@@ -62,11 +62,29 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("brush-tool"):
 		change_tool(Global.Tool.BRUSH);
 
-	if event.is_action_pressed("box-brush-tool"):
+	elif event.is_action_pressed("box-brush-tool"):
 		change_tool(Global.Tool.BOX_BRUSH);
 
 	if event.is_action_pressed("cursor-tool"):
 		change_tool(Global.Tool.CURSOR);
+		
+	elif event.is_action_pressed("first-select"):
+		change_tile(Global.TileType.SOLID);
+		
+	elif event.is_action_pressed("second-select"):
+		change_tile(Global.TileType.ONEWAY);
+		
+	elif event.is_action_pressed("third-select"):
+		change_tile(Global.TileType.DEATH);
+		
+	elif event.is_action_pressed("fourth-select"):
+		change_tile(Global.TileType.ICE);
+		
+	elif event.is_action_pressed("fifth-select"):
+		change_tile(Global.TileType.STICKY);
+		
+	elif event.is_action_pressed("sixth-select"):
+		change_tile(Global.TileType.BOUNCE);
 
 ## Places down the current brushing tile at the clicked position.
 ## position: Where the mouse is during the click.
@@ -114,8 +132,10 @@ func change_tool(tool: Global.Tool) -> void:
 	currentTool = tool;
 	
 	print("Current Tool: ", currentTool);
-	
 
+func change_tile(tile: Global.TileType) -> void:
+	brushTile = tile;
+	
 ## Converts the mouse's position into grid coordinates.
 ## mousePosition: Where the cursor currently is in world space.
 ## returns: The grid-coordinate equivalent of the position.

@@ -58,7 +58,7 @@ func run() -> void:
 	var direction := Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if direction:
-		accX = direction * groundSpeed * 400;
+		accX = direction * speedMod;
 	else:
 		accX = -velocity.x;
 	
@@ -69,7 +69,7 @@ func run() -> void:
 
 	# Adjust velocity by acceleration
 	velocity.x += accX;
-	velocity.x = clamp(velocity.x, -groundSpeed * 400, groundSpeed * 400);
+	velocity.x = clamp(velocity.x, -speedMod, speedMod);
 
 ## Have the player take damage
 ## amount: damage to deal

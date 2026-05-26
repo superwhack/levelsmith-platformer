@@ -1,0 +1,85 @@
+[gd_resource type="TileSet" format=3 uid="uid://d1n0acfj67o7r"]
+
+[ext_resource type="Texture2D" uid="uid://bb7ntbfefykop" path="res://Assets/Sprites/Tiles/Solid.png" id="1_00q1o"]
+[ext_resource type="Texture2D" uid="uid://pjdhb2te74w5" path="res://Assets/Sprites/Tiles/Death.png" id="2_cn8lu"]
+[ext_resource type="Texture2D" uid="uid://dmxmkfoute7gj" path="res://Assets/Sprites/Tiles/OneWay.png" id="3_alyph"]
+[ext_resource type="Texture2D" uid="uid://0ytag227enwn" path="res://Assets/Sprites/Tiles/Ice.png" id="4_6ba2f"]
+[ext_resource type="Texture2D" uid="uid://6bkm68b4v1w3" path="res://Assets/Sprites/Tiles/Sticky.png" id="5_8sjof"]
+[ext_resource type="Texture2D" uid="uid://cw3was5c5db7p" path="res://Assets/Sprites/Tiles/Bounce.png" id="6_me1w5"]
+[ext_resource type="Texture2D" uid="uid://dhaaqxr1wx2qb" path="res://Assets/Sprites/Tiles/Slope.png" id="7_jbnof"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rjqkl"]
+texture = ExtResource("1_00q1o")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64, -64, -64)
+0:0/0/custom_data_3 = "solid"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d2bti"]
+texture = ExtResource("2_cn8lu")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+0:0/0/custom_data_2 = 5
+0:0/0/custom_data_3 = "hazard"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_flf07"]
+texture = ExtResource("3_alyph")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, -64, -26.620003, 64, -26.620003, 64, -64, -64, -64)
+0:0/0/physics_layer_0/polygon_0/one_way = true
+0:0/0/custom_data_3 = "oneway"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ta5nu"]
+texture = ExtResource("4_6ba2f")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+0:0/0/custom_data_1 = 3.0
+0:0/0/custom_data_3 = "ice"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k73cj"]
+texture = ExtResource("5_8sjof")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+0:0/0/custom_data_3 = "slow"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hqns4"]
+texture = ExtResource("6_me1w5")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, -64, 64, 64, 64, 64, -64)
+0:0/0/custom_data_0 = 1.0
+0:0/0/custom_data_3 = "bounce"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x0ka3"]
+texture = ExtResource("7_jbnof")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, 64, -64, 64)
+0:0/0/custom_data_3 = "slope"
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -23.716003, 64, 19.844002, 64, 64, -64, 64)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, 19.844002, -64, 64, 64, 64)
+
+[resource]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "bounce"
+custom_data_layer_0/type = 3
+custom_data_layer_1/name = "friction"
+custom_data_layer_1/type = 3
+custom_data_layer_2/name = "damage"
+custom_data_layer_2/type = 2
+custom_data_layer_3/name = "name"
+custom_data_layer_3/type = 4
+sources/0 = SubResource("TileSetAtlasSource_rjqkl")
+sources/1 = SubResource("TileSetAtlasSource_d2bti")
+sources/3 = SubResource("TileSetAtlasSource_ta5nu")
+sources/2 = SubResource("TileSetAtlasSource_flf07")
+sources/4 = SubResource("TileSetAtlasSource_k73cj")
+sources/5 = SubResource("TileSetAtlasSource_hqns4")
+sources/6 = SubResource("TileSetAtlasSource_x0ka3")

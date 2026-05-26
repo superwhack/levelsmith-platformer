@@ -1,21 +1,38 @@
 extends Node2D
 
-# Possible tools to select	
+# Tool-based variables
 var currentTool := Global.Tool.BRUSH;
-var brushTile : TileData;
-@export var tileSet: TileMapLayer;
-@export var gridLines: TileMapLayer;
-@export var previewTile: TileMapLayer;
-var selectedTile: TileData;
-var playerSpawnPosition: Vector2;
+var brushTile : int;
+var selectedTile : TileData;
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("click"):
-		var tilePos = tileSet.local_to_map(tileSet.to_local(get_global_mouse_position()));
-		tileSet.set_cell(tilePos, -1);
-		print(tilePos);
+# References to grid TileMapLayer child nodes
+var tileSet: TileMapLayer;
+var gridLines: TileMapLayer;
+var previewTile: TileMapLayer;
+
+# Player spawnpoint. Set when placing the object.
+var playerSpawnPosition: Vector2 = Vector2(-1, -1);
+
+## Runs once when the script is ready.
+## Set up any reference variables here.
+func _ready() -> void:
+	tileSet = get_child(0);
+	gridLines = get_child(1);
+	previewTile = get_child(2);
 	
-	#TODO: Add key switch to input map and replace with .is_action_just_pressed
+	brushTile = Global.TileType.DEATH;
+
+## Runs every frame during the editing state
+## delta: how much time has passed
+func _process(_delta: float) -> void:
+	
+	if (Input.is_action_pressed("left-click")):
+		place_tile(get_global_mouse_position());
+		
+	if (Input.is_action_pressed("right-click")):
+		delete_tile(get_global_mouse_position());
+    
+  #TODO: Add key switch to input map and replace with .is_action_just_pressed
 	#if Input.is_action_just_pressed("brush_tool"):
 	if Input.is_key_pressed(KEY_Z):
 		change_tool(Global.Tool.BRUSH);
@@ -28,13 +45,25 @@ func _process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_C):
 		change_tool(Global.Tool.CURSOR);
 
-func place_tile(pos: Vector2) -> void:
+## Places down the current brushing tile at the clicked position.
+## position: Where the mouse is during the click.
+func place_tile(clickPosition: Vector2) -> void:
+	var tilePosition: Vector2 = tileSet.local_to_map(tileSet.to_local(clickPosition));
+	if (tileSet.get_cell_source_id(tilePosition) == brushTile): return;
+	
+	tileSet.erase_cell(tilePosition);
+	tileSet.set_cell(tilePosition, brushTile, Vector2i.ZERO);
+
+func place_object(clickPosition: Vector2) -> void:
 	print("a");
 
-func place_object(pos: Vector2) -> void:
-	print("a");
+## Deletes a tile at the clicked position
+## position: Where the mouse during the click.
+func delete_tile(clickPosition: Vector2) -> void:
+	var tilePosition: Vector2 = tileSet.local_to_map(tileSet.to_local(clickPosition));
+	tileSet.erase_cell(tilePosition);
 
-func select_tile(pos: Vector2) -> void:
+func select_tile(clickPosition: Vector2) -> void:
 	print("a");
 
 func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
@@ -43,7 +72,7 @@ func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
 func move_tile() -> void:
 	print("a");
 
-func update_brush_tile(tile: TileData) -> void:
+func update_brush_tile(tileId: int) -> void:
 	print("a");
 
 func toggle_grid_lines() -> void:

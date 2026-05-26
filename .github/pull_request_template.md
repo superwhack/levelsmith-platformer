@@ -1,9 +1,6 @@
 # Feature Name
 
-
-
 ## Summary
-
 
 
 ## Context \& Resources
@@ -54,10 +51,3 @@
 * 
 
  
-
-
-
-\## Risks / Future Work
-
-* 
-

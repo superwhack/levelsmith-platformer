@@ -48,14 +48,11 @@ func _process(delta: float) -> void:
 			process_build_camera(delta)
 
 			#var zoom_dir: float = 0.0
+			if (Input.is_action_just_pressed("zoom_in")):
+				process_zoom(zoomSpeed)
 
-			var zoom_dir: float = Input.get_axis("zoom_out", "zoom_in")
-
-			if zoom_dir != 0.0:
-				process_zoom(zoom_dir * zoomSpeed)
-
-			if zoom_dir != 0.0:
-				process_zoom(zoom_dir * zoomSpeed)
+			if (Input.is_action_just_pressed("zoom_out")):
+				process_zoom(-zoomSpeed)
 
 		State.PLAY:
 			process_player_camera(delta)

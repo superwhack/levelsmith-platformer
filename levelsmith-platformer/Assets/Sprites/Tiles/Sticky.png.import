@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://6bkm68b4v1w3"
-path="res://.godot/imported/slow.png-f08f826226ab3666ff45598ea82205ea.ctex"
+path="res://.godot/imported/Sticky.png-40915d9d64a662fed7ca788157843a9a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Tiles/slow.png"
-dest_files=["res://.godot/imported/slow.png-f08f826226ab3666ff45598ea82205ea.ctex"]
+source_file="res://Assets/Sprites/Tiles/Sticky.png"
+dest_files=["res://.godot/imported/Sticky.png-40915d9d64a662fed7ca788157843a9a.ctex"]
 
 [params]
 

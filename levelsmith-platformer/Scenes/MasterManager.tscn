@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bm5w14jlbl37k"]
+
+[ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
+[ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
+[ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="3_knx5t"]
+
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "gameManager")]
+script = ExtResource("1_3ngsi")
+editorManager = NodePath("EditorManager")
+gameManager = NodePath("GameManager")
+
+[node name="EditorManager" parent="." unique_id=2045534837 instance=ExtResource("2_430ed")]
+
+[node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("3_knx5t")]
+visible = false
+
+[connection signal="pressed" from="EditorManager/PlayButton" to="." method="play"]
+[connection signal="pressed" from="GameManager/PauseButton" to="." method="edit"]
+
+[editable path="EditorManager"]
+[editable path="GameManager"]

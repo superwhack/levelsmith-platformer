@@ -9,6 +9,10 @@ enum PlayState {
 var playState := PlayState.PLAY; 
 var goalReached := false;
 
+# Player starting values
+@export var player: CharacterBody2D;
+var playerStartingPosition: Vector2;
+
 # When pause is pressed, flip the current state
 func pause_pressed() -> void:
 	if playState == PlayState.PAUSE:
@@ -18,11 +22,14 @@ func pause_pressed() -> void:
 		get_tree().paused = true;
 		playState = PlayState.PAUSE;
 
+## Reset the play state, player position as well as all tile positions and information
 func reset() -> void:
-	get_tree().change_scene_to_file("res://Scenes/PlayScene.tscn");
+	player.position = playerStartingPosition
+	# TODO: Implement resetting of all parts of the tile map, not just the player.
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	playerStartingPosition = player.position;
 	pass # Replace with function body.
 
 

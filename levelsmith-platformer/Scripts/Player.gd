@@ -21,11 +21,11 @@ var health := maxHealth
 var currentFriction := 1.0;
 var currentSlowdown := 1.0;
 
-#var noSlide = true;
-var speedMod := groundSpeed * 400;
+# Speed with constant multiplier and slowdown appended in
+var trueSpeed : float;
 
 func _physics_process(delta: float) -> void:
-	speedMod = groundSpeed * 400 * currentSlowdown;
+	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair
 	if not is_on_floor():
 		if coyoteTimeLeft > 0:
@@ -54,22 +54,22 @@ func jump() -> void:
 ## amount: damage to deal
 func run() -> void:
 	# Acceration in the X direction for the player
-	var accX : float;
+	var accelerationX : float;
 	var direction := Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if direction:
-		accX = direction * speedMod;
+		accelerationX = direction * trueSpeed;
 	else:
-		accX = -velocity.x;
+		accelerationX = -velocity.x;
 	
 	# Friction and air control
-	accX *= currentFriction * currentFriction;
+	accelerationX *= currentFriction * currentFriction;
 	if not is_on_floor():
-		accX *= airControl * airControl;
+		accelerationX *= airControl * airControl;
 
 	# Adjust velocity by acceleration
-	velocity.x += accX;
-	velocity.x = clamp(velocity.x, -speedMod, speedMod);
+	velocity.x += accelerationX;
+	velocity.x = clamp(velocity.x, -trueSpeed, trueSpeed);
 
 ## Have the player take damage
 ## amount: damage to deal

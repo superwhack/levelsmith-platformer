@@ -14,6 +14,9 @@ var previewTileMap: TileMapLayer;
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
 
+# Flag for placeable areas
+var isPlaceable: bool = true;
+
 # Player spawnpoint. Set when placing the object.
 var playerSpawnPosition: Vector2 = Vector2(-1, -1);
 
@@ -71,9 +74,12 @@ func move_tile() -> void:
 func update_brush_tile(tileId: int) -> void:
 	print("a");
 
-
+## 
 func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
 	previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
+	
+	# Preview tile will appear red if not in a placeable area.
+	previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)
 	
 	if (mousePosition != prevMousePosition): 
 		previewTileMap.erase_cell(prevMousePosition);

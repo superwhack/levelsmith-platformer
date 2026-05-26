@@ -1,24 +1,24 @@
 [gd_scene format=3 uid="uid://bovucbco7l14c"]
 
-[ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_r3hl1"]
-[ext_resource type="Texture2D" uid="uid://bhcwugkxroj6k" path="res://Assets/Sprites/UI/pause.png" id="2_1sdb3"]
-[ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/GameManager.gd" id="2_pakvq"]
-[ext_resource type="Script" uid="uid://kl326f6vn6r8" path="res://Scripts/SceneSwap.gd" id="3_s0nau"]
-[ext_resource type="Texture2D" uid="uid://vxojf41vtsbg" path="res://Assets/Sprites/UI/reset.png" id="4_s0nau"]
-[ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Player.gd" id="5_p805a"]
-[ext_resource type="Texture2D" uid="uid://dglp6ibcolk70" path="res://Assets/Sprites/Entities/dude.png" id="6_pakvq"]
+[ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_dly0u"]
+[ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/GameManager.gd" id="2_yamew"]
+[ext_resource type="Texture2D" uid="uid://bhcwugkxroj6k" path="res://Assets/Sprites/UI/pause.png" id="3_ennkr"]
+[ext_resource type="Script" uid="uid://kl326f6vn6r8" path="res://Scripts/SceneSwap.gd" id="4_i7ohh"]
+[ext_resource type="Texture2D" uid="uid://vxojf41vtsbg" path="res://Assets/Sprites/UI/reset.png" id="5_ubck0"]
+[ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Player.gd" id="6_km2lw"]
+[ext_resource type="Texture2D" uid="uid://dglp6ibcolk70" path="res://Assets/Sprites/Entities/dude.png" id="7_qkcup"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5lpdq"]
 
 [node name="PlayScene" type="Node2D" unique_id=1980426325]
 
 [node name="MasterManager" type="Node2D" parent="." unique_id=1312191501]
-script = ExtResource("1_r3hl1")
+script = ExtResource("1_dly0u")
 
 [node name="GameManager" type="Node2D" parent="." unique_id=2046959520]
 process_mode = 3
 position = Vector2(1352, 922)
-script = ExtResource("2_pakvq")
+script = ExtResource("2_yamew")
 
 [node name="PauseButton" type="Button" parent="." unique_id=2016045018]
 offset_left = 1629.0
@@ -26,8 +26,8 @@ offset_top = 922.0
 offset_right = 1893.0
 offset_bottom = 1058.0
 action_mode = 0
-icon = ExtResource("2_1sdb3")
-script = ExtResource("3_s0nau")
+icon = ExtResource("3_ennkr")
+script = ExtResource("4_i7ohh")
 
 [node name="ResetButton" type="Button" parent="." unique_id=578432121]
 offset_left = 1352.0
@@ -35,19 +35,19 @@ offset_top = 922.0
 offset_right = 1616.0
 offset_bottom = 1058.0
 action_mode = 0
-icon = ExtResource("4_s0nau")
-script = ExtResource("3_s0nau")
+icon = ExtResource("5_ubck0")
+script = ExtResource("4_i7ohh")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=671008360]
 position = Vector2(573, 833)
-script = ExtResource("5_p805a")
+script = ExtResource("6_km2lw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1147603190]
 scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_5lpdq")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1187115549]
-texture = ExtResource("6_pakvq")
+texture = ExtResource("7_qkcup")
 
 [connection signal="pressed" from="PauseButton" to="MasterManager" method="edit"]
 [connection signal="pressed" from="ResetButton" to="GameManager" method="reset"]

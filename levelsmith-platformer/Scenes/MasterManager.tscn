@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="3_knx5t"]
+[ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/ToolSwitch.tscn" id="3_mg0h4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_knx5t"]
 
@@ -45,6 +46,11 @@ theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0vixy"
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
+
+[node name="ToolSwitch" parent="EditorManager" unique_id=1469240724 instance=ExtResource("3_mg0h4")]
+z_index = 1
+offset_right = 168.0
+offset_bottom = 0.0
 
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("3_knx5t")]
 visible = false

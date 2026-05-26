@@ -14,10 +14,6 @@ enum State {
 @export var zoomSpeed: float = 0.1;
 @export var maxZoomOut: float = 0.5;
 @export var maxZoomIn: float = 3.0;
-
-# Camera smoothing
-@export var lerpSpeed: float = 8.0;
-
 # Grid bounds
 @export var gridMinPos: Vector2 = Vector2(-1000, -1000);
 @export var gridMaxPos: Vector2 = Vector2(1000, 1000);
@@ -39,35 +35,32 @@ func _ready() -> void:
 	# Start zoomed out
 	zoom = Vector2.ONE * maxZoomOut;
 
+func _input(event):
+	if event is InputEventMouseButton:
+		print("Mouse button:", event.button_index, "pressed:", event.pressed)
+
 ## Processes camera logic every frame
 func _process(delta: float) -> void:
 
 	match gameState:
 
 		State.EDIT:
-			process_build_camera(delta);
+			process_build_camera(delta)
+
+			#var zoom_dir: float = 0.0
+
+			var zoom_dir: float = Input.get_axis("zoom_out", "zoom_in")
+
+			if zoom_dir != 0.0:
+				process_zoom(zoom_dir * zoomSpeed)
+
+			if zoom_dir != 0.0:
+				process_zoom(zoom_dir * zoomSpeed)
 
 		State.PLAY:
-			process_player_camera(delta);
+			process_player_camera(delta)
 
-	clamp_camera_to_grid();
-
-
-## Handles zoom input
-func _unhandled_input(event: InputEvent) -> void:
-
-	if gameState != State.EDIT:
-		return;
-
-	if event is InputEventMouseButton:
-
-		if event.pressed:
-
-			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				process_zoom(-zoomSpeed);
-
-			elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				process_zoom(zoomSpeed);
+	clamp_camera_to_grid()
 
 
 ## Changes the current camera state
@@ -132,10 +125,7 @@ func process_player_camera(delta: float) -> void:
 	if playerReference == null:
 		return;
 
-	position = position.lerp(
-		playerReference.global_position,
-		lerpSpeed * delta
-	);
+	position = playerReference.global_position;
 
 
 ## Adjusts camera zoom

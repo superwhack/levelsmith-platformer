@@ -9,8 +9,9 @@
 \## Context \& Resources
 
 * \*\*Related Systems:\*\* 
-* \*\*Task/Card Link(s):\*\* 
-* \*\*UML \& Documentation:\*\* 
+* \*\*Task Card Reference (Use #):\*\* 
+* \*\*UML:\*\*
+* \*\*Wiki Documentation:\*\*
 
 
 

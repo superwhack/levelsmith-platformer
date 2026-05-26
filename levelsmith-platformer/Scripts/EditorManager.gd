@@ -39,3 +39,7 @@ func toggle_grid_lines() -> void:
 # Change the selected tool to the clicked on tool.
 func change_tool(tool: Global.Tool) -> void:
 	currentTool = tool;
+
+
+func _on_play_button_pressed() -> void:
+	pass # Replace with function body.

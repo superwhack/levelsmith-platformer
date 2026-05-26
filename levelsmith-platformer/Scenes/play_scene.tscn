@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bovucbco7l14c"]
+
+[ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_r3hl1"]
+[ext_resource type="Texture2D" uid="uid://bhcwugkxroj6k" path="res://Assets/Sprites/UI/pause.png" id="2_1sdb3"]
+[ext_resource type="Script" uid="uid://kl326f6vn6r8" path="res://Scripts/SceneSwap.gd" id="3_s0nau"]
+[ext_resource type="Texture2D" uid="uid://vxojf41vtsbg" path="res://Assets/Sprites/UI/reset.png" id="4_s0nau"]
+
+[node name="PlayScene" type="Node2D" unique_id=1980426325]
+
+[node name="MasterManager" type="Node2D" parent="." unique_id=1312191501]
+script = ExtResource("1_r3hl1")
+
+[node name="PauseButton" type="Button" parent="." unique_id=2016045018]
+offset_left = 1629.0
+offset_top = 922.0
+offset_right = 1893.0
+offset_bottom = 1058.0
+action_mode = 0
+icon = ExtResource("2_1sdb3")
+script = ExtResource("3_s0nau")
+
+[node name="ResetButton" type="Button" parent="." unique_id=578432121]
+offset_left = 1352.0
+offset_top = 922.0
+offset_right = 1616.0
+offset_bottom = 1058.0
+action_mode = 0
+icon = ExtResource("4_s0nau")
+script = ExtResource("3_s0nau")
+
+[connection signal="pressed" from="PauseButton" to="MasterManager" method="Edit"]

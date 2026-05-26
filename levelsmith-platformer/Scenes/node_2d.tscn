@@ -167,7 +167,7 @@ tile_set = SubResource("TileSet_nr8wp")
 [node name="TileMapLayerPreview" type="TileMapLayer" parent="." unique_id=1230982405]
 tile_set = SubResource("TileSet_d2bti")
 
-[node name="Button" type="Button" parent="." unique_id=364615641]
+[node name="PlayButton" type="Button" parent="." unique_id=364615641]
 offset_left = 1629.0
 offset_top = 922.0
 offset_right = 1893.0
@@ -175,3 +175,5 @@ offset_bottom = 1058.0
 action_mode = 0
 icon = ExtResource("14_xiv05")
 script = ExtResource("15_uybdb")
+
+[connection signal="pressed" from="PlayButton" to="MasterManager" method="Play"]

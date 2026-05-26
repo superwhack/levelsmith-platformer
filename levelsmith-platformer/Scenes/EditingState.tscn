@@ -49,7 +49,6 @@ tile_set = SubResource("TileSet_nr8wp")
 modulate = Color(1, 1, 1, 0.5058824)
 tile_set = ExtResource("2_8t3j3")
 collision_enabled = false
-tile_set = SubResource("TileSet_d2bti")
 
 [node name="PlayButton" type="Button" parent="." unique_id=745550610]
 offset_left = 1629.0

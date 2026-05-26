@@ -14,9 +14,10 @@ enum State {
 @export var zoomSpeed: float = 0.1;
 @export var maxZoomOut: float = 0.5;
 @export var maxZoomIn: float = 3.0;
-# Grid bounds
-@export var gridMinPos: Vector2 = Vector2(-1000, -1000);
-@export var gridMaxPos: Vector2 = Vector2(1000, 1000);
+
+# Tilemap bound
+@export var tileSet: TileMapLayer
+var level_bounds: Rect2
 
 # Current game state
 var gameState: State = State.EDIT;
@@ -29,8 +30,9 @@ var playerReference: CharacterBody2D = null;
 func _ready() -> void:
 	make_current();
 	
-	# Center camera on grid
-	position = (gridMinPos + gridMaxPos) / 2.0;
+	# Center camera on rect2 of the entire level
+	level_bounds = get_level_bounds()
+	position = level_bounds.get_center()
 
 	# Start zoomed out
 	zoom = Vector2.ONE * maxZoomOut;
@@ -57,7 +59,7 @@ func _process(delta: float) -> void:
 		State.PLAY:
 			process_player_camera(delta)
 
-	clamp_camera_to_grid()
+	clamp_camera_to_level()
 
 
 ## Changes the current camera state
@@ -143,18 +145,29 @@ func process_zoom(zoomAmount: float) -> void:
 		maxZoomIn
 	);
 
+## Calculates the world-space bounding rectangle of all occupied tiles in the TileMapLayer
+## Returns a Rect2 in global coordinates representing the level's outer boundaries
+func get_level_bounds() -> Rect2:
+	var used_rect: Rect2i = tileSet.get_used_rect()
 
-## Prevents the camera from leaving the grid
-func clamp_camera_to_grid() -> void:
+	# Convert tile coords to world coords
+	var top_left: Vector2 = tileSet.to_global(tileSet.map_to_local(used_rect.position))
+	var bottom_right: Vector2 = tileSet.to_global(tileSet.map_to_local(used_rect.position + used_rect.size))
+
+	return Rect2(top_left, bottom_right - top_left)
+
+## Prevents the camera from leaving the level
+func clamp_camera_to_level() -> void:
+	var half_screen: Vector2 = get_viewport_rect().size * 0.5 * zoom
 
 	position.x = clamp(
 		position.x,
-		gridMinPos.x,
-		gridMaxPos.x
-	);
+		level_bounds.position.x + half_screen.x,
+		level_bounds.position.x + level_bounds.size.x - half_screen.x
+	)
 
 	position.y = clamp(
 		position.y,
-		gridMinPos.y,
-		gridMaxPos.y
-	);
+		level_bounds.position.y + half_screen.y,
+		level_bounds.position.y + level_bounds.size.y - half_screen.y
+	)

@@ -146,8 +146,9 @@ script = ExtResource("2_fg7i4")
 process_mode = 3
 script = ExtResource("3_gwne5")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1853583019]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1853583019 node_paths=PackedStringArray("tileSet")]
 script = ExtResource("4_fg7i4")
+tileSet = NodePath("../TileMapLayer")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1377222558]
 position = Vector2(573, 833)

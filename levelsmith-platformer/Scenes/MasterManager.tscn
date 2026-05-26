@@ -125,6 +125,7 @@ tile_set = SubResource("TileSet_d2bti")
 collision_enabled = true
 
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("3_knx5t")]
+visible = false
 
 [connection signal="pressed" from="EditorManager/PlayButton" to="." method="play"]
 [connection signal="pressed" from="GameManager/PauseButton" to="." method="edit"]

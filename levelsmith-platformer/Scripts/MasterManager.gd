@@ -7,6 +7,9 @@ var state : Global.State = Global.State.PLAY;
 @export var editorManager : Node2D;
 @export var gameManager : Node2D;
 
+# Map that is currently loaded in the Play scene
+var loadedMap : TileMapLayer;
+
 ## Swap to edit state
 func edit() -> void:
 	print("Edit")
@@ -44,6 +47,10 @@ func save_tilemap() -> void:
 
 ## Loads the tilemap from the resource folder
 func load_tilemap() -> void:
+	# If any map is currently loaded, delete that
+	if (loadedMap):
+		gameManager.remove_child(loadedMap);
+		loadedMap.queue_free();
 	# Load the saved map from the resource folder
 	var savedMap = load("res://SavedTileMap.tscn");
 	# Instantiate the map as a scene instance
@@ -51,3 +58,4 @@ func load_tilemap() -> void:
 	# Add that instance to the top of the GameManager's hierarchy
 	gameManager.add_child(sceneInstance);
 	gameManager.move_child(sceneInstance, 0);
+	loadedMap = gameManager.get_child(0);

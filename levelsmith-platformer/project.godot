@@ -24,6 +24,10 @@ Global="*uid://ddgi8vrr1tdwj"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 
+[dotnet]
+
+project/assembly_name="levelsmith-platformer"
+
 [input]
 
 right={

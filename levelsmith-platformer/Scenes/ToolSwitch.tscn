@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://84u38evaexwi"]
+
+[ext_resource type="Script" uid="uid://bc0t4fwnf3jge" path="res://Scripts/ToolSwitch.gd" id="1_8le6k"]
+[ext_resource type="Texture2D" uid="uid://beulnfgywfyen" path="res://Assets/UserInterface/Buttons/BrushToolButton.png" id="1_seqfd"]
+[ext_resource type="Texture2D" uid="uid://d0i2004v6afos" path="res://Assets/UserInterface/Buttons/BrushToolButton-pressed.png" id="2_qq874"]
+[ext_resource type="Texture2D" uid="uid://c3b06aes25hko" path="res://Assets/UserInterface/Buttons/BrushToolButton-hover.png" id="3_8le6k"]
+[ext_resource type="Texture2D" uid="uid://cfvwdpm881qj3" path="res://Assets/UserInterface/Buttons/BoxBrushToolButton.png" id="4_y8p3r"]
+[ext_resource type="Texture2D" uid="uid://n2mkd550obf3" path="res://Assets/UserInterface/Buttons/BoxBrushToolButton-pressed.png" id="5_85ipx"]
+[ext_resource type="Texture2D" uid="uid://fgu7tlq54ppg" path="res://Assets/UserInterface/Buttons/BoxBrushToolButton-hover.png" id="6_a7qfn"]
+[ext_resource type="Texture2D" uid="uid://6aw5pimo4a5q" path="res://Assets/UserInterface/Buttons/CursorToolButton.png" id="7_you77"]
+[ext_resource type="Texture2D" uid="uid://dq4hioof5em02" path="res://Assets/UserInterface/Buttons/CursorToolButton-pressed.png" id="8_ed4nk"]
+[ext_resource type="Texture2D" uid="uid://dfnh8cf1h7skh" path="res://Assets/UserInterface/Buttons/CursorToolButton-hover.png" id="9_762cx"]
+
+[node name="ToolSwitch" type="HBoxContainer" unique_id=1469240724]
+anchors_preset = -1
+anchor_right = 0.12900001
+anchor_bottom = 0.07700001
+offset_right = -79.68002
+offset_bottom = -2.1600113
+theme_override_constants/separation = 84
+script = ExtResource("1_8le6k")
+
+[node name="Control" type="Control" parent="." unique_id=2054412807]
+layout_mode = 2
+
+[node name="BrushToolButton" type="TextureButton" parent="Control" unique_id=1651147015]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 80.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource("1_seqfd")
+texture_pressed = ExtResource("2_qq874")
+texture_hover = ExtResource("3_8le6k")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Control2" type="Control" parent="." unique_id=1485990696]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BoxBrushToolButton" type="TextureButton" parent="Control2" unique_id=722401074]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 80.0
+texture_normal = ExtResource("4_y8p3r")
+texture_pressed = ExtResource("5_85ipx")
+texture_hover = ExtResource("6_a7qfn")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Control3" type="Control" parent="." unique_id=955516389]
+layout_mode = 2
+
+[node name="CursorButton" type="TextureButton" parent="Control3" unique_id=876085231]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 80.0
+texture_normal = ExtResource("7_you77")
+texture_pressed = ExtResource("8_ed4nk")
+texture_hover = ExtResource("9_762cx")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="Control/BrushToolButton" to="." method="_on_brush_tool_button_pressed"]
+[connection signal="pressed" from="Control2/BoxBrushToolButton" to="." method="_on_box_brush_tool_button_pressed"]
+[connection signal="pressed" from="Control3/CursorButton" to="." method="_on_cursor_button_pressed"]

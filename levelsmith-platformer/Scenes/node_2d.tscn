@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cwhg3tjyytxee" path="res://Assets/Sprites/Tiles/GridLine.png" id="13_fpmp2"]
 [ext_resource type="Texture2D" uid="uid://4a45jwvowkli" path="res://Assets/Sprites/UI/play.png" id="14_xiv05"]
 [ext_resource type="Script" uid="uid://kl326f6vn6r8" path="res://Scripts/SceneSwap.gd" id="15_uybdb"]
+[ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/ToolSwitch.tscn" id="16_fg7i4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x0ka3"]
 
@@ -175,3 +176,6 @@ offset_bottom = 1058.0
 action_mode = 0
 icon = ExtResource("14_xiv05")
 script = ExtResource("15_uybdb")
+
+[node name="ToolSwitch" parent="." unique_id=2083666767 node_paths=PackedStringArray("editorManager") instance=ExtResource("16_fg7i4")]
+editorManager = NodePath("../EditorManager")

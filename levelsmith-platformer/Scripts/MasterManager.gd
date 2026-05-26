@@ -18,6 +18,8 @@ func edit() -> void:
 	# Change scene to edit scene
 	gameManager.hide();
 	editorManager.show();
+	# Play the editor manager
+	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
 
 ## Swap to play
 func play() -> void:
@@ -29,6 +31,8 @@ func play() -> void:
 	# Change scene to play 
 	gameManager.show();
 	editorManager.hide();
+	# Pause the editor manager
+	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Load map
 	load_tilemap();
 	# Reset the play scene

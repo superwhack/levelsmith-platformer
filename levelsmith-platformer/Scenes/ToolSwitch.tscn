@@ -20,10 +20,10 @@ offset_bottom = -2.1600113
 theme_override_constants/separation = 84
 script = ExtResource("1_8le6k")
 
-[node name="Control" type="Control" parent="." unique_id=2054412807]
+[node name="BrushToolWrapper" type="Control" parent="." unique_id=2054412807]
 layout_mode = 2
 
-[node name="BrushToolButton" type="TextureButton" parent="Control" unique_id=1651147015]
+[node name="BrushToolButton" type="TextureButton" parent="BrushToolWrapper" unique_id=1651147015]
 layout_mode = 0
 offset_right = 80.0
 offset_bottom = 80.0
@@ -35,11 +35,11 @@ texture_hover = ExtResource("3_8le6k")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Control2" type="Control" parent="." unique_id=1485990696]
+[node name="BoxBrushToolWrapper" type="Control" parent="." unique_id=1485990696]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BoxBrushToolButton" type="TextureButton" parent="Control2" unique_id=722401074]
+[node name="BoxBrushToolButton" type="TextureButton" parent="BoxBrushToolWrapper" unique_id=722401074]
 layout_mode = 0
 offset_right = 80.0
 offset_bottom = 80.0
@@ -49,10 +49,10 @@ texture_hover = ExtResource("6_a7qfn")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Control3" type="Control" parent="." unique_id=955516389]
+[node name="CursorToolWrapper" type="Control" parent="." unique_id=955516389]
 layout_mode = 2
 
-[node name="CursorButton" type="TextureButton" parent="Control3" unique_id=876085231]
+[node name="CursorButton" type="TextureButton" parent="CursorToolWrapper" unique_id=876085231]
 layout_mode = 0
 offset_right = 80.0
 offset_bottom = 80.0
@@ -62,6 +62,6 @@ texture_hover = ExtResource("9_762cx")
 ignore_texture_size = true
 stretch_mode = 0
 
-[connection signal="pressed" from="Control/BrushToolButton" to="." method="_on_brush_tool_button_pressed"]
-[connection signal="pressed" from="Control2/BoxBrushToolButton" to="." method="_on_box_brush_tool_button_pressed"]
-[connection signal="pressed" from="Control3/CursorButton" to="." method="_on_cursor_button_pressed"]
+[connection signal="pressed" from="BrushToolWrapper/BrushToolButton" to="." method="_on_brush_tool_button_pressed"]
+[connection signal="pressed" from="BoxBrushToolWrapper/BoxBrushToolButton" to="." method="_on_box_brush_tool_button_pressed"]
+[connection signal="pressed" from="CursorToolWrapper/CursorButton" to="." method="_on_cursor_button_pressed"]

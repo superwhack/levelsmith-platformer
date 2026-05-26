@@ -25,25 +25,26 @@ func _ready() -> void:
 ## Runs every frame during the editing state
 ## delta: how much time has passed
 func _process(_delta: float) -> void:
-	
-	if (Input.is_action_pressed("left-click")):
+	pass
+
+## Inputs related to clicking on the tile map (for now?)
+func _unhandled_input(event):
+	if event.is_action_pressed("left-click"):
 		place_tile(get_global_mouse_position());
-		
-	if (Input.is_action_pressed("right-click")):
+
+	if event.is_action_pressed("right-click"):
 		delete_tile(get_global_mouse_position());
-    
-  #TODO: Add key switch to input map and replace with .is_action_just_pressed
-	#if Input.is_action_just_pressed("brush_tool"):
-	if Input.is_key_pressed(KEY_Z):
-		change_tool(Global.Tool.BRUSH);
 		
-	#if Input.is_action_just_pressed("box_brush_tool"):
-	if Input.is_key_pressed(KEY_X):
-		change_tool(Global.Tool.BOX_BRUSH);
-		
-	#if Input.is_action_just_pressed("cursor_tool"):
-	if Input.is_key_pressed(KEY_C):
-		change_tool(Global.Tool.CURSOR);
+## Inputs related to the GUI
+func _gui_input(event):
+	# Switch current tool based on user keyboard input
+	match event:
+		"brush-tool":
+			change_tool(Global.Tool.BRUSH);
+		"box-brush-tool":
+			change_tool(Global.Tool.BOX_BRUSH);
+		"cursor-tool":
+			change_tool(Global.Tool.CURSOR);
 
 ## Places down the current brushing tile at the clicked position.
 ## position: Where the mouse is during the click.

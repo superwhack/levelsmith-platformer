@@ -15,6 +15,12 @@
 
 [node name="EditorManager" parent="." unique_id=2045534837 instance=ExtResource("1_wjtap")]
 
+[node name="ToolSwitch" parent="EditorManager" unique_id=2083666767 node_paths=PackedStringArray("editorManager") instance=ExtResource("16_fg7i4")]
+offset_right = 168.0
+offset_bottom = 0.0
+mouse_filter = 0
+editorManager = NodePath("..")
+
 [node name="MasterManager" type="Node2D" parent="." unique_id=45588138]
 script = ExtResource("2_fg7i4")
 
@@ -41,6 +47,3 @@ offset_bottom = 1058.0
 action_mode = 0
 icon = ExtResource("14_xiv05")
 script = ExtResource("15_uybdb")
-
-[node name="ToolSwitch" parent="." unique_id=2083666767 node_paths=PackedStringArray("editorManager") instance=ExtResource("16_fg7i4")]
-editorManager = NodePath("../EditorManager")

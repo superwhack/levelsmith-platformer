@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-@export var editorManager : Node2D;
+@export var editorManager : Node2D = get_parent();
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

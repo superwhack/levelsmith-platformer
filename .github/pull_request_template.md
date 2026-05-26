@@ -1,51 +1,59 @@
-\# Feature Name
+# Feature Name
 
 
 
-\## Summary
+## Summary
 
 
 
-\## Context \& Resources
+## Context \& Resources
 
-* \*\*Related Systems:\*\* 
-* \*\*Task Card Reference (Use #):\*\* 
-* \*\*UML:\*\*
-* \*\*Wiki Documentation:\*\*
+- **Related Systems:** 
+- **Task Card Reference (Use #):** 
+- **UML:**
+- **Wiki Documentation:**
 
 
 
-\## Feature / Addition List
+## Feature / Addition List
+
+- 
+
+
+
+## Testing Criteria \& Methodology
+
+> **BE SPECIFIC!** Provide exact, step-by-step instructions on how to run and verify this code. 
+
+
+
+### Execution Steps To View Feature:
+
+1. 
+
+2. 
+
+3. 
+
+
+
+### Things to Test:
+
+- [ ] 
+
+
+
+## Known Issues
 
 * 
 
 
 
-\## Testing Criteria \& Methodology
-
-> \*\*BE SPECIFIC!\*\* Provide exact, step-by-step instructions on how to run and verify this code. 
-
-
-
-\### Execution Steps To View Feature:
-
-1\. 
-
-2\. 
-
-3\. 
-
-
-
-\### Things to Test:
-
-\- \[ ] 
-
-
-
-\## Known Issues
+## Risks / Future Work
 
 * 
+
+ 
 
 
 

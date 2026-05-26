@@ -8,7 +8,14 @@ var selectedTile : TileData;
 # References to grid TileMapLayer child nodes
 var tileSet: TileMapLayer;
 var gridLines: TileMapLayer;
-var previewTile: TileMapLayer;
+var previewTileMap: TileMapLayer;
+
+# Mouse position variables
+var currentMousePosition: Vector2;
+var prevMousePosition: Vector2;
+
+# Flag for placeable areas
+var isPlaceable: bool = true;
 
 # Player spawnpoint. Set when placing the object.
 var playerSpawnPosition: Vector2 = Vector2(-1, -1);
@@ -18,51 +25,53 @@ var playerSpawnPosition: Vector2 = Vector2(-1, -1);
 func _ready() -> void:
 	tileSet = get_child(0);
 	gridLines = get_child(1);
-	previewTile = get_child(2);
+	previewTileMap = get_child(2);
 	
-	brushTile = Global.TileType.DEATH;
+	brushTile = Global.TileType.SOLID;
 
 ## Runs every frame during the editing state
 ## delta: how much time has passed
 func _process(_delta: float) -> void:
-	pass
+	# record the position of the mouse on this frame
+	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
+	
+	update_preview_tile(currentMousePosition, prevMousePosition);
+	
+func _unhandled_input(event: InputEvent) -> void:
 
-## Inputs related to clicking on the tile map (for now?)
-func _unhandled_input(event):
-	if event.is_action_pressed("left-click"):
-		place_tile(get_global_mouse_position());
-
-	if event.is_action_pressed("right-click"):
-		delete_tile(get_global_mouse_position());
+	if (event.is_action_pressed("left-click")):
+		place_tile(currentMousePosition);
 		
-## Inputs related to the GUI
-func _gui_input(event):
-	# Switch current tool based on user keyboard input
-	match event:
-		"brush-tool":
-			change_tool(Global.Tool.BRUSH);
-		"box-brush-tool":
-			change_tool(Global.Tool.BOX_BRUSH);
-		"cursor-tool":
-			change_tool(Global.Tool.CURSOR);
+	if (event.is_action_pressed("right-click")):
+		delete_tile(currentMousePosition);
+	
+	# save the mouse position to the previous frame
+	prevMousePosition = currentMousePosition;
+	
+	if event.is_action_pressed("brush-tool"):
+		change_tool(Global.Tool.BRUSH);
+
+	if event.is_action_pressed("box-brush-tool"):
+		change_tool(Global.Tool.BOX_BRUSH);
+
+	if event.is_actionz_pressed("cursor-tool"):
+		change_tool(Global.Tool.CURSOR);
 
 ## Places down the current brushing tile at the clicked position.
 ## position: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
-	var tilePosition: Vector2 = tileSet.local_to_map(tileSet.to_local(clickPosition));
-	if (tileSet.get_cell_source_id(tilePosition) == brushTile): return;
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile): return;
 	
-	tileSet.erase_cell(tilePosition);
-	tileSet.set_cell(tilePosition, brushTile, Vector2i.ZERO);
+	tileSet.erase_cell(clickPosition);
+	tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
 
 func place_object(clickPosition: Vector2) -> void:
 	print("a");
 
-## Deletes a tile at the clicked position
-## position: Where the mouse during the click.
+## Deletes a tile at the clicked position.
+## position: Where the mouse is during the click.
 func delete_tile(clickPosition: Vector2) -> void:
-	var tilePosition: Vector2 = tileSet.local_to_map(tileSet.to_local(clickPosition));
-	tileSet.erase_cell(tilePosition);
+	tileSet.erase_cell(clickPosition);
 
 func select_tile(clickPosition: Vector2) -> void:
 	print("a");
@@ -76,8 +85,15 @@ func move_tile() -> void:
 func update_brush_tile(tileId: int) -> void:
 	print("a");
 
-func toggle_grid_lines() -> void:
-	print("a");
+## 
+func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
+	previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
+	
+	# Preview tile will appear red if not in a placeable area.
+	previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)
+	
+	if (mousePosition != prevMousePosition): 
+		previewTileMap.erase_cell(prevMousePosition);
 
 # Change the selected tool to the clicked on tool.
 func change_tool(tool: Global.Tool) -> void:
@@ -88,6 +104,9 @@ func change_tool(tool: Global.Tool) -> void:
 	
 	print("Current Tool: ", currentTool);
 	
-	
-	
-	
+
+## Converts the mouse's position into grid coordinates.
+## mousePosition: Where the cursor currently is in world space.
+## returns: The grid-coordinate equivalent of the position.
+func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
+	return tileSet.local_to_map(tileSet.to_local(mousePosition));

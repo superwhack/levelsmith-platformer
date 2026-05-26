@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="levelsmith-platformer"
-run/main_scene="res://Scenes/node_2d.tscn"
+run/main_scene="uid://bm5w14jlbl37k"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

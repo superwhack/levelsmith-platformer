@@ -4,7 +4,7 @@ extends Node2D
 var state : Global.State = Global.State.PLAY;
 
 ## Swap to edit state
-func Edit() -> void:
+func edit() -> void:
 	print("Edit")
 	# Update state variable
 	state = Global.State.EDIT;
@@ -12,7 +12,7 @@ func Edit() -> void:
 	get_tree().change_scene_to_file("res://Scenes/node_2d.tscn")
 
 ## Swap to play
-func Play() -> void:
+func play() -> void:
 	print("Play")
 	# Update state variable
 	state = Global.State.PLAY;

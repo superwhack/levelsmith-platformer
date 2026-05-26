@@ -176,4 +176,4 @@ action_mode = 0
 icon = ExtResource("14_xiv05")
 script = ExtResource("15_uybdb")
 
-[connection signal="pressed" from="PlayButton" to="MasterManager" method="Play"]
+[connection signal="pressed" from="PlayButton" to="MasterManager" method="play"]

@@ -4,6 +4,8 @@ extends Node2D
 var currentTool := Global.Tool.BRUSH;
 var brushTile : int;
 var selectedTile : TileData;
+var painting : bool = false;
+var erasing : bool = false;
 
 # References to grid TileMapLayer child nodes
 var tileSet: TileMapLayer;
@@ -34,15 +36,24 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# record the position of the mouse on this frame
 	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
-	
+
 	update_preview_tile(currentMousePosition, prevMousePosition);
 	
 func _unhandled_input(event: InputEvent) -> void:
 
 	if (event.is_action_pressed("left-click")):
-		place_tile(currentMousePosition);
+		painting = true;
+	if (event.is_action_released("left-click")):
+		painting = false;
 		
 	if (event.is_action_pressed("right-click")):
+		erasing = true;
+	if (event.is_action_released("right-click")):
+		erasing = false;
+		
+	if painting:
+		place_tile(currentMousePosition);
+	if erasing:
 		delete_tile(currentMousePosition);
 	
 	# save the mouse position to the previous frame
@@ -54,7 +65,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("box-brush-tool"):
 		change_tool(Global.Tool.BOX_BRUSH);
 
-	if event.is_actionz_pressed("cursor-tool"):
+	if event.is_action_pressed("cursor-tool"):
 		change_tool(Global.Tool.CURSOR);
 
 ## Places down the current brushing tile at the clicked position.

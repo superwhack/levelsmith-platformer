@@ -12,6 +12,9 @@ var tileSet: TileMapLayer;
 var gridLines: TileMapLayer;
 var previewTileMap: TileMapLayer;
 
+# Reference to TileSwitch for transparency
+var tileSwitch: HBoxContainer;
+
 # Mouse position variables
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
@@ -25,9 +28,13 @@ var playerSpawnPosition: Vector2 = Vector2(-1, -1);
 ## Runs once when the script is ready.
 ## Set up any reference variables here.
 func _ready() -> void:
+	
 	tileSet = get_child(0);
 	gridLines = get_child(1);
 	previewTileMap = get_child(2);
+	
+	tileSwitch = get_child(4).get_child(1);
+	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
 	
 	brushTile = Global.TileType.SOLID;
 
@@ -46,29 +53,39 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if (event.is_action_pressed("left-click")):
 		painting = true;
-	if (event.is_action_released("left-click")):
+	elif (event.is_action_released("left-click")):
 		painting = false;
 		
 	if (event.is_action_pressed("right-click")):
 		erasing = true;
-	if (event.is_action_released("right-click")):
+	elif (event.is_action_released("right-click")):
 		erasing = false;
 		
+	# Paint if the brush is selected, click to place if cursor is
 	if painting:
-		place_tile(currentMousePosition);
-	if erasing:
-		delete_tile(currentMousePosition);
-	
-	
+		if currentTool == Global.Tool.BRUSH:
+			place_tile(currentMousePosition);
+		elif currentTool == Global.Tool.CURSOR && event.is_action_pressed("left-click"):
+			place_tile(currentMousePosition); 
+			
+	# Drag erase if the brush is selected, click to remove if cursor is
+	elif erasing:
+		if currentTool == Global.Tool.BRUSH:
+			delete_tile(currentMousePosition);
+		elif currentTool == Global.Tool.CURSOR && event.is_action_pressed("right-click"):
+			delete_tile(currentMousePosition); 
 	
 	if event.is_action_pressed("brush-tool"):
 		change_tool(Global.Tool.BRUSH);
+		tileSwitch.cursorSelected(false);
 
 	elif event.is_action_pressed("box-brush-tool"):
 		change_tool(Global.Tool.BOX_BRUSH);
+		tileSwitch.cursorSelected(false);
 
 	if event.is_action_pressed("cursor-tool"):
 		change_tool(Global.Tool.CURSOR);
+		tileSwitch.cursorSelected(true);
 		
 	elif event.is_action_pressed("first-select"):
 		change_tile(Global.TileType.SOLID);
@@ -91,7 +108,12 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Places down the current brushing tile at the clicked position.
 ## position: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
-	if (tileSet.get_cell_source_id(clickPosition) == brushTile): return;
+	# If the tool is the cursor, don't overwrite any placement
+	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
+		return;
+	# If the cell is already of the same type, or if the cell is occupied by an object, don't overwrite
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > 5): 
+		return;
 	
 	tileSet.erase_cell(clickPosition);
 	tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
@@ -136,10 +158,14 @@ func change_tool(tool: Global.Tool) -> void:
 	
 	currentTool = tool;
 	
+	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
+	if (brushTile > 5 && currentTool != Global.Tool.CURSOR):
+		change_tile(0);
 	print("Current Tool: ", currentTool);
 
 func change_tile(tile: Global.TileType) -> void:
-	brushTile = tile;
+	if currentTool == Global.Tool.CURSOR || tile < 6:
+		brushTile = tile;
 	
 ## Converts the mouse's position into grid coordinates.
 ## mousePosition: Where the cursor currently is in world space.

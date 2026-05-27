@@ -4,24 +4,41 @@
 [ext_resource type="Texture2D" uid="uid://bb7ntbfefykop" path="res://Assets/Sprites/Tiles/solid.png" id="1_vjuxo"]
 [ext_resource type="Texture2D" uid="uid://6bkm68b4v1w3" path="res://Assets/Sprites/Tiles/Sticky.png" id="2_01osu"]
 [ext_resource type="Texture2D" uid="uid://cw3was5c5db7p" path="res://Assets/Sprites/Tiles/bounce.png" id="2_aauec"]
+[ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
 [ext_resource type="Texture2D" uid="uid://0ytag227enwn" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
 [ext_resource type="Texture2D" uid="uid://dhaaqxr1wx2qb" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
 [ext_resource type="Texture2D" uid="uid://dmxmkfoute7gj" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
-[ext_resource type="Texture2D" uid="uid://wm003qlxb4yh" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
+[ext_resource type="Texture2D" uid="uid://pjdhb2te74w5" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
 
-[node name="Control" type="HBoxContainer" unique_id=959816093]
+[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("movingButton", "slopeButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1896.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 4
 script = ExtResource("1_aauec")
+movingButton = NodePath("MovingObjectWrapper/MovingObjectButton")
+slopeButton = NodePath("SlopeObjectWrapper/SlopeObectButton")
 
-[node name="StickyTileWrapper" type="Control" parent="." unique_id=708304497]
+[node name="MovingObjectWrapper" type="Control" parent="." unique_id=194304977]
 layout_mode = 2
 
-[node name="StickyTileButton" type="TextureButton" parent="StickyTileWrapper" unique_id=928704748]
+[node name="MovingObjectButton" type="TextureButton" parent="MovingObjectWrapper" unique_id=1756298095]
+layout_mode = 0
+offset_left = 845.0
+offset_top = -1.0
+offset_right = 925.0
+offset_bottom = 79.0
+texture_normal = ExtResource("2_p43ua")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="StickyTWrapper" type="Control" parent="." unique_id=708304497]
+layout_mode = 2
+
+[node name="StickyTileButton" type="TextureButton" parent="StickyTWrapper" unique_id=928704748]
 layout_mode = 0
 offset_left = 390.0
 offset_right = 470.0
@@ -30,13 +47,13 @@ texture_normal = ExtResource("2_01osu")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="SlopeTileWrapper" type="Control" parent="." unique_id=1247154762]
+[node name="SlopeObjectWrapper" type="Control" parent="." unique_id=1247154762]
 layout_mode = 2
 
-[node name="SlopeTileButton" type="TextureButton" parent="SlopeTileWrapper" unique_id=1746073645]
+[node name="SlopeObectButton" type="TextureButton" parent="SlopeObjectWrapper" unique_id=1746073645]
 layout_mode = 0
-offset_left = 578.0
-offset_right = 658.0
+offset_left = 746.0
+offset_right = 826.0
 offset_bottom = 80.0
 texture_normal = ExtResource("3_p43ua")
 ignore_texture_size = true
@@ -105,8 +122,9 @@ texture_normal = ExtResource("3_lok7c")
 ignore_texture_size = true
 stretch_mode = 0
 
-[connection signal="pressed" from="StickyTileWrapper/StickyTileButton" to="." method="_on_sticky_tile_button_pressed"]
-[connection signal="pressed" from="SlopeTileWrapper/SlopeTileButton" to="." method="_on_slope_tile_button_pressed"]
+[connection signal="pressed" from="MovingObjectWrapper/MovingObjectButton" to="." method="_on_moving_object_button_pressed"]
+[connection signal="pressed" from="StickyTWrapper/StickyTileButton" to="." method="_on_sticky_tile_button_pressed"]
+[connection signal="pressed" from="SlopeObjectWrapper/SlopeObectButton" to="." method="_on_slope_object_button_pressed"]
 [connection signal="pressed" from="OnewayTileWrapper/OnewayTileButton" to="." method="_on_oneway_tile_button_pressed"]
 [connection signal="pressed" from="DeathTileWrapper/DeathTileButton" to="." method="_on_death_tile_button_pressed"]
 [connection signal="pressed" from="SolidTileWrapper/SolidTileButton" to="." method="_on_solid_tile_button_pressed"]

@@ -1,12 +1,13 @@
 [gd_resource type="TileSet" format=3 uid="uid://d1n0acfj67o7r"]
 
-[ext_resource type="Texture2D" uid="uid://bb7ntbfefykop" path="res://Assets/Sprites/Tiles/Solid.png" id="1_00q1o"]
+[ext_resource type="Texture2D" uid="uid://bb7ntbfefykop" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
 [ext_resource type="Texture2D" uid="uid://pjdhb2te74w5" path="res://Assets/Sprites/Tiles/death.png" id="2_cn8lu"]
-[ext_resource type="Texture2D" uid="uid://dmxmkfoute7gj" path="res://Assets/Sprites/Tiles/OneWay.png" id="3_alyph"]
-[ext_resource type="Texture2D" uid="uid://0ytag227enwn" path="res://Assets/Sprites/Tiles/Ice.png" id="4_6ba2f"]
+[ext_resource type="Texture2D" uid="uid://dmxmkfoute7gj" path="res://Assets/Sprites/Tiles/oneway.png" id="3_alyph"]
+[ext_resource type="Texture2D" uid="uid://0ytag227enwn" path="res://Assets/Sprites/Tiles/ice.png" id="4_6ba2f"]
 [ext_resource type="Texture2D" uid="uid://6bkm68b4v1w3" path="res://Assets/Sprites/Tiles/Sticky.png" id="5_8sjof"]
-[ext_resource type="Texture2D" uid="uid://cw3was5c5db7p" path="res://Assets/Sprites/Tiles/Bounce.png" id="6_me1w5"]
-[ext_resource type="Texture2D" uid="uid://dhaaqxr1wx2qb" path="res://Assets/Sprites/Tiles/Slope.png" id="7_jbnof"]
+[ext_resource type="Texture2D" uid="uid://cw3was5c5db7p" path="res://Assets/Sprites/Tiles/bounce.png" id="6_me1w5"]
+[ext_resource type="Texture2D" uid="uid://dhaaqxr1wx2qb" path="res://Assets/Sprites/Tiles/slope.png" id="7_jbnof"]
+[ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="8_cn8lu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rjqkl"]
 texture = ExtResource("1_00q1o")
@@ -65,6 +66,11 @@ texture_region_size = Vector2i(128, 128)
 2:0/0 = 0
 2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, 19.844002, -64, 64, 64, 64)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_alyph"]
+texture = ExtResource("8_cn8lu")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
 [resource]
 tile_size = Vector2i(128, 128)
 physics_layer_0/collision_layer = 1
@@ -83,3 +89,4 @@ sources/2 = SubResource("TileSetAtlasSource_flf07")
 sources/4 = SubResource("TileSetAtlasSource_k73cj")
 sources/5 = SubResource("TileSetAtlasSource_hqns4")
 sources/6 = SubResource("TileSetAtlasSource_x0ka3")
+sources/9 = SubResource("TileSetAtlasSource_alyph")

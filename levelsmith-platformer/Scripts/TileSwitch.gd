@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-@onready var editorManager : Node2D = get_parent().get_parent();
+@onready var editorManager : Node2D = get_parent().get_parent().get_parent();
 
 func _on_solid_tile_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.TileType.SOLID);

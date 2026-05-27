@@ -1,8 +1,9 @@
 [gd_scene format=4 uid="uid://bm5w14jlbl37k"]
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
-[ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
-[ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="3_knx5t"]
+[ext_resource type="PackedScene" path="res://Scenes/EditingState.tscn" id="2_430ed"]
+[ext_resource type="PackedScene" path="res://Scenes/PlayState.tscn" id="3_knx5t"]
+[ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_knx5t"]
 
@@ -31,6 +32,11 @@ script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 gameManager = NodePath("GameManager")
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=101918903 node_paths=PackedStringArray("masterManager", "tileSet")]
+script = ExtResource("4_mg0h4")
+masterManager = NodePath("..")
+tileSet = NodePath("../EditorManager/Tiles")
+
 [node name="EditorManager" parent="." unique_id=2045534837 instance=ExtResource("2_430ed")]
 
 [node name="Tiles" parent="EditorManager" index="0" unique_id=1452837543]
@@ -44,7 +50,7 @@ z_index = 0
 modulate = Color(1, 1, 1, 1)
 collision_enabled = true
 
-[node name="PlayButton" parent="EditorManager" index="3" unique_id=745550610]
+[node name="PlayButton" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="0" unique_id=745550610]
 theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
@@ -60,7 +66,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("3_knx5t")]
 visible = false
 
-[node name="PauseButton" parent="GameManager" index="0" unique_id=1339685622]
+[node name="CanvasLayer" parent="GameManager" index="1" unique_id=1567020351]
+visible = false
+
+[node name="PauseButton" parent="GameManager/CanvasLayer" index="0" unique_id=1339685622]
 theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
@@ -73,7 +82,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
-[node name="ResetButton" parent="GameManager" index="1" unique_id=1815887631]
+[node name="ResetButton" parent="GameManager/CanvasLayer" index="1" unique_id=1815887631]
 theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
@@ -86,8 +95,8 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
-[connection signal="pressed" from="EditorManager/PlayButton" to="." method="play"]
-[connection signal="pressed" from="GameManager/PauseButton" to="." method="edit"]
+[connection signal="pressed" from="EditorManager/CanvasLayer/PlayButton" to="." method="play"]
+[connection signal="pressed" from="GameManager/CanvasLayer/PauseButton" to="." method="edit"]
 
 [editable path="EditorManager"]
 [editable path="GameManager"]

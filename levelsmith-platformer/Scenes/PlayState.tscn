@@ -13,24 +13,6 @@
 script = ExtResource("1_habuo")
 player = NodePath("CharacterBody2D")
 
-[node name="PauseButton" type="Button" parent="." unique_id=1339685622]
-offset_left = 1629.0
-offset_top = 922.0
-offset_right = 1893.0
-offset_bottom = 1058.0
-action_mode = 0
-icon = ExtResource("2_ym18m")
-script = ExtResource("3_4i4ea")
-
-[node name="ResetButton" type="Button" parent="." unique_id=1815887631]
-offset_left = 1352.0
-offset_top = 922.0
-offset_right = 1616.0
-offset_bottom = 1058.0
-action_mode = 0
-icon = ExtResource("4_x53pn")
-script = ExtResource("3_4i4ea")
-
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=887863704]
 position = Vector2(573, 833)
 script = ExtResource("5_o46cv")
@@ -42,4 +24,24 @@ shape = SubResource("CircleShape2D_2riqt")
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=509343174]
 texture = ExtResource("6_4pdbi")
 
-[connection signal="pressed" from="ResetButton" to="." method="reset"]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1567020351]
+
+[node name="PauseButton" type="Button" parent="CanvasLayer" unique_id=1339685622]
+offset_left = 1629.0
+offset_top = 922.0
+offset_right = 1893.0
+offset_bottom = 1058.0
+action_mode = 0
+icon = ExtResource("2_ym18m")
+script = ExtResource("3_4i4ea")
+
+[node name="ResetButton" type="Button" parent="CanvasLayer" unique_id=1815887631]
+offset_left = 1352.0
+offset_top = 922.0
+offset_right = 1616.0
+offset_bottom = 1058.0
+action_mode = 0
+icon = ExtResource("4_x53pn")
+script = ExtResource("3_4i4ea")
+
+[connection signal="pressed" from="CanvasLayer/ResetButton" to="." method="reset"]

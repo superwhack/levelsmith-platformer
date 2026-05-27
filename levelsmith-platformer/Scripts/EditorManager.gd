@@ -4,6 +4,8 @@ extends Node2D
 var currentTool := Global.Tool.BRUSH;
 var brushTile : int;
 var selectedTile : TileData;
+var painting : bool = false;
+var erasing : bool = false;
 
 # References to grid TileMapLayer child nodes
 var tileSet: TileMapLayer;
@@ -34,17 +36,57 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# record the position of the mouse on this frame
 	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
-	
+
 	update_preview_tile(currentMousePosition, prevMousePosition);
-	
-	if (Input.is_action_pressed("left-click")):
-		place_tile(currentMousePosition);
-		
-	if (Input.is_action_pressed("right-click")):
-		delete_tile(currentMousePosition);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
+	
+func _unhandled_input(event: InputEvent) -> void:
+
+	if (event.is_action_pressed("left-click")):
+		painting = true;
+	if (event.is_action_released("left-click")):
+		painting = false;
+		
+	if (event.is_action_pressed("right-click")):
+		erasing = true;
+	if (event.is_action_released("right-click")):
+		erasing = false;
+		
+	if painting:
+		place_tile(currentMousePosition);
+	if erasing:
+		delete_tile(currentMousePosition);
+	
+	
+	
+	if event.is_action_pressed("brush-tool"):
+		change_tool(Global.Tool.BRUSH);
+
+	elif event.is_action_pressed("box-brush-tool"):
+		change_tool(Global.Tool.BOX_BRUSH);
+
+	if event.is_action_pressed("cursor-tool"):
+		change_tool(Global.Tool.CURSOR);
+		
+	elif event.is_action_pressed("first-select"):
+		change_tile(Global.TileType.SOLID);
+		
+	elif event.is_action_pressed("second-select"):
+		change_tile(Global.TileType.ONEWAY);
+		
+	elif event.is_action_pressed("third-select"):
+		change_tile(Global.TileType.DEATH);
+		
+	elif event.is_action_pressed("fourth-select"):
+		change_tile(Global.TileType.ICE);
+		
+	elif event.is_action_pressed("fifth-select"):
+		change_tile(Global.TileType.STICKY);
+		
+	elif event.is_action_pressed("sixth-select"):
+		change_tile(Global.TileType.BOUNCE);
 
 ## Places down the current brushing tile at the clicked position.
 ## position: Where the mouse is during the click.
@@ -74,8 +116,11 @@ func move_tile() -> void:
 func update_brush_tile(tileId: int) -> void:
 	print("a");
 
-## 
+## Hooks the preview tile to the mouse position and moves it when necessary
+## mousePosition: Where the mouse currently is in grid coordinates
+## prevMousePosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
+	
 	previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	
 	# Preview tile will appear red if not in a placeable area.
@@ -86,8 +131,16 @@ func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> 
 
 # Change the selected tool to the clicked on tool.
 func change_tool(tool: Global.Tool) -> void:
+	if currentTool == tool:
+		return;
+	
 	currentTool = tool;
+	
+	print("Current Tool: ", currentTool);
 
+func change_tile(tile: Global.TileType) -> void:
+	brushTile = tile;
+	
 ## Converts the mouse's position into grid coordinates.
 ## mousePosition: Where the cursor currently is in world space.
 ## returns: The grid-coordinate equivalent of the position.

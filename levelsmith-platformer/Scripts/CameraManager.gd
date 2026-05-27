@@ -1,5 +1,7 @@
 extends Camera2D;
 
+@export var masterManager: Node
+
 # Camera movement settings
 @export var moveSpeed: float = 500.0;
 @export var edgeScrollSpeed: float = 800.0;
@@ -14,9 +16,6 @@ extends Camera2D;
 @export var tileSet: TileMapLayer
 var level_bounds: Rect2
 
-# Current game state
-var gameState: Global.State = Global.State.EDIT;
-
 # Reference to player
 var playerReference: CharacterBody2D = null;
 
@@ -24,7 +23,6 @@ var playerReference: CharacterBody2D = null;
 ## Initializes the camera
 func _ready() -> void:
 	make_current();
-	
 	# Center camera on rect2 of the entire level
 	level_bounds = get_level_bounds()
 	position = level_bounds.get_center()
@@ -38,7 +36,11 @@ func _input(event):
 
 ## Processes camera logic every frame
 func _process(delta: float) -> void:
-	match gameState:
+	var state = masterManager.state
+
+	print("RUNNING STATE:", state)
+
+	match state:
 
 		Global.State.EDIT:
 			process_build_camera(delta)
@@ -52,7 +54,7 @@ func _process(delta: float) -> void:
 ## Changes the current camera state
 ## newState: New camera state
 func set_state(newState: Global.State) -> void:
-	gameState = newState;
+	masterManager.state = newState;
 
 
 ## Assigns the player reference
@@ -63,16 +65,17 @@ func set_player(newPlayerReference: CharacterBody2D) -> void:
 
 ## Processes editor camera keypress movement
 func process_build_camera(delta: float) -> void:
+	if masterManager.state != Global.State.EDIT:
+		return
+	var inputVector: Vector2 = Vector2.ZERO;
 
-	#var inputVector: Vector2 = Vector2.ZERO;
-#
-	#inputVector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left");
-#
-	#inputVector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up");
-#
-	## Keyboard movement
-	#if inputVector != Vector2.ZERO:
-		#position += inputVector.normalized() * moveSpeed * delta;
+	inputVector.x = Input.get_action_strength("right") - Input.get_action_strength("left");
+
+	inputVector.y = Input.get_action_strength("down") - Input.get_action_strength("up");
+
+	# Keyboard movement
+	if inputVector != Vector2.ZERO:
+		position += inputVector.normalized() * moveSpeed * delta;
 
 	process_edge_scrolling(delta);
 
@@ -133,6 +136,9 @@ func process_zoom(zoomAmount: float) -> void:
 	);
 
 func process_zoom_input() -> void:
+	if masterManager.state != Global.State.EDIT:
+		return
+
 	if (Input.is_action_just_pressed("zoom_in")):
 		process_zoom(zoomSpeed)
 

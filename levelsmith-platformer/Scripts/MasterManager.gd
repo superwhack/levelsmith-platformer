@@ -1,7 +1,7 @@
 extends Node2D
 
 # State variable to represent the state the game is currently in
-var state : Global.State = Global.State.PLAY;
+var state : Global.State = Global.State.EDIT;
 
 # References to both state managers
 @export var editorManager : Node2D;

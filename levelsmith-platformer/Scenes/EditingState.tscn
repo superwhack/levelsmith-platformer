@@ -61,13 +61,14 @@ icon = ExtResource("10_njgpr")
 script = ExtResource("11_klveo")
 
 [node name="ToolContainer" type="HBoxContainer" parent="." unique_id=2095469909]
+z_index = 2
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_constants/separation = 88
 
 [node name="ToolSwitch" parent="ToolContainer" unique_id=1469240724 instance=ExtResource("6_iws6f")]
-z_index = 2
 layout_mode = 2
+focus_behavior_recursive = 0
 
-[node name="Control" parent="ToolContainer" unique_id=959816093 instance=ExtResource("7_qupls")]
+[node name="TileSwitch" parent="ToolContainer" unique_id=959816093 instance=ExtResource("7_qupls")]
 layout_mode = 2

@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bm5w14jlbl37k"]
+[gd_scene format=3 uid="uid://x3p2agsoewa8"]
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
@@ -39,7 +39,7 @@ texture = ExtResource("6_8fjml")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
-0:0/0/custom_data_1 = 3.0
+0:0/0/custom_data_1 = 0.3
 0:0/0/custom_data_3 = "ice"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k73cj"]
@@ -145,6 +145,7 @@ z_index = 0
 modulate = Color(1, 1, 1, 1)
 tile_set = SubResource("TileSet_d2bti")
 collision_enabled = true
+
 [node name="PlayButton" parent="EditorManager" index="3" unique_id=745550610]
 theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")

@@ -96,11 +96,11 @@ func detect_tile() -> void:
 		var collision := get_slide_collision(i);
 		var collider := collision.get_collider();
 		# Only have collisions confer effects if they are below the player
-		if collider is TileMapLayer and collision.get_position().y > self.get_position().y + 63:
+		if collider is TileMapLayer:
 			# Use the global coord to find tile collision
 			var tilePos = collider.local_to_map(collider.to_local(collision.get_position()));
 			var tileData = collider.get_cell_tile_data(tilePos);
-			if tileData:
+			if tileData and (tileData.get_custom_data("name") == "hazard" or collision.get_position().y > self.get_position().y + 63):
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):
 					# Bounce the player up

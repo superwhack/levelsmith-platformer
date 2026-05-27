@@ -2,18 +2,24 @@ extends HBoxContainer
 
 @onready var editorManager : Node2D = get_parent().get_parent();
 
-@export var movingButton : TextureButton;
-@export var slopeButton : TextureButton;
+var objectButtons: Array[Control] = [];
+
+# NOTE: These get_child calls will have to change once all buttons are in
+func _ready() -> void:
+	objectButtons.resize(3);
+	objectButtons[0] = get_child(6);
+	objectButtons[1] = get_child(7);
+	objectButtons[2] = get_child(8);
 
 ## Set objects to be transparent when the cursor is selected
 ## selected: True if the cursor is selected
 func cursorSelected(selected: bool) -> void:
 	if !selected:
-		movingButton.modulate = Color(1, 1, 1, 0.5);
-		slopeButton.modulate = Color(1, 1, 1, 0.5);
+		for objectButton in objectButtons:
+			objectButton.modulate = Color(1, 1, 1, 0.5);
 	else:
-		movingButton.modulate = Color(1, 1, 1, 1);
-		slopeButton.modulate = Color(1, 1, 1, 1);
+		for objectButton in objectButtons:
+			objectButton.modulate = Color(1, 1, 1, 1);
 
 # Tile Buttons
 func _on_solid_tile_button_pressed() -> void:
@@ -37,6 +43,9 @@ func _on_bounce_tile_button_pressed() -> void:
 # Object Buttons
 func _on_slope_object_button_pressed() -> void:
 	editorManager.change_tile(Global.ObjectType.SLOPE);
+	
+func _on_spawn_object_button_pressed() -> void:
+	editorManager.change_tile(Global.ObjectType.SPAWN);
 
 func _on_moving_object_button_pressed() -> void:
 	editorManager.change_tile(Global.ObjectType.MOVING);

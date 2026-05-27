@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://x3p2agsoewa8"]
+[gd_scene format=4 uid="uid://x3p2agsoewa8"]
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]

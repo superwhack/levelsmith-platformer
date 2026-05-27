@@ -11,7 +11,7 @@ extends Camera2D;
 @export var zoomSpeed: float = 0.1;
 @export var maxZoomOut: float = 0.5;
 @export var maxZoomIn: float = 3.0;
-@export var playZoom: float = 1.5;
+@export var playZoom: float = 0.5;
 
 # Tilemap bound
 @export var tileSet: TileMapLayer

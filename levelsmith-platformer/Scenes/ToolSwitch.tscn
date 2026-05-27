@@ -17,6 +17,7 @@ anchor_right = 0.12900001
 anchor_bottom = 0.07700001
 offset_right = -79.68002
 offset_bottom = -2.1600113
+focus_behavior_recursive = 1
 theme_override_constants/separation = 84
 script = ExtResource("1_8le6k")
 

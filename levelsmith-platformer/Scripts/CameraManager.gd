@@ -11,6 +11,7 @@ extends Camera2D;
 @export var zoomSpeed: float = 0.1;
 @export var maxZoomOut: float = 0.5;
 @export var maxZoomIn: float = 3.0;
+@export var playZoom: float = 1.5;
 
 # Tilemap bound
 @export var tileSet: TileMapLayer
@@ -25,7 +26,7 @@ func _ready() -> void:
 	make_current();
 	# Center camera on rect2 of the entire level
 	level_bounds = get_level_bounds()
-	position = level_bounds.get_center()
+	global_position = level_bounds.get_center()
 
 	# Start zoomed out
 	zoom = Vector2.ONE * maxZoomOut;
@@ -49,6 +50,7 @@ func _process(delta: float) -> void:
 
 		Global.State.PLAY:
 			process_player_camera(delta)
+			zoom = Vector2.ONE * playZoom
 
 
 ## Changes the current camera state
@@ -75,7 +77,7 @@ func process_build_camera(delta: float) -> void:
 
 	# Keyboard movement
 	if inputVector != Vector2.ZERO:
-		position += inputVector.normalized() * moveSpeed * delta;
+		global_position += inputVector.normalized() * moveSpeed * delta;
 
 	process_edge_scrolling(delta);
 
@@ -105,7 +107,7 @@ func process_edge_scrolling(delta: float) -> void:
 		edgeMovement.y += 1.0;
 
 	if edgeMovement != Vector2.ZERO:
-		position += edgeMovement.normalized() * edgeScrollSpeed * delta;
+		global_position += edgeMovement.normalized() * edgeScrollSpeed * delta;
 
 
 ## Processes player follow camera(not tested yet)
@@ -160,14 +162,14 @@ func get_level_bounds() -> Rect2:
 func clamp_camera_to_level() -> void:
 	var half_screen: Vector2 = get_viewport_rect().size * 0.5 * zoom
 
-	position.x = clamp(
-		position.x,
+	global_position.x = clamp(
+		global_position.x,
 		level_bounds.position.x + half_screen.x,
 		level_bounds.position.x + level_bounds.size.x - half_screen.x
 	)
 
-	position.y = clamp(
-		position.y,
+	global_position.y = clamp(
+		global_position.y,
 		level_bounds.position.y + half_screen.y,
 		level_bounds.position.y + level_bounds.size.y - half_screen.y
 	)

@@ -106,6 +106,28 @@ physics_layer_2/collision_layer = 4
 physics_layer_2/collision_mask = 4
 physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_knx5t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mg0h4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ggjfv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i0d1j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64b2s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8vbpr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gojh1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0vixy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4q5nt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iwvbt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8fjml"]
+
 [node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "gameManager")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
@@ -123,9 +145,47 @@ z_index = 0
 modulate = Color(1, 1, 1, 1)
 tile_set = SubResource("TileSet_d2bti")
 collision_enabled = true
+[node name="PlayButton" parent="EditorManager" index="3" unique_id=745550610]
+theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_i0d1j")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_64b2s")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8vbpr")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_gojh1")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0vixy")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("3_knx5t")]
 visible = false
+
+[node name="PauseButton" parent="GameManager" index="0" unique_id=1339685622]
+theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_i0d1j")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_64b2s")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8vbpr")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_gojh1")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0vixy")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
+
+[node name="ResetButton" parent="GameManager" index="1" unique_id=1815887631]
+theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_i0d1j")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_64b2s")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8vbpr")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_gojh1")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0vixy")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
 [connection signal="pressed" from="EditorManager/PlayButton" to="." method="play"]
 [connection signal="pressed" from="GameManager/PauseButton" to="." method="edit"]

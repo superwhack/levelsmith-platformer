@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhaaqxr1wx2qb"
-path="res://.godot/imported/slope.png-89b66b98dbab0084cc5e23578a036d6a.ctex"
+uid="uid://cnb3a68lkiwgq"
+path="res://.godot/imported/baddude.png-1a08a0de46257a6528ca7dd9153232ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Tiles/slope.png"
-dest_files=["res://.godot/imported/slope.png-89b66b98dbab0084cc5e23578a036d6a.ctex"]
+source_file="res://Assets/Sprites/Entities/baddude.png"
+dest_files=["res://.godot/imported/baddude.png-1a08a0de46257a6528ca7dd9153232ee.ctex"]
 
 [params]
 

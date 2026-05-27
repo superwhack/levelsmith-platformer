@@ -50,7 +50,9 @@ modulate = Color(1, 1, 1, 0.5058824)
 tile_set = ExtResource("2_8t3j3")
 collision_enabled = false
 
-[node name="PlayButton" type="Button" parent="." unique_id=745550610]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
+
+[node name="PlayButton" type="Button" parent="CanvasLayer" unique_id=745550610]
 z_index = 2
 offset_left = 1629.0
 offset_top = 922.0
@@ -60,15 +62,15 @@ action_mode = 0
 icon = ExtResource("10_njgpr")
 script = ExtResource("11_klveo")
 
-[node name="ToolContainer" type="HBoxContainer" parent="." unique_id=2095469909]
+[node name="ToolContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=2095469909]
 z_index = 2
-offset_right = 40.0
+offset_right = 280.0
 offset_bottom = 40.0
 theme_override_constants/separation = 88
 
-[node name="ToolSwitch" parent="ToolContainer" unique_id=1469240724 instance=ExtResource("6_iws6f")]
+[node name="ToolSwitch" parent="CanvasLayer/ToolContainer" unique_id=1469240724 instance=ExtResource("6_iws6f")]
 layout_mode = 2
 focus_behavior_recursive = 0
 
-[node name="TileSwitch" parent="ToolContainer" unique_id=959816093 instance=ExtResource("7_qupls")]
+[node name="TileSwitch" parent="CanvasLayer/ToolContainer" unique_id=959816093 instance=ExtResource("7_qupls")]
 layout_mode = 2

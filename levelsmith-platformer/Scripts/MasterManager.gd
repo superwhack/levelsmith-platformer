@@ -17,7 +17,9 @@ func edit() -> void:
 	state = Global.State.EDIT;
 	# Change scene to edit scene
 	gameManager.hide();
+	gameManager.get_node("CanvasLayer").hide();
 	editorManager.show();
+	editorManager.get_node("CanvasLayer").show()
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
 
@@ -30,7 +32,9 @@ func play() -> void:
 	save_tilemap();
 	# Change scene to play 
 	gameManager.show();
+	gameManager.get_node("CanvasLayer").show()
 	editorManager.hide();
+	editorManager.get_node("CanvasLayer").hide();
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Load map

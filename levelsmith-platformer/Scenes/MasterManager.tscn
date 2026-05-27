@@ -42,7 +42,10 @@ tileSet = NodePath("../EditorManager/Tiles")
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("3_knx5t")]
 visible = false
 
-[node name="PauseButton" parent="GameManager" index="0" unique_id=1339685622]
+[node name="CanvasLayer" parent="GameManager" index="1" unique_id=1567020351]
+visible = false
+
+[node name="PauseButton" parent="GameManager/CanvasLayer" index="0" unique_id=1339685622]
 theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
@@ -55,7 +58,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
-[node name="ResetButton" parent="GameManager" index="1" unique_id=1815887631]
+[node name="ResetButton" parent="GameManager/CanvasLayer" index="1" unique_id=1815887631]
 theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
@@ -68,8 +71,8 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
-[connection signal="pressed" from="EditorManager/PlayButton" to="." method="play"]
-[connection signal="pressed" from="GameManager/PauseButton" to="." method="edit"]
+[connection signal="pressed" from="EditorManager/CanvasLayer/PlayButton" to="." method="play"]
+[connection signal="pressed" from="GameManager/CanvasLayer/PauseButton" to="." method="edit"]
 
 [editable path="EditorManager"]
 [editable path="GameManager"]

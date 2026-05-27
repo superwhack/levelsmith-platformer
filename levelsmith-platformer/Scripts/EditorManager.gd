@@ -71,22 +71,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		change_tool(Global.Tool.CURSOR);
 		
 	elif event.is_action_pressed("first-select"):
-		change_tile(Global.TileType.SOLID);
+		update_brush_tile(Global.TileType.SOLID);
 		
 	elif event.is_action_pressed("second-select"):
-		change_tile(Global.TileType.ONEWAY);
+		update_brush_tile(Global.TileType.ONEWAY);
 		
 	elif event.is_action_pressed("third-select"):
-		change_tile(Global.TileType.DEATH);
+		update_brush_tile(Global.TileType.DEATH);
 		
 	elif event.is_action_pressed("fourth-select"):
-		change_tile(Global.TileType.ICE);
+		update_brush_tile(Global.TileType.ICE);
 		
 	elif event.is_action_pressed("fifth-select"):
-		change_tile(Global.TileType.STICKY);
+		update_brush_tile(Global.TileType.STICKY);
 		
 	elif event.is_action_pressed("sixth-select"):
-		change_tile(Global.TileType.BOUNCE);
+		update_brush_tile(Global.TileType.BOUNCE);
 
 ## Places down the current brushing tile at the clicked position.
 ## position: Where the mouse is during the click.
@@ -113,8 +113,10 @@ func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
 func move_tile() -> void:
 	print("a");
 
-func update_brush_tile(tileId: int) -> void:
-	print("a");
+## Changes the brush tile.
+## tile: The tile source id to swap to
+func update_brush_tile(tile: Global.TileType) -> void:
+	brushTile = tile;
 
 ## Hooks the preview tile to the mouse position and moves it when necessary
 ## mousePosition: Where the mouse currently is in grid coordinates
@@ -137,9 +139,6 @@ func change_tool(tool: Global.Tool) -> void:
 	currentTool = tool;
 	
 	print("Current Tool: ", currentTool);
-
-func change_tile(tile: Global.TileType) -> void:
-	brushTile = tile;
 	
 ## Converts the mouse's position into grid coordinates.
 ## mousePosition: Where the cursor currently is in world space.

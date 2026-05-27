@@ -39,6 +39,9 @@ func _process(_delta: float) -> void:
 
 	update_preview_tile(currentMousePosition, prevMousePosition);
 	
+	# save the mouse position to the previous frame
+	prevMousePosition = currentMousePosition;
+	
 func _unhandled_input(event: InputEvent) -> void:
 
 	if (event.is_action_pressed("left-click")):
@@ -56,8 +59,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if erasing:
 		delete_tile(currentMousePosition);
 	
-	# save the mouse position to the previous frame
-	prevMousePosition = currentMousePosition;
+	
 	
 	if event.is_action_pressed("brush-tool"):
 		change_tool(Global.Tool.BRUSH);
@@ -116,6 +118,7 @@ func update_brush_tile(tileId: int) -> void:
 
 ## 
 func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
+	
 	previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	
 	# Preview tile will appear red if not in a placeable area.

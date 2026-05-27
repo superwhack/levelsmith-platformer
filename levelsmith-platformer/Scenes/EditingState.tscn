@@ -1,9 +1,7 @@
 [gd_scene format=4 uid="uid://dgg6vutiewgw2"]
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/EditorManager.gd" id="1_3goer"]
-
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
-
 [ext_resource type="Texture2D" uid="uid://cwhg3tjyytxee" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Texture2D" uid="uid://4a45jwvowkli" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
 [ext_resource type="Script" uid="uid://kl326f6vn6r8" path="res://Scripts/SceneSwap.gd" id="11_klveo"]

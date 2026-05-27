@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhaaqxr1wx2qb"
-path="res://.godot/imported/Slope.png-dbb25393754d2e2157ddf0536592dd64.ctex"
+uid="uid://c3b06aes25hko"
+path="res://.godot/imported/BrushToolButton-hover.png-36e7508406f4384064d72ad016bb202e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Tiles/Slope.png"
-dest_files=["res://.godot/imported/Slope.png-dbb25393754d2e2157ddf0536592dd64.ctex"]
+source_file="res://Assets/UserInterface/Buttons/BrushToolButton-hover.png"
+dest_files=["res://.godot/imported/BrushToolButton-hover.png-36e7508406f4384064d72ad016bb202e.ctex"]
 
 [params]
 

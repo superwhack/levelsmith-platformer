@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhaaqxr1wx2qb"
-path="res://.godot/imported/Slope.png-dbb25393754d2e2157ddf0536592dd64.ctex"
+uid="uid://dq4hioof5em02"
+path="res://.godot/imported/CursorToolButton-pressed.png-359962fcec6a6d6df13e93b15fdd9af5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Tiles/Slope.png"
-dest_files=["res://.godot/imported/Slope.png-dbb25393754d2e2157ddf0536592dd64.ctex"]
+source_file="res://Assets/UserInterface/Buttons/CursorToolButton-pressed.png"
+dest_files=["res://.godot/imported/CursorToolButton-pressed.png-359962fcec6a6d6df13e93b15fdd9af5.ctex"]
 
 [params]
 

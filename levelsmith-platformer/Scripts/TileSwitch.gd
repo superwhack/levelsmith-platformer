@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-@export var editorManager : Node2D = get_parent();
+@onready var editorManager : Node2D = get_parent().get_parent();
 
 func _on_solid_tile_button_pressed() -> void:
 	editorManager.change_tile(Global.TileType.SOLID);

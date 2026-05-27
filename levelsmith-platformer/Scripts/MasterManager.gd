@@ -51,7 +51,7 @@ func save_tilemap() -> void:
 	# Pack the node to save as a scene
 	scene.pack(nodeToSave)
 	# Save that scene to the resource folder
-	ResourceSaver.save(scene, "res://Scenes/SavedTileMap.tscn");
+	ResourceSaver.save(scene, "user://SavedTileMap.tscn");
 
 ## Loads the tilemap from the resource folder
 func load_tilemap() -> void:
@@ -60,7 +60,7 @@ func load_tilemap() -> void:
 		gameManager.remove_child(loadedMap);
 		loadedMap.queue_free();
 	# Load the saved map from the resource folder
-	var savedMap = load("res://Scenes/SavedTileMap.tscn");
+	var savedMap = load("user://SavedTileMap.tscn");
 	# Instantiate the map as a scene instance
 	var sceneInstance = savedMap.instantiate();
 	# Add that instance to the top of the GameManager's hierarchy

@@ -1,8 +1,9 @@
-[gd_scene format=3 uid="uid://bm5w14jlbl37k"]
+[gd_scene format=3 uid="uid://7sg83sp4l2m6"]
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
-[ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
-[ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="3_knx5t"]
+[ext_resource type="PackedScene" path="res://Scenes/EditingState.tscn" id="2_430ed"]
+[ext_resource type="PackedScene" path="res://Scenes/PlayState.tscn" id="3_knx5t"]
+[ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_knx5t"]
 
@@ -30,6 +31,10 @@
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 gameManager = NodePath("GameManager")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2016211963 node_paths=PackedStringArray("tileSet")]
+script = ExtResource("4_mg0h4")
+tileSet = NodePath("../EditorManager/Tiles")
 
 [node name="EditorManager" parent="." unique_id=2045534837 instance=ExtResource("2_430ed")]
 

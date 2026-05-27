@@ -1,10 +1,5 @@
 extends Camera2D;
 
-enum State {
-	EDIT,
-	PLAY
-}
-
 # Camera movement settings
 @export var moveSpeed: float = 500.0;
 @export var edgeScrollSpeed: float = 800.0;
@@ -20,7 +15,7 @@ enum State {
 var level_bounds: Rect2
 
 # Current game state
-var gameState: State = State.EDIT;
+var gameState: Global.State = Global.State.EDIT;
 
 # Reference to player
 var playerReference: CharacterBody2D = null;
@@ -43,28 +38,20 @@ func _input(event):
 
 ## Processes camera logic every frame
 func _process(delta: float) -> void:
-
 	match gameState:
 
-		State.EDIT:
+		Global.State.EDIT:
 			process_build_camera(delta)
+			process_zoom_input()
+			clamp_camera_to_level()
 
-			#var zoom_dir: float = 0.0
-			if (Input.is_action_just_pressed("zoom_in")):
-				process_zoom(zoomSpeed)
-
-			if (Input.is_action_just_pressed("zoom_out")):
-				process_zoom(-zoomSpeed)
-
-		State.PLAY:
+		Global.State.PLAY:
 			process_player_camera(delta)
-
-	clamp_camera_to_level()
 
 
 ## Changes the current camera state
 ## newState: New camera state
-func set_state(newState: State) -> void:
+func set_state(newState: Global.State) -> void:
 	gameState = newState;
 
 
@@ -119,12 +106,12 @@ func process_edge_scrolling(delta: float) -> void:
 
 
 ## Processes player follow camera(not tested yet)
-func process_player_camera(delta: float) -> void:
+func process_player_camera(_delta: float) -> void:
 
 	if playerReference == null:
 		return;
 
-	position = playerReference.global_position;
+	global_position = playerReference.global_position;
 
 
 ## Adjusts camera zoom
@@ -144,6 +131,13 @@ func process_zoom(zoomAmount: float) -> void:
 		maxZoomOut,
 		maxZoomIn
 	);
+
+func process_zoom_input() -> void:
+	if (Input.is_action_just_pressed("zoom_in")):
+		process_zoom(zoomSpeed)
+
+	if (Input.is_action_just_pressed("zoom_out")):
+		process_zoom(-zoomSpeed)
 
 ## Calculates the world-space bounding rectangle of all occupied tiles in the TileMapLayer
 ## Returns a Rect2 in global coordinates representing the level's outer boundaries

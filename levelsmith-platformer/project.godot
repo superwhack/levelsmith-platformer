@@ -12,6 +12,8 @@ config_version=5
 
 config/name="levelsmith-platformer"
 run/main_scene="uid://bm5w14jlbl37k"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="Levelsmith Labs"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

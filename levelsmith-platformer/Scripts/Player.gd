@@ -48,7 +48,7 @@ func _physics_process(delta: float) -> void:
 ## Make the player jump
 func jump() -> void:
 	 #if is_on_floor():
-	velocity.y = -jumpHeight * 300 * currentSlowdown;
+	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
 ## amount: damage to deal

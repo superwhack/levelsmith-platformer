@@ -25,6 +25,10 @@ Global="*uid://ddgi8vrr1tdwj"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 
+[global_group]
+
+Player="Objects that have _physics_process"
+
 [input]
 
 right={

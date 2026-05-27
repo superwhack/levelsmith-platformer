@@ -101,9 +101,10 @@ layout_mode = 2
 
 [node name="SlopeObectButton" type="TextureButton" parent="SlopeObjectWrapper" unique_id=1746073645]
 layout_mode = 0
-offset_left = 746.0
-offset_right = 826.0
-offset_bottom = 80.0
+offset_left = 774.0
+offset_top = 1.0
+offset_right = 854.0
+offset_bottom = 81.0
 texture_normal = ExtResource("3_p43ua")
 ignore_texture_size = true
 stretch_mode = 0

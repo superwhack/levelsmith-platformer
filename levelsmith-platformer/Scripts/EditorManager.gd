@@ -114,9 +114,18 @@ func place_tile(clickPosition: Vector2) -> void:
 	# If the cell is already of the same type, or if the cell is occupied by an object, don't overwrite
 	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > 5): 
 		return;
-	
 	tileSet.erase_cell(clickPosition);
-	tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
+	if (brushTile == 8 && playerSpawnPosition == Vector2(-1,-1)):
+		playerSpawnPosition = clickPosition;
+		tileSet.set_cell(clickPosition, 8, Vector2i.ZERO, 1);
+		await get_tree().process_frame;
+		get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
+		get_tree().get_first_node_in_group("Player").remove_from_group("Player");
+	else:
+		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
+
+func getSpawn() -> Vector2:
+	return playerSpawnPosition;
 
 func place_object(clickPosition: Vector2) -> void:
 	print("a");
@@ -124,6 +133,8 @@ func place_object(clickPosition: Vector2) -> void:
 ## Deletes a tile at the clicked position.
 ## position: Where the mouse is during the click.
 func delete_tile(clickPosition: Vector2) -> void:
+	if (tileSet.get_cell_source_id(clickPosition) == 8):
+		playerSpawnPosition = Vector2(-1, -1);
 	tileSet.erase_cell(clickPosition);
 
 func select_tile(clickPosition: Vector2) -> void:
@@ -142,8 +153,11 @@ func update_brush_tile(tileId: int) -> void:
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevMousePosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
-	
-	previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
+	if (brushTile == 8):
+		previewTileMap.set_cell(mousePosition, 8, Vector2i.ZERO, 1);
+		get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED)
+	else:
+		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	
 	# Preview tile will appear red if not in a placeable area.
 	previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)

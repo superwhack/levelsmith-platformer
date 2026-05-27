@@ -10,19 +10,25 @@ var state : Global.State = Global.State.PLAY;
 # Map that is currently loaded in the Play scene
 var loadedMap : TileMapLayer;
 
+func _ready() -> void:
+	edit();
+
 ## Swap to edit state
 func edit() -> void:
 	print("Edit")
+	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED)
 	# Update state variable
 	state = Global.State.EDIT;
 	# Change scene to edit scene
 	gameManager.hide();
+	gameManager.reset();
 	editorManager.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
 
 ## Swap to play
 func play() -> void:
+	print(get_tree().get_node_count_in_group("Player"))
 	print("Play")
 	# Update state variable
 	state = Global.State.PLAY;
@@ -30,6 +36,7 @@ func play() -> void:
 	save_tilemap();
 	# Change scene to play 
 	gameManager.show();
+	gameManager.start();
 	editorManager.hide();
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;

@@ -116,7 +116,9 @@ func move_tile() -> void:
 func update_brush_tile(tileId: int) -> void:
 	print("a");
 
-## 
+## Hooks the preview tile to the mouse position and moves it when necessary
+## mousePosition: Where the mouse currently is in grid coordinates
+## prevMousePosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
 	
 	previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);

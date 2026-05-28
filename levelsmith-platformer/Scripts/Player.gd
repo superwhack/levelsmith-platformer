@@ -13,6 +13,8 @@ var coyoteTimeLeft = coyoteTime;
 # TODO: Impliment animations and use this
 @export var FPS := 24;
 
+var spawnpoint := Vector2(0, 0);
+
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
 const maxHealth := 1;
 var health := maxHealth
@@ -23,6 +25,15 @@ var currentSlowdown := 1.0;
 
 # Speed with constant multiplier and slowdown appended in
 var trueSpeed : float;
+
+func _ready() -> void:
+	Global.playerReset.connect(reset_position);
+
+## Reset the position of the player
+## location: The position to reset to
+func reset_position(location: Vector2):
+	velocity = Vector2(0, 0);
+	set_position(location);
 
 func _physics_process(delta: float) -> void:
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
@@ -48,7 +59,7 @@ func _physics_process(delta: float) -> void:
 ## Make the player jump
 func jump() -> void:
 	 #if is_on_floor():
-	velocity.y = -jumpHeight * 300 * currentSlowdown;
+	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
 ## amount: damage to deal
@@ -82,7 +93,7 @@ func take_damage(amount: int) -> void:
 func die() -> void:
 	# Temporary stand-in for killing the player, should be replaced with actual death logic
 	health = maxHealth;
-	set_position(Vector2(573.0, 833.0));
+	Global.death.emit();
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tile() -> void:

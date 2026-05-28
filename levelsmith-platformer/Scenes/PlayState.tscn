@@ -4,14 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://bhcwugkxroj6k" path="res://Assets/Sprites/UI/pause.png" id="2_ym18m"]
 [ext_resource type="Script" uid="uid://kl326f6vn6r8" path="res://Scripts/SceneSwap.gd" id="3_4i4ea"]
 [ext_resource type="Texture2D" uid="uid://vxojf41vtsbg" path="res://Assets/Sprites/UI/reset.png" id="4_x53pn"]
-[ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Player.gd" id="5_o46cv"]
-[ext_resource type="Texture2D" uid="uid://dglp6ibcolk70" path="res://Assets/Sprites/Entities/dude.png" id="6_4pdbi"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2riqt"]
-
-[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("player")]
+[node name="GameManager" type="Node2D" unique_id=344859815]
 script = ExtResource("1_habuo")
-player = NodePath("CharacterBody2D")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=887863704]
 position = Vector2(573, 833)

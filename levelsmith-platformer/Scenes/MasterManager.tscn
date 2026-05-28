@@ -1,9 +1,10 @@
 [gd_scene format=4 uid="uid://bm5w14jlbl37k"]
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
-[ext_resource type="PackedScene" path="res://Scenes/EditingState.tscn" id="2_430ed"]
-[ext_resource type="PackedScene" path="res://Scenes/PlayState.tscn" id="3_knx5t"]
-[ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
+[ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
+[ext_resource type="PackedScene" uid="uid://hteqvpsk5u0x" path="res://Scenes/PlayScene.tscn" id="3_knx5t"]
+[ext_resource type="Script" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
+[ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/GameManager.gd" id="5_ggjfv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_knx5t"]
 
@@ -63,13 +64,17 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
+[node name="ToolContainer" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=2095469909]
+size_flags_stretch_ratio = 0.0
+
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("3_knx5t")]
 visible = false
+script = ExtResource("5_ggjfv")
 
-[node name="CanvasLayer" parent="GameManager" index="1" unique_id=1567020351]
+[node name="CanvasLayer" parent="GameManager" index="1" unique_id=761710489]
 visible = false
 
-[node name="PauseButton" parent="GameManager/CanvasLayer" index="0" unique_id=1339685622]
+[node name="PauseButton" parent="GameManager/CanvasLayer" index="0" unique_id=2016045018]
 theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
@@ -82,7 +87,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
-[node name="ResetButton" parent="GameManager/CanvasLayer" index="1" unique_id=1815887631]
+[node name="ResetButton" parent="GameManager/CanvasLayer" index="1" unique_id=578432121]
 theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")

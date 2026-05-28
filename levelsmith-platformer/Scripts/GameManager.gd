@@ -9,8 +9,7 @@ enum PlayState {
 var playState := PlayState.PLAY; 
 var goalReached := false;
 
-# Player starting values
-@export var player: CharacterBody2D;
+var player: CharacterBody2D;
 var playerStartingPosition: Vector2;
 
 # When pause is pressed, flip the current state
@@ -24,17 +23,20 @@ func pause_pressed() -> void:
 
 ## Reset the play state, player position as well as all tile positions and information
 func reset() -> void:
-	player.position = playerStartingPosition
-	# TODO: Implement resetting of all parts of the tile map, not just the player.
+	if player:
+		# Send a signal to reset player position
+		Global.playerReset.emit(playerStartingPosition);
+		# TODO: Implement resetting of all parts of the tile map, not just the player.
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func start() -> void:
+	## NOTE: Should figure out how to get this player to match the one the user plays as
+	## right now it doesn't, it doesn't really break anything as far as I'm aware but it might.
+	player = get_tree().get_first_node_in_group("Player")
 	playerStartingPosition = player.position;
-	pass # Replace with function body.
-
+	Global.death.connect(reset);
+	player.process_mode = Node.PROCESS_MODE_INHERIT;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		pause_pressed();
-	pass

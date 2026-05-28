@@ -67,7 +67,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		if currentTool == Global.Tool.BRUSH:
 			place_tile(currentMousePosition);
 		elif currentTool == Global.Tool.CURSOR && event.is_action_pressed("left-click"):
-			place_tile(currentMousePosition); 
+			if (brushTile < 6):
+				place_tile(currentMousePosition); 
+			else:
+				place_object(currentMousePosition); 
 			
 	# Drag erase if the brush is selected, click to remove if cursor is
 	elif erasing:
@@ -116,16 +119,20 @@ func place_tile(clickPosition: Vector2) -> void:
 	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > 5): 
 		return;
 	tileSet.erase_cell(clickPosition);
+	tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
+func getSpawn() -> Vector2:
+	return playerSpawnPosition;
+
+func place_object(clickPosition: Vector2) -> void:
+	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
+		return;
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > 5): 
+		return;
 	if (brushTile == 8 && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
 		tileSet.set_cell(clickPosition, 8, Vector2i.ZERO, 1);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
-func getSpawn() -> Vector2:
-	return playerSpawnPosition;
-
-func place_object(clickPosition: Vector2) -> void:
-	print("a");
 
 ## Deletes a tile at the clicked position.
 ## position: Where the mouse is during the click.

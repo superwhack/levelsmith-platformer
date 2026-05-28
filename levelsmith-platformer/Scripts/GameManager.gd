@@ -27,6 +27,7 @@ func reset() -> void:
 		# Send a signal to reset player position
 		#Global.playerReset.emit(playerStartingPosition);
 		player.position = playerStartingPosition;
+		player.velocity = Vector2(0, 0);
 		# TODO: Implement resetting of all parts of the tile map, not just the player.
 
 func start() -> void:

@@ -30,8 +30,11 @@ func _ready() -> void:
 	previewTileMap = get_child(2);
 	
 	brushTile = Global.TileType.SOLID;
-	print("Height:", get_parent().gridHeight);
-	print("Width:", get_parent().gridWidth);
+	
+	fill_grid_lines();
+	
+	print("Level Height:", get_parent().gridHeight);
+	print("Level Width:", get_parent().gridWidth);
 
 
 ## Runs every frame during the editing state
@@ -94,7 +97,10 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Places down the current brushing tile at the clicked position.
 ## position: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
-	print(get_grid_mouse_position(get_global_mouse_position()));
+	# Returns early if mouse is outside of grid parameters
+	if check_out_of_bounds():
+		return;
+	
 	if (tileSet.get_cell_source_id(clickPosition) == brushTile): return;
 	
 	tileSet.erase_cell(clickPosition);
@@ -128,10 +134,7 @@ func update_brush_tile(tile: Global.TileType) -> void:
 func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
 	
 	# Returns early if mouse is outside of grid parameters
-	if (get_grid_mouse_position(get_global_mouse_position())[0] < -1
-		|| get_grid_mouse_position(get_global_mouse_position())[0] > get_parent().gridHeight
-		|| get_grid_mouse_position(get_global_mouse_position())[1] < -1
-		|| get_grid_mouse_position(get_global_mouse_position())[1] > get_parent().gridWidth):
+	if check_out_of_bounds():
 		return;
 	
 	
@@ -157,3 +160,20 @@ func change_tool(tool: Global.Tool) -> void:
 ## returns: The grid-coordinate equivalent of the position.
 func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 	return tileSet.local_to_map(tileSet.to_local(mousePosition));
+	
+## Checks if the mouse is currently out of bounds
+func check_out_of_bounds() -> bool:
+	if (get_grid_mouse_position(get_global_mouse_position())[0] < -1
+	|| get_grid_mouse_position(get_global_mouse_position())[0] > get_parent().gridHeight
+	|| get_grid_mouse_position(get_global_mouse_position())[1] < -1
+	|| get_grid_mouse_position(get_global_mouse_position())[1] > get_parent().gridWidth):
+		return true;
+	return false;
+	
+## Fills the grid with grid lines tiles
+func fill_grid_lines() -> void:
+	# TODO: The 0,0 position is within the walls of the scene, meaning -1 is
+	# necessary until it is fixed
+	for height in range(-1, get_parent().gridHeight + 1):
+		for width in range(-1, get_parent().gridWidth + 1):
+			gridLines.set_cell(Vector2i(height, width), 1, Vector2i.ZERO);

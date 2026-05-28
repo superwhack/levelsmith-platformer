@@ -179,15 +179,8 @@ func change_tool(tool: Global.Tool) -> void:
 	
 	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
 	if (brushTile > 5 && currentTool != Global.Tool.CURSOR):
-		change_tile(0);
+		update_brush_tile(Global.TileType.SOLID);
 	print("Current Tool: ", currentTool);
-<<<<<<< HEAD
-
-func change_tile(tile: Global.TileType) -> void:
-	if currentTool == Global.Tool.CURSOR || tile < 6:
-		brushTile = tile;
-=======
->>>>>>> origin/main
 	
 ## Converts the mouse's position into grid coordinates.
 ## mousePosition: Where the cursor currently is in world space.

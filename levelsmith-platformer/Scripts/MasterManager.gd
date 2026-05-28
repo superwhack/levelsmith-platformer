@@ -21,11 +21,8 @@ func edit() -> void:
 	state = Global.State.EDIT;
 	# Change scene to edit scene
 	gameManager.hide();
-<<<<<<< HEAD
 	gameManager.reset();
-=======
 	gameManager.get_node("CanvasLayer").hide();
->>>>>>> origin/main
 	editorManager.show();
 	editorManager.get_node("CanvasLayer").show()
 	# Play the editor manager
@@ -40,11 +37,8 @@ func play() -> void:
 	save_tilemap();
 	# Change scene to play 
 	gameManager.show();
-<<<<<<< HEAD
 	gameManager.start();
-=======
 	gameManager.get_node("CanvasLayer").show()
->>>>>>> origin/main
 	editorManager.hide();
 	editorManager.get_node("CanvasLayer").hide();
 	# Pause the editor manager

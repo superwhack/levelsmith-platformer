@@ -1,35 +1,10 @@
 [gd_scene format=3 uid="uid://ducjve3v3e02u"]
 
-[ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_dly0u"]
-[ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/GameManager.gd" id="2_yamew"]
-[ext_resource type="Texture2D" uid="uid://bhcwugkxroj6k" path="res://Assets/Sprites/UI/pause.png" id="3_ennkr"]
+[ext_resource type="Texture2D" uid="uid://0tp3tr2xeug0" path="res://Assets/Sprites/UI/pause.png" id="3_ennkr"]
 [ext_resource type="Script" uid="uid://kl326f6vn6r8" path="res://Scripts/SceneSwap.gd" id="4_i7ohh"]
-[ext_resource type="Texture2D" uid="uid://vxojf41vtsbg" path="res://Assets/Sprites/UI/reset.png" id="5_ubck0"]
-[ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Player.gd" id="6_km2lw"]
-[ext_resource type="Texture2D" uid="uid://dglp6ibcolk70" path="res://Assets/Sprites/Entities/dude.png" id="7_qkcup"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_5lpdq"]
+[ext_resource type="Texture2D" uid="uid://s8voaudouj61" path="res://Assets/Sprites/UI/reset.png" id="5_ubck0"]
 
 [node name="PlayScene" type="Node2D" unique_id=1980426325]
-
-[node name="MasterManager" type="Node2D" parent="." unique_id=1312191501]
-script = ExtResource("1_dly0u")
-
-[node name="GameManager" type="Node2D" parent="." unique_id=2046959520]
-process_mode = 3
-position = Vector2(1352, 922)
-script = ExtResource("2_yamew")
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=671008360]
-position = Vector2(573, 833)
-script = ExtResource("6_km2lw")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1147603190]
-scale = Vector2(6.3, 6.3)
-shape = SubResource("CircleShape2D_5lpdq")
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1187115549]
-texture = ExtResource("7_qkcup")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=761710489]
 
@@ -50,6 +25,3 @@ offset_bottom = 1058.0
 action_mode = 0
 icon = ExtResource("5_ubck0")
 script = ExtResource("4_i7ohh")
-
-[connection signal="pressed" from="CanvasLayer/PauseButton" to="MasterManager" method="edit"]
-[connection signal="pressed" from="CanvasLayer/ResetButton" to="GameManager" method="reset"]

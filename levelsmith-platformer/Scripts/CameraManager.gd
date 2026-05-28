@@ -46,6 +46,8 @@ func _process(delta: float) -> void:
 	match state:
 
 		Global.State.EDIT:
+			playerReference = null;
+			searchForPlayer = true;
 			process_build_camera(delta)
 			process_zoom_input()
 			clamp_camera_to_level()
@@ -63,7 +65,7 @@ func try_find_player() -> void:
 	if !searchForPlayer:
 		return
 
-	playerReference = get_tree().get_first_node_in_group("player") as CharacterBody2D
+	playerReference = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1] as CharacterBody2D
 
 	if playerReference != null:
 		print("From CameraManager: player found")

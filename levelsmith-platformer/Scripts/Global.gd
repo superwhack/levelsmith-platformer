@@ -1,5 +1,8 @@
 extends Node
 
+# A signal for when the player dies
+signal death;
+
 # Application State
 enum State {
 	EDIT,

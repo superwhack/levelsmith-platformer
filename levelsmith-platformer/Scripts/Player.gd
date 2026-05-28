@@ -84,12 +84,7 @@ func take_damage(amount: int) -> void:
 func die() -> void:
 	# Temporary stand-in for killing the player, should be replaced with actual death logic
 	health = maxHealth;
-	print(spawnpoint);
-	set_position(spawnpoint);
-	
-func set_start(point: Vector2) -> void:
-	spawnpoint = point;
-	print(spawnpoint);
+	Global.death.emit();
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tile() -> void:

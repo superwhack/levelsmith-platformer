@@ -71,7 +71,9 @@ size_flags_stretch_ratio = 0.0
 visible = false
 script = ExtResource("5_ggjfv")
 
-[node name="CanvasLayer" parent="GameManager" index="1" unique_id=761710489]
+[node name="CharacterBody2D" parent="GameManager" index="0" unique_id=887863704 groups=["player"]]
+
+[node name="CanvasLayer" parent="GameManager" index="1" unique_id=1567020351]
 visible = false
 
 [node name="PauseButton" parent="GameManager/CanvasLayer" index="0" unique_id=2016045018]

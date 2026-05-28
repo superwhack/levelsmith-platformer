@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dtt02avvdvee"]
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/GameManager.gd" id="1_habuo"]
+
 [ext_resource type="Texture2D" uid="uid://dbdqxg33ixrri" path="res://Assets/Sprites/UI/pause.png" id="2_ym18m"]
 [ext_resource type="Script" uid="uid://kl326f6vn6r8" path="res://Scripts/SceneSwap.gd" id="3_4i4ea"]
 [ext_resource type="Texture2D" uid="uid://icym7kutxamx" path="res://Assets/Sprites/UI/reset.png" id="4_x53pn"]
@@ -15,6 +16,7 @@ offset_left = 1629.0
 offset_top = 922.0
 offset_right = 1893.0
 offset_bottom = 1058.0
+focus_behavior_recursive = 1
 action_mode = 0
 icon = ExtResource("2_ym18m")
 script = ExtResource("3_4i4ea")
@@ -24,6 +26,7 @@ offset_left = 1352.0
 offset_top = 922.0
 offset_right = 1616.0
 offset_bottom = 1058.0
+focus_behavior_recursive = 1
 action_mode = 0
 icon = ExtResource("4_x53pn")
 script = ExtResource("3_4i4ea")

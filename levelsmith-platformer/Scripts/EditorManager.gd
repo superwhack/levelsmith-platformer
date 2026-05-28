@@ -172,8 +172,6 @@ func check_out_of_bounds() -> bool:
 	
 ## Fills the grid with grid lines tiles
 func fill_grid_lines() -> void:
-	# TODO: The 0,0 position is within the walls of the scene, meaning -1 is
-	# necessary until it is fixed
 	for height in range(0, get_parent().gridHeight + 1):
 		for width in range(0, get_parent().gridWidth + 1):
 			gridLines.set_cell(Vector2i(height, width), 1, Vector2i.ZERO);

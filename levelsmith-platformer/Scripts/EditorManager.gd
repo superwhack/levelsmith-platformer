@@ -180,10 +180,14 @@ func change_tool(tool: Global.Tool) -> void:
 	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
 	if (brushTile > 5 && currentTool != Global.Tool.CURSOR):
 		change_tile(0);
+	if (brushTile < 6 && currentTool == Global.Tool.CURSOR):
+		change_tile(6);
 	print("Current Tool: ", currentTool);
 
 func change_tile(tile: Global.TileType) -> void:
-	if currentTool == Global.Tool.CURSOR || tile < 6:
+	if currentTool == Global.Tool.CURSOR && tile > 5:
+		brushTile = tile;
+	elif currentTool != Global.Tool.CURSOR && tile < 6:
 		brushTile = tile;
 	
 ## Converts the mouse's position into grid coordinates.
@@ -191,3 +195,6 @@ func change_tile(tile: Global.TileType) -> void:
 ## returns: The grid-coordinate equivalent of the position.
 func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 	return tileSet.local_to_map(tileSet.to_local(mousePosition));
+
+func player_exist() -> bool:
+	return playerSpawnPosition != Vector2(-1, -1);

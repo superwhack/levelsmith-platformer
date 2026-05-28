@@ -25,13 +25,15 @@ func pause_pressed() -> void:
 func reset() -> void:
 	if player:
 		# Send a signal to reset player position
-		Global.playerReset.emit(playerStartingPosition);
+		#Global.playerReset.emit(playerStartingPosition);
+		player.position = playerStartingPosition;
 		# TODO: Implement resetting of all parts of the tile map, not just the player.
 
 func start() -> void:
-	## NOTE: Should figure out how to get this player to match the one the user plays as
-	## right now it doesn't, it doesn't really break anything as far as I'm aware but it might.
-	player = get_tree().get_first_node_in_group("Player")
+	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
+	for frame in range(1, 5):
+		await get_tree().process_frame
+	player = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1]
 	playerStartingPosition = player.position;
 	Global.death.connect(reset);
 	player.process_mode = Node.PROCESS_MODE_INHERIT;

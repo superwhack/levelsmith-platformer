@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
-[ext_resource type="PackedScene" uid="uid://hteqvpsk5u0x" path="res://Scenes/PlayScene.tscn" id="3_knx5t"]
-[ext_resource type="Script" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
+[ext_resource type="PackedScene" uid="uid://ducjve3v3e02u" path="res://Scenes/PlayScene.tscn" id="3_knx5t"]
+[ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/GameManager.gd" id="5_ggjfv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_knx5t"]
@@ -71,9 +71,7 @@ size_flags_stretch_ratio = 0.0
 visible = false
 script = ExtResource("5_ggjfv")
 
-[node name="CharacterBody2D" parent="GameManager" index="0" unique_id=887863704 groups=["player"]]
-
-[node name="CanvasLayer" parent="GameManager" index="1" unique_id=1567020351]
+[node name="CanvasLayer" parent="GameManager" index="0" unique_id=761710489]
 visible = false
 
 [node name="PauseButton" parent="GameManager/CanvasLayer" index="0" unique_id=2016045018]

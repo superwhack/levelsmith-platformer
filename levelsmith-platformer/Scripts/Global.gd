@@ -2,7 +2,6 @@ extends Node
 
 # A signal for when the player dies
 signal death;
-signal playerReset;
 
 # Application State
 enum State {

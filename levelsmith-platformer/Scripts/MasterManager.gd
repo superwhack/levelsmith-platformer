@@ -30,6 +30,9 @@ func edit() -> void:
 
 ## Swap to play
 func play() -> void:
+	if (!editorManager.player_exist()):
+		print("No Player Exists, Cannot Start")
+		return;
 	print("Play")
 	# Update state variable
 	state = Global.State.PLAY;

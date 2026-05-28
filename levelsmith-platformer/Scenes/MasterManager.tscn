@@ -102,6 +102,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
 [connection signal="pressed" from="EditorManager/CanvasLayer/PlayButton" to="." method="play"]
 [connection signal="pressed" from="GameManager/CanvasLayer/PauseButton" to="." method="edit"]
+[connection signal="pressed" from="GameManager/CanvasLayer/ResetButton" to="GameManager" method="reset"]
 
 [editable path="EditorManager"]
 [editable path="GameManager"]

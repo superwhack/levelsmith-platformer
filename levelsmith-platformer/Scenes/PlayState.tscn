@@ -1,23 +1,12 @@
 [gd_scene format=3 uid="uid://dtt02avvdvee"]
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/GameManager.gd" id="1_habuo"]
-[ext_resource type="Texture2D" uid="uid://bhcwugkxroj6k" path="res://Assets/Sprites/UI/pause.png" id="2_ym18m"]
+[ext_resource type="Texture2D" uid="uid://dbdqxg33ixrri" path="res://Assets/Sprites/UI/pause.png" id="2_ym18m"]
 [ext_resource type="Script" uid="uid://kl326f6vn6r8" path="res://Scripts/SceneSwap.gd" id="3_4i4ea"]
-[ext_resource type="Texture2D" uid="uid://vxojf41vtsbg" path="res://Assets/Sprites/UI/reset.png" id="4_x53pn"]
+[ext_resource type="Texture2D" uid="uid://icym7kutxamx" path="res://Assets/Sprites/UI/reset.png" id="4_x53pn"]
 
 [node name="GameManager" type="Node2D" unique_id=344859815]
 script = ExtResource("1_habuo")
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=887863704]
-position = Vector2(573, 833)
-script = ExtResource("5_o46cv")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1980476327]
-scale = Vector2(6.3, 6.3)
-shape = SubResource("CircleShape2D_2riqt")
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=509343174]
-texture = ExtResource("6_4pdbi")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1567020351]
 

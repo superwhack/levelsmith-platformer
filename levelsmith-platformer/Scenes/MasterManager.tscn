@@ -66,6 +66,8 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("3_knx5t")]
 visible = false
 
+[node name="CharacterBody2D" parent="GameManager" index="0" unique_id=887863704 groups=["player"]]
+
 [node name="CanvasLayer" parent="GameManager" index="1" unique_id=1567020351]
 visible = false
 

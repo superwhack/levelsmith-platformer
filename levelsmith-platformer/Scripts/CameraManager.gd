@@ -11,7 +11,7 @@ extends Camera2D;
 @export var zoomSpeed: float = 0.1;
 @export var maxZoomOut: float = 0.5;
 @export var maxZoomIn: float = 3.0;
-@export var playZoom: float = 0.5;
+@export var playZoom: float = 0.7;
 
 # Tilemap bound
 @export var tileSet: TileMapLayer
@@ -19,7 +19,9 @@ var level_bounds: Rect2
 
 # Reference to player
 var playerReference: CharacterBody2D = null;
-
+var playerSearchAttempts := 0;
+var maxPlayerSearchAttempts := 60;
+var searchForPlayer := true;
 
 ## Initializes the camera
 func _ready() -> void:
@@ -31,15 +33,15 @@ func _ready() -> void:
 	# Start zoomed out
 	zoom = Vector2.ONE * maxZoomOut;
 
-func _input(event):
-	if event is InputEventMouseButton:
-		print("Mouse button:", event.button_index, "pressed:", event.pressed)
+#func _input(event):
+	#if event is InputEventMouseButton:
+		#print("Mouse button:", event.button_index, "pressed:", event.pressed)
 
 ## Processes camera logic every frame
 func _process(delta: float) -> void:
 	var state = masterManager.state
 
-	print("RUNNING STATE:", state)
+	#print("RUNNING STATE:", state)
 
 	match state:
 
@@ -49,26 +51,33 @@ func _process(delta: float) -> void:
 			clamp_camera_to_level()
 
 		Global.State.PLAY:
-			process_player_camera(delta)
-			zoom = Vector2.ONE * playZoom
+			if playerReference == null:
+				try_find_player()
 
+			if playerReference != null:
+				process_player_camera(delta)
+				zoom = Vector2.ONE * playZoom
 
-## Changes the current camera state
-## newState: New camera state
-func set_state(newState: Global.State) -> void:
-	masterManager.state = newState;
+## find the 1st node in the group called "player"
+func try_find_player() -> void:
+	if !searchForPlayer:
+		return
 
+	playerReference = get_tree().get_first_node_in_group("player") as CharacterBody2D
 
-## Assigns the player reference
-## newPlayerReference: Player node
-func set_player(newPlayerReference: CharacterBody2D) -> void:
-	playerReference = newPlayerReference;
-
+	if playerReference != null:
+		print("From CameraManager: player found")
+		searchForPlayer = false;
+		return
+	
+	playerSearchAttempts += 1
+	
+	if playerSearchAttempts >= maxPlayerSearchAttempts:
+		print("From CameraManager: ERROR - fail to find player")
+		searchForPlayer = false
 
 ## Processes editor camera keypress movement
 func process_build_camera(delta: float) -> void:
-	if masterManager.state != Global.State.EDIT:
-		return
 	var inputVector: Vector2 = Vector2.ZERO;
 
 	inputVector.x = Input.get_action_strength("right") - Input.get_action_strength("left");
@@ -84,7 +93,6 @@ func process_build_camera(delta: float) -> void:
 
 ## Processes editor edge scrolling
 func process_edge_scrolling(delta: float) -> void:
-
 	var mousePos: Vector2 = get_viewport().get_mouse_position();
 	var viewportSize: Vector2 = get_viewport_rect().size;
 
@@ -110,7 +118,7 @@ func process_edge_scrolling(delta: float) -> void:
 		global_position += edgeMovement.normalized() * edgeScrollSpeed * delta;
 
 
-## Processes player follow camera(not tested yet)
+## Processes player follow camera
 func process_player_camera(_delta: float) -> void:
 
 	if playerReference == null:

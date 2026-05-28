@@ -4,8 +4,8 @@
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/ToolSwitch.tscn" id="6_iws6f"]
 [ext_resource type="PackedScene" uid="uid://bm4xtof1yv0ib" path="res://Scenes/TileSwitch.tscn" id="7_qupls"]
-[ext_resource type="Texture2D" uid="uid://cwhg3tjyytxee" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
-[ext_resource type="Texture2D" uid="uid://4a45jwvowkli" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
+[ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
+[ext_resource type="Texture2D" uid="uid://bh8waatyaurop" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
 [ext_resource type="Script" uid="uid://kl326f6vn6r8" path="res://Scripts/SceneSwap.gd" id="11_klveo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -50,7 +50,9 @@ modulate = Color(1, 1, 1, 0.5058824)
 tile_set = ExtResource("2_8t3j3")
 collision_enabled = false
 
-[node name="PlayButton" type="Button" parent="." unique_id=745550610]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
+
+[node name="PlayButton" type="Button" parent="CanvasLayer" unique_id=745550610]
 z_index = 2
 offset_left = 1629.0
 offset_top = 922.0
@@ -60,15 +62,15 @@ action_mode = 0
 icon = ExtResource("10_njgpr")
 script = ExtResource("11_klveo")
 
-[node name="ToolContainer" type="HBoxContainer" parent="." unique_id=2095469909]
+[node name="ToolContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=2095469909]
 z_index = 2
-offset_right = 40.0
+offset_right = 280.0
 offset_bottom = 40.0
 theme_override_constants/separation = 88
 
-[node name="ToolSwitch" parent="ToolContainer" unique_id=1469240724 instance=ExtResource("6_iws6f")]
+[node name="ToolSwitch" parent="CanvasLayer/ToolContainer" unique_id=1469240724 instance=ExtResource("6_iws6f")]
 layout_mode = 2
 focus_behavior_recursive = 0
 
-[node name="TileSwitch" parent="ToolContainer" unique_id=959816093 instance=ExtResource("7_qupls")]
+[node name="TileSwitch" parent="CanvasLayer/ToolContainer" unique_id=959816093 instance=ExtResource("7_qupls")]
 layout_mode = 2

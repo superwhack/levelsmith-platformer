@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmxmkfoute7gj"
-path="res://.godot/imported/oneway.png-77448cad394487b72483dc377da3fb7e.ctex"
+uid="uid://crwfvhcm3n1nc"
+path="res://.godot/imported/OneWay.png-2ae659d9f9553b91a66d34d60e4391f3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Tiles/oneway.png"
-dest_files=["res://.godot/imported/oneway.png-77448cad394487b72483dc377da3fb7e.ctex"]
+source_file="res://Assets/Sprites/Tiles/OneWay.png"
+dest_files=["res://.godot/imported/OneWay.png-2ae659d9f9553b91a66d34d60e4391f3.ctex"]
 
 [params]
 

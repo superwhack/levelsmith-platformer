@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cw3was5c5db7p"
-path="res://.godot/imported/bounce.png-58dac44da9eb79f315f51e184f790a52.ctex"
+uid="uid://cq8xpjeln1u8t"
+path="res://.godot/imported/Bounce.png-b88d7dcbf2a8ad546aef797694efd80a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Tiles/bounce.png"
-dest_files=["res://.godot/imported/bounce.png-58dac44da9eb79f315f51e184f790a52.ctex"]
+source_file="res://Assets/Sprites/Tiles/Bounce.png"
+dest_files=["res://.godot/imported/Bounce.png-b88d7dcbf2a8ad546aef797694efd80a.ctex"]
 
 [params]
 

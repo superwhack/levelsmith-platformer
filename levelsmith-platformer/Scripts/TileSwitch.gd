@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-@onready var editorManager : Node2D = get_parent().get_parent();
+@onready var editorManager : Node2D = get_parent().get_parent().get_parent();
 
 var objectButtons: Array[Control] = [];
 
@@ -23,20 +23,26 @@ func cursorSelected(selected: bool) -> void:
 
 # Tile Buttons
 func _on_solid_tile_button_pressed() -> void:
-	editorManager.change_tile(Global.TileType.SOLID);
+	editorManager.update_brush_tile(Global.TileType.SOLID);
 
+<<<<<<< HEAD
 func _on_death_tile_button_pressed() -> void:
 	editorManager.change_tile(Global.TileType.DEATH);
 
 func _on_oneway_tile_button_pressed() -> void:
 	editorManager.change_tile(Global.TileType.ONEWAY);
+=======
+func _on_bounce_tile_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.TileType.BOUNCE);
+>>>>>>> origin/main
 
 func _on_ice_tile_button_pressed() -> void:
-	editorManager.change_tile(Global.TileType.ICE);
+	editorManager.update_brush_tile(Global.TileType.ICE);
 
 func _on_sticky_tile_button_pressed() -> void:
-	editorManager.change_tile(Global.TileType.STICKY);
+	editorManager.update_brush_tile(Global.TileType.STICKY);
 
+<<<<<<< HEAD
 func _on_bounce_tile_button_pressed() -> void:
 	editorManager.change_tile(Global.TileType.BOUNCE);
 
@@ -49,3 +55,13 @@ func _on_spawn_object_button_pressed() -> void:
 
 func _on_moving_object_button_pressed() -> void:
 	editorManager.change_tile(Global.ObjectType.MOVING);
+=======
+func _on_slope_tile_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.TileType.SLOPE);
+
+func _on_oneway_tile_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.TileType.ONEWAY);
+
+func _on_death_tile_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.TileType.DEATH);
+>>>>>>> origin/main

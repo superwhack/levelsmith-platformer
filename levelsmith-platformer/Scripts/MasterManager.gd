@@ -1,7 +1,7 @@
 extends Node2D
 
 # State variable to represent the state the game is currently in
-var state : Global.State = Global.State.PLAY;
+var state : Global.State = Global.State.EDIT;
 
 # References to both state managers
 @export var editorManager : Node2D;
@@ -21,8 +21,13 @@ func edit() -> void:
 	state = Global.State.EDIT;
 	# Change scene to edit scene
 	gameManager.hide();
+<<<<<<< HEAD
 	gameManager.reset();
+=======
+	gameManager.get_node("CanvasLayer").hide();
+>>>>>>> origin/main
 	editorManager.show();
+	editorManager.get_node("CanvasLayer").show()
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
 
@@ -35,8 +40,13 @@ func play() -> void:
 	save_tilemap();
 	# Change scene to play 
 	gameManager.show();
+<<<<<<< HEAD
 	gameManager.start();
+=======
+	gameManager.get_node("CanvasLayer").show()
+>>>>>>> origin/main
 	editorManager.hide();
+	editorManager.get_node("CanvasLayer").hide();
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Load map
@@ -53,7 +63,7 @@ func save_tilemap() -> void:
 	# Pack the node to save as a scene
 	scene.pack(nodeToSave)
 	# Save that scene to the resource folder
-	ResourceSaver.save(scene, "res://Scenes/SavedTileMap.tscn");
+	ResourceSaver.save(scene, "user://SavedTileMap.tscn");
 
 ## Loads the tilemap from the resource folder
 func load_tilemap() -> void:
@@ -62,7 +72,7 @@ func load_tilemap() -> void:
 		gameManager.remove_child(loadedMap);
 		loadedMap.queue_free();
 	# Load the saved map from the resource folder
-	var savedMap = load("res://Scenes/SavedTileMap.tscn");
+	var savedMap = load("user://SavedTileMap.tscn");
 	# Instantiate the map as a scene instance
 	var sceneInstance = savedMap.instantiate();
 	# Add that instance to the top of the GameManager's hierarchy

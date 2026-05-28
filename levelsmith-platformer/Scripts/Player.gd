@@ -13,6 +13,8 @@ var coyoteTimeLeft = coyoteTime;
 # TODO: Impliment animations and use this
 @export var FPS := 24;
 
+var spawnpoint := Vector2(0, 0);
+
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
 const maxHealth := 1;
 var health := maxHealth
@@ -82,7 +84,12 @@ func take_damage(amount: int) -> void:
 func die() -> void:
 	# Temporary stand-in for killing the player, should be replaced with actual death logic
 	health = maxHealth;
-	set_position(Vector2(573.0, 833.0));
+	print(spawnpoint);
+	set_position(spawnpoint);
+	
+func set_start(point: Vector2) -> void:
+	spawnpoint = point;
+	print(spawnpoint);
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tile() -> void:

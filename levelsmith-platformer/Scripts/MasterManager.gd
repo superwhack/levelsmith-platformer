@@ -16,7 +16,6 @@ func _ready() -> void:
 ## Swap to edit state
 func edit() -> void:
 	print("Edit")
-	editorManager.process_mode = Node.PROCESS_MODE_ALWAYS;
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED)
 	# Update state variable
 	state = Global.State.EDIT;
@@ -30,7 +29,6 @@ func edit() -> void:
 ## Swap to play
 func play() -> void:
 	print(get_tree().get_node_count_in_group("Player"))
-	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	print("Play")
 	# Update state variable
 	state = Global.State.PLAY;

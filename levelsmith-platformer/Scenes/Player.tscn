@@ -7,6 +7,12 @@
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1372711448 groups=["Player"]]
 script = ExtResource("1_kyqiw")
+groundSpeed = null
+jumpHeight = null
+airControl = null
+fallSpeed = null
+coyoteTime = null
+FPS = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]
 scale = Vector2(6.3, 6.3)

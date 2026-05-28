@@ -25,15 +25,13 @@ func pause_pressed() -> void:
 func reset() -> void:
 	if player:
 		player.position = playerStartingPosition
-		player.process_mode = Node.PROCESS_MODE_ALWAYS;
 		# TODO: Implement resetting of all parts of the tile map, not just the player.
 
 func start() -> void:
 	player = get_tree().get_first_node_in_group("Player")
-	if player:
-		print("Found player!");
 	playerStartingPosition = player.position;
-	player.process_mode = Node.PROCESS_MODE_ALWAYS;
+	player.process_mode = Node.PROCESS_MODE_INHERIT;
+	player.set_start(playerStartingPosition);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -163,9 +163,9 @@ func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 	
 ## Checks if the mouse is currently out of bounds
 func check_out_of_bounds() -> bool:
-	if (get_grid_mouse_position(get_global_mouse_position())[0] < -1
+	if (get_grid_mouse_position(get_global_mouse_position())[0] < 0
 	|| get_grid_mouse_position(get_global_mouse_position())[0] > get_parent().gridHeight
-	|| get_grid_mouse_position(get_global_mouse_position())[1] < -1
+	|| get_grid_mouse_position(get_global_mouse_position())[1] < 0
 	|| get_grid_mouse_position(get_global_mouse_position())[1] > get_parent().gridWidth):
 		return true;
 	return false;
@@ -174,6 +174,6 @@ func check_out_of_bounds() -> bool:
 func fill_grid_lines() -> void:
 	# TODO: The 0,0 position is within the walls of the scene, meaning -1 is
 	# necessary until it is fixed
-	for height in range(-1, get_parent().gridHeight + 1):
-		for width in range(-1, get_parent().gridWidth + 1):
+	for height in range(0, get_parent().gridHeight + 1):
+		for width in range(0, get_parent().gridWidth + 1):
 			gridLines.set_cell(Vector2i(height, width), 1, Vector2i.ZERO);

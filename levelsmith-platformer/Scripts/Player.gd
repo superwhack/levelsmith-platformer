@@ -26,6 +26,15 @@ var currentSlowdown := 1.0;
 # Speed with constant multiplier and slowdown appended in
 var trueSpeed : float;
 
+func _ready() -> void:
+	Global.playerReset.connect(reset_position);
+
+## Reset the position of the player
+## location: The position to reset to
+func reset_position(location: Vector2):
+	velocity = Vector2(0, 0);
+	set_position(location);
+
 func _physics_process(delta: float) -> void:
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair

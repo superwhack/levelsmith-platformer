@@ -24,12 +24,13 @@ func pause_pressed() -> void:
 ## Reset the play state, player position as well as all tile positions and information
 func reset() -> void:
 	if player:
-		print(player.position, " Start: ", playerStartingPosition);
-		player.position = playerStartingPosition
+		# Send a signal to reset player position
+		Global.playerReset.emit(playerStartingPosition);
 		# TODO: Implement resetting of all parts of the tile map, not just the player.
 
 func start() -> void:
-	print(get_tree().get_node_count_in_group("Player"))
+	## NOTE: Should figure out how to get this player to match the one the user plays as
+	## right now it doesn't, it doesn't really break anything as far as I'm aware but it might.
 	player = get_tree().get_first_node_in_group("Player")
 	playerStartingPosition = player.position;
 	Global.death.connect(reset);
@@ -37,7 +38,5 @@ func start() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if player:
-		player.show();
 	if Input.is_action_just_pressed("pause"):
 		pause_pressed();

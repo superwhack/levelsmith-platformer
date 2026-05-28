@@ -45,6 +45,7 @@ func _process(_delta: float) -> void:
 	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
 
 	update_preview_tile(currentMousePosition, prevMousePosition);
+	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
@@ -118,12 +119,8 @@ func place_tile(clickPosition: Vector2) -> void:
 	if (brushTile == 8 && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
 		tileSet.set_cell(clickPosition, 8, Vector2i.ZERO, 1);
-		await get_tree().process_frame;
-		get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
-		get_tree().get_first_node_in_group("Player").remove_from_group("Player");
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
-
 func getSpawn() -> Vector2:
 	return playerSpawnPosition;
 
@@ -154,8 +151,7 @@ func update_brush_tile(tileId: int) -> void:
 ## prevMousePosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
 	if (brushTile == 8):
-		previewTileMap.set_cell(mousePosition, 8, Vector2i.ZERO, 1);
-		get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED)
+		previewTileMap.set_cell(mousePosition, 8, Vector2i.ZERO, 2);
 	else:
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	

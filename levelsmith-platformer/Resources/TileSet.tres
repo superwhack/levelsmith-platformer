@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dhaaqxr1wx2qb" path="res://Assets/Sprites/Tiles/slope.png" id="7_jbnof"]
 [ext_resource type="PackedScene" uid="uid://87eq7bxythec" path="res://Scenes/Player.tscn" id="8_alyph"]
 [ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="8_cn8lu"]
+[ext_resource type="PackedScene" uid="uid://bj66b8ccvl345" path="res://Scenes/PlayerSpriteOnly.tscn" id="9_6ba2f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rjqkl"]
 texture = ExtResource("1_00q1o")
@@ -69,6 +70,7 @@ texture_region_size = Vector2i(128, 128)
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_6ba2f"]
 scenes/1/scene = ExtResource("8_alyph")
+scenes/2/scene = ExtResource("9_6ba2f")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_alyph"]
 texture = ExtResource("8_cn8lu")

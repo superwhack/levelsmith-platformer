@@ -12,6 +12,9 @@ var goalReached := false;
 var player: CharacterBody2D;
 var playerStartingPosition: Vector2;
 
+var enemies;
+var enemyStartingPositions: Array[Vector2];
+
 # When pause is pressed, flip the current state
 func pause_pressed() -> void:
 	if playState == PlayState.PAUSE:
@@ -29,15 +32,25 @@ func reset() -> void:
 		player.position = playerStartingPosition;
 		player.velocity = Vector2(0, 0);
 		# TODO: Implement resetting of all parts of the tile map, not just the player.
+	if enemies:
+		for curEnemy in range(0, enemies.size() - 1):
+			enemies[curEnemy].position = enemyStartingPositions[curEnemy];
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
 	for frame in range(1, 5):
-		await get_tree().process_frame
-	player = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1]
+		await get_tree().process_frame;
+	player = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1];
 	playerStartingPosition = player.position;
 	Global.death.connect(reset);
+	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
+	
+	enemies = get_tree().get_nodes_in_group("Enemy");
+	enemyStartingPositions.resize(enemies.size());
+	for curEnemy in range(0, enemies.size() - 1):
+		enemyStartingPositions[curEnemy] = enemies[curEnemy].position;
+
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 
 func _process(delta: float) -> void:

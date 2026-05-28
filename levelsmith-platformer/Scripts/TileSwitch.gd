@@ -60,5 +60,5 @@ func _on_slope_object_button_pressed() -> void:
 func _on_spawn_object_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.ObjectType.SPAWN);
 
-func _on_moving_object_button_pressed() -> void:
-	editorManager.update_brush_tile(Global.ObjectType.MOVING);
+func _on_patrolling_object_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.ObjectType.PATROLLING);

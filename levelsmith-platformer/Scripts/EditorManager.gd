@@ -46,6 +46,7 @@ func _process(_delta: float) -> void:
 
 	update_preview_tile(currentMousePosition, prevMousePosition);
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
+	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
@@ -75,9 +76,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	# Drag erase if the brush is selected, click to remove if cursor is
 	elif erasing:
 		if currentTool == Global.Tool.BRUSH:
-			delete_tile(currentMousePosition);
+			delete_entity(currentMousePosition);
 		elif currentTool == Global.Tool.CURSOR && event.is_action_pressed("right-click"):
-			delete_tile(currentMousePosition); 
+			delete_entity(currentMousePosition); 
 	
 	if event.is_action_pressed("brush-tool"):
 		change_tool(Global.Tool.BRUSH);
@@ -133,12 +134,16 @@ func place_object(clickPosition: Vector2) -> void:
 	if (brushTile == 8 && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
 		tileSet.set_cell(clickPosition, 8, Vector2i.ZERO, 1);
+	elif (brushTile == 9):
+		tileSet.set_cell(clickPosition, 9, Vector2i.ZERO, 1);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
 
-## Deletes a tile at the clicked position.
+## Deletes an entity at the clicked position.
 ## position: Where the mouse is during the click.
-func delete_tile(clickPosition: Vector2) -> void:
+func delete_entity (clickPosition: Vector2) -> void:
+	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > 5):
+		return;
 	if (tileSet.get_cell_source_id(clickPosition) == 8):
 		playerSpawnPosition = Vector2(-1, -1);
 	tileSet.erase_cell(clickPosition);
@@ -166,6 +171,8 @@ func update_brush_tile(tile: Global.TileType) -> void:
 func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
 	if (brushTile == 8):
 		previewTileMap.set_cell(mousePosition, 8, Vector2i.ZERO, 2);
+	elif (brushTile == 9):
+		previewTileMap.set_cell(mousePosition, 9, Vector2i.ZERO, 2);
 	else:
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	

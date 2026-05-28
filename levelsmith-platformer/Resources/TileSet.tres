@@ -8,8 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://kv7n6y5tjp83" path="res://Assets/Sprites/Tiles/bounce.png" id="6_me1w5"]
 [ext_resource type="Texture2D" uid="uid://cwlrmmmt8w86m" path="res://Assets/Sprites/Tiles/slope.png" id="7_jbnof"]
 [ext_resource type="PackedScene" uid="uid://87eq7bxythec" path="res://Scenes/Player.tscn" id="8_alyph"]
-[ext_resource type="Texture2D" uid="uid://bggaro288ywls" path="res://Assets/Sprites/Entities/baddude.png" id="8_cn8lu"]
 [ext_resource type="PackedScene" uid="uid://bj66b8ccvl345" path="res://Scenes/SpriteOnlys/PlayerSpriteOnly.tscn" id="9_6ba2f"]
+[ext_resource type="PackedScene" uid="uid://b3k624sctovph" path="res://Scenes/Patrolling.tscn" id="10_6ba2f"]
+[ext_resource type="PackedScene" uid="uid://bwtswvrxxful5" path="res://Scenes/SpriteOnlys/PatrollingSpriteOnly.tscn" id="11_8sjof"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rjqkl"]
 texture = ExtResource("1_00q1o")
@@ -72,10 +73,9 @@ texture_region_size = Vector2i(128, 128)
 scenes/1/scene = ExtResource("8_alyph")
 scenes/2/scene = ExtResource("9_6ba2f")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_alyph"]
-texture = ExtResource("8_cn8lu")
-texture_region_size = Vector2i(128, 128)
-0:0/0 = 0
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_8sjof"]
+scenes/1/scene = ExtResource("10_6ba2f")
+scenes/2/scene = ExtResource("11_8sjof")
 
 [resource]
 tile_size = Vector2i(128, 128)
@@ -95,5 +95,5 @@ sources/2 = SubResource("TileSetAtlasSource_flf07")
 sources/4 = SubResource("TileSetAtlasSource_k73cj")
 sources/5 = SubResource("TileSetAtlasSource_hqns4")
 sources/6 = SubResource("TileSetAtlasSource_x0ka3")
-sources/9 = SubResource("TileSetAtlasSource_alyph")
 sources/8 = SubResource("TileSetScenesCollectionSource_6ba2f")
+sources/9 = SubResource("TileSetScenesCollectionSource_8sjof")

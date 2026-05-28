@@ -30,6 +30,9 @@ func _ready() -> void:
 	previewTileMap = get_child(2);
 	
 	brushTile = Global.TileType.SOLID;
+	print("Height:", get_parent().gridHeight);
+	print("Width:", get_parent().gridWidth);
+
 
 ## Runs every frame during the editing state
 ## delta: how much time has passed
@@ -91,6 +94,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Places down the current brushing tile at the clicked position.
 ## position: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
+	print(get_grid_mouse_position(get_global_mouse_position()));
 	if (tileSet.get_cell_source_id(clickPosition) == brushTile): return;
 	
 	tileSet.erase_cell(clickPosition);
@@ -122,6 +126,14 @@ func update_brush_tile(tile: Global.TileType) -> void:
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevMousePosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
+	
+	# Returns early if mouse is outside of grid parameters
+	if (get_grid_mouse_position(get_global_mouse_position())[0] < -1
+		|| get_grid_mouse_position(get_global_mouse_position())[0] > get_parent().gridHeight
+		|| get_grid_mouse_position(get_global_mouse_position())[1] < -1
+		|| get_grid_mouse_position(get_global_mouse_position())[1] > get_parent().gridWidth):
+		return;
+	
 	
 	previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	

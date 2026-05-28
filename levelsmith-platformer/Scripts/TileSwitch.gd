@@ -36,29 +36,29 @@ func cursorSelected(selected: bool) -> void:
 
 # Tile Buttons
 func _on_solid_tile_button_pressed() -> void:
-	editorManager.change_tile(Global.TileType.SOLID);
+	editorManager.update_brush_tile(Global.TileType.SOLID);
 
 func _on_death_tile_button_pressed() -> void:
-	editorManager.change_tile(Global.TileType.DEATH);
+	editorManager.update_brush_tile(Global.TileType.DEATH);
 
 func _on_oneway_tile_button_pressed() -> void:
-	editorManager.change_tile(Global.TileType.ONEWAY);
+	editorManager.update_brush_tile(Global.TileType.ONEWAY);
 
 func _on_ice_tile_button_pressed() -> void:
-	editorManager.change_tile(Global.TileType.ICE);
+	editorManager.update_brush_tile(Global.TileType.ICE);
 
 func _on_sticky_tile_button_pressed() -> void:
-	editorManager.change_tile(Global.TileType.STICKY);
+	editorManager.update_brush_tile(Global.TileType.STICKY);
 
 func _on_bounce_tile_button_pressed() -> void:
-	editorManager.change_tile(Global.TileType.BOUNCE);
+	editorManager.update_brush_tile(Global.TileType.BOUNCE);
 
 # Object Buttons
 func _on_slope_object_button_pressed() -> void:
-	editorManager.change_tile(Global.ObjectType.SLOPE);
+	editorManager.update_brush_tile(Global.ObjectType.SLOPE);
 	
 func _on_spawn_object_button_pressed() -> void:
-	editorManager.change_tile(Global.ObjectType.SPAWN);
+	editorManager.update_brush_tile(Global.ObjectType.SPAWN);
 
 func _on_moving_object_button_pressed() -> void:
-	editorManager.change_tile(Global.ObjectType.MOVING);
+	editorManager.update_brush_tile(Global.ObjectType.MOVING);

@@ -109,7 +109,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("sixth-select"):
 		update_brush_tile(Global.TileType.BOUNCE);
 
-## Places down the current brushing tile at the clicked position.
+## Places down the current brush tile at the clicked position.
 ## position: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
 	# If the tool is the cursor, don't overwrite any placement
@@ -123,6 +123,8 @@ func place_tile(clickPosition: Vector2) -> void:
 func getSpawn() -> Vector2:
 	return playerSpawnPosition;
 
+## Places down the current brush object at the clicked position.
+## position: Where the mouse is during the click.
 func place_object(clickPosition: Vector2) -> void:
 	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
 		return;
@@ -149,11 +151,14 @@ func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
 
 func move_tile() -> void:
 	print("a");
-
-## Changes the brush tile.
-## tile: The tile source id to swap to
+	
+## Change the currently selected tile/object if possible
+## tile: the tile/pbject to try and change to
 func update_brush_tile(tile: Global.TileType) -> void:
-	brushTile = tile;
+	if currentTool == Global.Tool.CURSOR && tile > 5:
+		brushTile = tile;
+	elif currentTool != Global.Tool.CURSOR && tile < 6:
+		brushTile = tile;
 
 ## Hooks the preview tile to the mouse position and moves it when necessary
 ## mousePosition: Where the mouse currently is in grid coordinates
@@ -170,7 +175,8 @@ func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> 
 	if (mousePosition != prevMousePosition): 
 		previewTileMap.erase_cell(prevMousePosition);
 
-# Change the selected tool to the clicked on tool.
+## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.
+## tool: The tool to change to
 func change_tool(tool: Global.Tool) -> void:
 	if currentTool == tool:
 		return;
@@ -179,16 +185,11 @@ func change_tool(tool: Global.Tool) -> void:
 	
 	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
 	if (brushTile > 5 && currentTool != Global.Tool.CURSOR):
-		change_tile(0);
+		update_brush_tile(0);
 	if (brushTile < 6 && currentTool == Global.Tool.CURSOR):
-		change_tile(6);
+		update_brush_tile(6);
 	print("Current Tool: ", currentTool);
 
-func change_tile(tile: Global.TileType) -> void:
-	if currentTool == Global.Tool.CURSOR && tile > 5:
-		brushTile = tile;
-	elif currentTool != Global.Tool.CURSOR && tile < 6:
-		brushTile = tile;
 	
 ## Converts the mouse's position into grid coordinates.
 ## mousePosition: Where the cursor currently is in world space.
@@ -196,5 +197,7 @@ func change_tile(tile: Global.TileType) -> void:
 func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 	return tileSet.local_to_map(tileSet.to_local(mousePosition));
 
+## Return true if the player exists
+## returns: True if the player exists in the grid
 func player_exist() -> bool:
 	return playerSpawnPosition != Vector2(-1, -1);

@@ -30,6 +30,7 @@ func reset() -> void:
 		player.velocity = Vector2(0, 0);
 		# TODO: Implement resetting of all parts of the tile map, not just the player.
 
+## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
 	for frame in range(1, 5):
@@ -39,7 +40,6 @@ func start() -> void:
 	Global.death.connect(reset);
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		pause_pressed();

@@ -1,56 +1,36 @@
 [gd_scene format=3 uid="uid://bm4xtof1yv0ib"]
 
 [ext_resource type="Script" uid="uid://e6pkeumdahqd" path="res://Scripts/TileSwitch.gd" id="1_aauec"]
-[ext_resource type="Texture2D" uid="uid://bb7ntbfefykop" path="res://Assets/Sprites/Tiles/solid.png" id="1_vjuxo"]
-[ext_resource type="Texture2D" uid="uid://6bkm68b4v1w3" path="res://Assets/Sprites/Tiles/Sticky.png" id="2_01osu"]
-[ext_resource type="Texture2D" uid="uid://cw3was5c5db7p" path="res://Assets/Sprites/Tiles/bounce.png" id="2_aauec"]
-[ext_resource type="Texture2D" uid="uid://0ytag227enwn" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
-[ext_resource type="Texture2D" uid="uid://dhaaqxr1wx2qb" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
-[ext_resource type="Texture2D" uid="uid://dmxmkfoute7gj" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
-[ext_resource type="Texture2D" uid="uid://wm003qlxb4yh" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
+[ext_resource type="Texture2D" uid="uid://c04578uqgrfjv" path="res://Assets/Sprites/Tiles/solid.png" id="1_vjuxo"]
+[ext_resource type="Texture2D" uid="uid://3no57vbdqn51" path="res://Assets/Sprites/Tiles/Sticky.png" id="2_01osu"]
+[ext_resource type="Texture2D" uid="uid://kv7n6y5tjp83" path="res://Assets/Sprites/Tiles/bounce.png" id="2_aauec"]
+[ext_resource type="Texture2D" uid="uid://bggaro288ywls" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
+[ext_resource type="Texture2D" uid="uid://cgdgrnbm0yhsq" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
+[ext_resource type="Texture2D" uid="uid://cwlrmmmt8w86m" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
+[ext_resource type="Texture2D" uid="uid://r3td16hm8jd1" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
+[ext_resource type="Texture2D" uid="uid://bgu3tf17p5rpf" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
+[ext_resource type="Texture2D" uid="uid://2hfbf5bqyhy4" path="res://Assets/Sprites/Entities/dude.png" id="9_e1a7i"]
 
 [node name="Control" type="HBoxContainer" unique_id=959816093]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1896.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 4
 script = ExtResource("1_aauec")
 
-[node name="StickyTileWrapper" type="Control" parent="." unique_id=708304497]
+[node name="SolidTileWrapper" type="Control" parent="." unique_id=2098565494]
 layout_mode = 2
 
-[node name="StickyTileButton" type="TextureButton" parent="StickyTileWrapper" unique_id=928704748]
+[node name="SolidTileButton" type="TextureButton" parent="SolidTileWrapper" unique_id=580196334]
 layout_mode = 0
-offset_left = 390.0
-offset_right = 470.0
+offset_right = 80.0
 offset_bottom = 80.0
-texture_normal = ExtResource("2_01osu")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="SlopeTileWrapper" type="Control" parent="." unique_id=1247154762]
-layout_mode = 2
-
-[node name="SlopeTileButton" type="TextureButton" parent="SlopeTileWrapper" unique_id=1746073645]
-layout_mode = 0
-offset_left = 578.0
-offset_right = 658.0
-offset_bottom = 80.0
-texture_normal = ExtResource("3_p43ua")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="OnewayTileWrapper" type="Control" parent="." unique_id=19398503]
-layout_mode = 2
-
-[node name="OnewayTileButton" type="TextureButton" parent="OnewayTileWrapper" unique_id=1125313123]
-layout_mode = 0
-offset_left = 101.0
-offset_right = 181.0
-offset_bottom = 80.0
-texture_normal = ExtResource("4_e1a7i")
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource("1_vjuxo")
 ignore_texture_size = true
 stretch_mode = 0
 
@@ -66,16 +46,39 @@ texture_normal = ExtResource("5_02cwx")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="SolidTileWrapper" type="Control" parent="." unique_id=2098565494]
+[node name="OnewayTileWrapper" type="Control" parent="." unique_id=19398503]
 layout_mode = 2
 
-[node name="SolidTileButton" type="TextureButton" parent="SolidTileWrapper" unique_id=580196334]
+[node name="OnewayTileButton" type="TextureButton" parent="OnewayTileWrapper" unique_id=1125313123]
 layout_mode = 0
-offset_right = 80.0
+offset_left = 101.0
+offset_right = 181.0
 offset_bottom = 80.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture_normal = ExtResource("1_vjuxo")
+texture_normal = ExtResource("4_e1a7i")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="IceTileWrapper" type="Control" parent="." unique_id=1001883010]
+layout_mode = 2
+
+[node name="IceTileButton" type="TextureButton" parent="IceTileWrapper" unique_id=423141264]
+layout_mode = 0
+offset_left = 275.0
+offset_right = 355.0
+offset_bottom = 80.0
+texture_normal = ExtResource("3_lok7c")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="StickyTWrapper" type="Control" parent="." unique_id=708304497]
+layout_mode = 2
+
+[node name="StickyTileButton" type="TextureButton" parent="StickyTWrapper" unique_id=928704748]
+layout_mode = 0
+offset_left = 370.0
+offset_right = 450.0
+offset_bottom = 80.0
+texture_normal = ExtResource("2_01osu")
 ignore_texture_size = true
 stretch_mode = 0
 
@@ -93,22 +96,51 @@ texture_normal = ExtResource("2_aauec")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="IceTileWrapper" type="Control" parent="." unique_id=1001883010]
+[node name="SlopeObjectWrapper" type="Control" parent="." unique_id=1247154762]
 layout_mode = 2
 
-[node name="IceTileButton" type="TextureButton" parent="IceTileWrapper" unique_id=423141264]
+[node name="SlopeObectButton" type="TextureButton" parent="SlopeObjectWrapper" unique_id=1746073645]
 layout_mode = 0
-offset_left = 275.0
-offset_right = 355.0
-offset_bottom = 80.0
-texture_normal = ExtResource("3_lok7c")
+offset_left = 774.0
+offset_top = 1.0
+offset_right = 854.0
+offset_bottom = 81.0
+texture_normal = ExtResource("3_p43ua")
 ignore_texture_size = true
 stretch_mode = 0
 
-[connection signal="pressed" from="StickyTileWrapper/StickyTileButton" to="." method="_on_sticky_tile_button_pressed"]
-[connection signal="pressed" from="SlopeTileWrapper/SlopeTileButton" to="." method="_on_slope_tile_button_pressed"]
-[connection signal="pressed" from="OnewayTileWrapper/OnewayTileButton" to="." method="_on_oneway_tile_button_pressed"]
-[connection signal="pressed" from="DeathTileWrapper/DeathTileButton" to="." method="_on_death_tile_button_pressed"]
+[node name="SpawnObjectWrapper" type="Control" parent="." unique_id=1085605979]
+layout_mode = 2
+
+[node name="SpawnObjectButton" type="TextureButton" parent="SpawnObjectWrapper" unique_id=437566097]
+layout_mode = 0
+offset_left = 854.0
+offset_top = 1.0
+offset_right = 934.0
+offset_bottom = 81.0
+texture_normal = ExtResource("9_e1a7i")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="PatrollingObjectWrapper" type="Control" parent="." unique_id=194304977]
+layout_mode = 2
+
+[node name="PatrollingObjectButton" type="TextureButton" parent="PatrollingObjectWrapper" unique_id=1756298095]
+layout_mode = 0
+offset_left = 951.0
+offset_top = -1.0
+offset_right = 1031.0
+offset_bottom = 79.0
+texture_normal = ExtResource("2_p43ua")
+ignore_texture_size = true
+stretch_mode = 0
+
 [connection signal="pressed" from="SolidTileWrapper/SolidTileButton" to="." method="_on_solid_tile_button_pressed"]
-[connection signal="pressed" from="BounceTileWrapper/BounceTileButton" to="." method="_on_bounce_tile_button_pressed"]
+[connection signal="pressed" from="DeathTileWrapper/DeathTileButton" to="." method="_on_death_tile_button_pressed"]
+[connection signal="pressed" from="OnewayTileWrapper/OnewayTileButton" to="." method="_on_oneway_tile_button_pressed"]
 [connection signal="pressed" from="IceTileWrapper/IceTileButton" to="." method="_on_ice_tile_button_pressed"]
+[connection signal="pressed" from="StickyTWrapper/StickyTileButton" to="." method="_on_sticky_tile_button_pressed"]
+[connection signal="pressed" from="BounceTileWrapper/BounceTileButton" to="." method="_on_bounce_tile_button_pressed"]
+[connection signal="pressed" from="SlopeObjectWrapper/SlopeObectButton" to="." method="_on_slope_object_button_pressed"]
+[connection signal="pressed" from="SpawnObjectWrapper/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
+[connection signal="pressed" from="PatrollingObjectWrapper/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]

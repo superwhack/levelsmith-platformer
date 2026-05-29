@@ -12,14 +12,19 @@ var loadedMap : TileMapLayer;
 var gridWidth : int = 8;
 var gridHeight : int = 14;
 
+#func _ready() -> void:
+	#edit();
+
 ## Swap to edit state
 func edit() -> void:
 	print("Edit")
+	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
 	state = Global.State.EDIT;
 	# Change scene to edit scene
 	gameManager.hide();
 	gameManager.get_node("CanvasLayer").hide();
+	gameManager.reset();
 	editorManager.show();
 	editorManager.get_node("CanvasLayer").show()
 	# Play the editor manager
@@ -27,6 +32,9 @@ func edit() -> void:
 
 ## Swap to play
 func play() -> void:
+	if (!editorManager.player_exist()):
+		print("No Player Exists, Cannot Start")
+		return;
 	print("Play")
 	# Update state variable
 	state = Global.State.PLAY;
@@ -34,6 +42,7 @@ func play() -> void:
 	save_tilemap();
 	# Change scene to play 
 	gameManager.show();
+	gameManager.start();
 	gameManager.get_node("CanvasLayer").show()
 	editorManager.hide();
 	editorManager.get_node("CanvasLayer").hide();

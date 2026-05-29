@@ -32,10 +32,16 @@ func _ready() -> void:
 
 	# Start zoomed out
 	zoom = Vector2.ONE * maxZoomOut;
+	Global.reload.connect(reset_player_cam);
 
 #func _input(event):
 	#if event is InputEventMouseButton:
 		#print("Mouse button:", event.button_index, "pressed:", event.pressed)
+
+## On reloading the game scene, reset the player reference and search again
+func reset_player_cam() -> void:
+	playerReference = null;
+	searchForPlayer = true;
 
 ## Processes camera logic every frame
 func _process(delta: float) -> void:
@@ -46,8 +52,6 @@ func _process(delta: float) -> void:
 	match state:
 
 		Global.State.EDIT:
-			playerReference = null;
-			searchForPlayer = true;
 			process_build_camera(delta)
 			process_zoom_input()
 			clamp_camera_to_level()

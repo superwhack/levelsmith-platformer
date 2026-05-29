@@ -31,7 +31,7 @@ enum TileType {
 enum EntityType {
 	SLOPE = 6,
 	GOAL = 7,
-	SPAWN = 8,
+	PLAYER = 8,
 	PATROLLING = 9,
 	STATIONARY = 10, 
 	FLYING = 11,

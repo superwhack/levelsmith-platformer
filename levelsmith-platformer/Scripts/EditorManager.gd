@@ -26,6 +26,9 @@ var isPlaceable: bool = true;
 # Player spawnpoint. Set when placing the entity.
 var playerSpawnPosition: Vector2 = Vector2(-1, -1);
 
+# Stores the number of tiles made
+var tileCount := Global.TileType.size() - 1;
+
 ## Runs once when the script is ready.
 ## Set up any reference variables here.
 func _ready() -> void:
@@ -121,7 +124,7 @@ func place_tile(clickPosition: Vector2) -> void:
 	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
 		return;
 	# If the cell is already of the same type, or if the cell is occupied by an entity, don't overwrite
-	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > 5): 
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > tileCount): 
 		return;
 	tileSet.erase_cell(clickPosition);
 	tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
@@ -134,18 +137,16 @@ func place_entity(clickPosition: Vector2) -> void:
 	validationCheck = false;
 	if (!isPlaceable): return;
 	
-	if (tileSet.get_cell_source_id(clickPosition) == brushTile || (tileSet.get_cell_source_id(clickPosition) <= 5 && tileSet.get_cell_source_id(clickPosition) >= 0)): 
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile || (tileSet.get_cell_source_id(clickPosition) <= tileCount - 1 && tileSet.get_cell_source_id(clickPosition) >= 0)): 
 		return;
 	
 	if (tileSet.get_cell_source_id(clickPosition) == 8 && brushTile != 8):
 		playerSpawnPosition = Vector2(-1, -1);
 
-	if (brushTile == 7):
-		tileSet.set_cell(clickPosition, 7, Vector2i.ZERO, 1);
-	elif (brushTile == 8 && playerSpawnPosition == Vector2(-1,-1)):
+	if (brushTile == Global.EntityType.SPAWN && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
-		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
-	elif (brushTile == 9):
+		tileSet.set_cell(clickPosition, Global.EntityType.SPAWN, Vector2i.ZERO, 1);
+	elif (brushTile > tileCount):
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
@@ -162,7 +163,7 @@ func delete_tile (clickPosition: Vector2) -> void:
 ## clickPosition: Where the mouse is during the click.
 func delete_entity (clickPosition: Vector2) -> void:
 	validationCheck = false;
-	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > 5):
+	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > tileCount):
 		return;
 	if (tileSet.get_cell_source_id(clickPosition) == 8):
 		playerSpawnPosition = Vector2(-1, -1);
@@ -171,16 +172,16 @@ func delete_entity (clickPosition: Vector2) -> void:
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
 func update_brush_tile(tile: int) -> void:
-	if currentTool == Global.Tool.CURSOR && tile > 5:
+	if currentTool == Global.Tool.CURSOR && tile > tileCount:
 		brushTile = tile;
-	elif currentTool != Global.Tool.CURSOR && tile < 6:
+	elif currentTool != Global.Tool.CURSOR && tile <= tileCount:
 		brushTile = tile;
 
 ## Hooks the preview tile to the mouse position and moves it when necessary
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevPosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
-	if (brushTile >= 7):
+	if (brushTile > tileCount):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
 	else:
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
@@ -203,7 +204,7 @@ func change_tool(tool: Global.Tool) -> void:
 	if (currentTool != Global.Tool.CURSOR):
 		update_brush_tile(Global.TileType.SOLID);
 	else:
-		update_brush_tile(Global.EntityType.SLOPE);
+		update_brush_tile(Global.EntityType.GOAL);
 	print("Current Tool: ", currentTool);
 
 	

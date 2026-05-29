@@ -7,18 +7,19 @@ var objectButtons: Array[Control] = [];
 
 # NOTE: These get_child calls will have to change once all buttons are in
 func _ready() -> void:
-	tileButtons.resize(6);
+	tileButtons.resize(7);
 	tileButtons[0] = get_child(0);
 	tileButtons[1] = get_child(1);
 	tileButtons[2] = get_child(2);
 	tileButtons[3] = get_child(3);
 	tileButtons[4] = get_child(4);
 	tileButtons[5] = get_child(5);
+	tileButtons[6] = get_child(6);
 	
 	objectButtons.resize(3);
-	objectButtons[0] = get_child(6);
-	objectButtons[1] = get_child(7);
-	objectButtons[2] = get_child(8);
+	objectButtons[0] = get_child(7);
+	objectButtons[1] = get_child(8);
+	objectButtons[2] = get_child(9);
 
 ## Set objects to be transparent when the cursor is selected
 ## selected: True if the cursor is selected
@@ -53,10 +54,10 @@ func _on_sticky_tile_button_pressed() -> void:
 func _on_bounce_tile_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.TileType.BOUNCE);
 
-# Object Buttons
-func _on_slope_object_button_pressed() -> void:
-	editorManager.update_brush_tile(Global.EntityType.SLOPE);
+func _on_slope_tile_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.TileType.SLOPE);
 
+# Object Buttons
 func _on_goal_object_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.GOAL);
 

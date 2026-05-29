@@ -27,11 +27,11 @@ enum TileType {
 	ICE = 3,
 	STICKY = 4,
 	BOUNCE = 5, 
+	SLOPE = 6,
 }
 
 # Entity Types
 enum EntityType {
-	SLOPE = 6,
 	GOAL = 7,
 	SPAWN = 8,
 	PATROLLING = 9,

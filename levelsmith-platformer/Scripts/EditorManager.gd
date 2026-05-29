@@ -3,7 +3,6 @@ extends Node2D
 # Tool-based variables
 var currentTool := Global.Tool.BRUSH;
 var brushTile : int;
-var changesMade := true;
 var validationCheck := false;
 var selectedTile : TileData;
 var painting : bool = false;
@@ -116,6 +115,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Places down the current brush tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
+	validationCheck = false;
 	if (!isPlaceable): return;
 	# If the tool is the cursor, don't overwrite any placement
 	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
@@ -131,6 +131,7 @@ func getSpawn() -> Vector2:
 ## Places down the current brush entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_entity(clickPosition: Vector2) -> void:
+	validationCheck = false;
 	if (!isPlaceable): return;
 	
 	if (tileSet.get_cell_source_id(clickPosition) == brushTile || (tileSet.get_cell_source_id(clickPosition) <= 5 && tileSet.get_cell_source_id(clickPosition) >= 0)): 
@@ -152,6 +153,7 @@ func place_entity(clickPosition: Vector2) -> void:
 ## Deletes a tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_tile (clickPosition: Vector2) -> void:
+	validationCheck = false;
 	if (currentTool == Global.Tool.CURSOR):
 		return;
 	tileSet.erase_cell(clickPosition);
@@ -159,6 +161,7 @@ func delete_tile (clickPosition: Vector2) -> void:
 ## Deletes an entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_entity (clickPosition: Vector2) -> void:
+	validationCheck = false;
 	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > 5):
 		return;
 	if (tileSet.get_cell_source_id(clickPosition) == 8):

@@ -33,10 +33,15 @@ func _ready() -> void:
 
 	# Start zoomed out
 	zoom = Vector2.ONE * maxZoomOut;
+	Global.reload.connect(reset_camera);
 
 #func _input(event):
 	#if event is InputEventMouseButton:
 		#print("Mouse button:", event.button_index, "pressed:", event.pressed)
+
+func reset_camera() -> void:
+	playerReference = null;
+	searchForPlayer = true;
 
 ## Processes camera logic every frame
 func _process(delta: float) -> void:
@@ -64,7 +69,7 @@ func try_find_player() -> void:
 	if !searchForPlayer:
 		return
 
-	playerReference = get_tree().get_first_node_in_group("player") as CharacterBody2D
+	playerReference = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1] as CharacterBody2D
 
 	if playerReference != null:
 		print("From CameraManager: player found")

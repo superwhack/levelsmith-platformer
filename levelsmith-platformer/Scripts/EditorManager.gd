@@ -154,7 +154,10 @@ func place_tile(clickPosition: Vector2) -> void:
 	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > tileCount): 
 		return;
 	tileSet.erase_cell(clickPosition);
-	tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
+	if (brushTile != Global.TileType.ONEWAY):
+		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
+	else:
+		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
 func getSpawn() -> Vector2:
 	return playerSpawnPosition;
 
@@ -232,8 +235,10 @@ func update_brush_tile(tile: int) -> void:
 func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
 	if (brushTile > tileCount - 1):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
-	else:
+	elif (brushTile != Global.TileType.ONEWAY):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, tileRotation);
+	else:
+		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	
 	# Preview tile will appear red if not in a placeable area.
 	previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)

@@ -20,6 +20,8 @@ var tileSwitch: HBoxContainer;
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
 
+var tileRotation := 0;
+
 # Flag for placeable areas
 var isPlaceable: bool = true;
 
@@ -82,8 +84,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		Global.Tool.CURSOR:
 			if (event.is_action_pressed("left-click")):
 				place_entity(currentMousePosition);
-			if (event.is_action_pressed("right-click")):
+			elif (event.is_action_pressed("right-click")):
 				delete_entity(currentMousePosition);
+	
+	if event.is_action_pressed("rotate"):
+		rotate_tile();
 	
 	if event.is_action_pressed("brush-tool"):
 		change_tool(Global.Tool.BRUSH);
@@ -93,7 +98,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		change_tool(Global.Tool.BOX_BRUSH);
 		tileSwitch.cursorSelected(false);
 
-	if event.is_action_pressed("cursor-tool"):
+	elif event.is_action_pressed("cursor-tool"):
 		change_tool(Global.Tool.CURSOR);
 		tileSwitch.cursorSelected(true);
 		
@@ -127,7 +132,7 @@ func place_tile(clickPosition: Vector2) -> void:
 	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > tileCount): 
 		return;
 	tileSet.erase_cell(clickPosition);
-	tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
+	tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
 func getSpawn() -> Vector2:
 	return playerSpawnPosition;
 
@@ -149,7 +154,7 @@ func place_entity(clickPosition: Vector2) -> void:
 	elif (brushTile > tileCount):
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	else:
-		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
+		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
 
 ## Deletes a tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
@@ -184,7 +189,7 @@ func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
 	if (brushTile > tileCount):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
 	else:
-		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
+		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, tileRotation);
 	
 	# Preview tile will appear red if not in a placeable area.
 	previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)
@@ -207,6 +212,18 @@ func change_tool(tool: Global.Tool) -> void:
 		update_brush_tile(Global.EntityType.GOAL);
 	print("Current Tool: ", currentTool);
 
+func rotate_tile() -> void:
+	if (brushTile == Global.TileType.SLOPE):
+		match tileRotation:
+			0:
+				tileRotation = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H;
+			TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H:
+				tileRotation = TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V;
+			TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V:
+				tileRotation = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V;
+			_:
+				tileRotation = 0;
+		print(tileRotation);
 	
 ## Converts the mouse's position into grid coordinates.
 ## mousePosition: Where the cursor currently is in world space.

@@ -33,7 +33,7 @@ enum TileType {
 # Entity Types
 enum EntityType {
 	GOAL = 7,
-	SPAWN = 8,
+	PLAYER = 8,
 	PATROLLING = 9,
 	STATIONARY = 10, 
 	FLYING = 11,

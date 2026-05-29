@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b3k624sctovph"]
 
-[ext_resource type="Texture2D" uid="uid://bggaro288ywls" path="res://Assets/Sprites/Entities/baddude.png" id="1_vcgps"]
+[ext_resource type="Texture2D" uid="uid://bwodcp7krp0gt" path="res://Assets/Sprites/Entities/BadDude.png" id="1_8ustp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
@@ -11,4 +11,4 @@ scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
-texture = ExtResource("1_vcgps")
+texture = ExtResource("1_8ustp")

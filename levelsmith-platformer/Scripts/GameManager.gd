@@ -12,8 +12,8 @@ var goalReached := false;
 var player: CharacterBody2D;
 var playerStartingPosition: Vector2;
 
-# When pause is pressed, flip the current state
-func pause_pressed() -> void:
+## When pause is pressed, flip the current state
+func pause() -> void:
 	if playState == PlayState.PAUSE:
 		get_tree().paused = false;
 		playState = PlayState.PLAY;
@@ -21,7 +21,7 @@ func pause_pressed() -> void:
 		get_tree().paused = true;
 		playState = PlayState.PAUSE;
 
-## Reset the play state, player position as well as all tile positions and information
+## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
 	Global.reload.emit();
 
@@ -36,6 +36,8 @@ func start() -> void:
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 
-func _process(delta: float) -> void:
+## Runs every frame during the play state
+## _delta: The amount of time that has passed
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
-		pause_pressed();
+		pause();

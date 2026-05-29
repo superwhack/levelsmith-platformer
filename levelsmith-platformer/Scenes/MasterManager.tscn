@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
-[ext_resource type="PackedScene" uid="uid://ducjve3v3e02u" path="res://Scenes/PlayScene.tscn" id="3_knx5t"]
+[ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/GameManager.gd" id="5_ggjfv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_knx5t"]
 
@@ -28,10 +27,8 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8fjml"]
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "gameManager")]
+[node name="MasterManager" type="Node2D" unique_id=629421629]
 script = ExtResource("1_3ngsi")
-editorManager = NodePath("EditorManager")
-gameManager = NodePath("GameManager")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=101918903 node_paths=PackedStringArray("masterManager", "tileSet")]
 script = ExtResource("4_mg0h4")
@@ -64,46 +61,15 @@ theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0vixy"
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
+script = null
 
 [node name="ToolContainer" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=2095469909]
 size_flags_stretch_ratio = 0.0
 
-[node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("3_knx5t")]
-visible = false
-script = ExtResource("5_ggjfv")
-
-[node name="CanvasLayer" parent="GameManager" index="0" unique_id=761710489]
-visible = false
-
-[node name="PauseButton" parent="GameManager/CanvasLayer" index="0" unique_id=2016045018]
-theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_i0d1j")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_64b2s")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8vbpr")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_gojh1")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0vixy")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
-
-[node name="ResetButton" parent="GameManager/CanvasLayer" index="1" unique_id=578432121]
-theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_i0d1j")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_64b2s")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8vbpr")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_gojh1")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0vixy")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
+[node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 
 [connection signal="pressed" from="EditorManager/CanvasLayer/PlayButton" to="." method="play"]
 [connection signal="pressed" from="GameManager/CanvasLayer/PauseButton" to="." method="edit"]
-[connection signal="pressed" from="GameManager/CanvasLayer/ResetButton" to="GameManager" method="reset"]
 
 [editable path="EditorManager"]
 [editable path="GameManager"]

@@ -18,8 +18,16 @@ func _ready() -> void:
 	editorManager = get_child(1);
 	gameManager = get_child(2);
 	Global.reload.connect(load_tilemap);
+	Global.complete.connect(level_complete);
 	
 	edit();
+
+## When the level is completed, validate it and automatically return to editor
+## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
+func level_complete() -> void:
+	edit();
+	editorManager.validationCheck = true;
+	print("LEVEL COMPLETE")
 
 ## Swap to edit state
 func edit() -> void:

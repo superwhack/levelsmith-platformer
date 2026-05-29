@@ -139,7 +139,9 @@ func place_entity(clickPosition: Vector2) -> void:
 	if (tileSet.get_cell_source_id(clickPosition) == 8 && brushTile != 8):
 		playerSpawnPosition = Vector2(-1, -1);
 
-	if (brushTile == 8 && playerSpawnPosition == Vector2(-1,-1)):
+	if (brushTile == 7):
+		tileSet.set_cell(clickPosition, 7, Vector2i.ZERO, 1);
+	elif (brushTile == 8 && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	elif (brushTile == 9):
@@ -175,7 +177,7 @@ func update_brush_tile(tile: int) -> void:
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevPosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
-	if (brushTile >= 8):
+	if (brushTile >= 7):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
 	else:
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);

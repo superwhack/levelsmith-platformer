@@ -4,6 +4,10 @@ extends Node
 signal death;
 signal reload;
 
+# Tile size.
+var tileSize = 128;
+
+
 # Application State
 enum State {
 	EDIT,

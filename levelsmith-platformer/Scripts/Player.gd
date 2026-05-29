@@ -44,6 +44,8 @@ func _physics_process(delta: float) -> void:
 			jump();
 	# Handle A and D inputs, as well as lack of directional input
 	run();
+	check_out_of_bounds();
+
 	# Look at what the player is colliding with and apply effects
 	detect_tile();
 	move_and_slide();
@@ -101,7 +103,7 @@ func detect_tile() -> void:
 			var tilePos = collider.local_to_map(collider.to_local(collision.get_position()));
 			var tileData = collider.get_cell_tile_data(tilePos);
 			if tileData and (tileData.get_custom_data("name") == "hazard" or collision.get_position().y > self.get_position().y + 63):
-				print(tilePos, " ", tileData.get_custom_data("name"));
+				#print(tilePos, " ", tileData.get_custom_data("name"));
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):
 					## NOTE: Theoretical code for the player to drop down through one-ways, works fine but it's a no go for a feature
@@ -120,10 +122,15 @@ func detect_tile() -> void:
 					# Apply a slowdown to player movement and jumps
 					"slow":
 						currentSlowdown = .5;
-						
+
+## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> void:
-	if (self.x < 0
-	|| self.x > get_tree().root.gridHeight
-	|| self.y < 0
-	|| self.y > get_tree().root.gridWidth):
+	var masterManager : Node2D = get_tree().current_scene;
+	
+	# There is a 1 tile leeway given to players who leave bounds, before deth
+	if (self.global_position.x < (-1) * Global.tileSize
+	|| self.global_position.x > (masterManager.worldSize.y + 2) * Global.tileSize
+	|| self.global_position.y < (-1) * Global.tileSize
+	|| self.global_position.y > (masterManager.worldSize.x + 2) * Global.tileSize):
+		print("Player OOB: ", self.global_position)
 		die();

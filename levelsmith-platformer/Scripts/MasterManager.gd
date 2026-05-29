@@ -9,7 +9,9 @@ var gameManager : Node2D;
 
 # Map that is currently loaded in the Play scene
 var loadedMap : TileMapLayer;
+
 ## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
+## Vars for the world size.
 @export var worldSize : Vector2i = Vector2i(8, 14);
 
 func _ready() -> void:

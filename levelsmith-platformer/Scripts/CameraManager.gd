@@ -6,6 +6,7 @@ extends Camera2D;
 @export var moveSpeed: float = 500.0;
 @export var edgeScrollSpeed: float = 800.0;
 @export var edgeScrollMargin: float = 16.0;
+var is_panning;
 
 # Camera zoom settings
 @export var zoomSpeed: float = 0.1;
@@ -81,6 +82,18 @@ func try_find_player() -> void:
 	if playerSearchAttempts >= maxPlayerSearchAttempts:
 		print("From CameraManager: ERROR - fail to find player")
 		searchForPlayer = false
+
+## Handles mouse middle-click panning
+func _input(event: InputEvent) -> void:
+	# Start/stop middle-click panning
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_MIDDLE:
+			is_panning = event.pressed;
+
+	# Pan while dragging
+	if event is InputEventMouseMotion and is_panning:
+		global_position -= event.relative / zoom;
+		clamp_camera_to_level();
 
 ## Processes editor camera keypress movement
 func process_build_camera(delta: float) -> void:

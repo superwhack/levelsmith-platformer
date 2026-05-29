@@ -176,7 +176,9 @@ func place_entity(clickPosition: Vector2) -> void:
 	if (brushTile == Global.EntityType.PLAYER && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
-	elif (brushTile > tileCount - 1):
+	elif (brushTile == Global.EntityType.PLAYER):
+		return;
+	elif (brushTile >= tileCount):
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
@@ -233,7 +235,7 @@ func update_brush_tile(tile: int) -> void:
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevPosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
-	if (brushTile > tileCount - 1):
+	if (brushTile >= tileCount):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
 	elif (brushTile != Global.TileType.ONEWAY):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, tileRotation);

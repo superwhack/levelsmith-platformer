@@ -3,6 +3,8 @@ extends Node2D
 # Tool-based variables
 var currentTool := Global.Tool.BRUSH;
 var brushTile : int;
+var changesMade := true;
+var validationCheck := false;
 var selectedTile : TileData;
 var painting : bool = false;
 var erasing : bool = false;

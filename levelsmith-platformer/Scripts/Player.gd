@@ -35,7 +35,6 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta * fallSpeed;
 	else:
 		coyoteTimeLeft = coyoteTime;
-	
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() or coyoteTimeLeft > 0.0:
 			# Don't allow double jumps by reducing coyoteTimeLeft to 0
@@ -103,8 +102,13 @@ func detect_tile() -> void:
 			var tilePos = collider.local_to_map(collider.to_local(collision.get_position()));
 			var tileData = collider.get_cell_tile_data(tilePos);
 			if tileData and (tileData.get_custom_data("name") == "hazard" or collision.get_position().y > self.get_position().y + 63):
+				print(tilePos, " ", tileData.get_custom_data("name"));
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):
+					## NOTE: Theoretical code for the player to drop down through one-ways, works fine but it's a no go for a feature
+					#"oneway":
+					#	if Input.is_action_just_pressed("down"):
+					#		position += Vector2(0, 1);
 					# Bounce the player up
 					"bounce":
 						velocity.y = -jumpHeight * 600 * tileData.get_custom_data("bounce");

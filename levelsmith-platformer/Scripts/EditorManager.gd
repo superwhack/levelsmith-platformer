@@ -155,16 +155,16 @@ func getSpawn() -> Vector2:
 func place_entity(clickPosition: Vector2) -> void:
 	if (!isPlaceable): return;
 	
-	if (tileSet.get_cell_source_id(clickPosition) == brushTile || (tileSet.get_cell_source_id(clickPosition) <= Global.TileType.size() && tileSet.get_cell_source_id(clickPosition) >= 0)): 
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile || (tileSet.get_cell_source_id(clickPosition) < Global.TileType.size() && tileSet.get_cell_source_id(clickPosition) >= 0)): 
 		return;
 	
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER && brushTile != Global.EntityType.PLAYER):
 		playerSpawnPosition = Vector2(-1, -1);
 
-	if (brushTile == 8 && playerSpawnPosition == Vector2(-1,-1)):
+	if (brushTile == Global.EntityType.PLAYER && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
-	elif (brushTile == 9):
+	elif (brushTile == Global.EntityType.PATROLLING):
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
@@ -181,7 +181,7 @@ func delete_tile (clickPosition: Vector2) -> void:
 func delete_entity (clickPosition: Vector2) -> void:
 	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > 5):
 		return;
-	if (tileSet.get_cell_source_id(clickPosition) == 8):
+	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER):
 		playerSpawnPosition = Vector2(-1, -1);
 	tileSet.erase_cell(clickPosition);
 

@@ -61,7 +61,6 @@ theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0vixy"
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
-script = null
 
 [node name="ToolContainer" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=2095469909]
 size_flags_stretch_ratio = 0.0

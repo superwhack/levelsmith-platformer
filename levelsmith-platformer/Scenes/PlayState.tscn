@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dtt02avvdvee"]
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/GameManager.gd" id="1_habuo"]
-[ext_resource type="Texture2D" uid="uid://dbdqxg33ixrri" path="res://Assets/Sprites/UI/Pause.png" id="2_ym18m"]
-[ext_resource type="Texture2D" uid="uid://icym7kutxamx" path="res://Assets/Sprites/UI/Reset.png" id="4_x53pn"]
+[ext_resource type="Texture2D" uid="uid://bsnws70qq77ts" path="res://Assets/Sprites/UI/Pause.png" id="2_ym18m"]
+[ext_resource type="Texture2D" uid="uid://crs4uvi33lf4m" path="res://Assets/Sprites/UI/Reset.png" id="4_x53pn"]
 
 [node name="GameManager" type="Node2D" unique_id=344859815]
 script = ExtResource("1_habuo")

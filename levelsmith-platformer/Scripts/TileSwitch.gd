@@ -58,7 +58,7 @@ func _on_slope_object_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.SLOPE);
 	
 func _on_spawn_object_button_pressed() -> void:
-	editorManager.update_brush_tile(Global.EntityType.SPAWN);
+	editorManager.update_brush_tile(Global.EntityType.PLAYER);
 
 func _on_patrolling_object_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.PATROLLING);

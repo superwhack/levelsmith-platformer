@@ -210,9 +210,9 @@ func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
 func update_brush_tile(tile: int) -> void:
-	if currentTool == Global.Tool.CURSOR && tile > 5:
+	if currentTool == Global.Tool.CURSOR && tile >= Global.TileType.size():
 		brushTile = tile;
-	elif currentTool != Global.Tool.CURSOR && tile < 6:
+	elif currentTool != Global.Tool.CURSOR && tile < Global.TileType.size():
 		brushTile = tile;
 
 ## Hooks the preview tile to the mouse position and moves it when necessary

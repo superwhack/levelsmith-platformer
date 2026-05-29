@@ -98,9 +98,9 @@ func _unhandled_input(event: InputEvent) -> void:
 ## position: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
 	# Returns early if mouse is outside of grid parameters
-	if check_out_of_bounds():
+	if check_out_of_bounds(clickPosition):
 		return;
-	
+
 	if (tileSet.get_cell_source_id(clickPosition) == brushTile): return;
 	
 	tileSet.erase_cell(clickPosition);
@@ -134,9 +134,9 @@ func update_brush_tile(tile: Global.TileType) -> void:
 func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
 	
 	# Returns early if mouse is outside of grid parameters
-	if check_out_of_bounds():
+	if check_out_of_bounds(mousePosition):
+		previewTileMap.erase_cell(prevMousePosition);
 		return;
-	
 	
 	previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	
@@ -162,11 +162,11 @@ func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 	return tileSet.local_to_map(tileSet.to_local(mousePosition));
 	
 ## Checks if the mouse is currently out of bounds
-func check_out_of_bounds() -> bool:
-	if (get_grid_mouse_position(get_global_mouse_position())[0] < 0
-	|| get_grid_mouse_position(get_global_mouse_position())[0] > get_parent().gridHeight
-	|| get_grid_mouse_position(get_global_mouse_position())[1] < 0
-	|| get_grid_mouse_position(get_global_mouse_position())[1] > get_parent().gridWidth):
+func check_out_of_bounds(tilePosition: Vector2i) -> bool:
+	if (tilePosition.x < 0
+	|| tilePosition.x > get_parent().gridHeight
+	|| tilePosition.y < 0
+	|| tilePosition.y > get_parent().gridWidth):
 		return true;
 	return false;
 	

@@ -24,7 +24,7 @@ var prevMousePosition: Vector2;
 # Flag for placeable areas
 var isPlaceable: bool = true;
 
-# Player spawnpoint. Set when placing the object.
+# Player spawnpoint. Set when placing the entity.
 var playerSpawnPosition: Vector2 = Vector2(-1, -1);
 
 ## Runs once when the script is ready.
@@ -47,46 +47,41 @@ func _ready() -> void:
 
 
 ## Runs every frame during the editing state
-## delta: how much time has passed
+## _delta: how much time has passed
 func _process(_delta: float) -> void:
 	# record the position of the mouse on this frame
 	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
-
+	isPlaceable = !check_out_of_bounds(currentMousePosition);
+	
 	update_preview_tile(currentMousePosition, prevMousePosition);
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
-	
-func _unhandled_input(event: InputEvent) -> void:
 
-	if (event.is_action_pressed("left-click")):
-		painting = true;
-	elif (event.is_action_released("left-click")):
-		painting = false;
-		
-	if (event.is_action_pressed("right-click")):
-		erasing = true;
-	elif (event.is_action_released("right-click")):
-		erasing = false;
-		
-	# Paint if the brush is selected, click to place if cursor is
-	if painting:
-		if currentTool == Global.Tool.BRUSH:
-			place_tile(currentMousePosition);
-		elif currentTool == Global.Tool.CURSOR && event.is_action_pressed("left-click"):
-			if (brushTile < 6):
-				place_tile(currentMousePosition); 
-			else:
-				place_object(currentMousePosition); 
-			
-	# Drag erase if the brush is selected, click to remove if cursor is
-	elif erasing:
-		if currentTool == Global.Tool.BRUSH:
-			delete_entity(currentMousePosition);
-		elif currentTool == Global.Tool.CURSOR && event.is_action_pressed("right-click"):
-			delete_entity(currentMousePosition); 
+## Input manager for any clicks or key presses that aren't on UI elements
+## event: The key input being read.
+func _unhandled_input(event: InputEvent) -> void:
+	match (currentTool):
+		Global.Tool.BRUSH:
+			if (event.is_action_pressed("left-click")):
+				painting = true;
+			elif (event.is_action_released("left-click")):
+				painting = false;
+				
+			if (event.is_action_pressed("right-click")):
+				erasing = true;
+			elif (event.is_action_released("right-click")):
+				erasing = false;
+				
+			if painting: place_tile(currentMousePosition);
+			elif erasing: delete_tile(currentMousePosition);
+		Global.Tool.CURSOR:
+			if (event.is_action_pressed("left-click")):
+				place_entity(currentMousePosition);
+			if (event.is_action_pressed("right-click")):
+				delete_entity(currentMousePosition);
 	
 	if event.is_action_pressed("brush-tool"):
 		change_tool(Global.Tool.BRUSH);
@@ -119,16 +114,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		update_brush_tile(Global.TileType.BOUNCE);
 
 ## Places down the current brush tile at the clicked position.
-## position: Where the mouse is during the click.
+## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
-	# Returns early if mouse is outside of grid parameters
-	if check_out_of_bounds(clickPosition):
-		return;
-
+	if (!isPlaceable): return;
 	# If the tool is the cursor, don't overwrite any placement
 	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
 		return;
-	# If the cell is already of the same type, or if the cell is occupied by an object, don't overwrite
+	# If the cell is already of the same type, or if the cell is occupied by an entity, don't overwrite
 	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > 5): 
 		return;
 	tileSet.erase_cell(clickPosition);
@@ -136,23 +128,34 @@ func place_tile(clickPosition: Vector2) -> void:
 func getSpawn() -> Vector2:
 	return playerSpawnPosition;
 
-## Places down the current brush object at the clicked position.
-## position: Where the mouse is during the click.
-func place_object(clickPosition: Vector2) -> void:
-	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
+## Places down the current brush entity at the clicked position.
+## clickPosition: Where the mouse is during the click.
+func place_entity(clickPosition: Vector2) -> void:
+	if (!isPlaceable): return;
+	
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile || (tileSet.get_cell_source_id(clickPosition) <= 5 && tileSet.get_cell_source_id(clickPosition) >= 0)): 
 		return;
-	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > 5): 
-		return;
+	
+	if (tileSet.get_cell_source_id(clickPosition) == 8 && brushTile != 8):
+		playerSpawnPosition = Vector2(-1, -1);
+
 	if (brushTile == 8 && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
-		tileSet.set_cell(clickPosition, 8, Vector2i.ZERO, 1);
+		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	elif (brushTile == 9):
-		tileSet.set_cell(clickPosition, 9, Vector2i.ZERO, 1);
+		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
 
+## Deletes a tile at the clicked position.
+## clickPosition: Where the mouse is during the click.
+func delete_tile (clickPosition: Vector2) -> void:
+	if (currentTool == Global.Tool.CURSOR):
+		return;
+	tileSet.erase_cell(clickPosition);
+
 ## Deletes an entity at the clicked position.
-## position: Where the mouse is during the click.
+## clickPosition: Where the mouse is during the click.
 func delete_entity (clickPosition: Vector2) -> void:
 	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > 5):
 		return;
@@ -160,18 +163,9 @@ func delete_entity (clickPosition: Vector2) -> void:
 		playerSpawnPosition = Vector2(-1, -1);
 	tileSet.erase_cell(clickPosition);
 
-func select_tile(clickPosition: Vector2) -> void:
-	print("a");
-
-func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
-	print("a");
-
-func move_tile() -> void:
-	print("a");
-	
-## Change the currently selected tile/object if possible
-## tile: the tile/pbject to try and change to
-func update_brush_tile(tile: Global.TileType) -> void:
+## Change the currently selected tile/entity if possible
+## tile: the tile/entity to try and change to
+func update_brush_tile(tile: int) -> void:
 	if currentTool == Global.Tool.CURSOR && tile > 5:
 		brushTile = tile;
 	elif currentTool != Global.Tool.CURSOR && tile < 6:
@@ -179,17 +173,10 @@ func update_brush_tile(tile: Global.TileType) -> void:
 
 ## Hooks the preview tile to the mouse position and moves it when necessary
 ## mousePosition: Where the mouse currently is in grid coordinates
-## prevMousePosition: Where the mouse previously was in grid coordinates
-func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
-	# Returns early if mouse is outside of grid parameters
-	if check_out_of_bounds(mousePosition):
-		previewTileMap.erase_cell(prevMousePosition);
-		return;
-
-	if (brushTile == 8):
-		previewTileMap.set_cell(mousePosition, 8, Vector2i.ZERO, 2);
-	elif (brushTile == 9):
-		previewTileMap.set_cell(mousePosition, 9, Vector2i.ZERO, 2);
+## prevPosition: Where the mouse previously was in grid coordinates
+func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
+	if (brushTile >= 8):
+		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
 	else:
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	
@@ -208,10 +195,10 @@ func change_tool(tool: Global.Tool) -> void:
 	currentTool = tool;
 	
 	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
-	if (brushTile > 5 && currentTool != Global.Tool.CURSOR):
-		update_brush_tile(0);
-	if (brushTile < 6 && currentTool == Global.Tool.CURSOR):
-		update_brush_tile(6);
+	if (currentTool != Global.Tool.CURSOR):
+		update_brush_tile(Global.TileType.SOLID);
+	else:
+		update_brush_tile(Global.EntityType.SLOPE);
 	print("Current Tool: ", currentTool);
 
 	
@@ -221,12 +208,14 @@ func change_tool(tool: Global.Tool) -> void:
 func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 	return tileSet.local_to_map(tileSet.to_local(mousePosition));
 	
-## Checks if the mouse is currently out of bounds
-func check_out_of_bounds(tilePosition: Vector2i) -> bool:
-	if (tilePosition.x < 0
-	|| tilePosition.x > get_parent().gridHeight
-	|| tilePosition.y < 0
-	|| tilePosition.y > get_parent().gridWidth):
+## Checks if the mouse is currently outside of the world grid size
+## mousePosition: Where the mouse is during this check 
+## returns: True if the mouse is out of bounds
+func check_out_of_bounds(mousePosition: Vector2i) -> bool:
+	if (mousePosition.x < 0
+	|| mousePosition.x > get_parent().gridHeight
+	|| mousePosition.y < 0
+	|| mousePosition.y > get_parent().gridWidth):
 		return true;
 	return false;
 	

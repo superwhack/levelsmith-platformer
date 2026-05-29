@@ -2,11 +2,10 @@
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
-[ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/ToolSwitch.tscn" id="6_iws6f"]
-[ext_resource type="PackedScene" uid="uid://bm4xtof1yv0ib" path="res://Scenes/TileSwitch.tscn" id="7_qupls"]
-[ext_resource type="Texture2D" uid="uid://dt6pg2cjbdcuv" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
-[ext_resource type="Texture2D" uid="uid://4ep54j50e0kf" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
-[ext_resource type="Script" uid="uid://kl326f6vn6r8" path="res://Scripts/SceneSwap.gd" id="11_klveo"]
+[ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
+[ext_resource type="PackedScene" uid="uid://bm4xtof1yv0ib" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
+[ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
+[ext_resource type="Texture2D" uid="uid://cdt6pnj0wa52b" path="res://Assets/Sprites/UI/Play.png" id="10_njgpr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -61,7 +60,6 @@ offset_bottom = 1058.0
 focus_behavior_recursive = 1
 action_mode = 0
 icon = ExtResource("10_njgpr")
-script = ExtResource("11_klveo")
 
 [node name="ToolContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=2095469909]
 z_index = 2

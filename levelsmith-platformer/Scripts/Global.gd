@@ -27,8 +27,8 @@ enum TileType {
 	BOUNCE = 5, 
 }
 
-# Object Types
-enum ObjectType {
+# Entity Types
+enum EntityType {
 	SLOPE = 6,
 	GOAL = 7,
 	SPAWN = 8,

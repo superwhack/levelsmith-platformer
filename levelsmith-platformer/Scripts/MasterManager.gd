@@ -4,8 +4,8 @@ extends Node2D
 var state : Global.State = Global.State.EDIT;
 
 # References to both state managers
-@export var editorManager : Node2D;
-@export var gameManager : Node2D;
+var editorManager : Node2D;
+var gameManager : Node2D;
 
 # Map that is currently loaded in the Play scene
 var loadedMap : TileMapLayer;
@@ -13,8 +13,11 @@ var gridWidth : int = 8;
 var gridHeight : int = 14;
 
 func _ready() -> void:
-	edit();
+	editorManager = get_child(1);
+	gameManager = get_child(2);
 	Global.reload.connect(load_tilemap);
+	
+	edit();
 
 ## Swap to edit state
 func edit() -> void:
@@ -31,7 +34,7 @@ func edit() -> void:
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
 
-## Swap to play
+## Swap to play state
 func play() -> void:
 	if (!editorManager.player_exist()):
 		print("No Player Exists, Cannot Start")

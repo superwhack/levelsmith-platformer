@@ -55,10 +55,10 @@ func _on_bounce_tile_button_pressed() -> void:
 
 # Object Buttons
 func _on_slope_object_button_pressed() -> void:
-	editorManager.update_brush_tile(Global.ObjectType.SLOPE);
+	editorManager.update_brush_tile(Global.EntityType.SLOPE);
 	
 func _on_spawn_object_button_pressed() -> void:
-	editorManager.update_brush_tile(Global.ObjectType.SPAWN);
+	editorManager.update_brush_tile(Global.EntityType.SPAWN);
 
 func _on_patrolling_object_button_pressed() -> void:
-	editorManager.update_brush_tile(Global.ObjectType.PATROLLING);
+	editorManager.update_brush_tile(Global.EntityType.PATROLLING);

@@ -8,7 +8,7 @@ extends CharacterBody2D
 @export var fallSpeed := 1.0;
 # Determines how long after leaving a platform you can still jump
 @export var coyoteTime := 0.2;
-var coyoteTimeLeft = coyoteTime;
+var coyoteTimeLeft = 0;
 # TODO: Make FPS dependant on a global FPS initailly instead of being set to 24
 # TODO: Impliment animations and use this
 @export var FPS := 24;
@@ -26,6 +26,8 @@ var currentSlowdown := 1.0;
 # Speed with constant multiplier and slowdown appended in
 var trueSpeed : float;
 
+## Runs every frame during the play state
+## delta: How much time has passed
 func _physics_process(delta: float) -> void:
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair
@@ -52,7 +54,6 @@ func jump() -> void:
 	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
-## amount: damage to deal
 func run() -> void:
 	# Acceration in the X direction for the player
 	var accelerationX : float;
@@ -79,10 +80,8 @@ func take_damage(amount: int) -> void:
 	if (health <= 0):
 		die();
 	
-## Kill the player, for now it just sends them back to start
+## Kill the player and send the global death signal
 func die() -> void:
-	# Temporary stand-in for killing the player, should be replaced with actual death logic
-	health = maxHealth;
 	Global.death.emit();
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it

@@ -137,19 +137,37 @@ func process_player_camera(_delta: float) -> void:
 ## zoomAmount: Zoom change amount
 func process_zoom(zoomAmount: float) -> void:
 
-	zoom += Vector2.ONE * zoomAmount;
+	# Mouse world position BEFORE zoom
+	var mouse_world_before: Vector2 = get_global_mouse_position()
 
-	zoom.x = clamp(
-		zoom.x,
+	# Fallback to level center if mouse outside map
+	if !level_bounds.has_point(mouse_world_before):
+		mouse_world_before = level_bounds.get_center()
+
+	# Calculate new zoom first
+	var new_zoom: float = clamp(
+		zoom.x + zoomAmount,
 		maxZoomOut,
 		maxZoomIn
-	);
+	)
 
-	zoom.y = clamp(
-		zoom.y,
-		maxZoomOut,
-		maxZoomIn
-	);
+	# STOP if already at zoom limit
+	if is_equal_approx(new_zoom, zoom.x):
+		return
+
+	# Apply zoom
+	zoom = Vector2.ONE * new_zoom
+
+	# Mouse world position AFTER zoom
+	var mouse_world_after: Vector2 = get_global_mouse_position()
+
+	if !level_bounds.has_point(mouse_world_after):
+		mouse_world_after = level_bounds.get_center()
+
+	# Offset camera so zoom focuses on mouse
+	global_position += mouse_world_before - mouse_world_after
+
+	clamp_camera_to_level()
 
 func process_zoom_input() -> void:
 	if masterManager.state != Global.State.EDIT:
@@ -174,16 +192,24 @@ func get_level_bounds() -> Rect2:
 
 ## Prevents the camera from leaving the level
 func clamp_camera_to_level() -> void:
-	var half_screen: Vector2 = get_viewport_rect().size * 0.5 * zoom
+	var viewport_size: Vector2 = get_viewport_rect().size
 
-	global_position.x = clamp(
-		global_position.x,
-		level_bounds.position.x + half_screen.x,
-		level_bounds.position.x + level_bounds.size.x - half_screen.x
-	)
+	# Visible world size based on zoom
+	var visible_size: Vector2 = viewport_size * 0.5 / zoom
 
-	global_position.y = clamp(
-		global_position.y,
-		level_bounds.position.y + half_screen.y,
-		level_bounds.position.y + level_bounds.size.y - half_screen.y
-	)
+	var min_x = level_bounds.position.x + visible_size.x
+	var max_x = level_bounds.position.x + level_bounds.size.x - visible_size.x
+
+	var min_y = level_bounds.position.y + visible_size.y
+	var max_y = level_bounds.position.y + level_bounds.size.y - visible_size.y
+
+	# If level smaller than camera view, center camera
+	if min_x > max_x:
+		global_position.x = level_bounds.get_center().x
+	else:
+		global_position.x = clamp(global_position.x, min_x, max_x)
+
+	if min_y > max_y:
+		global_position.y = level_bounds.get_center().y
+	else:
+		global_position.y = clamp(global_position.y, min_y, max_y)

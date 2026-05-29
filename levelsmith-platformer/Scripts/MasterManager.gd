@@ -9,6 +9,8 @@ var state : Global.State = Global.State.EDIT;
 
 # Map that is currently loaded in the Play scene
 var loadedMap : TileMapLayer;
+var gridWidth : int = 8;
+var gridHeight : int = 14;
 
 #func _ready() -> void:
 	#edit();

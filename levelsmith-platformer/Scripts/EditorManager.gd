@@ -37,6 +37,12 @@ func _ready() -> void:
 	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
 	
 	brushTile = Global.TileType.SOLID;
+	
+	fill_grid_lines();
+	
+	print("Level Height:", get_parent().gridHeight);
+	print("Level Width:", get_parent().gridWidth);
+
 
 ## Runs every frame during the editing state
 ## delta: how much time has passed
@@ -113,6 +119,10 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Places down the current brush tile at the clicked position.
 ## position: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
+	# Returns early if mouse is outside of grid parameters
+	if check_out_of_bounds(clickPosition):
+		return;
+
 	# If the tool is the cursor, don't overwrite any placement
 	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
 		return;
@@ -169,6 +179,11 @@ func update_brush_tile(tile: Global.TileType) -> void:
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevMousePosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevMousePosition: Vector2) -> void:
+	# Returns early if mouse is outside of grid parameters
+	if check_out_of_bounds(mousePosition):
+		previewTileMap.erase_cell(prevMousePosition);
+		return;
+
 	if (brushTile == 8):
 		previewTileMap.set_cell(mousePosition, 8, Vector2i.ZERO, 2);
 	elif (brushTile == 9):
@@ -203,6 +218,21 @@ func change_tool(tool: Global.Tool) -> void:
 ## returns: The grid-coordinate equivalent of the position.
 func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 	return tileSet.local_to_map(tileSet.to_local(mousePosition));
+	
+## Checks if the mouse is currently out of bounds
+func check_out_of_bounds(tilePosition: Vector2i) -> bool:
+	if (tilePosition.x < 0
+	|| tilePosition.x > get_parent().gridHeight
+	|| tilePosition.y < 0
+	|| tilePosition.y > get_parent().gridWidth):
+		return true;
+	return false;
+	
+## Fills the grid with grid lines tiles
+func fill_grid_lines() -> void:
+	for height in range(0, get_parent().gridHeight + 1):
+		for width in range(0, get_parent().gridWidth + 1):
+			gridLines.set_cell(Vector2i(height, width), 1, Vector2i.ZERO);
 
 ## Return true if the player exists
 ## returns: True if the player exists in the grid

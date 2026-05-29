@@ -46,6 +46,7 @@ tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAA
 
 [node name="GridLines" parent="EditorManager" index="1" unique_id=669187714]
 z_index = 0
+tile_map_data = PackedByteArray()
 
 [node name="PreviewTile" parent="EditorManager" index="2" unique_id=1302011485]
 modulate = Color(1, 1, 1, 1)

@@ -3,10 +3,10 @@ extends Camera2D;
 @export var masterManager: Node
 
 # Camera movement settings
+@export var roamMargin: float = 2000.0
 @export var moveSpeed: float = 500.0;
 @export var edgeScrollSpeed: float = 800.0;
 @export var edgeScrollMargin: float = 16.0;
-var is_panning;
 
 # Camera zoom settings
 @export var zoomSpeed: float = 0.1;
@@ -33,16 +33,10 @@ func _ready() -> void:
 
 	# Start zoomed out
 	zoom = Vector2.ONE * maxZoomOut;
-	Global.reload.connect(reset_player_cam);
 
 #func _input(event):
 	#if event is InputEventMouseButton:
 		#print("Mouse button:", event.button_index, "pressed:", event.pressed)
-
-## On reloading the game scene, reset the player reference and search again
-func reset_player_cam() -> void:
-	playerReference = null;
-	searchForPlayer = true;
 
 ## Processes camera logic every frame
 func _process(delta: float) -> void:
@@ -70,7 +64,7 @@ func try_find_player() -> void:
 	if !searchForPlayer:
 		return
 
-	playerReference = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1] as CharacterBody2D
+	playerReference = get_tree().get_first_node_in_group("player") as CharacterBody2D
 
 	if playerReference != null:
 		print("From CameraManager: player found")
@@ -82,18 +76,6 @@ func try_find_player() -> void:
 	if playerSearchAttempts >= maxPlayerSearchAttempts:
 		print("From CameraManager: ERROR - fail to find player")
 		searchForPlayer = false
-
-## Handles mouse middle-click panning
-func _input(event: InputEvent) -> void:
-	# Start/stop middle-click panning
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_MIDDLE:
-			is_panning = event.pressed;
-
-	# Pan while dragging
-	if event is InputEventMouseMotion and is_panning:
-		global_position -= event.relative / zoom;
-		clamp_camera_to_level();
 
 ## Processes editor camera keypress movement
 func process_build_camera(delta: float) -> void:
@@ -145,7 +127,6 @@ func process_player_camera(_delta: float) -> void:
 
 	global_position = playerReference.global_position;
 
-
 ## Adjusts camera zoom
 ## zoomAmount: Zoom change amount
 func process_zoom(zoomAmount: float) -> void:
@@ -155,7 +136,7 @@ func process_zoom(zoomAmount: float) -> void:
 
 	# Fallback to level center if mouse outside map
 	if !level_bounds.has_point(mouse_world_before):
-		mouse_world_before = level_bounds.get_center()
+		mouse_world_before = global_position
 
 	# Calculate new zoom first
 	var new_zoom: float = clamp(
@@ -175,7 +156,7 @@ func process_zoom(zoomAmount: float) -> void:
 	var mouse_world_after: Vector2 = get_global_mouse_position()
 
 	if !level_bounds.has_point(mouse_world_after):
-		mouse_world_after = level_bounds.get_center()
+		mouse_world_after = global_position
 
 	# Offset camera so zoom focuses on mouse
 	global_position += mouse_world_before - mouse_world_after
@@ -203,20 +184,30 @@ func get_level_bounds() -> Rect2:
 
 	return Rect2(top_left, bottom_right - top_left)
 
+func get_camera_bounds() -> Rect2:
+	var center := level_bounds.get_center()
+
+	# Expand far beyond the level
+	var size := level_bounds.size + Vector2(roamMargin, roamMargin)
+
+	return Rect2(center - size * 0.5, size)
+
 ## Prevents the camera from leaving the level
 func clamp_camera_to_level() -> void:
+
+	var bounds := get_camera_bounds()
 	var viewport_size: Vector2 = get_viewport_rect().size
 
-	# Visible world size based on zoom
+	# visible world size
 	var visible_size: Vector2 = viewport_size * 0.5 / zoom
 
-	var min_x = level_bounds.position.x + visible_size.x
-	var max_x = level_bounds.position.x + level_bounds.size.x - visible_size.x
+	var min_x = bounds.position.x + visible_size.x
+	var max_x = bounds.position.x + bounds.size.x - visible_size.x
 
-	var min_y = level_bounds.position.y + visible_size.y
-	var max_y = level_bounds.position.y + level_bounds.size.y - visible_size.y
+	var min_y = bounds.position.y + visible_size.y
+	var max_y = bounds.position.y + bounds.size.y - visible_size.y
 
-	# If level smaller than camera view, center camera
+	# If zoom too far out, just center
 	if min_x > max_x:
 		global_position.x = level_bounds.get_center().x
 	else:

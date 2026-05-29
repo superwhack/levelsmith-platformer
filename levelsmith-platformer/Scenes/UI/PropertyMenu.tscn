@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bwguyxq8bjrjk"]
+
+[ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/PropertyMenu.gd" id="1_tnep3"]
+
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1439.0
+offset_top = 152.0
+offset_right = -81.0
+offset_bottom = -228.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tnep3")
+entityName = NodePath("EntityName")
+
+[node name="Label" type="Label" parent="." unique_id=1756571384]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 32
+text = "Properties"
+
+[node name="EntityName" type="Label" parent="." unique_id=1377298632]
+layout_mode = 0
+offset_top = 61.0
+offset_right = 161.0
+offset_bottom = 106.0
+theme_override_font_sizes/font_size = 24
+text = "Name"
+
+[node name="Button" type="Button" parent="." unique_id=429960597]
+layout_mode = 0
+offset_left = 302.0
+offset_top = 634.0
+offset_right = 372.0
+offset_bottom = 676.0
+theme_override_font_sizes/font_size = 24
+text = "Close"
+
+[connection signal="pressed" from="Button" to="." method="close"]

@@ -16,6 +16,9 @@ var previewTileMap: TileMapLayer;
 # Reference to TileSwitch for transparency
 var tileSwitch: HBoxContainer;
 
+# Reference to PropertyMenu for editing properties
+var propertyMenu: Panel;
+
 # Mouse position variables
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
@@ -51,6 +54,9 @@ func _ready() -> void:
 	
 	tileSwitch = get_child(3).get_child(1).get_child(1);
 	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
+	
+	# Set the reference to the property menu
+	propertyMenu = get_child(3).get_child(2);
 	
 	brushTile = Global.TileType.SOLID;
 	
@@ -105,8 +111,13 @@ func _unhandled_input(event: InputEvent) -> void:
 				
 		Global.Tool.CURSOR:
 			if (event.is_action_pressed("left-click")):
-				place_entity(currentMousePosition);
-			elif (event.is_action_pressed("right-click")):
+				# If the clicked cell is an entity, edit its properties
+				if (tileSet.get_cell_source_id(currentMousePosition) >= 6):
+					edit_properties(currentMousePosition);
+				# Otherwise, place the entity
+				else:
+					place_entity(currentMousePosition);
+			if (event.is_action_pressed("right-click")):
 				delete_entity(currentMousePosition);
 	
 	if event.is_action_pressed("rotate"):
@@ -303,3 +314,21 @@ func fill_grid_lines() -> void:
 ## returns: True if the player exists in the grid
 func player_exist() -> bool:
 	return playerSpawnPosition != Vector2(-1, -1);
+
+## Open the property menu and set the selected entity
+## clickPosition: position that the mouse has clicked at
+func edit_properties(clickPosition: Vector2) -> void:
+	propertyMenu.selectedEntity = get_scene_at_cell(clickPosition);
+	propertyMenu.show();
+
+## Retrieves a reference to the scene at a specific cell in the tile set
+## gridPosition: position of the cell being checked
+## returns: the node at the cell if there is one, null otherwise
+func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
+	# The global position of the target cell that is clicked
+	var targetGlobalPos = tileSet.map_to_local(gridPosition) + tileSet.global_position;
+	# Iterate through each node in the tileset, if any have the same global position return it
+	for node in tileSet.get_children():
+		if node.global_position == targetGlobalPos:
+			return node;
+	return null;

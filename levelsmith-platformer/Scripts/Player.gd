@@ -120,3 +120,10 @@ func detect_tile() -> void:
 					# Apply a slowdown to player movement and jumps
 					"slow":
 						currentSlowdown = .5;
+						
+func check_out_of_bounds() -> void:
+	if (self.x < 0
+	|| self.x > get_tree().root.gridHeight
+	|| self.y < 0
+	|| self.y > get_tree().root.gridWidth):
+		die();

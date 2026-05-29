@@ -21,6 +21,16 @@ var tileSwitch: HBoxContainer;
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
 
+# Box brush variables and enum
+enum BoxBrushState {
+	INACTIVE,
+	CREATE,
+	DELETE
+}
+var boxBrushState: BoxBrushState = BoxBrushState.INACTIVE;
+var firstCornerClick: Vector2;
+var secondCornerClick: Vector2;
+
 # Flag for placeable areas
 var isPlaceable: bool = true;
 
@@ -42,8 +52,8 @@ func _ready() -> void:
 	
 	fill_grid_lines();
 	
-	print("Level Height:", get_parent().gridHeight);
-	print("Level Width:", get_parent().gridWidth);
+	print("Level Height:", get_parent().worldSize.y);
+	print("Level Width:", get_parent().worldSize.x);
 
 
 ## Runs every frame during the editing state
@@ -77,6 +87,18 @@ func _unhandled_input(event: InputEvent) -> void:
 				
 			if painting: place_tile(currentMousePosition);
 			elif erasing: delete_tile(currentMousePosition);
+		Global.Tool.BOX_BRUSH:
+			if (event.is_action_pressed("left-click") && boxBrushState == BoxBrushState.INACTIVE):
+				firstCornerClick = currentMousePosition;
+				boxBrushState = BoxBrushState.CREATE;
+			elif (event.is_action_pressed("right-click") && boxBrushState == BoxBrushState.INACTIVE):
+				firstCornerClick = currentMousePosition;
+				boxBrushState = BoxBrushState.DELETE;
+				
+			if (event.is_action_released("left-click") || event.is_action_released("right-click")):
+				secondCornerClick = currentMousePosition;
+				box_edit(firstCornerClick, secondCornerClick);
+				
 		Global.Tool.CURSOR:
 			if (event.is_action_pressed("left-click")):
 				place_entity(currentMousePosition);
@@ -116,7 +138,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Places down the current brush tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
-	if (!isPlaceable): return;
+	if (check_out_of_bounds(clickPosition)): return;
 	# If the tool is the cursor, don't overwrite any placement
 	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
 		return;
@@ -133,16 +155,16 @@ func getSpawn() -> Vector2:
 func place_entity(clickPosition: Vector2) -> void:
 	if (!isPlaceable): return;
 	
-	if (tileSet.get_cell_source_id(clickPosition) == brushTile || (tileSet.get_cell_source_id(clickPosition) <= 5 && tileSet.get_cell_source_id(clickPosition) >= 0)): 
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile || (tileSet.get_cell_source_id(clickPosition) < Global.TileType.size() && tileSet.get_cell_source_id(clickPosition) >= 0)): 
 		return;
 	
-	if (tileSet.get_cell_source_id(clickPosition) == 8 && brushTile != 8):
+	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER && brushTile != Global.EntityType.PLAYER):
 		playerSpawnPosition = Vector2(-1, -1);
 
-	if (brushTile == 8 && playerSpawnPosition == Vector2(-1,-1)):
+	if (brushTile == Global.EntityType.PLAYER && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
-	elif (brushTile == 9):
+	elif (brushTile == Global.EntityType.PATROLLING):
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
@@ -150,7 +172,7 @@ func place_entity(clickPosition: Vector2) -> void:
 ## Deletes a tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_tile (clickPosition: Vector2) -> void:
-	if (currentTool == Global.Tool.CURSOR):
+	if (currentTool == Global.Tool.CURSOR || tileSet.get_cell_source_id(clickPosition) > 5 || check_out_of_bounds(clickPosition)):
 		return;
 	tileSet.erase_cell(clickPosition);
 
@@ -159,16 +181,38 @@ func delete_tile (clickPosition: Vector2) -> void:
 func delete_entity (clickPosition: Vector2) -> void:
 	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > 5):
 		return;
-	if (tileSet.get_cell_source_id(clickPosition) == 8):
+	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER):
 		playerSpawnPosition = Vector2(-1, -1);
 	tileSet.erase_cell(clickPosition);
+
+## Places or deletes all tiles in a box.
+## firstCorner: The corner where the mouse was clicked
+## secondCorner: The corner where the mouse was released
+func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
+	# Find the coordinate of the top left corner of the box.
+	var topLeft: Vector2 = Vector2(
+		min(firstCorner.x, secondCorner.x), 
+		min(firstCorner.y, secondCorner.y));
+	
+	match (boxBrushState):
+		BoxBrushState.CREATE:
+			# 1 is added to max to be inclusive
+			for i in abs(secondCorner.y - firstCorner.y) + 1:
+				for j in abs(secondCorner.x - firstCorner.x) + 1:
+					place_tile(topLeft + Vector2(j, i));
+		BoxBrushState.DELETE:
+			for i in abs(secondCorner.y - firstCorner.y) + 1:
+				for j in abs(secondCorner.x - firstCorner.x) + 1:
+					delete_tile(topLeft + Vector2(j, i));
+	
+	boxBrushState = BoxBrushState.INACTIVE;
 
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
 func update_brush_tile(tile: int) -> void:
-	if currentTool == Global.Tool.CURSOR && tile > 5:
+	if currentTool == Global.Tool.CURSOR && tile >= Global.TileType.size():
 		brushTile = tile;
-	elif currentTool != Global.Tool.CURSOR && tile < 6:
+	elif currentTool != Global.Tool.CURSOR && tile < Global.TileType.size():
 		brushTile = tile;
 
 ## Hooks the preview tile to the mouse position and moves it when necessary
@@ -183,8 +227,8 @@ func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
 	# Preview tile will appear red if not in a placeable area.
 	previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)
 	
-	if (mousePosition != prevMousePosition): 
-		previewTileMap.erase_cell(prevMousePosition);
+	if (mousePosition != prevPosition): 
+		previewTileMap.erase_cell(prevPosition);
 
 ## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.
 ## tool: The tool to change to
@@ -213,16 +257,16 @@ func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 ## returns: True if the mouse is out of bounds
 func check_out_of_bounds(mousePosition: Vector2i) -> bool:
 	if (mousePosition.x < 0
-	|| mousePosition.x > get_parent().gridHeight
+	|| mousePosition.x > get_parent().worldSize.y
 	|| mousePosition.y < 0
-	|| mousePosition.y > get_parent().gridWidth):
+	|| mousePosition.y > get_parent().worldSize.x):
 		return true;
 	return false;
 	
 ## Fills the grid with grid lines tiles
 func fill_grid_lines() -> void:
-	for height in range(0, get_parent().gridHeight + 1):
-		for width in range(0, get_parent().gridWidth + 1):
+	for height in range(0, get_parent().worldSize.y + 1):
+		for width in range(0, get_parent().worldSize.x + 1):
 			gridLines.set_cell(Vector2i(height, width), 1, Vector2i.ZERO);
 
 ## Return true if the player exists

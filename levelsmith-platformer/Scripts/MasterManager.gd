@@ -9,8 +9,7 @@ var gameManager : Node2D;
 
 # Map that is currently loaded in the Play scene
 var loadedMap : TileMapLayer;
-var gridWidth : int = 8;
-var gridHeight : int = 14;
+var worldSize : Vector2i = Vector2i(8, 14);
 
 func _ready() -> void:
 	editorManager = get_child(1);

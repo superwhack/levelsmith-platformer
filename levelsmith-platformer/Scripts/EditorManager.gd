@@ -42,8 +42,8 @@ func _ready() -> void:
 	
 	fill_grid_lines();
 	
-	print("Level Height:", get_parent().gridHeight);
-	print("Level Width:", get_parent().gridWidth);
+	print("Level Height:", get_parent().worldSize.y);
+	print("Level Width:", get_parent().worldSize.x);
 
 
 ## Runs every frame during the editing state
@@ -213,16 +213,16 @@ func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 ## returns: True if the mouse is out of bounds
 func check_out_of_bounds(mousePosition: Vector2i) -> bool:
 	if (mousePosition.x < 0
-	|| mousePosition.x > get_parent().gridHeight
+	|| mousePosition.x > get_parent().worldSize.y
 	|| mousePosition.y < 0
-	|| mousePosition.y > get_parent().gridWidth):
+	|| mousePosition.y > get_parent().worldSize.x):
 		return true;
 	return false;
 	
 ## Fills the grid with grid lines tiles
 func fill_grid_lines() -> void:
-	for height in range(0, get_parent().gridHeight + 1):
-		for width in range(0, get_parent().gridWidth + 1):
+	for height in range(0, get_parent().worldSize.y + 1):
+		for width in range(0, get_parent().worldSize.x + 1):
 			gridLines.set_cell(Vector2i(height, width), 1, Vector2i.ZERO);
 
 ## Return true if the player exists

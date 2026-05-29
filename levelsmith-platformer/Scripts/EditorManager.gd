@@ -173,7 +173,7 @@ func place_entity(clickPosition: Vector2) -> void:
 	if (brushTile == Global.EntityType.PLAYER && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
-	elif (brushTile > tileCount):
+	elif (brushTile > tileCount - 1):
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
@@ -181,7 +181,7 @@ func place_entity(clickPosition: Vector2) -> void:
 ## Deletes a tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_tile (clickPosition: Vector2) -> void:
-  validationCheck = false;
+	validationCheck = false;
 	if (currentTool == Global.Tool.CURSOR || tileSet.get_cell_source_id(clickPosition) >= tileCount || check_out_of_bounds(clickPosition)):
 		return;
 	tileSet.erase_cell(clickPosition);
@@ -230,7 +230,7 @@ func update_brush_tile(tile: int) -> void:
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevPosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
-	if (brushTile > tileCount):
+	if (brushTile > tileCount - 1):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
 	else:
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, tileRotation);

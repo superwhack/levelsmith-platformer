@@ -12,8 +12,9 @@ var loadedMap : TileMapLayer;
 var gridWidth : int = 8;
 var gridHeight : int = 14;
 
-#func _ready() -> void:
-	#edit();
+func _ready() -> void:
+	edit();
+	Global.reload.connect(load_tilemap);
 
 ## Swap to edit state
 func edit() -> void:
@@ -48,9 +49,7 @@ func play() -> void:
 	editorManager.get_node("CanvasLayer").hide();
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
-	# Load map
-	load_tilemap();
-	# Reset the play scene
+	# Reset the play scene and load the map
 	gameManager.reset();
 
 ## Saves the tilemap to the resource folder

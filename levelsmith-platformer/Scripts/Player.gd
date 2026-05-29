@@ -101,7 +101,6 @@ func detect_tile() -> void:
 			var tilePos = collider.local_to_map(collider.to_local(collision.get_position()));
 			var tileData = collider.get_cell_tile_data(tilePos);
 			if tileData and (tileData.get_custom_data("name") == "hazard" or collision.get_position().y > self.get_position().y + 63):
-				print(tilePos, " ", tileData.get_custom_data("name"));
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):
 					## NOTE: Theoretical code for the player to drop down through one-ways, works fine but it's a no go for a feature

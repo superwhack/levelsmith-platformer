@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://1wme1ton08gv"]
+
+[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="1_7hjqj"]
+
+[sub_resource type="GDScript" id="GDScript_yhd88"]
+resource_name = "Goal"
+script/source = "extends Area2D
+
+## If the player enters the area, emit the completion signal
+## body: the body entering to check if it's the player
+func _on_body_entered(body: Node2D) -> void:
+	if body is CharacterBody2D:
+		Global.complete.emit();
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7hjqj"]
+
+[node name="Goal" type="Area2D" unique_id=2133231128]
+script = SubResource("GDScript_yhd88")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1006454652]
+texture = ExtResource("1_7hjqj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1457671285]
+scale = Vector2(6.4, 6.4)
+shape = SubResource("RectangleShape2D_7hjqj")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

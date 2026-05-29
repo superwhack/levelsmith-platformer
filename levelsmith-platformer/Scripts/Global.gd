@@ -1,8 +1,10 @@
 extends Node
 
-# A signal for when the player dies
+# Signals related to current gamestates
 signal death;
 signal reload;
+signal complete;
+
 
 # Application State
 enum State {
@@ -25,11 +27,11 @@ enum TileType {
 	ICE = 3,
 	STICKY = 4,
 	BOUNCE = 5, 
+	SLOPE = 6,
 }
 
 # Entity Types
 enum EntityType {
-	SLOPE = 6,
 	GOAL = 7,
 	PLAYER = 8,
 	PATROLLING = 9,

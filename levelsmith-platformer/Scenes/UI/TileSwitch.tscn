@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bm4xtof1yv0ib"]
+[gd_scene format=3 uid="uid://cgqrior0thya8"]
 
 [ext_resource type="Script" uid="uid://e6pkeumdahqd" path="res://Scripts/TileSwitch.gd" id="1_aauec"]
 [ext_resource type="Texture2D" uid="uid://c04578uqgrfjv" path="res://Assets/Sprites/Tiles/solid.png" id="1_vjuxo"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cwlrmmmt8w86m" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
 [ext_resource type="Texture2D" uid="uid://r3td16hm8jd1" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
 [ext_resource type="Texture2D" uid="uid://bgu3tf17p5rpf" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
+[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="9_02cwx"]
 [ext_resource type="Texture2D" uid="uid://2hfbf5bqyhy4" path="res://Assets/Sprites/Entities/dude.png" id="9_e1a7i"]
 
 [node name="Control" type="HBoxContainer" unique_id=959816093]
@@ -96,16 +97,29 @@ texture_normal = ExtResource("2_aauec")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="SlopeObjectWrapper" type="Control" parent="." unique_id=1247154762]
+[node name="SlopeTileWrapper" type="Control" parent="." unique_id=1247154762]
 layout_mode = 2
 
-[node name="SlopeObectButton" type="TextureButton" parent="SlopeObjectWrapper" unique_id=1746073645]
+[node name="SlopeTileButton" type="TextureButton" parent="SlopeTileWrapper" unique_id=1746073645]
 layout_mode = 0
-offset_left = 774.0
+offset_left = 556.0
 offset_top = 1.0
-offset_right = 854.0
+offset_right = 636.0
 offset_bottom = 81.0
 texture_normal = ExtResource("3_p43ua")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="GoalObjectWrapper" type="Control" parent="." unique_id=629663342]
+layout_mode = 2
+
+[node name="GoalObjectButton" type="TextureButton" parent="GoalObjectWrapper" unique_id=2048100610]
+layout_mode = 0
+offset_left = 860.0
+offset_top = 1.0
+offset_right = 940.0
+offset_bottom = 81.0
+texture_normal = ExtResource("9_02cwx")
 ignore_texture_size = true
 stretch_mode = 0
 
@@ -114,9 +128,9 @@ layout_mode = 2
 
 [node name="SpawnObjectButton" type="TextureButton" parent="SpawnObjectWrapper" unique_id=437566097]
 layout_mode = 0
-offset_left = 854.0
+offset_left = 949.0
 offset_top = 1.0
-offset_right = 934.0
+offset_right = 1029.0
 offset_bottom = 81.0
 texture_normal = ExtResource("9_e1a7i")
 ignore_texture_size = true
@@ -127,9 +141,9 @@ layout_mode = 2
 
 [node name="PatrollingObjectButton" type="TextureButton" parent="PatrollingObjectWrapper" unique_id=1756298095]
 layout_mode = 0
-offset_left = 951.0
+offset_left = 1046.0
 offset_top = -1.0
-offset_right = 1031.0
+offset_right = 1126.0
 offset_bottom = 79.0
 texture_normal = ExtResource("2_p43ua")
 ignore_texture_size = true
@@ -141,6 +155,7 @@ stretch_mode = 0
 [connection signal="pressed" from="IceTileWrapper/IceTileButton" to="." method="_on_ice_tile_button_pressed"]
 [connection signal="pressed" from="StickyTWrapper/StickyTileButton" to="." method="_on_sticky_tile_button_pressed"]
 [connection signal="pressed" from="BounceTileWrapper/BounceTileButton" to="." method="_on_bounce_tile_button_pressed"]
-[connection signal="pressed" from="SlopeObjectWrapper/SlopeObectButton" to="." method="_on_slope_object_button_pressed"]
+[connection signal="pressed" from="SlopeTileWrapper/SlopeTileButton" to="." method="_on_slope_tile_button_pressed"]
+[connection signal="pressed" from="GoalObjectWrapper/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
 [connection signal="pressed" from="SpawnObjectWrapper/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
 [connection signal="pressed" from="PatrollingObjectWrapper/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]

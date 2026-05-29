@@ -3,7 +3,6 @@ extends Node2D
 # Tool-based variables
 var currentTool := Global.Tool.BRUSH;
 var brushTile : int;
-var changesMade := true;
 var validationCheck := false;
 var selectedTile : TileData;
 var painting : bool = false;
@@ -21,6 +20,8 @@ var tileSwitch: HBoxContainer;
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
 
+var tileRotation := 0;
+
 # Box brush variables and enum
 enum BoxBrushState {
 	INACTIVE,
@@ -36,6 +37,9 @@ var isPlaceable: bool = true;
 
 # Player spawnpoint. Set when placing the entity.
 var playerSpawnPosition: Vector2 = Vector2(-1, -1);
+
+# Stores the number of tiles made
+var tileCount := Global.TileType.size();
 
 ## Runs once when the script is ready.
 ## Set up any reference variables here.
@@ -102,8 +106,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		Global.Tool.CURSOR:
 			if (event.is_action_pressed("left-click")):
 				place_entity(currentMousePosition);
-			if (event.is_action_pressed("right-click")):
+			elif (event.is_action_pressed("right-click")):
 				delete_entity(currentMousePosition);
+	
+	if event.is_action_pressed("rotate"):
+		rotate_tile();
 	
 	if event.is_action_pressed("brush-tool"):
 		change_tool(Global.Tool.BRUSH);
@@ -113,7 +120,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		change_tool(Global.Tool.BOX_BRUSH);
 		tileSwitch.cursorSelected(false);
 
-	if event.is_action_pressed("cursor-tool"):
+	elif event.is_action_pressed("cursor-tool"):
 		change_tool(Global.Tool.CURSOR);
 		tileSwitch.cursorSelected(true);
 		
@@ -138,24 +145,29 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Places down the current brush tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
+	validationCheck = false;
 	if (check_out_of_bounds(clickPosition)): return;
 	# If the tool is the cursor, don't overwrite any placement
 	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
 		return;
 	# If the cell is already of the same type, or if the cell is occupied by an entity, don't overwrite
-	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > 5): 
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > tileCount): 
 		return;
 	tileSet.erase_cell(clickPosition);
-	tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
+	if (brushTile != Global.TileType.ONEWAY):
+		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
+	else:
+		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
 func getSpawn() -> Vector2:
 	return playerSpawnPosition;
 
 ## Places down the current brush entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_entity(clickPosition: Vector2) -> void:
+	validationCheck = false;
 	if (!isPlaceable): return;
 	
-	if (tileSet.get_cell_source_id(clickPosition) == brushTile || (tileSet.get_cell_source_id(clickPosition) < Global.TileType.size() && tileSet.get_cell_source_id(clickPosition) >= 0)): 
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile || (tileSet.get_cell_source_id(clickPosition) < tileCount && tileSet.get_cell_source_id(clickPosition) >= 0)): 
 		return;
 	
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER && brushTile != Global.EntityType.PLAYER):
@@ -164,22 +176,26 @@ func place_entity(clickPosition: Vector2) -> void:
 	if (brushTile == Global.EntityType.PLAYER && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
-	elif (brushTile == Global.EntityType.PATROLLING):
+	elif (brushTile == Global.EntityType.PLAYER):
+		return;
+	elif (brushTile >= tileCount):
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	else:
-		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
+		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
 
 ## Deletes a tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_tile (clickPosition: Vector2) -> void:
-	if (currentTool == Global.Tool.CURSOR || tileSet.get_cell_source_id(clickPosition) > 5 || check_out_of_bounds(clickPosition)):
+	validationCheck = false;
+	if (currentTool == Global.Tool.CURSOR || tileSet.get_cell_source_id(clickPosition) >= tileCount || check_out_of_bounds(clickPosition)):
 		return;
 	tileSet.erase_cell(clickPosition);
 
 ## Deletes an entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_entity (clickPosition: Vector2) -> void:
-	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > 5):
+	validationCheck = false;
+	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > tileCount):
 		return;
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER):
 		playerSpawnPosition = Vector2(-1, -1);
@@ -210,17 +226,19 @@ func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
 func update_brush_tile(tile: int) -> void:
-	if currentTool == Global.Tool.CURSOR && tile >= Global.TileType.size():
+	if currentTool == Global.Tool.CURSOR && tile >= tileCount:
 		brushTile = tile;
-	elif currentTool != Global.Tool.CURSOR && tile < Global.TileType.size():
+	elif currentTool != Global.Tool.CURSOR && tile < tileCount:
 		brushTile = tile;
 
 ## Hooks the preview tile to the mouse position and moves it when necessary
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevPosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
-	if (brushTile >= 8):
+	if (brushTile >= tileCount):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
+	elif (brushTile != Global.TileType.ONEWAY):
+		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, tileRotation);
 	else:
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	
@@ -242,9 +260,21 @@ func change_tool(tool: Global.Tool) -> void:
 	if (currentTool != Global.Tool.CURSOR):
 		update_brush_tile(Global.TileType.SOLID);
 	else:
-		update_brush_tile(Global.EntityType.SLOPE);
+		update_brush_tile(Global.EntityType.GOAL);
 	print("Current Tool: ", currentTool);
 
+## Rotate currently selected tile
+## NOTE: SceneCollection rotations work most likely by selecting the scene and rotating it, you can't spawn it rotated
+func rotate_tile() -> void:
+	match tileRotation:
+		0:
+			tileRotation = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H;
+		TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H:
+			tileRotation = TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V;
+		TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V:
+			tileRotation = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V;
+		_:
+			tileRotation = 0;
 	
 ## Converts the mouse's position into grid coordinates.
 ## mousePosition: Where the cursor currently is in world space.

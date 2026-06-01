@@ -23,7 +23,7 @@ var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
 
 # A timer to differentiate between click and holding click
-const holdTimeCap = .2;
+const holdTimeCap = .1;
 var holdTimer := holdTimeCap;
 # Previously selected tile before dragging.
 var prevTile := -1;
@@ -134,7 +134,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				delete_entity(currentMousePosition);
 			
 			# If left click is being held, pick up the current tile unless it's empty air.
-			if (holdTimer < 0 && prevTile == -1 && tileSet.get_cell_source_id(currentMousePosition) != -1):
+			if (holdTimer < 0 && prevTile == -1 && tileSet.get_cell_source_id(currentMousePosition) != -1) && tileSet.get_cell_source_id(currentMousePosition) >= tileCount:
 				# NOTE: THIS COMMENT BREAKS IT, BUT WE STILL SHOULD SAVE ROTATIONS SOMEWHERE
 				#tileRotation = tileSet.get_cell_alternative_tile(currentMousePosition);
 				# Await is needed to it has time to update selectedTile
@@ -155,12 +155,15 @@ func _unhandled_input(event: InputEvent) -> void:
 				if (prevTile == -2):
 					update_preview_tile(currentMousePosition, prevMousePosition);
 				# Otherwise handle the previews but wil no transparency on the tile map
-				elif (brushTile >= tileCount):
-					previewTileMap.set_cell(currentMousePosition, brushTile, Vector2i.ZERO, 2);
-				elif (brushTile != Global.TileType.ONEWAY):
-					previewTileMap.set_cell(currentMousePosition, brushTile, Vector2i.ZERO, tileRotation);
 				else:
-					previewTileMap.set_cell(currentMousePosition, brushTile, Vector2i.ZERO);
+					fill_grid_lines();
+					gridLines.set_cell(currentMousePosition, 2, Vector2i.ZERO);
+					if (brushTile >= tileCount):
+						previewTileMap.set_cell(currentMousePosition, brushTile, Vector2i.ZERO, 2);
+					elif (brushTile != Global.TileType.ONEWAY):
+						previewTileMap.set_cell(currentMousePosition, brushTile, Vector2i.ZERO, tileRotation);
+					else:
+						previewTileMap.set_cell(currentMousePosition, brushTile, Vector2i.ZERO);
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
 			elif (holdTimer == holdTimeCap && prevTile != -1):
 				drop_tile();
@@ -204,6 +207,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_tile() -> void:
 	previewTileMap.clear();
+	fill_grid_lines();
 	if (brushTile < tileCount):
 		place_tile(currentMousePosition);
 	else:
@@ -220,7 +224,7 @@ func place_tile(clickPosition: Vector2) -> void:
 	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
 		return;
 	# If the cell is already of the same type, or if the cell is occupied by an entity, don't overwrite
-	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > tileCount): 
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) >= tileCount): 
 		return;
 	tileSet.erase_cell(clickPosition);
 	if (brushTile != Global.TileType.ONEWAY):

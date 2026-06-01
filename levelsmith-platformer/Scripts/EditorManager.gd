@@ -12,6 +12,8 @@ var tileSet: TileMapLayer;
 var gridLines: TileMapLayer;
 var previewTileMap: TileMapLayer;
 
+var selector: Sprite2D;
+
 # Reference to TileSwitch for transparency
 var tileSwitch: HBoxContainer;
 
@@ -63,6 +65,8 @@ func _ready() -> void:
 	# Set the reference to the property menu
 	propertyMenu = get_child(3).get_child(2);
 	
+	selector = get_child(4);
+	
 	brushTile = Global.TileType.SOLID;
 	
 	fill_grid_lines();
@@ -97,6 +101,20 @@ func _process(_delta: float) -> void:
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
+	updateSelector();
+
+func updateSelector() -> void:
+	selector.position = currentMousePosition * 128 + Vector2(64, 64);
+	if (prevTile != -1):
+		selector.modulate = Color(0, 1, 1, 1);
+	#elif (tileSet.get_cell_source_id(currentMousePosition) != -1):
+	#	gridLines.set_cell(currentMousePosition, 2, Vector2i.ZERO);
+	#	gridLines.modulate = Color(1, 0, 0, .5);
+	#	selector.modulate = Color(0, 0, 0, 0);
+	elif (erasing):
+		selector.modulate = Color(1, 0, 0, 1);
+	else:
+		selector.modulate = Color(1, 1, 1, 1);
 
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
@@ -162,8 +180,6 @@ func _unhandled_input(event: InputEvent) -> void:
 					update_preview_tile(currentMousePosition, prevMousePosition);
 				# Otherwise handle the previews but wil no transparency on the tile map
 				else:
-					fill_grid_lines();
-					gridLines.set_cell(currentMousePosition, 2, Vector2i.ZERO);
 					if (brushTile >= tileCount):
 						previewTileMap.set_cell(currentMousePosition, brushTile, Vector2i.ZERO, 2);
 					elif (brushTile != Global.TileType.ONEWAY):
@@ -213,7 +229,6 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_tile() -> void:
 	previewTileMap.clear();
-	fill_grid_lines();
 	if (brushTile < tileCount):
 		place_tile(currentMousePosition);
 	else:

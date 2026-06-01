@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/PropertyMenu.gd" id="1_tnep3"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerProperties", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "presetOptions")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,6 +14,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tnep3")
 entityName = NodePath("EntityName")
+playerProperties = NodePath("PlayerProperties")
+playerSpeedSlider = NodePath("PlayerProperties/PlayerSpeed/HBoxContainer/SpeedSlider")
+playerJumpSlider = NodePath("PlayerProperties/PlayerJump/HBoxContainer/JumpSlider")
+playerAirControlSlider = NodePath("PlayerProperties/PlayerAirControl/HBoxContainer/AirControlSlider")
+playerFallSpeedSlider = NodePath("PlayerProperties/PlayerFallSpeed/HBoxContainer/FallSpeedSlider")
+playerCoyoteTimeSlider = NodePath("PlayerProperties/PlayerCoyoteTime/HBoxContainer/CoyoteTimeSlider")
+presetOptions = NodePath("PlayerProperties/PresetOptions")
 
 [node name="Label" type="Label" parent="." unique_id=1756571384]
 layout_mode = 0
@@ -39,4 +46,166 @@ offset_bottom = 676.0
 theme_override_font_sizes/font_size = 24
 text = "Close"
 
+[node name="PlayerProperties" type="VBoxContainer" parent="." unique_id=1398037876]
+layout_mode = 0
+offset_top = 119.0
+offset_right = 400.0
+offset_bottom = 603.0
+
+[node name="PlayerSpeed" type="VBoxContainer" parent="PlayerProperties" unique_id=180177179]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="PlayerProperties/PlayerSpeed" unique_id=1728608117]
+layout_mode = 2
+text = "Speed"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerSpeed" unique_id=249285980]
+layout_mode = 2
+
+[node name="SpeedSlider" type="HSlider" parent="PlayerProperties/PlayerSpeed/HBoxContainer" unique_id=466357475]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 10.0
+step = 0.1
+value = 10.0
+
+[node name="TextEdit" type="TextEdit" parent="PlayerProperties/PlayerSpeed/HBoxContainer" unique_id=492303103]
+custom_minimum_size = Vector2(60, 30)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+placeholder_text = "Speed"
+
+[node name="PlayerJump" type="VBoxContainer" parent="PlayerProperties" unique_id=612454456]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="PlayerProperties/PlayerJump" unique_id=1961529638]
+layout_mode = 2
+text = "Jump Height"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerJump" unique_id=579034822]
+layout_mode = 2
+
+[node name="JumpSlider" type="HSlider" parent="PlayerProperties/PlayerJump/HBoxContainer" unique_id=1479553949]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 10.0
+step = 0.1
+value = 10.0
+
+[node name="TextEdit" type="TextEdit" parent="PlayerProperties/PlayerJump/HBoxContainer" unique_id=649249538]
+custom_minimum_size = Vector2(60, 30)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+placeholder_text = "Speed"
+
+[node name="PlayerAirControl" type="VBoxContainer" parent="PlayerProperties" unique_id=116258844]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="PlayerProperties/PlayerAirControl" unique_id=1305909155]
+layout_mode = 2
+text = "Jump Height"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerAirControl" unique_id=141138014]
+layout_mode = 2
+
+[node name="AirControlSlider" type="HSlider" parent="PlayerProperties/PlayerAirControl/HBoxContainer" unique_id=92493413]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 10.0
+step = 0.1
+value = 10.0
+
+[node name="TextEdit" type="TextEdit" parent="PlayerProperties/PlayerAirControl/HBoxContainer" unique_id=1154337735]
+custom_minimum_size = Vector2(60, 30)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+placeholder_text = "Speed"
+
+[node name="PlayerFallSpeed" type="VBoxContainer" parent="PlayerProperties" unique_id=1157641597]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="PlayerProperties/PlayerFallSpeed" unique_id=353341030]
+layout_mode = 2
+text = "Jump Height"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerFallSpeed" unique_id=990118930]
+layout_mode = 2
+
+[node name="FallSpeedSlider" type="HSlider" parent="PlayerProperties/PlayerFallSpeed/HBoxContainer" unique_id=1107692251]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 10.0
+step = 0.1
+value = 10.0
+
+[node name="TextEdit" type="TextEdit" parent="PlayerProperties/PlayerFallSpeed/HBoxContainer" unique_id=1379323989]
+custom_minimum_size = Vector2(60, 30)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+placeholder_text = "Speed"
+
+[node name="PlayerCoyoteTime" type="VBoxContainer" parent="PlayerProperties" unique_id=1315772760]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="PlayerProperties/PlayerCoyoteTime" unique_id=114746919]
+layout_mode = 2
+text = "Jump Height"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerCoyoteTime" unique_id=266725307]
+layout_mode = 2
+
+[node name="CoyoteTimeSlider" type="HSlider" parent="PlayerProperties/PlayerCoyoteTime/HBoxContainer" unique_id=240371954]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 10.0
+step = 0.1
+value = 10.0
+
+[node name="TextEdit" type="TextEdit" parent="PlayerProperties/PlayerCoyoteTime/HBoxContainer" unique_id=903801074]
+custom_minimum_size = Vector2(60, 30)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 10
+placeholder_text = "Speed"
+
+[node name="PresetOptions" type="OptionButton" parent="PlayerProperties" unique_id=1677451211]
+layout_mode = 2
+selected = 0
+item_count = 5
+popup/item_0/text = "Default"
+popup/item_0/id = 0
+popup/item_1/text = "Fast"
+popup/item_1/id = 1
+popup/item_2/text = "Floaty"
+popup/item_2/id = 2
+popup/item_3/text = "Heavy"
+popup/item_3/id = 3
+popup/item_4/text = "Custom"
+popup/item_4/id = 4
+
 [connection signal="pressed" from="Button" to="." method="close"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerSpeed/HBoxContainer/SpeedSlider" to="." method="_on_drag_ended"]
+[connection signal="value_changed" from="PlayerProperties/PlayerSpeed/HBoxContainer/SpeedSlider" to="." method="_on_speed_changed"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerJump/HBoxContainer/JumpSlider" to="." method="_on_drag_ended"]
+[connection signal="value_changed" from="PlayerProperties/PlayerJump/HBoxContainer/JumpSlider" to="." method="_on_jump_changed"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerAirControl/HBoxContainer/AirControlSlider" to="." method="_on_drag_ended"]
+[connection signal="value_changed" from="PlayerProperties/PlayerAirControl/HBoxContainer/AirControlSlider" to="." method="_on_air_control_slider_value_changed"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerFallSpeed/HBoxContainer/FallSpeedSlider" to="." method="_on_drag_ended"]
+[connection signal="value_changed" from="PlayerProperties/PlayerFallSpeed/HBoxContainer/FallSpeedSlider" to="." method="_on_fall_speed_changed"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerCoyoteTime/HBoxContainer/CoyoteTimeSlider" to="." method="_on_drag_ended"]
+[connection signal="value_changed" from="PlayerProperties/PlayerCoyoteTime/HBoxContainer/CoyoteTimeSlider" to="." method="_on_coyote_time_changed"]
+[connection signal="item_selected" from="PlayerProperties/PresetOptions" to="." method="_on_preset_options_item_selected"]

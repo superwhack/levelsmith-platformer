@@ -26,6 +26,17 @@ var currentSlowdown := 1.0;
 # Speed with constant multiplier and slowdown appended in
 var trueSpeed : float;
 
+# The selected movement preset
+# TODO: Make it so that it selects the DefaultMovement preset automatically 
+@export var playerMovementPreset : PlayerMovementPreset;
+
+## Runs once on instantiation
+func _ready() -> void:
+	# Applies the preset on ready
+	if (playerMovementPreset):
+		print("Applying ", playerMovementPreset, " player movement preset.");
+		apply_preset(playerMovementPreset);
+
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
@@ -119,3 +130,12 @@ func detect_tile() -> void:
 					# Apply a slowdown to player movement and jumps
 					"slow":
 						currentSlowdown = .5;
+						
+## Applies the player selected player movement preset to the player
+func apply_preset(preset: PlayerMovementPreset) -> void:
+	# Setting all the player variables
+	groundSpeed = preset.groundSpeed;
+	jumpHeight = preset.jumpHeight;
+	airControl = preset.airControl;
+	fallSpeed = preset.fallSpeed;
+	coyoteTime = preset.coyoteTime;

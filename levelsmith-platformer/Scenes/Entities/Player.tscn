@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://87eq7bxythec"]
 
 [ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Player.gd" id="1_kyqiw"]
-[ext_resource type="Texture2D" uid="uid://cnosv0durnybp" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
+[ext_resource type="Resource" uid="uid://nd3ng1cl05pa" path="res://Resources/PlayerPresets/Default.tres" id="2_agccv"]
+[ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2riqt"]
 
 [node name="Player" type="CharacterBody2D" unique_id=1372711448 groups=["Player"]]
 script = ExtResource("1_kyqiw")
+playerMovementPreset = ExtResource("2_agccv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]
 scale = Vector2(6.3, 6.3)

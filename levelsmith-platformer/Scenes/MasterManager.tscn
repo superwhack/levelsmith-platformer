@@ -27,8 +27,9 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8fjml"]
 
-[node name="MasterManager" type="Node2D" unique_id=629421629]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("propertyMenu")]
 script = ExtResource("1_3ngsi")
+propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=101918903 node_paths=PackedStringArray("masterManager", "tileSet")]
 script = ExtResource("4_mg0h4")

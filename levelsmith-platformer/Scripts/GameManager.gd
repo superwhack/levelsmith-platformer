@@ -12,6 +12,8 @@ var goalReached := false;
 var player: CharacterBody2D;
 var playerStartingPosition: Vector2;
 
+var playerPreset: Resource;
+
 ## When pause is pressed, flip the current state
 func pause() -> void:
 	if playState == PlayState.PAUSE:
@@ -31,6 +33,7 @@ func start() -> void:
 	for frame in range(1, 5):
 		await get_tree().process_frame;
 	player = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1];
+	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
 	Global.death.connect(reset);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);

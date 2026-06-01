@@ -76,7 +76,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# record the position of the mouse on this frame
 	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
+	
 	isPlaceable = !check_out_of_bounds(currentMousePosition);
+	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(currentMousePosition) >= tileCount): isPlaceable = false; 
+	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(currentMousePosition) < tileCount && tileSet.get_cell_source_id(currentMousePosition) >= 0): isPlaceable = false; 
 	
 	if (Input.is_action_pressed("left-click")):
 		holdTimer -= _delta;
@@ -87,6 +90,10 @@ func _process(_delta: float) -> void:
 		update_preview_tile(currentMousePosition, prevMousePosition);
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
+	
+	if (boxBrushState != BoxBrushState.INACTIVE):
+		secondCornerClick = currentMousePosition;
+		update_box_preview(firstCornerClick, secondCornerClick);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
@@ -119,7 +126,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				boxBrushState = BoxBrushState.DELETE;
 				
 			if (event.is_action_released("left-click") || event.is_action_released("right-click")):
-				secondCornerClick = currentMousePosition;
 				box_edit(firstCornerClick, secondCornerClick);
 				
 		Global.Tool.CURSOR:
@@ -268,7 +274,7 @@ func delete_tile (clickPosition: Vector2) -> void:
 ## clickPosition: Where the mouse is during the click.
 func delete_entity (clickPosition: Vector2) -> void:
 	validationCheck = false;
-	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > tileCount):
+	if (currentTool != Global.Tool.CURSOR || (tileSet.get_cell_source_id(clickPosition) < tileCount)):
 		return;
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER):
 		playerSpawnPosition = Vector2(-1, -1);
@@ -295,6 +301,7 @@ func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
 					delete_tile(topLeft + Vector2(j, i));
 	
 	boxBrushState = BoxBrushState.INACTIVE;
+	previewTileMap.clear();
 
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
@@ -307,19 +314,35 @@ func update_brush_tile(tile: int) -> void:
 ## Hooks the preview tile to the mouse position and moves it when necessary
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevPosition: Where the mouse previously was in grid coordinates
-func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
+func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2, isRed: bool = false) -> void:
 	if (brushTile >= tileCount):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
-	elif (brushTile != Global.TileType.ONEWAY):
+	elif (brushTile == Global.TileType.SLOPE):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, tileRotation);
 	else:
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	
+	if (isRed): previewTileMap.modulate = Color(1, 0, 0, 0.5);
 	# Preview tile will appear red if not in a placeable area.
-	previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)
+	else: previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)
 	
 	if (mousePosition != prevPosition): 
 		previewTileMap.erase_cell(prevPosition);
+
+func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
+	# Find the coordinate of the top left corner of the box.
+	var topLeft: Vector2 = Vector2(
+		min(firstCorner.x, secondCorner.x), 
+		min(firstCorner.y, secondCorner.y));
+	
+	previewTileMap.clear();
+	for i in abs(secondCorner.y - firstCorner.y) + 1:
+		for j in abs(secondCorner.x - firstCorner.x) + 1:
+			# Will appear red when deleting tiles and use standard colors otherwise.
+			var currentCell: Vector2 = topLeft + Vector2(j, i)
+			if (not tileSet.get_cell_source_id(currentCell) >= tileCount):
+				update_preview_tile(currentCell, currentCell, boxBrushState == BoxBrushState.DELETE);
+	
 
 ## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.
 ## tool: The tool to change to

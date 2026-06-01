@@ -77,6 +77,10 @@ func _process(_delta: float) -> void:
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
 	
+	if (boxBrushState != BoxBrushState.INACTIVE):
+		secondCornerClick = currentMousePosition;
+		update_box_preview(firstCornerClick, secondCornerClick);
+	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
 
@@ -106,7 +110,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				boxBrushState = BoxBrushState.DELETE;
 				
 			if (event.is_action_released("left-click") || event.is_action_released("right-click")):
-				secondCornerClick = currentMousePosition;
 				box_edit(firstCornerClick, secondCornerClick);
 				
 		Global.Tool.CURSOR:
@@ -233,6 +236,7 @@ func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
 					delete_tile(topLeft + Vector2(j, i));
 	
 	boxBrushState = BoxBrushState.INACTIVE;
+	previewTileMap.clear();
 
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
@@ -245,19 +249,33 @@ func update_brush_tile(tile: int) -> void:
 ## Hooks the preview tile to the mouse position and moves it when necessary
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevPosition: Where the mouse previously was in grid coordinates
-func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
+func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2, isRed: bool = false) -> void:
 	if (brushTile >= tileCount):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
-	elif (brushTile != Global.TileType.ONEWAY):
+	elif (brushTile == Global.TileType.SLOPE):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, tileRotation);
 	else:
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	
+	if (isRed): previewTileMap.modulate = Color(1, 0, 0, 0.5);
 	# Preview tile will appear red if not in a placeable area.
-	previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)
+	else: previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)
 	
 	if (mousePosition != prevPosition): 
 		previewTileMap.erase_cell(prevPosition);
+
+func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
+	# Find the coordinate of the top left corner of the box.
+	var topLeft: Vector2 = Vector2(
+		min(firstCorner.x, secondCorner.x), 
+		min(firstCorner.y, secondCorner.y));
+	
+	previewTileMap.clear();
+	for i in abs(secondCorner.y - firstCorner.y) + 1:
+		for j in abs(secondCorner.x - firstCorner.x) + 1:
+			# Will appear red when deleting tiles and use standard colors otherwise.
+			update_preview_tile(topLeft + Vector2(j, i), topLeft + Vector2(j, i), boxBrushState == BoxBrushState.DELETE);
+	
 
 ## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.
 ## tool: The tool to change to

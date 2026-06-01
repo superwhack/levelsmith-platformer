@@ -78,7 +78,7 @@ func _process(_delta: float) -> void:
 	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
 	
 	isPlaceable = !check_out_of_bounds(currentMousePosition);
-	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(currentMousePosition) >= tileCount): isPlaceable = false; 
+	if (currentTool == Global.Tool.BRUSH && tileSet.get_cell_source_id(currentMousePosition) >= tileCount): isPlaceable = false; 
 	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(currentMousePosition) < tileCount && tileSet.get_cell_source_id(currentMousePosition) >= 0): isPlaceable = false; 
 	
 	if (Input.is_action_pressed("left-click")):

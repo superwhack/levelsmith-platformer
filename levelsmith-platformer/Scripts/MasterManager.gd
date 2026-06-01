@@ -38,7 +38,6 @@ func edit() -> void:
 	# Change scene to edit scene
 	gameManager.hide();
 	gameManager.get_node("CanvasLayer").hide();
-	gameManager.reset();
 	editorManager.show();
 	editorManager.get_node("CanvasLayer").show()
 	# Play the editor manager

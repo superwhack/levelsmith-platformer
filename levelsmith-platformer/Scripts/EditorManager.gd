@@ -71,7 +71,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# record the position of the mouse on this frame
 	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
+	
 	isPlaceable = !check_out_of_bounds(currentMousePosition);
+	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(currentMousePosition) >= tileCount): isPlaceable = false; 
+	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(currentMousePosition) < tileCount && tileSet.get_cell_source_id(currentMousePosition) >= 0): isPlaceable = false; 
 	
 	update_preview_tile(currentMousePosition, prevMousePosition);
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
@@ -209,7 +212,7 @@ func delete_tile (clickPosition: Vector2) -> void:
 ## clickPosition: Where the mouse is during the click.
 func delete_entity (clickPosition: Vector2) -> void:
 	validationCheck = false;
-	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > tileCount):
+	if (currentTool != Global.Tool.CURSOR || (tileSet.get_cell_source_id(clickPosition) < tileCount)):
 		return;
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER):
 		playerSpawnPosition = Vector2(-1, -1);
@@ -274,7 +277,9 @@ func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
 	for i in abs(secondCorner.y - firstCorner.y) + 1:
 		for j in abs(secondCorner.x - firstCorner.x) + 1:
 			# Will appear red when deleting tiles and use standard colors otherwise.
-			update_preview_tile(topLeft + Vector2(j, i), topLeft + Vector2(j, i), boxBrushState == BoxBrushState.DELETE);
+			var currentCell: Vector2 = topLeft + Vector2(j, i)
+			if (not tileSet.get_cell_source_id(currentCell) >= tileCount):
+				update_preview_tile(currentCell, currentCell, boxBrushState == BoxBrushState.DELETE);
 	
 
 ## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.

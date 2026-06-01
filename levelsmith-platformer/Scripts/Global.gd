@@ -6,6 +6,10 @@ signal reload;
 signal complete;
 
 
+# Tile size.
+var tileSize = 128;
+
+
 # Application State
 enum State {
 	EDIT,

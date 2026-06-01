@@ -3,7 +3,40 @@
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
+[ext_resource type="Texture2D" uid="uid://dt6pg2cjbdcuv" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
+[ext_resource type="Texture2D" uid="uid://bjqdwuhiphlly" path="res://Assets/Sprites/Tiles/gridSelect.png" id="5_64b2s"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rj586"]
+friction = 0.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ir8iy"]
+bounce = 1.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8vbpr"]
+texture = ExtResource("4_i0d1j")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gojh1"]
+texture = ExtResource("5_64b2s")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_0vixy"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_hqns4")
+physics_layer_1/collision_layer = 2
+physics_layer_1/collision_mask = 2
+physics_layer_1/physics_material = SubResource("PhysicsMaterial_rj586")
+physics_layer_2/collision_layer = 4
+physics_layer_2/collision_mask = 4
+physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
+sources/1 = SubResource("TileSetAtlasSource_8vbpr")
+sources/2 = SubResource("TileSetAtlasSource_gojh1")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_knx5t"]
 
@@ -44,9 +77,11 @@ tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAA
 [node name="GridLines" parent="EditorManager" index="1" unique_id=669187714]
 z_index = 0
 tile_map_data = PackedByteArray()
+tile_set = SubResource("TileSet_0vixy")
 
 [node name="PreviewTile" parent="EditorManager" index="2" unique_id=1302011485]
 modulate = Color(1, 1, 1, 1)
+position = Vector2(0, -1)
 collision_enabled = true
 
 [node name="PlayButton" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="0" unique_id=745550610]

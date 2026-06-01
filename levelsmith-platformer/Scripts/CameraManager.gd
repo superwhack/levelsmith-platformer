@@ -8,6 +8,7 @@ extends Camera2D;
 @export var edgeScrollSpeed: float = 800.0;
 @export var edgeScrollMargin: float = 16.0;
 var is_panning : bool = false;
+var panSpeed := 1.0;
 
 # Camera zoom settings
 @export var zoomSpeed: float = 0.1;
@@ -43,6 +44,7 @@ func _ready() -> void:
 func reset_camera() -> void:
 	playerReference = null;
 	searchForPlayer = true;
+	panSpeed = 1.0;
 
 ## Processes camera logic every frame
 func _process(delta: float) -> void:
@@ -82,7 +84,7 @@ func try_find_player() -> void:
 	if playerSearchAttempts >= maxPlayerSearchAttempts:
 		print("From CameraManager: ERROR - fail to find player")
 		searchForPlayer = false
-		
+
 ## Handles mouse middle-click panning
 func _input(event: InputEvent) -> void:
 	# Start/stop middle-click panning
@@ -94,6 +96,11 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and is_panning:
 		global_position -= event.relative / zoom;
 		clamp_camera_to_level();
+		
+	if Input.is_action_just_pressed("shift"):
+		panSpeed = 3.0;
+	if Input.is_action_just_released("shift"):
+		panSpeed = 1.0;
 
 ## Processes editor camera keypress movement
 func process_build_camera(delta: float) -> void:
@@ -105,7 +112,11 @@ func process_build_camera(delta: float) -> void:
 
 	# Keyboard movement
 	if inputVector != Vector2.ZERO:
-		global_position += inputVector.normalized() * moveSpeed * delta;
+		# If shift is being held, make it move faster.
+		if Input.is_action_pressed("shift"):
+			global_position += inputVector.normalized() * moveSpeed * 3 * delta;
+		else:
+			global_position += inputVector.normalized() * moveSpeed * delta;
 
 	process_edge_scrolling(delta);
 

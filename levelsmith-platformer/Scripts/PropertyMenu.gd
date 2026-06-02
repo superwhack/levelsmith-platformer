@@ -14,11 +14,11 @@ var playerFallSpeed : float;
 var playerCoyoteTime : float;
 
 # Player value sliders
-@export var playerSpeedSlider: HSlider;
-@export var playerJumpSlider: HSlider;
-@export var playerAirControlSlider: HSlider;
-@export var playerFallSpeedSlider: HSlider;
-@export var playerCoyoteTimeSlider: HSlider;
+@export var playerSpeedSlider: VBoxContainer;
+@export var playerJumpSlider: VBoxContainer;
+@export var playerAirControlSlider: VBoxContainer;
+@export var playerFallSpeedSlider: VBoxContainer;
+@export var playerCoyoteTimeSlider: VBoxContainer;
 
 # Preset Options
 @export var presetOptions: OptionButton;
@@ -37,34 +37,9 @@ func _process(delta: float) -> void:
 	# If there is a selected entity, set the name in the property menu, otherwise close
 	if (selectedEntity != null):
 		entityName.text = selectedEntity.name;
-		update_sliders();
-		update_labels();
 	else:
 		hide();
 
-## When the speed slider changes set the player's speed
-func _on_speed_changed(value: float) -> void:
-	playerSpeed = value;
-
-## When the jump slider changes, set the player's jump height
-## value: The value set to the slider
-func _on_jump_changed(value: float) -> void:
-	playerJumpHeight = value;
-
-## When the air control slider changes, set the player's air control
-## value: The value set to the slider
-func _on_air_control_slider_value_changed(value: float) -> void:
-	playerAirControl = value;
-
-## When the fall speed slider changes, set the player's fall speed
-## value: The value set to the slider
-func _on_fall_speed_changed(value: float) -> void:
-	playerFallSpeed = value;
-
-## When the coyote time slider changes, set the player's coyote time
-## value: The value set to the slider
-func _on_coyote_time_changed(value: float) -> void:
-	playerCoyoteTime = value;
 
 ## When a preset option is selected, load that preset and set all values to that preset
 ## index: the index of the preset selected
@@ -75,6 +50,7 @@ func _on_preset_options_item_selected(index: int) -> void:
 	playerAirControl = selectedPreset.airControl;
 	playerFallSpeed = selectedPreset.fallSpeed;
 	playerCoyoteTime = selectedPreset.coyoteTime;
+	update_sliders();
 
 ## Load and update the custom preset, then save its changes
 func update_custom() -> void:
@@ -89,20 +65,28 @@ func update_custom() -> void:
 ## Update all sliders according to the values
 func update_sliders() -> void:
 	playerSpeedSlider.value = playerSpeed;
+	playerSpeedSlider.update_slider();
 	playerJumpSlider.value = playerJumpHeight;
+	playerJumpSlider.update_slider();
 	playerAirControlSlider.value = playerAirControl;
+	playerAirControlSlider.update_slider();
 	playerFallSpeedSlider.value = playerFallSpeed;
+	playerFallSpeedSlider.update_slider();
 	playerCoyoteTimeSlider.value = playerCoyoteTime;
+	playerCoyoteTimeSlider.update_slider();
+	
+
+## Update all of the player values based on the sliders
+func update_values() -> void:
+	playerSpeed = playerSpeedSlider.value;
+	playerJumpHeight = playerJumpSlider.value;
+	playerAirControl = playerAirControlSlider.value;
+	playerFallSpeed = playerFallSpeedSlider.value;
+	playerCoyoteTime = playerCoyoteTimeSlider.value;
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
-func _on_drag_ended(value_changed: bool) -> void:
+func _on_drag_ended() -> void:
+	update_values();
 	update_custom();
 	presetOptions.select(4);
 	_on_preset_options_item_selected(4);
-
-func update_labels() -> void:
-	playerSpeedSlider.get_node("../Label").text = str(playerSpeedSlider.value);
-	playerJumpSlider.get_node("../Label").text = str(playerJumpSlider.value);
-	playerAirControlSlider.get_node("../Label").text = str(playerAirControlSlider.value);
-	playerFallSpeedSlider.get_node("../Label").text = str(playerFallSpeedSlider.value);
-	playerCoyoteTimeSlider.get_node("../Label").text = str(playerCoyoteTimeSlider.value);

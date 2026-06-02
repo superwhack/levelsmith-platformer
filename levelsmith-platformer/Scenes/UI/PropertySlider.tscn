@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://c3ype5vn62yxp"]
+
+[ext_resource type="Script" uid="uid://u63l1aalo6tr" path="res://Scripts/PropertySlider.gd" id="1_w5nda"]
+
+[node name="PropertySlider" type="VBoxContainer" unique_id=305056832 node_paths=PackedStringArray("nameLabel", "slider", "label")]
+size_flags_horizontal = 4
+script = ExtResource("1_w5nda")
+propertyName = "Name"
+nameLabel = NodePath("Name")
+slider = NodePath("HBoxContainer/Slider")
+label = NodePath("HBoxContainer/Value")
+
+[node name="Name" type="Label" parent="." unique_id=671881686]
+layout_mode = 2
+text = "Name"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1927265922]
+layout_mode = 2
+
+[node name="Slider" type="HSlider" parent="HBoxContainer" unique_id=1360091613]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 5.0
+step = 0.1
+
+[node name="Value" type="Label" parent="HBoxContainer" unique_id=141948241]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = "0.00"
+
+[connection signal="drag_ended" from="HBoxContainer/Slider" to="." method="_drag_ended"]

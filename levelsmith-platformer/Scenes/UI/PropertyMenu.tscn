@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bwguyxq8bjrjk"]
 
 [ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/PropertyMenu.gd" id="1_tnep3"]
+[ext_resource type="PackedScene" uid="uid://c3ype5vn62yxp" path="res://Scenes/UI/PropertySlider.tscn" id="2_w5eld"]
 
 [node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "presetOptions")]
 anchors_preset = 15
@@ -14,11 +15,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tnep3")
 entityName = NodePath("EntityName")
-playerSpeedSlider = NodePath("PlayerProperties/PlayerSpeed/HBoxContainer/SpeedSlider")
-playerJumpSlider = NodePath("PlayerProperties/PlayerJump/HBoxContainer/JumpSlider")
-playerAirControlSlider = NodePath("PlayerProperties/PlayerAirControl/HBoxContainer/AirControlSlider")
-playerFallSpeedSlider = NodePath("PlayerProperties/PlayerFallSpeed/HBoxContainer/FallSpeedSlider")
-playerCoyoteTimeSlider = NodePath("PlayerProperties/PlayerCoyoteTime/HBoxContainer/CoyoteTimeSlider")
+playerSpeedSlider = NodePath("PlayerProperties/PlayerSpeed")
+playerJumpSlider = NodePath("PlayerProperties/PlayerJump")
+playerAirControlSlider = NodePath("PlayerProperties/PlayerAirControl")
+playerFallSpeedSlider = NodePath("PlayerProperties/PlayerFallSpeed")
+playerCoyoteTimeSlider = NodePath("PlayerProperties/PlayerCoyoteTime")
 presetOptions = NodePath("PlayerProperties/PresetOptions")
 
 [node name="Label" type="Label" parent="." unique_id=1756571384]
@@ -51,120 +52,25 @@ offset_top = 119.0
 offset_right = 400.0
 offset_bottom = 603.0
 
-[node name="PlayerSpeed" type="VBoxContainer" parent="PlayerProperties" unique_id=180177179]
+[node name="PlayerSpeed" parent="PlayerProperties" unique_id=305056832 instance=ExtResource("2_w5eld")]
 layout_mode = 2
-size_flags_horizontal = 4
+propertyName = "Speed"
 
-[node name="Label" type="Label" parent="PlayerProperties/PlayerSpeed" unique_id=1728608117]
+[node name="PlayerJump" parent="PlayerProperties" unique_id=1835714671 instance=ExtResource("2_w5eld")]
 layout_mode = 2
-text = "Speed"
+propertyName = "Jump Height"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerSpeed" unique_id=249285980]
+[node name="PlayerAirControl" parent="PlayerProperties" unique_id=985825086 instance=ExtResource("2_w5eld")]
 layout_mode = 2
+propertyName = "Air Control"
 
-[node name="SpeedSlider" type="HSlider" parent="PlayerProperties/PlayerSpeed/HBoxContainer" unique_id=466357475]
-custom_minimum_size = Vector2(300, 0)
+[node name="PlayerFallSpeed" parent="PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
 layout_mode = 2
-size_flags_vertical = 1
-max_value = 5.0
-step = 0.1
+propertyName = "Fall Speed"
 
-[node name="Label" type="Label" parent="PlayerProperties/PlayerSpeed/HBoxContainer" unique_id=511012431]
-custom_minimum_size = Vector2(32, 0)
+[node name="PlayerCoyoteTime" parent="PlayerProperties" unique_id=2022302843 instance=ExtResource("2_w5eld")]
 layout_mode = 2
-text = "0.00"
-
-[node name="PlayerJump" type="VBoxContainer" parent="PlayerProperties" unique_id=612454456]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Label" type="Label" parent="PlayerProperties/PlayerJump" unique_id=1961529638]
-layout_mode = 2
-text = "Jump Height"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerJump" unique_id=579034822]
-layout_mode = 2
-
-[node name="JumpSlider" type="HSlider" parent="PlayerProperties/PlayerJump/HBoxContainer" unique_id=1479553949]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-size_flags_vertical = 1
-max_value = 25.0
-step = 0.1
-
-[node name="Label" type="Label" parent="PlayerProperties/PlayerJump/HBoxContainer" unique_id=1758579555]
-custom_minimum_size = Vector2(32, 0)
-layout_mode = 2
-text = "0.00"
-
-[node name="PlayerAirControl" type="VBoxContainer" parent="PlayerProperties" unique_id=116258844]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Label" type="Label" parent="PlayerProperties/PlayerAirControl" unique_id=1305909155]
-layout_mode = 2
-text = "Air Control"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerAirControl" unique_id=141138014]
-layout_mode = 2
-
-[node name="AirControlSlider" type="HSlider" parent="PlayerProperties/PlayerAirControl/HBoxContainer" unique_id=92493413]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-size_flags_vertical = 1
-max_value = 10.0
-step = 0.1
-
-[node name="Label" type="Label" parent="PlayerProperties/PlayerAirControl/HBoxContainer" unique_id=1051604428]
-custom_minimum_size = Vector2(32, 0)
-layout_mode = 2
-text = "0.00"
-
-[node name="PlayerFallSpeed" type="VBoxContainer" parent="PlayerProperties" unique_id=1157641597]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Label" type="Label" parent="PlayerProperties/PlayerFallSpeed" unique_id=353341030]
-layout_mode = 2
-text = "Fall Speed"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerFallSpeed" unique_id=990118930]
-layout_mode = 2
-
-[node name="FallSpeedSlider" type="HSlider" parent="PlayerProperties/PlayerFallSpeed/HBoxContainer" unique_id=1107692251]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-size_flags_vertical = 1
-max_value = 25.0
-step = 0.1
-
-[node name="Label" type="Label" parent="PlayerProperties/PlayerFallSpeed/HBoxContainer" unique_id=403967741]
-custom_minimum_size = Vector2(32, 0)
-layout_mode = 2
-text = "0.00"
-
-[node name="PlayerCoyoteTime" type="VBoxContainer" parent="PlayerProperties" unique_id=1315772760]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Label" type="Label" parent="PlayerProperties/PlayerCoyoteTime" unique_id=114746919]
-layout_mode = 2
-text = "Coyote Time"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerCoyoteTime" unique_id=266725307]
-layout_mode = 2
-
-[node name="CoyoteTimeSlider" type="HSlider" parent="PlayerProperties/PlayerCoyoteTime/HBoxContainer" unique_id=240371954]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-size_flags_vertical = 1
-max_value = 1.0
-step = 0.01
-
-[node name="Label" type="Label" parent="PlayerProperties/PlayerCoyoteTime/HBoxContainer" unique_id=630061766]
-custom_minimum_size = Vector2(32, 0)
-layout_mode = 2
-text = "0.00"
+propertyName = "Coyote Time"
 
 [node name="PresetOptions" type="OptionButton" parent="PlayerProperties" unique_id=1677451211]
 layout_mode = 2
@@ -183,14 +89,9 @@ popup/item_4/text = "Custom"
 popup/item_4/id = 4
 
 [connection signal="pressed" from="Button" to="." method="close"]
-[connection signal="drag_ended" from="PlayerProperties/PlayerSpeed/HBoxContainer/SpeedSlider" to="." method="_on_drag_ended"]
-[connection signal="value_changed" from="PlayerProperties/PlayerSpeed/HBoxContainer/SpeedSlider" to="." method="_on_speed_changed"]
-[connection signal="drag_ended" from="PlayerProperties/PlayerJump/HBoxContainer/JumpSlider" to="." method="_on_drag_ended"]
-[connection signal="value_changed" from="PlayerProperties/PlayerJump/HBoxContainer/JumpSlider" to="." method="_on_jump_changed"]
-[connection signal="drag_ended" from="PlayerProperties/PlayerAirControl/HBoxContainer/AirControlSlider" to="." method="_on_drag_ended"]
-[connection signal="value_changed" from="PlayerProperties/PlayerAirControl/HBoxContainer/AirControlSlider" to="." method="_on_air_control_slider_value_changed"]
-[connection signal="drag_ended" from="PlayerProperties/PlayerFallSpeed/HBoxContainer/FallSpeedSlider" to="." method="_on_drag_ended"]
-[connection signal="value_changed" from="PlayerProperties/PlayerFallSpeed/HBoxContainer/FallSpeedSlider" to="." method="_on_fall_speed_changed"]
-[connection signal="drag_ended" from="PlayerProperties/PlayerCoyoteTime/HBoxContainer/CoyoteTimeSlider" to="." method="_on_drag_ended"]
-[connection signal="value_changed" from="PlayerProperties/PlayerCoyoteTime/HBoxContainer/CoyoteTimeSlider" to="." method="_on_coyote_time_changed"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerSpeed" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerJump" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerAirControl" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerFallSpeed" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerCoyoteTime" to="." method="_on_drag_ended"]
 [connection signal="item_selected" from="PlayerProperties/PresetOptions" to="." method="_on_preset_options_item_selected"]

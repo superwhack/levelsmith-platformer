@@ -67,16 +67,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_vertical = 1
-max_value = 10.0
+max_value = 5.0
 step = 0.1
-value = 10.0
 
-[node name="TextEdit" type="TextEdit" parent="PlayerProperties/PlayerSpeed/HBoxContainer" unique_id=492303103]
-custom_minimum_size = Vector2(60, 30)
+[node name="Label" type="Label" parent="PlayerProperties/PlayerSpeed/HBoxContainer" unique_id=511012431]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
-size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 10
-placeholder_text = "Speed"
+text = "0.00"
 
 [node name="PlayerJump" type="VBoxContainer" parent="PlayerProperties" unique_id=612454456]
 layout_mode = 2
@@ -97,12 +94,10 @@ max_value = 10.0
 step = 0.1
 value = 10.0
 
-[node name="TextEdit" type="TextEdit" parent="PlayerProperties/PlayerJump/HBoxContainer" unique_id=649249538]
-custom_minimum_size = Vector2(60, 30)
+[node name="Label" type="Label" parent="PlayerProperties/PlayerJump/HBoxContainer" unique_id=1758579555]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
-size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 10
-placeholder_text = "Speed"
+text = "0.00"
 
 [node name="PlayerAirControl" type="VBoxContainer" parent="PlayerProperties" unique_id=116258844]
 layout_mode = 2
@@ -110,7 +105,7 @@ size_flags_horizontal = 4
 
 [node name="Label" type="Label" parent="PlayerProperties/PlayerAirControl" unique_id=1305909155]
 layout_mode = 2
-text = "Jump Height"
+text = "Air Control"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerAirControl" unique_id=141138014]
 layout_mode = 2
@@ -121,14 +116,11 @@ layout_mode = 2
 size_flags_vertical = 1
 max_value = 10.0
 step = 0.1
-value = 10.0
 
-[node name="TextEdit" type="TextEdit" parent="PlayerProperties/PlayerAirControl/HBoxContainer" unique_id=1154337735]
-custom_minimum_size = Vector2(60, 30)
+[node name="Label" type="Label" parent="PlayerProperties/PlayerAirControl/HBoxContainer" unique_id=1051604428]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
-size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 10
-placeholder_text = "Speed"
+text = "0.00"
 
 [node name="PlayerFallSpeed" type="VBoxContainer" parent="PlayerProperties" unique_id=1157641597]
 layout_mode = 2
@@ -136,7 +128,7 @@ size_flags_horizontal = 4
 
 [node name="Label" type="Label" parent="PlayerProperties/PlayerFallSpeed" unique_id=353341030]
 layout_mode = 2
-text = "Jump Height"
+text = "Fall Speed"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerFallSpeed" unique_id=990118930]
 layout_mode = 2
@@ -145,16 +137,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_vertical = 1
-max_value = 10.0
+max_value = 25.0
 step = 0.1
-value = 10.0
 
-[node name="TextEdit" type="TextEdit" parent="PlayerProperties/PlayerFallSpeed/HBoxContainer" unique_id=1379323989]
-custom_minimum_size = Vector2(60, 30)
+[node name="Label" type="Label" parent="PlayerProperties/PlayerFallSpeed/HBoxContainer" unique_id=403967741]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
-size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 10
-placeholder_text = "Speed"
+text = "0.00"
 
 [node name="PlayerCoyoteTime" type="VBoxContainer" parent="PlayerProperties" unique_id=1315772760]
 layout_mode = 2
@@ -162,7 +151,7 @@ size_flags_horizontal = 4
 
 [node name="Label" type="Label" parent="PlayerProperties/PlayerCoyoteTime" unique_id=114746919]
 layout_mode = 2
-text = "Jump Height"
+text = "Coyote Time"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PlayerProperties/PlayerCoyoteTime" unique_id=266725307]
 layout_mode = 2
@@ -171,20 +160,18 @@ layout_mode = 2
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_vertical = 1
-max_value = 10.0
-step = 0.1
-value = 10.0
+max_value = 1.0
+step = 0.01
 
-[node name="TextEdit" type="TextEdit" parent="PlayerProperties/PlayerCoyoteTime/HBoxContainer" unique_id=903801074]
-custom_minimum_size = Vector2(60, 30)
+[node name="Label" type="Label" parent="PlayerProperties/PlayerCoyoteTime/HBoxContainer" unique_id=630061766]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
-size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 10
-placeholder_text = "Speed"
+text = "0.00"
 
 [node name="PresetOptions" type="OptionButton" parent="PlayerProperties" unique_id=1677451211]
 layout_mode = 2
 selected = 0
+allow_reselect = true
 item_count = 5
 popup/item_0/text = "Default"
 popup/item_0/id = 0

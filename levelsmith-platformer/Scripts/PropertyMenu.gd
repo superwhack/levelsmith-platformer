@@ -83,3 +83,4 @@ func update_sliders() -> void:
 func _on_drag_ended(value_changed: bool) -> void:
 	update_custom();
 	presetOptions.select(4);
+	_on_preset_options_item_selected(4);

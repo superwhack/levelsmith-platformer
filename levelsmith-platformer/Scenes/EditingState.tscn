@@ -2,11 +2,14 @@
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
+[ext_resource type="Texture2D" uid="uid://bd16leq2lp76o" path="res://Assets/Sprites/UI/paintBrush.png" id="2_dvhpf"]
+[ext_resource type="Texture2D" uid="uid://qatvje4morq5" path="res://Assets/Sprites/UI/no.png" id="3_njgpr"]
+[ext_resource type="Texture2D" uid="uid://ci85m207j0lqr" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
-[ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
-[ext_resource type="Texture2D" uid="uid://bh8waatyaurop" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
+[ext_resource type="Texture2D" uid="uid://dt6pg2cjbdcuv" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
+[ext_resource type="Texture2D" uid="uid://4ep54j50e0kf" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -21,6 +24,10 @@ texture = ExtResource("9_2u2e6")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dvhpf"]
+texture = ExtResource("4_5cunq")
+texture_region_size = Vector2i(128, 128)
+
 [sub_resource type="TileSet" id="TileSet_nr8wp"]
 tile_size = Vector2i(128, 128)
 physics_layer_0/collision_layer = 1
@@ -32,6 +39,10 @@ physics_layer_2/collision_layer = 4
 physics_layer_2/collision_mask = 4
 physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_0h7mo")
+sources/2 = SubResource("TileSetAtlasSource_dvhpf")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dvhpf"]
+size = Vector2(1445, 107)
 
 [node name="EditorManager" type="Node2D" unique_id=2045534837]
 script = ExtResource("1_3goer")
@@ -64,8 +75,8 @@ icon = ExtResource("10_njgpr")
 
 [node name="ToolContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=2095469909]
 z_index = 2
-offset_right = 280.0
-offset_bottom = 40.0
+offset_right = 1463.0
+offset_bottom = 89.0
 theme_override_constants/separation = 88
 
 [node name="ToolSwitch" parent="CanvasLayer/ToolContainer" unique_id=1469240724 instance=ExtResource("6_iws6f")]
@@ -75,5 +86,31 @@ focus_behavior_recursive = 0
 [node name="TileSwitch" parent="CanvasLayer/ToolContainer" unique_id=959816093 instance=ExtResource("7_qupls")]
 layout_mode = 2
 
+[node name="CursorChecker" type="Area2D" parent="CanvasLayer/ToolContainer" unique_id=1710550081]
+z_index = 20
+
+[node name="CursorCheckerRect" type="CollisionShape2D" parent="CanvasLayer/ToolContainer/CursorChecker" unique_id=948755903]
+position = Vector2(712.5, 43.5)
+shape = SubResource("RectangleShape2D_dvhpf")
+
 [node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
 visible = false
+
+[node name="Selector" type="Sprite2D" parent="." unique_id=1894609535]
+
+[node name="Cursor" type="Sprite2D" parent="." unique_id=1972481442]
+z_index = 3
+scale = Vector2(2, 2)
+texture = ExtResource("2_dvhpf")
+
+[node name="No" type="Sprite2D" parent="Cursor" unique_id=1394871915]
+position = Vector2(10, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_njgpr")
+
+[connection signal="mouse_entered" from="CanvasLayer/PlayButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/PlayButton" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="CanvasLayer/ToolContainer/CursorChecker" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/ToolContainer/CursorChecker" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="CanvasLayer/PropertyMenu" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/PropertyMenu" to="." method="_on_mouse_exited"]

@@ -106,10 +106,10 @@ func _process(_delta: float) -> void:
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
 	cantPlace.modulate = Color(1, 0, 0, 0);
-	updateSelector();
+	update_selector();
 
 ## Update the selector and cursor in accordance to current location and ability to place tiles
-func updateSelector() -> void:
+func update_selector() -> void:
 	selector.position = currentMousePosition * 128 + Vector2(64, 64);
 	cursor.position = get_global_mouse_position() + Vector2(10, 10);
 	var hoverTile = tileSet.get_cell_source_id(currentMousePosition);

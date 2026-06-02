@@ -280,14 +280,18 @@ func place_entity(clickPosition: Vector2) -> void:
 	
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER && brushTile != Global.EntityType.PLAYER):
 		playerSpawnPosition = Vector2(-1, -1);
-
+	
 	if (brushTile == Global.EntityType.PLAYER && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	elif (brushTile == Global.EntityType.PLAYER):
 		return;
 	elif (brushTile >= tileCount):
-		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
+		# If the tile is a prop, use rotation
+		if (brushTile >= 12 && brushTile <= 17):
+			tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
+		else:
+			tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
 
@@ -346,8 +350,13 @@ func update_brush_tile(tile: int) -> void:
 func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2, isRed: bool = false) -> void:
 	previewTileMap.clear();
 	if (brushTile >= tileCount):
-		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
+		# If the tile is a prop, use rotation.
+		if (brushTile >= 12 && brushTile <= 17):
+			previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, tileRotation);
+		else:
+			previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
 	elif (brushTile == Global.TileType.SLOPE):
+		print("previewing tile:", brushTile)
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, tileRotation);
 	else:
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);

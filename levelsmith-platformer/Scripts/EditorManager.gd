@@ -12,9 +12,9 @@ var erasing : bool = false;
 @export var gridLines: TileMapLayer;
 @export var previewTileMap: TileMapLayer;
 
-var selector: Sprite2D;
-var cursor: Sprite2D;
-var cantPlace: Sprite2D;
+@export var selector: Sprite2D;
+@export var cursor: Sprite2D;
+@export var cantPlace: Sprite2D;
 
 # Reference to TileSwitch for transparency
 @export var tileSwitch: HBoxContainer;
@@ -60,10 +60,6 @@ func _ready() -> void:
 	# Assign self reference to UI
 	tileSwitch.editorManager = self;
 	toolSwitch.editorManager = self;
-	
-	selector = get_child(4);
-	cursor = get_child(5);
-	cantPlace = get_child(5).get_child(0);
 	
 	brushTile = Global.TileType.SOLID;
 	
@@ -388,7 +384,8 @@ func change_tool(tool: Global.Tool) -> void:
 		tileSwitch.displayTiles(false);
 		tileSwitch.displayEntities(true);
 	propertyMenu.hide();
-	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
+	#tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
+	
 	match currentTool:
 		Global.Tool.CURSOR:
 			update_brush_tile(Global.EntityType.GOAL);

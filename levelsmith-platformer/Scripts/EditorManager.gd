@@ -156,7 +156,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		Global.Tool.CURSOR:
 			if (event.is_action_released("left-click") && prevTile == -1):
 				# If the clicked cell is an entity and the click was short, edit its properties
-				if (tileSet.get_cell_source_id(currentMousePosition) >= 6 && holdTimer > 0):
+				if (tileSet.get_cell_source_id(currentMousePosition) >= 6 && holdTimer > -holdTimeCap):
 					edit_properties(currentMousePosition);
 				# Otherwise, place the entity
 				else:

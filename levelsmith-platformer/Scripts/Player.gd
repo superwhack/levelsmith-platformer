@@ -132,9 +132,9 @@ func detect_tiles() -> void:
 		if slideCollisions[i].get_collider() is TileMapLayer:
 			var collider : TileMapLayer = slideCollisions[i].get_collider();
 			# Use the global coord to find tile collision
-			var tilePos = collider.local_to_map(collider.to_local(collision));
+			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position);
 			var tileData = collider.get_cell_tile_data(tilePos);
-			if tileData and (tileData.get_custom_data("name") == "hazard" or slideCollisions[i] == raycastDownL || slideCollisions[i] == raycastDownR):
+			if tileData and (tileData.get_custom_data("name") == "hazard" || slideCollisions[i] == raycastDownL || slideCollisions[i] == raycastDownR):
 				#print(tilePos, " ", tileData.get_custom_data("name"));
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):

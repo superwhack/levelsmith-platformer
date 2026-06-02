@@ -147,7 +147,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		Global.Tool.BOX_BRUSH:
 			match (boxBrushState):
 				BoxBrushState.INACTIVE, BoxBrushState.CREATE_CONFIRM, BoxBrushState.DELETE_CONFIRM:
-					if (event.is_action_pressed("enter") && boxBrushState != BoxBrushState.INACTIVE):
+					if (event.is_action_pressed("jump") && boxBrushState != BoxBrushState.INACTIVE):
 						box_edit(firstCornerClick, secondCornerClick);
 					
 					if (event.is_action_pressed("left-click")):

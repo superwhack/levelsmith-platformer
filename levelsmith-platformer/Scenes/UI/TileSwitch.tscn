@@ -4,13 +4,18 @@
 [ext_resource type="Texture2D" uid="uid://6ik31jce0t7d" path="res://Assets/Sprites/Tiles/solid.png" id="1_vjuxo"]
 [ext_resource type="Texture2D" uid="uid://dsjnx6ie35vcy" path="res://Assets/Sprites/Tiles/Sticky.png" id="2_01osu"]
 [ext_resource type="Texture2D" uid="uid://babvjdloy7c3t" path="res://Assets/Sprites/Tiles/bounce.png" id="2_aauec"]
-[ext_resource type="Texture2D" uid="uid://c3tbgyhvm76uk" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
+[ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
 [ext_resource type="Texture2D" uid="uid://dvgxk4sd2a6ip" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
 [ext_resource type="Texture2D" uid="uid://b3ejj8ppb8c06" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
 [ext_resource type="Texture2D" uid="uid://bcu5p4cee56xc" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
-[ext_resource type="Texture2D" uid="uid://tercdgy7ber" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
-[ext_resource type="Texture2D" uid="uid://dol6bgwkx83b8" path="res://Assets/Sprites/Entities/goal.png" id="9_02cwx"]
+[ext_resource type="Texture2D" uid="uid://pjdhb2te74w5" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
+[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="9_02cwx"]
 [ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="9_e1a7i"]
+[ext_resource type="Texture2D" uid="uid://canq7b734hiwf" path="res://Assets/Sprites/Entities/Props/DirectionMarker.png" id="12_rf0fx"]
+[ext_resource type="Texture2D" uid="uid://bu3ysbjultqnw" path="res://Assets/Sprites/Entities/Props/StopMarker.png" id="13_krx33"]
+[ext_resource type="Texture2D" uid="uid://cgcii7osgonql" path="res://Assets/Sprites/Entities/Props/StartMarker.png" id="14_goodf"]
+[ext_resource type="Texture2D" uid="uid://c77rgcb7sk8o6" path="res://Assets/Sprites/Entities/Props/EndMarker.png" id="15_pggt4"]
+[ext_resource type="Texture2D" uid="uid://bp5gas5mcjf7o" path="res://Assets/Sprites/Entities/Props/GoalMarker.png" id="16_h6q5o"]
 
 [node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities")]
 offset_right = 628.0
@@ -166,3 +171,83 @@ stretch_mode = 0
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Entities/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Entities/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Entities/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]
+[node name="DirectionMarkerWrapper" type="Control" parent="." unique_id=1249601608]
+layout_mode = 2
+
+[node name="DirectionMarkerPropButton" type="TextureButton" parent="DirectionMarkerWrapper" unique_id=1076858031]
+layout_mode = 0
+offset_left = 1134.0
+offset_top = -1.0
+offset_right = 1214.0
+offset_bottom = 79.0
+texture_normal = ExtResource("12_rf0fx")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="StopMarkerWrapper" type="Control" parent="." unique_id=912759544]
+layout_mode = 2
+
+[node name="StopMarkerPropButton" type="TextureButton" parent="StopMarkerWrapper" unique_id=390902970]
+layout_mode = 0
+offset_left = 1219.0
+offset_top = -1.0
+offset_right = 1299.0
+offset_bottom = 79.0
+texture_normal = ExtResource("13_krx33")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="StartMarkerWrapper" type="Control" parent="." unique_id=2038341511]
+layout_mode = 2
+
+[node name="StartMarkerPropButton" type="TextureButton" parent="StartMarkerWrapper" unique_id=23904667]
+layout_mode = 0
+offset_left = 1305.655
+offset_top = -1.0
+offset_right = 1385.655
+offset_bottom = 79.0
+texture_normal = ExtResource("14_goodf")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="EndMarkerWrapper" type="Control" parent="." unique_id=1826631044]
+layout_mode = 2
+
+[node name="EndMarkerPropButton" type="TextureButton" parent="EndMarkerWrapper" unique_id=1171346932]
+layout_mode = 0
+offset_left = 1390.53
+offset_top = -1.0
+offset_right = 1470.53
+offset_bottom = 79.0
+texture_normal = ExtResource("15_pggt4")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="GoalMarkerWrapper" type="Control" parent="." unique_id=777141475]
+layout_mode = 2
+
+[node name="GoalMarkerPropButton" type="TextureButton" parent="GoalMarkerWrapper" unique_id=1541270030]
+layout_mode = 0
+offset_left = 1475.01
+offset_top = -1.0
+offset_right = 1555.01
+offset_bottom = 79.0
+texture_normal = ExtResource("16_h6q5o")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="SolidTileWrapper/SolidTileButton" to="." method="_on_solid_tile_button_pressed"]
+[connection signal="pressed" from="DeathTileWrapper/DeathTileButton" to="." method="_on_death_tile_button_pressed"]
+[connection signal="pressed" from="OnewayTileWrapper/OnewayTileButton" to="." method="_on_oneway_tile_button_pressed"]
+[connection signal="pressed" from="IceTileWrapper/IceTileButton" to="." method="_on_ice_tile_button_pressed"]
+[connection signal="pressed" from="StickyTWrapper/StickyTileButton" to="." method="_on_sticky_tile_button_pressed"]
+[connection signal="pressed" from="BounceTileWrapper/BounceTileButton" to="." method="_on_bounce_tile_button_pressed"]
+[connection signal="pressed" from="SlopeTileWrapper/SlopeTileButton" to="." method="_on_slope_tile_button_pressed"]
+[connection signal="pressed" from="GoalObjectWrapper/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
+[connection signal="pressed" from="SpawnObjectWrapper/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
+[connection signal="pressed" from="PatrollingObjectWrapper/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]
+[connection signal="pressed" from="DirectionMarkerWrapper/DirectionMarkerPropButton" to="." method="_on_direction_marker_prop_button_pressed"]
+[connection signal="pressed" from="StopMarkerWrapper/StopMarkerPropButton" to="." method="_on_stop_marker_prop_button_pressed"]
+[connection signal="pressed" from="StartMarkerWrapper/StartMarkerPropButton" to="." method="_on_start_marker_prop_button_pressed"]
+[connection signal="pressed" from="EndMarkerWrapper/EndMarkerPropButton" to="." method="_on_end_marker_prop_button_pressed"]
+[connection signal="pressed" from="GoalMarkerWrapper/GoalMarkerPropButton" to="." method="_on_goal_marker_prop_button_pressed"]

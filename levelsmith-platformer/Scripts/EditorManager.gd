@@ -4,7 +4,6 @@ extends Node2D
 var currentTool := Global.Tool.BRUSH;
 var brushTile : int;
 var validationCheck := false;
-var selectedTile : TileData;
 var painting : bool = false;
 var erasing : bool = false;
 
@@ -12,6 +11,10 @@ var erasing : bool = false;
 @export var tileSet: TileMapLayer;
 @export var gridLines: TileMapLayer;
 @export var previewTileMap: TileMapLayer;
+
+var selector: Sprite2D;
+var cursor: Sprite2D;
+var cantPlace: Sprite2D;
 
 # Reference to TileSwitch for transparency
 @export var tileSwitch: HBoxContainer;
@@ -23,6 +26,12 @@ var erasing : bool = false;
 # Mouse position variables
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
+
+# A timer to differentiate between click and holding click
+const holdTimeCap = .1;
+var holdTimer := holdTimeCap;
+# Previously selected tile before dragging.
+var prevTile := -1;
 
 var tileRotation := 0;
 
@@ -52,6 +61,10 @@ func _ready() -> void:
 	tileSwitch.editorManager = self;
 	toolSwitch.editorManager = self;
 	
+	selector = get_child(4);
+	cursor = get_child(5);
+	cantPlace = get_child(5).get_child(0);
+	
 	brushTile = Global.TileType.SOLID;
 	
 	fill_grid_lines();
@@ -65,18 +78,48 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# record the position of the mouse on this frame
 	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
-	isPlaceable = !check_out_of_bounds(currentMousePosition);
 	
-	update_preview_tile(currentMousePosition, prevMousePosition);
+	isPlaceable = !check_out_of_bounds(currentMousePosition);
+	if (currentTool == Global.Tool.BRUSH && tileSet.get_cell_source_id(currentMousePosition) >= tileCount): isPlaceable = false; 
+	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(currentMousePosition) < tileCount && tileSet.get_cell_source_id(currentMousePosition) >= 0): isPlaceable = false; 
+	
+	if (Input.is_action_pressed("left-click")):
+		holdTimer -= _delta;
+	elif (Input.is_action_just_released("left-click")):
+		holdTimer = holdTimeCap;
+	
+	if (holdTimer > 0):
+		update_preview_tile(currentMousePosition, prevMousePosition);
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
 	
+	if (boxBrushState != BoxBrushState.INACTIVE):
+		secondCornerClick = currentMousePosition;
+		update_box_preview(firstCornerClick, secondCornerClick);
+	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
+	cantPlace.modulate = Color(1, 0, 0, 0);
+	update_selector();
+
+## Update the selector and cursor in accordance to current location and ability to place tiles
+func update_selector() -> void:
+	selector.position = currentMousePosition * 128 + Vector2(64, 64);
+	cursor.position = get_global_mouse_position() + Vector2(10, 10);
+	var hoverTile = tileSet.get_cell_source_id(currentMousePosition);
+	if ((hoverTile >= tileCount && brushTile < tileCount) || (hoverTile < tileCount && hoverTile > -1 && brushTile >= tileCount) || check_out_of_bounds(currentMousePosition)):
+		cantPlace.modulate = Color(1, 0, 0, 1);
+		selector.modulate = Color(0, 0, 0, 0);
+	elif (prevTile > -1 && Input.is_action_pressed("click")):
+		selector.modulate = Color(0, 1, 1, 1);
+	elif (erasing):
+		selector.modulate = Color(1, 0, 0, 1);
+	else:
+		selector.modulate = Color(1, 1, 1, 1);
 
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:	
 	match (currentTool):
 		Global.Tool.BRUSH:
 			if (event.is_action_pressed("left-click")):
@@ -89,8 +132,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			elif (event.is_action_released("right-click")):
 				erasing = false;
 				
-			if painting: place_tile(currentMousePosition);
-			elif erasing: delete_tile(currentMousePosition);
+			if painting: 
+				place_tile(currentMousePosition);
+			elif erasing:
+				delete_tile(currentMousePosition);
 		Global.Tool.BOX_BRUSH:
 			if (event.is_action_pressed("left-click") && boxBrushState == BoxBrushState.INACTIVE):
 				firstCornerClick = currentMousePosition;
@@ -100,27 +145,62 @@ func _unhandled_input(event: InputEvent) -> void:
 				boxBrushState = BoxBrushState.DELETE;
 				
 			if (event.is_action_released("left-click") || event.is_action_released("right-click")):
-				secondCornerClick = currentMousePosition;
 				box_edit(firstCornerClick, secondCornerClick);
 				
 		Global.Tool.CURSOR:
-			if (event.is_action_pressed("left-click")):
-				# If the clicked cell is an entity, edit its properties
-				if (tileSet.get_cell_source_id(currentMousePosition) >= 6):
+			if (event.is_action_released("left-click") && prevTile == -1):
+				# If the clicked cell is an entity and the click was short, edit its properties
+				if (tileSet.get_cell_source_id(currentMousePosition) >= 6 && holdTimer > -holdTimeCap):
 					edit_properties(currentMousePosition);
 				# Otherwise, place the entity
 				else:
 					place_entity(currentMousePosition);
-			if (event.is_action_pressed("right-click")):
+			elif (event.is_action_pressed("right-click")):
 				delete_entity(currentMousePosition);
-	
+			
+			# If left click is being held, pick up the current tile unless it's empty air.
+			if (holdTimer < 0 && prevTile == -1 && tileSet.get_cell_source_id(currentMousePosition) != -1) && tileSet.get_cell_source_id(currentMousePosition) >= tileCount:
+				# NOTE: THIS COMMENT BREAKS IT, BUT WE STILL SHOULD SAVE ROTATIONS SOMEWHERE
+				#tileRotation = tileSet.get_cell_alternative_tile(currentMousePosition);
+				# Await is needed to it has time to update selectedTile
+				prevTile = brushTile;
+				await get_tree().process_frame;
+				brushTile = tileSet.get_cell_source_id(currentMousePosition);
+				if (brushTile == Global.EntityType.PLAYER):
+					playerSpawnPosition = Vector2(-1, -1);
+				previewTileMap.modulate = Color(1, 1, 1, 1);
+				tileSet.erase_cell(currentMousePosition);
+			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
+			elif (holdTimer < 0 && prevTile == -1):
+				prevTile = -2;
+			# If an entity is currently picked up and click is still being held, update the previewmap to look like the tile's being dragged around
+			elif (holdTimer < 0):
+				previewTileMap.clear();
+				# If the condition for prevTile = -2 above has happened, just handle previews normally
+				if (prevTile == -2):
+					update_preview_tile(currentMousePosition, prevMousePosition);
+				# Otherwise handle the previews but wil no transparency on the tile map
+				else:
+					if (brushTile >= tileCount):
+						previewTileMap.set_cell(currentMousePosition, brushTile, Vector2i.ZERO, 2);
+					elif (brushTile != Global.TileType.ONEWAY):
+						previewTileMap.set_cell(currentMousePosition, brushTile, Vector2i.ZERO, tileRotation);
+					else:
+						previewTileMap.set_cell(currentMousePosition, brushTile, Vector2i.ZERO);
+			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
+			elif (holdTimer == holdTimeCap && prevTile != -1):
+				drop_tile();
 	if event.is_action_pressed("rotate"):
 		rotate_tile();
 	
 	if event.is_action_pressed("brush-tool"):
+		if (prevTile != -1):
+			drop_tile();
 		change_tool(Global.Tool.BRUSH);
 
 	elif event.is_action_pressed("box-brush-tool"):
+		if (prevTile != -1):
+			drop_tile();
 		change_tool(Global.Tool.BOX_BRUSH);
 
 	elif event.is_action_pressed("cursor-tool"):
@@ -143,7 +223,21 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	elif event.is_action_pressed("sixth-select"):
 		update_brush_tile(Global.TileType.BOUNCE);
+		
+	elif event.is_action_pressed("seventh-select"):
+		update_brush_tile(Global.TileType.SLOPE);
 
+## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
+func drop_tile() -> void:
+	previewTileMap.clear();
+	if (brushTile < tileCount):
+		place_tile(currentMousePosition);
+	else:
+		place_entity(currentMousePosition);
+	if (prevTile != -2):
+		brushTile = prevTile;
+	prevTile = -1;
+	
 ## Places down the current brush tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
@@ -153,13 +247,16 @@ func place_tile(clickPosition: Vector2) -> void:
 	if (currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
 		return;
 	# If the cell is already of the same type, or if the cell is occupied by an entity, don't overwrite
-	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) > tileCount): 
+	if (tileSet.get_cell_source_id(clickPosition) == brushTile || tileSet.get_cell_source_id(clickPosition) >= tileCount): 
 		return;
 	tileSet.erase_cell(clickPosition);
 	if (brushTile != Global.TileType.ONEWAY):
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
+		
+## Get the player's spawn
+## returns: player's current spawn
 func getSpawn() -> Vector2:
 	return playerSpawnPosition;
 
@@ -174,14 +271,18 @@ func place_entity(clickPosition: Vector2) -> void:
 	
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER && brushTile != Global.EntityType.PLAYER):
 		playerSpawnPosition = Vector2(-1, -1);
-
+	
 	if (brushTile == Global.EntityType.PLAYER && playerSpawnPosition == Vector2(-1,-1)):
 		playerSpawnPosition = clickPosition;
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	elif (brushTile == Global.EntityType.PLAYER):
 		return;
 	elif (brushTile >= tileCount):
-		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
+		# If the tile is a prop, use rotation
+		if (brushTile >= 12 && brushTile <= 17):
+			tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
+		else:
+			tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, 1);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
 
@@ -197,7 +298,7 @@ func delete_tile (clickPosition: Vector2) -> void:
 ## clickPosition: Where the mouse is during the click.
 func delete_entity (clickPosition: Vector2) -> void:
 	validationCheck = false;
-	if (currentTool != Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) > tileCount):
+	if (currentTool != Global.Tool.CURSOR || (tileSet.get_cell_source_id(clickPosition) < tileCount)):
 		return;
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER):
 		playerSpawnPosition = Vector2(-1, -1);
@@ -224,6 +325,7 @@ func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
 					delete_tile(topLeft + Vector2(j, i));
 	
 	boxBrushState = BoxBrushState.INACTIVE;
+	previewTileMap.clear();
 
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
@@ -236,19 +338,38 @@ func update_brush_tile(tile: int) -> void:
 ## Hooks the preview tile to the mouse position and moves it when necessary
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevPosition: Where the mouse previously was in grid coordinates
-func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2) -> void:
+func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2, isRed: bool = false) -> void:
+	previewTileMap.clear();
 	if (brushTile >= tileCount):
-		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
-	elif (brushTile != Global.TileType.ONEWAY):
+		# If the tile is a prop, use rotation.
+		if (brushTile >= 12 && brushTile <= 17):
+			previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, tileRotation);
+		else:
+			previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
+	elif (brushTile == Global.TileType.SLOPE):
+		print("previewing tile:", brushTile)
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, tileRotation);
 	else:
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO);
 	
+	if (isRed): previewTileMap.modulate = Color(1, 0, 0, 0.5);
 	# Preview tile will appear red if not in a placeable area.
-	previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)
+	else: previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)	
+
+func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
+	# Find the coordinate of the top left corner of the box.
+	var topLeft: Vector2 = Vector2(
+		min(firstCorner.x, secondCorner.x), 
+		min(firstCorner.y, secondCorner.y));
 	
-	if (mousePosition != prevPosition): 
-		previewTileMap.erase_cell(prevPosition);
+	previewTileMap.clear();
+	for i in abs(secondCorner.y - firstCorner.y) + 1:
+		for j in abs(secondCorner.x - firstCorner.x) + 1:
+			# Will appear red when deleting tiles and use standard colors otherwise.
+			var currentCell: Vector2 = topLeft + Vector2(j, i)
+			if (not tileSet.get_cell_source_id(currentCell) >= tileCount):
+				update_preview_tile(currentCell, currentCell, boxBrushState == BoxBrushState.DELETE);
+	
 
 ## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.
 ## tool: The tool to change to
@@ -266,6 +387,18 @@ func change_tool(tool: Global.Tool) -> void:
 		update_brush_tile(Global.EntityType.GOAL);
 		tileSwitch.displayTiles(false);
 		tileSwitch.displayEntities(true);
+	propertyMenu.hide();
+	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
+	match currentTool:
+		Global.Tool.CURSOR:
+			update_brush_tile(Global.EntityType.GOAL);
+			cursor.texture = load('res://Assets/Sprites/UI/cursor.png');
+		Global.Tool.BOX_BRUSH:
+			update_brush_tile(Global.TileType.SOLID);
+			cursor.texture = load('res://Assets/Sprites/UI/boxBrush.png');
+		Global.Tool.BRUSH:
+			update_brush_tile(Global.TileType.SOLID);
+			cursor.texture = load('res://Assets/Sprites/UI/paintBrush.png');
 	print("Current Tool: ", currentTool);
 
 ## Rotate currently selected tile
@@ -326,3 +459,12 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 		if node.global_position == targetGlobalPos:
 			return node;
 	return null;
+
+## Show the normal mouse if it's hovering over UI elements.
+func _on_mouse_entered() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+	cursor.modulate = Color(1, 1, 1, 0);
+## Get rid of the normal mouse when it's stopped.
+func _on_mouse_exited() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
+	cursor.modulate = Color(1, 1, 1, 1);

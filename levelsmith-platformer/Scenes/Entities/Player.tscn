@@ -1,16 +1,40 @@
 [gd_scene format=3 uid="uid://87eq7bxythec"]
 
 [ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Player.gd" id="1_kyqiw"]
-[ext_resource type="Texture2D" uid="uid://cnosv0durnybp" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
+[ext_resource type="Resource" uid="uid://nd3ng1cl05pa" path="res://Resources/PlayerPresets/Default.tres" id="2_agccv"]
+[ext_resource type="Texture2D" uid="uid://2hfbf5bqyhy4" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2riqt"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_agccv"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1372711448 groups=["Player"]]
+[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycastDownL", "raycastDownR", "raycastLeft", "raycastRight", "raycastUp") groups=["Player"]]
 script = ExtResource("1_kyqiw")
+raycastDownL = NodePath("RayCastDownL")
+raycastDownR = NodePath("RayCastDownR")
+raycastLeft = NodePath("RayCastLeft")
+raycastRight = NodePath("RayCastRight")
+raycastUp = NodePath("RayCastUp")
+playerMovementPreset = ExtResource("2_agccv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]
 scale = Vector2(6.3, 6.3)
-shape = SubResource("CircleShape2D_2riqt")
+shape = SubResource("CircleShape2D_agccv")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=290798525]
 texture = ExtResource("2_gntrk")
+
+[node name="RayCastDownL" type="RayCast2D" parent="." unique_id=116409988]
+position = Vector2(-50, 0)
+target_position = Vector2(0, 64)
+
+[node name="RayCastDownR" type="RayCast2D" parent="." unique_id=690188439]
+position = Vector2(50, 0)
+target_position = Vector2(0, 64)
+
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1278463934]
+target_position = Vector2(-64, 0)
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=1567430084]
+target_position = Vector2(64, 0)
+
+[node name="RayCastUp" type="RayCast2D" parent="." unique_id=866310471]
+target_position = Vector2(0, -64)

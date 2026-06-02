@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PlayerMovementPreset" format=3]
+
+[ext_resource type="Script" path="res://Scripts/PlayerMovementPreset.gd" id="1_1qm3p"]
+
+[resource]
+script = ExtResource("1_1qm3p")
+groundSpeed = 6.8
+jumpHeight = 6.1
+airControl = 4.5
+fallSpeed = 7.6
+coyoteTime = 6.4
+metadata/_custom_type_script = "uid://bp8erofrb01fc"

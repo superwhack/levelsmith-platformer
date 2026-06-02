@@ -51,3 +51,24 @@ func _on_spawn_object_button_pressed() -> void:
 
 func _on_patrolling_object_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.PATROLLING);
+	
+
+
+func _on_direction_marker_prop_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.EntityType.PROP1);
+
+
+func _on_stop_marker_prop_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.EntityType.PROP2);
+
+
+func _on_start_marker_prop_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.EntityType.PROP3);
+
+
+func _on_end_marker_prop_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.EntityType.PROP4);
+
+
+func _on_goal_marker_prop_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.EntityType.PROP5);

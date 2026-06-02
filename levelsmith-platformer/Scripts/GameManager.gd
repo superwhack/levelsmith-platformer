@@ -12,6 +12,8 @@ var goalReached := false;
 var player: CharacterBody2D;
 var playerStartingPosition: Vector2;
 
+var playerPreset: Resource;
+
 ## When pause is pressed, flip the current state
 func pause() -> void:
 	if playState == PlayState.PAUSE:
@@ -24,6 +26,7 @@ func pause() -> void:
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
 	Global.reload.emit();
+	start();
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
@@ -31,10 +34,13 @@ func start() -> void:
 	for frame in range(1, 5):
 		await get_tree().process_frame;
 	player = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1];
+	player.playerMovementPreset = playerPreset;
+	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
 	Global.death.connect(reset);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
 
 ## Runs every frame during the play state
 ## _delta: The amount of time that has passed

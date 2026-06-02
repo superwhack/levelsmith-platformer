@@ -63,8 +63,6 @@ func _physics_process(delta: float) -> void:
 			jump();
 	# Handle A and D inputs, as well as lack of directional input
 	run();
-	check_out_of_bounds();
-
 	# Look at what the player is colliding with and apply effects
 	detect_tiles();
 	move_and_slide();
@@ -155,6 +153,7 @@ func detect_tiles() -> void:
 					# Apply a slowdown to player movement and jumps
 					"slow":
 						currentSlowdown = .5;
+						
 
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> void:

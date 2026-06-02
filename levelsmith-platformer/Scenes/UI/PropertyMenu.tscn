@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://bwguyxq8bjrjk"]
 
 [ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/PropertyMenu.gd" id="1_tnep3"]
+[ext_resource type="PackedScene" uid="uid://c3ype5vn62yxp" path="res://Scenes/UI/PropertySlider.tscn" id="2_w5eld"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "presetOptions")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,6 +15,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tnep3")
 entityName = NodePath("EntityName")
+playerSpeedSlider = NodePath("PlayerProperties/PlayerSpeed")
+playerJumpSlider = NodePath("PlayerProperties/PlayerJump")
+playerAirControlSlider = NodePath("PlayerProperties/PlayerAirControl")
+playerFallSpeedSlider = NodePath("PlayerProperties/PlayerFallSpeed")
+playerCoyoteTimeSlider = NodePath("PlayerProperties/PlayerCoyoteTime")
+presetOptions = NodePath("PlayerProperties/PresetOptions")
 
 [node name="Label" type="Label" parent="." unique_id=1756571384]
 layout_mode = 0
@@ -39,4 +46,52 @@ offset_bottom = 676.0
 theme_override_font_sizes/font_size = 24
 text = "Close"
 
+[node name="PlayerProperties" type="VBoxContainer" parent="." unique_id=1398037876]
+layout_mode = 0
+offset_top = 119.0
+offset_right = 400.0
+offset_bottom = 603.0
+
+[node name="PlayerSpeed" parent="PlayerProperties" unique_id=305056832 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "Speed"
+
+[node name="PlayerJump" parent="PlayerProperties" unique_id=1835714671 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "Jump Height"
+
+[node name="PlayerAirControl" parent="PlayerProperties" unique_id=985825086 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "Air Control"
+
+[node name="PlayerFallSpeed" parent="PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "Fall Speed"
+
+[node name="PlayerCoyoteTime" parent="PlayerProperties" unique_id=2022302843 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "Coyote Time"
+
+[node name="PresetOptions" type="OptionButton" parent="PlayerProperties" unique_id=1677451211]
+layout_mode = 2
+selected = 0
+allow_reselect = true
+item_count = 5
+popup/item_0/text = "Default"
+popup/item_0/id = 0
+popup/item_1/text = "Fast"
+popup/item_1/id = 1
+popup/item_2/text = "Floaty"
+popup/item_2/id = 2
+popup/item_3/text = "Heavy"
+popup/item_3/id = 3
+popup/item_4/text = "Custom"
+popup/item_4/id = 4
+
 [connection signal="pressed" from="Button" to="." method="close"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerSpeed" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerJump" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerAirControl" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerFallSpeed" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="PlayerProperties/PlayerCoyoteTime" to="." method="_on_drag_ended"]
+[connection signal="item_selected" from="PlayerProperties/PresetOptions" to="." method="_on_preset_options_item_selected"]

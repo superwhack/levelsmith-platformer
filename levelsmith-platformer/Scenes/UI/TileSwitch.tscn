@@ -28,7 +28,6 @@ entityTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities")
 propTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Props")
 
 [node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
-visible = false
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="TilePickerUI" unique_id=1221828212]
@@ -112,6 +111,7 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="EntityPickerUI" type="PanelContainer" parent="." unique_id=324821247]
+visible = false
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="EntityPickerUI" unique_id=1037770530]

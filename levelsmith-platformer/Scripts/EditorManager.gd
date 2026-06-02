@@ -108,6 +108,7 @@ func _process(_delta: float) -> void:
 	cantPlace.modulate = Color(1, 0, 0, 0);
 	updateSelector();
 
+## Update the selector and cursor in accordance to current location and ability to place tiles
 func updateSelector() -> void:
 	selector.position = currentMousePosition * 128 + Vector2(64, 64);
 	cursor.position = get_global_mouse_position() + Vector2(10, 10);
@@ -245,6 +246,7 @@ func drop_tile() -> void:
 	if (prevTile != -2):
 		brushTile = prevTile;
 	prevTile = -1;
+	
 ## Places down the current brush tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
@@ -261,6 +263,9 @@ func place_tile(clickPosition: Vector2) -> void:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
+		
+## Get the player's spawn
+## returns: player's current spawn
 func getSpawn() -> Vector2:
 	return playerSpawnPosition;
 
@@ -448,14 +453,11 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 			return node;
 	return null;
 
-
-
-#func fillEntity(TileMapScene)
-
 ## Show the normal mouse if it's hovering over UI elements.
 func _on_mouse_entered() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
 	cursor.modulate = Color(1, 1, 1, 0);
+## Get rid of the normal mouse when it's stopped.
 func _on_mouse_exited() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
 	cursor.modulate = Color(1, 1, 1, 1);

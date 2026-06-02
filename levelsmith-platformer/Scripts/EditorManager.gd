@@ -21,6 +21,7 @@ var tileSwitch: HBoxContainer;
 
 # Reference to PropertyMenu for editing properties
 var propertyMenu: Panel;
+@export var playButton: Button;
 
 # Mouse position variables
 var currentMousePosition: Vector2;
@@ -56,6 +57,7 @@ var tileCount := Global.TileType.size();
 ## Runs once when the script is ready.
 ## Set up any reference variables here.
 func _ready() -> void:
+	playButton.modulate = Color(1, 1, 1, .5);
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
 	tileSet = get_child(0);
 	gridLines = get_child(1);
@@ -102,6 +104,7 @@ func _process(_delta: float) -> void:
 	if (boxBrushState != BoxBrushState.INACTIVE):
 		secondCornerClick = currentMousePosition;
 		update_box_preview(firstCornerClick, secondCornerClick);
+	playButton.modulate = Color(1, 1, 1, float(playerSpawnPosition != Vector2(-1, -1)) / 2 + .5);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;

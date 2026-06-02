@@ -145,6 +145,7 @@ func detect_tiles() -> void:
 					# Bounce the player up
 					"bounce":
 						velocity.y = -jumpHeight * 600 * tileData.get_custom_data("bounce");
+						coyoteTimeLeft = 0;
 					# Deal damage to the player
 					"hazard":
 						take_damage(1);

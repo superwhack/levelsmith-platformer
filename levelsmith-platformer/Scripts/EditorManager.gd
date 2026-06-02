@@ -12,6 +12,10 @@ var tileSet: TileMapLayer;
 var gridLines: TileMapLayer;
 var previewTileMap: TileMapLayer;
 
+var selector: Sprite2D;
+var cursor: Sprite2D;
+var cantPlace: Sprite2D;
+
 # Reference to TileSwitch for transparency
 var tileSwitch: HBoxContainer;
 
@@ -52,7 +56,7 @@ var tileCount := Global.TileType.size();
 ## Runs once when the script is ready.
 ## Set up any reference variables here.
 func _ready() -> void:
-	
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
 	tileSet = get_child(0);
 	gridLines = get_child(1);
 	previewTileMap = get_child(2);
@@ -62,6 +66,10 @@ func _ready() -> void:
 	
 	# Set the reference to the property menu
 	propertyMenu = get_child(3).get_child(2);
+	
+	selector = get_child(4);
+	cursor = get_child(5);
+	cantPlace = get_child(5).get_child(0);
 	
 	brushTile = Global.TileType.SOLID;
 	
@@ -86,6 +94,7 @@ func _process(_delta: float) -> void:
 	elif (Input.is_action_just_released("left-click")):
 		holdTimer = holdTimeCap;
 	
+	previewTileMap.clear();
 	if (holdTimer > 0):
 		update_preview_tile(currentMousePosition, prevMousePosition);
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
@@ -97,6 +106,23 @@ func _process(_delta: float) -> void:
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
+	cantPlace.modulate = Color(1, 0, 0, 0);
+	update_selector();
+
+## Update the selector and cursor in accordance to current location and ability to place tiles
+func update_selector() -> void:
+	selector.position = currentMousePosition * 128 + Vector2(64, 64);
+	cursor.position = get_global_mouse_position() + Vector2(10, 10);
+	var hoverTile = tileSet.get_cell_source_id(currentMousePosition);
+	if ((hoverTile >= tileCount && brushTile < tileCount) || (hoverTile < tileCount && hoverTile > -1 && brushTile >= tileCount) || check_out_of_bounds(currentMousePosition)):
+		cantPlace.modulate = Color(1, 0, 0, 1);
+		selector.modulate = Color(0, 0, 0, 0);
+	elif (prevTile > -1 && Input.is_action_pressed("click")):
+		selector.modulate = Color(0, 1, 1, 1);
+	elif (erasing):
+		selector.modulate = Color(1, 0, 0, 1);
+	else:
+		selector.modulate = Color(1, 1, 1, 1);
 
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
@@ -162,8 +188,6 @@ func _unhandled_input(event: InputEvent) -> void:
 					update_preview_tile(currentMousePosition, prevMousePosition);
 				# Otherwise handle the previews but wil no transparency on the tile map
 				else:
-					fill_grid_lines();
-					gridLines.set_cell(currentMousePosition, 2, Vector2i.ZERO);
 					if (brushTile >= tileCount):
 						previewTileMap.set_cell(currentMousePosition, brushTile, Vector2i.ZERO, 2);
 					elif (brushTile != Global.TileType.ONEWAY):
@@ -209,11 +233,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	elif event.is_action_pressed("sixth-select"):
 		update_brush_tile(Global.TileType.BOUNCE);
+		
+	elif event.is_action_pressed("seventh-select"):
+		update_brush_tile(Global.TileType.SLOPE);
 
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_tile() -> void:
 	previewTileMap.clear();
-	fill_grid_lines();
 	if (brushTile < tileCount):
 		place_tile(currentMousePosition);
 	else:
@@ -221,6 +247,7 @@ func drop_tile() -> void:
 	if (prevTile != -2):
 		brushTile = prevTile;
 	prevTile = -1;
+	
 ## Places down the current brush tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
@@ -237,6 +264,9 @@ func place_tile(clickPosition: Vector2) -> void:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO, tileRotation);
 	else:
 		tileSet.set_cell(clickPosition, brushTile, Vector2i.ZERO);
+		
+## Get the player's spawn
+## returns: player's current spawn
 func getSpawn() -> Vector2:
 	return playerSpawnPosition;
 
@@ -324,10 +354,7 @@ func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2, isRed: b
 	
 	if (isRed): previewTileMap.modulate = Color(1, 0, 0, 0.5);
 	# Preview tile will appear red if not in a placeable area.
-	else: previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)
-	
-	if (mousePosition != prevPosition): 
-		previewTileMap.erase_cell(prevPosition);
+	else: previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)	
 
 func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
 	# Find the coordinate of the top left corner of the box.
@@ -353,10 +380,16 @@ func change_tool(tool: Global.Tool) -> void:
 	currentTool = tool;
 	
 	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
-	if (currentTool != Global.Tool.CURSOR):
-		update_brush_tile(Global.TileType.SOLID);
-	else:
-		update_brush_tile(Global.EntityType.GOAL);
+	match currentTool:
+		Global.Tool.CURSOR:
+			update_brush_tile(Global.EntityType.GOAL);
+			cursor.texture = load('res://Assets/Sprites/UI/cursor.png');
+		Global.Tool.BOX_BRUSH:
+			update_brush_tile(Global.TileType.SOLID);
+			cursor.texture = load('res://Assets/Sprites/UI/boxBrush.png');
+		Global.Tool.BRUSH:
+			update_brush_tile(Global.TileType.SOLID);
+			cursor.texture = load('res://Assets/Sprites/UI/paintBrush.png');
 	print("Current Tool: ", currentTool);
 
 ## Rotate currently selected tile
@@ -418,4 +451,11 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 			return node;
 	return null;
 
-#func fillEntity(TileMapScene)
+## Show the normal mouse if it's hovering over UI elements.
+func _on_mouse_entered() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+	cursor.modulate = Color(1, 1, 1, 0);
+## Get rid of the normal mouse when it's stopped.
+func _on_mouse_exited() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
+	cursor.modulate = Color(1, 1, 1, 1);

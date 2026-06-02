@@ -39,7 +39,9 @@ var tileRotation := 0;
 enum BoxBrushState {
 	INACTIVE,
 	CREATE,
-	DELETE
+	DELETE,
+	CREATE_CONFIRM,
+	DELETE_CONFIRM
 }
 var boxBrushState: BoxBrushState = BoxBrushState.INACTIVE;
 var firstCornerClick: Vector2;
@@ -96,12 +98,12 @@ func _process(_delta: float) -> void:
 	elif (Input.is_action_just_released("left-click")):
 		holdTimer = holdTimeCap;
 	
-	if (holdTimer > 0):
+	if (holdTimer > 0 && (boxBrushState != BoxBrushState.CREATE_CONFIRM && boxBrushState != BoxBrushState.DELETE_CONFIRM)):
 		update_preview_tile(currentMousePosition, prevMousePosition);
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
 	
-	if (boxBrushState != BoxBrushState.INACTIVE):
+	if (boxBrushState == BoxBrushState.CREATE || boxBrushState == BoxBrushState.DELETE):
 		secondCornerClick = currentMousePosition;
 		update_box_preview(firstCornerClick, secondCornerClick);
 	playButton.modulate = Color(1, 1, 1, float(playerSpawnPosition != Vector2(-1, -1)) / 2 + .5);
@@ -146,15 +148,25 @@ func _unhandled_input(event: InputEvent) -> void:
 			elif erasing:
 				delete_tile(currentMousePosition);
 		Global.Tool.BOX_BRUSH:
-			if (event.is_action_pressed("left-click") && boxBrushState == BoxBrushState.INACTIVE):
-				firstCornerClick = currentMousePosition;
-				boxBrushState = BoxBrushState.CREATE;
-			elif (event.is_action_pressed("right-click") && boxBrushState == BoxBrushState.INACTIVE):
-				firstCornerClick = currentMousePosition;
-				boxBrushState = BoxBrushState.DELETE;
+			match (boxBrushState):
+				BoxBrushState.INACTIVE, BoxBrushState.CREATE_CONFIRM, BoxBrushState.DELETE_CONFIRM:
+					if (event.is_action_pressed("jump") && boxBrushState != BoxBrushState.INACTIVE):
+						box_edit(firstCornerClick, secondCornerClick);
+					
+					if (event.is_action_pressed("left-click")):
+						firstCornerClick = currentMousePosition;
+						boxBrushState = BoxBrushState.CREATE;
+					elif (event.is_action_pressed("right-click")):
+						firstCornerClick = currentMousePosition;
+						boxBrushState = BoxBrushState.DELETE;
 				
-			if (event.is_action_released("left-click") || event.is_action_released("right-click")):
-				box_edit(firstCornerClick, secondCornerClick);
+				BoxBrushState.CREATE:
+					if (event.is_action_released("left-click")):
+						boxBrushState = BoxBrushState.CREATE_CONFIRM;
+				
+				BoxBrushState.DELETE:
+					if (event.is_action_released("right-click")):
+						boxBrushState = BoxBrushState.DELETE_CONFIRM;
 				
 		Global.Tool.CURSOR:
 			if (event.is_action_released("left-click") && prevTile == -1):
@@ -326,17 +338,17 @@ func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
 		min(firstCorner.y, secondCorner.y));
 	
 	match (boxBrushState):
-		BoxBrushState.CREATE:
+		BoxBrushState.CREATE_CONFIRM:
 			# 1 is added to max to be inclusive
 			for i in abs(secondCorner.y - firstCorner.y) + 1:
 				for j in abs(secondCorner.x - firstCorner.x) + 1:
 					place_tile(topLeft + Vector2(j, i));
-		BoxBrushState.DELETE:
+		BoxBrushState.DELETE_CONFIRM:
 			for i in abs(secondCorner.y - firstCorner.y) + 1:
 				for j in abs(secondCorner.x - firstCorner.x) + 1:
 					delete_tile(topLeft + Vector2(j, i));
 	
-	boxBrushState = BoxBrushState.INACTIVE;
+	disable_box_brush();
 	previewTileMap.clear();
 
 ## Change the currently selected tile/entity if possible
@@ -351,7 +363,6 @@ func update_brush_tile(tile: int) -> void:
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevPosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2, isRed: bool = false) -> void:
-	previewTileMap.clear();
 	if (brushTile >= tileCount):
 		# If the tile is a prop, use rotation.
 		if (brushTile >= 12 && brushTile <= 17):
@@ -366,7 +377,9 @@ func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2, isRed: b
 	
 	if (isRed): previewTileMap.modulate = Color(1, 0, 0, 0.5);
 	# Preview tile will appear red if not in a placeable area.
-	else: previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)	
+	else: previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)	;
+	
+	if (mousePosition != prevPosition): previewTileMap.clear();
 
 func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
 	# Find the coordinate of the top left corner of the box.
@@ -389,7 +402,9 @@ func change_tool(tool: Global.Tool) -> void:
 	if currentTool == tool:
 		return;
 	
+	if (currentTool == Global.Tool.BOX_BRUSH): disable_box_brush();
 	currentTool = tool;
+	previewTileMap.clear(); 
 	propertyMenu.hide();
 	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
 	match currentTool:
@@ -403,6 +418,10 @@ func change_tool(tool: Global.Tool) -> void:
 			update_brush_tile(Global.TileType.SOLID);
 			cursor.texture = load('res://Assets/Sprites/UI/paintBrush.png');
 	print("Current Tool: ", currentTool);
+
+## Deactivates the box brush.
+func disable_box_brush() -> void:
+	boxBrushState = BoxBrushState.INACTIVE;
 
 ## Rotate currently selected tile
 ## NOTE: SceneCollection rotations work most likely by selecting the scene and rotating it, you can't spawn it rotated

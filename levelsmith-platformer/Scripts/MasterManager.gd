@@ -50,6 +50,7 @@ func play() -> void:
 	if (!editorManager.player_exist()):
 		print("No Player Exists, Cannot Start")
 		return;
+	propertyMenu.hide();
 	print("Play")
 	# Update state variable
 	state = Global.State.PLAY;

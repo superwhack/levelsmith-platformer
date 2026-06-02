@@ -387,7 +387,7 @@ func change_tool(tool: Global.Tool) -> void:
 		return;
 	
 	currentTool = tool;
-	
+	propertyMenu.hide();
 	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
 	match currentTool:
 		Global.Tool.CURSOR:

@@ -131,6 +131,19 @@ func detect_tile() -> void:
 					"slow":
 						currentSlowdown = .5;
 						
+
+## When the player walks/falls out of bounds, force kill them
+func check_out_of_bounds() -> void:
+	var masterManager : Node2D = get_tree().current_scene;
+	
+	# There is a 1 tile leeway given to players who leave bounds, before deth
+	if (self.global_position.x < (-1) * Global.tileSize
+	|| self.global_position.x > (masterManager.worldSize.y + 2) * Global.tileSize
+	|| self.global_position.y < (-1) * Global.tileSize
+	|| self.global_position.y > (masterManager.worldSize.x + 2) * Global.tileSize):
+		print("Player OOB: ", self.global_position)
+		die();
+
 ## Applies the player selected player movement preset to the player
 func apply_preset(preset: PlayerMovementPreset) -> void:
 	# Setting all the player variables

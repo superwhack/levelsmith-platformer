@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/PropertyMenu.gd" id="1_tnep3"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerProperties", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "presetOptions")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "presetOptions")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,7 +14,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tnep3")
 entityName = NodePath("EntityName")
-playerProperties = NodePath("PlayerProperties")
 playerSpeedSlider = NodePath("PlayerProperties/PlayerSpeed/HBoxContainer/SpeedSlider")
 playerJumpSlider = NodePath("PlayerProperties/PlayerJump/HBoxContainer/JumpSlider")
 playerAirControlSlider = NodePath("PlayerProperties/PlayerAirControl/HBoxContainer/AirControlSlider")
@@ -90,9 +89,8 @@ layout_mode = 2
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_vertical = 1
-max_value = 10.0
+max_value = 25.0
 step = 0.1
-value = 10.0
 
 [node name="Label" type="Label" parent="PlayerProperties/PlayerJump/HBoxContainer" unique_id=1758579555]
 custom_minimum_size = Vector2(32, 0)

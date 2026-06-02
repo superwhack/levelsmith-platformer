@@ -154,54 +154,66 @@ texture_normal = ExtResource("2_p43ua")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="PropObjectWrapper" type="Control" parent="." unique_id=1249601608]
+[node name="DirectionMarkerWrapper" type="Control" parent="." unique_id=1249601608]
 layout_mode = 2
 
-[node name="DirectionMarkerPropButton" type="TextureButton" parent="PropObjectWrapper" unique_id=1076858031]
+[node name="DirectionMarkerPropButton" type="TextureButton" parent="DirectionMarkerWrapper" unique_id=1076858031]
 layout_mode = 0
-offset_left = 1046.0
+offset_left = 1134.0
 offset_top = -1.0
-offset_right = 1126.0
+offset_right = 1214.0
 offset_bottom = 79.0
 texture_normal = ExtResource("12_rf0fx")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="StopMarkerPropButton" type="TextureButton" parent="PropObjectWrapper" unique_id=301701850]
+[node name="StopMarkerWrapper" type="Control" parent="." unique_id=912759544]
+layout_mode = 2
+
+[node name="StopMarkerPropButton" type="TextureButton" parent="StopMarkerWrapper" unique_id=390902970]
 layout_mode = 0
-offset_left = 1046.0
+offset_left = 1219.0
 offset_top = -1.0
-offset_right = 1126.0
+offset_right = 1299.0
 offset_bottom = 79.0
 texture_normal = ExtResource("13_krx33")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="StartMarkerPropButton" type="TextureButton" parent="PropObjectWrapper" unique_id=1797883134]
+[node name="StartMarkerWrapper" type="Control" parent="." unique_id=2038341511]
+layout_mode = 2
+
+[node name="StartMarkerPropButton" type="TextureButton" parent="StartMarkerWrapper" unique_id=23904667]
 layout_mode = 0
-offset_left = 1046.0
+offset_left = 1305.655
 offset_top = -1.0
-offset_right = 1126.0
+offset_right = 1385.655
 offset_bottom = 79.0
 texture_normal = ExtResource("14_goodf")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="EndMarkerPropButton" type="TextureButton" parent="PropObjectWrapper" unique_id=1436800665]
+[node name="EndMarkerWrapper" type="Control" parent="." unique_id=1826631044]
+layout_mode = 2
+
+[node name="EndMarkerPropButton" type="TextureButton" parent="EndMarkerWrapper" unique_id=1171346932]
 layout_mode = 0
-offset_left = 1046.0
+offset_left = 1390.53
 offset_top = -1.0
-offset_right = 1126.0
+offset_right = 1470.53
 offset_bottom = 79.0
 texture_normal = ExtResource("15_pggt4")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="GoalMarkerPropButton" type="TextureButton" parent="PropObjectWrapper" unique_id=1875219171]
+[node name="GoalMarkerWrapper" type="Control" parent="." unique_id=777141475]
+layout_mode = 2
+
+[node name="GoalMarkerPropButton" type="TextureButton" parent="GoalMarkerWrapper" unique_id=1541270030]
 layout_mode = 0
-offset_left = 1046.0
+offset_left = 1475.01
 offset_top = -1.0
-offset_right = 1126.0
+offset_right = 1555.01
 offset_bottom = 79.0
 texture_normal = ExtResource("16_h6q5o")
 ignore_texture_size = true
@@ -217,3 +229,8 @@ stretch_mode = 0
 [connection signal="pressed" from="GoalObjectWrapper/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
 [connection signal="pressed" from="SpawnObjectWrapper/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
 [connection signal="pressed" from="PatrollingObjectWrapper/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]
+[connection signal="pressed" from="DirectionMarkerWrapper/DirectionMarkerPropButton" to="." method="_on_direction_marker_prop_button_pressed"]
+[connection signal="pressed" from="StopMarkerWrapper/StopMarkerPropButton" to="." method="_on_stop_marker_prop_button_pressed"]
+[connection signal="pressed" from="StartMarkerWrapper/StartMarkerPropButton" to="." method="_on_start_marker_prop_button_pressed"]
+[connection signal="pressed" from="EndMarkerWrapper/EndMarkerPropButton" to="." method="_on_end_marker_prop_button_pressed"]
+[connection signal="pressed" from="GoalMarkerWrapper/GoalMarkerPropButton" to="." method="_on_goal_marker_prop_button_pressed"]

@@ -13,6 +13,7 @@ var gridLines: TileMapLayer;
 var previewTileMap: TileMapLayer;
 
 var selector: Sprite2D;
+var cursor: Sprite2D;
 var cantPlace: Sprite2D;
 
 # Reference to TileSwitch for transparency
@@ -55,7 +56,7 @@ var tileCount := Global.TileType.size();
 ## Runs once when the script is ready.
 ## Set up any reference variables here.
 func _ready() -> void:
-	
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
 	tileSet = get_child(0);
 	gridLines = get_child(1);
 	previewTileMap = get_child(2);
@@ -67,7 +68,8 @@ func _ready() -> void:
 	propertyMenu = get_child(3).get_child(2);
 	
 	selector = get_child(4);
-	cantPlace = get_child(5);
+	cursor = get_child(5);
+	cantPlace = get_child(5).get_child(0);
 	
 	brushTile = Global.TileType.SOLID;
 	
@@ -108,11 +110,11 @@ func _process(_delta: float) -> void:
 
 func updateSelector() -> void:
 	selector.position = currentMousePosition * 128 + Vector2(64, 64);
+	cursor.position = get_global_mouse_position() + Vector2(10, 10);
 	var hoverTile = tileSet.get_cell_source_id(currentMousePosition);
 	if ((hoverTile >= tileCount && brushTile < tileCount) || (hoverTile < tileCount && hoverTile > -1 && brushTile >= tileCount) || check_out_of_bounds(currentMousePosition)):
 		cantPlace.modulate = Color(1, 0, 0, 1);
 		selector.modulate = Color(0, 0, 0, 0);
-		cantPlace.position = get_global_mouse_position() + Vector2(30, -10);
 	elif (prevTile > -1 && Input.is_action_pressed("click")):
 		selector.modulate = Color(0, 1, 1, 1);
 	elif (erasing):
@@ -229,6 +231,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	elif event.is_action_pressed("sixth-select"):
 		update_brush_tile(Global.TileType.BOUNCE);
+		
 	elif event.is_action_pressed("seventh-select"):
 		update_brush_tile(Global.TileType.SLOPE);
 
@@ -374,10 +377,16 @@ func change_tool(tool: Global.Tool) -> void:
 	currentTool = tool;
 	
 	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
-	if (currentTool != Global.Tool.CURSOR):
-		update_brush_tile(Global.TileType.SOLID);
-	else:
-		update_brush_tile(Global.EntityType.GOAL);
+	match currentTool:
+		Global.Tool.CURSOR:
+			update_brush_tile(Global.EntityType.GOAL);
+			cursor.texture = load('res://Assets/Sprites/UI/cursor.png');
+		Global.Tool.BOX_BRUSH:
+			update_brush_tile(Global.TileType.SOLID);
+			cursor.texture = load('res://Assets/Sprites/UI/boxBrush.png');
+		Global.Tool.BRUSH:
+			update_brush_tile(Global.TileType.SOLID);
+			cursor.texture = load('res://Assets/Sprites/UI/paintBrush.png');
 	print("Current Tool: ", currentTool);
 
 ## Rotate currently selected tile
@@ -439,4 +448,14 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 			return node;
 	return null;
 
+
+
 #func fillEntity(TileMapScene)
+
+## Show the normal mouse if it's hovering over UI elements.
+func _on_mouse_entered() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+	cursor.modulate = Color(1, 1, 1, 0);
+func _on_mouse_exited() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
+	cursor.modulate = Color(1, 1, 1, 1);

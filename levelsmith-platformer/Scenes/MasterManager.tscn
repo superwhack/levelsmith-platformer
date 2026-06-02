@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Texture2D" uid="uid://bjqdwuhiphlly" path="res://Assets/Sprites/Tiles/gridSelect.png" id="5_64b2s"]
 [ext_resource type="Texture2D" uid="uid://ci85m207j0lqr" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
-[ext_resource type="Texture2D" uid="uid://qatvje4morq5" path="res://Assets/Sprites/UI/no.png" id="7_8vbpr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -72,16 +71,16 @@ tileSet = NodePath("../EditorManager/Tiles")
 
 [node name="EditorManager" parent="." unique_id=2045534837 instance=ExtResource("2_430ed")]
 
-[node name="Tiles" parent="EditorManager" index="0" unique_id=1452837543]
+[node name="Tiles" parent="EditorManager" index="1" unique_id=1452837543]
 position = Vector2(1, 0)
 tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAAAAAADAAcAAwAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAKAAYABAAAAAAAAAALAAYABAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAANAAUAAQAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAADAAkAAAAAAAAAAAACAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAD//wkAAAAAAAAAAAAJAAYABgAAAAAAAGAMAAUABgAAAAAAABACAAUABQAAAAAAAAAGAAUABQAAAAAAAAA=")
 
-[node name="GridLines" parent="EditorManager" index="1" unique_id=669187714]
+[node name="GridLines" parent="EditorManager" index="2" unique_id=669187714]
 z_index = 0
 tile_map_data = PackedByteArray()
 tile_set = SubResource("TileSet_0vixy")
 
-[node name="PreviewTile" parent="EditorManager" index="2" unique_id=1302011485]
+[node name="PreviewTile" parent="EditorManager" index="3" unique_id=1302011485]
 modulate = Color(1, 1, 1, 1)
 position = Vector2(0, -1)
 collision_enabled = true
@@ -102,11 +101,8 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 [node name="ToolContainer" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=2095469909]
 size_flags_stretch_ratio = 0.0
 
-[node name="Selector" parent="EditorManager" index="4" unique_id=1894609535]
+[node name="Selector" parent="EditorManager" index="5" unique_id=1894609535]
 texture = ExtResource("5_64b2s")
-
-[node name="No" type="Sprite2D" parent="EditorManager" unique_id=485489361]
-texture = ExtResource("7_8vbpr")
 
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 

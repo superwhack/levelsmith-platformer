@@ -1,16 +1,21 @@
 [gd_scene format=3 uid="uid://cgqrior0thya8"]
 
 [ext_resource type="Script" uid="uid://e6pkeumdahqd" path="res://Scripts/TileSwitch.gd" id="1_aauec"]
-[ext_resource type="Texture2D" uid="uid://c04578uqgrfjv" path="res://Assets/Sprites/Tiles/solid.png" id="1_vjuxo"]
-[ext_resource type="Texture2D" uid="uid://3no57vbdqn51" path="res://Assets/Sprites/Tiles/Sticky.png" id="2_01osu"]
-[ext_resource type="Texture2D" uid="uid://kv7n6y5tjp83" path="res://Assets/Sprites/Tiles/bounce.png" id="2_aauec"]
-[ext_resource type="Texture2D" uid="uid://bggaro288ywls" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
-[ext_resource type="Texture2D" uid="uid://cgdgrnbm0yhsq" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
-[ext_resource type="Texture2D" uid="uid://cwlrmmmt8w86m" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
-[ext_resource type="Texture2D" uid="uid://r3td16hm8jd1" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
-[ext_resource type="Texture2D" uid="uid://bgu3tf17p5rpf" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
+[ext_resource type="Texture2D" uid="uid://6ik31jce0t7d" path="res://Assets/Sprites/Tiles/solid.png" id="1_vjuxo"]
+[ext_resource type="Texture2D" uid="uid://dsjnx6ie35vcy" path="res://Assets/Sprites/Tiles/Sticky.png" id="2_01osu"]
+[ext_resource type="Texture2D" uid="uid://babvjdloy7c3t" path="res://Assets/Sprites/Tiles/bounce.png" id="2_aauec"]
+[ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
+[ext_resource type="Texture2D" uid="uid://dvgxk4sd2a6ip" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
+[ext_resource type="Texture2D" uid="uid://b3ejj8ppb8c06" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
+[ext_resource type="Texture2D" uid="uid://bcu5p4cee56xc" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
+[ext_resource type="Texture2D" uid="uid://pjdhb2te74w5" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
 [ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="9_02cwx"]
-[ext_resource type="Texture2D" uid="uid://2hfbf5bqyhy4" path="res://Assets/Sprites/Entities/dude.png" id="9_e1a7i"]
+[ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="9_e1a7i"]
+[ext_resource type="Texture2D" uid="uid://canq7b734hiwf" path="res://Assets/Sprites/Entities/Props/DirectionMarker.png" id="12_rf0fx"]
+[ext_resource type="Texture2D" uid="uid://bu3ysbjultqnw" path="res://Assets/Sprites/Entities/Props/StopMarker.png" id="13_krx33"]
+[ext_resource type="Texture2D" uid="uid://cgcii7osgonql" path="res://Assets/Sprites/Entities/Props/StartMarker.png" id="14_goodf"]
+[ext_resource type="Texture2D" uid="uid://c77rgcb7sk8o6" path="res://Assets/Sprites/Entities/Props/EndMarker.png" id="15_pggt4"]
+[ext_resource type="Texture2D" uid="uid://bp5gas5mcjf7o" path="res://Assets/Sprites/Entities/Props/GoalMarker.png" id="16_h6q5o"]
 
 [node name="Control" type="HBoxContainer" unique_id=959816093]
 anchors_preset = 15
@@ -146,6 +151,59 @@ offset_top = -1.0
 offset_right = 1126.0
 offset_bottom = 79.0
 texture_normal = ExtResource("2_p43ua")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="PropObjectWrapper" type="Control" parent="." unique_id=1249601608]
+layout_mode = 2
+
+[node name="DirectionMarkerPropButton" type="TextureButton" parent="PropObjectWrapper" unique_id=1076858031]
+layout_mode = 0
+offset_left = 1046.0
+offset_top = -1.0
+offset_right = 1126.0
+offset_bottom = 79.0
+texture_normal = ExtResource("12_rf0fx")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="StopMarkerPropButton" type="TextureButton" parent="PropObjectWrapper" unique_id=301701850]
+layout_mode = 0
+offset_left = 1046.0
+offset_top = -1.0
+offset_right = 1126.0
+offset_bottom = 79.0
+texture_normal = ExtResource("13_krx33")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="StartMarkerPropButton" type="TextureButton" parent="PropObjectWrapper" unique_id=1797883134]
+layout_mode = 0
+offset_left = 1046.0
+offset_top = -1.0
+offset_right = 1126.0
+offset_bottom = 79.0
+texture_normal = ExtResource("14_goodf")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="EndMarkerPropButton" type="TextureButton" parent="PropObjectWrapper" unique_id=1436800665]
+layout_mode = 0
+offset_left = 1046.0
+offset_top = -1.0
+offset_right = 1126.0
+offset_bottom = 79.0
+texture_normal = ExtResource("15_pggt4")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="GoalMarkerPropButton" type="TextureButton" parent="PropObjectWrapper" unique_id=1875219171]
+layout_mode = 0
+offset_left = 1046.0
+offset_top = -1.0
+offset_right = 1126.0
+offset_bottom = 79.0
+texture_normal = ExtResource("16_h6q5o")
 ignore_texture_size = true
 stretch_mode = 0
 

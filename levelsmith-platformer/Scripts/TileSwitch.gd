@@ -66,3 +66,4 @@ func _on_spawn_object_button_pressed() -> void:
 
 func _on_patrolling_object_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.PATROLLING);
+	

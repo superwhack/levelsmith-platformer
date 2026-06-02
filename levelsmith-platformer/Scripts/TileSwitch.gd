@@ -4,6 +4,7 @@ extends HBoxContainer
 
 var tileButtons: Array[Control] = [];
 var objectButtons: Array[Control] = [];
+var propButtons: Array[Control] = [];
 
 # NOTE: These get_child calls will have to change once all buttons are in
 func _ready() -> void:
@@ -20,6 +21,14 @@ func _ready() -> void:
 	objectButtons[0] = get_child(7);
 	objectButtons[1] = get_child(8);
 	objectButtons[2] = get_child(9);
+	
+	propButtons.resize(5);
+	propButtons[0] = get_child(10);
+	propButtons[1] = get_child(11);
+	propButtons[2] = get_child(12);
+	propButtons[3] = get_child(13);
+	propButtons[4] = get_child(14);
+
 
 ## Set objects to be transparent when the cursor is selected
 ## selected: True if the cursor is selected
@@ -29,11 +38,16 @@ func cursorSelected(selected: bool) -> void:
 			tileButton.modulate = Color(1, 1, 1, 1);
 		for objectButton in objectButtons:
 			objectButton.modulate = Color(1, 1, 1, 0.5);
+		for propButton in propButtons:
+			propButton.modulate = Color(1, 1, 1, 0.5);
 	else:
 		for tileButton in tileButtons:
 			tileButton.modulate = Color(1, 1, 1, 0.5);
 		for objectButton in objectButtons:
 			objectButton.modulate = Color(1, 1, 1, 1);
+		for propButton in propButtons:
+			propButton.modulate = Color(1, 1, 1, 1);
+			
 
 # Tile Buttons
 func _on_solid_tile_button_pressed() -> void:
@@ -66,3 +80,24 @@ func _on_spawn_object_button_pressed() -> void:
 
 func _on_patrolling_object_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.PATROLLING);
+	
+
+
+func _on_direction_marker_prop_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.EntityType.PROP1);
+
+
+func _on_stop_marker_prop_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.EntityType.PROP2);
+
+
+func _on_start_marker_prop_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.EntityType.PROP3);
+
+
+func _on_end_marker_prop_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.EntityType.PROP4);
+
+
+func _on_goal_marker_prop_button_pressed() -> void:
+	editorManager.update_brush_tile(Global.EntityType.PROP5);

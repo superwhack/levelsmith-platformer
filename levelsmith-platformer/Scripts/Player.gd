@@ -15,6 +15,14 @@ var coyoteTimeLeft = 0;
 
 var spawnpoint := Vector2(0, 0);
 
+# Raycasts
+@export var raycastDownL : RayCast2D;
+@export var raycastDownR : RayCast2D;
+@export var raycastLeft : RayCast2D;
+@export var raycastRight : RayCast2D;
+@export var raycastUp : RayCast2D;
+
+
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
 const maxHealth := 1;
 var health := maxHealth
@@ -32,7 +40,7 @@ var trueSpeed : float;
 
 ## Runs once on instantiation
 func _ready() -> void:
-	# Applies the preset on ready
+	# Applies the preset on ready	
 	if (playerMovementPreset):
 		print("Applying ", playerMovementPreset, " player movement preset.");
 		apply_preset(playerMovementPreset);
@@ -55,10 +63,8 @@ func _physics_process(delta: float) -> void:
 			jump();
 	# Handle A and D inputs, as well as lack of directional input
 	run();
-	check_out_of_bounds();
-
 	# Look at what the player is colliding with and apply effects
-	detect_tile();
+	detect_tiles();
 	move_and_slide();
 
 ## Make the player jump
@@ -98,32 +104,46 @@ func die() -> void:
 	Global.death.emit();
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
-func detect_tile() -> void:
+func detect_tiles() -> void:
 	# If there is a collision then reset savedFriction and savedSlowdown
 	if get_slide_collision_count() != 0:
 		currentFriction = 1.0;
 		currentSlowdown = 1.0;
 	
+	# Check all collisions with raycasts
+	var slideCollisions: Array[RayCast2D] = [];
+	if raycastDownL.is_colliding():
+		slideCollisions.push_back(raycastDownL);
+	if raycastDownR.is_colliding():
+		slideCollisions.push_back(raycastDownR);
+	if raycastLeft.is_colliding():
+		slideCollisions.push_back(raycastLeft);
+	if raycastRight.is_colliding():
+		slideCollisions.push_back(raycastRight);
+	if raycastUp.is_colliding():
+		slideCollisions.push_back(raycastUp);
+	
 	# Check all current collisions
-	for i in get_slide_collision_count():
-		var collision := get_slide_collision(i);
-		var collider := collision.get_collider();
+	for i in slideCollisions.size():
+		var collision : Vector2 = slideCollisions[i].get_collision_point();
 		# Only have collisions confer effects if they are below the player
-		if collider is TileMapLayer:
+		if slideCollisions[i].get_collider() is TileMapLayer:
+			var collider : TileMapLayer = slideCollisions[i].get_collider();
 			# Use the global coord to find tile collision
-			var tilePos = collider.local_to_map(collider.to_local(collision.get_position()));
+			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position);
 			var tileData = collider.get_cell_tile_data(tilePos);
-			if tileData and (tileData.get_custom_data("name") == "hazard" or collision.get_position().y > self.get_position().y + 63):
+			if tileData and (tileData.get_custom_data("name") == "hazard" || slideCollisions[i] == raycastDownL || slideCollisions[i] == raycastDownR):
 				#print(tilePos, " ", tileData.get_custom_data("name"));
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):
 					## NOTE: Theoretical code for the player to drop down through one-ways, works fine but it's a no go for a feature
-					#"oneway":
-					#	if Input.is_action_just_pressed("down"):
-					#		position += Vector2(0, 1);
+					"oneway":
+						if Input.is_action_just_pressed("down"):
+							position += Vector2(0, 1);
 					# Bounce the player up
 					"bounce":
 						velocity.y = -jumpHeight * 600 * tileData.get_custom_data("bounce");
+						coyoteTimeLeft = 0;
 					# Deal damage to the player
 					"hazard":
 						take_damage(1);
@@ -133,6 +153,7 @@ func detect_tile() -> void:
 					# Apply a slowdown to player movement and jumps
 					"slow":
 						currentSlowdown = .5;
+						
 
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> void:

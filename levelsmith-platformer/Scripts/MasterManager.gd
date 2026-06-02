@@ -14,6 +14,8 @@ var loadedMap : TileMapLayer;
 ## Vars for the world size.
 @export var worldSize : Vector2i = Vector2i(8, 14);
 
+@export var propertyMenu : Panel;
+
 func _ready() -> void:
 	editorManager = get_child(1);
 	gameManager = get_child(2);
@@ -48,6 +50,7 @@ func play() -> void:
 	if (!editorManager.player_exist()):
 		print("No Player Exists, Cannot Start")
 		return;
+	propertyMenu.hide();
 	print("Play")
 	# Update state variable
 	state = Global.State.PLAY;
@@ -65,6 +68,7 @@ func play() -> void:
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
 	gameManager.reset();
+	gameManager.playerPreset = propertyMenu.selectedPreset;
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:

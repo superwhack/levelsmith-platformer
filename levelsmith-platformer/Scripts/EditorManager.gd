@@ -377,12 +377,12 @@ func change_tool(tool: Global.Tool) -> void:
 	
 	if (currentTool != Global.Tool.CURSOR):
 		update_brush_tile(Global.TileType.SOLID);
-		tileSwitch.displayTiles(true);
-		tileSwitch.displayEntities(false);
+		tileSwitch.display_tiles(true);
+		tileSwitch.display_entities(false);
 	else:
 		update_brush_tile(Global.EntityType.GOAL);
-		tileSwitch.displayTiles(false);
-		tileSwitch.displayEntities(true);
+		tileSwitch.display_tiles(false);
+		tileSwitch.display_entities(true);
 	propertyMenu.hide();
 	#tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
 	

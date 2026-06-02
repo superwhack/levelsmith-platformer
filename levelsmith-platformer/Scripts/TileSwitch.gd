@@ -3,22 +3,41 @@ extends HBoxContainer
 # Reference to editor manager
 var editorManager : Node2D;
 
+enum TileState {
+	
+}
+
 # References to button bars
 @export var tiles : PanelContainer;
 @export var entities : PanelContainer;
+
+# References to tabs in Entity picker
+@export var entityTab: HBoxContainer;
+@export var propTab: HBoxContainer;
 
 func _ready() -> void:
 	pass;
 
 ## Toggles visibility of tile selection bar
 ## visibility: desired visibility
-func displayTiles(visibility: bool):
+func display_tiles(visibility: bool):
 	tiles.visible = visibility;
 
 ## Toggles visibility of entity selection bar
 ## visibility: desired visibility
-func displayEntities(visibility: bool):
+func display_entities(visibility: bool):
 	entities.visible = visibility;
+
+## Toggles visibility of tabs
+## index: index of tab selected
+func entity_dropdown_select(index: int):
+	match index:
+		0:
+			entityTab.visible = true;
+			propTab.visible = false;
+		1:
+			entityTab.visible = false;
+			propTab.visible = true;
 
 # Tile Buttons
 func _on_solid_tile_button_pressed() -> void:
@@ -53,7 +72,7 @@ func _on_patrolling_object_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.PATROLLING);
 	
 
-
+# Prop Buttons
 func _on_direction_marker_prop_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.PROP1);
 

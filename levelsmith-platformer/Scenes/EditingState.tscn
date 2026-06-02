@@ -101,7 +101,7 @@ visible = false
 [node name="CanvasLayer_ToolContainer#CursorChecker" type="Area2D" parent="." unique_id=1710550081]
 z_index = 20
 
-[node name="CanvasLayer_ToolContainer_CursorChecker#CursorCheckerRect" type="CollisionShape2D" parent="." unique_id=948755903]
+[node name="CanvasLayer_ToolContainer_CursorChecker#CursorCheckerRect" type="CollisionShape2D" parent="CanvasLayer_ToolContainer#CursorChecker" unique_id=948755903]
 position = Vector2(318.5, 53)
 shape = SubResource("RectangleShape2D_dvhpf")
 
@@ -121,3 +121,5 @@ texture = ExtResource("3_njgpr")
 [connection signal="mouse_exited" from="CanvasLayer/PlayButton" to="." method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/PropertyMenu" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/PropertyMenu" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="CanvasLayer_ToolContainer#CursorChecker" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer_ToolContainer#CursorChecker" to="." method="_on_mouse_exited"]

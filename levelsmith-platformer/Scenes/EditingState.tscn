@@ -87,6 +87,7 @@ focus_behavior_recursive = 0
 layout_mode = 2
 
 [node name="CursorChecker" type="Area2D" parent="CanvasLayer/ToolContainer" unique_id=1710550081]
+z_index = 20
 
 [node name="CursorCheckerRect" type="CollisionShape2D" parent="CanvasLayer/ToolContainer/CursorChecker" unique_id=948755903]
 position = Vector2(712.5, 43.5)

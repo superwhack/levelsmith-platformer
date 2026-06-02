@@ -94,6 +94,7 @@ func _process(_delta: float) -> void:
 	elif (Input.is_action_just_released("left-click")):
 		holdTimer = holdTimeCap;
 	
+	previewTileMap.clear();
 	if (holdTimer > 0):
 		update_preview_tile(currentMousePosition, prevMousePosition);
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
@@ -353,10 +354,7 @@ func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2, isRed: b
 	
 	if (isRed): previewTileMap.modulate = Color(1, 0, 0, 0.5);
 	# Preview tile will appear red if not in a placeable area.
-	else: previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)
-	
-	if (mousePosition != prevPosition): 
-		previewTileMap.erase_cell(prevPosition);
+	else: previewTileMap.modulate = Color(1, 1, 1, 0.5) if isPlaceable else Color(1, 0, 0, 0.5)	
 
 func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
 	# Find the coordinate of the top left corner of the box.

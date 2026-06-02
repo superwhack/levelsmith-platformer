@@ -61,6 +61,8 @@ func play() -> void:
 	gameManager.start();
 	gameManager.get_node("CanvasLayer").show()
 	editorManager.hide();
+	editorManager.previewTileMap.clear();
+	editorManager.disable_box_brush();
 	editorManager.get_node("CanvasLayer").hide();
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;

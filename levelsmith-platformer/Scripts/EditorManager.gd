@@ -94,7 +94,6 @@ func _process(_delta: float) -> void:
 	elif (Input.is_action_just_released("left-click")):
 		holdTimer = holdTimeCap;
 	
-	previewTileMap.clear();
 	if (holdTimer > 0):
 		update_preview_tile(currentMousePosition, prevMousePosition);
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
@@ -345,6 +344,7 @@ func update_brush_tile(tile: int) -> void:
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevPosition: Where the mouse previously was in grid coordinates
 func update_preview_tile(mousePosition: Vector2, prevPosition: Vector2, isRed: bool = false) -> void:
+	previewTileMap.clear();
 	if (brushTile >= tileCount):
 		previewTileMap.set_cell(mousePosition, brushTile, Vector2i.ZERO, 2);
 	elif (brushTile == Global.TileType.SLOPE):

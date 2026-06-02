@@ -9,15 +9,16 @@ var painting : bool = false;
 var erasing : bool = false;
 
 # References to grid TileMapLayer child nodes
-var tileSet: TileMapLayer;
-var gridLines: TileMapLayer;
-var previewTileMap: TileMapLayer;
+@export var tileSet: TileMapLayer;
+@export var gridLines: TileMapLayer;
+@export var previewTileMap: TileMapLayer;
 
 # Reference to TileSwitch for transparency
-var tileSwitch: HBoxContainer;
+@export var tileSwitch: HBoxContainer;
+@export var toolSwitch: HBoxContainer;
 
 # Reference to PropertyMenu for editing properties
-var propertyMenu: Panel;
+@export var propertyMenu: Panel;
 
 # Mouse position variables
 var currentMousePosition: Vector2;
@@ -47,16 +48,9 @@ var tileCount := Global.TileType.size();
 ## Runs once when the script is ready.
 ## Set up any reference variables here.
 func _ready() -> void:
-	
-	tileSet = get_child(0);
-	gridLines = get_child(1);
-	previewTileMap = get_child(2);
-	
-	tileSwitch = get_child(3).get_child(1).get_child(1);
-	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
-	
-	# Set the reference to the property menu
-	propertyMenu = get_child(3).get_child(2);
+	# Assign self reference to UI
+	tileSwitch.editorManager = self;
+	toolSwitch.editorManager = self;
 	
 	brushTile = Global.TileType.SOLID;
 	
@@ -125,15 +119,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("brush-tool"):
 		change_tool(Global.Tool.BRUSH);
-		tileSwitch.cursorSelected(false);
 
 	elif event.is_action_pressed("box-brush-tool"):
 		change_tool(Global.Tool.BOX_BRUSH);
-		tileSwitch.cursorSelected(false);
 
 	elif event.is_action_pressed("cursor-tool"):
 		change_tool(Global.Tool.CURSOR);
-		tileSwitch.cursorSelected(true);
 		
 	elif event.is_action_pressed("first-select"):
 		update_brush_tile(Global.TileType.SOLID);
@@ -267,11 +258,14 @@ func change_tool(tool: Global.Tool) -> void:
 	
 	currentTool = tool;
 	
-	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
 	if (currentTool != Global.Tool.CURSOR):
 		update_brush_tile(Global.TileType.SOLID);
+		tileSwitch.displayTiles(true);
+		tileSwitch.displayEntities(false);
 	else:
 		update_brush_tile(Global.EntityType.GOAL);
+		tileSwitch.displayTiles(false);
+		tileSwitch.displayEntities(true);
 	print("Current Tool: ", currentTool);
 
 ## Rotate currently selected tile

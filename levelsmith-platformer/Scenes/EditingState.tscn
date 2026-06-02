@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
-[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
-[ext_resource type="Texture2D" uid="uid://b2doutbpyoq2i" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
+[ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
+[ext_resource type="Texture2D" uid="uid://bh8waatyaurop" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -33,8 +33,14 @@ physics_layer_2/collision_mask = 4
 physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_0h7mo")
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("tileSet", "gridLines", "previewTileMap", "tileSwitch", "toolSwitch", "propertyMenu")]
 script = ExtResource("1_3goer")
+tileSet = NodePath("Tiles")
+gridLines = NodePath("GridLines")
+previewTileMap = NodePath("PreviewTile")
+tileSwitch = NodePath("CanvasLayer/TileSwitch")
+toolSwitch = NodePath("CanvasLayer/ToolSwitch")
+propertyMenu = NodePath("CanvasLayer/PropertyMenu")
 
 [node name="Tiles" type="TileMapLayer" parent="." unique_id=1452837543]
 tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAAAAAADAAcAAwAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAKAAYABAAAAAAAAAALAAYABAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAANAAUAAQAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAADAAkAAAAAAAAAAAACAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAD//wkAAAAAAAAAAAAJAAYABgAAAAAAAGAMAAUABgAAAAAAAGACAAUABQAAAAAAAAAGAAUABQAAAAAAAAAAAAAAAAAAAAAAAAA=")
@@ -62,18 +68,18 @@ focus_behavior_recursive = 1
 action_mode = 0
 icon = ExtResource("10_njgpr")
 
-[node name="ToolContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=2095469909]
-z_index = 2
-offset_right = 280.0
-offset_bottom = 40.0
-theme_override_constants/separation = 88
-
-[node name="ToolSwitch" parent="CanvasLayer/ToolContainer" unique_id=1469240724 instance=ExtResource("6_iws6f")]
-layout_mode = 2
+[node name="ToolSwitch" parent="CanvasLayer" unique_id=1469240724 instance=ExtResource("6_iws6f")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -313.0
+offset_right = 0.0
+offset_bottom = 104.0
+grow_horizontal = 0
 focus_behavior_recursive = 0
 
-[node name="TileSwitch" parent="CanvasLayer/ToolContainer" unique_id=959816093 instance=ExtResource("7_qupls")]
-layout_mode = 2
+[node name="TileSwitch" parent="CanvasLayer" unique_id=959816093 instance=ExtResource("7_qupls")]
+offset_bottom = 104.0
 
 [node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
 visible = false

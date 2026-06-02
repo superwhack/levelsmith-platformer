@@ -62,9 +62,6 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
-[node name="ToolContainer" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=2095469909]
-size_flags_stretch_ratio = 0.0
-
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 
 [connection signal="pressed" from="EditorManager/CanvasLayer/PlayButton" to="." method="play"]

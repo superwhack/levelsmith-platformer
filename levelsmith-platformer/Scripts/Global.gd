@@ -23,6 +23,13 @@ enum Tool {
 	CURSOR
 }
 
+# Hotbar state (primarily for hotkeys)
+enum HotbarState {
+	TILES,
+	ENTITIES,
+	PROPS
+}
+
 # Tile Types
 enum TileType {
 	SOLID = 0,

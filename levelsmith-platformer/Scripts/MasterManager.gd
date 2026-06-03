@@ -65,6 +65,9 @@ func play() -> void:
 	gameManagerCanvas.show()
 	editorManager.hide();
 	editorManagerCanvas.hide();
+	editorManager.previewTileMap.clear();
+	editorManager.disable_box_brush();
+	editorManager.get_node("CanvasLayer").hide();
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map

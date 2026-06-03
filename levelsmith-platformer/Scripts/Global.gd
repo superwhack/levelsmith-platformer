@@ -30,6 +30,15 @@ enum HotbarState {
 	PROPS
 }
 
+# Box brush state (for previewing and confirmation)
+enum BoxBrushState {
+	INACTIVE,
+	CREATE,
+	DELETE,
+	CREATE_CONFIRM,
+	DELETE_CONFIRM
+}
+
 # Tile Types
 enum TileType {
 	SOLID = 0,

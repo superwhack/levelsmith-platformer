@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://bm5w14jlbl37k"]
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
-[ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scenes/AudioManager.gd" id="2_8vbpr"]
+[ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://dt6pg2cjbdcuv" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]

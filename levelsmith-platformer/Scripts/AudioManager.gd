@@ -8,7 +8,6 @@ const audioPlayerCount := 6;
 # NOTE: This would be a folder alongside the other assets in the user's local directory, it needs to be changed
 const audioLibraryPath := "res://Assets/Audio/";
 const UIAudioLibraryPath := "res://Assets/Audio/";
-var audioLibrary : Dictionary;
 
 var musicPlayer : AudioStreamPlayer;
 var availablePlayers : Array[AudioStreamPlayer];
@@ -34,13 +33,27 @@ func music_loop(player: AudioStreamPlayer) -> void:
 func audio_finished(player: AudioStreamPlayer) -> void:
 	availablePlayers.append(player);
 	inusePlayers.erase(player);
-func play_music(musicName: String) -> void:
+
+# NOTE: isUI might not be needed here since there's only two tracks, not sure yet though
+## Play the music track
+## musicName: name of the sound effect
+## isUI: true if the music is tied to the UI, meaning the user doesn't adjust it
+func play_music(musicName: String, isUI: bool = false) -> void:
 	musicPlayer.stop();
-	musicPlayer.stream = load(musicName);
+	if isUI:
+		musicPlayer.stream = load(UIAudioLibraryPath + musicName + ".mp3");
+	else:
+		musicPlayer.stream = load(audioLibraryPath + musicName + ".mp3");
+	musicPlayer.play();
 
-
+## Add specified SFX to the queue
+## effectName: name of the sound effect
+## isUI: true if the SFX is tied to the UI, meaning the user doesn't adjust it
 func play_effect(effectName: String, isUI: bool = false) -> void:
-	queue.append(effectName);
+	if isUI:
+		queue.append(UIAudioLibraryPath + effectName + ".wav");
+	else:
+		queue.append(audioLibraryPath + effectName + ".wav");
 
 ## Reset and stop all audio
 func reset_audio() -> void:
@@ -55,5 +68,5 @@ func reset_audio() -> void:
 func _process(delta: float) -> void:
 	if !queue.is_empty() && !availablePlayers.is_empty():
 		availablePlayers[0].stream = load(queue.pop_front());
-		availablePlayers[0].play;
+		availablePlayers[0].play();
 		availablePlayers.pop_front();

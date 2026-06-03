@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b3k624sctovph"]
 
-[ext_resource type="Texture2D" uid="uid://c3tbgyhvm76uk" path="res://Assets/Sprites/Entities/baddude.png" id="1_8ustp"]
+[ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="1_8ustp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 

@@ -67,7 +67,6 @@ func play() -> void:
 	editorManagerCanvas.hide();
 	editorManager.previewTileMap.clear();
 	editorManager.disable_box_brush();
-	editorManager.get_node("CanvasLayer").hide();
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
@@ -76,8 +75,7 @@ func play() -> void:
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
-	# Reference the tile map as the node to be saved
-	#var nodeToSave = editorManager.get_node("Tiles");
+	# Reference the tile map as the node to be saved\
 	var nodeToSave = tileSet;
 	# Create a PackedScene
 	var scene = PackedScene.new();

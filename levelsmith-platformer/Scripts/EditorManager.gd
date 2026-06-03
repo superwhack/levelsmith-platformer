@@ -104,7 +104,7 @@ func _process(_delta: float) -> void:
 	if (boxBrushState == BoxBrushState.CREATE || boxBrushState == BoxBrushState.DELETE):
 		secondCornerClick = currentMousePosition;
 		update_box_preview(firstCornerClick, secondCornerClick);
-	playButton.modulate = Color(1, 1, 1, float(playerSpawnPosition != Vector2(-1, -1)) / 2 + .5);
+	#playButton.modulate = Color(1, 1, 1, float(playerSpawnPosition != Vector2(-1, -1)) / 2 + .5);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;

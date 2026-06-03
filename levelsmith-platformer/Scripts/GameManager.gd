@@ -37,10 +37,13 @@ func start() -> void:
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
-	Global.death.connect(reset);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+
+## Just connect death
+func _ready() -> void:
+	Global.death.connect(reset);
 
 ## Runs every frame during the play state
 ## _delta: The amount of time that has passed

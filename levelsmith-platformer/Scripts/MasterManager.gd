@@ -20,7 +20,6 @@ func _ready() -> void:
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
 	# Don't play this please, it's just for testing
-	#AudioManager.play_music("Mindframe");
 	
 	edit();
 
@@ -33,6 +32,7 @@ func level_complete() -> void:
 
 ## Swap to edit state
 func edit() -> void:
+	AudioManager.play_music("Mindframe");
 	print("Edit")
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
@@ -51,6 +51,7 @@ func play() -> void:
 		print("No Player Exists, Cannot Start")
 		return;
 	propertyMenu.hide();
+	AudioManager.play_music("LevelMusic");
 	print("Play")
 	# Update state variable
 	state = Global.State.PLAY;

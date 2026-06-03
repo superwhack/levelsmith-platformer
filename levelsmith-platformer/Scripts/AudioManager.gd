@@ -3,6 +3,8 @@ extends Node
 var masterVolume := 1.0;
 var musicVolume := 1.0;
 var SFXVolume := 1.0;
+# Lowest DB, should be inaudible (it's negative)
+const lowestDB = 80;
 
 const audioPlayerCount := 6;
 # NOTE: This would be a folder alongside the other assets in the user's local directory, it needs to be changed
@@ -38,6 +40,14 @@ func music_loop(player: AudioStreamPlayer) -> void:
 func audio_finished(player: AudioStreamPlayer) -> void:
 	availablePlayers.append(player);
 	inusePlayers.erase(player);
+
+func update_volume() -> void:
+	musicPlayer.volume_db = (lowestDB * masterVolume * musicVolume) - lowestDB;
+	print(musicPlayer.volume_db);
+	for i in inusePlayers.size():
+		inusePlayers[i].volume_db = (lowestDB * masterVolume * SFXVolume) - lowestDB;
+	for i in availablePlayers.size():
+		availablePlayers[i].volume_db = (lowestDB * masterVolume * SFXVolume) - lowestDB;
 
 # NOTE: isUI might not be needed here since there's only two tracks, not sure yet though
 ## Play the music track

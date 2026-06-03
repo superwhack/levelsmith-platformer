@@ -4,8 +4,8 @@ extends Node2D
 var state : Global.State = Global.State.EDIT;
 
 # References to both state managers
-var editorManager : Node2D;
-var gameManager : Node2D;
+@export var editorManager : Node2D;
+@export var gameManager : Node2D;
 
 # Map that is currently loaded in the Play scene
 var loadedMap : TileMapLayer;
@@ -17,8 +17,6 @@ var loadedMap : TileMapLayer;
 @export var propertyMenu : Panel;
 
 func _ready() -> void:
-	editorManager = get_child(1);
-	gameManager = get_child(2);
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
 	

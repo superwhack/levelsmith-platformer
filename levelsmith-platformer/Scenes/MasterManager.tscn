@@ -61,8 +61,13 @@ sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8fjml"]
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("propertyMenu")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "gameManager", "editorManagerCanvas", "gameManagerCanvas", "tileSet", "propertyMenu")]
 script = ExtResource("1_3ngsi")
+editorManager = NodePath("EditorManager")
+gameManager = NodePath("GameManager")
+editorManagerCanvas = NodePath("EditorManager/CanvasLayer")
+gameManagerCanvas = NodePath("GameManager/CanvasLayer")
+tileSet = NodePath("EditorManager/Tiles")
 propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=101918903 node_paths=PackedStringArray("masterManager", "tileSet")]
@@ -99,14 +104,8 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
-[node name="CanvasLayer_ToolContainer_CursorChecker#CursorCheckerRect" parent="EditorManager/CanvasLayer_ToolContainer#CursorChecker" parent_id_path=PackedInt32Array(2045534837, 1710550081) index="0" unique_id=948755903]
-position = Vector2(317, 51)
-
-[node name="Selector" parent="EditorManager" index="5" unique_id=1894609535]
+[node name="Selector" parent="EditorManager" index="4" unique_id=1894609535]
 texture = ExtResource("6_64b2s")
-
-[node name="Cursor" parent="EditorManager" index="6" unique_id=1972481442]
-visible = false
 
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 

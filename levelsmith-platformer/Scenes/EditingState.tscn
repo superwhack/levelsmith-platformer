@@ -39,9 +39,6 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_0h7mo")
 sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dvhpf"]
-size = Vector2(657, 126)
-
 [node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("tileSet", "gridLines", "previewTileMap", "selector", "tileSwitch", "toolSwitch", "propertyMenu")]
 script = ExtResource("1_3goer")
 tileSet = NodePath("Tiles")
@@ -94,19 +91,9 @@ offset_bottom = 104.0
 [node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
 visible = false
 
-[node name="CanvasLayer_ToolContainer#CursorChecker" type="Area2D" parent="." unique_id=1710550081]
-visible = false
-z_index = 20
-
-[node name="CanvasLayer_ToolContainer_CursorChecker#CursorCheckerRect" type="CollisionShape2D" parent="CanvasLayer_ToolContainer#CursorChecker" unique_id=948755903]
-position = Vector2(318.5, 53)
-shape = SubResource("RectangleShape2D_dvhpf")
-
 [node name="Selector" type="Sprite2D" parent="." unique_id=1894609535]
 
 [connection signal="mouse_entered" from="CanvasLayer/PlayButton" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/PlayButton" to="." method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/PropertyMenu" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/PropertyMenu" to="." method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="CanvasLayer_ToolContainer#CursorChecker" to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer_ToolContainer#CursorChecker" to="." method="_on_mouse_exited"]

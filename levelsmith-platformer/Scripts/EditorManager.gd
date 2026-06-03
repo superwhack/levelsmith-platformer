@@ -12,9 +12,8 @@ var erasing : bool = false;
 @export var gridLines: TileMapLayer;
 @export var previewTileMap: TileMapLayer;
 
+# Reference to selector image
 @export var selector: Sprite2D;
-# @export var cursor: Sprite2D;
-# @export var cantPlace: Sprite2D;
 
 # Reference to TileSwitch for transparency
 @export var tileSwitch: HBoxContainer;
@@ -27,11 +26,14 @@ var erasing : bool = false;
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
 
+var currentHotbarState : Global.HotbarState;
+
 # Mouse assets
 var cursorToolImage = load('res://Assets/Sprites/UI/cursor.png');
 var brushToolImage = load('res://Assets/Sprites/UI/paintBrush.png');
 var boxToolImage = load('res://Assets/Sprites/UI/boxBrush.png');
 var invalidPlaceImage = load('res://Assets/Sprites/UI/no.png');
+var uiHoverImage = load('res://Assets/Sprites/UI/cursor.png');
 
 # A timer to differentiate between click and holding click
 const holdTimeCap = .1;
@@ -109,7 +111,12 @@ func _process(_delta: float) -> void:
 func update_selector() -> void:
 	selector.position = currentMousePosition * 128 + Vector2(64, 64);
 	var hoverTile = tileSet.get_cell_source_id(currentMousePosition);
-	if ((hoverTile >= tileCount && brushTile < tileCount) || (hoverTile < tileCount && hoverTile > -1 && brushTile >= tileCount) || check_out_of_bounds(currentMousePosition)):
+	
+	# WARNING: potential issues with elif chain interfering with mouse cursor image swap
+	if(get_viewport().gui_get_hovered_control()):
+		Input.set_custom_mouse_cursor(uiHoverImage);
+		selector.modulate = Color(0, 0, 0, 0);
+	elif ((hoverTile >= tileCount && brushTile < tileCount) || (hoverTile < tileCount && hoverTile > -1 && brushTile >= tileCount) || check_out_of_bounds(currentMousePosition)):
 		Input.set_custom_mouse_cursor(invalidPlaceImage);
 		selector.modulate = Color(0, 0, 0, 0);
 	elif (prevTile > -1 && Input.is_action_pressed("click")):
@@ -206,35 +213,57 @@ func _unhandled_input(event: InputEvent) -> void:
 		if (prevTile != -1):
 			drop_tile();
 		change_tool(Global.Tool.BRUSH);
+		change_current_hotbar(Global.HotbarState.TILES);
 
 	elif event.is_action_pressed("box-brush-tool"):
 		if (prevTile != -1):
 			drop_tile();
 		change_tool(Global.Tool.BOX_BRUSH);
+		change_current_hotbar(Global.HotbarState.TILES);
 
 	elif event.is_action_pressed("cursor-tool"):
 		change_tool(Global.Tool.CURSOR);
 		
-	elif event.is_action_pressed("first-select"):
-		update_brush_tile(Global.TileType.SOLID);
-		
-	elif event.is_action_pressed("second-select"):
-		update_brush_tile(Global.TileType.ONEWAY);
-		
-	elif event.is_action_pressed("third-select"):
-		update_brush_tile(Global.TileType.DEATH);
-		
-	elif event.is_action_pressed("fourth-select"):
-		update_brush_tile(Global.TileType.ICE);
-		
-	elif event.is_action_pressed("fifth-select"):
-		update_brush_tile(Global.TileType.STICKY);
-		
-	elif event.is_action_pressed("sixth-select"):
-		update_brush_tile(Global.TileType.BOUNCE);
-		
-	elif event.is_action_pressed("seventh-select"):
-		update_brush_tile(Global.TileType.SLOPE);
+	# Tile/Entity hotkeys
+	match(currentHotbarState):
+		Global.HotbarState.TILES:
+			if event.is_action_pressed("first-select"):
+				update_brush_tile(Global.TileType.SOLID);
+			elif event.is_action_pressed("second-select"):
+				update_brush_tile(Global.TileType.ONEWAY);
+			elif event.is_action_pressed("third-select"):
+				update_brush_tile(Global.TileType.DEATH);
+			elif event.is_action_pressed("fourth-select"):
+				update_brush_tile(Global.TileType.ICE);
+			elif event.is_action_pressed("fifth-select"):
+				update_brush_tile(Global.TileType.STICKY);
+			elif event.is_action_pressed("sixth-select"):
+				update_brush_tile(Global.TileType.BOUNCE);
+			elif event.is_action_pressed("seventh-select"):
+				update_brush_tile(Global.TileType.SLOPE);
+		Global.HotbarState.ENTITIES:
+			if event.is_action_pressed("first-select"):
+				update_brush_tile(Global.EntityType.GOAL);
+			elif event.is_action_pressed("second-select"):
+				update_brush_tile(Global.EntityType.PLAYER);
+			elif event.is_action_pressed("third-select"):
+				update_brush_tile(Global.EntityType.PATROLLING);
+		Global.HotbarState.PROPS:
+			if event.is_action_pressed("first-select"):
+				update_brush_tile(Global.EntityType.PROP1);
+			elif event.is_action_pressed("second-select"):
+				update_brush_tile(Global.EntityType.PROP2);
+			elif event.is_action_pressed("third-select"):
+				update_brush_tile(Global.EntityType.PROP3);
+			elif event.is_action_pressed("fourth-select"):
+				update_brush_tile(Global.EntityType.PROP4);
+			elif event.is_action_pressed("fifth-select"):
+				update_brush_tile(Global.EntityType.PROP5);
+
+## Changes current hotbar state (used for hotkeys)
+## newState: Global.HotbarState
+func change_current_hotbar(newState: Global.HotbarState):
+	currentHotbarState = newState;
 
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_tile() -> void:
@@ -465,12 +494,3 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 		if node.global_position == targetGlobalPos:
 			return node;
 	return null;
-
-## Show the normal mouse if it's hovering over UI elements.
-func _on_mouse_entered() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
-	# cursor.modulate = Color(1, 1, 1, 0);
-## Get rid of the normal mouse when it's stopped.
-func _on_mouse_exited() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
-	# cursor.modulate = Color(1, 1, 1, 1);

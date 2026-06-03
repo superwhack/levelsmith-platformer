@@ -14,9 +14,11 @@ func _process(delta: float) -> void:
 
 func _on_brush_tool_button_pressed() -> void:
 	editorManager.change_tool(Global.Tool.BRUSH);
+	editorManager.change_current_hotbar(Global.HotbarState.TILES);
 
 func _on_box_brush_tool_button_pressed() -> void:
 	editorManager.change_tool(Global.Tool.BOX_BRUSH);
+	editorManager.change_current_hotbar(Global.HotbarState.TILES);
 
 func _on_cursor_button_pressed() -> void:
 	editorManager.change_tool(Global.Tool.CURSOR);

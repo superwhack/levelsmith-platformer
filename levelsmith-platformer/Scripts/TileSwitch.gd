@@ -29,9 +29,11 @@ func display_entities(visibility: bool):
 func entity_dropdown_select(index: int):
 	match index:
 		0:
+			editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);
 			entityTab.visible = true;
 			propTab.visible = false;
 		1:
+			editorManager.change_current_hotbar(Global.HotbarState.PROPS);
 			entityTab.visible = false;
 			propTab.visible = true;
 
@@ -72,18 +74,14 @@ func _on_patrolling_object_button_pressed() -> void:
 func _on_direction_marker_prop_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.PROP1);
 
-
 func _on_stop_marker_prop_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.PROP2);
-
 
 func _on_start_marker_prop_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.PROP3);
 
-
 func _on_end_marker_prop_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.PROP4);
-
 
 func _on_goal_marker_prop_button_pressed() -> void:
 	editorManager.update_brush_tile(Global.EntityType.PROP5);

@@ -28,8 +28,13 @@ func _ready() -> void:
 		audioPlayer.finished.connect(audio_finished.bind(audioPlayer));
 		audioPlayer.bus = "master";
 
+## Only done with music, loop instead of ending it
+## player: the audio stream player running the music
 func music_loop(player: AudioStreamPlayer) -> void:
 	player.play();
+
+## Once the audio track is finished
+## player: the audio stream player to end
 func audio_finished(player: AudioStreamPlayer) -> void:
 	availablePlayers.append(player);
 	inusePlayers.erase(player);
@@ -40,20 +45,38 @@ func audio_finished(player: AudioStreamPlayer) -> void:
 ## isUI: true if the music is tied to the UI, meaning the user doesn't adjust it
 func play_music(musicName: String, isUI: bool = false) -> void:
 	musicPlayer.stop();
+	var fullPath : String;
 	if isUI:
-		musicPlayer.stream = load(UIAudioLibraryPath + musicName + ".mp3");
+		fullPath = UIAudioLibraryPath;
 	else:
-		musicPlayer.stream = load(audioLibraryPath + musicName + ".mp3");
+		fullPath = audioLibraryPath;
+	fullPath += musicName;
+	if FileAccess.file_exists(fullPath + ".mp3"):
+		musicPlayer.stream = load(fullPath + ".mp3");
+	elif FileAccess.file_exists(fullPath + ".wav"):
+		musicPlayer.stream = load(fullPath + ".wav");
+	else:
+		print("File not found or doesn't use .wav/.mp3!");
+		return;
 	musicPlayer.play();
 
 ## Add specified SFX to the queue
 ## effectName: name of the sound effect
 ## isUI: true if the SFX is tied to the UI, meaning the user doesn't adjust it
 func play_effect(effectName: String, isUI: bool = false) -> void:
+	var fullPath : String;
 	if isUI:
-		queue.append(UIAudioLibraryPath + effectName + ".wav");
+		fullPath = UIAudioLibraryPath;
 	else:
-		queue.append(audioLibraryPath + effectName + ".wav");
+		fullPath = audioLibraryPath;
+	fullPath += effectName;
+	if FileAccess.file_exists(fullPath + ".mp3"):
+		queue.append(fullPath + ".mp3");
+	elif FileAccess.file_exists(fullPath + ".wav"):
+		queue.append(fullPath + ".wav");
+	else:
+		print("File not found or doesn't use .wav/.mp3!");
+		return;
 
 ## Reset and stop all audio
 func reset_audio() -> void:

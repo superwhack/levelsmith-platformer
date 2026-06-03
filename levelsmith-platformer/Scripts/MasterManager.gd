@@ -19,7 +19,8 @@ var loadedMap : TileMapLayer;
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
-	AudioManager.play_music("Mindframe");
+	# Don't play this please, it's just for testing
+	#AudioManager.play_music("Mindframe");
 	
 	edit();
 

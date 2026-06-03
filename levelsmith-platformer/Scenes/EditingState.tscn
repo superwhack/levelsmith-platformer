@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
-[ext_resource type="Texture2D" uid="uid://bd16leq2lp76o" path="res://Assets/Sprites/UI/paintBrush.png" id="2_dvhpf"]
-[ext_resource type="Texture2D" uid="uid://qatvje4morq5" path="res://Assets/Sprites/UI/no.png" id="3_njgpr"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
@@ -44,14 +42,12 @@ sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dvhpf"]
 size = Vector2(657, 126)
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("tileSet", "gridLines", "previewTileMap", "selector", "cursor", "cantPlace", "tileSwitch", "toolSwitch", "propertyMenu")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("tileSet", "gridLines", "previewTileMap", "selector", "tileSwitch", "toolSwitch", "propertyMenu")]
 script = ExtResource("1_3goer")
 tileSet = NodePath("Tiles")
 gridLines = NodePath("GridLines")
 previewTileMap = NodePath("PreviewTile")
 selector = NodePath("Selector")
-cursor = NodePath("Cursor")
-cantPlace = NodePath("Cursor/No")
 tileSwitch = NodePath("CanvasLayer/TileSwitch")
 toolSwitch = NodePath("CanvasLayer/ToolSwitch")
 propertyMenu = NodePath("CanvasLayer/PropertyMenu")
@@ -99,6 +95,7 @@ offset_bottom = 104.0
 visible = false
 
 [node name="CanvasLayer_ToolContainer#CursorChecker" type="Area2D" parent="." unique_id=1710550081]
+visible = false
 z_index = 20
 
 [node name="CanvasLayer_ToolContainer_CursorChecker#CursorCheckerRect" type="CollisionShape2D" parent="CanvasLayer_ToolContainer#CursorChecker" unique_id=948755903]
@@ -106,16 +103,6 @@ position = Vector2(318.5, 53)
 shape = SubResource("RectangleShape2D_dvhpf")
 
 [node name="Selector" type="Sprite2D" parent="." unique_id=1894609535]
-
-[node name="Cursor" type="Sprite2D" parent="." unique_id=1972481442]
-z_index = 3
-scale = Vector2(2, 2)
-texture = ExtResource("2_dvhpf")
-
-[node name="No" type="Sprite2D" parent="Cursor" unique_id=1394871915]
-position = Vector2(10, 0)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_njgpr")
 
 [connection signal="mouse_entered" from="CanvasLayer/PlayButton" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/PlayButton" to="." method="_on_mouse_exited"]

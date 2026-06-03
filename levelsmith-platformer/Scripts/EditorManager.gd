@@ -13,8 +13,8 @@ var erasing : bool = false;
 @export var previewTileMap: TileMapLayer;
 
 @export var selector: Sprite2D;
-@export var cursor: Sprite2D;
-@export var cantPlace: Sprite2D;
+# @export var cursor: Sprite2D;
+# @export var cantPlace: Sprite2D;
 
 # Reference to TileSwitch for transparency
 @export var tileSwitch: HBoxContainer;
@@ -26,6 +26,12 @@ var erasing : bool = false;
 # Mouse position variables
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
+
+# Mouse assets
+var cursorToolImage = load('res://Assets/Sprites/UI/cursor.png');
+var brushToolImage = load('res://Assets/Sprites/UI/paintBrush.png');
+var boxToolImage = load('res://Assets/Sprites/UI/boxBrush.png');
+var invalidPlaceImage = load('res://Assets/Sprites/UI/no.png');
 
 # A timer to differentiate between click and holding click
 const holdTimeCap = .1;
@@ -61,6 +67,8 @@ func _ready() -> void:
 	tileSwitch.editorManager = self;
 	toolSwitch.editorManager = self;
 	
+	Input.set_custom_mouse_cursor(brushToolImage);
+	
 	brushTile = Global.TileType.SOLID;
 	
 	fill_grid_lines();
@@ -95,16 +103,14 @@ func _process(_delta: float) -> void:
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
-	cantPlace.modulate = Color(1, 0, 0, 0);
 	update_selector();
 
 ## Update the selector and cursor in accordance to current location and ability to place tiles
 func update_selector() -> void:
 	selector.position = currentMousePosition * 128 + Vector2(64, 64);
-	cursor.position = get_global_mouse_position() + Vector2(10, 10);
 	var hoverTile = tileSet.get_cell_source_id(currentMousePosition);
 	if ((hoverTile >= tileCount && brushTile < tileCount) || (hoverTile < tileCount && hoverTile > -1 && brushTile >= tileCount) || check_out_of_bounds(currentMousePosition)):
-		cantPlace.modulate = Color(1, 0, 0, 1);
+		Input.set_custom_mouse_cursor(invalidPlaceImage);
 		selector.modulate = Color(0, 0, 0, 0);
 	elif (prevTile > -1 && Input.is_action_pressed("click")):
 		selector.modulate = Color(0, 1, 1, 1);
@@ -112,6 +118,13 @@ func update_selector() -> void:
 		selector.modulate = Color(1, 0, 0, 1);
 	else:
 		selector.modulate = Color(1, 1, 1, 1);
+		match(currentTool):
+			Global.Tool.CURSOR:
+				Input.set_custom_mouse_cursor(cursorToolImage);
+			Global.Tool.BRUSH:
+				Input.set_custom_mouse_cursor(brushToolImage);
+			Global.Tool.BOX_BRUSH:
+				Input.set_custom_mouse_cursor(boxToolImage);
 
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
@@ -384,18 +397,14 @@ func change_tool(tool: Global.Tool) -> void:
 		tileSwitch.display_tiles(false);
 		tileSwitch.display_entities(true);
 	propertyMenu.hide();
-	#tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
 	
 	match currentTool:
 		Global.Tool.CURSOR:
 			update_brush_tile(Global.EntityType.GOAL);
-			cursor.texture = load('res://Assets/Sprites/UI/cursor.png');
 		Global.Tool.BOX_BRUSH:
 			update_brush_tile(Global.TileType.SOLID);
-			cursor.texture = load('res://Assets/Sprites/UI/boxBrush.png');
 		Global.Tool.BRUSH:
 			update_brush_tile(Global.TileType.SOLID);
-			cursor.texture = load('res://Assets/Sprites/UI/paintBrush.png');
 	print("Current Tool: ", currentTool);
 
 ## Rotate currently selected tile
@@ -460,8 +469,8 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 ## Show the normal mouse if it's hovering over UI elements.
 func _on_mouse_entered() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
-	cursor.modulate = Color(1, 1, 1, 0);
+	# cursor.modulate = Color(1, 1, 1, 0);
 ## Get rid of the normal mouse when it's stopped.
 func _on_mouse_exited() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
-	cursor.modulate = Color(1, 1, 1, 1);
+	# cursor.modulate = Color(1, 1, 1, 1);

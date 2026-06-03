@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://bm1iadl23kv0w" path="res://Assets/Sprites/Tiles/gridSelect.png" id="6_64b2s"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -98,8 +99,14 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
-[node name="CanvasLayer_ToolContainer_CursorChecker#CursorCheckerRect" parent="EditorManager" index="5" unique_id=948755903]
+[node name="CanvasLayer_ToolContainer_CursorChecker#CursorCheckerRect" parent="EditorManager/CanvasLayer_ToolContainer#CursorChecker" parent_id_path=PackedInt32Array(2045534837, 1710550081) index="0" unique_id=948755903]
 position = Vector2(317, 51)
+
+[node name="Selector" parent="EditorManager" index="5" unique_id=1894609535]
+texture = ExtResource("6_64b2s")
+
+[node name="Cursor" parent="EditorManager" index="6" unique_id=1972481442]
+visible = false
 
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 

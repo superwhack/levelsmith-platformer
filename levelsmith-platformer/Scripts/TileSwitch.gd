@@ -3,10 +3,6 @@ extends HBoxContainer
 # Reference to editor manager
 var editorManager : Node2D;
 
-enum TileState {
-	
-}
-
 # References to button bars
 @export var tiles : PanelContainer;
 @export var entities : PanelContainer;

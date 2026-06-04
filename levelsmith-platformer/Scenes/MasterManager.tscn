@@ -72,9 +72,8 @@ gameManagerCanvas = NodePath("GameManager/CanvasLayer")
 tileSet = NodePath("EditorManager/Tiles")
 propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
 
-[node name="ImportExportManager" type="Node" parent="." unique_id=1814118730 node_paths=PackedStringArray("tileMap")]
+[node name="ImportExportManager" type="Node" parent="." unique_id=1814118730]
 script = ExtResource("9_gojh1")
-tileMap = NodePath("../EditorManager/Tiles")
 
 [node name="AudioManager" type="Node" parent="." unique_id=62565252]
 script = ExtResource("2_8vbpr")

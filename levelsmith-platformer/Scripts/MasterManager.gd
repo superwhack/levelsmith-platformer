@@ -25,7 +25,7 @@ func _ready() -> void:
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
 	ImportExportManager.make_new_level("Level01");
-	ImportExportManager.export_level();
+	#ImportExportManager.export_level();
 	edit();
 
 ## When the level is completed, validate it and automatically return to editor
@@ -103,3 +103,10 @@ func load_tilemap() -> void:
 	
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
+	
+
+func _process(_delta: float) -> void:
+	if (Input.is_action_just_pressed("fourth-select") && editorManager.player_exist()):
+		ImportExportManager.tileSet = editorManager.tileSet;
+		ImportExportManager.playerData = propertyMenu;
+		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);

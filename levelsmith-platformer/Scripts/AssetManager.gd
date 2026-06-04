@@ -129,21 +129,34 @@ func find_file_by_name(targetFileName: String, currentDirectory: String = filePa
 			currentFileName = dir.get_next();
 	return "";
 
-
+## Recursively finds the path to a specific directory based on its name
+## targetDirectoryName: Name of the target directory
+## currentDirectory: Path to the directory currently being checked
+## returns: Path to the directory
 func find_directory_by_name(targetDirectoryName: String, currentDirectory: String = filePath) -> String:
+	# Opens the directory at the currentDirectory path
 	var dir = DirAccess.open(currentDirectory);
-	
+	# If there is a directory at that path
 	if (dir):
+		# Initialize the file stream
 		dir.list_dir_begin();
+		# Set the currentFileName to the next item being checked
 		var currentFileName = dir.get_next();
+		# Loop as long as the currentFileName is not empty
 		while (currentFileName != ""):
+			# Track the full path to the file being checked
 			var fullPath = currentDirectory + "/" + currentFileName;
+			# If the current item being checked is a folder
 			if (dir.current_is_dir()):
+				# If the folder name is equal to the target name, return the path
 				if (currentFileName == targetDirectoryName):
 					return fullPath;
+				# If the folder name is not the target
 				else:
+					# Call this function with the new path
 					var result = find_directory_by_name(targetDirectoryName, fullPath);
 					if (result != ""):
 						return result;
+			# Update the currentFileName to be the next file
 			currentFileName = dir.get_next();
 	return "";

@@ -15,7 +15,8 @@ var audioToReplace: AudioStream;
 @export var mainTileSet: TileMapLayer;
 @export var previewTileSet: TileMapLayer;
 
-var selectedItem: AssetItem;
+@export var imagePreview: TextureRect;
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -23,8 +24,7 @@ func _ready() -> void:
 	#find_image("Dodo.png");
 	#print(find_directory_by_name("Other4"))
 	#print(file_count_in_folder("Fail"));
-	print(get_animation_from_folder("Tile"));
-	selectedItem = null;
+	#print(get_animation_from_folder("Tile"));
 	pass;
 
 ## Finds an image by its name
@@ -127,6 +127,10 @@ func return_to_default_audio(audioName: String) -> void:
 
 func return_all_to_default(categoryName: String) -> void:
 	pass;
+
+func item_selected(selectedItem: AssetItem) -> void:
+	imagePreview.texture = ImageTexture.create_from_image(find_image_in_folder(selectedItem.assetName));
+	pass
 
 ## Recursively searches directories for a file of a specific name
 ## targetFileName: The name of the target file

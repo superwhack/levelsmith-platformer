@@ -33,7 +33,7 @@ func level_complete() -> void:
 func edit() -> void:
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
-	AudioManager.play_UI_music("Mindframe");
+	AudioManager.play_UI_music("EditorMusic");
 	print("Edit")
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable

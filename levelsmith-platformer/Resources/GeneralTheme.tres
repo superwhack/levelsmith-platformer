@@ -11,17 +11,21 @@
 [ext_resource type="StyleBox" uid="uid://cwo782d4sgcr7" path="res://Assets/UserInterface/ScrollAreaStyleBox.tres" id="7_du07a"]
 [ext_resource type="StyleBox" uid="uid://nqweanxgm6cj" path="res://Assets/UserInterface/TextEntryStyleBox.tres" id="7_gp8ah"]
 [ext_resource type="StyleBox" uid="uid://kpc3pw6w1747" path="res://Assets/UserInterface/TextEntryFocusStyleBox.tres" id="7_rm7lu"]
-[ext_resource type="Texture2D" uid="uid://bmkretbtyqi01" path="res://Assets/Sprites/UI/MediumGrab.png" id="8_fngxd"]
+[ext_resource type="StyleBox" uid="uid://c7y2n7kpvwjmu" path="res://Assets/UserInterface/HSeparatorLine.tres" id="8_fngxd"]
 [ext_resource type="StyleBox" uid="uid://d0dnc4expn1x0" path="res://Assets/UserInterface/SliderStyleBox.tres" id="8_tg4mj"]
+[ext_resource type="Texture2D" uid="uid://dekrnt44tg4hi" path="res://Assets/Sprites/UI/GrabInvert.png" id="8_uynww"]
 [ext_resource type="StyleBox" uid="uid://be7kkb87oloe4" path="res://Assets/UserInterface/ReadOnlyStyleBox.tres" id="9_5ihoh"]
 [ext_resource type="StyleBox" uid="uid://brabxcb463n2t" path="res://Assets/UserInterface/TabHoverStyleBox.tres" id="9_uusg4"]
 [ext_resource type="StyleBox" uid="uid://d1ya2u617jayi" path="res://Assets/UserInterface/TabSelectStyleBox.tres" id="10_5ihoh"]
 [ext_resource type="StyleBox" uid="uid://b6f6805u0j1vu" path="res://Assets/UserInterface/TabUnselectStyleBox.tres" id="11_46rmy"]
+[ext_resource type="StyleBox" uid="uid://hkmaut0uwvq0" path="res://Assets/UserInterface/ArrowStyleBox.tres" id="16_lvc2u"]
 [ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="17_fngxd"]
+[ext_resource type="StyleBox" uid="uid://2c766bdw6jyr" path="res://Assets/UserInterface/ArrowStyleHover.tres" id="17_x8l6q"]
 [ext_resource type="StyleBox" uid="uid://du2kuqvwpo5j0" path="res://Assets/UserInterface/HScrollGrabStyleBox.tres" id="17_xtucn"]
 [ext_resource type="StyleBox" uid="uid://b1tpgrjp8xpbj" path="res://Assets/UserInterface/TooltipStyleBox.tres" id="18_j30k7"]
 [ext_resource type="StyleBox" uid="uid://bryfqoermm7f4" path="res://Assets/UserInterface/HScrollAreaStyleBox.tres" id="18_ugqva"]
 [ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="20_fngxd"]
+[ext_resource type="StyleBox" uid="uid://bwclbl24ey6hw" path="res://Assets/UserInterface/VSeparatorLine.tres" id="22_j30k7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2jud"]
 
@@ -44,8 +48,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gm0r7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_du07a"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j2hgx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xtucn"]
 
@@ -106,8 +108,10 @@ HScrollBar/styles/grabber = ExtResource("6_j2hgx")
 HScrollBar/styles/grabber_highlight = ExtResource("6_j2hgx")
 HScrollBar/styles/grabber_pressed = ExtResource("6_j2hgx")
 HScrollBar/styles/scroll = ExtResource("7_du07a")
-HSlider/icons/grabber = null
-HSlider/icons/grabber_highlight = null
+HSeparator/styles/separator = ExtResource("8_fngxd")
+HSlider/icons/grabber = ExtResource("8_uynww")
+HSlider/icons/grabber_disabled = ExtResource("20_fngxd")
+HSlider/icons/grabber_highlight = ExtResource("8_uynww")
 HSlider/styles/grabber_area = ExtResource("7_c51xu")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxEmpty_du07a")
 HSlider/styles/slider = ExtResource("8_tg4mj")
@@ -122,18 +126,22 @@ MenuButton/colors/font_focus_color = Color(0.03137255, 0.11764706, 0.27058825, 1
 MenuButton/colors/font_hover_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 MenuButton/colors/font_hover_pressed_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 MenuButton/colors/font_pressed_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
-TabBar/colors/font_disabled_color = Color(0.23921569, 0.23921569, 0.23921569, 1)
-TabBar/colors/font_hovered_color = Color(0.95, 0.95, 0.95, 1)
-TabBar/colors/font_selected_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
-TabBar/colors/font_unselected_color = Color(1, 1, 1, 1)
-TabBar/colors/icon_disabled_color = Color(0.23921569, 0.23921569, 0.23921569, 1)
-TabBar/colors/icon_hovered_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
-TabBar/colors/icon_selected_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
-TabBar/colors/icon_unselected_color = Color(1, 1, 1, 1)
-TabBar/styles/tab_disabled = SubResource("StyleBoxEmpty_j2hgx")
-TabBar/styles/tab_hovered = ExtResource("9_uusg4")
-TabBar/styles/tab_selected = ExtResource("10_5ihoh")
-TabBar/styles/tab_unselected = ExtResource("11_46rmy")
+SpinBox/colors/down_hover_icon_modulate = Color(0.03137255, 0.11764706, 0.27058825, 1)
+SpinBox/colors/down_icon_modulate = Color(1, 1, 1, 1)
+SpinBox/colors/up_hover_icon_modulate = Color(0.03137255, 0.11764706, 0.27058825, 1)
+SpinBox/colors/up_icon_modulate = Color(1, 1, 1, 1)
+SpinBox/styles/down_background = ExtResource("16_lvc2u")
+SpinBox/styles/down_background_hovered = ExtResource("17_x8l6q")
+SpinBox/styles/up_background = ExtResource("16_lvc2u")
+SpinBox/styles/up_background_hovered = ExtResource("17_x8l6q")
+TabContainer/colors/font_disabled_color = Color(0.7372549, 0.7372549, 0.7372549, 1)
+TabContainer/colors/font_hovered_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+TabContainer/colors/font_selected_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+TabContainer/colors/font_unselected_color = Color(1, 1, 1, 1)
+TabContainer/fonts/font = ExtResource("17_fngxd")
+TabContainer/styles/tab_hovered = ExtResource("9_uusg4")
+TabContainer/styles/tab_selected = ExtResource("10_5ihoh")
+TabContainer/styles/tab_unselected = ExtResource("11_46rmy")
 TextEdit/styles/focus = ExtResource("7_rm7lu")
 TextEdit/styles/normal = ExtResource("7_gp8ah")
 TooltipLabel/colors/font_color = Color(1, 1, 1, 1)
@@ -144,8 +152,9 @@ VScrollBar/styles/grabber = ExtResource("17_xtucn")
 VScrollBar/styles/grabber_highlight = ExtResource("17_xtucn")
 VScrollBar/styles/grabber_pressed = ExtResource("17_xtucn")
 VScrollBar/styles/scroll = ExtResource("18_ugqva")
-VSlider/icons/grabber = ExtResource("20_fngxd")
-VSlider/icons/grabber_highlight = ExtResource("8_fngxd")
+VSeparator/styles/separator = ExtResource("22_j30k7")
+VSlider/icons/grabber = ExtResource("8_uynww")
+VSlider/icons/grabber_highlight = ExtResource("8_uynww")
 VSlider/styles/grabber_area = ExtResource("7_c51xu")
 VSlider/styles/grabber_area_highlight = SubResource("StyleBoxEmpty_xtucn")
 VSlider/styles/slider = ExtResource("8_tg4mj")

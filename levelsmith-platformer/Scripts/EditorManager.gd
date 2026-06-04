@@ -6,7 +6,6 @@ extends Node2D
 
 # References to grid TileMapLayer child nodes
 @export var tileSet: TileMapLayer;
-@export var gridLines: TileMapLayer;
 
 # Reference to selector image
 @export var selector: Sprite2D;
@@ -30,14 +29,6 @@ var playerExists: bool = false;
 
 # Stores the number of tiles made
 var tileCount := Global.TileType.size();
-
-## Runs once when the script is ready.
-## Set up any reference variables here.
-func _ready() -> void:
-	fill_grid_lines();
-	
-	print("Level Height:", get_parent().worldSize.y);
-	print("Level Width:", get_parent().worldSize.x);
 
 
 ## Runs every frame during the editing state
@@ -87,9 +78,3 @@ func check_out_of_bounds(mousePosition: Vector2i) -> bool:
 	|| mousePosition.y > get_parent().worldSize.x):
 		return true;
 	return false;
-	
-## Fills the grid with grid lines tiles
-func fill_grid_lines() -> void:
-	for height in range(0, masterManager.worldSize.y + 1):
-		for width in range(0, masterManager.worldSize.x + 1):
-			gridLines.set_cell(Vector2i(height, width), 1, Vector2i.ZERO);

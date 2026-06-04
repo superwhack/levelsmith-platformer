@@ -46,15 +46,10 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_0h7mo")
 sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("tileSet", "gridLines", "previewTileMap", "selector", "tileSwitch", "toolSwitch", "propertyMenu", "playButton")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("tileSet", "selector", "playButton")]
 script = ExtResource("1_3goer")
 tileSet = NodePath("Tiles")
-gridLines = NodePath("GridLines")
-previewTileMap = NodePath("PreviewTile")
 selector = NodePath("SelectorFrame")
-tileSwitch = NodePath("CanvasLayer/TileSwitch")
-toolSwitch = NodePath("CanvasLayer/ToolSwitch")
-propertyMenu = NodePath("CanvasLayer/PropertyMenu")
 playButton = NodePath("CanvasLayer/PlayButton")
 
 [node name="Tiles" type="TileMapLayer" parent="." unique_id=1452837543]
@@ -67,10 +62,14 @@ tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAA
 tile_set = SubResource("TileSet_nr8wp")
 script = ExtResource("5_2h6au")
 
-[node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485]
+[node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485 node_paths=PackedStringArray("editorManager", "toolManager", "tileSet")]
 modulate = Color(1, 1, 1, 0.5058824)
 tile_set = ExtResource("2_8t3j3")
 collision_enabled = false
+script = ExtResource("15_wiuwn")
+editorManager = NodePath("..")
+toolManager = NodePath("../ToolManager")
+tileSet = NodePath("../Tiles")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 
@@ -102,23 +101,37 @@ visible = false
 
 [node name="SelectorFrame" type="Sprite2D" parent="." unique_id=1894609535]
 
-[node name="HotkeyManager" type="Node2D" parent="." unique_id=1848065233]
+[node name="HotkeyManager" type="Node2D" parent="." unique_id=1848065233 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager")]
 script = ExtResource("10_bpoex")
+editorManager = NodePath("..")
+toolManager = NodePath("../ToolManager")
+entityManager = NodePath("../ToolManager/EntityManager")
 
-[node name="CustomCursorManager" type="Node2D" parent="." unique_id=1871670420]
+[node name="CustomCursorManager" type="Node2D" parent="." unique_id=1871670420 node_paths=PackedStringArray("tileSet", "editorManager", "toolManager", "entityManager")]
 script = ExtResource("11_rllk2")
+tileSet = NodePath("../Tiles")
+editorManager = NodePath("..")
+toolManager = NodePath("../ToolManager")
+entityManager = NodePath("../ToolManager/EntityManager")
 
-[node name="ToolManager" type="Node2D" parent="." unique_id=2103609005]
+[node name="ToolManager" type="Node2D" parent="." unique_id=2103609005 node_paths=PackedStringArray("editorManager", "entityManager", "tileManager")]
 script = ExtResource("12_20xd7")
+editorManager = NodePath("..")
+entityManager = NodePath("EntityManager")
+tileManager = NodePath("TileManager")
 
-[node name="TileManager" type="Node2D" parent="ToolManager" unique_id=511412025]
+[node name="TileManager" type="Node2D" parent="ToolManager" unique_id=511412025 node_paths=PackedStringArray("editorManager", "toolManager", "tileSet")]
 script = ExtResource("13_7flhh")
+editorManager = NodePath("../..")
+toolManager = NodePath("..")
+tileSet = NodePath("../../Tiles")
 
-[node name="EntityManager" type="Node2D" parent="ToolManager" unique_id=1126944329]
+[node name="EntityManager" type="Node2D" parent="ToolManager" unique_id=1126944329 node_paths=PackedStringArray("editorManager", "toolManager", "tileSet", "propertyMenu")]
 script = ExtResource("14_pkt5f")
-
-[node name="PreviewManager" type="Node2D" parent="ToolManager" unique_id=298349272]
-script = ExtResource("15_wiuwn")
+editorManager = NodePath("../..")
+toolManager = NodePath("..")
+tileSet = NodePath("../../Tiles")
+propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
 
 [connection signal="mouse_entered" from="CanvasLayer/PlayButton" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/PlayButton" to="." method="_on_mouse_exited"]

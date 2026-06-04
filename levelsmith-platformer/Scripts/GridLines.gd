@@ -2,7 +2,6 @@ extends TileMapLayer
 
 # Master and Editor Manager exports for easy access
 @export var masterManager : Node2D;
-@export var editorManager : Node2D;
 
 # The grid size, taken from the MasterManager.
 @onready var gridSize : Vector2i = masterManager.worldSize;
@@ -10,6 +9,9 @@ extends TileMapLayer
 ## Called when the grid lines tile map layer is created.
 func _ready() -> void:
 	fill_grid_lines();
+	
+	print("Level Height:", get_parent().worldSize.y);
+	print("Level Width:", get_parent().worldSize.x);
 
 ## Fills the grid with grid lines tiles.
 func fill_grid_lines() -> void:

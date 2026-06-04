@@ -24,6 +24,10 @@ var isPainting : bool;
 var isErasing : bool;
 var isMoving : bool;
 
+func _process(_delta: float):
+	if (boxBrushState == Global.BoxBrushState.PLACE || boxBrushState == Global.BoxBrushState.DELETE):
+		secondBoxCorner = editorManager.currentMousePosition;
+
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
 func _unhandled_input(event: InputEvent) -> void:	

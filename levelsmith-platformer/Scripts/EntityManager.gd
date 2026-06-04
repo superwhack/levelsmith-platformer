@@ -13,7 +13,7 @@ var isEditing : bool;
 ## Places down the current brush entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_entity(clickPosition: Vector2) -> void:
-	editorManager.validationCheck = false;
+	editorManager.isValidated = false;
 	if (!editorManager.isPlaceable): return;
 	
 	if (tileSet.get_cell_source_id(clickPosition) == toolManager.brushObject 
@@ -23,11 +23,11 @@ func place_entity(clickPosition: Vector2) -> void:
 	
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER 
 	&& toolManager.brushObject != Global.EntityType.PLAYER):
-		editorManager.playerSpawnPosition = Vector2(-1, -1);
+		editorManager.playerExists = false;
 	
 	if (toolManager.brushObject == Global.EntityType.PLAYER 
-	&& editorManager.playerSpawnPosition == Vector2(-1,-1)):
-		editorManager.playerSpawnPosition = clickPosition;
+	&& !editorManager.playerExists):
+		editorManager.playerExists = true;
 		tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
 	elif (toolManager.brushObject == Global.EntityType.PLAYER):
 		return;
@@ -43,9 +43,9 @@ func place_entity(clickPosition: Vector2) -> void:
 ## Deletes an entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_entity (clickPosition: Vector2) -> void:
-	editorManager.validationCheck = false;
+	editorManager.isValidated = false;
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER):
-		editorManager.playerSpawnPosition = Vector2(-1, -1);
+		editorManager.playerExists = false;
 	tileSet.erase_cell(clickPosition);
 	
 	
@@ -77,7 +77,7 @@ func move_entity() -> void:
 	await get_tree().process_frame;
 	toolManager.brushObject = tileSet.get_cell_source_id(editorManager.currentMousePosition);
 	if (toolManager.brushObject == Global.EntityType.PLAYER):
-		editorManager.playerSpawnPosition = Vector2(-1, -1);
+		editorManager.playerExists = false;
 	tileSet.erase_cell(editorManager.currentMousePosition);
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor

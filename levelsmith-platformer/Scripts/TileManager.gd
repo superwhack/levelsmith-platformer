@@ -9,7 +9,7 @@ extends Node2D
 ## Places down the current brush tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
-	editorManager.validationCheck = false;
+	editorManager.isValidated = false;
 	if (editorManager.check_out_of_bounds(clickPosition)): return;
 	# If the tool is the cursor, don't overwrite any placement
 	if (toolManager.currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
@@ -27,7 +27,7 @@ func place_tile(clickPosition: Vector2) -> void:
 ## Deletes a tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_tile (clickPosition: Vector2) -> void:
-	editorManager.validationCheck = false;
+	editorManager.isValidated = false;
 	if (toolManager.currentTool == Global.Tool.CURSOR 
 	|| tileSet.get_cell_source_id(clickPosition) >= editorManager.tileCount 
 	|| editorManager.check_out_of_bounds(clickPosition)):

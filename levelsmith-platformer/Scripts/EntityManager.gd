@@ -69,12 +69,20 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 	return null;
 	
 	
-
-	
+func move_entity() -> void:
+	# NOTE: THIS COMMENT BREAKS IT, BUT WE STILL SHOULD SAVE ROTATIONS SOMEWHERE
+	#toolManager.currentObjectRotation = entityManager.tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
+	# Await is needed to it has time to update selectedTile
+	toolManager.prevEntity = toolManager.brushObject;
+	await get_tree().process_frame;
+	toolManager.brushObject = tileSet.get_cell_source_id(editorManager.currentMousePosition);
+	if (toolManager.brushObject == Global.EntityType.PLAYER):
+		editorManager.playerSpawnPosition = Vector2(-1, -1);
+	tileSet.erase_cell(editorManager.currentMousePosition);
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_tile() -> void:
 	place_entity(editorManager.currentMousePosition);
-	if (editorManager.prevTile != -2):
-		toolManager.brushObject = editorManager.prevTile;
-	editorManager.prevTile = -1;
+	if (editorManager.prevEntity != -2):
+		toolManager.brushObject = editorManager.prevEntity;
+	editorManager.prevEntity = -1;

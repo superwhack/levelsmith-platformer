@@ -12,7 +12,7 @@ var boxBrushState : Global.BoxBrushState = Global.BoxBrushState.INACTIVE
 var brushObject : int;
 
 # The previously selected tile before dragging
-var prevTile : int = -1;
+var prevEntity : int = -1;
 
 # A timer to differentiate between click and holding click
 const holdTimeCap = .15;
@@ -68,7 +68,7 @@ func _unhandled_input(event: InputEvent) -> void:
 						boxBrushState = Global.BoxBrushState.DELETE_CONFIRM;
 				
 		Global.Tool.CURSOR:
-			if (event.is_action_released("left-click") && prevTile == -1):
+			if (event.is_action_released("left-click") && prevEntity == -1):
 				# If the clicked cell is an entity and the click was short, edit its properties
 				if (entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= 6 && holdTimer > -.5):
 					entityManager.edit_properties(editorManager.currentMousePosition);
@@ -79,21 +79,13 @@ func _unhandled_input(event: InputEvent) -> void:
 				entityManager.delete_entity(editorManager.currentMousePosition);
 			
 			# If left click is being held, pick up the current tile unless it's empty air.
-			if (holdTimer < 0 && prevTile == -1 && entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) != -1) && entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount:
-				# NOTE: THIS COMMENT BREAKS IT, BUT WE STILL SHOULD SAVE ROTATIONS SOMEWHERE
-				#tileRotation = entityManager.tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
-				# Await is needed to it has time to update selectedTile
-				prevTile = brushObject;
-				await get_tree().process_frame;
-				brushObject = entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition);
-				if (brushObject == Global.EntityType.PLAYER):
-					editorManager.playerSpawnPosition = Vector2(-1, -1);
-				entityManager.tileSet.erase_cell(editorManager.currentMousePosition);
+			if (holdTimer < 0 && prevEntity == -1 && entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) != -1) && entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount:
+				entityManager.move_object();
 			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
-			elif (holdTimer < 0 && prevTile == -1):
-				prevTile = -2;
+			elif (holdTimer < 0 && prevEntity == -1):
+				prevEntity = -2;
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
-			elif (holdTimer == holdTimeCap && prevTile != -1):
+			elif (holdTimer == holdTimeCap && prevEntity != -1):
 				entityManager.drop_entity();
 
 ## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.

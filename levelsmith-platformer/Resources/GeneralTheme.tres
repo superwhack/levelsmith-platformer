@@ -1,17 +1,27 @@
 [gd_resource type="Theme" format=3 uid="uid://cf0uq6i6ml5pm"]
 
 [ext_resource type="FontFile" uid="uid://ibgv3ey3taus" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="1_g6ve4"]
-[ext_resource type="FontFile" path="res://Assets/JetBrainsMono-VariableFont_wght.ttf" id="1_u2jud"]
+[ext_resource type="FontFile" uid="uid://cgycilgp5dv06" path="res://Assets/Fonts/Variable/JetBrainsMono-VariableFont_wght.ttf" id="1_u2jud"]
 [ext_resource type="StyleBox" uid="uid://cpf1gfwh4cnqm" path="res://Assets/UserInterface/DisabledStyleBox.tres" id="2_g6ve4"]
 [ext_resource type="StyleBox" uid="uid://73sk20dbjygq" path="res://Assets/UserInterface/FocusStyleBox.tres" id="3_gp8ah"]
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_rm7lu"]
 [ext_resource type="StyleBox" uid="uid://c77hfkgnkauj3" path="res://Assets/UserInterface/ButtonNormalStyleBox.tres" id="5_7q30d"]
+[ext_resource type="StyleBox" uid="uid://cixip2eyb83r1" path="res://Assets/UserInterface/ScrollGrabStyleBox.tres" id="6_j2hgx"]
+[ext_resource type="StyleBox" uid="uid://cwx2h3fkut8pb" path="res://Assets/UserInterface/GrabberAreaStyleBox.tres" id="7_c51xu"]
+[ext_resource type="StyleBox" uid="uid://cwo782d4sgcr7" path="res://Assets/UserInterface/ScrollAreaStyleBox.tres" id="7_du07a"]
 [ext_resource type="StyleBox" uid="uid://nqweanxgm6cj" path="res://Assets/UserInterface/TextEntryStyleBox.tres" id="7_gp8ah"]
 [ext_resource type="StyleBox" uid="uid://kpc3pw6w1747" path="res://Assets/UserInterface/TextEntryFocusStyleBox.tres" id="7_rm7lu"]
+[ext_resource type="Texture2D" uid="uid://bmkretbtyqi01" path="res://Assets/Sprites/UI/MediumGrab.png" id="8_fngxd"]
+[ext_resource type="StyleBox" uid="uid://d0dnc4expn1x0" path="res://Assets/UserInterface/SliderStyleBox.tres" id="8_tg4mj"]
 [ext_resource type="StyleBox" uid="uid://be7kkb87oloe4" path="res://Assets/UserInterface/ReadOnlyStyleBox.tres" id="9_5ihoh"]
 [ext_resource type="StyleBox" uid="uid://brabxcb463n2t" path="res://Assets/UserInterface/TabHoverStyleBox.tres" id="9_uusg4"]
 [ext_resource type="StyleBox" uid="uid://d1ya2u617jayi" path="res://Assets/UserInterface/TabSelectStyleBox.tres" id="10_5ihoh"]
 [ext_resource type="StyleBox" uid="uid://b6f6805u0j1vu" path="res://Assets/UserInterface/TabUnselectStyleBox.tres" id="11_46rmy"]
+[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="17_fngxd"]
+[ext_resource type="StyleBox" uid="uid://du2kuqvwpo5j0" path="res://Assets/UserInterface/HScrollGrabStyleBox.tres" id="17_xtucn"]
+[ext_resource type="StyleBox" uid="uid://b1tpgrjp8xpbj" path="res://Assets/UserInterface/TooltipStyleBox.tres" id="18_j30k7"]
+[ext_resource type="StyleBox" uid="uid://bryfqoermm7f4" path="res://Assets/UserInterface/HScrollAreaStyleBox.tres" id="18_ugqva"]
+[ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="20_fngxd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2jud"]
 
@@ -33,7 +43,11 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gm0r7"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_du07a"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j2hgx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xtucn"]
 
 [resource]
 default_font = ExtResource("1_u2jud")
@@ -88,8 +102,17 @@ FlatButton/colors/font_focus_color = Color(0.03137255, 0.11764706, 0.27058825, 1
 FlatButton/colors/font_hover_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 FlatButton/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 FlatButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+HScrollBar/styles/grabber = ExtResource("6_j2hgx")
+HScrollBar/styles/grabber_highlight = ExtResource("6_j2hgx")
+HScrollBar/styles/grabber_pressed = ExtResource("6_j2hgx")
+HScrollBar/styles/scroll = ExtResource("7_du07a")
+HSlider/icons/grabber = null
+HSlider/icons/grabber_highlight = null
+HSlider/styles/grabber_area = ExtResource("7_c51xu")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxEmpty_du07a")
+HSlider/styles/slider = ExtResource("8_tg4mj")
+Label/colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 Label/font_sizes/font_size = 16
-Label/fonts/font = ExtResource("1_u2jud")
 LineEdit/styles/focus = ExtResource("7_rm7lu")
 LineEdit/styles/normal = ExtResource("7_gp8ah")
 LineEdit/styles/read_only = ExtResource("9_5ihoh")
@@ -113,3 +136,16 @@ TabBar/styles/tab_selected = ExtResource("10_5ihoh")
 TabBar/styles/tab_unselected = ExtResource("11_46rmy")
 TextEdit/styles/focus = ExtResource("7_rm7lu")
 TextEdit/styles/normal = ExtResource("7_gp8ah")
+TooltipLabel/colors/font_color = Color(1, 1, 1, 1)
+TooltipLabel/font_sizes/font_size = 14
+TooltipLabel/fonts/font = ExtResource("17_fngxd")
+TooltipLabel/styles/normal = ExtResource("18_j30k7")
+VScrollBar/styles/grabber = ExtResource("17_xtucn")
+VScrollBar/styles/grabber_highlight = ExtResource("17_xtucn")
+VScrollBar/styles/grabber_pressed = ExtResource("17_xtucn")
+VScrollBar/styles/scroll = ExtResource("18_ugqva")
+VSlider/icons/grabber = ExtResource("20_fngxd")
+VSlider/icons/grabber_highlight = ExtResource("8_fngxd")
+VSlider/styles/grabber_area = ExtResource("7_c51xu")
+VSlider/styles/grabber_area_highlight = SubResource("StyleBoxEmpty_xtucn")
+VSlider/styles/slider = ExtResource("8_tg4mj")

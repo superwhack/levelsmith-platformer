@@ -10,6 +10,7 @@ script/source = "extends Area2D
 ## body: the body entering to check if it's the player
 func _on_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D:
+		AudioManager.play_effect(\"Victory\");
 		Global.complete.emit();
 "
 

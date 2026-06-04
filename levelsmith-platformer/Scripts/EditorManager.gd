@@ -431,7 +431,6 @@ func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
 func change_tool(tool: Global.Tool) -> void:
 	if currentTool == tool:
 		return;
-	
 	if (currentTool == Global.Tool.BOX_BRUSH): disable_box_brush();
 	currentTool = tool;
 	

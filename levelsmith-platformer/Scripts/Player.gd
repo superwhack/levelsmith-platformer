@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 
 ## Make the player jump
 func jump() -> void:
-	 #if is_on_floor():
+	AudioManager.play_effect("PlayerJump");
 	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
@@ -101,6 +101,7 @@ func take_damage(amount: int) -> void:
 	
 ## Kill the player and send the global death signal
 func die() -> void:
+	AudioManager.play_effect("PlayerDeath");
 	Global.death.emit();
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it

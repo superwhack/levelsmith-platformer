@@ -31,7 +31,7 @@ func level_complete() -> void:
 
 ## Swap to edit state
 func edit() -> void:
-	AudioManager.masterVolume = .5;
+	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
 	AudioManager.play_UI_music("Mindframe");
 	print("Edit")

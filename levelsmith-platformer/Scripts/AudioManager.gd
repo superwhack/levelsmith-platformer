@@ -10,12 +10,14 @@ const audioPlayerCount := 6;
 # NOTE: This would be a folder alongside the other assets in the user's local directory, it needs to be changed
 const audioLibraryPath := "user://Audio/";
 const UIAudioLibraryPath := "res://Assets/Audio/";
+const backupAudioLibraryPath := "res://Assets/Audio/Default/";
 
 var musicPlayer : AudioStreamPlayer;
 var availablePlayers : Array[AudioStreamPlayer];
 var inusePlayers : Array[AudioStreamPlayer]
 var queue : Array[String];
 
+##
 func _ready() -> void:
 	musicPlayer = AudioStreamPlayer.new();
 	add_child(musicPlayer);
@@ -41,6 +43,7 @@ func audio_finished(player: AudioStreamPlayer) -> void:
 	availablePlayers.append(player);
 	inusePlayers.erase(player);
 
+## Update the current volume by adjusting every player.
 func update_volume() -> void:
 	musicPlayer.volume_db = (lowestDB * masterVolume * musicVolume) - lowestDB;
 	print(musicPlayer.volume_db);
@@ -49,7 +52,7 @@ func update_volume() -> void:
 	for i in availablePlayers.size():
 		availablePlayers[i].volume_db = (lowestDB * masterVolume * SFXVolume) - lowestDB;
 
-## NOTE: These two functions can probably be shortened since we know that the associated files should exist
+## NOTE: These two functions can probably be shortened since we know that the associated files have specific filePaths
 ## Add specified SFX to the queue from builder sounds
 ## effectName: name of the effect to play
 func play_UI_effect(effectName: String) -> void:
@@ -72,28 +75,38 @@ func play_UI_music(musicName: String) -> void:
 
 ## Play the music track
 ## musicName: name of the sound effect
-func play_music(musicName: String) -> void:
+func play_music(musicName: String, isDefault: bool = false) -> void:
 	musicPlayer.stop();
-	var fullPath : String = audioLibraryPath + musicName;
+	var fullPath : String;
+	if isDefault:
+		fullPath = backupAudioLibraryPath + musicName;
+	else:
+		fullPath = audioLibraryPath + musicName;
 	if FileAccess.file_exists(fullPath + ".mp3"):
 		musicPlayer.stream = AudioStreamMP3.load_from_file(fullPath + ".mp3");
 	elif FileAccess.file_exists(fullPath + ".wav"):
 		musicPlayer.stream = AudioStreamWAV.load_from_file(fullPath + ".wav");
 	else:
-		print("File not found or doesn't use .wav/.mp3!");
+		print(musicName, "file not found or doesn't use .wav/.mp3! Reading backup instead.");
+		play_music(musicName, true);
 		return;
 	musicPlayer.play();
 
 ## Add specified SFX to the queue
 ## effectName: name of the sound effect
-func play_effect(effectName: String) -> void:
-	var fullPath : String = audioLibraryPath + effectName;
+func play_effect(effectName: String, isDefault: bool = false) -> void:
+	var fullPath : String;
+	if (isDefault):
+		fullPath = backupAudioLibraryPath + effectName;
+	else:
+		fullPath = audioLibraryPath + effectName;
 	if FileAccess.file_exists(fullPath + ".mp3"):
 		queue.append(fullPath + ".mp3");
 	elif FileAccess.file_exists(fullPath + ".wav"):
 		queue.append(fullPath + ".wav");
 	else:
-		print("File not found or doesn't use .wav/.mp3!");
+		print(effectName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
+		play_effect(effectName, true);
 		return;
 
 ## Reset and stop all audio

@@ -94,7 +94,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				prevTile = -2;
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
 			elif (holdTimer == holdTimeCap && prevTile != -1):
-				entityManager.drop_tile();
+				entityManager.drop_entity();
 
 ## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.
 ## tool: The tool to change to

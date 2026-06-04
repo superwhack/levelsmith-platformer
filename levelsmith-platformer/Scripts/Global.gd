@@ -7,8 +7,7 @@ signal complete;
 
 
 # Tile size.
-var tileSize = 128;
-
+const tileSize: int = 128;
 
 # Application State
 enum State {

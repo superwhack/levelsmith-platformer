@@ -1,6 +1,92 @@
 [gd_scene format=3 uid="uid://d2ud25a3qonvp"]
 
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
+[ext_resource type="PackedScene" uid="uid://dv7vnncwwgetg" path="res://Scenes/UI/AssetItem.tscn" id="2_50v57"]
 
-[node name="AssetManager" type="Node2D" unique_id=1655103101]
+[node name="AssetManager" type="Panel" unique_id=468653693]
+custom_minimum_size = Vector2(900, 600)
+offset_left = 525.0
+offset_top = 219.0
+offset_right = 1425.0
+offset_bottom = 819.0
 script = ExtResource("1_2va5h")
+
+[node name="Tabs" type="TabContainer" parent="." unique_id=1214091300]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 0
+offset_left = 573.0
+offset_top = 102.0
+offset_right = 873.0
+offset_bottom = 152.0
+current_tab = 0
+
+[node name="Images" type="ScrollContainer" parent="Tabs" unique_id=40713710]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Images" unique_id=1654478705]
+layout_mode = 2
+
+[node name="AssetItem" parent="Tabs/Images/VBoxContainer" unique_id=244367531 instance=ExtResource("2_50v57")]
+layout_mode = 2
+assetName = "Testing"
+
+[node name="AssetItem2" parent="Tabs/Images/VBoxContainer" unique_id=74011955 instance=ExtResource("2_50v57")]
+layout_mode = 2
+assetName = "Testing"
+
+[node name="AssetItem3" parent="Tabs/Images/VBoxContainer" unique_id=2092990729 instance=ExtResource("2_50v57")]
+layout_mode = 2
+assetName = "Testing"
+
+[node name="AssetItem4" parent="Tabs/Images/VBoxContainer" unique_id=865713102 instance=ExtResource("2_50v57")]
+layout_mode = 2
+assetName = "Testing"
+
+[node name="Animations" type="ScrollContainer" parent="Tabs" unique_id=1953296503]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Animations" unique_id=1715688617]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Tabs/Animations/VBoxContainer" unique_id=523140369]
+layout_mode = 2
+text = "setsd"
+
+[node name="Label2" type="Label" parent="Tabs/Animations/VBoxContainer" unique_id=1136090987]
+layout_mode = 2
+text = "gesgsgds"
+
+[node name="Label3" type="Label" parent="Tabs/Animations/VBoxContainer" unique_id=9584868]
+layout_mode = 2
+text = "segsd"
+
+[node name="Audio" type="ScrollContainer" parent="Tabs" unique_id=912303560]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Audio" unique_id=1395642184]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=1550632889]
+layout_mode = 2
+text = "ewyeherh"
+
+[node name="Label2" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=967186754]
+layout_mode = 2
+text = "gesgsgds"
+
+[node name="Label3" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=583971705]
+layout_mode = 2
+text = "segsd"
+
+[node name="Title" type="Label" parent="." unique_id=1534252912]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 40.0
+offset_right = 239.0
+offset_bottom = 63.0
+text = "Custom Asset Manager"

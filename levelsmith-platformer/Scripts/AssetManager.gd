@@ -1,5 +1,6 @@
-extends Node2D
+extends Panel
 
+# Path to the root folder of all assets
 var filePath: String = "user://Assets";
 
 # References to images
@@ -14,11 +15,16 @@ var audioToReplace: AudioStream;
 @export var mainTileSet: TileMapLayer;
 @export var previewTileSet: TileMapLayer;
 
+var selectedItem: AssetItem;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#find_image_in_folder("Tile");
-	find_image("Dodo.png");
-	print(find_directory_by_name("Other4"))
+	#find_image("Dodo.png");
+	#print(find_directory_by_name("Other4"))
+	#print(file_count_in_folder("Fail"));
+	print(get_animation_from_folder("Tile"));
+	selectedItem = null;
 	pass;
 
 ## Finds an image by its name
@@ -37,7 +43,7 @@ func find_image(imageName: String) -> Image:
 	# If the path does not exist, print error
 	else:
 		print("No file found");
-	return null;
+		return null;
 
 ## Finds and loads the first image found in given folder
 ## folderName: Name of the folder to search in
@@ -71,11 +77,37 @@ func find_image_in_folder(folderName: String) -> Image:
 func validate_image(image: Image) -> Image:
 	return null;
 
-#func get_animation_from_folder(folderName: String) -> Array[Image]:
-	#return;
+func get_animation_from_folder(folderName: String) -> Array[Image]:
+	var pathToFolder: String = find_directory_by_name(folderName);
+	if (pathToFolder):
+		var dir = DirAccess.open(pathToFolder);
+		var allImageNames = dir.get_files();
+		var allImages: Array[Image] = [];
+		for imageName in allImageNames:
+			allImages.append(find_image(imageName));
+		return allImages;
+	else:
+		print("Could not open file path");
+	return [];
 
+## Gets the amount of files within a folder
+## folderName: Name of the folder to check
+## returns: The amount of files in the folder
 func file_count_in_folder(folderName: String) -> int:
-	#var dir = DirAccess.open()
+	# Get the path to the folder
+	var pathToFolder: String = find_directory_by_name(folderName);
+	# If there is a path to the folder
+	if (pathToFolder):
+		# Open the directory at the path
+		var dir = DirAccess.open(pathToFolder);
+		# Store all files in that path in an array
+		var allFiles = dir.get_files();
+		# Return the size of that array
+		return allFiles.size();
+	# If there is no path to the folder
+	else:
+		# Print error
+		print("Folder not found");
 	return -1;
 
 func refresh_assets() -> void:

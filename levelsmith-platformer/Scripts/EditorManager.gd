@@ -8,24 +8,35 @@ var painting : bool = false;
 var erasing : bool = false;
 
 # References to grid TileMapLayer child nodes
-var tileSet: TileMapLayer;
-var gridLines: TileMapLayer;
-var previewTileMap: TileMapLayer;
+@export var tileSet: TileMapLayer;
+@export var gridLines: TileMapLayer;
+@export var previewTileMap: TileMapLayer;
 
-var selector: Sprite2D;
-var cursor: Sprite2D;
-var invalidIndicator: Sprite2D;
+# Reference to selector image
+@export var selector: Sprite2D;
 
 # Reference to TileSwitch for transparency
-var tileSwitch: HBoxContainer;
+@export var tileSwitch: HBoxContainer;
+@export var toolSwitch: HBoxContainer;
 
 # Reference to PropertyMenu for editing properties
-var propertyMenu: Panel;
+@export var propertyMenu: Panel;
+
+# Play button
 @export var playButton: Button;
 
 # Mouse position variables
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
+
+var currentHotbarState : Global.HotbarState;
+
+# Mouse assets
+var cursorToolImage = load('res://Assets/Sprites/UI/cursor.png');
+var brushToolImage = load('res://Assets/Sprites/UI/paintBrush.png');
+var boxToolImage = load('res://Assets/Sprites/UI/boxBrush.png');
+var invalidPlaceImage = load('res://Assets/Sprites/UI/no.png');
+var uiHoverImage = load('res://Assets/Sprites/UI/cursor.png');
 
 # A timer to differentiate between click and holding click
 const holdTimeCap = .15;
@@ -59,21 +70,11 @@ var tileCount := Global.TileType.size();
 ## Runs once when the script is ready.
 ## Set up any reference variables here.
 func _ready() -> void:
-	playButton.modulate = Color(1, 1, 1, .5);
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
-	tileSet = get_child(0);
-	gridLines = get_child(1);
-	previewTileMap = get_child(2);
+	# Assign self reference to UI
+	tileSwitch.editorManager = self;
+	toolSwitch.editorManager = self;
 	
-	tileSwitch = get_child(3).get_child(1).get_child(1);
-	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
-	
-	# Set the reference to the property menu
-	propertyMenu = get_child(3).get_child(2);
-	
-	selector = get_child(4);
-	cursor = get_child(5);
-	invalidIndicator = get_child(5).get_child(0);
+	Input.set_custom_mouse_cursor(brushToolImage);
 	
 	brushTile = Global.TileType.SOLID;
 	
@@ -110,16 +111,19 @@ func _process(_delta: float) -> void:
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
-	invalidIndicator.modulate = Color(1, 0, 0, 0);
 	update_selector();
 
 ## Update the selector and cursor in accordance to current location and ability to place tiles
 func update_selector() -> void:
 	selector.position = currentMousePosition * 128 + Vector2(64, 64);
-	cursor.position = get_global_mouse_position() + Vector2(10, 10);
 	var hoverTile = tileSet.get_cell_source_id(currentMousePosition);
-	if ((hoverTile >= tileCount && brushTile < tileCount) || (hoverTile < tileCount && hoverTile > -1 && brushTile >= tileCount) || check_out_of_bounds(currentMousePosition)):
-		invalidIndicator.modulate = Color(1, 0, 0, 1);
+	
+	# WARNING: potential issues with elif chain interfering with mouse cursor image swap
+	if(get_viewport().gui_get_hovered_control()):
+		Input.set_custom_mouse_cursor(uiHoverImage);
+		selector.modulate = Color(0, 0, 0, 0);
+	elif ((hoverTile >= tileCount && brushTile < tileCount) || (hoverTile < tileCount && hoverTile > -1 && brushTile >= tileCount) || check_out_of_bounds(currentMousePosition)):
+		Input.set_custom_mouse_cursor(invalidPlaceImage);
 		selector.modulate = Color(0, 0, 0, 0);
 	elif (prevTile > -1 && Input.is_action_pressed("click")):
 		selector.modulate = Color(0, 1, 1, 1);
@@ -127,6 +131,13 @@ func update_selector() -> void:
 		selector.modulate = Color(1, 0, 0, 1);
 	else:
 		selector.modulate = Color(1, 1, 1, 1);
+		match(currentTool):
+			Global.Tool.CURSOR:
+				Input.set_custom_mouse_cursor(cursorToolImage);
+			Global.Tool.BRUSH:
+				Input.set_custom_mouse_cursor(brushToolImage);
+			Global.Tool.BOX_BRUSH:
+				Input.set_custom_mouse_cursor(boxToolImage);
 
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
@@ -218,38 +229,57 @@ func _unhandled_input(event: InputEvent) -> void:
 		if (prevTile != -1):
 			drop_tile();
 		change_tool(Global.Tool.BRUSH);
-		tileSwitch.cursorSelected(false);
+		change_current_hotbar(Global.HotbarState.TILES);
 
 	elif event.is_action_pressed("box-brush-tool"):
 		if (prevTile != -1):
 			drop_tile();
 		change_tool(Global.Tool.BOX_BRUSH);
-		tileSwitch.cursorSelected(false);
+		change_current_hotbar(Global.HotbarState.TILES);
 
 	elif event.is_action_pressed("cursor-tool"):
 		change_tool(Global.Tool.CURSOR);
-		tileSwitch.cursorSelected(true);
 		
-	elif event.is_action_pressed("first-select"):
-		update_brush_tile(Global.TileType.SOLID);
-		
-	elif event.is_action_pressed("second-select"):
-		update_brush_tile(Global.TileType.ONEWAY);
-		
-	elif event.is_action_pressed("third-select"):
-		update_brush_tile(Global.TileType.DEATH);
-		
-	elif event.is_action_pressed("fourth-select"):
-		update_brush_tile(Global.TileType.ICE);
-		
-	elif event.is_action_pressed("fifth-select"):
-		update_brush_tile(Global.TileType.STICKY);
-		
-	elif event.is_action_pressed("sixth-select"):
-		update_brush_tile(Global.TileType.BOUNCE);
-		
-	elif event.is_action_pressed("seventh-select"):
-		update_brush_tile(Global.TileType.SLOPE);
+	# Tile/Entity hotkeys
+	match(currentHotbarState):
+		Global.HotbarState.TILES:
+			if event.is_action_pressed("first-select"):
+				update_brush_tile(Global.TileType.SOLID);
+			elif event.is_action_pressed("second-select"):
+				update_brush_tile(Global.TileType.ONEWAY);
+			elif event.is_action_pressed("third-select"):
+				update_brush_tile(Global.TileType.DEATH);
+			elif event.is_action_pressed("fourth-select"):
+				update_brush_tile(Global.TileType.ICE);
+			elif event.is_action_pressed("fifth-select"):
+				update_brush_tile(Global.TileType.STICKY);
+			elif event.is_action_pressed("sixth-select"):
+				update_brush_tile(Global.TileType.BOUNCE);
+			elif event.is_action_pressed("seventh-select"):
+				update_brush_tile(Global.TileType.SLOPE);
+		Global.HotbarState.ENTITIES:
+			if event.is_action_pressed("first-select"):
+				update_brush_tile(Global.EntityType.GOAL);
+			elif event.is_action_pressed("second-select"):
+				update_brush_tile(Global.EntityType.PLAYER);
+			elif event.is_action_pressed("third-select"):
+				update_brush_tile(Global.EntityType.PATROLLING);
+		Global.HotbarState.PROPS:
+			if event.is_action_pressed("first-select"):
+				update_brush_tile(Global.EntityType.PROP1);
+			elif event.is_action_pressed("second-select"):
+				update_brush_tile(Global.EntityType.PROP2);
+			elif event.is_action_pressed("third-select"):
+				update_brush_tile(Global.EntityType.PROP3);
+			elif event.is_action_pressed("fourth-select"):
+				update_brush_tile(Global.EntityType.PROP4);
+			elif event.is_action_pressed("fifth-select"):
+				update_brush_tile(Global.EntityType.PROP5);
+
+## Changes current hotbar state (used for hotkeys)
+## newState: Global.HotbarState
+func change_current_hotbar(newState: Global.HotbarState):
+	currentHotbarState = newState;
 
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_tile() -> void:
@@ -403,19 +433,25 @@ func change_tool(tool: Global.Tool) -> void:
 		return;
 	if (currentTool == Global.Tool.BOX_BRUSH): disable_box_brush();
 	currentTool = tool;
+	
+	if (currentTool != Global.Tool.CURSOR):
+		update_brush_tile(Global.TileType.SOLID);
+		tileSwitch.display_tiles(true);
+		tileSwitch.display_entities(false);
+	else:
+		update_brush_tile(Global.EntityType.GOAL);
+		tileSwitch.display_tiles(false);
+		tileSwitch.display_entities(true);
 	previewTileMap.clear(); 
 	propertyMenu.hide();
-	tileSwitch.cursorSelected(currentTool == Global.Tool.CURSOR);
+	
 	match currentTool:
 		Global.Tool.CURSOR:
 			update_brush_tile(Global.EntityType.GOAL);
-			cursor.texture = load('res://Assets/Sprites/UI/cursor.png');
 		Global.Tool.BOX_BRUSH:
 			update_brush_tile(Global.TileType.SOLID);
-			cursor.texture = load('res://Assets/Sprites/UI/boxBrush.png');
 		Global.Tool.BRUSH:
 			update_brush_tile(Global.TileType.SOLID);
-			cursor.texture = load('res://Assets/Sprites/UI/paintBrush.png');
 	print("Current Tool: ", currentTool);
 
 ## Deactivates the box brush.
@@ -480,12 +516,3 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 		if node.global_position == targetGlobalPos:
 			return node;
 	return null;
-
-## Show the normal mouse if it's hovering over UI elements.
-func _on_mouse_entered() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
-	cursor.modulate = Color(1, 1, 1, 0);
-## Get rid of the normal mouse when it's stopped.
-func _on_mouse_exited() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
-	cursor.modulate = Color(1, 1, 1, 1);

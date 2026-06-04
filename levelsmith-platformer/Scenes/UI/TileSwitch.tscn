@@ -17,220 +17,223 @@
 [ext_resource type="Texture2D" uid="uid://084j38o8pfab" path="res://Assets/Sprites/Entities/Props/Bush.png" id="15_pggt4"]
 [ext_resource type="Texture2D" uid="uid://dxl3blvdjwt4m" path="res://Assets/Sprites/Entities/Props/GoalMarker.png" id="16_h6q5o"]
 
-[node name="Control" type="HBoxContainer" unique_id=959816093]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1896.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab")]
+offset_right = 628.0
+offset_bottom = 100.0
 theme_override_constants/separation = 4
 script = ExtResource("1_aauec")
+tiles = NodePath("TilePickerUI")
+entities = NodePath("EntityPickerUI")
+entityTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities")
+propTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Props")
 
-[node name="SolidTileWrapper" type="Control" parent="." unique_id=2098565494]
+[node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
 layout_mode = 2
 
-[node name="SolidTileButton" type="TextureButton" parent="SolidTileWrapper" unique_id=580196334]
-layout_mode = 0
-offset_right = 80.0
-offset_bottom = 80.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
+[node name="ColorRect" type="ColorRect" parent="TilePickerUI" unique_id=1221828212]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.03374115, 0.27284646, 0.40548867, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="TilePickerUI" unique_id=2028902409]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Tiles" type="HBoxContainer" parent="TilePickerUI/MarginContainer" unique_id=952326033]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SolidTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=580196334]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("1_vjuxo")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="DeathTileWrapper" type="Control" parent="." unique_id=1583039465]
+[node name="DeathTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=427658681]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-
-[node name="DeathTileButton" type="TextureButton" parent="DeathTileWrapper" unique_id=427658681]
-layout_mode = 0
-offset_left = 187.0
-offset_right = 267.0
-offset_bottom = 80.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("5_02cwx")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="OnewayTileWrapper" type="Control" parent="." unique_id=19398503]
+[node name="OnewayTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1125313123]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-
-[node name="OnewayTileButton" type="TextureButton" parent="OnewayTileWrapper" unique_id=1125313123]
-layout_mode = 0
-offset_left = 101.0
-offset_right = 181.0
-offset_bottom = 80.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("4_e1a7i")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="IceTileWrapper" type="Control" parent="." unique_id=1001883010]
+[node name="IceTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=423141264]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-
-[node name="IceTileButton" type="TextureButton" parent="IceTileWrapper" unique_id=423141264]
-layout_mode = 0
-offset_left = 275.0
-offset_right = 355.0
-offset_bottom = 80.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("3_lok7c")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="StickyTWrapper" type="Control" parent="." unique_id=708304497]
+[node name="StickyTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=928704748]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-
-[node name="StickyTileButton" type="TextureButton" parent="StickyTWrapper" unique_id=928704748]
-layout_mode = 0
-offset_left = 370.0
-offset_right = 450.0
-offset_bottom = 80.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("2_01osu")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="BounceTileWrapper" type="Control" parent="." unique_id=1865780699]
+[node name="BounceTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1472925597]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="BounceTileButton" type="TextureButton" parent="BounceTileWrapper" unique_id=1472925597]
-layout_mode = 0
-offset_left = 464.0
-offset_top = 1.0
-offset_right = 544.0
-offset_bottom = 81.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("2_aauec")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="SlopeTileWrapper" type="Control" parent="." unique_id=1247154762]
+[node name="SlopeTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1746073645]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-
-[node name="SlopeTileButton" type="TextureButton" parent="SlopeTileWrapper" unique_id=1746073645]
-layout_mode = 0
-offset_left = 556.0
-offset_top = 1.0
-offset_right = 636.0
-offset_bottom = 81.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("3_p43ua")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="GoalObjectWrapper" type="Control" parent="." unique_id=629663342]
+[node name="EntityPickerUI" type="PanelContainer" parent="." unique_id=324821247]
+visible = false
 layout_mode = 2
 
-[node name="GoalObjectButton" type="TextureButton" parent="GoalObjectWrapper" unique_id=2048100610]
-layout_mode = 0
-offset_left = 860.0
-offset_top = 1.0
-offset_right = 940.0
-offset_bottom = 81.0
+[node name="ColorRect" type="ColorRect" parent="EntityPickerUI" unique_id=1037770530]
+layout_mode = 2
+color = Color(0.2670356, 0.6822123, 0.7571357, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="EntityPickerUI" unique_id=860665089]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Tabs" type="HBoxContainer" parent="EntityPickerUI/MarginContainer" unique_id=1816441022]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="EntityPickerUI/MarginContainer/Tabs" unique_id=316198321]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+selected = 0
+item_count = 2
+popup/item_0/text = "Entities"
+popup/item_0/id = 0
+popup/item_1/text = "Props"
+popup/item_1/id = 1
+
+[node name="Entities" type="HBoxContainer" parent="EntityPickerUI/MarginContainer/Tabs" unique_id=1206438351]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="GoalObjectButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=2048100610]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("9_02cwx")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="SpawnObjectWrapper" type="Control" parent="." unique_id=1085605979]
+[node name="SpawnObjectButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=437566097]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-
-[node name="SpawnObjectButton" type="TextureButton" parent="SpawnObjectWrapper" unique_id=437566097]
-layout_mode = 0
-offset_left = 949.0
-offset_top = 1.0
-offset_right = 1029.0
-offset_bottom = 81.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("9_e1a7i")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="PatrollingObjectWrapper" type="Control" parent="." unique_id=194304977]
+[node name="PatrollingObjectButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1756298095]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-
-[node name="PatrollingObjectButton" type="TextureButton" parent="PatrollingObjectWrapper" unique_id=1756298095]
-layout_mode = 0
-offset_left = 1046.0
-offset_top = -1.0
-offset_right = 1126.0
-offset_bottom = 79.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("2_p43ua")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="DirectionMarkerWrapper" type="Control" parent="." unique_id=1249601608]
+[node name="Props" type="HBoxContainer" parent="EntityPickerUI/MarginContainer/Tabs" unique_id=1986159458]
+visible = false
 layout_mode = 2
+theme_override_constants/separation = 8
 
-[node name="DirectionMarkerPropButton" type="TextureButton" parent="DirectionMarkerWrapper" unique_id=1076858031]
-layout_mode = 0
-offset_left = 1134.0
-offset_top = -1.0
-offset_right = 1214.0
-offset_bottom = 79.0
+[node name="DirectionMarkerPropButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1076858031]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("12_rf0fx")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="StopMarkerWrapper" type="Control" parent="." unique_id=912759544]
+[node name="StopMarkerPropButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=390902970]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-
-[node name="StopMarkerPropButton" type="TextureButton" parent="StopMarkerWrapper" unique_id=390902970]
-layout_mode = 0
-offset_left = 1219.0
-offset_top = -1.0
-offset_right = 1299.0
-offset_bottom = 79.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("13_krx33")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="StartMarkerWrapper" type="Control" parent="." unique_id=2038341511]
+[node name="StartMarkerPropButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=23904667]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-
-[node name="StartMarkerPropButton" type="TextureButton" parent="StartMarkerWrapper" unique_id=23904667]
-layout_mode = 0
-offset_left = 1305.655
-offset_top = -1.0
-offset_right = 1385.655
-offset_bottom = 79.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("14_goodf")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="EndMarkerWrapper" type="Control" parent="." unique_id=1826631044]
+[node name="EndMarkerPropButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1171346932]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-
-[node name="EndMarkerPropButton" type="TextureButton" parent="EndMarkerWrapper" unique_id=1171346932]
-layout_mode = 0
-offset_left = 1390.53
-offset_top = -1.0
-offset_right = 1470.53
-offset_bottom = 79.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("15_pggt4")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="GoalMarkerWrapper" type="Control" parent="." unique_id=777141475]
+[node name="GoalMarkerPropButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1541270030]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-
-[node name="GoalMarkerPropButton" type="TextureButton" parent="GoalMarkerWrapper" unique_id=1541270030]
-layout_mode = 0
-offset_left = 1475.01
-offset_top = -1.0
-offset_right = 1555.01
-offset_bottom = 79.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture_normal = ExtResource("16_h6q5o")
 ignore_texture_size = true
 stretch_mode = 0
 
-[connection signal="pressed" from="SolidTileWrapper/SolidTileButton" to="." method="_on_solid_tile_button_pressed"]
-[connection signal="pressed" from="DeathTileWrapper/DeathTileButton" to="." method="_on_death_tile_button_pressed"]
-[connection signal="pressed" from="OnewayTileWrapper/OnewayTileButton" to="." method="_on_oneway_tile_button_pressed"]
-[connection signal="pressed" from="IceTileWrapper/IceTileButton" to="." method="_on_ice_tile_button_pressed"]
-[connection signal="pressed" from="StickyTWrapper/StickyTileButton" to="." method="_on_sticky_tile_button_pressed"]
-[connection signal="pressed" from="BounceTileWrapper/BounceTileButton" to="." method="_on_bounce_tile_button_pressed"]
-[connection signal="pressed" from="SlopeTileWrapper/SlopeTileButton" to="." method="_on_slope_tile_button_pressed"]
-[connection signal="pressed" from="GoalObjectWrapper/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
-[connection signal="pressed" from="SpawnObjectWrapper/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
-[connection signal="pressed" from="PatrollingObjectWrapper/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]
-[connection signal="pressed" from="DirectionMarkerWrapper/DirectionMarkerPropButton" to="." method="_on_direction_marker_prop_button_pressed"]
-[connection signal="pressed" from="StopMarkerWrapper/StopMarkerPropButton" to="." method="_on_stop_marker_prop_button_pressed"]
-[connection signal="pressed" from="StartMarkerWrapper/StartMarkerPropButton" to="." method="_on_start_marker_prop_button_pressed"]
-[connection signal="pressed" from="EndMarkerWrapper/EndMarkerPropButton" to="." method="_on_end_marker_prop_button_pressed"]
-[connection signal="pressed" from="GoalMarkerWrapper/GoalMarkerPropButton" to="." method="_on_goal_marker_prop_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SolidTileButton" to="." method="_on_solid_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/DeathTileButton" to="." method="_on_death_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/OnewayTileButton" to="." method="_on_oneway_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/IceTileButton" to="." method="_on_ice_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/StickyTileButton" to="." method="_on_sticky_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/BounceTileButton" to="." method="_on_bounce_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SlopeTileButton" to="." method="_on_slope_tile_button_pressed"]
+[connection signal="item_selected" from="EntityPickerUI/MarginContainer/Tabs/OptionButton" to="." method="entity_dropdown_select"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/DirectionMarkerPropButton" to="." method="_on_direction_marker_prop_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/StopMarkerPropButton" to="." method="_on_stop_marker_prop_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/StartMarkerPropButton" to="." method="_on_start_marker_prop_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/EndMarkerPropButton" to="." method="_on_end_marker_prop_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/GoalMarkerPropButton" to="." method="_on_goal_marker_prop_button_pressed"]

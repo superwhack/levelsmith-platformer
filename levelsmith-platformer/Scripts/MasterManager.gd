@@ -3,9 +3,14 @@ extends Node2D
 # State variable to represent the state the game is currently in
 var state : Global.State = Global.State.EDIT;
 
-# References to both state managers
+# References to state managers and canvas components
 @export var editorManager : Node2D;
 @export var gameManager : Node2D;
+@export var editorManagerCanvas : CanvasLayer;
+@export var gameManagerCanvas : CanvasLayer;
+
+# Reference to tileset
+@export var tileSet: TileMapLayer;
 
 # Map that is currently loaded in the Play scene
 var loadedMap : TileMapLayer;
@@ -40,9 +45,9 @@ func edit() -> void:
 	state = Global.State.EDIT;
 	# Change scene to edit scene
 	gameManager.hide();
-	gameManager.get_node("CanvasLayer").hide();
+	gameManagerCanvas.hide();
 	editorManager.show();
-	editorManager.get_node("CanvasLayer").show()
+	editorManagerCanvas.show()
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
 
@@ -61,11 +66,11 @@ func play() -> void:
 	# Change scene to play 
 	gameManager.show();
 	gameManager.start();
-	gameManager.get_node("CanvasLayer").show()
+	gameManagerCanvas.show()
 	editorManager.hide();
+	editorManagerCanvas.hide();
 	editorManager.previewTileMap.clear();
 	editorManager.disable_box_brush();
-	editorManager.get_node("CanvasLayer").hide();
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
@@ -74,8 +79,8 @@ func play() -> void:
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
-	# Reference the tile map as the node to be saved
-	var nodeToSave = editorManager.get_node("Tiles");
+	# Reference the tile map as the node to be saved\
+	var nodeToSave = tileSet;
 	# Create a PackedScene
 	var scene = PackedScene.new();
 	# Pack the node to save as a scene
@@ -96,4 +101,6 @@ func load_tilemap() -> void:
 	# Add that instance to the top of the GameManager's hierarchy
 	gameManager.add_child(sceneInstance);
 	gameManager.move_child(sceneInstance, 0);
+	
+	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);

@@ -1,13 +1,12 @@
 [gd_scene format=4 uid="uid://bm5w14jlbl37k"]
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
-[ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
-[ext_resource type="Texture2D" uid="uid://dt6pg2cjbdcuv" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Texture2D" uid="uid://bjqdwuhiphlly" path="res://Assets/Sprites/Tiles/gridSelect.png" id="5_64b2s"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://bm1iadl23kv0w" path="res://Assets/Sprites/Tiles/gridSelect.png" id="6_64b2s"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -62,15 +61,14 @@ sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8fjml"]
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "gameManager", "propertyMenu")]
-process_mode = 3
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "gameManager", "editorManagerCanvas", "gameManagerCanvas", "tileSet", "propertyMenu")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 gameManager = NodePath("GameManager")
+editorManagerCanvas = NodePath("EditorManager/CanvasLayer")
+gameManagerCanvas = NodePath("GameManager/CanvasLayer")
+tileSet = NodePath("EditorManager/Tiles")
 propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
-
-[node name="AudioManager" type="Node" parent="." unique_id=957247124]
-script = ExtResource("2_8vbpr")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=101918903 node_paths=PackedStringArray("masterManager", "tileSet")]
 script = ExtResource("4_mg0h4")
@@ -106,14 +104,10 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 
-[node name="ToolContainer" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=2095469909]
-size_flags_stretch_ratio = 0.0
-
 [node name="Selector" parent="EditorManager" index="4" unique_id=1894609535]
-texture = ExtResource("5_64b2s")
+texture = ExtResource("6_64b2s")
 
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
-process_mode = 1
 
 [connection signal="pressed" from="EditorManager/CanvasLayer/PlayButton" to="." method="play"]
 [connection signal="pressed" from="GameManager/CanvasLayer/PauseButton" to="." method="edit"]

@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1_1qm3p")
-groundSpeed = 6.8
-jumpHeight = 6.1
-airControl = 4.5
-fallSpeed = 7.6
-coyoteTime = 6.4
+groundSpeed = 1.0
+jumpHeight = 2.0
+airControl = 1.0
+fallSpeed = 1.2
+coyoteTime = 0.2
 metadata/_custom_type_script = "uid://bp8erofrb01fc"

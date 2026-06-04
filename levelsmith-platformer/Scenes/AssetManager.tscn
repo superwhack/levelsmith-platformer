@@ -32,8 +32,8 @@ layout_mode = 2
 [node name="Basic Tile" parent="Tabs/Images/VBoxContainer" unique_id=244367531 instance=ExtResource("2_50v57")]
 layout_mode = 2
 text = "Basic Tile"
-displayName = "Basic Tile"
-assetName = "BasicTile"
+displayName = "Solid Tile"
+assetName = "Solid"
 
 [node name="Ice Tile" parent="Tabs/Images/VBoxContainer" unique_id=74011955 instance=ExtResource("2_50v57")]
 layout_mode = 2

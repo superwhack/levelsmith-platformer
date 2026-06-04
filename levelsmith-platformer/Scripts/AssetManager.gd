@@ -25,6 +25,10 @@ func _ready() -> void:
 	#print(find_directory_by_name("Other4"))
 	#print(file_count_in_folder("Fail"));
 	#print(get_animation_from_folder("Tile"));
+	create_file_tree();
+	var dir = DirAccess.open(filePath);
+	if (!dir):
+		create_file_tree();
 	pass;
 
 ## Finds an image by its name
@@ -196,3 +200,12 @@ func find_directory_by_name(targetDirectoryName: String, currentDirectory: Strin
 			# Update the currentFileName to be the next file
 			currentFileName = dir.get_next();
 	return "";
+
+func create_file_tree():
+	var tileTypes: Array[String] = ["Solid", "Ice", "OneWay", "Bounce", "Death", "Slope", "Sticky"];
+	var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyPatrol", "EnemyFlying", "Goal"];
+	var dir = DirAccess.open("user://");
+	for type: String in tileTypes:
+		dir.make_dir_recursive(filePath + "/Tiles/" + type);
+	for type: String in entityTypes:
+		dir.make_dir_recursive(filePath + "/Entities/" + type);

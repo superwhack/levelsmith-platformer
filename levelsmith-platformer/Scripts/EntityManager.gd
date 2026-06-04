@@ -44,6 +44,7 @@ func delete_entity (clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER):
 		editorManager.playerExists = false;
+		tileSet.erase_cell(clickPosition);
 	elif (tileSet.get_cell_source_id(clickPosition) >= editorManager.tileCount):
 		tileSet.erase_cell(clickPosition);
 	

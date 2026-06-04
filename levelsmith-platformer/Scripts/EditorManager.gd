@@ -59,8 +59,8 @@ func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 ## returns: True if the mouse is out of bounds
 func check_out_of_bounds(mousePosition: Vector2i) -> bool:
 	if (mousePosition.x < 0
-	|| mousePosition.x > get_parent().worldSize.y
+	|| mousePosition.x > get_parent().worldSize.x
 	|| mousePosition.y < 0
-	|| mousePosition.y > get_parent().worldSize.x):
+	|| mousePosition.y > get_parent().worldSize.y):
 		return true;
 	return false;

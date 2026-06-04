@@ -25,7 +25,7 @@ func _ready() -> void:
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
 	ImportExportManager.make_new_level("Level01");
-	
+	ImportExportManager.export_level();
 	edit();
 
 ## When the level is completed, validate it and automatically return to editor
@@ -40,7 +40,6 @@ func edit() -> void:
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
 	AudioManager.play_UI_music("EditorMusic");
-	print("Edit")
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
 	state = Global.State.EDIT;
@@ -59,7 +58,6 @@ func play() -> void:
 		return;
 	propertyMenu.hide();
 	AudioManager.play_music("LevelMusic");
-	print("Play")
 	# Update state variable
 	state = Global.State.PLAY;
 	# Save map

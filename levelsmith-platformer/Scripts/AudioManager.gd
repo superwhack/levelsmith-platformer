@@ -12,7 +12,7 @@ const lowestDB = 70;
 const audioPlayerCount := 6;
 
 # All folders for audio
-const audioLibraryPath := "user://Audio/";
+var audioLibraryPath := "user://Audio/";
 const UIAudioLibraryPath := "res://Assets/Audio/";
 const backupAudioLibraryPath := "res://Assets/Defaults/Assets/Audio/";
 
@@ -48,14 +48,19 @@ func audio_finished(player: AudioStreamPlayer) -> void:
 	availablePlayers.append(player);
 	inusePlayers.erase(player);
 
-## Update the current volume by adjusting every player.
+## Update the current volume by adjusting every player. If the volume is set to 0 for anything, mute completely
 func update_volume() -> void:
 	musicPlayer.volume_db = (lowestDB * masterVolume * musicVolume) - lowestDB;
-	print(musicPlayer.volume_db);
+	if musicPlayer.volume_db == -lowestDB:
+			musicPlayer.volume_db = -100;
 	for i in inusePlayers.size():
 		inusePlayers[i].volume_db = (lowestDB * masterVolume * SFXVolume) - lowestDB;
+		if inusePlayers[i].volume_db == -lowestDB:
+			inusePlayers[i].volume_db = -100;
 	for i in availablePlayers.size():
 		availablePlayers[i].volume_db = (lowestDB * masterVolume * SFXVolume) - lowestDB;
+		if availablePlayers[i].volume_db == -lowestDB:
+			availablePlayers[i].volume_db = -100;
 
 ## NOTE: These two functions can probably be shortened since we know that the associated files have specific filePaths
 ## Play the music track for the builder
@@ -90,9 +95,7 @@ func play_music(musicName: String) -> void:
 	else:
 		print(musicName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .mp3 for music
-		print(backupAudioLibraryPath + musicName + ".mp3")
 		musicPlayer.stream = load(backupAudioLibraryPath + musicName + ".mp3");
-		return;
 	musicPlayer.play();
 
 ## Add specified SFX to the queue
@@ -107,7 +110,6 @@ func play_effect(effectName: String) -> void:
 		print(effectName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .wav for effects
 		queue.append(backupAudioLibraryPath + effectName + ".wav")
-		return;
 
 ## Reset and stop all audio
 func reset_audio() -> void:

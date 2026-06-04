@@ -14,7 +14,7 @@ enum SelectorState {
 	MOVING,
 	INVALID
 }
-var selectorState: SelectorState;
+var selectorState: SelectorState = SelectorState.DEFAULT;
 
 # Sprite variables
 @export var selectorFrameSprite: Sprite2D;

@@ -69,11 +69,12 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 	return null;
 	
 	
-
+func move_entity() -> void:
+	pass;
 	
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
-func drop_tile() -> void:
+func drop_entity() -> void:
 	place_entity(editorManager.currentMousePosition);
 	if (editorManager.prevTile != -2):
 		toolManager.brushObject = editorManager.prevTile;

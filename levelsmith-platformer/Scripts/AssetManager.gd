@@ -18,6 +18,7 @@ var audioToReplace: AudioStream;
 func _ready() -> void:
 	#find_image_in_folder("Tile");
 	find_image("Dodo.png");
+	print(find_directory_by_name("Other4"))
 	pass;
 
 ## Finds an image by its name
@@ -74,6 +75,7 @@ func validate_image(image: Image) -> Image:
 	#return;
 
 func file_count_in_folder(folderName: String) -> int:
+	#var dir = DirAccess.open()
 	return -1;
 
 func refresh_assets() -> void:
@@ -108,7 +110,7 @@ func find_file_by_name(targetFileName: String, currentDirectory: String = filePa
 		# Set the current file name to the next file in the directory
 		var currentFileName = dir.get_next();
 		# Loop if the current name exists
-		while currentFileName != "":
+		while (currentFileName != ""):
 			# Instantiate a variable to represent the full path currently being accessed
 			var fullPath = currentDirectory + "/" + currentFileName;
 			# If the current item is a directory
@@ -124,5 +126,24 @@ func find_file_by_name(targetFileName: String, currentDirectory: String = filePa
 				if (currentFileName == targetFileName):
 					return fullPath;
 			# set the current file name to the next file
+			currentFileName = dir.get_next();
+	return "";
+
+
+func find_directory_by_name(targetDirectoryName: String, currentDirectory: String = filePath) -> String:
+	var dir = DirAccess.open(currentDirectory);
+	
+	if (dir):
+		dir.list_dir_begin();
+		var currentFileName = dir.get_next();
+		while (currentFileName != ""):
+			var fullPath = currentDirectory + "/" + currentFileName;
+			if (dir.current_is_dir()):
+				if (currentFileName == targetDirectoryName):
+					return fullPath;
+				else:
+					var result = find_directory_by_name(targetDirectoryName, fullPath);
+					if (result != ""):
+						return result;
 			currentFileName = dir.get_next();
 	return "";

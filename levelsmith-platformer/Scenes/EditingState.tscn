@@ -2,14 +2,19 @@
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
-[ext_resource type="Texture2D" uid="uid://d1gfww7cpqgxp" path="res://Assets/Sprites/UI/paintBrush.png" id="2_dvhpf"]
-[ext_resource type="Texture2D" uid="uid://pcj66fm5juxb" path="res://Assets/Sprites/UI/no.png" id="3_njgpr"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
+[ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
 [ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
+[ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/HotkeyManager.gd" id="10_bpoex"]
 [ext_resource type="Texture2D" uid="uid://bh8waatyaurop" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
+[ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/CustomCursor.gd" id="11_rllk2"]
+[ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/ToolManager.gd" id="12_20xd7"]
+[ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/TileManager.gd" id="13_7flhh"]
+[ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/EntityManager.gd" id="14_pkt5f"]
+[ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/PreviewManager.gd" id="15_wiuwn"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -41,15 +46,10 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_0h7mo")
 sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("tileSet", "gridLines", "previewTileMap", "selector", "tileSwitch", "toolSwitch", "propertyMenu", "playButton")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileSet", "playButton")]
 script = ExtResource("1_3goer")
+toolManager = NodePath("ToolManager")
 tileSet = NodePath("Tiles")
-gridLines = NodePath("GridLines")
-previewTileMap = NodePath("PreviewTile")
-selector = NodePath("Selector")
-tileSwitch = NodePath("CanvasLayer/TileSwitch")
-toolSwitch = NodePath("CanvasLayer/ToolSwitch")
-propertyMenu = NodePath("CanvasLayer/PropertyMenu")
 playButton = NodePath("CanvasLayer/PlayButton")
 
 [node name="Tiles" type="TileMapLayer" parent="." unique_id=1452837543]
@@ -60,11 +60,16 @@ tile_set = ExtResource("2_8t3j3")
 z_index = 1
 tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAQAAAAAAAAAAAAcAAQAAAAAAAAABAAAAAQAAAAAAAAABAAEAAQAAAAAAAAABAAIAAQAAAAAAAAABAAMAAQAAAAAAAAABAAQAAQAAAAAAAAABAAUAAQAAAAAAAAABAAYAAQAAAAAAAAABAAcAAQAAAAAAAAACAAAAAQAAAAAAAAACAAEAAQAAAAAAAAACAAIAAQAAAAAAAAACAAMAAQAAAAAAAAACAAQAAQAAAAAAAAACAAUAAQAAAAAAAAACAAYAAQAAAAAAAAACAAcAAQAAAAAAAAADAAAAAQAAAAAAAAADAAEAAQAAAAAAAAADAAIAAQAAAAAAAAADAAMAAQAAAAAAAAADAAQAAQAAAAAAAAADAAUAAQAAAAAAAAADAAYAAQAAAAAAAAADAAcAAQAAAAAAAAAEAAAAAQAAAAAAAAAEAAEAAQAAAAAAAAAEAAIAAQAAAAAAAAAEAAMAAQAAAAAAAAAEAAQAAQAAAAAAAAAEAAUAAQAAAAAAAAAEAAYAAQAAAAAAAAAEAAcAAQAAAAAAAAAFAAAAAQAAAAAAAAAFAAEAAQAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAFAAQAAQAAAAAAAAAFAAUAAQAAAAAAAAAFAAYAAQAAAAAAAAAFAAcAAQAAAAAAAAAGAAAAAQAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAQAAAAAAAAAGAAMAAQAAAAAAAAAGAAQAAQAAAAAAAAAGAAUAAQAAAAAAAAAGAAYAAQAAAAAAAAAGAAcAAQAAAAAAAAAHAAAAAQAAAAAAAAAHAAEAAQAAAAAAAAAHAAIAAQAAAAAAAAAHAAMAAQAAAAAAAAAHAAQAAQAAAAAAAAAHAAUAAQAAAAAAAAAHAAYAAQAAAAAAAAAHAAcAAQAAAAAAAAAIAAAAAQAAAAAAAAAIAAEAAQAAAAAAAAAIAAIAAQAAAAAAAAAIAAMAAQAAAAAAAAAIAAQAAQAAAAAAAAAIAAUAAQAAAAAAAAAIAAYAAQAAAAAAAAAIAAcAAQAAAAAAAAAJAAAAAQAAAAAAAAAJAAEAAQAAAAAAAAAJAAIAAQAAAAAAAAAJAAMAAQAAAAAAAAAJAAQAAQAAAAAAAAAJAAUAAQAAAAAAAAAJAAYAAQAAAAAAAAAJAAcAAQAAAAAAAAAKAAAAAQAAAAAAAAAKAAEAAQAAAAAAAAAKAAIAAQAAAAAAAAAKAAMAAQAAAAAAAAAKAAQAAQAAAAAAAAAKAAUAAQAAAAAAAAAKAAYAAQAAAAAAAAAKAAcAAQAAAAAAAAALAAAAAQAAAAAAAAALAAEAAQAAAAAAAAALAAIAAQAAAAAAAAALAAMAAQAAAAAAAAALAAQAAQAAAAAAAAALAAUAAQAAAAAAAAALAAYAAQAAAAAAAAALAAcAAQAAAAAAAAAMAAAAAQAAAAAAAAAMAAEAAQAAAAAAAAAMAAIAAQAAAAAAAAAMAAMAAQAAAAAAAAAMAAQAAQAAAAAAAAAMAAUAAQAAAAAAAAAMAAYAAQAAAAAAAAAMAAcAAQAAAAAAAAANAAAAAQAAAAAAAAANAAEAAQAAAAAAAAANAAIAAQAAAAAAAAANAAMAAQAAAAAAAAANAAQAAQAAAAAAAAANAAUAAQAAAAAAAAANAAYAAQAAAAAAAAANAAcAAQAAAAAAAAAOAAAAAQAAAAAAAAAOAAEAAQAAAAAAAAAOAAIAAQAAAAAAAAAOAAMAAQAAAAAAAAAOAAQAAQAAAAAAAAAOAAUAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAcAAQAAAAAAAAABAAkAAQAAAAAAAAAAAAgAAQAAAAAAAAABAAgAAQAAAAAAAAACAAgAAQAAAAAAAAADAAgAAQAAAAAAAAAEAAgAAQAAAAAAAAAFAAgAAQAAAAAAAAAGAAgAAQAAAAAAAAAHAAgAAQAAAAAAAAAIAAgAAQAAAAAAAAAJAAgAAQAAAAAAAAAKAAgAAQAAAAAAAAALAAgAAQAAAAAAAAAMAAgAAQAAAAAAAAANAAgAAQAAAAAAAAAOAAgAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_nr8wp")
+script = ExtResource("5_2h6au")
 
-[node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485]
+[node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485 node_paths=PackedStringArray("editorManager", "toolManager", "tileSet")]
 modulate = Color(1, 1, 1, 0.5058824)
 tile_set = ExtResource("2_8t3j3")
 collision_enabled = false
+script = ExtResource("15_wiuwn")
+editorManager = NodePath("..")
+toolManager = NodePath("../ToolManager")
+tileSet = NodePath("../Tiles")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 
@@ -78,7 +83,7 @@ focus_behavior_recursive = 1
 action_mode = 0
 icon = ExtResource("10_njgpr")
 
-[node name="ToolSwitch" parent="CanvasLayer" unique_id=1469240724 instance=ExtResource("6_iws6f")]
+[node name="ToolSwitch" parent="CanvasLayer" unique_id=1469240724 node_paths=PackedStringArray("editorManager", "toolManager") instance=ExtResource("6_iws6f")]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -87,14 +92,52 @@ offset_right = 0.0
 offset_bottom = 104.0
 grow_horizontal = 0
 focus_behavior_recursive = 0
+editorManager = NodePath("../..")
+toolManager = NodePath("../../ToolManager")
 
-[node name="TileSwitch" parent="CanvasLayer" unique_id=959816093 instance=ExtResource("7_qupls")]
+[node name="TileSwitch" parent="CanvasLayer" unique_id=959816093 node_paths=PackedStringArray("toolManager", "editorManager") instance=ExtResource("7_qupls")]
 offset_bottom = 104.0
+toolManager = NodePath("../../ToolManager")
+editorManager = NodePath("../..")
 
 [node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
 visible = false
 
-[node name="Selector" type="Sprite2D" parent="." unique_id=1894609535]
+[node name="HotkeyManager" type="Node2D" parent="." unique_id=1848065233 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager")]
+script = ExtResource("10_bpoex")
+editorManager = NodePath("..")
+toolManager = NodePath("../ToolManager")
+entityManager = NodePath("../ToolManager/EntityManager")
+
+[node name="CustomCursorManager" type="Node2D" parent="." unique_id=1871670420 node_paths=PackedStringArray("tileSet", "editorManager", "toolManager", "entityManager")]
+script = ExtResource("11_rllk2")
+tileSet = NodePath("../Tiles")
+editorManager = NodePath("..")
+toolManager = NodePath("../ToolManager")
+entityManager = NodePath("../ToolManager/EntityManager")
+
+[node name="ToolManager" type="Node2D" parent="." unique_id=2103609005 node_paths=PackedStringArray("editorManager", "entityManager", "tileManager", "tileSwitch", "propertyMenu", "previewTile")]
+script = ExtResource("12_20xd7")
+editorManager = NodePath("..")
+entityManager = NodePath("EntityManager")
+tileManager = NodePath("TileManager")
+tileSwitch = NodePath("../CanvasLayer/TileSwitch")
+propertyMenu = NodePath("../CanvasLayer/PropertyMenu")
+previewTile = NodePath("../PreviewTile")
+
+[node name="TileManager" type="Node2D" parent="ToolManager" unique_id=511412025 node_paths=PackedStringArray("editorManager", "toolManager", "tileSet", "previewTile")]
+script = ExtResource("13_7flhh")
+editorManager = NodePath("../..")
+toolManager = NodePath("..")
+tileSet = NodePath("../../Tiles")
+previewTile = NodePath("../../PreviewTile")
+
+[node name="EntityManager" type="Node2D" parent="ToolManager" unique_id=1126944329 node_paths=PackedStringArray("editorManager", "toolManager", "tileSet", "propertyMenu")]
+script = ExtResource("14_pkt5f")
+editorManager = NodePath("../..")
+toolManager = NodePath("..")
+tileSet = NodePath("../../Tiles")
+propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
 
 [connection signal="mouse_entered" from="CanvasLayer/PlayButton" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/PlayButton" to="." method="_on_mouse_exited"]

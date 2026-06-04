@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dtt02avvdvee"]
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/GameManager.gd" id="1_habuo"]
-[ext_resource type="Texture2D" uid="uid://0tp3tr2xeug0" path="res://Assets/Sprites/UI/Pause.png" id="2_ym18m"]
-[ext_resource type="Texture2D" uid="uid://s8voaudouj61" path="res://Assets/Sprites/UI/Reset.png" id="4_x53pn"]
+[ext_resource type="Texture2D" uid="uid://bsnws70qq77ts" path="res://Assets/Sprites/UI/Pause.png" id="2_ym18m"]
+[ext_resource type="Texture2D" uid="uid://crs4uvi33lf4m" path="res://Assets/Sprites/UI/Reset.png" id="4_x53pn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nfgi8"]
 

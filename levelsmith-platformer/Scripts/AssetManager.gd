@@ -16,14 +16,26 @@ var audioToReplace: AudioStream;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	find_image_in_folder("Tile");
+	#find_image_in_folder("Tile");
+	find_image("Dodo.png");
+	pass;
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
+## Finds an image by its name
+## imageName: Name of the image
+## returns: Loaded image
 func find_image(imageName: String) -> Image:
+	# Get the path to the image
+	var imagePath = find_file_by_name(imageName);
+	# If the path exists
+	if (imagePath):
+		# Create and load an image from the path
+		var image = Image.new();
+		image.load(imagePath);
+		# Return the loaded image
+		return image;
+	# If the path does not exist, print error
+	else:
+		print("No file found");
 	return null;
 
 ## Finds and loads the first image found in given folder
@@ -81,3 +93,36 @@ func return_to_default_audio(audioName: String) -> void:
 
 func return_all_to_default(categoryName: String) -> void:
 	pass;
+
+## Recursively searches directories for a file of a specific name
+## targetFileName: The name of the target file
+## currentDirectory: The file path currently being checked
+## returns: File path to the file with that name
+func find_file_by_name(targetFileName: String, currentDirectory: String = filePath) -> String:
+	# Opens the folder at the given currentDirectory path
+	var dir = DirAccess.open(currentDirectory);
+	# If the directory opened successfully
+	if (dir):
+		# Initialize the file stream
+		dir.list_dir_begin();
+		# Set the current file name to the next file in the directory
+		var currentFileName = dir.get_next();
+		# Loop if the current name exists
+		while currentFileName != "":
+			# Instantiate a variable to represent the full path currently being accessed
+			var fullPath = currentDirectory + "/" + currentFileName;
+			# If the current item is a directory
+			if (dir.current_is_dir()):
+				# Call this function on the directory currently being accessed
+				var result = find_file_by_name(targetFileName, fullPath);
+				# If the result is something, return it
+				if (result != ""):
+					return result;
+			# If the current item is not a directory
+			else:
+				# If the current file being accessed is the correct name, return the full path to it
+				if (currentFileName == targetFileName):
+					return fullPath;
+			# set the current file name to the next file
+			currentFileName = dir.get_next();
+	return "";

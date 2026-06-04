@@ -1,10 +1,10 @@
 [gd_scene format=4 uid="uid://bm5w14jlbl37k"]
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
-[ext_resource type="Script" uid="uid://c48mfte4opogm" path="res://Scripts/AudioManager.gd" id="2_8vbpr"]
+[ext_resource type="Script" path="res://Scripts/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
-[ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 
@@ -61,15 +61,17 @@ sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8fjml"]
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "editorManagerCanvas", "gameManagerCanvas", "tileSet", "previewTileMap", "propertyMenu")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "audioManager", "editorManagerCanvas", "gameManagerCanvas", "tileSet", "previewTileMap", "propertyMenu")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
 gameManager = NodePath("GameManager")
+audioManager = NodePath("AudioManager")
 editorManagerCanvas = NodePath("EditorManager/CanvasLayer")
 gameManagerCanvas = NodePath("GameManager/CanvasLayer")
 tileSet = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
+worldSize = Vector2i(14, 8)
 propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
 
 [node name="AudioManager" type="Node" parent="." unique_id=62565252]

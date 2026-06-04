@@ -21,11 +21,11 @@ var invalidSprite: Sprite2D;
 var selectorFrame: Sprite2D;
 
 # Image variables
-var brushIcon: Texture2D = load("res://Assets/Sprites/UI/Brush.png");
-var boxBrushIcon: Texture2D = load("res://Assets/Sprites/UI/BoxBrush.png");
-var cursorIcon: Texture2D = load("res://Assets/Sprites/UI/Cursor.png");
-var selectorFrameSprite: Texture2D = load("res://Assets/Sprites/UI/SelectorFrame.png");
-var invalidIcon: Texture2D = load("res://Assets/Sprites/UI/Invalid.png"); 
+var brushIcon: Texture2D = preload("res://Assets/Sprites/UI/Brush.png");
+var boxBrushIcon: Texture2D = preload("res://Assets/Sprites/UI/BoxBrush.png");
+var cursorIcon: Texture2D = preload("res://Assets/Sprites/UI/Cursor.png");
+var selectorFrameSprite: Texture2D = preload("res://Assets/Sprites/UI/SelectorFrame.png");
+var invalidIcon: Texture2D = preload("res://Assets/Sprites/UI/Invalid.png"); 
 var uiCursor: Texture2D = cursorIcon;
 
 # mouse position reference  (always updated)

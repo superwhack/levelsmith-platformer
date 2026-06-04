@@ -7,6 +7,7 @@ var state : Global.State = Global.State.EDIT;
 @export var editorManager: Node2D;
 @export var toolManager: Node2D;
 @export var gameManager: Node2D;
+@export var audioManager: Node;
 @export var editorManagerCanvas: CanvasLayer;
 @export var gameManagerCanvas: CanvasLayer;
 
@@ -38,9 +39,9 @@ func level_complete() -> void:
 
 ## Swap to edit state
 func edit() -> void:
-	AudioManager.masterVolume = 0;
-	AudioManager.update_volume();
-	AudioManager.play_UI_music("EditorMusic");
+	audioManager.masterVolume = 0;
+	audioManager.update_volume();
+	audioManager.play_UI_music("EditorMusic");
 	print("Edit")
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
@@ -59,7 +60,7 @@ func play() -> void:
 		print("No Player Exists, Cannot Start")
 		return;
 	propertyMenu.hide();
-	AudioManager.play_music("LevelMusic");
+	audioManager.play_music("LevelMusic");
 	print("Play")
 	# Update state variable
 	state = Global.State.PLAY;

@@ -124,12 +124,17 @@ func detect_tiles() -> void:
 	if raycastUp.is_colliding():
 		slideCollisions.push_back(raycastUp);
 	
+	var finishedCollisions : Array[CollisionObject2D];
 	# Check all current collisions
 	for i in slideCollisions.size():
 		var collision : Vector2 = slideCollisions[i].get_collision_point();
+		var collider = slideCollisions[i].get_collider();
+		if (finishedCollisions.has(collider)):
+			continue;
+		finishedCollisions.append(collider);
 		# Only have collisions confer effects if they are below the player
 		if slideCollisions[i].get_collider() is TileMapLayer:
-			var collider : TileMapLayer = slideCollisions[i].get_collider();
+			#collider = slideCollisions[i].get_collider();
 			# Use the global coord to find tile collision
 			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position);
 			var tileData = collider.get_cell_tile_data(tilePos);
@@ -155,7 +160,6 @@ func detect_tiles() -> void:
 					"slow":
 						currentSlowdown = .5;
 						
-
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> void:
 	var masterManager : Node2D = get_tree().current_scene;

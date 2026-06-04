@@ -2,6 +2,7 @@ extends HBoxContainer
 
 # Reference to tool manager
 @export var toolManager: Node2D;
+@export var editorManager: Node2D;
 
 # References to button bars
 @export var tiles: PanelContainer;
@@ -29,11 +30,11 @@ func display_entities(visibility: bool):
 func entity_dropdown_select(index: int):
 	match index:
 		0:
-			toolManager.change_current_hotbar(Global.HotbarState.ENTITIES);
+			editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);
 			entityTab.visible = true;
 			propTab.visible = false;
 		1:
-			toolManager.change_current_hotbar(Global.HotbarState.PROPS);
+			editorManager.change_current_hotbar(Global.HotbarState.PROPS);
 			entityTab.visible = false;
 			propTab.visible = true;
 

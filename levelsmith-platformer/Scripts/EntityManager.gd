@@ -32,7 +32,7 @@ func place_entity(clickPosition: Vector2) -> void:
 	elif (toolManager.brushObject >= editorManager.tileCount):
 		# If the tile is a prop, use rotation
 		if (toolManager.brushObject >= 12 && toolManager.brushObject <= 17):
-			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentTileRotation);
+			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
 	else:

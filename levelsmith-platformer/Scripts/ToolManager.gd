@@ -13,9 +13,9 @@ extends Node2D
 @export var previewTile: TileMapLayer;
 
 # Vars that tools will utilize
-var currentObjectRotation : int;
-var currentTool : Global.Tool = Global.Tool.BRUSH;
-var boxBrushState : Global.BoxBrushState = Global.BoxBrushState.INACTIVE
+var currentObjectRotation: int;
+var currentTool:  Global.Tool = Global.Tool.BRUSH;
+var boxBrushState: Global.BoxBrushState = Global.BoxBrushState.INACTIVE
 
 # The previously selected tile before dragging
 var prevEntity : int = -1;

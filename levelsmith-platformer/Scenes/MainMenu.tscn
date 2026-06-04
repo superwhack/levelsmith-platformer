@@ -1,9 +1,9 @@
 [gd_scene format=4 uid="uid://dexibp35a4dca"]
 
-[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_48xlc"]
-[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_1ehe0"]
-[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_1ehe0"]
-[ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="4_ce3w2"]
+[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_df05h"]
+[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_8um5k"]
+[ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="4_xim88"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -14,12 +14,12 @@ friction = 0.0
 bounce = 1.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ce3w2"]
-texture = ExtResource("1_48xlc")
+texture = ExtResource("1_ghw46")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n45e2"]
-texture = ExtResource("2_1ehe0")
+texture = ExtResource("2_df05h")
 texture_region_size = Vector2i(128, 128)
 
 [sub_resource type="TileSet" id="TileSet_opfnp"]
@@ -76,7 +76,7 @@ layout_mode = 2
 
 [node name="HeaderPanel" type="PanelContainer" parent="Safe Area/RootVBox" unique_id=1137965105]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("3_1ehe0")
+theme_override_styles/panel = ExtResource("3_8um5k")
 
 [node name="TitleBackgroundMargin" type="MarginContainer" parent="Safe Area/RootVBox/HeaderPanel" unique_id=1974822260]
 layout_mode = 2
@@ -104,7 +104,7 @@ size_flags_vertical = 3
 [node name="LeftMenuPanel" type="PanelContainer" parent="Safe Area/RootVBox/BodyRow" unique_id=545994426]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-theme_override_styles/panel = ExtResource("3_1ehe0")
+theme_override_styles/panel = ExtResource("3_8um5k")
 
 [node name="LeftMenuMargin" type="MarginContainer" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel" unique_id=54071245]
 layout_mode = 2
@@ -147,7 +147,7 @@ size_flags_horizontal = 0
 [node name="LevelPanel" type="PanelContainer" parent="Safe Area/RootVBox/BodyRow" unique_id=1787470239]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = ExtResource("3_1ehe0")
+theme_override_styles/panel = ExtResource("3_8um5k")
 
 [node name="LevelPanelMargin" type="MarginContainer" parent="Safe Area/RootVBox/BodyRow/LevelPanel" unique_id=1190610552]
 layout_mode = 2
@@ -167,13 +167,14 @@ text = "Load Level:"
 
 [node name="LevelPanelDivider" type="HSeparator" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox" unique_id=376003075]
 layout_mode = 2
-theme_override_styles/separator = ExtResource("4_ce3w2")
+theme_override_styles/separator = ExtResource("4_xim88")
 
 [node name="LevelList" type="ItemList" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox" unique_id=632439816]
 layout_mode = 2
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=120086451]
-custom_minimum_size = Vector2(630, 450)
+visible = false
+custom_minimum_size = Vector2(630, 425)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -199,14 +200,14 @@ grow_vertical = 2
 [node name="OverlayCard" type="PanelContainer" parent="NewLevelOverlay/SafeArea" unique_id=1141388319]
 custom_minimum_size = Vector2(700, 450)
 layout_mode = 2
-theme_override_styles/panel = ExtResource("3_1ehe0")
+theme_override_styles/panel = ExtResource("3_8um5k")
 
 [node name="OverlayMargin" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard" unique_id=596298443]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_bottom = 50
 
 [node name="OverlayVBox" type="VBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin" unique_id=525659560]
 layout_mode = 2
@@ -219,7 +220,11 @@ text = "New Level"
 
 [node name="TitleDivider" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=557088841]
 layout_mode = 2
-theme_override_styles/separator = ExtResource("4_ce3w2")
+theme_override_styles/separator = ExtResource("4_xim88")
+
+[node name="FormSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=1815649012]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
 
 [node name="FormVBox" type="VBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=816520779]
 layout_mode = 2
@@ -230,6 +235,7 @@ layout_mode = 2
 [node name="NameLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/NameRow" unique_id=1725020308]
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 text = "Name: "
 
 [node name="NameInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/NameRow" unique_id=1813530241]
@@ -237,40 +243,68 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
+[node name="FormSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=551543159]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
 [node name="GridSettingsLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=1799077670]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 text = "Grid Settings:"
 
-[node name="GridRowX" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=223931892]
+[node name="GridXMargin" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=1642699094]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GridRowX" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin" unique_id=223931892]
 layout_mode = 2
 
-[node name="XLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowX" unique_id=279957919]
+[node name="IndentationSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=2123647650]
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+
+[node name="XLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=279957919]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 text = "X: "
 
-[node name="XInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowX" unique_id=1837442565]
+[node name="XInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=1837442565]
 layout_mode = 2
 
 [node name="GridRowY" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=993765537]
 layout_mode = 2
 
+[node name="IndentationSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY" unique_id=155378371]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
 [node name="YLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY" unique_id=1681234298]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 text = "Y: "
 
 [node name="YInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY" unique_id=1090946014]
 layout_mode = 2
 
 [node name="BottomSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=2094910545]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
 [node name="ActionsRow" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=1801518463]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="CreateButton" type="Button" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow" unique_id=682596686]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Create"
+
+[node name="ButtonSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow" unique_id=181663509]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
 
 [node name="CancelButton" type="Button" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow" unique_id=676091898]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Cancel"

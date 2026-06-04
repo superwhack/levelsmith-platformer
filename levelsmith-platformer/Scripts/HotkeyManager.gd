@@ -9,7 +9,7 @@ extends Node
 ## event: The input event to parse.
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("rotate"):
-		toolManager.rotate_tile();
+		toolManager.rotate_object();
 	
 	if event.is_action_pressed("brush-tool"):
 		if (toolManager.prevEntity != -1):
@@ -30,34 +30,34 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	match(editorManager.currentHotbarState):
 		Global.HotbarState.TILES:
 			if event.is_action_pressed("first-select"):
-				editorManager.update_brush_object(Global.TileType.SOLID);
+				toolManager.update_brush_object(Global.TileType.SOLID);
 			elif event.is_action_pressed("second-select"):
-				editorManager.update_brush_object(Global.TileType.ONEWAY);
+				toolManager.update_brush_object(Global.TileType.ONEWAY);
 			elif event.is_action_pressed("third-select"):
-				editorManager.update_brush_object(Global.TileType.DEATH);
+				toolManager.update_brush_object(Global.TileType.DEATH);
 			elif event.is_action_pressed("fourth-select"):
-				editorManager.update_brush_object(Global.TileType.ICE);
+				toolManager.update_brush_object(Global.TileType.ICE);
 			elif event.is_action_pressed("fifth-select"):
-				editorManager.update_brush_object(Global.TileType.STICKY);
+				toolManager.update_brush_object(Global.TileType.STICKY);
 			elif event.is_action_pressed("sixth-select"):
-				editorManager.update_brush_object(Global.TileType.BOUNCE);
+				toolManager.update_brush_object(Global.TileType.BOUNCE);
 			elif event.is_action_pressed("seventh-select"):
-				editorManager.update_brush_object(Global.TileType.SLOPE);
+				toolManager.update_brush_object(Global.TileType.SLOPE);
 		Global.HotbarState.ENTITIES:
 			if event.is_action_pressed("first-select"):
-				editorManager.update_brush_object(Global.EntityType.GOAL);
+				toolManager.update_brush_object(Global.EntityType.GOAL);
 			elif event.is_action_pressed("second-select"):
-				editorManager.update_brush_object(Global.EntityType.PLAYER);
+				toolManager.update_brush_object(Global.EntityType.PLAYER);
 			elif event.is_action_pressed("third-select"):
-				editorManager.update_brush_object(Global.EntityType.PATROLLING);
+				toolManager.update_brush_object(Global.EntityType.PATROLLING);
 		Global.HotbarState.PROPS:
 			if event.is_action_pressed("first-select"):
-				editorManager.update_brush_object(Global.EntityType.PROP1);
+				toolManager.update_brush_object(Global.EntityType.PROP1);
 			elif event.is_action_pressed("second-select"):
-				editorManager.update_brush_object(Global.EntityType.PROP2);
+				toolManager.update_brush_object(Global.EntityType.PROP2);
 			elif event.is_action_pressed("third-select"):
-				editorManager.update_brush_object(Global.EntityType.PROP3);
+				toolManager.update_brush_object(Global.EntityType.PROP3);
 			elif event.is_action_pressed("fourth-select"):
-				editorManager.update_brush_object(Global.EntityType.PROP4);
+				toolManager.update_brush_object(Global.EntityType.PROP4);
 			elif event.is_action_pressed("fifth-select"):
-				editorManager.update_brush_object(Global.EntityType.PROP5);
+				toolManager.update_brush_object(Global.EntityType.PROP5);

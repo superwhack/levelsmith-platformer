@@ -16,10 +16,6 @@ enum SelectorState {
 }
 var selectorState: SelectorState = SelectorState.DEFAULT;
 
-# Sprite variables
-@export var selectorFrameSprite: Sprite2D;
-@export var invalidIcon: Sprite2D;
-
 # instantiated sprites
 var invalidSprite: Sprite2D;
 var selectorFrame: Sprite2D;
@@ -28,29 +24,37 @@ var selectorFrame: Sprite2D;
 var brushIcon: Texture2D = load("res://Assets/Sprites/UI/Brush.png");
 var boxBrushIcon: Texture2D = load("res://Assets/Sprites/UI/BoxBrush.png");
 var cursorIcon: Texture2D = load("res://Assets/Sprites/UI/Cursor.png");
+var selectorFrameSprite: Texture2D = load("res://Assets/Sprites/UI/SelectorFrame.png");
+var invalidIcon: Texture2D = load("res://Assets/Sprites/UI/Invalid.png"); 
 var uiCursor: Texture2D = cursorIcon;
 
 # mouse position reference  (always updated)
 var currentMousePosition: Vector2;
 
+# editing check for yellow state
+var isEditing: bool;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	invalidSprite = invalidIcon.instantiate();
+	invalidSprite = Sprite2D.new();
+	invalidSprite.texture = invalidIcon;
 	add_child(invalidSprite);
 	invalidSprite.hide();
 	
-	selectorFrame = selectorFrameSprite.instantiate();
+	selectorFrame = Sprite2D.new();
+	selectorFrame.texture = selectorFrameSprite;
 	add_child(selectorFrame);
 	
 	Input.set_custom_mouse_cursor(brushIcon);
-	pass # Replace with function body.
 
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	currentMousePosition = editorManager.currentMousePosition;
-	selectorFrame.global_position = currentMousePosition * Global.tileSize;
+	selectorFrame.global_position = currentMousePosition * Global.tileSize + Vector2(Global.tileSize / 2.0, Global.tileSize / 2.0);
 	invalidSprite.global_position = get_global_mouse_position();
+	
+	isEditing = toolManager.currentTool == Global.Tool.CURSOR && editorManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount;
 	
 	update_selector_state();
 	match (selectorState):
@@ -82,6 +86,6 @@ func _process(_delta: float) -> void:
 func update_selector_state() -> void:
 	if (!editorManager.isPlaceable): selectorState = SelectorState.INVALID;
 	elif (toolManager.isErasing): selectorState = SelectorState.ERASING;
-	elif (entityManager.isEditing): selectorState = SelectorState.EDITING; 
+	elif (isEditing): selectorState = SelectorState.EDITING; 
 	elif (toolManager.isMoving): selectorState = SelectorState.MOVING;
 	else: selectorState = SelectorState.DEFAULT;

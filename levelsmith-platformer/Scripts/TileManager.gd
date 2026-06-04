@@ -1,10 +1,10 @@
 extends Node2D
 
 ## Managers and tileset for easy access.
-@export var editorManager : Node2D;
-@export var toolManager : Node2D;
+@export var editorManager: Node2D;
+@export var toolManager: Node2D;
 @export var tileSet : TileMapLayer;
-
+@export var previewTile: TileMapLayer;
 
 ## Places down the current brush tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
@@ -47,14 +47,13 @@ func box_place(firstCorner: Vector2, secondCorner: Vector2) -> void:
 	for i in abs(secondCorner.y - firstCorner.y) + 1:
 		for j in abs(secondCorner.x - firstCorner.x) + 1:
 			place_tile(topLeft + Vector2(j, i));
-
-	toolManager.disable_box_brush();
 	
+	toolManager.disable_box_brush();
 	
 ## Deletes all tiles in a box.
 ## firstCorner: The corner where the mouse was clicked
 ## secondCorner: The corner where the mouse was released
-func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
+func box_delete(firstCorner: Vector2, secondCorner: Vector2) -> void:
 	# Find the coordinate of the top left corner of the box.
 	var topLeft: Vector2 = Vector2(
 		min(firstCorner.x, secondCorner.x), 
@@ -66,4 +65,4 @@ func box_edit(firstCorner: Vector2, secondCorner: Vector2) -> void:
 			delete_tile(topLeft + Vector2(j, i));
 	
 	toolManager.disable_box_brush();
-	
+	previewTile.clear();

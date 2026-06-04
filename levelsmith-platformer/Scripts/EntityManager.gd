@@ -8,8 +8,6 @@ extends Node2D
 # Reference to PropertyMenu for editing properties
 @export var propertyMenu: Panel;
 
-var isEditing : bool;
-
 ## Places down the current brush entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_entity(clickPosition: Vector2) -> void:
@@ -46,15 +44,14 @@ func delete_entity (clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER):
 		editorManager.playerExists = false;
-	tileSet.erase_cell(clickPosition);
-	
+	elif (tileSet.get_cell_source_id(clickPosition) >= editorManager.tileCount):
+		tileSet.erase_cell(clickPosition);
 	
 ## Open the property menu and set the selected entity
 ## clickPosition: position that the mouse has clicked at
 func edit_properties(clickPosition: Vector2) -> void:
 	propertyMenu.selectedEntity = get_scene_at_cell(clickPosition);
 	propertyMenu.show();
-	
 	
 ## Retrieves a reference to the scene at a specific cell in the tile set
 ## gridPosition: position of the cell being checked
@@ -79,10 +76,12 @@ func move_entity() -> void:
 	if (toolManager.brushObject == Global.EntityType.PLAYER):
 		editorManager.playerExists = false;
 	tileSet.erase_cell(editorManager.currentMousePosition);
+	toolManager.isMoving = true;
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
-func drop_tile() -> void:
+func drop_entity() -> void:
 	place_entity(editorManager.currentMousePosition);
-	if (editorManager.prevEntity != -2):
-		toolManager.brushObject = editorManager.prevEntity;
-	editorManager.prevEntity = -1;
+	if (toolManager.prevEntity != -2):
+		toolManager.brushObject = toolManager.prevEntity;
+	toolManager.prevEntity = -1;
+	toolManager.isMoving = false;

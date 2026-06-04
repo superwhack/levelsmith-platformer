@@ -7,13 +7,8 @@ extends Node2D
 # References to grid TileMapLayer child nodes
 @export var tileSet: TileMapLayer;
 
-# Reference to selector image
-@export var selector: Sprite2D;
-
 # Play button
 @export var playButton: Button;
-
-var brushObject: int;
 
 # Mouse position variables
 var currentMousePosition: Vector2;
@@ -29,7 +24,6 @@ var playerExists: bool = false;
 
 # Stores the number of tiles made
 var tileCount := Global.TileType.size();
-
 
 ## Runs every frame during the editing state
 ## _delta: how much time has passed
@@ -53,14 +47,6 @@ func _process(_delta: float) -> void:
 ## newState: Global.HotbarState
 func change_current_hotbar(newState: Global.HotbarState):
 	currentHotbarState = newState;
-
-## Change the currently selected tile/entity if possible
-## tile: the tile/entity to try and change to
-func update_brush_object(objectId: int) -> void:
-	if toolManager.currentTool == Global.Tool.CURSOR && objectId >= tileCount:
-		brushObject = objectId;
-	elif toolManager.currentTool != Global.Tool.CURSOR && objectId < tileCount:
-		brushObject = objectId;
 
 ## Converts the mouse's position into grid coordinates.
 ## mousePosition: Where the cursor currently is in world space.

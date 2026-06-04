@@ -10,8 +10,8 @@ extends TileMapLayer
 func _ready() -> void:
 	fill_grid_lines();
 	
-	print("Level Height:", get_parent().worldSize.y);
-	print("Level Width:", get_parent().worldSize.x);
+	print("Level Height:", gridSize.y);
+	print("Level Width:", gridSize.x);
 
 ## Fills the grid with grid lines tiles.
 func fill_grid_lines() -> void:

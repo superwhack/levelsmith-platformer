@@ -3,10 +3,9 @@
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
-[ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
-[ext_resource type="Texture2D" uid="uid://byfm163phk0g2" path="res://Assets/Sprites/Tiles/gridSelect.png" id="6_64b2s"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -61,13 +60,15 @@ sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8fjml"]
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "gameManager", "editorManagerCanvas", "gameManagerCanvas", "tileSet", "propertyMenu")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "editorManagerCanvas", "gameManagerCanvas", "tileSet", "previewTileMap", "propertyMenu")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
+toolManager = NodePath("EditorManager/ToolManager")
 gameManager = NodePath("GameManager")
 editorManagerCanvas = NodePath("EditorManager/CanvasLayer")
 gameManagerCanvas = NodePath("GameManager/CanvasLayer")
 tileSet = NodePath("EditorManager/Tiles")
+previewTileMap = NodePath("EditorManager/PreviewTile")
 propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=101918903 node_paths=PackedStringArray("masterManager", "tileSet")]
@@ -105,9 +106,6 @@ theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0vixy"
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
-
-[node name="SelectorFrame" parent="EditorManager" index="4" unique_id=1894609535]
-texture = ExtResource("6_64b2s")
 
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 

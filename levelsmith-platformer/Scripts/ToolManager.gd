@@ -1,18 +1,25 @@
 extends Node2D
 
 # Our exported managers for easy access
-@export var editorManager : Node2D;
-@export var entityManager : Node2D;
-@export var tileManager : Node2D;
+@export var editorManager: Node2D;
+@export var entityManager: Node2D;
+@export var tileManager: Node2D;
+
+# references to UI elements
+@export var tileSwitch: HBoxContainer;
+@export var propertyMenu: Panel;
+
+# reference to preview tile map
+@export var previewTile: TileMapLayer;
 
 # Vars that tools will utilize
 var currentObjectRotation : int;
 var currentTool : Global.Tool = Global.Tool.BRUSH;
 var boxBrushState : Global.BoxBrushState = Global.BoxBrushState.INACTIVE
-var brushObject : int;
 
 # The previously selected tile before dragging
 var prevEntity : int = -1;
+var brushObject: int = 0;
 
 # A timer to differentiate between click and holding click
 const holdTimeCap = .15;
@@ -25,8 +32,15 @@ var isErasing : bool;
 var isMoving : bool;
 
 func _process(_delta: float):
+	if (Input.is_action_pressed("left-click")):
+		holdTimer -= _delta;
+	elif (Input.is_action_just_released("left-click")):
+		holdTimer = holdTimeCap;
+	
 	if (boxBrushState == Global.BoxBrushState.PLACE || boxBrushState == Global.BoxBrushState.DELETE):
 		secondBoxCorner = editorManager.currentMousePosition;
+	
+	
 
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
@@ -51,16 +65,18 @@ func _unhandled_input(event: InputEvent) -> void:
 			match (boxBrushState):
 				Global.BoxBrushState.INACTIVE, Global.BoxBrushState.PLACE_CONFIRM, Global.BoxBrushState.DELETE_CONFIRM:
 					if (event.is_action_pressed("jump") && boxBrushState != Global.BoxBrushState.INACTIVE):
-						if (boxBrushState == Global.BoxBrushState.PLACE):
+						if (boxBrushState == Global.BoxBrushState.PLACE_CONFIRM):
 							tileManager.box_place(firstBoxCorner, secondBoxCorner);
-						elif (boxBrushState == Global.BoxBrushState.DELETE):
+						elif (boxBrushState == Global.BoxBrushState.DELETE_CONFIRM):
 							tileManager.box_delete(firstBoxCorner, secondBoxCorner);
 					
 					if (event.is_action_pressed("left-click")):
 						firstBoxCorner = editorManager.currentMousePosition;
+						secondBoxCorner = editorManager.currentMousePosition;
 						boxBrushState = Global.BoxBrushState.PLACE;
 					elif (event.is_action_pressed("right-click")):
 						firstBoxCorner = editorManager.currentMousePosition;
+						secondBoxCorner = editorManager.currentMousePosition;
 						boxBrushState = Global.BoxBrushState.DELETE;
 				
 				Global.BoxBrushState.PLACE:
@@ -84,13 +100,21 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 			# If left click is being held, pick up the current tile unless it's empty air.
 			if (holdTimer < 0 && prevEntity == -1 && entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) != -1) && entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount:
-				entityManager.move_object();
+				entityManager.move_entity();
 			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
 			elif (holdTimer < 0 && prevEntity == -1):
 				prevEntity = -2;
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
 			elif (holdTimer == holdTimeCap && prevEntity != -1):
 				entityManager.drop_entity();
+
+## Change the currently selected tile/entity if possible
+## tile: the tile/entity to try and change to
+func update_brush_object(objectId: int) -> void:
+	if currentTool == Global.Tool.CURSOR && objectId >= editorManager.tileCount:
+		brushObject = objectId;
+	elif currentTool != Global.Tool.CURSOR && objectId < editorManager.tileCount:
+		brushObject = objectId;
 
 ## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.
 ## tool: The tool to change to
@@ -102,22 +126,23 @@ func change_tool(tool: Global.Tool) -> void:
 	currentTool = tool;
 	
 	if (currentTool != Global.Tool.CURSOR):
-		editorManager.update_brush_object(Global.TileType.SOLID);
-		editorManager.tileSwitch.display_tiles(true);
-		editorManager.tileSwitch.display_entities(false);
+		update_brush_object(Global.TileType.SOLID);
+		tileSwitch.display_tiles(true);
+		tileSwitch.display_entities(false);
 	else:
-		editorManager.update_brush_object(Global.EntityType.GOAL);
-		editorManager.tileSwitch.display_tiles(false);
-		editorManager.tileSwitch.display_entities(true);
-	editorManager.propertyMenu.hide();
+		update_brush_object(Global.EntityType.GOAL);
+		tileSwitch.display_tiles(false);
+		tileSwitch.display_entities(true);
+	propertyMenu.hide();
+	previewTile.clear();
 	
 	match currentTool:
 		Global.Tool.CURSOR:
-			editorManager.update_brush_object(Global.EntityType.GOAL);
+			update_brush_object(Global.EntityType.GOAL);
 		Global.Tool.BOX_BRUSH:
-			editorManager.update_brush_object(Global.TileType.SOLID);
+			update_brush_object(Global.TileType.SOLID);
 		Global.Tool.BRUSH:
-			editorManager.update_brush_object(Global.TileType.SOLID);
+			update_brush_object(Global.TileType.SOLID);
 	print("Current Tool: ", currentTool);
 
 ## Deactivates the box brush.

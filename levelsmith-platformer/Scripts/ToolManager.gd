@@ -95,59 +95,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
 			elif (holdTimer == holdTimeCap && prevTile != -1):
 				entityManager.drop_tile();
-	if event.is_action_pressed("rotate"):
-		rotate_object();
-	
-	if event.is_action_pressed("brush-tool"):
-		if (prevTile != -1):
-			entityManager.drop_entity();
-		change_tool(Global.Tool.BRUSH);
-		editorManager.change_current_hotbar(Global.HotbarState.TILES);
-
-	elif event.is_action_pressed("box-brush-tool"):
-		if (prevTile != -1):
-			entityManager.drop_tile();
-		change_tool(Global.Tool.BOX_BRUSH);
-		editorManager.change_current_hotbar(Global.HotbarState.TILES);
-
-	elif event.is_action_pressed("cursor-tool"):
-		change_tool(Global.Tool.CURSOR);
-		
-	# Tile/Entity hotkeys
-	match(editorManager.currentHotbarState):
-		Global.HotbarState.TILES:
-			if event.is_action_pressed("first-select"):
-				editorManager.update_brush_tile(Global.TileType.SOLID);
-			elif event.is_action_pressed("second-select"):
-				editorManager.update_brush_tile(Global.TileType.ONEWAY);
-			elif event.is_action_pressed("third-select"):
-				editorManager.update_brush_tile(Global.TileType.DEATH);
-			elif event.is_action_pressed("fourth-select"):
-				editorManager.update_brush_tile(Global.TileType.ICE);
-			elif event.is_action_pressed("fifth-select"):
-				editorManager.update_brush_tile(Global.TileType.STICKY);
-			elif event.is_action_pressed("sixth-select"):
-				editorManager.update_brush_tile(Global.TileType.BOUNCE);
-			elif event.is_action_pressed("seventh-select"):
-				editorManager.update_brush_tile(Global.TileType.SLOPE);
-		Global.HotbarState.ENTITIES:
-			if event.is_action_pressed("first-select"):
-				editorManager.update_brush_tile(Global.EntityType.GOAL);
-			elif event.is_action_pressed("second-select"):
-				editorManager.update_brush_tile(Global.EntityType.PLAYER);
-			elif event.is_action_pressed("third-select"):
-				editorManager.update_brush_tile(Global.EntityType.PATROLLING);
-		Global.HotbarState.PROPS:
-			if event.is_action_pressed("first-select"):
-				editorManager.update_brush_tile(Global.EntityType.PROP1);
-			elif event.is_action_pressed("second-select"):
-				editorManager.update_brush_tile(Global.EntityType.PROP2);
-			elif event.is_action_pressed("third-select"):
-				editorManager.update_brush_tile(Global.EntityType.PROP3);
-			elif event.is_action_pressed("fourth-select"):
-				editorManager.update_brush_tile(Global.EntityType.PROP4);
-			elif event.is_action_pressed("fifth-select"):
-				editorManager.update_brush_tile(Global.EntityType.PROP5);
 
 ## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.
 ## tool: The tool to change to

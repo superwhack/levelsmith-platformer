@@ -287,7 +287,7 @@ func getSpawn() -> Vector2:
 ## Places down the current brush entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_entity(clickPosition: Vector2) -> void:
-#	AudioManager.play_effect("CarDoor");
+	AudioManager.play_UI_effect("CarDoor");
 	validationCheck = false;
 	if (!isPlaceable): return;
 	

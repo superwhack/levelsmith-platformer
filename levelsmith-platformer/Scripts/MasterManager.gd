@@ -19,7 +19,6 @@ var loadedMap : TileMapLayer;
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
-	# Don't play this please, it's just for testing
 	
 	edit();
 
@@ -32,7 +31,9 @@ func level_complete() -> void:
 
 ## Swap to edit state
 func edit() -> void:
-	AudioManager.play_music("Mindframe");
+	AudioManager.masterVolume = .5;
+	AudioManager.update_volume();
+	AudioManager.play_UI_music("Mindframe");
 	print("Edit")
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable

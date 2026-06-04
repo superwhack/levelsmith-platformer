@@ -8,7 +8,7 @@ const lowestDB = 80;
 
 const audioPlayerCount := 6;
 # NOTE: This would be a folder alongside the other assets in the user's local directory, it needs to be changed
-const audioLibraryPath := "res://Assets/Audio/";
+const audioLibraryPath := "user://Audio/";
 const UIAudioLibraryPath := "res://Assets/Audio/";
 
 var musicPlayer : AudioStreamPlayer;
@@ -49,22 +49,36 @@ func update_volume() -> void:
 	for i in availablePlayers.size():
 		availablePlayers[i].volume_db = (lowestDB * masterVolume * SFXVolume) - lowestDB;
 
-# NOTE: isUI might not be needed here since there's only two tracks, not sure yet though
-## Play the music track
-## musicName: name of the sound effect
-## isUI: true if the music is tied to the UI, meaning the user doesn't adjust it
-func play_music(musicName: String, isUI: bool = false) -> void:
+## NOTE: These two functions can probably be shortened since we know that the associated files should exist
+## Add specified SFX to the queue from builder sounds
+## effectName: name of the effect to play
+func play_UI_effect(effectName: String) -> void:
+	var fullPath : String = UIAudioLibraryPath + effectName;
+	if FileAccess.file_exists(fullPath + ".mp3"):
+		queue.append(fullPath + ".mp3");
+	elif FileAccess.file_exists(fullPath + ".wav"):
+		queue.append(fullPath + ".wav");
+
+## Play the music track for the builder
+## musicName: name of the song to play
+func play_UI_music(musicName: String) -> void:
 	musicPlayer.stop();
-	var fullPath : String;
-	if isUI:
-		fullPath = UIAudioLibraryPath;
-	else:
-		fullPath = audioLibraryPath;
-	fullPath += musicName;
+	var fullPath : String = UIAudioLibraryPath + musicName;
 	if FileAccess.file_exists(fullPath + ".mp3"):
 		musicPlayer.stream = load(fullPath + ".mp3");
 	elif FileAccess.file_exists(fullPath + ".wav"):
 		musicPlayer.stream = load(fullPath + ".wav");
+	musicPlayer.play();
+
+## Play the music track
+## musicName: name of the sound effect
+func play_music(musicName: String) -> void:
+	musicPlayer.stop();
+	var fullPath : String = audioLibraryPath + musicName;
+	if FileAccess.file_exists(fullPath + ".mp3"):
+		musicPlayer.stream = AudioStreamMP3.load_from_file(fullPath + ".mp3");
+	elif FileAccess.file_exists(fullPath + ".wav"):
+		musicPlayer.stream = AudioStreamWAV.load_from_file(fullPath + ".wav");
 	else:
 		print("File not found or doesn't use .wav/.mp3!");
 		return;
@@ -72,14 +86,8 @@ func play_music(musicName: String, isUI: bool = false) -> void:
 
 ## Add specified SFX to the queue
 ## effectName: name of the sound effect
-## isUI: true if the SFX is tied to the UI, meaning the user doesn't adjust it
-func play_effect(effectName: String, isUI: bool = false) -> void:
-	var fullPath : String;
-	if isUI:
-		fullPath = UIAudioLibraryPath;
-	else:
-		fullPath = audioLibraryPath;
-	fullPath += effectName;
+func play_effect(effectName: String) -> void:
+	var fullPath : String = audioLibraryPath + effectName;
 	if FileAccess.file_exists(fullPath + ".mp3"):
 		queue.append(fullPath + ".mp3");
 	elif FileAccess.file_exists(fullPath + ".wav"):
@@ -100,6 +108,12 @@ func reset_audio() -> void:
 ## delta: unused
 func _process(delta: float) -> void:
 	if !queue.is_empty() && !availablePlayers.is_empty():
-		availablePlayers[0].stream = load(queue.pop_front());
+		var path = queue.pop_front(); 
+		if path.ends_with(".mp3"):
+			availablePlayers[0].stream = AudioStreamMP3.load_from_file(path);
+		elif path.ends_with(".wav"):
+			availablePlayers[0].stream = AudioStreamWAV.load_from_file(path);
+		else:
+			print("Error, somehow a different extention made it into here!")
 		availablePlayers[0].play();
 		availablePlayers.pop_front();

@@ -3,16 +3,16 @@ extends CanvasLayer
 # TODO Functionality for stack exists, but is commented out until further clarification/dev
 
 # Popup templates
-var DebugTemplate = preload("res://Scenes/UI/ErrorPopUpTemplate.tscn");
+const ERROR_TEMPLATE: PackedScene = preload("res://Scenes/UI/ErrorPopUpTemplate.tscn");
 
 # Stack of messages (possible future addition if needed, would need to change some behavior)
 #const POP_UP_STACK = [];
 
-## Creates a debug popup with customizable content
-## title: Title of debug error
-## body: Body content of debug error
-func createDebugPopUp(title: String = "Error", body: String = "An error has occurred") -> void:
-	var newPopUp = DebugTemplate.instantiate();
+## Creates an error popup with customizable content
+## title: Title of error
+## body: Body content of error
+func createErrorPopUp(title: String = "Error", body: String = "An error has occurred") -> void:
+	var newPopUp: Panel = ERROR_TEMPLATE.instantiate();
 	
 	# Add desired content to popup
 	# WARNING I wonder if there is a better way to do this
@@ -40,9 +40,9 @@ func createDebugPopUp(title: String = "Error", body: String = "An error has occu
 ## Test function with sole purpose of creating example popUp outside of code
 ## Delete later
 func createTestPopUp() -> void:
-	createDebugPopUp("My awesome title", "Misc Body Text");
+	createErrorPopUp("My awesome title", "Misc Body Text");
 
 ## Test function with sole purpose of creating generic example popUp outside of code
 ## Delete later
 func createGenericTestPopUp() -> void:
-	createDebugPopUp();
+	createErrorPopUp();

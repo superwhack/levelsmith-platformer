@@ -124,7 +124,7 @@ func detect_tiles() -> void:
 	if raycastUp.is_colliding():
 		slideCollisions.push_back(raycastUp);
 	
-	var finishedCollisions : Array[CollisionObject2D];
+	var finishedCollisions : Array;
 	# Check all current collisions
 	for i in slideCollisions.size():
 		var collision : Vector2 = slideCollisions[i].get_collision_point();

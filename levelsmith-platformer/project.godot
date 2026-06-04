@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 
 Global="*uid://ddgi8vrr1tdwj"
 AudioManager="*uid://b2na8kblsdcth"
+ImportExportManager="*uid://osd05p20la73"
 
 [display]
 

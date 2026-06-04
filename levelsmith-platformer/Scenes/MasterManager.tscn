@@ -1,13 +1,14 @@
 [gd_scene format=4 uid="uid://bm5w14jlbl37k"]
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
-[ext_resource type="Script" uid="uid://c48mfte4opogm" path="res://Scripts/AudioManager.gd" id="2_8vbpr"]
+[ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://dt6pg2cjbdcuv" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Texture2D" uid="uid://bjqdwuhiphlly" path="res://Assets/Sprites/Tiles/gridSelect.png" id="6_64b2s"]
+[ext_resource type="Script" uid="uid://osd05p20la73" path="res://Scripts/ImportExportManager.gd" id="9_gojh1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -112,6 +113,9 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
 texture = ExtResource("6_64b2s")
 
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
+
+[node name="ImportExportManager" type="Node" parent="." unique_id=1814118730]
+script = ExtResource("9_gojh1")
 
 [connection signal="pressed" from="EditorManager/CanvasLayer/PlayButton" to="." method="play"]
 [connection signal="pressed" from="GameManager/CanvasLayer/PauseButton" to="." method="edit"]

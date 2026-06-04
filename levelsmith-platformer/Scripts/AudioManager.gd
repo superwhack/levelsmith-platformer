@@ -14,7 +14,7 @@ const audioPlayerCount := 6;
 # All folders for audio
 const audioLibraryPath := "user://Audio/";
 const UIAudioLibraryPath := "res://Assets/Audio/";
-const backupAudioLibraryPath := "res://Assets/Audio/Default/";
+const backupAudioLibraryPath := "res://Assets/Defaults/Assets/Audio/";
 
 # Players and the queue that holds filepaths to play
 var musicPlayer : AudioStreamPlayer;
@@ -88,8 +88,9 @@ func play_music(musicName: String) -> void:
 	elif FileAccess.file_exists(fullPath + ".wav"):
 		musicPlayer.stream = AudioStreamWAV.load_from_file(fullPath + ".wav");
 	else:
-		print(musicName, "file not found or doesn't use .wav/.mp3! Reading backup instead.");
+		print(musicName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .mp3 for music
+		print(backupAudioLibraryPath + musicName + ".mp3")
 		musicPlayer.stream = load(backupAudioLibraryPath + musicName + ".mp3");
 		return;
 	musicPlayer.play();

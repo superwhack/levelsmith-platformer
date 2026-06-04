@@ -13,6 +13,6 @@ func _ready() -> void:
 
 ## Fills the grid with grid lines tiles.
 func fill_grid_lines() -> void:
-	for height in range(0, get_parent().worldSize.y + 1):
-		for width in range(0, get_parent().worldSize.x + 1):
+	for height in range(0, gridSize.y + 1):
+		for width in range(0, gridSize.x + 1):
 			self.set_cell(Vector2i(height, width), 1, Vector2i.ZERO);

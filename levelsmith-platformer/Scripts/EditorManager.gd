@@ -287,7 +287,6 @@ func getSpawn() -> Vector2:
 ## Places down the current brush entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_entity(clickPosition: Vector2) -> void:
-	AudioManager.play_UI_effect("CarDoor");
 	validationCheck = false;
 	if (!isPlaceable): return;
 	
@@ -402,7 +401,6 @@ func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
 func change_tool(tool: Global.Tool) -> void:
 	if currentTool == tool:
 		return;
-	
 	if (currentTool == Global.Tool.BOX_BRUSH): disable_box_brush();
 	currentTool = tool;
 	previewTileMap.clear(); 

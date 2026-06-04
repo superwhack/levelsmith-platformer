@@ -1,0 +1,195 @@
+extends Node2D
+
+# Our exported managers for easy access
+@export var editorManager : Node2D;
+@export var entityManager : Node2D;
+@export var tileManager : Node2D;
+
+# Vars that tools will utilize
+var currentObjectRotation : int;
+var currentTool : Global.Tool = Global.Tool.BRUSH;
+var boxBrushState : Global.BoxBrushState = Global.BoxBrushState.INACTIVE
+var brushObject : int;
+
+# The previously selected tile before dragging
+var prevTile : int = -1;
+
+# A timer to differentiate between click and holding click
+const holdTimeCap = .15;
+var holdTimer := holdTimeCap;
+
+var firstBoxCorner : Vector2;
+var secondBoxCorner : Vector2;
+var isPainting : bool;
+var isErasing : bool;
+var isMoving : bool;
+
+## Input manager for any clicks or key presses that aren't on UI elements
+## event: The key input being read.
+func _unhandled_input(event: InputEvent) -> void:	
+	match (currentTool):
+		Global.Tool.BRUSH:
+			if (event.is_action_pressed("left-click")):
+				isPainting = true;
+			elif (event.is_action_released("left-click")):
+				isPainting = false;
+				
+			if (event.is_action_pressed("right-click")):
+				isErasing = true;
+			elif (event.is_action_released("right-click")):
+				isErasing = false;
+				
+			if isPainting: 
+				tileManager.place_tile(editorManager.currentMousePosition);
+			elif isErasing:
+				tileManager.delete_tile(editorManager.currentMousePosition);
+		Global.Tool.BOX_BRUSH:
+			match (boxBrushState):
+				Global.BoxBrushState.INACTIVE, Global.BoxBrushState.PLACE_CONFIRM, Global.BoxBrushState.DELETE_CONFIRM:
+					if (event.is_action_pressed("jump") && boxBrushState != Global.BoxBrushState.INACTIVE):
+						if (boxBrushState == Global.BoxBrushState.PLACE):
+							tileManager.box_place(firstBoxCorner, secondBoxCorner);
+						elif (boxBrushState == Global.BoxBrushState.DELETE):
+							tileManager.box_delete(firstBoxCorner, secondBoxCorner);
+					
+					if (event.is_action_pressed("left-click")):
+						firstBoxCorner = editorManager.currentMousePosition;
+						boxBrushState = Global.BoxBrushState.PLACE;
+					elif (event.is_action_pressed("right-click")):
+						firstBoxCorner = editorManager.currentMousePosition;
+						boxBrushState = Global.BoxBrushState.DELETE;
+				
+				Global.BoxBrushState.PLACE:
+					if (event.is_action_released("left-click")):
+						boxBrushState = Global.BoxBrushState.PLACE_CONFIRM;
+				
+				Global.BoxBrushState.DELETE:
+					if (event.is_action_released("right-click")):
+						boxBrushState = Global.BoxBrushState.DELETE_CONFIRM;
+				
+		Global.Tool.CURSOR:
+			if (event.is_action_released("left-click") && prevTile == -1):
+				# If the clicked cell is an entity and the click was short, edit its properties
+				if (entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= 6 && holdTimer > -.5):
+					entityManager.edit_properties(editorManager.currentMousePosition);
+				# Otherwise, place the entity
+				else:
+					entityManager.place_entity(editorManager.currentMousePosition);
+			elif (event.is_action_pressed("right-click")):
+				entityManager.delete_entity(editorManager.currentMousePosition);
+			
+			# If left click is being held, pick up the current tile unless it's empty air.
+			if (holdTimer < 0 && prevTile == -1 && entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) != -1) && entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount:
+				# NOTE: THIS COMMENT BREAKS IT, BUT WE STILL SHOULD SAVE ROTATIONS SOMEWHERE
+				#tileRotation = entityManager.tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
+				# Await is needed to it has time to update selectedTile
+				prevTile = brushObject;
+				await get_tree().process_frame;
+				brushObject = entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition);
+				if (brushObject == Global.EntityType.PLAYER):
+					editorManager.playerSpawnPosition = Vector2(-1, -1);
+				entityManager.tileSet.erase_cell(editorManager.currentMousePosition);
+			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
+			elif (holdTimer < 0 && prevTile == -1):
+				prevTile = -2;
+			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
+			elif (holdTimer == holdTimeCap && prevTile != -1):
+				entityManager.drop_tile();
+	if event.is_action_pressed("rotate"):
+		rotate_object();
+	
+	if event.is_action_pressed("brush-tool"):
+		if (prevTile != -1):
+			entityManager.drop_entity();
+		change_tool(Global.Tool.BRUSH);
+		editorManager.change_current_hotbar(Global.HotbarState.TILES);
+
+	elif event.is_action_pressed("box-brush-tool"):
+		if (prevTile != -1):
+			entityManager.drop_tile();
+		change_tool(Global.Tool.BOX_BRUSH);
+		editorManager.change_current_hotbar(Global.HotbarState.TILES);
+
+	elif event.is_action_pressed("cursor-tool"):
+		change_tool(Global.Tool.CURSOR);
+		
+	# Tile/Entity hotkeys
+	match(editorManager.currentHotbarState):
+		Global.HotbarState.TILES:
+			if event.is_action_pressed("first-select"):
+				editorManager.update_brush_tile(Global.TileType.SOLID);
+			elif event.is_action_pressed("second-select"):
+				editorManager.update_brush_tile(Global.TileType.ONEWAY);
+			elif event.is_action_pressed("third-select"):
+				editorManager.update_brush_tile(Global.TileType.DEATH);
+			elif event.is_action_pressed("fourth-select"):
+				editorManager.update_brush_tile(Global.TileType.ICE);
+			elif event.is_action_pressed("fifth-select"):
+				editorManager.update_brush_tile(Global.TileType.STICKY);
+			elif event.is_action_pressed("sixth-select"):
+				editorManager.update_brush_tile(Global.TileType.BOUNCE);
+			elif event.is_action_pressed("seventh-select"):
+				editorManager.update_brush_tile(Global.TileType.SLOPE);
+		Global.HotbarState.ENTITIES:
+			if event.is_action_pressed("first-select"):
+				editorManager.update_brush_tile(Global.EntityType.GOAL);
+			elif event.is_action_pressed("second-select"):
+				editorManager.update_brush_tile(Global.EntityType.PLAYER);
+			elif event.is_action_pressed("third-select"):
+				editorManager.update_brush_tile(Global.EntityType.PATROLLING);
+		Global.HotbarState.PROPS:
+			if event.is_action_pressed("first-select"):
+				editorManager.update_brush_tile(Global.EntityType.PROP1);
+			elif event.is_action_pressed("second-select"):
+				editorManager.update_brush_tile(Global.EntityType.PROP2);
+			elif event.is_action_pressed("third-select"):
+				editorManager.update_brush_tile(Global.EntityType.PROP3);
+			elif event.is_action_pressed("fourth-select"):
+				editorManager.update_brush_tile(Global.EntityType.PROP4);
+			elif event.is_action_pressed("fifth-select"):
+				editorManager.update_brush_tile(Global.EntityType.PROP5);
+
+## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.
+## tool: The tool to change to
+func change_tool(tool: Global.Tool) -> void:
+	if currentTool == tool:
+		return;
+	
+	if (currentTool == Global.Tool.BOX_BRUSH): disable_box_brush();
+	currentTool = tool;
+	
+	if (currentTool != Global.Tool.CURSOR):
+		editorManager.update_brush_object(Global.TileType.SOLID);
+		editorManager.tileSwitch.display_tiles(true);
+		editorManager.tileSwitch.display_entities(false);
+	else:
+		editorManager.update_brush_object(Global.EntityType.GOAL);
+		editorManager.tileSwitch.display_tiles(false);
+		editorManager.tileSwitch.display_entities(true);
+	editorManager.propertyMenu.hide();
+	
+	match currentTool:
+		Global.Tool.CURSOR:
+			editorManager.update_brush_object(Global.EntityType.GOAL);
+		Global.Tool.BOX_BRUSH:
+			editorManager.update_brush_object(Global.TileType.SOLID);
+		Global.Tool.BRUSH:
+			editorManager.update_brush_object(Global.TileType.SOLID);
+	print("Current Tool: ", currentTool);
+
+## Deactivates the box brush.
+func disable_box_brush() -> void:
+	boxBrushState = Global.BoxBrushState.INACTIVE;
+	
+## Rotate currently selected object
+## NOTE: SceneCollection rotations work most likely by selecting the scene and rotating it, you can't spawn it rotated
+func rotate_object() -> void:
+	match currentObjectRotation:
+		0:
+			currentObjectRotation = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H;
+		TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H:
+			currentObjectRotation = TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V;
+		TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V:
+			currentObjectRotation = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V;
+		_:
+			currentObjectRotation = 0;

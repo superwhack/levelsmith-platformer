@@ -33,9 +33,9 @@ enum HotbarState {
 # Box brush state (for previewing and confirmation)
 enum BoxBrushState {
 	INACTIVE,
-	CREATE,
+	PLACE,
 	DELETE,
-	CREATE_CONFIRM,
+	PLACE_CONFIRM,
 	DELETE_CONFIRM
 }
 

@@ -7,8 +7,7 @@ signal complete;
 
 
 # Tile size.
-var tileSize = 128;
-
+const tileSize: int = 128;
 
 # Application State
 enum State {
@@ -28,6 +27,15 @@ enum HotbarState {
 	TILES,
 	ENTITIES,
 	PROPS
+}
+
+# Box brush state (for previewing and confirmation)
+enum BoxBrushState {
+	INACTIVE,
+	PLACE,
+	DELETE,
+	PLACE_CONFIRM,
+	DELETE_CONFIRM
 }
 
 # Tile Types

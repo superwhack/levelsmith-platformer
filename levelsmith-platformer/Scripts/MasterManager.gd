@@ -4,20 +4,23 @@ extends Node2D
 var state : Global.State = Global.State.EDIT;
 
 # References to state managers and canvas components
-@export var editorManager : Node2D;
-@export var gameManager : Node2D;
-@export var editorManagerCanvas : CanvasLayer;
-@export var gameManagerCanvas : CanvasLayer;
+@export var editorManager: Node2D;
+@export var toolManager: Node2D;
+@export var gameManager: Node2D;
+@export var audioManager: Node;
+@export var editorManagerCanvas: CanvasLayer;
+@export var gameManagerCanvas: CanvasLayer;
 
 # Reference to tileset
 @export var tileSet: TileMapLayer;
+@export var previewTileMap: TileMapLayer;
 
 # Map that is currently loaded in the Play scene
-var loadedMap : TileMapLayer;
+var loadedMap: TileMapLayer;
 
 ## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
-@export var worldSize : Vector2i = Vector2i(8, 14);
+@export var worldSize: Vector2i = Vector2i(8, 14);
 
 @export var propertyMenu : Panel;
 
@@ -53,7 +56,7 @@ func edit() -> void:
 
 ## Swap to play state
 func play() -> void:
-	if (!editorManager.player_exist()):
+	if (!editorManager.playerExists):
 		print("No Player Exists, Cannot Start")
 		return;
 	propertyMenu.hide();
@@ -68,8 +71,8 @@ func play() -> void:
 	gameManagerCanvas.show()
 	editorManager.hide();
 	editorManagerCanvas.hide();
-	editorManager.previewTileMap.clear();
-	editorManager.disable_box_brush();
+	previewTileMap.clear();
+	toolManager.disable_box_brush();
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map

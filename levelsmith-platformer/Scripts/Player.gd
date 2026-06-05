@@ -22,6 +22,8 @@ var spawnpoint := Vector2(0, 0);
 @export var raycastRight : RayCast2D;
 @export var raycastUp : RayCast2D;
 
+# Audio manager export
+#@export var audioManager : Node;
 
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
 const maxHealth := 1;
@@ -69,7 +71,8 @@ func _physics_process(delta: float) -> void:
 
 ## Make the player jump
 func jump() -> void:
-	AudioManager.play_effect("PlayerJump");
+	# TODO fix reference later
+	#audioManager.play_effect("PlayerJump");
 	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
@@ -101,7 +104,8 @@ func take_damage(amount: int) -> void:
 	
 ## Kill the player and send the global death signal
 func die() -> void:
-	AudioManager.play_effect("PlayerDeath");
+	# TODO fix reference later
+	#audioManager.play_effect("PlayerDeath");
 	Global.death.emit();
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it

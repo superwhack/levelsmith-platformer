@@ -1,14 +1,14 @@
 extends Camera2D;
 
-@export var masterManager: Node
+@export var masterManager: Node2D;
 
 # Camera movement settings
-@export var roamMargin: float = 2000.0
+@export var roamCellCount: float = 4.0;
 @export var moveSpeed: float = 500.0;
 @export var edgeScrollSpeed: float = 800.0;
-@export var edgeScrollMargin: float = 16.0;
-var is_panning : bool = false;
-var panSpeed := 1.0;
+@export var edgeScrollMargin: float = 100.0;
+var isPanning: bool = false;
+var panSpeed: float = 1.0;
 
 # Camera zoom settings
 @export var zoomSpeed: float = 0.1;
@@ -17,8 +17,9 @@ var panSpeed := 1.0;
 @export var playZoom: float = 0.7;
 
 # Tilemap bound
-@export var tileSet: TileMapLayer
-var level_bounds: Rect2
+@export var tileSet: TileMapLayer;
+var levelBounds: Rect2;
+var roamBounds: Rect2;
 
 # Reference to player
 var playerReference: CharacterBody2D = null;
@@ -30,9 +31,11 @@ var searchForPlayer := true;
 func _ready() -> void:
 	make_current();
 	# Center camera on rect2 of the entire level
-	level_bounds = get_level_bounds()
-	global_position = level_bounds.get_center()
-
+	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.tileSize);
+	set_global_position(levelBounds.get_center());  
+	
+	roamBounds = get_camera_bounds();
+	
 	# Start zoomed out
 	zoom = Vector2.ONE * maxZoomOut;
 	Global.reload.connect(reset_camera);
@@ -48,52 +51,45 @@ func reset_camera() -> void:
 
 ## Processes camera logic every frame
 func _process(delta: float) -> void:
-	var state = masterManager.state
-
-	#print("RUNNING STATE:", state)
-
-	match state:
-
+	match masterManager.state:
 		Global.State.EDIT:
-			process_build_camera(delta)
-			process_zoom_input()
-			clamp_camera_to_level()
-
+			process_build_camera(delta);
+			process_zoom_input();
+			clamp_camera_to_level();
 		Global.State.PLAY:
 			if playerReference == null:
-				try_find_player()
-
-			if playerReference != null:
-				process_player_camera(delta)
-				zoom = Vector2.ONE * playZoom
+				try_find_player();
+			else:
+				process_player_camera(delta);
+				zoom = Vector2.ONE * playZoom;
 
 ## find the 1st node in the group called "player"
 func try_find_player() -> void:
 	if !searchForPlayer:
-		return
-
-	playerReference = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1] as CharacterBody2D
-
+		return;
+	
+	playerReference = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1] as CharacterBody2D;
+	
 	if playerReference != null:
-		print("From CameraManager: player found")
+		print("From CameraManager: player found");
 		searchForPlayer = false;
-		return
+		return;
 	
 	playerSearchAttempts += 1
 	
 	if playerSearchAttempts >= maxPlayerSearchAttempts:
-		print("From CameraManager: ERROR - fail to find player")
-		searchForPlayer = false
+		print("From CameraManager: ERROR - fail to find player");
+		searchForPlayer = false;
 
 ## Handles mouse middle-click panning
 func _input(event: InputEvent) -> void:
 	# Start/stop middle-click panning
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_MIDDLE:
-			is_panning = event.pressed;
+			isPanning = event.pressed;
 
 	# Pan while dragging
-	if event is InputEventMouseMotion and is_panning:
+	if event is InputEventMouseMotion and isPanning:
 		global_position -= event.relative / zoom;
 		clamp_camera_to_level();
 		
@@ -104,22 +100,19 @@ func _input(event: InputEvent) -> void:
 
 ## Processes editor camera keypress movement
 func process_build_camera(delta: float) -> void:
-	var inputVector: Vector2 = Vector2.ZERO;
-
+	var inputVector: Vector2;
+	var speedModifier: int = 1;
+	
 	inputVector.x = Input.get_action_strength("right") - Input.get_action_strength("left");
-
+	
 	inputVector.y = Input.get_action_strength("down") - Input.get_action_strength("up");
-
-	# Keyboard movement
-	if inputVector != Vector2.ZERO:
-		# If shift is being held, make it move faster.
-		if Input.is_action_pressed("shift"):
-			global_position += inputVector.normalized() * moveSpeed * 3 * delta;
-		else:
-			global_position += inputVector.normalized() * moveSpeed * delta;
-
+	
+	# If shift is being held, make it move faster.
+	if Input.is_action_pressed("shift"): speedModifier = 3;
+	
+	global_position += inputVector.normalized() * moveSpeed * speedModifier * delta;
+	
 	process_edge_scrolling(delta);
-
 
 ## Processes editor edge scrolling
 func process_edge_scrolling(delta: float) -> void:
@@ -159,90 +152,77 @@ func process_player_camera(_delta: float) -> void:
 ## Adjusts camera zoom
 ## zoomAmount: Zoom change amount
 func process_zoom(zoomAmount: float) -> void:
-
+	
 	# Mouse world position BEFORE zoom
-	var mouse_world_before: Vector2 = get_global_mouse_position()
-
-	# Fallback to level center if mouse outside map
-	if !level_bounds.has_point(mouse_world_before):
-		mouse_world_before = global_position
-
+	var mouseWorldBefore: Vector2 = get_global_mouse_position();
+	
 	# Calculate new zoom first
-	var new_zoom: float = clamp(
+	var newZoom: float = clamp(
 		zoom.x + zoomAmount,
 		maxZoomOut,
 		maxZoomIn
-	)
-
-	# STOP if already at zoom limit
-	if is_equal_approx(new_zoom, zoom.x):
-		return
-
+	);
+	
 	# Apply zoom
-	zoom = Vector2.ONE * new_zoom
-
+	zoom = Vector2.ONE * newZoom;
+	
 	# Mouse world position AFTER zoom
-	var mouse_world_after: Vector2 = get_global_mouse_position()
-
-	if !level_bounds.has_point(mouse_world_after):
-		mouse_world_after = global_position
-
+	var mouseWorldAfter: Vector2 = get_global_mouse_position();
+	
 	# Offset camera so zoom focuses on mouse
-	global_position += mouse_world_before - mouse_world_after
-
-	clamp_camera_to_level()
+	global_position += mouseWorldBefore - mouseWorldAfter;
+	
+	clamp_camera_to_level();
 
 func process_zoom_input() -> void:
 	if masterManager.state != Global.State.EDIT:
-		return
-
-	if (Input.is_action_just_pressed("zoom_in")):
-		process_zoom(zoomSpeed)
-
-	if (Input.is_action_just_pressed("zoom_out")):
-		process_zoom(-zoomSpeed)
-
-## Calculates the world-space bounding rectangle of all occupied tiles in the TileMapLayer
-## Returns a Rect2 in global coordinates representing the level's outer boundaries
-func get_level_bounds() -> Rect2:
-	var used_rect: Rect2i = tileSet.get_used_rect()
-
-	# Convert tile coords to world coords
-	var top_left: Vector2 = tileSet.to_global(tileSet.map_to_local(used_rect.position))
-	var bottom_right: Vector2 = tileSet.to_global(tileSet.map_to_local(used_rect.position + used_rect.size))
-
-	return Rect2(top_left, bottom_right - top_left)
+		return;
+	
+	if (Input.is_action_pressed("zoom_in")):
+		process_zoom(zoomSpeed / 8);
+		
+	if (Input.is_action_pressed("zoom_out")):
+		process_zoom(-zoomSpeed / 8);
+	
+	if (Input.is_action_just_pressed("scroll_up")):
+		process_zoom(zoomSpeed);
+		
+	if (Input.is_action_just_pressed("scroll_down")):
+		process_zoom(-zoomSpeed);
 
 func get_camera_bounds() -> Rect2:
-	var center := level_bounds.get_center()
-
-	# Expand far beyond the level
-	var size := level_bounds.size + Vector2(roamMargin, roamMargin)
-
-	return Rect2(center - size * 0.5, size)
+	# Convert roam cell count to pixels
+	var roamMargin = roamCellCount * Global.tileSize;
+	var roamLimit: Vector2 = Vector2(roamMargin, roamMargin);
+	
+	# Expanded roam space adds the limit to the top and bottoms of the level boundary.
+	var size: Vector2 = levelBounds.size + (roamLimit * 2);
+	
+	print(levelBounds.size);
+	print(size);
+	
+	return Rect2(-roamLimit, size);
 
 ## Prevents the camera from leaving the level
 func clamp_camera_to_level() -> void:
-
-	var bounds := get_camera_bounds()
-	var viewport_size: Vector2 = get_viewport_rect().size
-
+	var viewportSize: Vector2 = get_viewport_rect().size;
+	
 	# visible world size
-	var visible_size: Vector2 = viewport_size * 0.5 / zoom
-
-	var min_x = bounds.position.x + visible_size.x
-	var max_x = bounds.position.x + bounds.size.x - visible_size.x
-
-	var min_y = bounds.position.y + visible_size.y
-	var max_y = bounds.position.y + bounds.size.y - visible_size.y
-
+	var visibleSize: Vector2 = viewportSize * 0.5 / zoom;
+	
+	var minX = roamBounds.position.x + visibleSize.x;
+	var maxX = roamBounds.end.x - visibleSize.x;
+	
+	var minY = roamBounds.position.y + visibleSize.y;
+	var maxY = roamBounds.end.y - visibleSize.y;
+	
 	# If zoom too far out, just center
-	if min_x > max_x:
-		global_position.x = level_bounds.get_center().x
+	if minX > maxX:
+		global_position.x = levelBounds.get_center().x;
 	else:
-		global_position.x = clamp(global_position.x, min_x, max_x)
-
-	if min_y > max_y:
-		global_position.y = level_bounds.get_center().y
+		global_position.x = clamp(global_position.x, minX, maxX);
+	
+	if minY > maxY:
+		global_position.y = levelBounds.get_center().y;
 	else:
-		global_position.y = clamp(global_position.y, min_y, max_y)
+		global_position.y = clamp(global_position.y, minY, maxY);

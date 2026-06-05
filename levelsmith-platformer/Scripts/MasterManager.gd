@@ -3,16 +3,24 @@ extends Node2D
 # State variable to represent the state the game is currently in
 var state : Global.State = Global.State.EDIT;
 
-# References to both state managers
-@export var editorManager : Node2D;
-@export var gameManager : Node2D;
+# References to state managers and canvas components
+@export var editorManager: Node2D;
+@export var toolManager: Node2D;
+@export var gameManager: Node2D;
+@export var audioManager: Node;
+@export var editorManagerCanvas: CanvasLayer;
+@export var gameManagerCanvas: CanvasLayer;
+
+# Reference to tileset
+@export var tileSet: TileMapLayer;
+@export var previewTileMap: TileMapLayer;
 
 # Map that is currently loaded in the Play scene
-var loadedMap : TileMapLayer;
+var loadedMap: TileMapLayer;
 
 ## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
-@export var worldSize : Vector2i = Vector2i(8, 14);
+@export var worldSize: Vector2i = Vector2i(8, 14);
 
 @export var propertyMenu : Panel;
 
@@ -31,24 +39,28 @@ func level_complete() -> void:
 
 ## Swap to edit state
 func edit() -> void:
+	audioManager.masterVolume = 0;
+	audioManager.update_volume();
+	audioManager.play_UI_music("EditorMusic");
 	print("Edit")
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
 	state = Global.State.EDIT;
 	# Change scene to edit scene
 	gameManager.hide();
-	gameManager.get_node("CanvasLayer").hide();
+	gameManagerCanvas.hide();
 	editorManager.show();
-	editorManager.get_node("CanvasLayer").show()
+	editorManagerCanvas.show()
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
 
 ## Swap to play state
 func play() -> void:
-	if (!editorManager.player_exist()):
+	if (!editorManager.playerExists):
 		print("No Player Exists, Cannot Start")
 		return;
 	propertyMenu.hide();
+	audioManager.play_music("LevelMusic");
 	print("Play")
 	# Update state variable
 	state = Global.State.PLAY;
@@ -57,11 +69,11 @@ func play() -> void:
 	# Change scene to play 
 	gameManager.show();
 	gameManager.start();
-	gameManager.get_node("CanvasLayer").show()
+	gameManagerCanvas.show()
 	editorManager.hide();
-	editorManager.previewTileMap.clear();
-	editorManager.disable_box_brush();
-	editorManager.get_node("CanvasLayer").hide();
+	editorManagerCanvas.hide();
+	previewTileMap.clear();
+	toolManager.disable_box_brush();
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
@@ -70,8 +82,8 @@ func play() -> void:
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
-	# Reference the tile map as the node to be saved
-	var nodeToSave = editorManager.get_node("Tiles");
+	# Reference the tile map as the node to be saved\
+	var nodeToSave = tileSet;
 	# Create a PackedScene
 	var scene = PackedScene.new();
 	# Pack the node to save as a scene
@@ -92,4 +104,6 @@ func load_tilemap() -> void:
 	# Add that instance to the top of the GameManager's hierarchy
 	gameManager.add_child(sceneInstance);
 	gameManager.move_child(sceneInstance, 0);
+	
+	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);

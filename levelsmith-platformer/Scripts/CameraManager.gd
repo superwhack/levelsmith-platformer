@@ -23,7 +23,7 @@ var level_bounds: Rect2
 # Reference to player
 var playerReference: CharacterBody2D = null;
 var playerSearchAttempts := 0;
-var maxPlayerSearchAttempts := 60;
+const maxPlayerSearchAttempts := 60;
 var searchForPlayer := true;
 
 ## Initializes the camera

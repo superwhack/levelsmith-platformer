@@ -15,10 +15,12 @@ func make_new_level(name: String) -> void:
 	DirAccess.make_dir_absolute(levelPath);
 	clone_data();
 
-func export_level(playerData: Panel, tileSet: TileMapLayer, worldSize: Vector2) -> void:
-	# If anything doesn't exist, abort
-	if (!playerData || !tileSet):
-		return;
+## Export the current level
+## tileSet: The tileSet
+## playerData: All of the player's special information
+## worldSize: Size of the world (x, y) for creating the csv file.
+func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) -> void:
+
 	
 	# Create JSON for enemies and player
 	var data_to_send = '{"enemies": [], "player": {';
@@ -39,11 +41,11 @@ func export_level(playerData: Panel, tileSet: TileMapLayer, worldSize: Vector2) 
 	
 	# Write tileData in the form of a CSV file
 	var CSVFile = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.WRITE);
-	for currentRow in worldSize.y:
-		var tileRow : String;
-		for currentCol in worldSize.x:
-			# CONTINUE
-			print("t")
+	for currentRow in worldSize.x + 1:
+		var tileRow : Array;
+		for currentCol in worldSize.y + 1:
+			tileRow.append(tileSet.get_cell_source_id(Vector2(currentCol, currentRow)));
+		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 
 ## Clone all of the data from the default folder 

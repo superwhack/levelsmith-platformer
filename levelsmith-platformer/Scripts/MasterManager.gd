@@ -106,7 +106,5 @@ func load_tilemap() -> void:
 	
 
 func _process(_delta: float) -> void:
-	if (Input.is_action_just_pressed("fourth-select") && editorManager.player_exist()):
-		ImportExportManager.tileSet = editorManager.tileSet;
-		ImportExportManager.playerData = propertyMenu;
+	if (Input.is_action_just_pressed("tempSave")):
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);

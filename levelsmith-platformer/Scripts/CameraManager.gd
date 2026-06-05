@@ -13,7 +13,7 @@ var panSpeed: float = 1.0;
 # Camera zoom settings
 @export var zoomSpeed: float = 0.1;
 @export var maxZoomOut: float = 0.5;
-@export var maxZoomIn: float = 3.0;
+@export var maxZoomIn: float = 2.0;
 @export var playZoom: float = 0.7;
 
 # Tilemap bound
@@ -211,10 +211,10 @@ func clamp_camera_to_level() -> void:
 	var visibleSize: Vector2 = viewportSize * 0.5 / zoom;
 	
 	var minX = roamBounds.position.x + visibleSize.x;
-	var maxX = roamBounds.end.x - visibleSize.x;
+	var maxX = roamBounds.end.x - visibleSize.x + Global.tileSize;
 	
 	var minY = roamBounds.position.y + visibleSize.y;
-	var maxY = roamBounds.end.y - visibleSize.y;
+	var maxY = roamBounds.end.y - visibleSize.y + Global.tileSize;
 	
 	# If zoom too far out, just center
 	if minX > maxX:

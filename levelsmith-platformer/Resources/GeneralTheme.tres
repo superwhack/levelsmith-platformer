@@ -7,6 +7,7 @@
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_rm7lu"]
 [ext_resource type="StyleBox" uid="uid://c77hfkgnkauj3" path="res://Assets/UserInterface/ButtonNormalStyleBox.tres" id="5_7q30d"]
 [ext_resource type="StyleBox" uid="uid://cixip2eyb83r1" path="res://Assets/UserInterface/ScrollGrabStyleBox.tres" id="6_j2hgx"]
+[ext_resource type="Texture2D" uid="uid://b88f0rfl1f7l6" path="res://Assets/Sprites/UI/BoxChecked.png" id="6_u8oi0"]
 [ext_resource type="Texture2D" uid="uid://bc5en51l7hpq" path="res://Assets/Sprites/UI/SwitchOn.png" id="6_ve3ax"]
 [ext_resource type="StyleBox" uid="uid://cwx2h3fkut8pb" path="res://Assets/UserInterface/GrabberAreaStyleBox.tres" id="7_c51xu"]
 [ext_resource type="StyleBox" uid="uid://cwo782d4sgcr7" path="res://Assets/UserInterface/ScrollAreaStyleBox.tres" id="7_du07a"]
@@ -17,6 +18,7 @@
 [ext_resource type="StyleBox" uid="uid://d0dnc4expn1x0" path="res://Assets/UserInterface/SliderStyleBox.tres" id="8_tg4mj"]
 [ext_resource type="Texture2D" uid="uid://dekrnt44tg4hi" path="res://Assets/Sprites/UI/GrabInvert.png" id="8_uynww"]
 [ext_resource type="StyleBox" uid="uid://be7kkb87oloe4" path="res://Assets/UserInterface/ReadOnlyStyleBox.tres" id="9_5ihoh"]
+[ext_resource type="Texture2D" uid="uid://bn0uohdiojkbm" path="res://Assets/Sprites/UI/BoxUnchecked.png" id="9_ie6rc"]
 [ext_resource type="StyleBox" uid="uid://brabxcb463n2t" path="res://Assets/UserInterface/TabHoverStyleBox.tres" id="9_uusg4"]
 [ext_resource type="StyleBox" uid="uid://d1ya2u617jayi" path="res://Assets/UserInterface/TabSelectStyleBox.tres" id="10_5ihoh"]
 [ext_resource type="StyleBox" uid="uid://b6f6805u0j1vu" path="res://Assets/UserInterface/TabUnselectStyleBox.tres" id="11_46rmy"]
@@ -119,9 +121,10 @@ CheckBox/colors/font_hover_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 CheckBox/colors/font_hover_pressed_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 CheckBox/colors/font_pressed_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 CheckBox/fonts/font = ExtResource("1_g6ve4")
-CheckBox/icons/checked = null
+CheckBox/icons/checked = ExtResource("6_u8oi0")
 CheckBox/icons/radio_checked = ExtResource("18_74mva")
 CheckBox/icons/radio_unchecked = ExtResource("8_uynww")
+CheckBox/icons/unchecked = ExtResource("9_ie6rc")
 CheckBox/styles/disabled = SubResource("StyleBoxEmpty_u2jud")
 CheckBox/styles/focus = SubResource("StyleBoxEmpty_g6ve4")
 CheckBox/styles/hover = SubResource("StyleBoxEmpty_gp8ah")

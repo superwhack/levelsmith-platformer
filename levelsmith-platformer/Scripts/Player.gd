@@ -129,6 +129,7 @@ func detect_tiles() -> void:
 		if slideCollisions[i].get_collider() is RigidBody2D:
 			# Landed on top of one, kill them and bounce
 			if downwardsRaycasts.has(slideCollisions[i]):
+				AudioManager.play_effect("EnemyDeath");
 				slideCollisions[i].get_collider().queue_free();
 				if (Input.is_action_pressed("jump")):
 					velocity.y = -jumpHeight * 360;

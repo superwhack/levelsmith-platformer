@@ -1,13 +1,13 @@
-[gd_scene format=4 uid="uid://dexibp35a4dca"]
+[gd_scene format=4 uid="uid://bjx53xjckex6r"]
 
 [ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GeneralTheme.tres" id="1_df05h"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_df05h"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_8um5k"]
 [ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="4_xim88"]
-[ext_resource type="Texture2D" uid="uid://cfmy5pk58n8fx" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
-[ext_resource type="Texture2D" uid="uid://dxoqpsw52s2ii" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="7_loo7a"]
-[ext_resource type="Texture2D" uid="uid://21my6qjib5ao" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="8_if7li"]
+[ext_resource type="Texture2D" uid="uid://caw5vfrla8ry1" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
+[ext_resource type="Texture2D" uid="uid://cn52j7r73ygot" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="7_loo7a"]
+[ext_resource type="Texture2D" uid="uid://5qon1fxclb4n" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="8_if7li"]
 [ext_resource type="StyleBox" uid="uid://c4nxvw40uptk2" path="res://Resources/UIStyles/WarningPanelStyle.tres" id="9_rrcx7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -186,7 +186,6 @@ theme_override_styles/panel = ExtResource("3_8um5k")
 item_count = 1
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=120086451]
-visible = false
 custom_minimum_size = Vector2(630, 425)
 layout_mode = 1
 anchors_preset = 15
@@ -255,6 +254,7 @@ text = "Name: "
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 
 [node name="FormSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=551543159]
 custom_minimum_size = Vector2(0, 10)
@@ -284,6 +284,7 @@ text = "X: "
 
 [node name="XInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=1837442565]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 
 [node name="GridRowY" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=993765537]
 layout_mode = 2
@@ -299,6 +300,7 @@ text = "Y: "
 
 [node name="YInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY" unique_id=1090946014]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 
 [node name="BottomSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=2094910545]
 custom_minimum_size = Vector2(0, 100)

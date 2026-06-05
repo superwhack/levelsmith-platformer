@@ -27,22 +27,22 @@ var loadedMap: TileMapLayer;
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
-	
+	ImportExportManager.make_new_level("Level01");
+	#ImportExportManager.export_level();
 	edit();
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
 func level_complete() -> void:
 	edit();
-	editorManager.validationCheck = true;
+	editorManager.isValidated = true;
 	print("LEVEL COMPLETE")
 
 ## Swap to edit state
 func edit() -> void:
-	audioManager.masterVolume = 0;
-	audioManager.update_volume();
-	audioManager.play_UI_music("EditorMusic");
-	print("Edit")
+	AudioManager.masterVolume = 0;
+	AudioManager.update_volume();
+	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
 	state = Global.State.EDIT;
@@ -60,8 +60,7 @@ func play() -> void:
 		print("No Player Exists, Cannot Start")
 		return;
 	propertyMenu.hide();
-	audioManager.play_music("LevelMusic");
-	print("Play")
+	AudioManager.play_music("LevelMusic");
 	# Update state variable
 	state = Global.State.PLAY;
 	# Save map
@@ -107,3 +106,10 @@ func load_tilemap() -> void:
 	
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
+
+## THESE ARE TEMPORARY AND SHOULD BE CHANGED WHEN BUTTONS ARE PUT IN
+func _process(_delta: float) -> void:
+	if (Input.is_action_just_pressed("tempSave")):
+		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
+	if (Input.is_action_just_pressed("tempLoad")):
+		editorManager.playerExists = ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");

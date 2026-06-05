@@ -6,13 +6,10 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_agccv"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycastDownL", "raycastDownR", "raycastLeft", "raycastRight", "raycastUp") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts") groups=["Player"]]
 script = ExtResource("1_kyqiw")
-raycastDownL = NodePath("RayCastDownL")
-raycastDownR = NodePath("RayCastDownR")
-raycastLeft = NodePath("RayCastLeft")
-raycastRight = NodePath("RayCastRight")
-raycastUp = NodePath("RayCastUp")
+raycasts = [NodePath("RayCastDown"), NodePath("RayCastDown2"), NodePath("RayCastDown3"), NodePath("RayCastLeft"), NodePath("RayCastLeft2"), NodePath("RayCastLeft3"), NodePath("RayCastRight"), NodePath("RayCastRight2"), NodePath("RayCastRight3"), NodePath("RayCastUp"), NodePath("RayCastUp2"), NodePath("RayCastUp3")]
+downwardsRaycasts = [NodePath("RayCastDown"), NodePath("RayCastDown2"), NodePath("RayCastDown3")]
 playerMovementPreset = ExtResource("2_agccv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]
@@ -22,19 +19,52 @@ shape = SubResource("CircleShape2D_agccv")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=290798525]
 texture = ExtResource("2_gntrk")
 
-[node name="RayCastDownL" type="RayCast2D" parent="." unique_id=116409988]
+[node name="RayCastDown" type="RayCast2D" parent="." unique_id=116409988]
 position = Vector2(-50, 0)
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 64)
 
-[node name="RayCastDownR" type="RayCast2D" parent="." unique_id=690188439]
+[node name="RayCastDown2" type="RayCast2D" parent="." unique_id=690188439]
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(0, 64)
+
+[node name="RayCastDown3" type="RayCast2D" parent="." unique_id=1487377010]
 position = Vector2(50, 0)
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 64)
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1278463934]
+position = Vector2(0, -50)
+target_position = Vector2(-64, 0)
+
+[node name="RayCastLeft2" type="RayCast2D" parent="." unique_id=225528529]
+target_position = Vector2(-64, 0)
+
+[node name="RayCastLeft3" type="RayCast2D" parent="." unique_id=1773931023]
+position = Vector2(0, 50)
 target_position = Vector2(-64, 0)
 
 [node name="RayCastRight" type="RayCast2D" parent="." unique_id=1567430084]
+position = Vector2(0, -50)
+target_position = Vector2(64, 0)
+
+[node name="RayCastRight2" type="RayCast2D" parent="." unique_id=1096570450]
+target_position = Vector2(64, 0)
+
+[node name="RayCastRight3" type="RayCast2D" parent="." unique_id=952952818]
+position = Vector2(0, 50)
 target_position = Vector2(64, 0)
 
 [node name="RayCastUp" type="RayCast2D" parent="." unique_id=866310471]
+position = Vector2(-50, 0)
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(0, -64)
+
+[node name="RayCastUp2" type="RayCast2D" parent="." unique_id=1451835448]
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(0, -64)
+
+[node name="RayCastUp3" type="RayCast2D" parent="." unique_id=2089040233]
+position = Vector2(50, 0)
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -64)

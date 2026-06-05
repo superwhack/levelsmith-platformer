@@ -34,7 +34,7 @@ func _ready() -> void:
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
 func level_complete() -> void:
 	edit();
-	editorManager.validationCheck = true;
+	editorManager.isValidated = true;
 	print("LEVEL COMPLETE")
 
 ## Swap to edit state

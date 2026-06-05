@@ -8,6 +8,10 @@ const ERROR_TEMPLATE: PackedScene = preload("res://Scenes/UI/ErrorPopUpTemplate.
 # Stack of messages (possible future addition if needed, would need to change some behavior)
 #const POP_UP_STACK = [];
 
+## Set the layer
+func _ready() -> void:
+	self.layer = 5;
+
 ## Creates an error popup with customizable content
 ## title: Title of error
 ## body: Body content of error

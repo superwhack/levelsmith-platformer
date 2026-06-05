@@ -49,12 +49,18 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 
-func import_level(tileSet: TileMapLayer, playerData: Panel, directory: String) -> bool:
+func import_level(tileSet: TileMapLayer, playerData: Panel, directory: String) -> int:
 	levelPath = "user://Levels/" + directory + "/";
-	if !DirAccess.dir_exists_absolute(levelPath):
-		print("Level directory does not exist!")
-		return false;
 	print("Attempting import...");
+	if !DirAccess.dir_exists_absolute(levelPath):
+		PopUpManager.createErrorPopUp("Level Directory Doesn't Exist!", "The directory " + levelPath + " could not be found.");
+		return 0;
+	if !FileAccess.file_exists(levelPath + "Settings.JSON"):
+		PopUpManager.createErrorPopUp("Level Properties Don't Exist!", "The directory " + levelPath + " does not have a file Settings.JSON.");
+		return 0;
+	if !FileAccess.file_exists(levelPath + "Tiles.CSV"):
+		PopUpManager.createErrorPopUp("Level Directory Doesn't Exist!", "The directory " + levelPath + " does not have a file Tiles.CSV.");
+		return 0;
 	# Read JSON to file and close it
 	var JSONFile = FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
 	var json_as_dict = JSON.parse_string(JSONFile.get_as_text());
@@ -87,7 +93,7 @@ func import_level(tileSet: TileMapLayer, playerData: Panel, directory: String) -
 			col += 1;
 		row += 1;
 	CSVFile.close();
-	return playerExists;
+	return int(playerExists) + 1;
 
 ## Clone all of the data from the default folder 
 func clone_data(directory: String = ""):

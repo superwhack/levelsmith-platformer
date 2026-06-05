@@ -178,6 +178,12 @@ theme_override_styles/separator = ExtResource("4_xim88")
 
 [node name="LevelList" type="ItemList" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox" unique_id=632439816]
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+theme_override_colors/font_hovered_color = Color(0.08078892, 0.21693686, 0.45689148, 1)
+theme_override_colors/font_hovered_selected_color = Color(0.19205198, 0.4054752, 0.781936, 1)
+theme_override_styles/panel = ExtResource("3_8um5k")
+item_count = 1
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=120086451]
 visible = false
@@ -380,6 +386,7 @@ theme_override_font_sizes/font_size = 20
 text = "File Path:"
 
 [node name="FilePathInput" type="LineEdit" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow" unique_id=183140136]
+custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -396,7 +403,7 @@ theme_override_styles/panel = ExtResource("9_rrcx7")
 
 [node name="MarginContainer" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ErrorBanner" unique_id=1400970093]
 layout_mode = 2
-theme_override_constants/margin_left = 5
+theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 10
 

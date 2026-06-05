@@ -36,9 +36,9 @@ func _ready() -> void:
 ## Finds an image by its name
 ## imageName: Name of the image
 ## returns: Loaded image
-func find_image(imageName: String) -> Image:
+func find_image(imageName: String, currentDirectory: String = filePath) -> Image:
 	# Get the path to the image
-	var imagePath = find_file_by_name(imageName);
+	var imagePath = find_file_by_name(imageName, currentDirectory);
 	# If the path exists
 	if (imagePath):
 		# Create and load an image from the path
@@ -57,6 +57,7 @@ func find_image(imageName: String) -> Image:
 func find_image_in_folder(folderPath: String) -> Image:
 	# Opens the folder at the given folderName path
 	var dir = DirAccess.open(folderPath);
+	print(folderPath)
 	# If a folder was sucessfully opened
 	if (dir):
 		# Initialize file stream
@@ -132,8 +133,10 @@ func replace_image(imageToReplace: Image, newImage: Image) -> void:
 func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 	pass;
 
-func return_to_default_image(imageName: String) -> void:
-	pass;
+func return_to_default_image(imageName: String) -> Texture2D:
+	var defaultReplacement: Image = find_image(imageName + ".png", "res://Assets/Defaults");
+	
+	return ImageTexture.create_from_image(defaultReplacement);
 
 func return_to_default_audio(audioName: String) -> void:
 	pass;
@@ -142,8 +145,9 @@ func return_all_to_default(categoryName: String) -> void:
 	pass;
 
 func item_selected(selectedItem: AssetItem) -> void:
-	imagePreview.texture = ImageTexture.create_from_image(find_image_in_folder(selectedItem.assetName));
-	pass
+	var replacementTexture = ImageTexture.create_from_image(find_image_in_folder(find_directory_by_name(selectedItem.assetName)));
+	if (!replacementTexture): imagePreview.texture = return_to_default_image(selectedItem.assetName);
+	else: imagePreview.texture = ImageTexture.create_from_image(find_image_in_folder(find_directory_by_name(selectedItem.assetName)));
 
 ## Change the texture of an atlas tile to a new image texture
 ## sourceID: Source ID of the tile being changed

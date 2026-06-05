@@ -4,11 +4,11 @@
 [ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
-[ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
-[ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="8_8vbpr"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/PopUpManager.gd" id="7_8vbpr"]
+[ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="8_8vbpr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -135,7 +135,6 @@ script = ExtResource("7_8vbpr")
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 
 [node name="AssetManager" parent="." unique_id=468653693 node_paths=PackedStringArray("mainTileMap", "previewTileSet") instance=ExtResource("8_8vbpr")]
-visible = false
 mainTileMap = NodePath("../EditorManager/Tiles")
 previewTileSet = NodePath("../EditorManager/PreviewTile")
 

@@ -10,7 +10,7 @@ signal item_selected(selectedItem: AssetItem);
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	text = assetName;
+	text = displayName;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

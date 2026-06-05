@@ -1,24 +1,16 @@
 extends HBoxContainer
 
-# Reference to editor manager
-var editorManager : Node2D;
-
-## Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
-
-## Called every frame. 
-## delta: time elapsed since the previous frame.
-func _process(delta: float) -> void:
-	pass
+# References to managers
+@export var editorManager : Node2D;
+@export var toolManager : Node2D;
 
 func _on_brush_tool_button_pressed() -> void:
-	editorManager.change_tool(Global.Tool.BRUSH);
+	toolManager.change_tool(Global.Tool.BRUSH);
 	editorManager.change_current_hotbar(Global.HotbarState.TILES);
 
 func _on_box_brush_tool_button_pressed() -> void:
-	editorManager.change_tool(Global.Tool.BOX_BRUSH);
+	toolManager.change_tool(Global.Tool.BOX_BRUSH);
 	editorManager.change_current_hotbar(Global.HotbarState.TILES);
 
 func _on_cursor_button_pressed() -> void:
-	editorManager.change_tool(Global.Tool.CURSOR);
+	toolManager.change_tool(Global.Tool.CURSOR);

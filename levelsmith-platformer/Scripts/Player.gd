@@ -22,6 +22,8 @@ var spawnpoint := Vector2(0, 0);
 @export var raycastRight : RayCast2D;
 @export var raycastUp : RayCast2D;
 
+# Audio manager export
+#@export var audioManager : Node;
 
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
 const maxHealth := 1;
@@ -69,7 +71,8 @@ func _physics_process(delta: float) -> void:
 
 ## Make the player jump
 func jump() -> void:
-	 #if is_on_floor():
+	# TODO fix reference later
+	#audioManager.play_effect("PlayerJump");
 	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
@@ -101,6 +104,8 @@ func take_damage(amount: int) -> void:
 	
 ## Kill the player and send the global death signal
 func die() -> void:
+	# TODO fix reference later
+	#audioManager.play_effect("PlayerDeath");
 	Global.death.emit();
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
@@ -123,12 +128,17 @@ func detect_tiles() -> void:
 	if raycastUp.is_colliding():
 		slideCollisions.push_back(raycastUp);
 	
+	var finishedCollisions : Array;
 	# Check all current collisions
 	for i in slideCollisions.size():
 		var collision : Vector2 = slideCollisions[i].get_collision_point();
+		var collider = slideCollisions[i].get_collider();
+		if (finishedCollisions.has(collider)):
+			continue;
+		finishedCollisions.append(collider);
 		# Only have collisions confer effects if they are below the player
 		if slideCollisions[i].get_collider() is TileMapLayer:
-			var collider : TileMapLayer = slideCollisions[i].get_collider();
+			#collider = slideCollisions[i].get_collider();
 			# Use the global coord to find tile collision
 			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position);
 			var tileData = collider.get_cell_tile_data(tilePos);
@@ -154,7 +164,6 @@ func detect_tiles() -> void:
 					"slow":
 						currentSlowdown = .5;
 						
-
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> void:
 	var masterManager : Node2D = get_tree().current_scene;

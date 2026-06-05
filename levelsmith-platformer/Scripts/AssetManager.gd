@@ -17,6 +17,12 @@ var audioToReplace: AudioStream;
 
 @export var imagePreview: TextureRect;
 
+# All types of tiles
+var tileTypes: Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
+
+# All types of entities
+var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyPatrol", "EnemyFlying", "Goal"];
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,9 +30,7 @@ func _ready() -> void:
 	var dir = DirAccess.open(filePath);
 	if (!dir):
 		create_file_tree();
-	
-	# Testing changing tile texture, replace empty string with the name of an image file in the file tree
-	change_tile_texture(0, find_image(""), mainTileMap);
+	refresh_assets();
 	pass;
 
 ## Finds an image by its name
@@ -48,11 +52,11 @@ func find_image(imageName: String) -> Image:
 		return null;
 
 ## Finds and loads the first image found in given folder
-## folderName: Name of the folder to search in
+## folderPath: Path to the folder
 ## returns: Image loaded if it is found
-func find_image_in_folder(folderName: String) -> Image:
+func find_image_in_folder(folderPath: String) -> Image:
 	# Opens the folder at the given folderName path
-	var dir = DirAccess.open(find_directory_by_name(folderName));
+	var dir = DirAccess.open(folderPath);
 	# If a folder was sucessfully opened
 	if (dir):
 		# Initialize file stream
@@ -67,7 +71,7 @@ func find_image_in_folder(folderName: String) -> Image:
 			# Initialize an image
 			var image: Image = Image.new();
 			# Load the image based on it's file path
-			image.load(filePath + "/" + folderName + "/" + imageName);
+			image.load(folderPath + "/" + imageName);
 			# Close file stream
 			dir.list_dir_end();
 			# Return loaded image
@@ -77,6 +81,10 @@ func find_image_in_folder(folderName: String) -> Image:
 		return null;
 
 func validate_image(image: Image) -> Image:
+	var imageWidth = image.get_width();
+	var imageHeight = image.get_height();
+	if (imageWidth != 128 || imageHeight != 128):
+		image.resize(128, 128, Image.INTERPOLATE_LANCZOS);
 	return null;
 
 func get_animation_from_folder(folderName: String) -> Array[Image]:
@@ -113,6 +121,8 @@ func file_count_in_folder(folderName: String) -> int:
 	return -1;
 
 func refresh_assets() -> void:
+	for i in range(tileTypes.size()):
+		change_tile_texture(i, find_image_in_folder(find_directory_by_name(tileTypes[i])), mainTileMap);
 	pass;
 
 func replace_image(imageToReplace: Image, newImage: Image) -> void:
@@ -138,7 +148,9 @@ func item_selected(selectedItem: AssetItem) -> void:
 ## sourceID: Source ID of the tile being changed
 ## newImage: Image being switched to
 ## tileMap: The tileMap being changed
+## NOTE: Only works with images >= 128px x 128px
 func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
+	validate_image(newImage);
 	# Create a Texture2D from the image
 	var newTexture: Texture2D = ImageTexture.create_from_image(newImage);
 	# Set a reference to the tile map's tile set
@@ -216,10 +228,6 @@ func find_directory_by_name(targetDirectoryName: String, currentDirectory: Strin
 
 ## Creates all folders in tree for the user
 func create_file_tree() -> void:
-	# All types of tiles
-	var tileTypes: Array[String] = ["Solid", "Ice", "OneWay", "Bounce", "Death", "Slope", "Sticky"];
-	# All types of enemies
-	var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyPatrol", "EnemyFlying", "Goal"];
 	# Open the user root directory
 	var dir = DirAccess.open("user://");
 	# Create all folders for tile types

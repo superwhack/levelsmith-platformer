@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://bm5w14jlbl37k"]
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
-[ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/AudioManager.gd" id="2_8vbpr"]
+[ext_resource type="Script" path="res://Scripts/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
@@ -73,9 +73,6 @@ tileSet = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
 worldSize = Vector2i(14, 8)
 propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
-
-[node name="ImportExportManager" type="Node" parent="." unique_id=1814118730]
-script = ExtResource("9_gojh1")
 
 [node name="AudioManager" type="Node" parent="." unique_id=62565252]
 script = ExtResource("2_8vbpr")

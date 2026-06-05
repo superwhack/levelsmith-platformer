@@ -35,7 +35,7 @@ func _ready() -> void:
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
 func level_complete() -> void:
 	edit();
-	editorManager.validationCheck = true;
+	editorManager.isValidated = true;
 	print("LEVEL COMPLETE")
 
 ## Swap to edit state
@@ -106,8 +106,10 @@ func load_tilemap() -> void:
 	
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
-	
 
+## THESE ARE TEMPORARY AND SHOULD BE CHANGED WHEN BUTTONS ARE PUT IN
 func _process(_delta: float) -> void:
 	if (Input.is_action_just_pressed("tempSave")):
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
+	if (Input.is_action_just_pressed("tempLoad")):
+		editorManager.playerExists = ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");

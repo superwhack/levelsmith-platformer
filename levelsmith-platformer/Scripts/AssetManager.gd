@@ -80,12 +80,13 @@ func find_image_in_folder(folderPath: String) -> Image:
 		print("Could not open file path");
 		return null;
 
-func validate_image(image: Image) -> Image:
+func validate_image(image: Image) -> bool:
+	if (!image): return false;
 	var imageWidth = image.get_width();
 	var imageHeight = image.get_height();
 	if (imageWidth != 128 || imageHeight != 128):
 		image.resize(128, 128, Image.INTERPOLATE_LANCZOS);
-	return null;
+	return true;
 
 func get_animation_from_folder(folderName: String) -> Array[Image]:
 	var pathToFolder: String = find_directory_by_name(folderName);
@@ -150,7 +151,8 @@ func item_selected(selectedItem: AssetItem) -> void:
 ## tileMap: The tileMap being changed
 ## NOTE: Only works with images >= 128px x 128px
 func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
-	validate_image(newImage);
+	if (!validate_image(newImage)):
+		return;
 	# Create a Texture2D from the image
 	var newTexture: Texture2D = ImageTexture.create_from_image(newImage);
 	# Set a reference to the tile map's tile set

@@ -12,7 +12,7 @@ var newAudio: AudioStream;
 var audioToReplace: AudioStream;
 
 # References to both tile maps
-@export var mainTileSet: TileMapLayer;
+@export var mainTileMap: TileMapLayer;
 @export var previewTileSet: TileMapLayer;
 
 @export var imagePreview: TextureRect;
@@ -20,15 +20,13 @@ var audioToReplace: AudioStream;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#find_image_in_folder("Tile");
-	#find_image("Dodo.png");
-	#print(find_directory_by_name("Other4"))
-	#print(file_count_in_folder("Fail"));
-	#print(get_animation_from_folder("Tile"));
-	create_file_tree();
+	# Checks if the user has an assets root folder, creates one if not
 	var dir = DirAccess.open(filePath);
 	if (!dir):
 		create_file_tree();
+	
+	# Testing changing tile texture, replace empty string with the name of an image file in the file tree
+	change_tile_texture(0, find_image(""), mainTileMap);
 	pass;
 
 ## Finds an image by its name
@@ -54,7 +52,7 @@ func find_image(imageName: String) -> Image:
 ## returns: Image loaded if it is found
 func find_image_in_folder(folderName: String) -> Image:
 	# Opens the folder at the given folderName path
-	var dir = DirAccess.open(filePath + "/" + folderName);
+	var dir = DirAccess.open(find_directory_by_name(folderName));
 	# If a folder was sucessfully opened
 	if (dir):
 		# Initialize file stream
@@ -136,6 +134,21 @@ func item_selected(selectedItem: AssetItem) -> void:
 	imagePreview.texture = ImageTexture.create_from_image(find_image_in_folder(selectedItem.assetName));
 	pass
 
+## Change the texture of an atlas tile to a new image texture
+## sourceID: Source ID of the tile being changed
+## newImage: Image being switched to
+## tileMap: The tileMap being changed
+func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
+	# Create a Texture2D from the image
+	var newTexture: Texture2D = ImageTexture.create_from_image(newImage);
+	# Set a reference to the tile map's tile set
+	var tileSet = tileMap.tile_set;
+	# Set a reference to the source in the tile set
+	var source = tileSet.get_source(sourceID) as TileSetAtlasSource;
+	# If the source is found, set the texture to the image
+	if source:
+		source.texture = newTexture;
+
 ## Recursively searches directories for a file of a specific name
 ## targetFileName: The name of the target file
 ## currentDirectory: The file path currently being checked
@@ -201,11 +214,18 @@ func find_directory_by_name(targetDirectoryName: String, currentDirectory: Strin
 			currentFileName = dir.get_next();
 	return "";
 
-func create_file_tree():
+## Creates all folders in tree for the user
+func create_file_tree() -> void:
+	# All types of tiles
 	var tileTypes: Array[String] = ["Solid", "Ice", "OneWay", "Bounce", "Death", "Slope", "Sticky"];
+	# All types of enemies
 	var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyPatrol", "EnemyFlying", "Goal"];
+	# Open the user root directory
 	var dir = DirAccess.open("user://");
+	# Create all folders for tile types
 	for type: String in tileTypes:
 		dir.make_dir_recursive(filePath + "/Tiles/" + type);
+	# Create all folders for enitity types
 	for type: String in entityTypes:
 		dir.make_dir_recursive(filePath + "/Entities/" + type);
+	# TODO: Add folders for animations and audio

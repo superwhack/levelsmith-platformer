@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://6vhh2keedl4q"]
+
+[ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/ErrorPopUp.gd" id="1_i0gwu"]
+
+[node name="PopUpBackground" type="Panel" unique_id=1027997759]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i0gwu")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -98.5
+offset_right = 150.0
+offset_bottom = -16.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PanelContainer" unique_id=559632651]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+color = Color(1, 0.5636667, 0.23000002, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=266539190]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1465809994]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1675355400]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Error"
+horizontal_alignment = 1
+
+[node name="Body" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=908015837]
+layout_mode = 2
+text = "An error has occurred"
+fit_content = true
+
+[node name="CloseButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1027214704]
+layout_mode = 2
+text = "Close"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/CloseButton" to="." method="closePopUp"]

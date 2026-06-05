@@ -6,7 +6,7 @@ signal reload;
 signal complete;
 
 
-# Tile size.
+# Tile size
 const tileSize: int = 128;
 
 # Application State

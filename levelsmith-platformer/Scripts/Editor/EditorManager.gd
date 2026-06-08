@@ -6,9 +6,12 @@ extends Node2D
 
 # References to grid TileMapLayer child nodes
 @export var tileSet: TileMapLayer;
+@export var previewTileSet: TileMapLayer;
 
 # Play button
 @export var playButton: Button;
+
+@export var assetManager: Control;
 
 # Mouse position variables
 var currentMousePosition: Vector2;
@@ -60,3 +63,15 @@ func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 ## returns: True if the mouse is out of bounds
 func check_out_of_bounds(mousePosition: Vector2i) -> bool:
 	return mousePosition.x < 0 || mousePosition.x > get_parent().worldSize.x || mousePosition.y < 0 || mousePosition.y > get_parent().worldSize.y;
+
+func open_asset_manager() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = true;
+	previewTileSet.hide();
+	assetManager.show();
+
+func close_asset_manager() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = false;
+	previewTileSet.show();
+	assetManager.hide();

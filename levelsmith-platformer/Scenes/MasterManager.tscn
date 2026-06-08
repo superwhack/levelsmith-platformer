@@ -64,6 +64,7 @@ sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
 [node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "audioManager", "editorManagerCanvas", "gameManagerCanvas", "tileSet", "previewTileMap", "propertyMenu")]
 script = ExtResource("1_3ngsi")
+worldSize = Vector2i(14, 8)
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
 gameManager = NodePath("GameManager")
@@ -72,7 +73,6 @@ editorManagerCanvas = NodePath("EditorManager/CanvasLayer")
 gameManagerCanvas = NodePath("GameManager/CanvasLayer")
 tileSet = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
-worldSize = Vector2i(14, 8)
 propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
 
 [node name="AudioManager" type="Node" parent="." unique_id=62565252]

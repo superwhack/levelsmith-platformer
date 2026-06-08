@@ -4,8 +4,8 @@ extends Panel
 var filePath: String = "user://Assets";
 
 # References to images
-var newImage: Image;
 var imageToReplace: Image;
+var imageNameToReplace: String;
 
 # References to audio
 var newAudio: AudioStream;
@@ -16,13 +16,13 @@ var audioToReplace: AudioStream;
 @export var previewTileSet: TileMapLayer;
 
 @export var imagePreview: TextureRect;
+@export var imageSelect: FileDialog;
 
 # All types of tiles
 var tileTypes: Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
 
 # All types of entities
 var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyPatrol", "EnemyFlying", "Goal"];
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -124,30 +124,57 @@ func file_count_in_folder(folderName: String) -> int:
 
 func refresh_assets() -> void:
 	for i in range(tileTypes.size()):
-		change_tile_texture(i, find_image_in_folder(find_directory_by_name(tileTypes[i])), mainTileMap);
+		var tileImage: Image = find_image_in_folder(find_directory_by_name(tileTypes[i]));
+		var defaultTileImage: Image = find_image(tileTypes[i] + ".png", "res://Assets/Defaults");
+		change_tile_texture(i, tileImage if tileImage else defaultTileImage, mainTileMap);
 	pass;
 
-func replace_image(imageToReplace: Image, newImage: Image) -> void:
-	pass;
+## Clears any images in the replacement directory
+## returns: The replacement directory
+func clear_image() -> DirAccess:
+	var targetFilePath: String = find_directory_by_name(imageNameToReplace);
+	var targetDirectory: DirAccess  = DirAccess.open(targetFilePath);
+	
+	if(!targetDirectory): return;
+	var existingFiles: PackedStringArray = targetDirectory.get_files();
+	# Remove any files in the directory
+	for file in existingFiles:
+		targetDirectory.remove(file); 
+	return targetDirectory;
+
+## Replaces the currently previewed image with one chosen via file dialog.
+## newImagePath: The file path of the new image replacing the old one.x 
+func replace_image(newImagePath: String) -> void:
+	var targetFilePath: String = find_directory_by_name(imageNameToReplace);
+	var targetDirectory: DirAccess = clear_image();
+	targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
+	
+	refresh_assets();
+	imagePreview.texture = ImageTexture.create_from_image(find_image_in_folder(targetFilePath));
 
 func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 	pass;
 
-func return_to_default_image(imageName: String) -> Texture2D:
-	var defaultReplacement: Image = find_image(imageName + ".png", "res://Assets/Defaults");
-	
-	return ImageTexture.create_from_image(defaultReplacement);
+func reset_image() -> void:
+	clear_image();
+	refresh_assets();
+	imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 
-func return_to_default_audio(audioName: String) -> void:
+func reset_audio(audioName: String) -> void:
 	pass;
 
 func return_all_to_default(categoryName: String) -> void:
 	pass;
 
 func item_selected(selectedItem: AssetItem) -> void:
-	var replacementTexture = ImageTexture.create_from_image(find_image_in_folder(find_directory_by_name(selectedItem.assetName)));
-	if (!replacementTexture): imagePreview.texture = return_to_default_image(selectedItem.assetName);
-	else: imagePreview.texture = ImageTexture.create_from_image(find_image_in_folder(find_directory_by_name(selectedItem.assetName)));
+	imageNameToReplace = selectedItem.assetName;
+	imageToReplace = find_image_in_folder(find_directory_by_name(imageNameToReplace));
+	
+	var replacementTexture = ImageTexture.create_from_image(imageToReplace);
+	if (!replacementTexture): 
+		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
+	else: imagePreview.texture = ImageTexture.create_from_image(imageToReplace);
+	
 
 ## Change the texture of an atlas tile to a new image texture
 ## sourceID: Source ID of the tile being changed
@@ -243,3 +270,6 @@ func create_file_tree() -> void:
 	for type: String in entityTypes:
 		dir.make_dir_recursive(filePath + "/Entities/" + type);
 	# TODO: Add folders for animations and audio
+
+func open_image_selector() -> void:
+	imageSelect.popup_file_dialog();

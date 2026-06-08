@@ -21,6 +21,8 @@ var audioToReplace: AudioStream;
 @export var imagesTab: VBoxContainer;
 @export var animationsTab: VBoxContainer;
 
+var firstSelected: AssetItem = null;
+
 const ASSET_BUTTON = preload("res://Scenes/UI/AssetItem.tscn");
 
 # All types of tiles
@@ -42,6 +44,7 @@ func _ready() -> void:
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Entities", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
+	item_selected(firstSelected);
 	# Refresh all assets
 	refresh_assets();
 
@@ -66,6 +69,8 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 			container.add_child(newButton);
 			newButton.pressed.connect(item_selected.bind(newButton));
 			newButton.type = type;
+			if (!firstSelected):
+				firstSelected = newButton;
 
 ## Finds an image by its name
 ## imageName: Name of the image

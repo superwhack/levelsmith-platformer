@@ -13,21 +13,22 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	if rayCastRight.is_colliding():
-		direction = -1
+		direction = -1;
 	if rayCastLeft.is_colliding():
-		direction = 1
+		direction = 1;
 
-	velocity.x = direction * groundSpeed
-	velocity.y += 980 * delta
+	velocity.x = direction * groundSpeed;
+	velocity.y += 980 * delta;
 	
-	move_and_slide()
+	move_and_slide();
 	pass
 
 func _on_hurt_area_body_entered(body):
-	print("HIT:", body)
-	print("GROUPS:", body.get_groups())
+	print("HIT:", body);
+	print("GROUPS:", body.get_groups());
 	if body.is_in_group("player"):
-		body.take_damage(1)
+		body.take_damage(1);
 
 func die() -> void:
-	queue_free()
+	AudioManager.play_effect("EnemyDeath");
+	queue_free();

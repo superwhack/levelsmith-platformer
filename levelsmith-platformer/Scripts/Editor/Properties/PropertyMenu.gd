@@ -16,10 +16,6 @@ var playerAirControl : float;
 var playerFallSpeed : float;
 var playerCoyoteTime : float;
 
-# Patrolling values
-var patrollingSpeed : float;
-var patrollingRestricted : bool;
-
 # Player value sliders
 @export var playerSpeedSlider: VBoxContainer;
 @export var playerJumpSlider: VBoxContainer;
@@ -87,10 +83,9 @@ func update_sliders() -> void:
 	playerCoyoteTimeSlider.update_slider();
 	
 	# Enemies
-	patrollingSpeedSlider.value = patrollingSpeed;
-	patrollingSpeedSlider.update_slider();
-	patrollingRestrictedCheckbox.value = patrollingRestricted;
-	patrollingRestrictedCheckbox.update_checkbox();
+	if selectedEntity is Patrolling:
+		patrollingSpeedSlider.value = selectedEntity.groundSpeed;
+		patrollingRestrictedCheckbox.value = selectedEntity.restricted;
 	
 
 ## Update all of the player values based on the sliders
@@ -101,8 +96,9 @@ func update_values() -> void:
 	playerFallSpeed = playerFallSpeedSlider.value;
 	playerCoyoteTime = playerCoyoteTimeSlider.value;
 	
-	patrollingSpeed = patrollingSpeedSlider.value;
-	patrollingRestricted = patrollingRestrictedCheckbox.value;
+	if selectedEntity is Patrolling:
+		selectedEntity.groundSpeed = patrollingSpeedSlider.value;
+		selectedEntity.restricted = patrollingRestrictedCheckbox.value;
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
@@ -112,15 +108,14 @@ func _on_drag_ended() -> void:
 		presetOptions.select(4);
 		_on_preset_options_item_selected(4);
 	
-func show_menu(type: Global.EntityType) -> void:
+func show_menu() -> void:
 	playerMenu.hide();
 	patrollingMenu.hide();
-	match type:
-		Global.EntityType.PLAYER:
-			playerMenu.show();
-		Global.EntityType.PATROLLING:
-			patrollingMenu.show();
-		Global.EntityType.STATIONARY:
-			print ("Not implemented yet.");
-		Global.EntityType.FLYING:
-			print ("Not implemented yet.");
+	if selectedEntity is Patrolling:
+		patrollingSpeedSlider.value = selectedEntity.groundSpeed;
+		patrollingSpeedSlider.update_slider();
+		patrollingRestrictedCheckbox.value = selectedEntity.restricted;
+		patrollingRestrictedCheckbox.update_checkbox();
+		patrollingMenu.show();
+	else:
+		playerMenu.show();

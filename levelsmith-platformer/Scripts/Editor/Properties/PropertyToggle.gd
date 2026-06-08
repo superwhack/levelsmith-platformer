@@ -5,6 +5,8 @@ extends VBoxContainer
 @export var nameLabel: Label; 
 @export var checkBox: CheckBox;
 
+signal check_changed;
+
 # Value of the CheckBox
 var value: bool;
 
@@ -12,9 +14,11 @@ var value: bool;
 func _ready() -> void:
 	nameLabel.text = propertyName;
 
-func _process(delta: float) -> void:
-	value = checkBox.button_pressed;
-
 ## Update the checkbox value
 func update_checkbox() -> void:
 	checkBox.button_pressed = value;
+
+## Runs when the checkbox gets pressed
+func _box_clicked() -> void:
+	value = checkBox.button_pressed;
+	emit_signal("check_changed");

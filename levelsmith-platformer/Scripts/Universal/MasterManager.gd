@@ -96,7 +96,7 @@ func load_tilemap() -> void:
 		gameManager.remove_child(loadedMap);
 		loadedMap.queue_free();
 	# Load the saved map from the resource folder
-	var savedMap = load("user://SavedTileMap.tscn");
+	var savedMap = ResourceLoader.load("user://SavedTileMap.tscn");
 	# Instantiate the map as a scene instance
 	var sceneInstance = savedMap.instantiate();
 	# Add that instance to the top of the GameManager's hierarchy

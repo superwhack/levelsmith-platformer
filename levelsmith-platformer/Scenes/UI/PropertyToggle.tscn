@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cgity27eghw43"]
+[gd_scene format=3 uid="uid://d2vwie50ncny6"]
 
 [ext_resource type="Script" uid="uid://cgpg23yvvg60m" path="res://Scripts/Editor/Properties/PropertyToggle.gd" id="1_adaxu"]
 
@@ -17,3 +17,5 @@ layout_mode = 2
 
 [node name="CheckBox" type="CheckBox" parent="HBoxContainer" unique_id=472627819]
 layout_mode = 2
+
+[connection signal="pressed" from="HBoxContainer/CheckBox" to="." method="_box_clicked"]

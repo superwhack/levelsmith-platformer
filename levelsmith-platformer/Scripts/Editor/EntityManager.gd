@@ -51,8 +51,9 @@ func delete_entity (clickPosition: Vector2) -> void:
 ## Open the property menu and set the selected entity
 ## clickPosition: position that the mouse has clicked at
 func edit_properties(clickPosition: Vector2) -> void:
+	print("Clicked")
 	propertyMenu.selectedEntity = get_scene_at_cell(clickPosition);
-	propertyMenu.show_menu(tileSet.get_cell_source_id(clickPosition));
+	propertyMenu.show_menu();
 	propertyMenu.show();
 	
 ## Retrieves a reference to the scene at a specific cell in the tile set
@@ -63,7 +64,7 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 	var targetGlobalPos = tileSet.map_to_local(gridPosition) + tileSet.global_position;
 	# Iterate through each node in the tileset, if any have the same global position return it
 	for node in tileSet.get_children():
-		if node.global_position == targetGlobalPos:
+		if tileSet.local_to_map(node.global_position) == gridPosition:
 			return node;
 	return null;
 	

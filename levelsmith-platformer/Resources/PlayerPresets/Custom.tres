@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="PlayerMovementPreset" format=3]
 
-[ext_resource type="Script" path="res://Scripts/PlayerMovementPreset.gd" id="1_1qm3p"]
+[ext_resource type="Script" path="res://Scripts/Editor/Properties/PlayerMovementPreset.gd" id="1_1qm3p"]
 
 [resource]
 script = ExtResource("1_1qm3p")
-groundSpeed = 1.0
+groundSpeed = 3.3
 jumpHeight = 2.0
 airControl = 1.0
 fallSpeed = 1.0

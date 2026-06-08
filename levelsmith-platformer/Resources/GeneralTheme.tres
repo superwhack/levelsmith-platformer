@@ -1,7 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://cf0uq6i6ml5pm"]
 
 [ext_resource type="FontFile" uid="uid://ibgv3ey3taus" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="1_g6ve4"]
-[ext_resource type="FontFile" uid="uid://cgycilgp5dv06" path="res://Assets/Fonts/Variable/JetBrainsMono-VariableFont_wght.ttf" id="1_u2jud"]
+[ext_resource type="FontFile" uid="uid://dbqegiv6yp7w1" path="res://Assets/Fonts/Variable/JetBrainsMono-VariableFont_wght.ttf" id="1_u2jud"]
 [ext_resource type="StyleBox" uid="uid://cpf1gfwh4cnqm" path="res://Assets/UserInterface/DisabledStyleBox.tres" id="2_g6ve4"]
 [ext_resource type="StyleBox" uid="uid://73sk20dbjygq" path="res://Assets/UserInterface/FocusStyleBox.tres" id="3_gp8ah"]
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_rm7lu"]

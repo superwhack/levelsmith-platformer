@@ -6,6 +6,9 @@ var selectedEntity: Node2D;
 # Name displayed on property menu
 @export var entityName: Label;
 
+@export var playerMenu: VBoxContainer;
+@export var patrollingMenu: VBoxContainer;
+
 # Player values
 var playerSpeed: float;
 var playerJumpHeight : float;
@@ -13,12 +16,20 @@ var playerAirControl : float;
 var playerFallSpeed : float;
 var playerCoyoteTime : float;
 
+# Patrolling values
+var patrollingSpeed : float;
+var patrollingRestricted : bool;
+
 # Player value sliders
 @export var playerSpeedSlider: VBoxContainer;
 @export var playerJumpSlider: VBoxContainer;
 @export var playerAirControlSlider: VBoxContainer;
 @export var playerFallSpeedSlider: VBoxContainer;
 @export var playerCoyoteTimeSlider: VBoxContainer;
+
+# Patrolling inputs
+@export var patrollingSpeedSlider: VBoxContainer;
+@export var patrollingRestrictedCheckbox: VBoxContainer;
 
 # Preset Options
 @export var presetOptions: OptionButton;
@@ -75,6 +86,12 @@ func update_sliders() -> void:
 	playerCoyoteTimeSlider.value = playerCoyoteTime;
 	playerCoyoteTimeSlider.update_slider();
 	
+	# Enemies
+	patrollingSpeedSlider.value = patrollingSpeed;
+	patrollingSpeedSlider.update_slider();
+	patrollingRestrictedCheckbox.value = patrollingRestricted;
+	patrollingRestrictedCheckbox.update_checkbox();
+	
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:
@@ -83,10 +100,27 @@ func update_values() -> void:
 	playerAirControl = playerAirControlSlider.value;
 	playerFallSpeed = playerFallSpeedSlider.value;
 	playerCoyoteTime = playerCoyoteTimeSlider.value;
+	
+	patrollingSpeed = patrollingSpeedSlider.value;
+	patrollingRestricted = patrollingRestrictedCheckbox.value;
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
 	update_values();
-	update_custom();
-	presetOptions.select(4);
-	_on_preset_options_item_selected(4);
+	if playerMenu.visible:
+		update_custom();
+		presetOptions.select(4);
+		_on_preset_options_item_selected(4);
+	
+func show_menu(type: Global.EntityType) -> void:
+	playerMenu.hide();
+	patrollingMenu.hide();
+	match type:
+		Global.EntityType.PLAYER:
+			playerMenu.show();
+		Global.EntityType.PATROLLING:
+			patrollingMenu.show();
+		Global.EntityType.STATIONARY:
+			print ("Not implemented yet.");
+		Global.EntityType.FLYING:
+			print ("Not implemented yet.");

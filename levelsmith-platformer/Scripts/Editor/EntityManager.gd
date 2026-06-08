@@ -52,6 +52,7 @@ func delete_entity (clickPosition: Vector2) -> void:
 ## clickPosition: position that the mouse has clicked at
 func edit_properties(clickPosition: Vector2) -> void:
 	propertyMenu.selectedEntity = get_scene_at_cell(clickPosition);
+	propertyMenu.show_menu(tileSet.get_cell_source_id(clickPosition));
 	propertyMenu.show();
 	
 ## Retrieves a reference to the scene at a specific cell in the tile set

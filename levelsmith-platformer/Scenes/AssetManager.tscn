@@ -77,6 +77,7 @@ offset_right = 363.0
 offset_bottom = 108.0
 theme_override_font_sizes/font_size = 21
 text = "Current Asset"
+horizontal_alignment = 1
 
 [node name="PreviewWindow" type="Panel" parent="." unique_id=1394480238]
 custom_minimum_size = Vector2(400, 400)

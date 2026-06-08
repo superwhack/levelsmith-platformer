@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/TileManager.gd" id="13_7flhh"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/EntityManager.gd" id="14_pkt5f"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/PreviewManager.gd" id="15_wiuwn"]
-[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GeneralTheme.tres" id="16_bpoex"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="16_bpoex"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 

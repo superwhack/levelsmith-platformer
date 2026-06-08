@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://2ds4uof5vhcm"]
 
-[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GeneralTheme.tres" id="1_byp4v"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_byp4v"]
 [ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="2_75eu0"]
 [ext_resource type="Texture2D" uid="uid://lppoqn04jr6a" path="res://Assets/Sprites/UI/BlankDoubleChevronDown.png" id="3_n6we1"]
 [ext_resource type="Texture2D" uid="uid://b88f0rfl1f7l6" path="res://Assets/Sprites/UI/BoxChecked.png" id="4_n6we1"]

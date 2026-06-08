@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/TileManager.gd" id="13_7flhh"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/EntityManager.gd" id="14_pkt5f"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/PreviewManager.gd" id="15_wiuwn"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GeneralTheme.tres" id="16_bpoex"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -138,6 +139,34 @@ editorManager = NodePath("../..")
 toolManager = NodePath("..")
 tileSet = NodePath("../../Tiles")
 propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
+
+[node name="Control" type="Control" parent="." unique_id=1809908569]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 614.0
+offset_bottom = 455.0
+theme = ExtResource("16_bpoex")
+
+[node name="Button" type="Button" parent="Control" unique_id=169586567]
+layout_mode = 0
+offset_left = 138.0
+offset_top = 160.0
+offset_right = 162.0
+offset_bottom = 168.0
+text = "Button Text"
+
+[node name="TabBar" type="TabBar" parent="Control" unique_id=720215564]
+layout_mode = 0
+offset_left = 113.0
+offset_top = 277.0
+offset_right = 771.0
+offset_bottom = 317.0
+current_tab = 0
+tab_count = 4
+tab_0/title = "sdfdsf"
+tab_0/tooltip = "sdfsdfdf"
+tab_1/title = "sdfsdfsdfsdfsdfsdfs"
+tab_2/title = "dsfsdfsdf"
 
 [connection signal="mouse_entered" from="CanvasLayer/PlayButton" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/PlayButton" to="." method="_on_mouse_exited"]

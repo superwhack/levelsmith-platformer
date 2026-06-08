@@ -38,24 +38,34 @@ func _ready() -> void:
 	var dir = DirAccess.open(filePath);
 	if (!dir):
 		create_file_tree();
+	# Generate all buttons under their tabs
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Entities", imagesTab);
-	generate_buttons("Animations", animationsTab);
+	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
+	# Refresh all assets
 	refresh_assets();
-	pass;
 
-func generate_buttons(tab: String, container: VBoxContainer):
-	var categoryFilePath: String = find_directory_by_name(tab);
-	
+## Generate buttons for each asset
+## folder: Which folder the assets for a certain group are stored in
+## container: Which container the list of assets is stored in
+## type: What type the asset is - Image, Animation, or Audio 
+func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.AssetType = AssetItem.AssetType.IMAGE):
+	# Set the file path to the folder
+	var categoryFilePath: String = find_directory_by_name(folder);
+	# Open the folder at the path
 	var dir = DirAccess.open(categoryFilePath);
+	# If the folder is successfully opened
 	if (dir):
+		# Get all directories within the folder
 		var allDirectories = dir.get_directories();
+		# For each directory within, instantiate a button and set its properties based on the folder name
 		for directory: String in allDirectories:
 			var newButton = ASSET_BUTTON.instantiate();
 			newButton.assetName = directory;
-			newButton.displayName = directory;
+			newButton.displayName = directory.capitalize();
 			container.add_child(newButton);
 			newButton.pressed.connect(item_selected.bind(newButton));
+			newButton.type = type;
 
 ## Finds an image by its name
 ## imageName: Name of the image

@@ -66,8 +66,8 @@ func check_out_of_bounds(mousePosition: Vector2i) -> bool:
 	return false;
 
 func check_goal_exists() -> bool:
-	for x in get_parent().worldSize.x:
-		for y in get_parent().worldSize.y:
+	for x in get_parent().worldSize.x + 1:
+		for y in get_parent().worldSize.y + 1:
 			if tileSet.get_cell_source_id(Vector2(x, y)) == Global.EntityType.GOAL:
 				return true;
 	return false;

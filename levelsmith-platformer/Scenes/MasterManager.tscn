@@ -1,14 +1,16 @@
 [gd_scene format=4 uid="uid://bm5w14jlbl37k"]
 
-[ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/MasterManager.gd" id="1_3ngsi"]
-[ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/AudioManager.gd" id="2_8vbpr"]
+[ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/Universal/MasterManager.gd" id="1_3ngsi"]
+[ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/Universal/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
-[ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
-[ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/PopUpManager.gd" id="7_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="8_8vbpr"]
+[ext_resource type="Texture2D" uid="uid://dt6pg2cjbdcuv" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
+[ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
+[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -129,18 +131,18 @@ offset_right = 1914.0
 offset_bottom = 195.0
 text = "Generic PopUp Test"
 
-[node name="PopUps" type="CanvasLayer" parent="EditorManager" unique_id=1234008250]
-script = ExtResource("7_8vbpr")
-
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 
 [node name="AssetManager" parent="." unique_id=468653693 node_paths=PackedStringArray("mainTileMap", "previewTileSet") instance=ExtResource("8_8vbpr")]
 mainTileMap = NodePath("../EditorManager/Tiles")
 previewTileSet = NodePath("../EditorManager/PreviewTile")
+[node name="PopUps" type="CanvasLayer" parent="." unique_id=1234008250]
+layer = 5
+script = ExtResource("7_8vbpr")
 
 [connection signal="pressed" from="EditorManager/CanvasLayer/PlayButton" to="." method="play"]
-[connection signal="pressed" from="EditorManager/CanvasLayer/PopUpTest" to="EditorManager/PopUps" method="createTestPopUp"]
-[connection signal="pressed" from="EditorManager/CanvasLayer/GenericPopUpTest" to="EditorManager/PopUps" method="createGenericTestPopUp"]
+[connection signal="pressed" from="EditorManager/CanvasLayer/PopUpTest" to="PopUps" method="createTestPopUp"]
+[connection signal="pressed" from="EditorManager/CanvasLayer/GenericPopUpTest" to="PopUps" method="createGenericTestPopUp"]
 [connection signal="pressed" from="GameManager/CanvasLayer/PauseButton" to="." method="edit"]
 
 [editable path="EditorManager"]

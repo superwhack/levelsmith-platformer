@@ -38,7 +38,7 @@ func _process(_delta: float) -> void:
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
 	
-	playButton.modulate = Color(1, 1, 1) if playerExists else Color(1, 1, 1, 0.5);
+	playButton.modulate = Color(1, 1, 1) if playerExists && check_goal_exists() else Color(1, 1, 1, 0.5);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
@@ -63,4 +63,11 @@ func check_out_of_bounds(mousePosition: Vector2i) -> bool:
 	|| mousePosition.y < 0
 	|| mousePosition.y > get_parent().worldSize.y):
 		return true;
+	return false;
+
+func check_goal_exists() -> bool:
+	for x in get_parent().worldSize.x + 1:
+		for y in get_parent().worldSize.y + 1:
+			if tileSet.get_cell_source_id(Vector2(x, y)) == Global.EntityType.GOAL:
+				return true;
 	return false;

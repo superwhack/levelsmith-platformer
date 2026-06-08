@@ -28,7 +28,8 @@ func _ready() -> void:
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
 	ImportExportManager.make_new_level("Level01");
-	#ImportExportManager.export_level();
+	AudioManager.masterVolume = 0;
+	AudioManager.update_volume();
 	edit();
 
 ## When the level is completed, validate it and automatically return to editor
@@ -40,8 +41,6 @@ func level_complete() -> void:
 
 ## Swap to edit state
 func edit() -> void:
-	AudioManager.masterVolume = 0;
-	AudioManager.update_volume();
 	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
@@ -56,8 +55,14 @@ func edit() -> void:
 
 ## Swap to play state
 func play() -> void:
-	if (!editorManager.playerExists):
-		print("No Player Exists, Cannot Start")
+	if (!editorManager.playerExists && !editorManager.check_goal_exists()):
+		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no goal or player placed down!");
+		return;
+	elif (!editorManager.playerExists):
+		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no player placed down!");
+		return;
+	elif (!editorManager.check_goal_exists()):
+		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no goal placed down!");
 		return;
 	propertyMenu.hide();
 	AudioManager.play_music("LevelMusic");
@@ -112,4 +117,6 @@ func _process(_delta: float) -> void:
 	if (Input.is_action_just_pressed("tempSave")):
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
 	if (Input.is_action_just_pressed("tempLoad")):
-		editorManager.playerExists = ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
+		var result = ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
+		if (result != 0):
+			editorManager.playerExists = result - 1;

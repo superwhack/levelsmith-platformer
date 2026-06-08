@@ -108,19 +108,7 @@ func die() -> void:
 
 ## use raycast to detect enemy collision
 func detect_enemies() -> void:
-	move_and_slide()
-
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		var c = collision.get_collider()
-
-		if c.is_in_group("enemy"):
-			# top hit (stomp)
-			if collision.get_normal().y < -0.7:
-				c.die()
-				velocity.y = -300
-			else:
-				take_damage(1)
+	return;
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
@@ -143,7 +131,7 @@ func detect_tiles() -> void:
 			continue;
 		finishedCollisions.append(collider);
 		# Check for collisions with enemies
-		if slideCollisions[i].get_collider() is RigidBody2D:
+		if slideCollisions[i].get_collider() is CharacterBody2D:
 			# Landed on top of one, kill them and bounce
 			if downwardsRaycasts.has(slideCollisions[i]):
 				AudioManager.play_effect("EnemyDeath");

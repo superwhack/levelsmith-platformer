@@ -10,6 +10,8 @@ extends Node2D
 # Play button
 @export var playButton: Button;
 
+@export var assetManager: Control;
+
 # Mouse position variables
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
@@ -71,3 +73,6 @@ func check_goal_exists() -> bool:
 			if tileSet.get_cell_source_id(Vector2(x, y)) == Global.EntityType.GOAL:
 				return true;
 	return false;
+
+func open_asset_manager() -> void:
+	assetManager.show();

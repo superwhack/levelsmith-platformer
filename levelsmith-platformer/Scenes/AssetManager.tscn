@@ -138,6 +138,16 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Reset"
 
+[node name="CloseButton" type="Button" parent="." unique_id=334412884]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_left = 772.0
+offset_top = 522.0
+offset_right = 872.0
+offset_bottom = 572.0
+text = "Close"
+
 [connection signal="pressed" from="LoadFileButton" to="." method="open_image_selector"]
 [connection signal="file_selected" from="LoadFileButton/FileDialog" to="." method="replace_image"]
 [connection signal="pressed" from="ResetButton" to="." method="reset_image"]
+[connection signal="pressed" from="CloseButton" to="." method="close"]

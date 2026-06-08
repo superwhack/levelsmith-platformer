@@ -131,6 +131,7 @@ text = "Generic PopUp Test"
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 
 [node name="PopUps" type="CanvasLayer" parent="." unique_id=1234008250]
+layer = 5
 script = ExtResource("7_8vbpr")
 
 [connection signal="pressed" from="EditorManager/CanvasLayer/PlayButton" to="." method="play"]

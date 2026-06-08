@@ -1,8 +1,10 @@
-extends CharacterBody2D
 class_name Enemy
+extends CharacterBody2D
 
 # Health variable to adjust
 @export var health: int = 1
+
+var propertyFile : String;
 
 # Sprite reference
 #@onready var sprites: AnimatedSprite2D = $AnimatedSprite2D

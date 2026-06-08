@@ -5,6 +5,7 @@ const defaultPath := "res://Assets/Defaults/";
 ## Create a new level, cloning from the default folder
 ## name: Name of the new level, indicates where it'll go in the folder
 func make_new_level(name: String) -> void:
+	clear_enemies_folder();
 	DirAccess.make_dir_absolute("user://Levels/");
 	levelPath = "user://Levels/" + name + "/";
 	#if DirAccess.dir_exists_absolute(levelPath):
@@ -50,6 +51,7 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	CSVFile.close();
 
 func import_level(tileSet: TileMapLayer, playerData: Panel, directory: String) -> bool:
+	clear_enemies_folder();
 	levelPath = "user://Levels/" + directory + "/";
 	if !DirAccess.dir_exists_absolute(levelPath):
 		print("Level directory does not exist!")
@@ -106,3 +108,8 @@ func clone_data(directory: String = ""):
 	#var file = FileAccess.open(levelPath + "/a.txt", FileAccess.WRITE);
 	#file.store_string("TESTING");
 	#file.close();
+
+func clear_enemies_folder() -> void:
+	var files = DirAccess.get_files_at("res://Resources/Enemies/");
+	for file in files:
+		DirAccess.remove_absolute("res://Resources/Enemies/" + file);

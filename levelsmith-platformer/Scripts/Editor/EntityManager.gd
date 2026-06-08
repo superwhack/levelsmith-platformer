@@ -33,6 +33,19 @@ func place_entity(clickPosition: Vector2) -> void:
 		# If the tile is a prop, use rotation
 		if (toolManager.brushObject >= 12 && toolManager.brushObject <= 17):
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
+		# If it's an enemy, create a new property file
+		elif (toolManager.brushObject == Global.EntityType.PATROLLING):
+			var time = Time.get_ticks_msec();
+			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
+			# Wait five frames, I really don't like doing it like this but I'm not sure of a better way.
+			for frame in range(1, 5):
+				await get_tree().process_frame;
+			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
+			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
+			var newFile = ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol" + str(time) + ".tres");
+			var patrollingEnemy = get_scene_at_cell(clickPosition);
+			patrollingEnemy.propertyFile = "Patrol" + str(time);
+			patrollingEnemy.name = "Patrol" + str(time);
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
 	else:
@@ -51,7 +64,6 @@ func delete_entity (clickPosition: Vector2) -> void:
 ## Open the property menu and set the selected entity
 ## clickPosition: position that the mouse has clicked at
 func edit_properties(clickPosition: Vector2) -> void:
-	print("Clicked")
 	propertyMenu.selectedEntity = get_scene_at_cell(clickPosition);
 	propertyMenu.show_menu();
 	propertyMenu.show();
@@ -76,9 +88,7 @@ func move_entity() -> void:
 	toolManager.prevEntity = toolManager.brushObject;
 	await get_tree().process_frame;
 	toolManager.brushObject = tileSet.get_cell_source_id(editorManager.currentMousePosition);
-	if (toolManager.brushObject == Global.EntityType.PLAYER):
-		editorManager.playerExists = false;
-	tileSet.erase_cell(editorManager.currentMousePosition);
+	delete_entity(editorManager.currentMousePosition);
 	toolManager.isMoving = true;
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor

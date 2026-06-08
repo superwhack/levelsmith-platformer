@@ -18,16 +18,10 @@ func _physics_process(delta: float) -> void:
 		direction = 1;
 
 	velocity.x = direction * groundSpeed;
-	velocity.y += 980 * delta;
+	velocity += get_gravity() * delta;
 	
 	move_and_slide();
 	pass
-
-func _on_hurt_area_body_entered(body):
-	print("HIT:", body);
-	print("GROUPS:", body.get_groups());
-	if body.is_in_group("player"):
-		body.take_damage(1);
 
 func die() -> void:
 	AudioManager.play_effect("EnemyDeath");

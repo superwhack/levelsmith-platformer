@@ -68,8 +68,7 @@ func _physics_process(delta: float) -> void:
 
 ## Make the player jump
 func jump() -> void:
-	# TODO fix reference later
-	#audioManager.play_effect("PlayerJump");
+	AudioManager.play_effect("PlayerJump");
 	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input

@@ -7,9 +7,6 @@ const defaultPath := "res://Assets/Defaults/";
 func make_new_level(name: String) -> void:
 	DirAccess.make_dir_absolute("user://Levels/");
 	levelPath = "user://Levels/" + name + "/";
-	#if DirAccess.dir_exists_absolute(levelPath):
-	#	print("This level already exists!");
-	#	return;
 	# NOTE: In the future we might want to assign this elsewhere 
 	AudioManager.audioLibraryPath = levelPath + "Assets/Audio/";
 	DirAccess.make_dir_absolute(levelPath);
@@ -51,7 +48,6 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 
 func import_level(tileSet: TileMapLayer, playerData: Panel, directory: String) -> int:
 	levelPath = "user://Levels/" + directory + "/";
-	print("Attempting import...");
 	if !DirAccess.dir_exists_absolute(levelPath):
 		PopUpManager.createErrorPopUp("Level Directory Doesn't Exist!", "The directory " + levelPath + " could not be found.");
 		return 0;
@@ -59,7 +55,7 @@ func import_level(tileSet: TileMapLayer, playerData: Panel, directory: String) -
 		PopUpManager.createErrorPopUp("Level Properties Don't Exist!", "The directory " + levelPath + " does not have a file Settings.JSON.");
 		return 0;
 	if !FileAccess.file_exists(levelPath + "Tiles.CSV"):
-		PopUpManager.createErrorPopUp("Level Directory Doesn't Exist!", "The directory " + levelPath + " does not have a file Tiles.CSV.");
+		PopUpManager.createErrorPopUp("Level Tile Map Doesn't Exist!", "The directory " + levelPath + " does not have a file Tiles.CSV.");
 		return 0;
 	# Read JSON to file and close it
 	var JSONFile = FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);

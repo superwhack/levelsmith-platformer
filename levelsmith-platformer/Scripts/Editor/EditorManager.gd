@@ -6,9 +6,12 @@ extends Node2D
 
 # References to grid TileMapLayer child nodes
 @export var tileSet: TileMapLayer;
+@export var previewTileSet: TileMapLayer;
 
 # Play button
 @export var playButton: Button;
+
+@export var assetManager: Control;
 
 # Mouse position variables
 var currentMousePosition: Vector2;
@@ -71,3 +74,15 @@ func check_goal_exists() -> bool:
 			if tileSet.get_cell_source_id(Vector2(x, y)) == Global.EntityType.GOAL:
 				return true;
 	return false;
+
+func open_asset_manager() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = true;
+	previewTileSet.hide();
+	assetManager.show();
+
+func close_asset_manager() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = false;
+	previewTileSet.show();
+	assetManager.hide();

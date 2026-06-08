@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
 [ext_resource type="Texture2D" uid="uid://d21j834524jcc" path="res://icon.svg" id="3_rshqi"]
 
-[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imageSelect", "imagesTab", "animationsTab")]
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel")]
 custom_minimum_size = Vector2(900, 600)
 offset_left = 525.0
 offset_top = 219.0
@@ -14,6 +14,7 @@ imagePreview = NodePath("PreviewWindow/ImagePreview")
 imageSelect = NodePath("LoadFileButton/FileDialog")
 imagesTab = NodePath("Tabs/Images/VBoxContainer")
 animationsTab = NodePath("Tabs/Animations/VBoxContainer")
+currentAssetLabel = NodePath("CurrentAssetLabel")
 
 [node name="Tabs" type="TabContainer" parent="." unique_id=1214091300]
 custom_minimum_size = Vector2(300, 400)
@@ -66,6 +67,16 @@ offset_top = 40.0
 offset_right = 239.0
 offset_bottom = 63.0
 text = "Custom Asset Manager"
+
+[node name="CurrentAssetLabel" type="Label" parent="." unique_id=1120158356]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 224.0
+offset_top = 78.0
+offset_right = 363.0
+offset_bottom = 108.0
+theme_override_font_sizes/font_size = 21
+text = "Current Asset"
 
 [node name="PreviewWindow" type="Panel" parent="." unique_id=1394480238]
 custom_minimum_size = Vector2(400, 400)

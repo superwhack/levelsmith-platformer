@@ -20,6 +20,7 @@ var audioToReplace: AudioStream;
 
 @export var imagesTab: VBoxContainer;
 @export var animationsTab: VBoxContainer;
+@export var currentAssetLabel: Label;
 
 var firstSelected: AssetItem = null;
 
@@ -213,7 +214,7 @@ func item_selected(selectedItem: AssetItem) -> void:
 	if (!replacementTexture): 
 		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 	else: imagePreview.texture = ImageTexture.create_from_image(imageToReplace);
-	
+	currentAssetLabel.text = selectedItem.displayName;
 
 ## Change the texture of an atlas tile to a new image texture
 ## sourceID: Source ID of the tile being changed

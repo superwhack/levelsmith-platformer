@@ -18,6 +18,8 @@ func make_new_level(name: String) -> void:
 ## worldSize: Size of the world (x, y) for creating the csv file.
 func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) -> void:
 	# Create JSON for enemies and player
+	if !DirAccess.dir_exists_absolute(levelPath):
+		DirAccess.make_dir_absolute(levelPath);
 	var data_to_send = '{"enemies": [], "player": {';
 	data_to_send += '"speed": ' + str(playerData.playerSpeed) + ", ";
 	data_to_send += '"jump": ' + str(playerData.playerJumpHeight) + ", ";

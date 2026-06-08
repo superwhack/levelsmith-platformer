@@ -132,3 +132,10 @@ popup/item_0/text = "Entities"
 popup/item_0/id = 0
 popup/item_1/text = "Props"
 popup/item_1/id = 1
+
+[node name="HSlider" type="HSlider" parent="." unique_id=2036216041]
+layout_mode = 0
+offset_left = 314.0
+offset_top = 359.0
+offset_right = 678.0
+offset_bottom = 375.0

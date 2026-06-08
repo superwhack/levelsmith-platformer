@@ -15,7 +15,6 @@
 [ext_resource type="StyleBox" uid="uid://cwo782d4sgcr7" path="res://Assets/UserInterface/ScrollAreaStyleBox.tres" id="13_hrj3f"]
 [ext_resource type="StyleBox" uid="uid://c7y2n7kpvwjmu" path="res://Assets/UserInterface/HSeparatorLine.tres" id="14_vsidl"]
 [ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="15_ke4fi"]
-[ext_resource type="StyleBox" uid="uid://cwx2h3fkut8pb" path="res://Assets/UserInterface/GrabberAreaStyleBox.tres" id="16_ccokw"]
 [ext_resource type="StyleBox" uid="uid://d0dnc4expn1x0" path="res://Assets/UserInterface/SliderStyleBox.tres" id="17_5jgur"]
 [ext_resource type="StyleBox" uid="uid://kpc3pw6w1747" path="res://Assets/UserInterface/TextEntryFocusStyleBox.tres" id="18_4tmrm"]
 [ext_resource type="StyleBox" uid="uid://nqweanxgm6cj" path="res://Assets/UserInterface/TextEntryStyleBox.tres" id="19_5devf"]
@@ -66,6 +65,8 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gm0r7"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n23f4"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_du07a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pwa3"]
@@ -91,7 +92,9 @@ corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wg48r"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xtucn"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_km3k5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wg75p"]
 
 [resource]
 default_font = ExtResource("38_k2v08")
@@ -157,7 +160,7 @@ HSeparator/styles/separator = ExtResource("14_vsidl")
 HSlider/icons/grabber = ExtResource("8_km3k5")
 HSlider/icons/grabber_disabled = ExtResource("15_ke4fi")
 HSlider/icons/grabber_highlight = ExtResource("8_km3k5")
-HSlider/styles/grabber_area = ExtResource("16_ccokw")
+HSlider/styles/grabber_area = SubResource("StyleBoxEmpty_n23f4")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxEmpty_du07a")
 HSlider/styles/slider = ExtResource("17_5jgur")
 Label/colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
@@ -263,6 +266,6 @@ VScrollBar/styles/scroll_focus = ExtResource("36_3caln")
 VSeparator/styles/separator = ExtResource("37_apnec")
 VSlider/icons/grabber = ExtResource("8_km3k5")
 VSlider/icons/grabber_highlight = ExtResource("8_km3k5")
-VSlider/styles/grabber_area = ExtResource("16_ccokw")
-VSlider/styles/grabber_area_highlight = SubResource("StyleBoxEmpty_xtucn")
+VSlider/styles/grabber_area = SubResource("StyleBoxEmpty_km3k5")
+VSlider/styles/grabber_area_highlight = SubResource("StyleBoxEmpty_wg75p")
 VSlider/styles/slider = ExtResource("17_5jgur")

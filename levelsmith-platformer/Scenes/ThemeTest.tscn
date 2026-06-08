@@ -2,8 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_byp4v"]
 [ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="2_75eu0"]
-[ext_resource type="Texture2D" uid="uid://lppoqn04jr6a" path="res://Assets/Sprites/UI/BlankDoubleChevronDown.png" id="3_n6we1"]
+[ext_resource type="Texture2D" uid="uid://buk5nj35b0fuf" path="res://Assets/Sprites/UI/BlankDoubleChevronDownMedium.png" id="3_blppq"]
 [ext_resource type="Texture2D" uid="uid://b88f0rfl1f7l6" path="res://Assets/Sprites/UI/BoxChecked.png" id="4_n6we1"]
+[ext_resource type="Texture2D" uid="uid://b2doutbpyoq2i" path="res://Assets/Sprites/UI/play.png" id="5_blppq"]
 
 [node name="Control" type="Control" unique_id=1993821239]
 layout_mode = 3
@@ -30,21 +31,21 @@ text = "Button Text"
 
 [node name="Button3" type="Button" parent="." unique_id=366412493]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 113.0
-offset_right = 259.0
-offset_bottom = 143.0
+offset_left = 811.0
+offset_top = 33.0
+offset_right = 1125.0
+offset_bottom = 169.0
 text = "Button Text"
 icon = ExtResource("2_75eu0")
 
 [node name="Button4" type="Button" parent="." unique_id=653874630]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 154.0
-offset_right = 259.0
-offset_bottom = 184.0
+offset_left = 692.0
+offset_top = 192.0
+offset_right = 924.0
+offset_bottom = 233.0
 text = "Button Text"
-icon = ExtResource("3_n6we1")
+icon = ExtResource("3_blppq")
 
 [node name="TabBar" type="TabBar" parent="." unique_id=2036239913]
 layout_mode = 0
@@ -62,10 +63,10 @@ tab_2/title = "dsfsdfsdf"
 
 [node name="TextEdit" type="TextEdit" parent="." unique_id=1426495625]
 layout_mode = 0
-offset_left = 288.0
-offset_top = 11.0
-offset_right = 500.0
-offset_bottom = 142.0
+offset_left = 570.0
+offset_top = 17.0
+offset_right = 782.0
+offset_bottom = 148.0
 
 [node name="LineEdit" type="LineEdit" parent="." unique_id=357384977]
 layout_mode = 0
@@ -104,3 +105,30 @@ offset_top = 304.0
 offset_right = 489.0
 offset_bottom = 326.0
 text = "This text is not rich."
+
+[node name="PlayButton" type="Button" parent="." unique_id=845139126]
+z_index = 2
+layout_mode = 0
+offset_left = 285.0
+offset_top = 12.0
+offset_right = 549.0
+offset_bottom = 148.0
+focus_behavior_recursive = 1
+action_mode = 0
+icon = ExtResource("5_blppq")
+
+[node name="OptionButton" type="OptionButton" parent="." unique_id=711476018]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 0
+offset_left = 33.0
+offset_top = 118.0
+offset_right = 200.0
+offset_bottom = 168.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+selected = 0
+item_count = 2
+popup/item_0/text = "Entities"
+popup/item_0/id = 0
+popup/item_1/text = "Props"
+popup/item_1/id = 1

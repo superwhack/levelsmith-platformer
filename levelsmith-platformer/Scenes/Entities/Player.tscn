@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Game/Player.gd" id="1_kyqiw"]
 [ext_resource type="Resource" uid="uid://nd3ng1cl05pa" path="res://Resources/PlayerPresets/Default.tres" id="2_agccv"]
-[ext_resource type="Texture2D" uid="uid://2hfbf5bqyhy4" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
+[ext_resource type="Texture2D" uid="uid://cnosv0durnybp" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_agccv"]
 
@@ -38,6 +38,7 @@ position = Vector2(0, -50)
 target_position = Vector2(-64, 0)
 
 [node name="RayCastLeft2" type="RayCast2D" parent="." unique_id=225528529]
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(-64, 0)
 
 [node name="RayCastLeft3" type="RayCast2D" parent="." unique_id=1773931023]
@@ -49,6 +50,7 @@ position = Vector2(0, -50)
 target_position = Vector2(64, 0)
 
 [node name="RayCastRight2" type="RayCast2D" parent="." unique_id=1096570450]
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(64, 0)
 
 [node name="RayCastRight3" type="RayCast2D" parent="." unique_id=952952818]

@@ -1,10 +1,9 @@
 [gd_scene format=3 uid="uid://d2ud25a3qonvp"]
 
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
-[ext_resource type="PackedScene" uid="uid://dv7vnncwwgetg" path="res://Scenes/UI/AssetItem.tscn" id="2_50v57"]
-[ext_resource type="Texture2D" uid="uid://c5yp6ltt8f310" path="res://icon.svg" id="3_rshqi"]
+[ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="3_rshqi"]
 
-[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview")]
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imagesTab", "animationsTab")]
 custom_minimum_size = Vector2(900, 600)
 offset_left = 525.0
 offset_top = 219.0
@@ -12,6 +11,8 @@ offset_right = 1425.0
 offset_bottom = 819.0
 script = ExtResource("1_2va5h")
 imagePreview = NodePath("PreviewWindow/ImagePreview")
+imagesTab = NodePath("Tabs/Images/VBoxContainer")
+animationsTab = NodePath("Tabs/Animations/VBoxContainer")
 
 [node name="Tabs" type="TabContainer" parent="." unique_id=1214091300]
 custom_minimum_size = Vector2(300, 400)
@@ -29,38 +30,6 @@ metadata/_tab_index = 0
 [node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Images" unique_id=1654478705]
 layout_mode = 2
 
-[node name="Basic Tile" parent="Tabs/Images/VBoxContainer" unique_id=244367531 instance=ExtResource("2_50v57")]
-layout_mode = 2
-text = "Basic Tile"
-displayName = "Solid Tile"
-assetName = "Solid"
-
-[node name="One-Way Tile" parent="Tabs/Images/VBoxContainer" unique_id=348862171 instance=ExtResource("2_50v57")]
-layout_mode = 2
-displayName = "One-Way Tile"
-assetName = "OneWay"
-
-[node name="Death Tile" parent="Tabs/Images/VBoxContainer" unique_id=2092990729 instance=ExtResource("2_50v57")]
-layout_mode = 2
-displayName = "Death Tile"
-assetName = "Death"
-
-[node name="Ice Tile" parent="Tabs/Images/VBoxContainer" unique_id=74011955 instance=ExtResource("2_50v57")]
-layout_mode = 2
-text = "Ice Tile"
-displayName = "Ice Tile"
-assetName = "Ice"
-
-[node name="Sticky Tile" parent="Tabs/Images/VBoxContainer" unique_id=865713102 instance=ExtResource("2_50v57")]
-layout_mode = 2
-displayName = "Sticky Tile"
-assetName = "Sticky"
-
-[node name="Bouncy Tile" parent="Tabs/Images/VBoxContainer" unique_id=877715835 instance=ExtResource("2_50v57")]
-layout_mode = 2
-displayName = "Bouncy Tile"
-assetName = "Bounce"
-
 [node name="Animations" type="ScrollContainer" parent="Tabs" unique_id=1953296503]
 visible = false
 layout_mode = 2
@@ -68,18 +37,6 @@ metadata/_tab_index = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Animations" unique_id=1715688617]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="Tabs/Animations/VBoxContainer" unique_id=523140369]
-layout_mode = 2
-text = "setsd"
-
-[node name="Label2" type="Label" parent="Tabs/Animations/VBoxContainer" unique_id=1136090987]
-layout_mode = 2
-text = "gesgsgds"
-
-[node name="Label3" type="Label" parent="Tabs/Animations/VBoxContainer" unique_id=9584868]
-layout_mode = 2
-text = "segsd"
 
 [node name="Audio" type="ScrollContainer" parent="Tabs" unique_id=912303560]
 visible = false
@@ -131,10 +88,3 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_rshqi")
-
-[connection signal="item_selected" from="Tabs/Images/VBoxContainer/Basic Tile" to="." method="item_selected"]
-[connection signal="item_selected" from="Tabs/Images/VBoxContainer/One-Way Tile" to="." method="item_selected"]
-[connection signal="item_selected" from="Tabs/Images/VBoxContainer/Death Tile" to="." method="item_selected"]
-[connection signal="item_selected" from="Tabs/Images/VBoxContainer/Ice Tile" to="." method="item_selected"]
-[connection signal="item_selected" from="Tabs/Images/VBoxContainer/Sticky Tile" to="." method="item_selected"]
-[connection signal="item_selected" from="Tabs/Images/VBoxContainer/Bouncy Tile" to="." method="item_selected"]

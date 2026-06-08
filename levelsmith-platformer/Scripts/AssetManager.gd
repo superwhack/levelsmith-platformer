@@ -17,11 +17,19 @@ var audioToReplace: AudioStream;
 
 @export var imagePreview: TextureRect;
 
+@export var imagesTab: VBoxContainer;
+@export var animationsTab: VBoxContainer;
+
+const ASSET_BUTTON = preload("res://Scenes/UI/AssetItem.tscn");
+
 # All types of tiles
 var tileTypes: Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
 
 # All types of entities
 var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyPatrol", "EnemyFlying", "Goal"];
+
+#All animations
+var animations: Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];
 
 
 # Called when the node enters the scene tree for the first time.
@@ -30,8 +38,24 @@ func _ready() -> void:
 	var dir = DirAccess.open(filePath);
 	if (!dir):
 		create_file_tree();
+	generate_buttons("Tiles", imagesTab);
+	generate_buttons("Entities", imagesTab);
+	generate_buttons("Animations", animationsTab);
 	refresh_assets();
 	pass;
+
+func generate_buttons(tab: String, container: VBoxContainer):
+	var categoryFilePath: String = find_directory_by_name(tab);
+	
+	var dir = DirAccess.open(categoryFilePath);
+	if (dir):
+		var allDirectories = dir.get_directories();
+		for directory: String in allDirectories:
+			var newButton = ASSET_BUTTON.instantiate();
+			newButton.assetName = directory;
+			newButton.displayName = directory;
+			container.add_child(newButton);
+			newButton.pressed.connect(item_selected.bind(newButton));
 
 ## Finds an image by its name
 ## imageName: Name of the image
@@ -238,8 +262,11 @@ func create_file_tree() -> void:
 	var dir = DirAccess.open("user://");
 	# Create all folders for tile types
 	for type: String in tileTypes:
-		dir.make_dir_recursive(filePath + "/Tiles/" + type);
+		dir.make_dir_recursive(filePath + "/Images/Tiles/" + type);
 	# Create all folders for enitity types
 	for type: String in entityTypes:
-		dir.make_dir_recursive(filePath + "/Entities/" + type);
-	# TODO: Add folders for animations and audio
+		dir.make_dir_recursive(filePath + "/Images/Entities/" + type);
+	# Create all folders for animations
+	for animation: String in animations:
+		dir.make_dir_recursive(filePath + "/Animations/" + animation);
+	# TODO: Add folders for audio

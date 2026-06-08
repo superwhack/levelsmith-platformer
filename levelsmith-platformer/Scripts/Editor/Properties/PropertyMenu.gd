@@ -83,7 +83,7 @@ func update_sliders() -> void:
 	playerCoyoteTimeSlider.update_slider();
 	
 	# Enemies
-	if selectedEntity is Patrolling:
+	if selectedEntity is EnemyPatrol:
 		patrollingSpeedSlider.value = selectedEntity.groundSpeed;
 		patrollingRestrictedCheckbox.value = selectedEntity.restricted;
 	
@@ -96,7 +96,7 @@ func update_values() -> void:
 	playerFallSpeed = playerFallSpeedSlider.value;
 	playerCoyoteTime = playerCoyoteTimeSlider.value;
 	
-	if selectedEntity is Patrolling:
+	if selectedEntity is EnemyPatrol:
 		selectedEntity.groundSpeed = patrollingSpeedSlider.value;
 		selectedEntity.restricted = patrollingRestrictedCheckbox.value;
 
@@ -111,7 +111,7 @@ func _on_drag_ended() -> void:
 func show_menu() -> void:
 	playerMenu.hide();
 	patrollingMenu.hide();
-	if selectedEntity is Patrolling:
+	if selectedEntity is EnemyPatrol:
 		patrollingSpeedSlider.value = selectedEntity.groundSpeed;
 		patrollingSpeedSlider.update_slider();
 		patrollingRestrictedCheckbox.value = selectedEntity.restricted;

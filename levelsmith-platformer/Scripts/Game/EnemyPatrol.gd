@@ -1,4 +1,5 @@
 extends Enemy
+class_name EnemyPatrol
 
 # Movement variables
 @export var groundSpeed := 600

@@ -317,7 +317,3 @@ func create_file_tree() -> void:
 func open_image_selector() -> void:
 	imageSelect.title = "Replace " + imageNameToReplace;
 	imageSelect.popup_file_dialog();
-
-func close() -> void:
-	refresh_assets();
-	hide();

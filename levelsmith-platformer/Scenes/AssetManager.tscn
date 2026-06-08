@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d21j834524jcc" path="res://icon.svg" id="3_rshqi"]
 
 [node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel")]
+process_mode = 2
 custom_minimum_size = Vector2(900, 600)
 offset_left = 525.0
 offset_top = 219.0

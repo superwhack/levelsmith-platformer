@@ -6,6 +6,7 @@ extends Node2D
 
 # References to grid TileMapLayer child nodes
 @export var tileSet: TileMapLayer;
+@export var previewTileSet: TileMapLayer;
 
 # Play button
 @export var playButton: Button;
@@ -75,4 +76,13 @@ func check_goal_exists() -> bool:
 	return false;
 
 func open_asset_manager() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = true;
+	previewTileSet.hide();
 	assetManager.show();
+
+func close_asset_manager() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = false;
+	previewTileSet.show();
+	assetManager.hide();

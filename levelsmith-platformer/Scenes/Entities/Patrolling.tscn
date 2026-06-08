@@ -5,10 +5,12 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
-[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 groups=["Enemy"]]
+[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft", "rayCastRight") groups=["Enemy"]]
 collision_layer = 6
 collision_mask = 6
 script = ExtResource("1_ecr3g")
+rayCastLeft = NodePath("RayCastLeft")
+rayCastRight = NodePath("RayCastRight")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
 scale = Vector2(6.3, 6.3)

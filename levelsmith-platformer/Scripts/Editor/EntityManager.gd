@@ -8,45 +8,56 @@ extends Node2D
 # Reference to PropertyMenu for editing properties
 @export var propertyMenu: Panel;
 
+var goalCount: int = 0;
+@onready var brushObject: int = toolManager.brushObject;
+
+func _process(_delta: float) -> void:
+	editorManager.goalExists = goalCount > 0;
+	brushObject = toolManager.brushObject;
+
 ## Places down the current brush entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_entity(clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
 	if (!editorManager.isPlaceable): return;
 	
-	if (tileSet.get_cell_source_id(clickPosition) == toolManager.brushObject 
-	|| (tileSet.get_cell_source_id(clickPosition) < editorManager.tileCount 
-	&& tileSet.get_cell_source_id(clickPosition) >= 0)): 
+	var clickedTileId: int = tileSet.get_cell_source_id(clickPosition);
+	
+	if (clickedTileId == brushObject 
+	|| (clickedTileId < editorManager.tileCount 
+	&& clickedTileId >= 0)): 
 		return;
 	
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER 
-	&& toolManager.brushObject != Global.EntityType.PLAYER):
+	&& brushObject != Global.EntityType.PLAYER):
 		editorManager.playerExists = false;
 	
-	if (toolManager.brushObject == Global.EntityType.PLAYER 
-	&& !editorManager.playerExists):
-		editorManager.playerExists = true;
-		tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
-	elif (toolManager.brushObject == Global.EntityType.PLAYER):
-		return;
-	elif (toolManager.brushObject >= editorManager.tileCount):
-		# If the tile is a prop, use rotation
-		if (toolManager.brushObject >= 12 && toolManager.brushObject <= 17):
-			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
-		else:
-			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
-	else:
-		tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
+	if (brushObject == Global.EntityType.PLAYER):
+		if (editorManager.playerExists): return;
 		
+		editorManager.playerExists = true;
+		tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
+	else:
+		# If the tile is a prop, use rotation
+		if (brushObject >= Global.EntityType.PROP1):
+			tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
+		else:
+			tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
+	
+	if (brushObject == Global.EntityType.GOAL): goalCount += 1;
+
 ## Deletes an entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_entity (clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
-	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER):
-		editorManager.playerExists = false;
-		tileSet.erase_cell(clickPosition);
-	elif (tileSet.get_cell_source_id(clickPosition) >= editorManager.tileCount):
-		tileSet.erase_cell(clickPosition);
+	
+	var clickedTileId: int = tileSet.get_cell_source_id(clickPosition);
+	if (clickedTileId < editorManager.tileCount): return;
+	
+	tileSet.erase_cell(clickPosition);
+	
+	if (clickedTileId == Global.EntityType.PLAYER): editorManager.playerExists = false;
+	elif (clickedTileId == Global.EntityType.GOAL): goalCount -= 1;
 	
 ## Open the property menu and set the selected entity
 ## clickPosition: position that the mouse has clicked at
@@ -65,8 +76,8 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 		if node.global_position == targetGlobalPos:
 			return node;
 	return null;
-	
-	
+
+## Moves the entity at the clicked position
 func move_entity() -> void:
 	# NOTE: THIS COMMENT BREAKS IT, BUT WE STILL SHOULD SAVE ROTATIONS SOMEWHERE
 	#toolManager.currentObjectRotation = entityManager.tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);

@@ -65,6 +65,7 @@ func _physics_process(delta: float) -> void:
 	# Look at what the player is colliding with and apply effects
 	detect_tiles();
 	move_and_slide();
+	detect_enemies();
 
 ## Make the player jump
 func jump() -> void:
@@ -104,6 +105,22 @@ func die() -> void:
 	# TODO fix reference later
 	#audioManager.play_effect("PlayerDeath");
 	Global.death.emit();
+
+## use raycast to detect enemy collision
+func detect_enemies() -> void:
+	move_and_slide()
+
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var c = collision.get_collider()
+
+		if c.is_in_group("enemy"):
+			# top hit (stomp)
+			if collision.get_normal().y < -0.7:
+				c.die()
+				velocity.y = -300
+			else:
+				take_damage(1)
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:

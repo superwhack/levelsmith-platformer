@@ -1,7 +1,11 @@
 [gd_scene format=3 uid="uid://d2ud25a3qonvp"]
 
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
-[ext_resource type="Texture2D" uid="uid://d21j834524jcc" path="res://icon.svg" id="3_rshqi"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_rshqi"]
+[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
+[ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="3_rshqi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rshqi"]
 
 [node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel")]
 process_mode = 2
@@ -10,85 +14,56 @@ offset_left = 525.0
 offset_top = 219.0
 offset_right = 1425.0
 offset_bottom = 819.0
+theme = ExtResource("1_rshqi")
 script = ExtResource("1_2va5h")
-imagePreview = NodePath("PreviewWindow/ImagePreview")
-imageSelect = NodePath("LoadFileButton/FileDialog")
-imagesTab = NodePath("Tabs/Images/VBoxContainer")
-animationsTab = NodePath("Tabs/Animations/VBoxContainer")
-currentAssetLabel = NodePath("CurrentAssetLabel")
+imagePreview = NodePath("PanelContainer/VBoxContainer2/MainContentContainer/VBoxContainer/PreviewWindow/ImagePreview")
+imageSelect = NodePath("PanelContainer/VBoxContainer2/ButtonSpacer/ButtonContainer/LoadFileButton/FileDialog")
+imagesTab = NodePath("PanelContainer/VBoxContainer2/MainContentContainer/Tabs/Images/VBoxContainer")
+animationsTab = NodePath("PanelContainer/VBoxContainer2/MainContentContainer/Tabs/Animations/VBoxContainer")
+currentAssetLabel = NodePath("PanelContainer/VBoxContainer2/MainContentContainer/VBoxContainer/CurrentAssetLabel")
 
-[node name="Tabs" type="TabContainer" parent="." unique_id=1214091300]
-custom_minimum_size = Vector2(300, 400)
-layout_mode = 0
-offset_left = 573.0
-offset_top = 102.0
-offset_right = 873.0
-offset_bottom = 152.0
-current_tab = 0
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=285655584]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 12.0
+offset_right = -16.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_rshqi")
 
-[node name="Images" type="ScrollContainer" parent="Tabs" unique_id=40713710]
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Images" unique_id=1654478705]
-layout_mode = 2
-
-[node name="Animations" type="ScrollContainer" parent="Tabs" unique_id=1953296503]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Animations" unique_id=1715688617]
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer" unique_id=1686367830]
 layout_mode = 2
 
-[node name="Audio" type="ScrollContainer" parent="Tabs" unique_id=912303560]
-visible = false
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer2" unique_id=1534252912]
 layout_mode = 2
-metadata/_tab_index = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Audio" unique_id=1395642184]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=1550632889]
-layout_mode = 2
-text = "ewyeherh"
-
-[node name="Label2" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=967186754]
-layout_mode = 2
-text = "gesgsgds"
-
-[node name="Label3" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=583971705]
-layout_mode = 2
-text = "segsd"
-
-[node name="Title" type="Label" parent="." unique_id=1534252912]
-layout_mode = 0
-offset_left = 61.0
-offset_top = 40.0
-offset_right = 239.0
-offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("3_mhodq")
+theme_override_font_sizes/font_size = 40
 text = "Custom Asset Manager"
 
-[node name="CurrentAssetLabel" type="Label" parent="." unique_id=1120158356]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 224.0
-offset_top = 78.0
-offset_right = 363.0
-offset_bottom = 108.0
-theme_override_font_sizes/font_size = 21
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer2" unique_id=457032284]
+layout_mode = 2
+
+[node name="MainContentContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer2" unique_id=950802687]
+layout_mode = 2
+alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer2/MainContentContainer" unique_id=58018460]
+layout_mode = 2
+
+[node name="CurrentAssetLabel" type="Label" parent="PanelContainer/VBoxContainer2/MainContentContainer/VBoxContainer" unique_id=1120158356]
+layout_mode = 2
 text = "Current Asset"
 horizontal_alignment = 1
 
-[node name="PreviewWindow" type="Panel" parent="." unique_id=1394480238]
+[node name="PreviewWindow" type="Panel" parent="PanelContainer/VBoxContainer2/MainContentContainer/VBoxContainer" unique_id=1394480238]
 custom_minimum_size = Vector2(400, 400)
-layout_mode = 0
-offset_left = 89.0
-offset_top = 111.0
-offset_right = 489.0
-offset_bottom = 511.0
+layout_mode = 2
 
-[node name="ImagePreview" type="TextureRect" parent="PreviewWindow" unique_id=777284124]
+[node name="ImagePreview" type="TextureRect" parent="PanelContainer/VBoxContainer2/MainContentContainer/VBoxContainer/PreviewWindow" unique_id=777284124]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -103,20 +78,60 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_rshqi")
 
-[node name="LoadFileButton" type="Button" parent="." unique_id=857868498]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.707
-anchor_top = 0.86500007
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -0.30004883
-offset_top = -6.1035156e-05
-offset_right = -210.75604
-offset_bottom = -30.0
+[node name="Tabs" type="TabContainer" parent="PanelContainer/VBoxContainer2/MainContentContainer" unique_id=1214091300]
+layout_mode = 2
+size_flags_horizontal = 3
+current_tab = 0
+
+[node name="Images" type="ScrollContainer" parent="PanelContainer/VBoxContainer2/MainContentContainer/Tabs" unique_id=40713710]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer2/MainContentContainer/Tabs/Images" unique_id=1654478705]
+layout_mode = 2
+
+[node name="Animations" type="ScrollContainer" parent="PanelContainer/VBoxContainer2/MainContentContainer/Tabs" unique_id=1953296503]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer2/MainContentContainer/Tabs/Animations" unique_id=1715688617]
+layout_mode = 2
+
+[node name="Audio" type="ScrollContainer" parent="PanelContainer/VBoxContainer2/MainContentContainer/Tabs" unique_id=912303560]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer2/MainContentContainer/Tabs/Audio" unique_id=1395642184]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer2/MainContentContainer/Tabs/Audio/VBoxContainer" unique_id=1550632889]
+layout_mode = 2
+text = "ewyeherh"
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer2/MainContentContainer/Tabs/Audio/VBoxContainer" unique_id=967186754]
+layout_mode = 2
+text = "gesgsgds"
+
+[node name="Label3" type="Label" parent="PanelContainer/VBoxContainer2/MainContentContainer/Tabs/Audio/VBoxContainer" unique_id=583971705]
+layout_mode = 2
+text = "segsd"
+
+[node name="ButtonSpacer" type="VBoxContainer" parent="PanelContainer/VBoxContainer2" unique_id=1470477179]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 2
+
+[node name="ButtonContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer2/ButtonSpacer" unique_id=1762300532]
+layout_mode = 2
+alignment = 2
+
+[node name="LoadFileButton" type="Button" parent="PanelContainer/VBoxContainer2/ButtonSpacer/ButtonContainer" unique_id=857868498]
+layout_mode = 2
 text = "Load"
 
-[node name="FileDialog" type="FileDialog" parent="LoadFileButton" unique_id=267413043]
+[node name="FileDialog" type="FileDialog" parent="PanelContainer/VBoxContainer2/ButtonSpacer/ButtonContainer/LoadFileButton" unique_id=267413043]
 oversampling_override = 1.0
 title = "Open a File"
 position = Vector2i(0, 36)
@@ -124,31 +139,15 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.png", "*.jpeg", "*.webp", "*.svg")
 
-[node name="ResetButton" type="Button" parent="." unique_id=2035131409]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.638
-anchor_top = 0.86500007
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -0.2000122
-offset_top = -6.1035156e-05
-offset_right = -273.0
-offset_bottom = -30.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ResetButton" type="Button" parent="PanelContainer/VBoxContainer2/ButtonSpacer/ButtonContainer" unique_id=2035131409]
+layout_mode = 2
 text = "Reset"
 
-[node name="CloseButton" type="Button" parent="." unique_id=334412884]
-custom_minimum_size = Vector2(100, 50)
-layout_mode = 0
-offset_left = 772.0
-offset_top = 522.0
-offset_right = 872.0
-offset_bottom = 572.0
+[node name="CloseButton" type="Button" parent="PanelContainer/VBoxContainer2/ButtonSpacer/ButtonContainer" unique_id=334412884]
+layout_mode = 2
 text = "Close"
 
-[connection signal="pressed" from="LoadFileButton" to="." method="open_image_selector"]
-[connection signal="file_selected" from="LoadFileButton/FileDialog" to="." method="replace_image"]
-[connection signal="pressed" from="ResetButton" to="." method="reset_image"]
-[connection signal="pressed" from="CloseButton" to="." method="close"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer2/ButtonSpacer/ButtonContainer/LoadFileButton" to="." method="open_image_selector"]
+[connection signal="file_selected" from="PanelContainer/VBoxContainer2/ButtonSpacer/ButtonContainer/LoadFileButton/FileDialog" to="." method="replace_image"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer2/ButtonSpacer/ButtonContainer/ResetButton" to="." method="reset_image"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer2/ButtonSpacer/ButtonContainer/CloseButton" to="." method="close"]

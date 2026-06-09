@@ -1,9 +1,9 @@
-[gd_scene format=3 uid="uid://senog1nd1523"]
+[gd_scene format=3 uid="uid://c2l5c0wss88qr"]
 
-[ext_resource type="Texture2D" uid="uid://ygnltxfbdvg4" path="res://Assets/UserInterface/Buttons/HomeButtonDefault.png" id="1_advkd"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="1_ef2s3"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_oeklc"]
+[ext_resource type="Texture2D" uid="uid://bd4p61avbou82" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonHomeWhite.png" id="2_6fw3s"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="2_albdw"]
-[ext_resource type="Texture2D" uid="uid://ciuh2cysj5o88" path="res://Assets/UserInterface/Buttons/HomeButtonHover.png" id="2_v30ws"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="5_oeklc"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6fw3s"]
@@ -22,14 +22,12 @@ theme_override_constants/margin_top = 20
 [node name="TopLeftRow" type="HBoxContainer" parent="TopLeftAnchor" unique_id=1851750065]
 layout_mode = 2
 
-[node name="HomeButton" type="TextureButton" parent="TopLeftAnchor/TopLeftRow" unique_id=767012667]
-custom_minimum_size = Vector2(115, 50)
+[node name="HomeButton" type="Button" parent="TopLeftAnchor/TopLeftRow" unique_id=1385633318]
 layout_mode = 2
-texture_normal = ExtResource("1_advkd")
-texture_hover = ExtResource("2_v30ws")
-stretch_mode = 5
+theme = ExtResource("1_oeklc")
+icon = ExtResource("2_6fw3s")
 
-[node name="Control" type="Control" parent="TopLeftAnchor/TopLeftRow" unique_id=1725752072]
+[node name="HomeTileSpacer" type="Control" parent="TopLeftAnchor/TopLeftRow" unique_id=1725752072]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -65,9 +63,6 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_63w0a")
 layout_mode = 2
 
 [node name="ToolSwitch" parent="TopRightAnchor/TopRightRow/ToolSwitchFrame/ToolSwitchMargin" unique_id=1469240724 instance=ExtResource("2_albdw")]
-layout_mode = 2
-
-[node name="SaveButton" type="TextureButton" parent="TopRightAnchor/TopRightRow/ToolSwitchFrame" unique_id=736504717]
 layout_mode = 2
 
 [node name="BottomLeftAnchor" type="MarginContainer" parent="." unique_id=714724835]

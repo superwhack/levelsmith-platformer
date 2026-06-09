@@ -20,10 +20,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Global="*uid://ddgi8vrr1tdwj"
 AudioManager="*uid://b2na8kblsdcth"
 ImportExportManager="*uid://osd05p20la73"
 PopUpManager="*uid://balrchnavex6a"
-Global="*uid://ddgi8vrr1tdwj"
 
 [display]
 

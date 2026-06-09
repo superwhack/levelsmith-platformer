@@ -27,7 +27,7 @@ var playerExists: bool = false;
 var goalExists: bool = false;
 
 # Stores the number of tiles made
-var tileCount := Global.TileType.size();
+var tileCount : int = Global.TileType.size();
 
 ## Runs every frame during the editing state
 ## _delta: how much time has passed

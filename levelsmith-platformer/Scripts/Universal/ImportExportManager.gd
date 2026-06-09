@@ -54,6 +54,8 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 				tileRow.append(tileSet.get_cell_source_id(Vector2(currentCol, currentRow)));
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
+	
+	clone_data("user://Assets/", levelAssetPath);
 
 ## Imports a level at the specified directory.
 ## tileMap: The Tile map layer to map the level terrain to
@@ -129,6 +131,7 @@ func clone_data(from: String, to: String, directory: String = ""):
 	# Copy all file data.
 	# Erase all files in the destination folder if the source has nothing.
 	var files: PackedStringArray = DirAccess.get_files_at(from + directory);
+	print(files);
 	if (files.size() <= 0):
 		var destinationFiles: PackedStringArray = DirAccess.get_files_at(to + directory);
 		for file in destinationFiles:

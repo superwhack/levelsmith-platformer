@@ -49,6 +49,7 @@ func _ready() -> void:
 	# Refresh all assets
 	refresh_assets();
 	ImportExportManager.levelImported.connect(refresh_assets);
+	ImportExportManager.levelImported.connect(item_selected);
 
 ## Generate buttons for each asset
 ## folder: Which folder the assets for a certain group are stored in
@@ -207,7 +208,7 @@ func reset_audio(audioName: String) -> void:
 func return_all_to_default(categoryName: String) -> void:
 	pass;
 
-func item_selected(selectedItem: AssetItem) -> void:
+func item_selected(selectedItem: AssetItem = firstSelected) -> void:
 	imageNameToReplace = selectedItem.assetName;
 	imageToReplace = find_image_in_folder(find_directory_by_name(imageNameToReplace));
 	

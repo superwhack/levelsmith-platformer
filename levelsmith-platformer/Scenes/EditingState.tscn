@@ -9,7 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
 [ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
+<<<<<<< Updated upstream
 [ext_resource type="Texture2D" uid="uid://bh8waatyaurop" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
+=======
+[ext_resource type="Texture2D" uid="uid://bh8waatyaurop" path="res://Assets/Sprites/UI/Play.png" id="10_njgpr"]
+>>>>>>> Stashed changes
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
@@ -111,6 +115,7 @@ visible = false
 mainTileMap = NodePath("../../Tiles")
 previewTileSet = NodePath("../../PreviewTile")
 
+<<<<<<< Updated upstream
 [node name="AssetManagerButton" type="Button" parent="CanvasLayer" unique_id=741088811]
 custom_minimum_size = Vector2(100, 30)
 offset_left = 75.0
@@ -118,6 +123,15 @@ offset_top = 946.0
 offset_right = 297.0
 offset_bottom = 1021.0
 text = "Asset Manager"
+=======
+[node name="AssetManagerButton" type="Button" parent="CanvasLayer" unique_id=601789604]
+custom_minimum_size = Vector2(150, 75)
+offset_left = 34.0
+offset_top = 954.0
+offset_right = 184.0
+offset_bottom = 1029.0
+text = "Assets"
+>>>>>>> Stashed changes
 
 [node name="HotkeyManager" type="Node2D" parent="." unique_id=1848065233 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager")]
 script = ExtResource("10_bpoex")
@@ -155,10 +169,13 @@ toolManager = NodePath("..")
 tileSet = NodePath("../../Tiles")
 propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
 
+<<<<<<< Updated upstream
 [connection signal="mouse_entered" from="CanvasLayer/PlayButton" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/PlayButton" to="." method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/PropertyMenu" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/PropertyMenu" to="." method="_on_mouse_exited"]
+=======
+>>>>>>> Stashed changes
 [connection signal="pressed" from="CanvasLayer/AssetManager/CloseButton" to="." method="close_asset_manager"]
 [connection signal="pressed" from="CanvasLayer/AssetManagerButton" to="." method="open_asset_manager"]
 

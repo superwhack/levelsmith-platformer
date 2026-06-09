@@ -1,0 +1,154 @@
+[gd_scene format=3 uid="uid://d2ud25a3qonvp"]
+
+[ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
+[ext_resource type="Texture2D" uid="uid://d21j834524jcc" path="res://icon.svg" id="3_rshqi"]
+
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel")]
+process_mode = 2
+custom_minimum_size = Vector2(900, 600)
+offset_left = 525.0
+offset_top = 219.0
+offset_right = 1425.0
+offset_bottom = 819.0
+script = ExtResource("1_2va5h")
+imagePreview = NodePath("PreviewWindow/ImagePreview")
+imageSelect = NodePath("LoadFileButton/FileDialog")
+imagesTab = NodePath("Tabs/Images/VBoxContainer")
+animationsTab = NodePath("Tabs/Animations/VBoxContainer")
+currentAssetLabel = NodePath("CurrentAssetLabel")
+
+[node name="Tabs" type="TabContainer" parent="." unique_id=1214091300]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 0
+offset_left = 573.0
+offset_top = 102.0
+offset_right = 873.0
+offset_bottom = 152.0
+current_tab = 0
+
+[node name="Images" type="ScrollContainer" parent="Tabs" unique_id=40713710]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Images" unique_id=1654478705]
+layout_mode = 2
+
+[node name="Animations" type="ScrollContainer" parent="Tabs" unique_id=1953296503]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Animations" unique_id=1715688617]
+layout_mode = 2
+
+[node name="Audio" type="ScrollContainer" parent="Tabs" unique_id=912303560]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Audio" unique_id=1395642184]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=1550632889]
+layout_mode = 2
+text = "ewyeherh"
+
+[node name="Label2" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=967186754]
+layout_mode = 2
+text = "gesgsgds"
+
+[node name="Label3" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=583971705]
+layout_mode = 2
+text = "segsd"
+
+[node name="Title" type="Label" parent="." unique_id=1534252912]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 40.0
+offset_right = 239.0
+offset_bottom = 63.0
+text = "Custom Asset Manager"
+
+[node name="CurrentAssetLabel" type="Label" parent="." unique_id=1120158356]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 224.0
+offset_top = 78.0
+offset_right = 363.0
+offset_bottom = 108.0
+theme_override_font_sizes/font_size = 21
+text = "Current Asset"
+horizontal_alignment = 1
+
+[node name="PreviewWindow" type="Panel" parent="." unique_id=1394480238]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 0
+offset_left = 89.0
+offset_top = 111.0
+offset_right = 489.0
+offset_bottom = 511.0
+
+[node name="ImagePreview" type="TextureRect" parent="PreviewWindow" unique_id=777284124]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_rshqi")
+
+[node name="LoadFileButton" type="Button" parent="." unique_id=857868498]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.707
+anchor_top = 0.86500007
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -0.30004883
+offset_top = -6.1035156e-05
+offset_right = -210.75604
+offset_bottom = -30.0
+text = "Load"
+
+[node name="FileDialog" type="FileDialog" parent="LoadFileButton" unique_id=267413043]
+oversampling_override = 1.0
+title = "Open a File"
+position = Vector2i(0, 36)
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png", "*.jpeg", "*.webp", "*.svg")
+
+[node name="ResetButton" type="Button" parent="." unique_id=2035131409]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.638
+anchor_top = 0.86500007
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -0.2000122
+offset_top = -6.1035156e-05
+offset_right = -273.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Reset"
+
+[node name="CloseButton" type="Button" parent="." unique_id=334412884]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_left = 772.0
+offset_top = 522.0
+offset_right = 872.0
+offset_bottom = 572.0
+text = "Close"
+
+[connection signal="pressed" from="LoadFileButton" to="." method="open_image_selector"]
+[connection signal="file_selected" from="LoadFileButton/FileDialog" to="." method="replace_image"]
+[connection signal="pressed" from="ResetButton" to="." method="reset_image"]
+[connection signal="pressed" from="CloseButton" to="." method="close"]

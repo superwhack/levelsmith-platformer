@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://bwguyxq8bjrjk"]
 
+[ext_resource type="Theme" path="res://Resources/GlobalTheme.tres" id="1_afykx"]
 [ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/Editor/Properties/PropertyMenu.gd" id="1_tnep3"]
 [ext_resource type="PackedScene" uid="uid://c3ype5vn62yxp" path="res://Scenes/UI/PropertySlider.tscn" id="2_w5eld"]
-[ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
+[ext_resource type="PackedScene" uid="uid://cgity27eghw43" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
+[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_x85wq"]
 
 [node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "presetOptions")]
 anchors_preset = 15
@@ -14,6 +16,8 @@ offset_right = -81.0
 offset_bottom = -228.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_afykx")
+theme_override_styles/panel = ExtResource("2_x85wq")
 script = ExtResource("1_tnep3")
 entityName = NodePath("EntityName")
 playerMenu = NodePath("PlayerProperties")
@@ -26,6 +30,11 @@ playerCoyoteTimeSlider = NodePath("PlayerProperties/PlayerCoyoteTime")
 patrollingSpeedSlider = NodePath("PatrollingProperties/PatrollingSpeed")
 patrollingRestrictedCheckbox = NodePath("PatrollingProperties/PatrollingRestricted")
 presetOptions = NodePath("PlayerProperties/PresetOptions")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1879514987]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="." unique_id=1756571384]
 layout_mode = 0

@@ -15,7 +15,7 @@ func _process(_delta: float) -> void:
 ## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
-	if (!editorManager.isPlaceable): return;
+	if (editorManager.check_out_of_bounds(clickPosition)): return;
 	
 	# If the tool is the cursor, don't overwrite any placement
 	if (toolManager.currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
@@ -39,7 +39,7 @@ func delete_tile (clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
 	if (toolManager.currentTool == Global.Tool.CURSOR 
 	|| tileSet.get_cell_source_id(clickPosition) >= editorManager.tileCount 
-	|| !editorManager.isPlaceable):
+	|| editorManager.check_out_of_bounds(clickPosition)):
 		return;
 	tileSet.erase_cell(clickPosition);
 	

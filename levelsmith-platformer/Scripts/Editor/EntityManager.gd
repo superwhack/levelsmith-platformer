@@ -11,6 +11,8 @@ extends Node2D
 var goalCount: int = 0;
 @onready var brushObject: int = toolManager.brushObject;
 
+var movingResource: Resource;
+
 func _process(_delta: float) -> void:
 	editorManager.goalExists = goalCount > 0;
 	brushObject = toolManager.brushObject;
@@ -42,6 +44,7 @@ func place_entity(clickPosition: Vector2) -> void:
 		# If the tile is a prop, use rotation
 		if (toolManager.brushObject >= 12 && toolManager.brushObject <= 17):
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
+
 		# If it's an enemy, create a new property file
 		elif (toolManager.brushObject == Global.EntityType.PATROLLING):
 			var time = Time.get_ticks_msec();
@@ -60,12 +63,6 @@ func place_entity(clickPosition: Vector2) -> void:
 		
 		editorManager.playerExists = true;
 		tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
-	else:
-		# If the tile is a prop, use rotation
-		if (brushObject >= Global.EntityType.PROP1):
-			tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
-		else:
-			tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
 	
 	if (brushObject == Global.EntityType.GOAL): goalCount += 1;
 
@@ -113,6 +110,8 @@ func move_entity() -> void:
 	await get_tree().process_frame;
 	toolManager.brushObject = tileSet.get_cell_source_id(editorManager.currentMousePosition);
 	toolManager.currentObjectRotation = tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
+	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy:
+		movingResource = get_scene_at_cell(editorManager.currentMousePosition).propertyFile;
 	delete_entity(editorManager.currentMousePosition);
 	toolManager.isMoving = true;
 	
@@ -123,3 +122,10 @@ func drop_entity() -> void:
 		toolManager.brushObject = toolManager.prevEntity;
 	toolManager.prevEntity = -1;
 	toolManager.isMoving = false;
+	for frame in range(1, 5):
+		await get_tree().process_frame;
+	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy:
+		movingResource.position = editorManager.currentMousePosition;
+		get_scene_at_cell(editorManager.currentMousePosition).apply_script(movingResource);
+		movingResource = null;
+		editorManager.reset_enemy_positions();

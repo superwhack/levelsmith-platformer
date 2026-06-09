@@ -132,6 +132,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Close"
 
+[node name="Control" type="Control" parent="." unique_id=1803642272]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerSpeed" to="." method="_on_drag_ended"]
 [connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerJump" to="." method="_on_drag_ended"]
 [connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerAirControl" to="." method="_on_drag_ended"]

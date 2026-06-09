@@ -3,7 +3,6 @@
 [ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_byp4v"]
 [ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="2_75eu0"]
 [ext_resource type="Texture2D" uid="uid://buk5nj35b0fuf" path="res://Assets/Sprites/UI/BlankDoubleChevronDownMedium.png" id="3_blppq"]
-[ext_resource type="Texture2D" uid="uid://bkwvgm6gqpndh" path="res://Assets/Sprites/UI/TestIcon.png" id="4_ksjpt"]
 [ext_resource type="Texture2D" uid="uid://b88f0rfl1f7l6" path="res://Assets/Sprites/UI/BoxChecked.png" id="4_n6we1"]
 [ext_resource type="Texture2D" uid="uid://b2doutbpyoq2i" path="res://Assets/Sprites/UI/play.png" id="5_blppq"]
 [ext_resource type="Texture2D" uid="uid://b4uvmd0mtjmou" path="res://Assets/Sprites/UI/TestIconMedium.png" id="5_hd2lr"]
@@ -65,8 +64,8 @@ offset_left = 79.0
 offset_top = 120.0
 offset_right = 159.0
 offset_bottom = 200.0
-theme_type_variation = &"ToolButton"
-icon = ExtResource("4_ksjpt")
+theme_type_variation = &"TileButton"
+icon = ExtResource("2_75eu0")
 
 [node name="Tool Button3" type="Button" parent="." unique_id=797699856]
 layout_mode = 0

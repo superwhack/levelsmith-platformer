@@ -44,10 +44,14 @@
 [ext_resource type="FontFile" uid="uid://cgycilgp5dv06" path="res://Assets/Fonts/Variable/JetBrainsMono-VariableFont_wght.ttf" id="38_k2v08"]
 [ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="39_km3k5"]
 [ext_resource type="StyleBox" uid="uid://csnvdq0u2kbg5" path="res://Assets/UserInterface/ToolButtonFocusStyleBox.tres" id="40_g1adj"]
+[ext_resource type="StyleBox" uid="uid://blvx1jpl8wk6y" path="res://Assets/UserInterface/TileButtonFocusStyleBox.tres" id="40_ke4fi"]
 [ext_resource type="StyleBox" uid="uid://bcx2ixaf8mxjd" path="res://Assets/UserInterface/ToolButtonNormalStyleBox.tres" id="40_km3k5"]
 [ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="40_wg75p"]
+[ext_resource type="StyleBox" uid="uid://de7k1e7p5nyw8" path="res://Assets/UserInterface/TileButtonHoverStyleBox.tres" id="41_ccokw"]
 [ext_resource type="StyleBox" uid="uid://blnb73c6181oq" path="res://Assets/UserInterface/ToolButtonHoverStyleBox.tres" id="41_p21lw"]
+[ext_resource type="StyleBox" uid="uid://depwd8khx6b5m" path="res://Assets/UserInterface/TileButtonSelectStyleBox.tres" id="42_5jgur"]
 [ext_resource type="StyleBox" uid="uid://0p7omelnc5u2" path="res://Assets/UserInterface/ToolButtonSelectStyleBox.tres" id="42_hrj3f"]
+[ext_resource type="StyleBox" uid="uid://buxbdeangr5th" path="res://Assets/UserInterface/TileButtonNormalStyleBox.tres" id="43_4tmrm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2jud"]
 
@@ -256,6 +260,19 @@ TabContainer/styles/tabbar_background = SubResource("StyleBoxEmpty_wg48r")
 TextEdit/colors/font_color = Color(0, 0, 0, 1)
 TextEdit/styles/focus = ExtResource("18_4tmrm")
 TextEdit/styles/normal = ExtResource("19_5devf")
+TileButton/base_type = &"Button"
+TileButton/colors/icon_disabled_color = Color(1, 1, 1, 1)
+TileButton/colors/icon_focus_color = Color(1, 1, 1, 1)
+TileButton/colors/icon_hover_color = Color(1, 1, 1, 1)
+TileButton/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+TileButton/colors/icon_normal_color = Color(1, 1, 1, 1)
+TileButton/colors/icon_pressed_color = Color(1, 1, 1, 1)
+TileButton/constants/icon_max_width = 56
+TileButton/styles/focus = ExtResource("40_ke4fi")
+TileButton/styles/hover = ExtResource("41_ccokw")
+TileButton/styles/hover_pressed = ExtResource("42_5jgur")
+TileButton/styles/normal = ExtResource("43_4tmrm")
+TileButton/styles/pressed = ExtResource("42_5jgur")
 ToolButton/base_type = &"Button"
 ToolButton/constants/icon_max_width = 72
 ToolButton/styles/focus = ExtResource("40_g1adj")

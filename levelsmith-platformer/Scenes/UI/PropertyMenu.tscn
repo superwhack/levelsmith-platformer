@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bwguyxq8bjrjk"]
 
-[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GeneralTheme.tres" id="1_afykx"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_afykx"]
 [ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/Editor/Properties/PropertyMenu.gd" id="1_tnep3"]
 [ext_resource type="PackedScene" uid="uid://c3ype5vn62yxp" path="res://Scenes/UI/PropertySlider.tscn" id="2_w5eld"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_x85wq"]
@@ -31,8 +31,11 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 70.0
+offset_bottom = 106.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.85, 0.85)
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
@@ -131,11 +134,6 @@ theme_override_constants/margin_top = 190
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Close"
-
-[node name="Control" type="Control" parent="." unique_id=1803642272]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerSpeed" to="." method="_on_drag_ended"]
 [connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerJump" to="." method="_on_drag_ended"]

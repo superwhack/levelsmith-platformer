@@ -6,9 +6,14 @@ extends Node2D
 
 # References to grid TileMapLayer child nodes
 @export var tileSet: TileMapLayer;
+@export var previewTileSet: TileMapLayer;
 
 # Play button
 @export var playButton: Button;
+
+@export var assetManager: Control;
+
+@export var customCursorManager: Node2D;
 
 # Mouse position variables
 var currentMousePosition: Vector2;
@@ -21,6 +26,7 @@ var currentHotbarState : Global.HotbarState;
 var isValidated: bool = false;
 var isPlaceable: bool = true;
 var playerExists: bool = false;
+var goalExists: bool = false;
 
 # Stores the number of tiles made
 var tileCount := Global.TileType.size();
@@ -38,7 +44,7 @@ func _process(_delta: float) -> void:
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
 	
-	playButton.modulate = Color(1, 1, 1) if playerExists else Color(1, 1, 1, 0.5);
+	playButton.modulate = Color(1, 1, 1) if playerExists && goalExists else Color(1, 1, 1, 0.5);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
@@ -58,9 +64,17 @@ func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 ## mousePosition: Where the mouse is during this check 
 ## returns: True if the mouse is out of bounds
 func check_out_of_bounds(mousePosition: Vector2i) -> bool:
-	if (mousePosition.x < 0
-	|| mousePosition.x > get_parent().worldSize.x
-	|| mousePosition.y < 0
-	|| mousePosition.y > get_parent().worldSize.y):
-		return true;
-	return false;
+	return mousePosition.x < 0 || mousePosition.x > get_parent().worldSize.x || mousePosition.y < 0 || mousePosition.y > get_parent().worldSize.y;
+
+func open_asset_manager() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = true;
+	previewTileSet.hide();
+	customCursorManager.invalidSprite.hide();
+	assetManager.show();
+
+func close_asset_manager() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = false;
+	previewTileSet.show();
+	assetManager.hide();

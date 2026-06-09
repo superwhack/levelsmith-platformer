@@ -58,13 +58,13 @@ func edit() -> void:
 
 ## Swap to play state
 func play() -> void:
-	if (!editorManager.playerExists && !editorManager.check_goal_exists()):
+	if (!editorManager.playerExists && !editorManager.goalExists):
 		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no goal or player placed down!");
 		return;
 	elif (!editorManager.playerExists):
 		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no player placed down!");
 		return;
-	elif (!editorManager.check_goal_exists()):
+	elif (!editorManager.goalExists):
 		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no goal placed down!");
 		return;
 	propertyMenu.hide();

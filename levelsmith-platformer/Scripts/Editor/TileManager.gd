@@ -6,23 +6,32 @@ extends Node2D
 @export var tileSet : TileMapLayer;
 @export var previewTile: TileMapLayer;
 
+@onready var brushObject = toolManager.brushObject;
+
+func _process(_delta: float) -> void:
+	brushObject = toolManager.brushObject;
+
 ## Places down the current brush tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
-	if (editorManager.check_out_of_bounds(clickPosition)): return;
+	if (!editorManager.isPlaceable): return;
+	
 	# If the tool is the cursor, don't overwrite any placement
 	if (toolManager.currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(clickPosition) != -1):
 		return;
+	
+	var clickedTileId = tileSet.get_cell_source_id(clickPosition);
+	
 	# If the cell is already of the same type, or if the cell is occupied by an entity, don't overwrite
-	if (tileSet.get_cell_source_id(clickPosition) == toolManager.brushObject 
-	|| tileSet.get_cell_source_id(clickPosition) >= editorManager.tileCount): 
+	if (clickedTileId == brushObject 
+	|| clickedTileId >= editorManager.tileCount): 
 		return;
-	tileSet.erase_cell(clickPosition);
-	if (toolManager.brushObject != Global.TileType.ONEWAY):
-		tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
+	
+	if (brushObject != Global.TileType.ONEWAY):
+		tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
 	else:
-		tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO);
+		tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO);
 		
 ## Deletes a tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
@@ -30,7 +39,7 @@ func delete_tile (clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
 	if (toolManager.currentTool == Global.Tool.CURSOR 
 	|| tileSet.get_cell_source_id(clickPosition) >= editorManager.tileCount 
-	|| editorManager.check_out_of_bounds(clickPosition)):
+	|| !editorManager.isPlaceable):
 		return;
 	tileSet.erase_cell(clickPosition);
 	

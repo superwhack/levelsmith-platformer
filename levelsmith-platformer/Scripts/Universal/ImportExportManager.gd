@@ -120,16 +120,22 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 ## directory: The current directory being cloned
 func clone_data(from: String, to: String, directory: String = ""):
 	# Recursively loop through all folders
-	var childDirectories = DirAccess.get_directories_at(from + directory);
+	var childDirectories: PackedStringArray = DirAccess.get_directories_at(from + directory);
 	for currentDirectory in childDirectories:
 		var newPath = directory + currentDirectory + "/";
 		DirAccess.make_dir_absolute(to + newPath);
 		clone_data(from, to, directory + currentDirectory + "/");
 	
-	# Copy all file data
-	var files = DirAccess.get_files_at(from + directory)
-	for file in files:
-		DirAccess.copy_absolute(from + directory + file, to + directory + file);
+	# Copy all file data.
+	# Erase all files in the destination folder if the source has nothing.
+	var files: PackedStringArray = DirAccess.get_files_at(from + directory);
+	if (files.size() <= 0):
+		var destinationFiles: PackedStringArray = DirAccess.get_files_at(to + directory);
+		for file in destinationFiles:
+			DirAccess.remove_absolute(to + directory + file);
+	else:
+		for file in files:
+			DirAccess.copy_absolute(from + directory + file, to + directory + file);
 	
 	#var file = FileAccess.open(levelPath + "/a.txt", FileAccess.WRITE);
 	#file.store_string("TESTING");

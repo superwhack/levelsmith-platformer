@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bc0t4fwnf3jge" path="res://Scripts/Editor/ToolSwitch.gd" id="1_8le6k"]
 [ext_resource type="Texture2D" uid="uid://q5q5li7dya2b" path="res://Assets/UserInterface/Buttons/BrushToolButton.png" id="1_seqfd"]
+[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_bma6q"]
 [ext_resource type="Texture2D" uid="uid://dpqrngwcnamj7" path="res://Assets/UserInterface/Buttons/BrushToolButton-pressed.png" id="2_qq874"]
 [ext_resource type="Texture2D" uid="uid://bleme42h0jcag" path="res://Assets/UserInterface/Buttons/BrushToolButton-hover.png" id="3_8le6k"]
 [ext_resource type="Texture2D" uid="uid://cowiixx75s50l" path="res://Assets/UserInterface/Buttons/BoxBrushToolButton.png" id="4_y8p3r"]
@@ -20,10 +21,7 @@ script = ExtResource("1_8le6k")
 
 [node name="TileEditingToolUI" type="PanelContainer" parent="." unique_id=1533380283]
 layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="TileEditingToolUI" unique_id=117798737]
-layout_mode = 2
-color = Color(0.03529412, 0.27450982, 0.40392157, 1)
+theme_override_styles/panel = ExtResource("2_bma6q")
 
 [node name="MarginContainer" type="MarginContainer" parent="TileEditingToolUI" unique_id=41147329]
 layout_mode = 2
@@ -60,10 +58,7 @@ stretch_mode = 0
 
 [node name="EntityEditingToolsUI" type="PanelContainer" parent="." unique_id=147750149]
 layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="EntityEditingToolsUI" unique_id=115085619]
-layout_mode = 2
-color = Color(0.26666668, 0.68235296, 0.75686276, 1)
+theme_override_styles/panel = ExtResource("2_bma6q")
 
 [node name="MarginContainer" type="MarginContainer" parent="EntityEditingToolsUI" unique_id=2062202130]
 layout_mode = 2

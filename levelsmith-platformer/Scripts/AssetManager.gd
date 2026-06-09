@@ -197,6 +197,9 @@ func replace_image(newImagePath: String) -> void:
 	var targetDirectory: DirAccess = clear_image();
 	if (newImagePath.get_extension().to_lower() == "png"):
 		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
+	else:
+		print("File must be PNG format");
+		# TODO: Implement pop up
 	
 	refresh_assets();
 	var replacementImage = find_image_in_folder(targetFilePath);

@@ -1,74 +1,52 @@
 [gd_scene format=3 uid="uid://dtt02avvdvee"]
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
-[ext_resource type="Texture2D" uid="uid://dbdqxg33ixrri" path="res://Assets/Sprites/UI/Pause.png" id="2_ym18m"]
-[ext_resource type="Texture2D" uid="uid://icym7kutxamx" path="res://Assets/Sprites/UI/Reset.png" id="4_x53pn"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nfgi8"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_snfl5"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jygy8"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_habuo"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ym18m"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4i4ea"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x53pn"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o46cv"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4pdbi"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2riqt"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j23bb"]
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_snfl5"]
+[ext_resource type="Texture2D" uid="uid://bw2mins88t48f" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonRestartWhite.png" id="3_jygy8"]
+[ext_resource type="Texture2D" uid="uid://dnd75m1akapxn" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeBuildWhite.png" id="4_habuo"]
 
 [node name="GameManager" type="Node2D" unique_id=344859815]
 script = ExtResource("1_habuo")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1567020351]
 
-[node name="PauseButton" type="Button" parent="CanvasLayer" unique_id=1339685622]
-offset_left = 1629.0
-offset_top = 922.0
-offset_right = 1893.0
-offset_bottom = 1058.0
-focus_behavior_recursive = 1
-theme_override_styles/normal = SubResource("StyleBoxEmpty_nfgi8")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_snfl5")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_jygy8")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_habuo")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ym18m")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_4i4ea")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_x53pn")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_o46cv")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_4pdbi")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_2riqt")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_j23bb")
-action_mode = 0
-icon = ExtResource("2_ym18m")
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=762088827]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -148.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="ResetButton" type="Button" parent="CanvasLayer" unique_id=1815887631]
-offset_left = 1352.0
-offset_top = 922.0
-offset_right = 1616.0
-offset_bottom = 1058.0
-focus_behavior_recursive = 1
-theme_override_styles/normal = SubResource("StyleBoxEmpty_nfgi8")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_snfl5")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_jygy8")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_habuo")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ym18m")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_4i4ea")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_x53pn")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_o46cv")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_4pdbi")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_2riqt")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_j23bb")
-action_mode = 0
-icon = ExtResource("4_x53pn")
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer" unique_id=1808122079]
+layout_mode = 2
 
-[connection signal="pressed" from="CanvasLayer/ResetButton" to="." method="reset"]
+[node name="ResetButton" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer" unique_id=1815887631]
+layout_mode = 2
+size_flags_vertical = 8
+focus_behavior_recursive = 1
+theme = ExtResource("2_snfl5")
+action_mode = 0
+icon = ExtResource("3_jygy8")
+icon_alignment = 1
+
+[node name="Spacer" type="Control" parent="CanvasLayer/MarginContainer/HBoxContainer" unique_id=964069108]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PauseButton" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer" unique_id=1339685622]
+custom_minimum_size = Vector2(265, 0)
+layout_mode = 2
+focus_behavior_recursive = 1
+theme = ExtResource("2_snfl5")
+action_mode = 0
+icon = ExtResource("4_habuo")
+icon_alignment = 1
+
+[connection signal="pressed" from="CanvasLayer/MarginContainer/HBoxContainer/ResetButton" to="." method="reset"]

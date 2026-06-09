@@ -173,6 +173,11 @@ func refresh_assets() -> void:
 		var tileImage: Image = find_image_in_folder(find_directory_by_name(tileTypes[i]));
 		var defaultTileImage: Image = find_image(tileTypes[i] + ".png", "res://Assets/Defaults");
 		change_tile_texture(i, tileImage if tileImage else defaultTileImage, mainTileMap);
+		
+	for i in range(propTypes.size()):
+		var propImage: Image = find_image_in_folder(find_directory_by_name(propTypes[i]));
+		var defaultPropImage: Image = find_image(propTypes[i] + ".png", "res://Assets/Defaults");
+		change_tile_texture(Global.EntityType.PROP1 + i, propImage if propImage else defaultPropImage, mainTileMap);
 	pass;
 
 ## Clears any images in the replacement directory

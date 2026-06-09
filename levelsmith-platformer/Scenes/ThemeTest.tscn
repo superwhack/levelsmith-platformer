@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://bkwvgm6gqpndh" path="res://Assets/Sprites/UI/TestIcon.png" id="4_ksjpt"]
 [ext_resource type="Texture2D" uid="uid://b88f0rfl1f7l6" path="res://Assets/Sprites/UI/BoxChecked.png" id="4_n6we1"]
 [ext_resource type="Texture2D" uid="uid://b2doutbpyoq2i" path="res://Assets/Sprites/UI/play.png" id="5_blppq"]
+[ext_resource type="Texture2D" uid="uid://b4uvmd0mtjmou" path="res://Assets/Sprites/UI/TestIconMedium.png" id="5_hd2lr"]
+[ext_resource type="Texture2D" uid="uid://dmi32a0c74puf" path="res://Assets/Sprites/UI/TestIconMediumCropped.png" id="6_vrvwj"]
 
 [node name="Control" type="Control" unique_id=1993821239]
 layout_mode = 3
@@ -66,6 +68,24 @@ offset_bottom = 200.0
 theme_type_variation = &"ToolButton"
 icon = ExtResource("4_ksjpt")
 
+[node name="Tool Button3" type="Button" parent="." unique_id=797699856]
+layout_mode = 0
+offset_left = 181.0
+offset_top = 122.0
+offset_right = 261.0
+offset_bottom = 202.0
+theme_type_variation = &"ToolButton"
+icon = ExtResource("5_hd2lr")
+
+[node name="Tool Button4" type="Button" parent="." unique_id=810064504]
+layout_mode = 0
+offset_left = 278.0
+offset_top = 120.0
+offset_right = 358.0
+offset_bottom = 200.0
+theme_type_variation = &"ToolButton"
+icon = ExtResource("6_vrvwj")
+
 [node name="TabBar" type="TabBar" parent="." unique_id=2036239913]
 layout_mode = 0
 offset_left = 29.0
@@ -89,10 +109,10 @@ offset_bottom = 176.0
 
 [node name="LineEdit" type="LineEdit" parent="." unique_id=357384977]
 layout_mode = 0
-offset_left = 286.0
-offset_top = 185.0
-offset_right = 537.0
-offset_bottom = 221.0
+offset_left = 940.0
+offset_top = 189.0
+offset_right = 1191.0
+offset_bottom = 225.0
 
 [node name="Button5" type="Button" parent="." unique_id=320914937]
 layout_mode = 0
@@ -128,10 +148,10 @@ text = "This text is not rich."
 [node name="PlayButton" type="Button" parent="." unique_id=845139126]
 z_index = 2
 layout_mode = 0
-offset_left = 283.0
-offset_top = 40.0
-offset_right = 563.0
-offset_bottom = 176.0
+offset_left = 1141.0
+offset_top = 28.0
+offset_right = 1421.0
+offset_bottom = 164.0
 focus_behavior_recursive = 1
 action_mode = 0
 icon = ExtResource("5_blppq")

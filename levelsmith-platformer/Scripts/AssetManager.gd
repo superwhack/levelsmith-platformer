@@ -84,12 +84,12 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 		# Create and load an image from the path
 		var image = Image.new();
 		image.load(imagePath);
-		if (validate_image(image)):
-			# Return the loaded image
-			return image;
-		else:
-			print("Image not valid");
-			return null;
+		if (imagePath.get_extension().to_lower() == "png"):
+			if (validate_image(image)):
+				# Return the loaded image
+				return image;
+		print("Image not valid");
+		return null;
 		
 	# If the path does not exist, print error
 	else:
@@ -102,7 +102,6 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 func find_image_in_folder(folderPath: String) -> Image:
 	# Opens the folder at the given folderName path
 	var dir = DirAccess.open(folderPath);
-	print(folderPath)
 	# If a folder was sucessfully opened
 	if (dir):
 		# Initialize file stream
@@ -120,12 +119,12 @@ func find_image_in_folder(folderPath: String) -> Image:
 			image.load(folderPath + "/" + imageName);
 			# Close file stream
 			dir.list_dir_end();
-			if (validate_image(image)):
-				# Return loaded image
-				return image;
-			else:
-				print("Image not valid");
-				return null;
+			if (imageName.get_extension().to_lower() == "png"):
+				if (validate_image(image)):
+					# Return loaded image
+					return image;
+			print("Image not valid");
+			return null;
 	else:
 		print("Could not open file path");
 		return null;
@@ -196,7 +195,8 @@ func clear_image() -> DirAccess:
 func replace_image(newImagePath: String) -> void:
 	var targetFilePath: String = find_directory_by_name(imageNameToReplace);
 	var targetDirectory: DirAccess = clear_image();
-	targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
+	if (newImagePath.get_extension().to_lower() == "png"):
+		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
 	
 	refresh_assets();
 	var replacementImage = find_image_in_folder(targetFilePath);
@@ -237,7 +237,7 @@ func item_selected(selectedItem: AssetItem) -> void:
 ## tileMap: The tileMap being changed
 ## NOTE: Only works with images >= 128px x 128px
 func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
-	if (!validate_image(newImage)):
+	if (newImage == null):
 		return;
 	# Create a Texture2D from the image
 	var newTexture: Texture2D = ImageTexture.create_from_image(newImage);

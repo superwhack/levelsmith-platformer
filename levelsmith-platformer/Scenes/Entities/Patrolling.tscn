@@ -28,3 +28,17 @@ collision_mask = 2
 rotation = -1.5707964
 scale = Vector2(1.355, 1.355)
 collision_mask = 2
+
+[node name="RayCastDownL" type="RayCast2D" parent="." unique_id=991043695]
+position = Vector2(-75, 0)
+rotation = -3.1415925
+scale = Vector2(1.355, 1.355)
+target_position = Vector2(0, -80)
+collision_mask = 2
+
+[node name="RayCastDownR" type="RayCast2D" parent="." unique_id=15048655]
+position = Vector2(75, 0)
+rotation = -3.1415927
+scale = Vector2(1.355, 1.355)
+target_position = Vector2(0, -80)
+collision_mask = 2

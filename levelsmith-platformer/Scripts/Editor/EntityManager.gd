@@ -124,8 +124,9 @@ func drop_entity() -> void:
 	toolManager.isMoving = false;
 	for frame in range(1, 5):
 		await get_tree().process_frame;
-	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy:
+	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy && movingResource:
 		movingResource.position = editorManager.currentMousePosition;
 		get_scene_at_cell(editorManager.currentMousePosition).apply_script(movingResource);
+		ResourceSaver.save(movingResource, "res://Resources/Enemies/" + get_scene_at_cell(editorManager.currentMousePosition).name + ".tres");
 		movingResource = null;
 		editorManager.reset_enemy_positions();

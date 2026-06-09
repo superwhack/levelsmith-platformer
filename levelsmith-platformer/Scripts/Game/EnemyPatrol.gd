@@ -11,6 +11,9 @@ extends Enemy
 @export var rayCastLeft : RayCast2D;
 @export var rayCastRight : RayCast2D;
 
+@export var rayCastDownL : RayCast2D;
+@export var rayCastDownR : RayCast2D;
+
 func _physics_process(delta: float) -> void:
 	# Gravity
 	super._physics_process(delta);
@@ -24,6 +27,7 @@ func patrol_behavior() -> void:
 		direction = -1
 	if rayCastLeft.is_colliding():
 		direction = 1
+	#if restricted && 
 	velocity.x = direction * groundSpeed * 400;
 
 func assign_script(id: String, position: Vector2i) -> void:

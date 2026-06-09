@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://6vhh2keedl4q"]
 
-[ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/ErrorPopUp.gd" id="1_i0gwu"]
+[ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/Editor/PopUp/ErrorPopUp.gd" id="1_i0gwu"]
 
 [node name="PopUpBackground" type="Panel" unique_id=1027997759]
 anchors_preset = 15

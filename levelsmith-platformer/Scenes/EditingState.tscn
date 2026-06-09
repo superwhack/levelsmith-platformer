@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
 [ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
-[ext_resource type="Texture2D" uid="uid://cdt6pnj0wa52b" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
+[ext_resource type="Texture2D" uid="uid://cdt6pnj0wa52b" path="res://Assets/Sprites/UI/Play.png" id="10_njgpr"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]

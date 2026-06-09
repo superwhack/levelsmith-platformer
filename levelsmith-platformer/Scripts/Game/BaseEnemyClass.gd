@@ -4,7 +4,7 @@ extends CharacterBody2D
 # variable to adjust
 @export var health: int = 1
 @export var gravity: float = 980.0
-var propertyFile : String;
+var propertyFile : Resource;
 
 # Sprite reference
 #@onready var sprites: AnimatedSprite2D = $AnimatedSprite2D
@@ -30,3 +30,8 @@ func take_damage(amount: int = 1) -> void:
 ## Handles enemy death
 func die() -> void:
 	queue_free()
+
+func assign_script(id: String, position: Vector2i) -> void:
+	pass;
+func apply_script(file: Resource) -> void:
+	pass;

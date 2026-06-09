@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bwguyxq8bjrjk"]
 
-[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_afykx"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GeneralTheme.tres" id="1_afykx"]
 [ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/Editor/Properties/PropertyMenu.gd" id="1_tnep3"]
 [ext_resource type="PackedScene" uid="uid://c3ype5vn62yxp" path="res://Scenes/UI/PropertySlider.tscn" id="2_w5eld"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_x85wq"]
@@ -31,11 +31,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 70.0
-offset_bottom = 106.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.85, 0.85)
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
@@ -96,14 +93,13 @@ theme_override_constants/margin_bottom = 0
 [node name="PresetHBox" type="HBoxContainer" parent="MainMargin/RootVBox/PlayerProperties/PresetMargin" unique_id=1201100021]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox" unique_id=205586519]
-layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_right = 80
-
-[node name="PresetLabel" type="Label" parent="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/MarginContainer" unique_id=164513532]
+[node name="PresetLabel" type="Label" parent="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox" unique_id=164513532]
 layout_mode = 2
 text = "Preset Options "
+
+[node name="PresetSpacer" type="Control" parent="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox" unique_id=878301671]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="PresetOptions" type="OptionButton" parent="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox" unique_id=1677451211]
 layout_mode = 2
@@ -122,15 +118,15 @@ popup/item_3/id = 3
 popup/item_4/text = "Custom"
 popup/item_4/id = 4
 
+[node name="BottomSpacer" type="Control" parent="MainMargin/RootVBox" unique_id=1741289699]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MainMargin/RootVBox" unique_id=600370838]
 layout_direction = 3
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MainMargin/RootVBox/HBoxContainer" unique_id=329391286]
-layout_mode = 2
-theme_override_constants/margin_top = 190
-
-[node name="Button" type="Button" parent="MainMargin/RootVBox/HBoxContainer/MarginContainer" unique_id=429960597]
+[node name="CloseButton" type="Button" parent="MainMargin/RootVBox/HBoxContainer" unique_id=429960597]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Close"
@@ -141,4 +137,4 @@ text = "Close"
 [connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerFallSpeed" to="." method="_on_drag_ended"]
 [connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime" to="." method="_on_drag_ended"]
 [connection signal="item_selected" from="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions" to="." method="_on_preset_options_item_selected"]
-[connection signal="pressed" from="MainMargin/RootVBox/HBoxContainer/MarginContainer/Button" to="." method="close"]
+[connection signal="pressed" from="MainMargin/RootVBox/HBoxContainer/CloseButton" to="." method="close"]

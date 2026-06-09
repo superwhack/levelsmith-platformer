@@ -77,8 +77,6 @@ func check_goal_exists() -> bool:
 func reset_enemy_positions() -> void:
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
 		if (enemy.propertyFile):
-			print(enemy.propertyFile);
-			print(enemy.propertyFile.position);
 			enemy.global_position = tileSet.map_to_local(enemy.propertyFile.position);
 func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues

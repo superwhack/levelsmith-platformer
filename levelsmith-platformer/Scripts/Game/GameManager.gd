@@ -44,8 +44,6 @@ func start() -> void:
 	for enemyProperty in enemyProperties:
 		var propertyFile = load("res://Resources/Enemies/" + enemyProperty);
 		for node in tileSet.get_children():
-			print(node.global_position)
-			print(propertyFile.position)
 			if tileSet.local_to_map(node.global_position) == propertyFile.position:
 				(node as Enemy).apply_script(propertyFile);
 	player.process_mode = Node.PROCESS_MODE_INHERIT;

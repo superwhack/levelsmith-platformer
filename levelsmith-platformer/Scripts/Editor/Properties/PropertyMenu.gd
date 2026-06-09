@@ -118,7 +118,6 @@ func show_menu(resource: Resource = null) -> void:
 	patrollingMenu.hide();
 	if selectedEntity is EnemyPatrol:
 		selectedPreset = resource;
-		print(selectedPreset.position);
 		update_sliders();
 		patrollingMenu.show();
 	else:

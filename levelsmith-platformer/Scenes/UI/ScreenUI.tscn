@@ -4,7 +4,9 @@
 [ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_oeklc"]
 [ext_resource type="Texture2D" uid="uid://bd4p61avbou82" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonHomeWhite.png" id="2_6fw3s"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="2_albdw"]
+[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="5_6fw3s"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="5_oeklc"]
+[ext_resource type="Texture2D" uid="uid://brn23iof6rncf" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonSaveWhite.png" id="6_63w0a"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6fw3s"]
 
@@ -64,6 +66,22 @@ layout_mode = 2
 
 [node name="ToolSwitch" parent="TopRightAnchor/TopRightRow/ToolSwitchFrame/ToolSwitchMargin" unique_id=1469240724 instance=ExtResource("2_albdw")]
 layout_mode = 2
+
+[node name="SavePanel" type="PanelContainer" parent="TopRightAnchor/TopRightRow" unique_id=992085748]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("5_6fw3s")
+
+[node name="SaveMargin" type="MarginContainer" parent="TopRightAnchor/TopRightRow/SavePanel" unique_id=464922728]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="SaveButton" type="Button" parent="TopRightAnchor/TopRightRow/SavePanel/SaveMargin" unique_id=778830983]
+layout_mode = 2
+theme = ExtResource("1_oeklc")
+icon = ExtResource("6_63w0a")
 
 [node name="BottomLeftAnchor" type="MarginContainer" parent="." unique_id=714724835]
 anchors_preset = 2

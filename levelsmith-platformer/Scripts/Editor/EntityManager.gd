@@ -85,9 +85,8 @@ func move_entity() -> void:
 	toolManager.prevEntity = toolManager.brushObject;
 	await get_tree().process_frame;
 	toolManager.brushObject = tileSet.get_cell_source_id(editorManager.currentMousePosition);
-	if (toolManager.brushObject == Global.EntityType.PLAYER):
-		editorManager.playerExists = false;
-	tileSet.erase_cell(editorManager.currentMousePosition);
+	toolManager.currentObjectRotation = tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
+	delete_entity(editorManager.currentMousePosition);
 	toolManager.isMoving = true;
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor

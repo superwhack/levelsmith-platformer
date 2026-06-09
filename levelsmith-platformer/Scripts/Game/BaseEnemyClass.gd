@@ -1,16 +1,13 @@
 class_name Enemy
 extends CharacterBody2D
 
-# Health variable to adjust
+# variable to adjust
 @export var health: int = 1
-
+@export var gravity: float = 980.0
 var propertyFile : String;
 
 # Sprite reference
 #@onready var sprites: AnimatedSprite2D = $AnimatedSprite2D
-
-# Fixed gravity
-const GRAVITY := 980.0
 
 ## Initializing, add to the group named enemy
 func _ready() -> void:
@@ -22,7 +19,7 @@ func _physics_process(delta: float) -> void:
 
 ## Adds gravity
 func apply_gravity(delta: float) -> void:
-	velocity.y += GRAVITY * delta
+	velocity.y += gravity * delta
 
 ## Applies damage to enemy, triggered by player stomping
 func take_damage(amount: int = 1) -> void:

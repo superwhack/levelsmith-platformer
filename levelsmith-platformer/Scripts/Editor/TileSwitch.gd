@@ -72,17 +72,17 @@ func _on_patrolling_object_button_pressed() -> void:
 	
 
 # Prop Buttons
-func _on_direction_marker_prop_button_pressed() -> void:
+func _on_prop_one_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.PROP1);
 
-func _on_stop_marker_prop_button_pressed() -> void:
+func _on_prop_two_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.PROP2);
 
-func _on_start_marker_prop_button_pressed() -> void:
+func _on_prop_three_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.PROP3);
 
-func _on_end_marker_prop_button_pressed() -> void:
+func _on_prop_four_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.PROP4);
 
-func _on_goal_marker_prop_button_pressed() -> void:
+func _on_prop_five_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.PROP5);

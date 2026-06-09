@@ -176,7 +176,7 @@ visible = false
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="EndMarkerPropButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1171346932]
+[node name="PropOneButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1171346932]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -185,7 +185,7 @@ texture_normal = ExtResource("15_pggt4")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="GoalMarkerPropButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1541270030]
+[node name="PropTwoButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1541270030]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -194,7 +194,7 @@ texture_normal = ExtResource("16_h6q5o")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="DirectionMarkerPropButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1076858031]
+[node name="PropThreeButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1076858031]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -203,7 +203,7 @@ texture_normal = ExtResource("12_rf0fx")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="StartMarkerPropButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=23904667]
+[node name="PropFourButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=23904667]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -212,7 +212,7 @@ texture_normal = ExtResource("14_goodf")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="StopMarkerPropButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=390902970]
+[node name="PropFiveButton" type="TextureButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=390902970]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -232,8 +232,8 @@ stretch_mode = 0
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/EndMarkerPropButton" to="." method="_on_end_marker_prop_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/GoalMarkerPropButton" to="." method="_on_goal_marker_prop_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/DirectionMarkerPropButton" to="." method="_on_direction_marker_prop_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/StartMarkerPropButton" to="." method="_on_start_marker_prop_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/StopMarkerPropButton" to="." method="_on_stop_marker_prop_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/PropOneButton" to="." method="_on_prop_one_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/PropTwoButton" to="." method="_on_prop_two_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/PropThreeButton" to="." method="_on_prop_three_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/PropFourButton" to="." method="_on_prop_four_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/PropFiveButton" to="." method="_on_prop_five_button_pressed"]

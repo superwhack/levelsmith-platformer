@@ -26,7 +26,7 @@ func patrol_behavior() -> void:
 		direction = 1
 	velocity.x = direction * groundSpeed * 400;
 
-func assign_script(id: String, position: Vector2i) -> void:
+func assign_script(id: String, position: Vector2i) -> void:	
 	propertyFile = load("res://Resources/Enemies/Patrol" + id + ".tres");
 	name = "Patrol" + id;
 	propertyFile.position = position;

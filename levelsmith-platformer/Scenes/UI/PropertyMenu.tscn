@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://bwguyxq8bjrjk"]
 
-[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GeneralTheme.tres" id="1_afykx"]
+[ext_resource type="Theme" path="res://Resources/GlobalTheme.tres" id="1_afykx"]
 [ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/Editor/Properties/PropertyMenu.gd" id="1_tnep3"]
 [ext_resource type="PackedScene" uid="uid://c3ype5vn62yxp" path="res://Scenes/UI/PropertySlider.tscn" id="2_w5eld"]
+[ext_resource type="PackedScene" uid="uid://cgity27eghw43" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_x85wq"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "presetOptions")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "presetOptions")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -19,11 +20,15 @@ theme = ExtResource("1_afykx")
 theme_override_styles/panel = ExtResource("2_x85wq")
 script = ExtResource("1_tnep3")
 entityName = NodePath("EntityName")
+playerMenu = NodePath("PlayerProperties")
+patrollingMenu = NodePath("PatrollingProperties")
 playerSpeedSlider = NodePath("PlayerProperties/PlayerSpeed")
 playerJumpSlider = NodePath("PlayerProperties/PlayerJump")
 playerAirControlSlider = NodePath("PlayerProperties/PlayerAirControl")
 playerFallSpeedSlider = NodePath("PlayerProperties/PlayerFallSpeed")
 playerCoyoteTimeSlider = NodePath("PlayerProperties/PlayerCoyoteTime")
+patrollingSpeedSlider = NodePath("PatrollingProperties/PatrollingSpeed")
+patrollingRestrictedCheckbox = NodePath("PatrollingProperties/PatrollingRestricted")
 presetOptions = NodePath("PlayerProperties/PresetOptions")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1879514987]
@@ -56,6 +61,7 @@ theme_override_font_sizes/font_size = 24
 text = "Close"
 
 [node name="PlayerProperties" type="VBoxContainer" parent="." unique_id=1398037876]
+visible = false
 layout_mode = 0
 offset_top = 119.0
 offset_right = 400.0
@@ -97,6 +103,20 @@ popup/item_3/id = 3
 popup/item_4/text = "Custom"
 popup/item_4/id = 4
 
+[node name="PatrollingProperties" type="VBoxContainer" parent="." unique_id=1428467899]
+layout_mode = 0
+offset_top = 119.0
+offset_right = 400.0
+offset_bottom = 420.0
+
+[node name="PatrollingSpeed" parent="PatrollingProperties" unique_id=1211665616 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "Speed"
+
+[node name="PatrollingRestricted" parent="PatrollingProperties" unique_id=1482315026 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+propertyName = "Restricted"
+
 [connection signal="pressed" from="Button" to="." method="close"]
 [connection signal="drag_ended" from="PlayerProperties/PlayerSpeed" to="." method="_on_drag_ended"]
 [connection signal="drag_ended" from="PlayerProperties/PlayerJump" to="." method="_on_drag_ended"]
@@ -104,3 +124,5 @@ popup/item_4/id = 4
 [connection signal="drag_ended" from="PlayerProperties/PlayerFallSpeed" to="." method="_on_drag_ended"]
 [connection signal="drag_ended" from="PlayerProperties/PlayerCoyoteTime" to="." method="_on_drag_ended"]
 [connection signal="item_selected" from="PlayerProperties/PresetOptions" to="." method="_on_preset_options_item_selected"]
+[connection signal="drag_ended" from="PatrollingProperties/PatrollingSpeed" to="." method="_on_drag_ended"]
+[connection signal="check_changed" from="PatrollingProperties/PatrollingRestricted" to="." method="update_values"]

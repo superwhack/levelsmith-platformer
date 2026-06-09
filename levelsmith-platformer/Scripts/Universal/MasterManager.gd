@@ -121,6 +121,6 @@ func _process(_delta: float) -> void:
 	if (Input.is_action_just_pressed("tempSave")):
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
 	if (Input.is_action_just_pressed("tempLoad")):
-		var result = ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
+		var result = await ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
 		if (result != 0):
 			editorManager.playerExists = result - 1;

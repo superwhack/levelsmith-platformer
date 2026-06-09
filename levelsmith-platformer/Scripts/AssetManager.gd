@@ -84,8 +84,13 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 		# Create and load an image from the path
 		var image = Image.new();
 		image.load(imagePath);
-		# Return the loaded image
-		return image;
+		if (validate_image(image)):
+			# Return the loaded image
+			return image;
+		else:
+			print("Image not valid");
+			return null;
+		
 	# If the path does not exist, print error
 	else:
 		print("No file found");
@@ -115,8 +120,12 @@ func find_image_in_folder(folderPath: String) -> Image:
 			image.load(folderPath + "/" + imageName);
 			# Close file stream
 			dir.list_dir_end();
-			# Return loaded image
-			return image;
+			if (validate_image(image)):
+				# Return loaded image
+				return image;
+			else:
+				print("Image not valid");
+				return null;
 	else:
 		print("Could not open file path");
 		return null;
@@ -190,7 +199,11 @@ func replace_image(newImagePath: String) -> void:
 	targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
 	
 	refresh_assets();
-	imagePreview.texture = ImageTexture.create_from_image(find_image_in_folder(targetFilePath));
+	var replacementImage = find_image_in_folder(targetFilePath);
+	if (replacementImage):
+		imagePreview.texture = ImageTexture.create_from_image(replacementImage);
+	else:
+		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 
 func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 	pass;
@@ -209,11 +222,13 @@ func return_all_to_default(categoryName: String) -> void:
 func item_selected(selectedItem: AssetItem) -> void:
 	imageNameToReplace = selectedItem.assetName;
 	imageToReplace = find_image_in_folder(find_directory_by_name(imageNameToReplace));
-	
-	var replacementTexture = ImageTexture.create_from_image(imageToReplace);
-	if (!replacementTexture): 
+	if (imageToReplace):
+		var replacementTexture = ImageTexture.create_from_image(imageToReplace);
+		if (replacementTexture): 
+			imagePreview.texture = ImageTexture.create_from_image(imageToReplace);
+	else:
 		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
-	else: imagePreview.texture = ImageTexture.create_from_image(imageToReplace);
+	
 	currentAssetLabel.text = selectedItem.displayName;
 
 ## Change the texture of an atlas tile to a new image texture

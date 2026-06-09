@@ -130,3 +130,4 @@ func _process(_delta: float) -> void:
 		var result = await ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
 		if (result != 0):
 			editorManager.playerExists = result - 1;
+		editorManager.check_goal_exists();

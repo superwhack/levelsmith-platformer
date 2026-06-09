@@ -130,3 +130,11 @@ func drop_entity() -> void:
 		ResourceSaver.save(movingResource, "res://Resources/Enemies/" + get_scene_at_cell(editorManager.currentMousePosition).name + ".tres");
 		movingResource = null;
 		editorManager.reset_enemy_positions();
+
+func scan_goals(xSize: int, ySize: int) -> void:
+	goalCount = 0;
+	for x in xSize:
+		for y in ySize:
+			if tileSet.get_cell_source_id(Vector2(x, y)) == Global.EntityType.GOAL:
+				goalCount += 1;
+	editorManager.goalExists = goalCount > 0;

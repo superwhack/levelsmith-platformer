@@ -24,10 +24,16 @@ func _physics_process(delta: float) -> void:
 ## Applies horizontal movements and directional changes triggered by raycasts
 func patrol_behavior() -> void:
 	if rayCastRight.is_colliding():
-		direction = -1
+		direction = -1;
 	if rayCastLeft.is_colliding():
-		direction = 1
-	#if restricted && 
+		direction = 1;
+	# BUG: Doesn't work yet
+	if restricted && !rayCastDownL.is_colliding() && !rayCastDownR.is_colliding():
+		print("One not touching.")
+		if (!rayCastDownL.is_colliding()):
+			direction = 1;
+		elif (!rayCastDownR.is_colliding()):
+			direction = -1;
 	velocity.x = direction * groundSpeed * 400;
 
 func assign_script(id: String, position: Vector2i) -> void:

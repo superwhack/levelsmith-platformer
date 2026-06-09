@@ -140,4 +140,5 @@ script = ExtResource("7_8vbpr")
 [connection signal="pressed" from="GameManager/CanvasLayer/PauseButton" to="." method="edit"]
 
 [editable path="EditorManager"]
+[editable path="EditorManager/CanvasLayer/AssetManager"]
 [editable path="GameManager"]

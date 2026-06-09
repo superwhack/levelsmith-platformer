@@ -48,6 +48,7 @@ func _ready() -> void:
 	item_selected(firstSelected);
 	# Refresh all assets
 	refresh_assets();
+	ImportExportManager.levelImported.connect(refresh_assets);
 
 ## Generate buttons for each asset
 ## folder: Which folder the assets for a certain group are stored in

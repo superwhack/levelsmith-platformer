@@ -1,16 +1,23 @@
 extends Node
+
 var levelPath : String;
+var levelAssetPath : String;
+
 const defaultPath := "res://Assets/Defaults/";
 
+signal levelImported;
+
 ## Create a new level, cloning from the default folder
-## name: Name of the new level, indicates where it'll go in the folder
-func make_new_level(name: String) -> void:
+## levelName: Name of the new level, indicates where it'll go in the folder
+func make_new_level(levelName: String) -> void:
 	DirAccess.make_dir_absolute("user://Levels/");
-	levelPath = "user://Levels/" + name + "/";
+	levelPath = "user://Levels/" + levelName + "/";
+	levelAssetPath = levelPath + "Assets/";
 	# NOTE: In the future we might want to assign this elsewhere 
 	AudioManager.audioLibraryPath = levelPath + "Assets/Audio/";
 	DirAccess.make_dir_absolute(levelPath);
-	clone_data();
+	DirAccess.make_dir_absolute(levelAssetPath);
+	clone_data("user://Assets/", levelAssetPath);
 
 ## Export the current level
 ## tileSet: The tileSet
@@ -48,8 +55,14 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 
-func import_level(tileSet: TileMapLayer, playerData: Panel, directory: String) -> int:
+## Imports a level at the specified directory.
+## tileMap: The Tile map layer to map the level terrain to
+## playerData: The player's stats being imported
+## directory: Source level directory
+## returns: An int that depends on the state of the import
+func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -> int:
 	levelPath = "user://Levels/" + directory + "/";
+	levelAssetPath = levelPath + "Assets/"
 	if !DirAccess.dir_exists_absolute(levelPath):
 		PopUpManager.createErrorPopUp("Level Directory Doesn't Exist!", "The directory " + levelPath + " could not be found.");
 		return 0;
@@ -85,28 +98,39 @@ func import_level(tileSet: TileMapLayer, playerData: Panel, directory: String) -
 				if (int(tileData[0]) == Global.EntityType.PLAYER):
 					playerExists = true;
 				var rotatedTileData = tileData.split("|");
-				tileSet.set_cell(Vector2(col, row), int(rotatedTileData[0]), Vector2i.ZERO, int(rotatedTileData[1]));
+				tileMap.set_cell(Vector2(col, row), int(rotatedTileData[0]), Vector2i.ZERO, int(rotatedTileData[1]));
 			else:
-				tileSet.set_cell(Vector2(col, row), int(tileData), Vector2i.ZERO);
+				tileMap.set_cell(Vector2(col, row), int(tileData), Vector2i.ZERO);
 			col += 1;
 		row += 1;
 	CSVFile.close();
+	
+	clone_data(levelAssetPath, "user://Assets/");
+	levelImported.emit();
+	
+	# Int is based on state of the player in the imported level
+	# 0: Import failed
+	# 1: Import succeeded, but no player
+	# 2: Import succeeded with player
 	return int(playerExists) + 1;
 
-## Clone all of the data from the default folder 
-func clone_data(directory: String = ""):
+## Clone all of the data from the user asset folder 
+## from: the source directory
+## to: the destination directory
+## directory: The current directory being cloned
+func clone_data(from: String, to: String, directory: String = ""):
 	# Recursively loop through all folders
-	var childDirectories = DirAccess.get_directories_at(defaultPath + directory);
+	var childDirectories = DirAccess.get_directories_at(from + directory);
 	for currentDirectory in childDirectories:
 		var newPath = directory + currentDirectory + "/";
-		DirAccess.make_dir_absolute(levelPath + newPath);
-		clone_data(directory + currentDirectory + "/");
+		DirAccess.make_dir_absolute(to + newPath);
+		clone_data(from, to, directory + currentDirectory + "/");
 	
 	# Copy all file data
-	var files = DirAccess.get_files_at(defaultPath + directory)
+	var files = DirAccess.get_files_at(from + directory)
 	for file in files:
-		DirAccess.copy_absolute(defaultPath + directory + file, levelPath + directory + file);
-
+		DirAccess.copy_absolute(from + directory + file, to + directory + file);
+	
 	#var file = FileAccess.open(levelPath + "/a.txt", FileAccess.WRITE);
 	#file.store_string("TESTING");
 	#file.close();

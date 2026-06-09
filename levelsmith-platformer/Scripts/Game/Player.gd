@@ -16,11 +16,8 @@ var coyoteTimeLeft = 0;
 var spawnpoint := Vector2(0, 0);
 
 # Raycasts
-@export var raycastDownL : RayCast2D;
-@export var raycastDownR : RayCast2D;
-@export var raycastLeft : RayCast2D;
-@export var raycastRight : RayCast2D;
-@export var raycastUp : RayCast2D;
+@export var raycasts : Array[RayCast2D];
+@export var downwardsRaycasts : Array[RayCast2D];
 
 # Audio manager export
 #@export var audioManager : Node;
@@ -117,32 +114,38 @@ func detect_tiles() -> void:
 	
 	# Check all collisions with raycasts
 	var slideCollisions: Array[RayCast2D] = [];
-	if raycastDownL.is_colliding():
-		slideCollisions.push_back(raycastDownL);
-	if raycastDownR.is_colliding():
-		slideCollisions.push_back(raycastDownR);
-	if raycastLeft.is_colliding():
-		slideCollisions.push_back(raycastLeft);
-	if raycastRight.is_colliding():
-		slideCollisions.push_back(raycastRight);
-	if raycastUp.is_colliding():
-		slideCollisions.push_back(raycastUp);
+	for raycast in raycasts:
+		if raycast.is_colliding():
+			slideCollisions.push_back(raycast);
 	
 	var finishedCollisions : Array;
 	# Check all current collisions
 	for i in slideCollisions.size():
-		var collision : Vector2 = slideCollisions[i].get_collision_point();
 		var collider = slideCollisions[i].get_collider();
 		if (finishedCollisions.has(collider)):
 			continue;
 		finishedCollisions.append(collider);
+		# Check for collisions with enemies
+		if slideCollisions[i].get_collider() is RigidBody2D:
+			# Landed on top of one, kill them and bounce
+			if downwardsRaycasts.has(slideCollisions[i]):
+				AudioManager.play_effect("EnemyDeath");
+				slideCollisions[i].get_collider().queue_free();
+				if (Input.is_action_pressed("jump")):
+					velocity.y = -jumpHeight * 360;
+				else:
+					velocity.y = -jumpHeight * 180;
+				coyoteTimeLeft = 0;
+			# Ran into them or enemy dropped on head, take damage
+			else:
+				take_damage(1);
 		# Only have collisions confer effects if they are below the player
 		if slideCollisions[i].get_collider() is TileMapLayer:
 			#collider = slideCollisions[i].get_collider();
 			# Use the global coord to find tile collision
 			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position);
 			var tileData = collider.get_cell_tile_data(tilePos);
-			if tileData and (tileData.get_custom_data("name") == "hazard" || slideCollisions[i] == raycastDownL || slideCollisions[i] == raycastDownR):
+			if tileData and (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i])):
 				#print(tilePos, " ", tileData.get_custom_data("name"));
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):

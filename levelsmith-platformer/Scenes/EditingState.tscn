@@ -1,20 +1,21 @@
 [gd_scene format=4 uid="uid://dgg6vutiewgw2"]
 
-[ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/EditorManager.gd" id="1_3goer"]
+[ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/Editor/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
-[ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/GridLines.gd" id="5_2h6au"]
+[ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
 [ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
-[ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/HotkeyManager.gd" id="10_bpoex"]
+[ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
 [ext_resource type="Texture2D" uid="uid://bh8waatyaurop" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
-[ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/CustomCursor.gd" id="11_rllk2"]
-[ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/ToolManager.gd" id="12_20xd7"]
-[ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/PreviewManager.gd" id="15_wiuwn"]
+[ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
+[ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
+[ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
+[ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
+[ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
+[ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -46,11 +47,14 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_0h7mo")
 sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileSet", "playButton")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileSet", "previewTileSet", "playButton", "assetManager", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
 tileSet = NodePath("Tiles")
+previewTileSet = NodePath("PreviewTile")
 playButton = NodePath("CanvasLayer/PlayButton")
+assetManager = NodePath("CanvasLayer/AssetManager")
+customCursorManager = NodePath("CustomCursorManager")
 
 [node name="Tiles" type="TileMapLayer" parent="." unique_id=1452837543]
 tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAAAAAADAAcAAwAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAKAAYABAAAAAAAAAALAAYABAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAANAAUAAQAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAADAAkAAAAAAAAAAAACAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAD//wkAAAAAAAAAAAAJAAYABgAAAAAAAGAMAAUABgAAAAAAAGACAAUABQAAAAAAAAAGAAUABQAAAAAAAAAAAAAAAAAAAAAAAAA=")
@@ -103,6 +107,19 @@ editorManager = NodePath("../..")
 [node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
 visible = false
 
+[node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("mainTileMap", "previewTileSet") instance=ExtResource("11_bpoex")]
+visible = false
+mainTileMap = NodePath("../../Tiles")
+previewTileSet = NodePath("../../PreviewTile")
+
+[node name="AssetManagerButton" type="Button" parent="CanvasLayer" unique_id=1025084523]
+custom_minimum_size = Vector2(150, 75)
+offset_left = 54.0
+offset_top = 924.0
+offset_right = 204.0
+offset_bottom = 999.0
+text = "Assets"
+
 [node name="HotkeyManager" type="Node2D" parent="." unique_id=1848065233 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager")]
 script = ExtResource("10_bpoex")
 editorManager = NodePath("..")
@@ -139,7 +156,7 @@ toolManager = NodePath("..")
 tileSet = NodePath("../../Tiles")
 propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
 
-[connection signal="mouse_entered" from="CanvasLayer/PlayButton" to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/PlayButton" to="." method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="CanvasLayer/PropertyMenu" to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/PropertyMenu" to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/AssetManager/CloseButton" to="." method="close_asset_manager"]
+[connection signal="pressed" from="CanvasLayer/AssetManagerButton" to="." method="open_asset_manager"]
+
+[editable path="CanvasLayer/AssetManager"]

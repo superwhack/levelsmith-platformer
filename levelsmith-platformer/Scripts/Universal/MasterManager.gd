@@ -49,19 +49,22 @@ func edit() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
-	editorManagerCanvas.show()
+	editorManagerCanvas.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
+	for frame in range(1, 3):
+		await get_tree().process_frame;
+	editorManager.reset_enemy_positions();
 
 ## Swap to play state
 func play() -> void:
-	if (!editorManager.playerExists && !editorManager.check_goal_exists()):
+	if (!editorManager.playerExists && !editorManager.goalExists):
 		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no goal or player placed down!");
 		return;
 	elif (!editorManager.playerExists):
 		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no player placed down!");
 		return;
-	elif (!editorManager.check_goal_exists()):
+	elif (!editorManager.goalExists):
 		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no goal placed down!");
 		return;
 	propertyMenu.hide();
@@ -82,7 +85,7 @@ func play() -> void:
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
 	gameManager.reset();
-	gameManager.playerPreset = propertyMenu.selectedPreset;
+	gameManager.playerPreset = propertyMenu.selectedPlayerPreset;
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
@@ -111,12 +114,13 @@ func load_tilemap() -> void:
 	
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
+	gameManager.tileSet = loadedMap;
 
 ## THESE ARE TEMPORARY AND SHOULD BE CHANGED WHEN BUTTONS ARE PUT IN
 func _process(_delta: float) -> void:
 	if (Input.is_action_just_pressed("tempSave")):
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
 	if (Input.is_action_just_pressed("tempLoad")):
-		var result = ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
+		var result = await ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
 		if (result != 0):
 			editorManager.playerExists = result - 1;

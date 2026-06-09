@@ -49,9 +49,12 @@ func edit() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
-	editorManagerCanvas.show()
+	editorManagerCanvas.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
+	for frame in range(1, 3):
+		await get_tree().process_frame;
+	editorManager.reset_enemy_positions();
 
 ## Swap to play state
 func play() -> void:
@@ -82,7 +85,7 @@ func play() -> void:
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
 	gameManager.reset();
-	gameManager.playerPreset = propertyMenu.selectedPreset;
+	gameManager.playerPreset = propertyMenu.selectedPlayerPreset;
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
@@ -111,6 +114,7 @@ func load_tilemap() -> void:
 	
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
+	gameManager.tileSet = loadedMap;
 
 ## THESE ARE TEMPORARY AND SHOULD BE CHANGED WHEN BUTTONS ARE PUT IN
 func _process(_delta: float) -> void:

@@ -1,3 +1,4 @@
+class_name Player;
 extends CharacterBody2D
 
 # The player settings that can be changed in editor

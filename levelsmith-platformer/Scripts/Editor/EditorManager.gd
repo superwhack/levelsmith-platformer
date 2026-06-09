@@ -71,3 +71,11 @@ func check_goal_exists() -> bool:
 			if tileSet.get_cell_source_id(Vector2(x, y)) == Global.EntityType.GOAL:
 				return true;
 	return false;
+
+## Reset all the enemy positions to the center of their tiles.
+func reset_enemy_positions() -> void:
+	for enemy in get_tree().get_nodes_in_group("Enemy"):
+		if (enemy.propertyFile):
+			print(enemy.propertyFile);
+			print(enemy.propertyFile.position);
+			enemy.global_position = tileSet.map_to_local(enemy.propertyFile.position);

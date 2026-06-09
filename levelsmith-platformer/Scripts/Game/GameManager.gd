@@ -12,6 +12,8 @@ var goalReached := false;
 var player: CharacterBody2D;
 var playerStartingPosition: Vector2;
 
+var tileSet: TileMapLayer;
+
 var playerPreset: Resource;
 
 ## When pause is pressed, flip the current state
@@ -38,6 +40,14 @@ func start() -> void:
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
+	var enemyProperties = DirAccess.get_files_at("res://Resources/Enemies/");
+	for enemyProperty in enemyProperties:
+		var propertyFile = load("res://Resources/Enemies/" + enemyProperty);
+		for node in tileSet.get_children():
+			print(node.global_position)
+			print(propertyFile.position)
+			if tileSet.local_to_map(node.global_position) == propertyFile.position:
+				(node as Enemy).apply_script(propertyFile);
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
 

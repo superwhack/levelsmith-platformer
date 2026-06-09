@@ -43,9 +43,7 @@ func place_entity(clickPosition: Vector2) -> void:
 			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
 			var newFile = ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol" + str(time) + ".tres");
-			var patrollingEnemy = get_scene_at_cell(clickPosition);
-			patrollingEnemy.propertyFile = "Patrol" + str(time);
-			patrollingEnemy.name = "Patrol" + str(time);
+			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
 	else:
@@ -59,21 +57,25 @@ func delete_entity (clickPosition: Vector2) -> void:
 		editorManager.playerExists = false;
 		tileSet.erase_cell(clickPosition);
 	elif (tileSet.get_cell_source_id(clickPosition) >= editorManager.tileCount):
+		if get_scene_at_cell(clickPosition) is Enemy:
+			DirAccess.remove_absolute("res://Resources/Enemies/" + get_scene_at_cell(clickPosition).name + ".tres");
+			get_scene_at_cell(clickPosition).queue_free();
 		tileSet.erase_cell(clickPosition);
 	
 ## Open the property menu and set the selected entity
 ## clickPosition: position that the mouse has clicked at
 func edit_properties(clickPosition: Vector2) -> void:
 	propertyMenu.selectedEntity = get_scene_at_cell(clickPosition);
-	propertyMenu.show_menu();
+	if get_scene_at_cell(clickPosition) is Enemy:
+		propertyMenu.show_menu(get_scene_at_cell(clickPosition).propertyFile);
+	else:
+		propertyMenu.show_menu();
 	propertyMenu.show();
 	
 ## Retrieves a reference to the scene at a specific cell in the tile set
 ## gridPosition: position of the cell being checked
 ## returns: the node at the cell if there is one, null otherwise
 func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
-	# The global position of the target cell that is clicked
-	var targetGlobalPos = tileSet.map_to_local(gridPosition) + tileSet.global_position;
 	# Iterate through each node in the tileset, if any have the same global position return it
 	for node in tileSet.get_children():
 		if tileSet.local_to_map(node.global_position) == gridPosition:

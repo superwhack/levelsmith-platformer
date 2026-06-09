@@ -31,6 +31,8 @@ var playerCoyoteTime : float;
 @export var presetOptions: OptionButton;
 var selectedPreset: Resource;
 
+var selectedPlayerPreset: Resource;
+
 ## When this starts, select the default option
 func _ready() -> void:
 	_on_preset_options_item_selected(0);
@@ -51,12 +53,12 @@ func _process(delta: float) -> void:
 ## When a preset option is selected, load that preset and set all values to that preset
 ## index: the index of the preset selected
 func _on_preset_options_item_selected(index: int) -> void:
-	selectedPreset = load("res://Resources/PlayerPresets/" + presetOptions.get_item_text(index) + ".tres")
-	playerSpeed = selectedPreset.groundSpeed;
-	playerJumpHeight = selectedPreset.jumpHeight;
-	playerAirControl = selectedPreset.airControl;
-	playerFallSpeed = selectedPreset.fallSpeed;
-	playerCoyoteTime = selectedPreset.coyoteTime;
+	selectedPlayerPreset = load("res://Resources/PlayerPresets/" + presetOptions.get_item_text(index) + ".tres")
+	playerSpeed = selectedPlayerPreset.groundSpeed;
+	playerJumpHeight = selectedPlayerPreset.jumpHeight;
+	playerAirControl = selectedPlayerPreset.airControl;
+	playerFallSpeed = selectedPlayerPreset.fallSpeed;
+	playerCoyoteTime = selectedPlayerPreset.coyoteTime;
 	update_sliders();
 
 ## Load and update the custom preset, then save its changes
@@ -84,8 +86,11 @@ func update_sliders() -> void:
 	
 	# Enemies
 	if selectedEntity is EnemyPatrol:
-		patrollingSpeedSlider.value = selectedEntity.groundSpeed;
-		patrollingRestrictedCheckbox.value = selectedEntity.restricted;
+		patrollingSpeedSlider.value = selectedPreset.groundSpeed;
+		patrollingRestrictedCheckbox.value = selectedPreset.restricted;
+		patrollingSpeedSlider.update_slider();
+		patrollingRestrictedCheckbox.update_checkbox();
+
 	
 
 ## Update all of the player values based on the sliders
@@ -97,25 +102,24 @@ func update_values() -> void:
 	playerCoyoteTime = playerCoyoteTimeSlider.value;
 	
 	if selectedEntity is EnemyPatrol:
-		selectedEntity.groundSpeed = patrollingSpeedSlider.value;
-		selectedEntity.restricted = patrollingRestrictedCheckbox.value;
+		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
+		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
 	update_values();
-	if playerMenu.visible:
+	if selectedEntity is Player:
 		update_custom();
 		presetOptions.select(4);
 		_on_preset_options_item_selected(4);
 	
-func show_menu() -> void:
+func show_menu(resource: Resource = null) -> void:
 	playerMenu.hide();
 	patrollingMenu.hide();
 	if selectedEntity is EnemyPatrol:
-		patrollingSpeedSlider.value = selectedEntity.groundSpeed;
-		patrollingSpeedSlider.update_slider();
-		patrollingRestrictedCheckbox.value = selectedEntity.restricted;
-		patrollingRestrictedCheckbox.update_checkbox();
+		selectedPreset = resource;
+		print(selectedPreset.position);
+		update_sliders();
 		patrollingMenu.show();
 	else:
 		playerMenu.show();

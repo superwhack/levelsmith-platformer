@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c3ype5vn62yxp"]
 
-[ext_resource type="Script" uid="uid://u63l1aalo6tr" path="res://Scripts/PropertySlider.gd" id="1_w5nda"]
+[ext_resource type="Script" uid="uid://u63l1aalo6tr" path="res://Scripts/Editor/Properties/PropertySlider.gd" id="1_w5nda"]
 
 [node name="PropertySlider" type="VBoxContainer" unique_id=305056832 node_paths=PackedStringArray("nameLabel", "slider", "label")]
 size_flags_horizontal = 4

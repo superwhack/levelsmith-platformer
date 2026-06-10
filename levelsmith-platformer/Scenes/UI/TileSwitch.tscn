@@ -182,7 +182,6 @@ layout_mode = 2
 thisItemID = 16
 tilebar = NodePath("../../../../..")
 
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SolidTileButton" to="." method="_on_solid_tile_button_pressed"]
 [connection signal="item_selected" from="EntityPickerUI/MarginContainer/Tabs/OptionButton" to="." method="entity_dropdown_select"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]

@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="PatrollingPreset" format=3]
-
-[ext_resource type="Script" path="res://Scripts/Editor/Properties/PatrollingPreset.gd" id="1_5m8bi"]
-
-[resource]
-script = ExtResource("1_5m8bi")
-position = Vector2i(13, 4)
-groundSpeed = 1.0
-restricted = true

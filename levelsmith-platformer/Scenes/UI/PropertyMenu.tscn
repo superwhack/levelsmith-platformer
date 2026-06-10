@@ -69,22 +69,27 @@ offset_bottom = 603.0
 [node name="PlayerSpeed" parent="PlayerProperties" unique_id=305056832 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Speed"
+minMax = Vector2i(0, 5)
 
 [node name="PlayerJump" parent="PlayerProperties" unique_id=1835714671 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Jump Height"
+minMax = Vector2i(0, 5)
 
 [node name="PlayerAirControl" parent="PlayerProperties" unique_id=985825086 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Air Control"
+minMax = Vector2i(0, 1)
 
 [node name="PlayerFallSpeed" parent="PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Fall Speed"
+minMax = Vector2i(0, 5)
 
 [node name="PlayerCoyoteTime" parent="PlayerProperties" unique_id=2022302843 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Coyote Time"
+minMax = Vector2i(0, 1)
 
 [node name="PresetOptions" type="OptionButton" parent="PlayerProperties" unique_id=1677451211]
 layout_mode = 2
@@ -112,6 +117,7 @@ offset_bottom = 420.0
 [node name="PatrollingSpeed" parent="PatrollingProperties" unique_id=1211665616 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Speed"
+minMax = Vector2i(0, 2)
 
 [node name="PatrollingRestricted" parent="PatrollingProperties" unique_id=1482315026 instance=ExtResource("3_1mv14")]
 layout_mode = 2

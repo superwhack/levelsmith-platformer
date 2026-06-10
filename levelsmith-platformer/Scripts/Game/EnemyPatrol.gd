@@ -29,6 +29,8 @@ func patrol_behavior() -> void:
 		direction = -1;
 	if rayCastLeft.is_colliding():
 		direction = 1;
+	
+	# Check for running off of a tile with restricted on
 	if restricted && !(rayCastDownL.is_colliding() && rayCastDownR.is_colliding()):
 		if (!rayCastDownL.is_colliding()):
 			direction = 1;
@@ -36,9 +38,11 @@ func patrol_behavior() -> void:
 			direction = -1;
 	velocity.x = direction * groundSpeed * 400;
 	
+	# Check for collisions with other enemies and bounce
 	for currentCollision in get_slide_collision_count():
-		if get_slide_collision(currentCollision).get_collider().is_in_group("Enemy"):
-			if get_slide_collision(currentCollision).get_collider().position.x < position.x:
+		var collider = get_slide_collision(currentCollision).get_collider();
+		if collider != null && collider.is_in_group("Enemy"):
+			if collider.position.x < position.x:
 				direction = 1;
 			else:
 				direction = -1;
@@ -53,6 +57,7 @@ func assign_script(id: String, position: Vector2i) -> void:
 	propertyFile.position = position;
 	groundSpeed = propertyFile.groundSpeed; 
 	restricted = propertyFile.restricted; 
+
 func apply_script(file: Resource) -> void:
 	propertyFile = file;
 	groundSpeed = propertyFile.groundSpeed;

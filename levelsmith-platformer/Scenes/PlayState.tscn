@@ -81,6 +81,7 @@ theme_override_font_sizes/font_size = 25
 text = "Move [WASD / Arrow Keys]	     Jump [Space]"
 
 [node name="PausedScreenContainer" type="PanelContainer" parent="CanvasLayer" unique_id=610850262]
+process_mode = 2
 visible = false
 anchors_preset = 10
 anchor_right = 1.0
@@ -114,3 +115,4 @@ bbcode_enabled = true
 text = "[u][i]Game Paused[/i][/u]"
 
 [connection signal="pressed" from="CanvasLayer/BottomRightMargin/Container/ResetButton" to="." method="reset"]
+[connection signal="pressed" from="CanvasLayer/TopLeftMargin/PauseButton" to="." method="pause"]

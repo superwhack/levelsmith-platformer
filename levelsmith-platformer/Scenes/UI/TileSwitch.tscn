@@ -8,10 +8,18 @@
 [ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
 [ext_resource type="Texture2D" uid="uid://dvvkbjb1ejkoi" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
 [ext_resource type="Texture2D" uid="uid://lh0kyct8ass4" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="3_pggt4"]
 [ext_resource type="Texture2D" uid="uid://crwfvhcm3n1nc" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
+[ext_resource type="Texture2D" uid="uid://bokpof0od4saa" path="res://Assets/UserInterface/TilePlatform.png" id="4_h6q5o"]
 [ext_resource type="Texture2D" uid="uid://tercdgy7ber" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
+[ext_resource type="Texture2D" uid="uid://c78d48ueinqoh" path="res://Assets/UserInterface/TilePlatformOneWay.png" id="5_3tme8"]
+[ext_resource type="Texture2D" uid="uid://bqcpeyb2mb82r" path="res://Assets/UserInterface/TileHazard.png" id="6_xxd6f"]
+[ext_resource type="Texture2D" uid="uid://2qwt8k6fb3cc" path="res://Assets/UserInterface/TileIce.png" id="7_jyj72"]
+[ext_resource type="Texture2D" uid="uid://ovec640c38br" path="res://Assets/UserInterface/TileSticky.png" id="8_vkn71"]
 [ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="9_02cwx"]
 [ext_resource type="Texture2D" uid="uid://cnosv0durnybp" path="res://Assets/Sprites/Entities/dude.png" id="9_e1a7i"]
+[ext_resource type="Texture2D" uid="uid://dlh5rny1sjyu7" path="res://Assets/UserInterface/TileBouncy.png" id="9_f1o86"]
+[ext_resource type="Texture2D" uid="uid://b67vf2ulptixk" path="res://Assets/UserInterface/TileSlope.png" id="10_ltypp"]
 [ext_resource type="Texture2D" uid="uid://ctuv2s25s1vo6" path="res://Assets/Sprites/Entities/Props/DirectionMarker.png" id="12_rf0fx"]
 [ext_resource type="Texture2D" uid="uid://cdilnh7owg4nh" path="res://Assets/Sprites/Entities/Props/StopMarker.png" id="13_krx33"]
 [ext_resource type="Texture2D" uid="uid://clm0o8gcf4nab" path="res://Assets/Sprites/Entities/Props/StartMarker.png" id="14_goodf"]
@@ -19,7 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://dxl3blvdjwt4m" path="res://Assets/Sprites/Entities/Props/GoalMarker.png" id="16_h6q5o"]
 
 [node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab")]
-offset_right = 628.0
+offset_right = 669.0
 offset_bottom = 100.0
 theme_override_constants/separation = 4
 script = ExtResource("1_aauec")
@@ -34,17 +42,62 @@ theme_override_styles/panel = ExtResource("2_krx33")
 
 [node name="MarginContainer" type="MarginContainer" parent="TilePickerUI" unique_id=2028902409]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="Tiles" type="HBoxContainer" parent="TilePickerUI/MarginContainer" unique_id=952326033]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 8
+alignment = 1
+
+[node name="SolidButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=963860115]
+layout_mode = 2
+theme = ExtResource("3_pggt4")
+theme_type_variation = &"TileButton"
+icon = ExtResource("4_h6q5o")
+
+[node name="OnewayButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1586201939]
+layout_mode = 2
+theme = ExtResource("3_pggt4")
+theme_type_variation = &"TileButton"
+icon = ExtResource("5_3tme8")
+
+[node name="DeathButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=557548775]
+layout_mode = 2
+theme = ExtResource("3_pggt4")
+theme_type_variation = &"TileButton"
+icon = ExtResource("6_xxd6f")
+
+[node name="IceButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1134266503]
+layout_mode = 2
+theme = ExtResource("3_pggt4")
+theme_type_variation = &"TileButton"
+icon = ExtResource("7_jyj72")
+
+[node name="StickyButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1753056153]
+layout_mode = 2
+theme = ExtResource("3_pggt4")
+theme_type_variation = &"TileButton"
+icon = ExtResource("8_vkn71")
+
+[node name="BounceButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=38339817]
+layout_mode = 2
+theme = ExtResource("3_pggt4")
+theme_type_variation = &"TileButton"
+icon = ExtResource("9_f1o86")
+
+[node name="SlopeButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1166373907]
+layout_mode = 2
+theme = ExtResource("3_pggt4")
+theme_type_variation = &"TileButton"
+icon = ExtResource("10_ltypp")
 
 [node name="SolidTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=580196334]
+visible = false
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -54,6 +107,7 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="OnewayTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1125313123]
+visible = false
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -63,6 +117,7 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="DeathTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=427658681]
+visible = false
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -72,6 +127,7 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="IceTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=423141264]
+visible = false
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -81,6 +137,7 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="StickyTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=928704748]
+visible = false
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -90,6 +147,7 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="BounceTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1472925597]
+visible = false
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -99,6 +157,7 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="SlopeTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1746073645]
+visible = false
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -117,10 +176,6 @@ color = Color(0.2670356, 0.6822123, 0.7571357, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="EntityPickerUI" unique_id=860665089]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
 [node name="Tabs" type="HBoxContainer" parent="EntityPickerUI/MarginContainer" unique_id=1816441022]
 layout_mode = 2

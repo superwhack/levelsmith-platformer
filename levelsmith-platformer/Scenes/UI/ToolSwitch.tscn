@@ -40,7 +40,6 @@ layout_mode = 2
 mouse_filter = 1
 theme = ExtResource("3_0ykeq")
 theme_type_variation = &"ToolButton"
-toggle_mode = true
 icon = ExtResource("4_8yt78")
 icon_alignment = 1
 

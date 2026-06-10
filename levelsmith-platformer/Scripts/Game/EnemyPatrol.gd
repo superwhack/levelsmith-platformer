@@ -29,13 +29,19 @@ func patrol_behavior() -> void:
 		direction = -1;
 	if rayCastLeft.is_colliding():
 		direction = 1;
-	# BUG: Doesn't work yet
 	if restricted && !(rayCastDownL.is_colliding() && rayCastDownR.is_colliding()):
 		if (!rayCastDownL.is_colliding()):
 			direction = 1;
 		elif (!rayCastDownR.is_colliding()):
 			direction = -1;
 	velocity.x = direction * groundSpeed * 400;
+	
+	for currentCollision in get_slide_collision_count():
+		if get_slide_collision(currentCollision).get_collider().is_in_group("Enemy"):
+			if get_slide_collision(currentCollision).get_collider().position.x < position.x:
+				direction = 1;
+			else:
+				direction = -1;
 	
 	# NOTE: A better solution would need to be found in order to get the enemy to stick to slopes
 	#if teleCast.is_colliding() && velocity.y > 17:

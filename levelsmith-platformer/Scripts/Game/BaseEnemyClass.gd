@@ -29,6 +29,7 @@ func take_damage(amount: int = 1) -> void:
 
 ## Handles enemy death
 func die() -> void:
+	AudioManager.play_effect("EnemyDeath");
 	queue_free()
 
 ## OVERRIDE

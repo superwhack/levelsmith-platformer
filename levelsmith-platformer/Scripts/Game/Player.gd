@@ -115,7 +115,7 @@ func detect_enemy_bounce(body: Node2D) -> void:
 		if (Input.is_action_pressed("jump")):
 			velocity.y = -jumpHeight * 360;
 		else:
-			velocity.y = -jumpHeight * 180;
+			velocity.y = -jumpHeight * 240;
 		coyoteTimeLeft = 0;
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it

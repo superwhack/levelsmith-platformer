@@ -49,11 +49,12 @@ func _ready() -> void:
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
-	# Add the gravity; reduce coyoteTimeLeft if in midair
+	# Add the gravity; reduce coyoteTimeLeft if in midair, and reset friction.
 	if not is_on_floor():
 		if coyoteTimeLeft > 0:
 			coyoteTimeLeft -= delta;
 		velocity += get_gravity() * delta * fallSpeed;
+		currentFriction = 1.0;
 	else:
 		coyoteTimeLeft = coyoteTime;
 	if Input.is_action_just_pressed("jump"):
@@ -61,6 +62,7 @@ func _physics_process(delta: float) -> void:
 			# Don't allow double jumps by reducing coyoteTimeLeft to 0
 			coyoteTimeLeft = 0;
 			jump();
+	
 	# Handle A and D inputs, as well as lack of directional input
 	run();
 	# Look at what the player is colliding with and apply effects
@@ -115,7 +117,7 @@ func detect_enemy_bounce(body: Node2D) -> void:
 		if (Input.is_action_pressed("jump")):
 			velocity.y = -jumpHeight * 360;
 		else:
-			velocity.y = -jumpHeight * 180;
+			velocity.y = -jumpHeight * 240;
 		coyoteTimeLeft = 0;
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it

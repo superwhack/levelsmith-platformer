@@ -5,7 +5,7 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
-[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft", "rayCastRight", "rayCastDownL", "rayCastDownR") groups=["Enemy"]]
+[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft", "rayCastRight", "rayCastDownL", "rayCastDownR", "teleCast") groups=["Enemy"]]
 collision_layer = 6
 collision_mask = 6
 script = ExtResource("1_ecr3g")
@@ -13,6 +13,7 @@ rayCastLeft = NodePath("RayCastLeft")
 rayCastRight = NodePath("RayCastRight")
 rayCastDownL = NodePath("RayCastDownL")
 rayCastDownR = NodePath("RayCastDownR")
+teleCast = NodePath("TeleCast")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
 scale = Vector2(6.3, 6.3)
@@ -20,6 +21,11 @@ shape = SubResource("CircleShape2D_lurgl")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
 texture = ExtResource("1_8ustp")
+
+[node name="TeleCast" type="RayCast2D" parent="." unique_id=859866353]
+scale = Vector2(1.836025, 1.836025)
+target_position = Vector2(0, 70)
+collision_mask = 2
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=121573990]
 rotation = 1.5707964
@@ -32,15 +38,15 @@ scale = Vector2(1.355, 1.355)
 collision_mask = 2
 
 [node name="RayCastDownL" type="RayCast2D" parent="." unique_id=991043695]
-position = Vector2(-95, 0)
+position = Vector2(-10, 0)
 rotation = -6.2831855
 scale = Vector2(1.355, 1.355)
-target_position = Vector2(0, 100)
+target_position = Vector2(0, 150)
 collision_mask = 2
 
 [node name="RayCastDownR" type="RayCast2D" parent="." unique_id=15048655]
-position = Vector2(95, 0)
+position = Vector2(10, 0)
 rotation = -6.2831855
 scale = Vector2(1.355, 1.355)
-target_position = Vector2(0, 100)
+target_position = Vector2(0, 150)
 collision_mask = 2

@@ -10,8 +10,9 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
 
-[node name="GameManager" type="Node2D" unique_id=344859815]
+[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen")]
 script = ExtResource("1_habuo")
+pauseScreen = NodePath("CanvasLayer/PausedScreenContainer")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1567020351]
 
@@ -116,3 +117,4 @@ text = "[u][i]Game Paused[/i][/u]"
 
 [connection signal="pressed" from="CanvasLayer/BottomRightMargin/Container/ResetButton" to="." method="reset"]
 [connection signal="pressed" from="CanvasLayer/TopLeftMargin/PauseButton" to="." method="pause"]
+[connection signal="pressed" from="CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer/ResumeButton" to="." method="pause"]

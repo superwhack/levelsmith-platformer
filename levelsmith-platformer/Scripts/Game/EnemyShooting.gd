@@ -6,7 +6,7 @@ extends Enemy
 
 # Firing properties
 @export var shotSpeed : float = 1;
-@export var fireRate : float = 0.5;
+@export var fireRate : float = 0.0;
 
 const projectile = preload("res://Scenes/Entities/Projectile.tscn");
 

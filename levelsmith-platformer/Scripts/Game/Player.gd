@@ -108,7 +108,7 @@ func die() -> void:
 
 ## use raycast to detect enemy collision
 func detect_enemies(body: Node2D) -> void:
-	if body.is_in_group("enemy") || body.is_in_group("Projectile"):
+	if body.is_in_group("enemy"):
 		take_damage(1);
 
 func detect_enemy_bounce(body: Node2D) -> void:

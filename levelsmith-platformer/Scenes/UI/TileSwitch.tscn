@@ -19,7 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://3x10yuj6hqho" path="res://Assets/Sprites/Entities/Props/Bush.png" id="15_pggt4"]
 [ext_resource type="Texture2D" uid="uid://dxl3blvdjwt4m" path="res://Assets/Sprites/Entities/Props/GoalMarker.png" id="16_h6q5o"]
 
-[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "solidTileButton", "oneWayTileButton", "deathTileButton", "iceTileButton", "stickyTileButton", "bounceTileButton", "slopeTileButton", "propOneButton", "propTwoButton", "propThreeButton", "propFourButton", "propFiveButton")]
+[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "solidTileButton", "oneWayTileButton", "deathTileButton", "iceTileButton", "stickyTileButton", "bounceTileButton", "slopeTileButton", "spawnButton", "goalButton", "patrollingButton", "shootingButton", "propOneButton", "propTwoButton", "propThreeButton", "propFourButton", "propFiveButton")]
 offset_right = 628.0
 offset_bottom = 100.0
 theme_override_constants/separation = 4
@@ -35,6 +35,10 @@ iceTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/IceTileButton")
 stickyTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/StickyTileButton")
 bounceTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/BounceTileButton")
 slopeTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SlopeTileButton")
+spawnButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/SpawnObjectButton")
+goalButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/GoalObjectButton")
+patrollingButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingObjectButton")
+shootingButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/ShootingObjectButton")
 propOneButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropOneButton")
 propTwoButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropTwoButton")
 propThreeButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropThreeButton")
@@ -240,20 +244,4 @@ texture_normal = ExtResource("13_krx33")
 ignore_texture_size = true
 stretch_mode = 0
 
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SolidTileButton" to="." method="_on_solid_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/OnewayTileButton" to="." method="_on_oneway_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/DeathTileButton" to="." method="_on_death_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/IceTileButton" to="." method="_on_ice_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/StickyTileButton" to="." method="_on_sticky_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/BounceTileButton" to="." method="_on_bounce_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SlopeTileButton" to="." method="_on_slope_tile_button_pressed"]
 [connection signal="item_selected" from="EntityPickerUI/MarginContainer/Tabs/OptionButton" to="." method="entity_dropdown_select"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/ShootingObjectButton" to="." method="_on_shooting_object_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/PropOneButton" to="." method="_on_prop_one_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/PropTwoButton" to="." method="_on_prop_two_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/PropThreeButton" to="." method="_on_prop_three_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/PropFourButton" to="." method="_on_prop_four_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/PropFiveButton" to="." method="_on_prop_five_button_pressed"]

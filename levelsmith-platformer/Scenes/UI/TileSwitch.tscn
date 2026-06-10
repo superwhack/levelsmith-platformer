@@ -1,14 +1,15 @@
 [gd_scene format=3 uid="uid://cgqrior0thya8"]
 
 [ext_resource type="Script" uid="uid://e6pkeumdahqd" path="res://Scripts/Editor/TileSwitch.gd" id="1_aauec"]
-[ext_resource type="Texture2D" uid="uid://d3322wnij0k2g" path="res://Assets/Sprites/Tiles/solid.png" id="1_vjuxo"]
-[ext_resource type="Texture2D" uid="uid://df4ruo4g6aono" path="res://Assets/Sprites/Tiles/Sticky.png" id="2_01osu"]
-[ext_resource type="Texture2D" uid="uid://cq8xpjeln1u8t" path="res://Assets/Sprites/Tiles/bounce.png" id="2_aauec"]
-[ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
-[ext_resource type="Texture2D" uid="uid://dvvkbjb1ejkoi" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
-[ext_resource type="Texture2D" uid="uid://lh0kyct8ass4" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
-[ext_resource type="Texture2D" uid="uid://crwfvhcm3n1nc" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
-[ext_resource type="Texture2D" uid="uid://tercdgy7ber" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
+[ext_resource type="Texture2D" uid="uid://bj4n838tdpcf6" path="res://Assets/Sprites/Tiles/solid.png" id="1_vjuxo"]
+[ext_resource type="Texture2D" uid="uid://c4tdi4u3hoayc" path="res://Assets/Sprites/Tiles/Sticky.png" id="2_01osu"]
+[ext_resource type="Texture2D" uid="uid://djug6sv47earm" path="res://Assets/Sprites/Tiles/bounce.png" id="2_aauec"]
+[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_krx33"]
+[ext_resource type="Texture2D" uid="uid://bwodcp7krp0gt" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
+[ext_resource type="Texture2D" uid="uid://d35uanyk0pldh" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
+[ext_resource type="Texture2D" uid="uid://dba85li3gep4a" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
+[ext_resource type="Texture2D" uid="uid://uukhubdeubec" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
+[ext_resource type="Texture2D" uid="uid://dq2l0hjod61wq" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
 [ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="9_02cwx"]
 [ext_resource type="Texture2D" uid="uid://cnosv0durnybp" path="res://Assets/Sprites/Entities/dude.png" id="9_e1a7i"]
 [ext_resource type="Texture2D" uid="uid://cejg0xpwj474i" path="res://Assets/Sprites/Entities/Props/DirectionMarker.png" id="12_rf0fx"]
@@ -29,18 +30,14 @@ propTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Props")
 
 [node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
 layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="TilePickerUI" unique_id=1221828212]
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(0.03374115, 0.27284646, 0.40548867, 1)
+theme_override_styles/panel = ExtResource("2_krx33")
 
 [node name="MarginContainer" type="MarginContainer" parent="TilePickerUI" unique_id=2028902409]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
 [node name="Tiles" type="HBoxContainer" parent="TilePickerUI/MarginContainer" unique_id=952326033]
 custom_minimum_size = Vector2(0, 40)

@@ -29,6 +29,7 @@ offset_left = 27.0
 offset_top = 70.0
 offset_right = 237.0
 offset_bottom = 100.0
+theme_type_variation = &"TextListButton"
 text = "Button Text"
 
 [node name="Button3" type="Button" parent="." unique_id=366412493]
@@ -177,3 +178,12 @@ offset_left = 312.0
 offset_top = 387.0
 offset_right = 676.0
 offset_bottom = 403.0
+
+[node name="LinkButton" type="LinkButton" parent="." unique_id=498365425]
+layout_mode = 0
+offset_left = 277.0
+offset_top = 36.0
+offset_right = 483.0
+offset_bottom = 76.0
+text = "link"
+underline = 1

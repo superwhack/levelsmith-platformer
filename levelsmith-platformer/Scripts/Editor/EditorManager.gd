@@ -13,6 +13,8 @@ extends Node2D
 
 @export var assetManager: Control;
 
+@export var customCursorManager: Node2D;
+
 # Mouse position variables
 var currentMousePosition: Vector2;
 var prevMousePosition: Vector2;
@@ -68,6 +70,7 @@ func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
 	previewTileSet.hide();
+	customCursorManager.invalidSprite.hide();
 	assetManager.show();
 
 func close_asset_manager() -> void:

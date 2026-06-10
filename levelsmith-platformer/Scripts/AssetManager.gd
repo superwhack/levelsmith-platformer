@@ -86,8 +86,13 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 		# Create and load an image from the path
 		var image = Image.new();
 		image.load(imagePath);
-		# Return the loaded image
-		return image;
+		if (imagePath.get_extension().to_lower() == "png"):
+			if (validate_image(image)):
+				# Return the loaded image
+				return image;
+		print("Image not valid");
+		return null;
+		
 	# If the path does not exist, print error
 	else:
 		print("No file found");
@@ -99,7 +104,6 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 func find_image_in_folder(folderPath: String) -> Image:
 	# Opens the folder at the given folderName path
 	var dir = DirAccess.open(folderPath);
-	print(folderPath)
 	# If a folder was sucessfully opened
 	if (dir):
 		# Initialize file stream
@@ -117,8 +121,12 @@ func find_image_in_folder(folderPath: String) -> Image:
 			image.load(folderPath + "/" + imageName);
 			# Close file stream
 			dir.list_dir_end();
-			# Return loaded image
-			return image;
+			if (imageName.get_extension().to_lower() == "png"):
+				if (validate_image(image)):
+					# Return loaded image
+					return image;
+			print("Image not valid");
+			return null;
 	else:
 		print("Could not open file path");
 		return null;
@@ -189,10 +197,18 @@ func clear_image() -> DirAccess:
 func replace_image(newImagePath: String) -> void:
 	var targetFilePath: String = find_directory_by_name(imageNameToReplace);
 	var targetDirectory: DirAccess = clear_image();
-	targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
+	if (newImagePath.get_extension().to_lower() == "png"):
+		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
+	else:
+		print("File must be PNG format");
+		# TODO: Implement pop up
 	
 	refresh_assets();
-	imagePreview.texture = ImageTexture.create_from_image(find_image_in_folder(targetFilePath));
+	var replacementImage = find_image_in_folder(targetFilePath);
+	if (replacementImage):
+		imagePreview.texture = ImageTexture.create_from_image(replacementImage);
+	else:
+		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 
 func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 	pass;
@@ -211,11 +227,13 @@ func return_all_to_default(categoryName: String) -> void:
 func item_selected(selectedItem: AssetItem = firstSelected) -> void:
 	imageNameToReplace = selectedItem.assetName;
 	imageToReplace = find_image_in_folder(find_directory_by_name(imageNameToReplace));
-	
-	var replacementTexture = ImageTexture.create_from_image(imageToReplace);
-	if (!replacementTexture): 
+	if (imageToReplace):
+		var replacementTexture = ImageTexture.create_from_image(imageToReplace);
+		if (replacementTexture): 
+			imagePreview.texture = ImageTexture.create_from_image(imageToReplace);
+	else:
 		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
-	else: imagePreview.texture = ImageTexture.create_from_image(imageToReplace);
+	
 	currentAssetLabel.text = selectedItem.displayName;
 
 ## Change the texture of an atlas tile to a new image texture
@@ -224,7 +242,7 @@ func item_selected(selectedItem: AssetItem = firstSelected) -> void:
 ## tileMap: The tileMap being changed
 ## NOTE: Only works with images >= 128px x 128px
 func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
-	if (!validate_image(newImage)):
+	if (newImage == null):
 		return;
 	# Create a Texture2D from the image
 	var newTexture: Texture2D = ImageTexture.create_from_image(newImage);

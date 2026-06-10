@@ -14,6 +14,7 @@ extends HBoxContainer
 
 @export var tileMap: TileMapLayer;
 
+# References to all Tile buttons
 @export var solidTileButton: TextureButton;
 @export var oneWayTileButton: TextureButton;
 @export var deathTileButton: TextureButton;
@@ -22,7 +23,15 @@ extends HBoxContainer
 @export var bounceTileButton: TextureButton;
 @export var slopeTileButton: TextureButton;
 
+# References to all Prop buttons
+@export var propOneButton: TextureButton;
+@export var propTwoButton: TextureButton;
+@export var propThreeButton: TextureButton;
+@export var propFourButton: TextureButton;
+@export var propFiveButton: TextureButton;
+
 func _ready() -> void:
+	# Connect all Tile button signals
 	solidTileButton.pressed.connect(_on_solid_tile_button_pressed);
 	oneWayTileButton.pressed.connect(_on_oneway_tile_button_pressed);
 	deathTileButton.pressed.connect(_on_death_tile_button_pressed);
@@ -30,6 +39,13 @@ func _ready() -> void:
 	stickyTileButton.pressed.connect(_on_sticky_tile_button_pressed);
 	bounceTileButton.pressed.connect(_on_bounce_tile_button_pressed);
 	slopeTileButton.pressed.connect(_on_slope_tile_button_pressed);
+	
+	# Connect all Prop button signals
+	propOneButton.pressed.connect(_on_prop_one_button_pressed);
+	propTwoButton.pressed.connect(_on_prop_two_button_pressed);
+	propThreeButton.pressed.connect(_on_prop_three_button_pressed);
+	propFourButton.pressed.connect(_on_prop_four_button_pressed);
+	propFiveButton.pressed.connect(_on_prop_five_button_pressed);
 
 ## Toggles visibility of tile selection bar
 ## visibility: desired visibility

@@ -10,29 +10,39 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
 
-[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen")]
+[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "bottomScreenGroup")]
 script = ExtResource("1_habuo")
 pauseScreen = NodePath("CanvasLayer/PausedScreenContainer")
+bottomScreenGroup = NodePath("CanvasLayer/BottomScreenGroup")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1567020351]
 
-[node name="BottomRightMargin" type="MarginContainer" parent="CanvasLayer" unique_id=762088827]
+[node name="BottomScreenGroup" type="Control" parent="CanvasLayer" unique_id=165234259]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BottomRightMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=762088827]
+layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -280.0
-offset_top = -148.0
+offset_left = 1479.0
+offset_top = 892.0
+offset_right = 1880.0
+offset_bottom = 1040.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Container" type="HBoxContainer" parent="CanvasLayer/BottomRightMargin" unique_id=1808122079]
+[node name="Container" type="HBoxContainer" parent="CanvasLayer/BottomScreenGroup/BottomRightMargin" unique_id=1808122079]
 layout_mode = 2
 
-[node name="ResetButton" type="Button" parent="CanvasLayer/BottomRightMargin/Container" unique_id=1815887631]
+[node name="ResetButton" type="Button" parent="CanvasLayer/BottomScreenGroup/BottomRightMargin/Container" unique_id=1815887631]
 layout_mode = 2
 size_flags_vertical = 8
 focus_behavior_recursive = 1
@@ -41,12 +51,12 @@ action_mode = 0
 icon = ExtResource("3_jygy8")
 icon_alignment = 1
 
-[node name="Spacer" type="Control" parent="CanvasLayer/BottomRightMargin/Container" unique_id=964069108]
+[node name="Spacer" type="Control" parent="CanvasLayer/BottomScreenGroup/BottomRightMargin/Container" unique_id=964069108]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ReturnEditorButton" type="Button" parent="CanvasLayer/BottomRightMargin/Container" unique_id=1339685622]
+[node name="ReturnEditorButton" type="Button" parent="CanvasLayer/BottomScreenGroup/BottomRightMargin/Container" unique_id=1339685622]
 custom_minimum_size = Vector2(265, 0)
 layout_mode = 2
 focus_behavior_recursive = 1
@@ -55,28 +65,31 @@ action_mode = 0
 icon = ExtResource("4_habuo")
 icon_alignment = 1
 
-[node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer" unique_id=1930773515]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=1930773515]
+layout_mode = 0
+offset_right = 108.0
+offset_bottom = 92.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 
-[node name="PauseButton" type="Button" parent="CanvasLayer/TopLeftMargin" unique_id=2000062892]
+[node name="PauseButton" type="Button" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin" unique_id=2000062892]
 layout_mode = 2
 theme = ExtResource("2_snfl5")
 icon = ExtResource("5_jygy8")
 
-[node name="BottomLeftMargin" type="MarginContainer" parent="CanvasLayer" unique_id=420297532]
+[node name="BottomLeftMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=420297532]
+layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 40.0
+offset_top = 985.0
+offset_right = 531.0
+offset_bottom = 1040.0
 grow_vertical = 0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="ControlsLabel" type="Label" parent="CanvasLayer/BottomLeftMargin" unique_id=1113873687]
+[node name="ControlsLabel" type="Label" parent="CanvasLayer/BottomScreenGroup/BottomLeftMargin" unique_id=1113873687]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Move [WASD / Arrow Keys]	     Jump [Space]"
@@ -115,6 +128,6 @@ theme_override_font_sizes/italics_font_size = 35
 bbcode_enabled = true
 text = "[u][i]Game Paused[/i][/u]"
 
-[connection signal="pressed" from="CanvasLayer/BottomRightMargin/Container/ResetButton" to="." method="reset"]
-[connection signal="pressed" from="CanvasLayer/TopLeftMargin/PauseButton" to="." method="pause"]
+[connection signal="pressed" from="CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ResetButton" to="." method="reset"]
+[connection signal="pressed" from="CanvasLayer/BottomScreenGroup/TopLeftMargin/PauseButton" to="." method="pause"]
 [connection signal="pressed" from="CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer/ResumeButton" to="." method="pause"]

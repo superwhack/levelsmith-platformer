@@ -88,7 +88,7 @@ layer = 5
 script = ExtResource("7_8vbpr")
 
 [connection signal="pressed" from="EditorManager/ScreenUI/BottomLeftAnchor/BottomLeftRow/AssetManagerButton" to="EditorManager" method="open_asset_manager"]
-[connection signal="pressed" from="GameManager/CanvasLayer/BottomRightMargin/Container/ReturnEditorButton" to="." method="edit"]
+[connection signal="pressed" from="GameManager/CanvasLayer/Control/BottomRightMargin/Container/ReturnEditorButton" to="." method="edit"]
 
 [editable path="EditorManager"]
 [editable path="EditorManager/CanvasLayer/AssetManager"]

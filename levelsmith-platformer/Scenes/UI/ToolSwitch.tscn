@@ -4,13 +4,7 @@
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_bma6q"]
 [ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="3_0ykeq"]
 [ext_resource type="Texture2D" uid="uid://bvs8x1xbu3h1d" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBrushWhite.png" id="4_8yt78"]
-[ext_resource type="Texture2D" uid="uid://cfvwdpm881qj3" path="res://Assets/UserInterface/Buttons/BoxBrushToolButton.png" id="4_y8p3r"]
-[ext_resource type="Texture2D" uid="uid://n2mkd550obf3" path="res://Assets/UserInterface/Buttons/BoxBrushToolButton-pressed.png" id="5_85ipx"]
-[ext_resource type="Texture2D" uid="uid://fgu7tlq54ppg" path="res://Assets/UserInterface/Buttons/BoxBrushToolButton-hover.png" id="6_a7qfn"]
-[ext_resource type="Texture2D" uid="uid://6aw5pimo4a5q" path="res://Assets/UserInterface/Buttons/CursorToolButton.png" id="7_you77"]
 [ext_resource type="Texture2D" uid="uid://kqxcpbn4i32k" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBoxWhite.png" id="8_bma6q"]
-[ext_resource type="Texture2D" uid="uid://dq4hioof5em02" path="res://Assets/UserInterface/Buttons/CursorToolButton-pressed.png" id="8_ed4nk"]
-[ext_resource type="Texture2D" uid="uid://dfnh8cf1h7skh" path="res://Assets/UserInterface/Buttons/CursorToolButton-hover.png" id="9_762cx"]
 [ext_resource type="Texture2D" uid="uid://ccof3ja31cgcx" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolCursorWhite.png" id="12_126op"]
 
 [node name="ToolSwitch" type="HBoxContainer" unique_id=1469240724]
@@ -50,18 +44,6 @@ theme_type_variation = &"ToolButton"
 icon = ExtResource("8_bma6q")
 icon_alignment = 1
 
-[node name="BoxBrushToolButton" type="TextureButton" parent="TileEditingToolUI/MarginContainer/TileTools" unique_id=722401074]
-visible = false
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("4_y8p3r")
-texture_pressed = ExtResource("5_85ipx")
-texture_hover = ExtResource("6_a7qfn")
-ignore_texture_size = true
-stretch_mode = 0
-
 [node name="EntityEditingToolsUI" type="PanelContainer" parent="." unique_id=147750149]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_bma6q")
@@ -76,18 +58,6 @@ theme_override_constants/margin_bottom = 10
 [node name="EntityTools" type="HBoxContainer" parent="EntityEditingToolsUI/MarginContainer" unique_id=196862975]
 layout_mode = 2
 
-[node name="CursorButtonOld" type="TextureButton" parent="EntityEditingToolsUI/MarginContainer/EntityTools" unique_id=876085231]
-visible = false
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("7_you77")
-texture_pressed = ExtResource("8_ed4nk")
-texture_hover = ExtResource("9_762cx")
-ignore_texture_size = true
-stretch_mode = 0
-
 [node name="CursorButton" type="Button" parent="EntityEditingToolsUI/MarginContainer/EntityTools" unique_id=1112685996]
 layout_mode = 2
 theme = ExtResource("3_0ykeq")
@@ -96,3 +66,4 @@ icon = ExtResource("12_126op")
 
 [connection signal="pressed" from="TileEditingToolUI/MarginContainer/TileTools/BrushButton" to="." method="_on_brush_button_pressed"]
 [connection signal="pressed" from="TileEditingToolUI/MarginContainer/TileTools/BoxBrushButton" to="." method="_on_box_brush_button_pressed"]
+[connection signal="pressed" from="EntityEditingToolsUI/MarginContainer/EntityTools/CursorButton" to="." method="_on_cursor_button_pressed"]

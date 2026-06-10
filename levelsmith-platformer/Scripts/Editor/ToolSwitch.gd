@@ -14,6 +14,7 @@ extends HBoxContainer
 
 func _on_cursor_button_pressed() -> void:
 	toolManager.change_tool(Global.Tool.CURSOR);
+	editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);
 
 
 func _on_brush_button_pressed() -> void:

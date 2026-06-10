@@ -23,6 +23,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 20
+metadata/_edit_use_anchors_ = true
 
 [node name="TopLeftRow" type="HBoxContainer" parent="TopLeftAnchor" unique_id=1851750065]
 layout_mode = 2
@@ -59,6 +60,7 @@ offset_bottom = 40.0
 grow_horizontal = 0
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
+metadata/_edit_use_anchors_ = true
 
 [node name="TopRightRow" type="HBoxContainer" parent="TopRightAnchor" unique_id=1668837166]
 layout_mode = 2
@@ -105,6 +107,7 @@ offset_right = 40.0
 grow_vertical = 0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_bottom = 20
+metadata/_edit_use_anchors_ = true
 
 [node name="BottomLeftRow" type="HBoxContainer" parent="BottomLeftAnchor" unique_id=1343700794]
 layout_mode = 2
@@ -158,6 +161,7 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
+metadata/_edit_use_anchors_ = true
 
 [node name="PlayButton" type="Button" parent="BottomRightAnchor" unique_id=1821933362]
 custom_minimum_size = Vector2(265, 0)
@@ -169,12 +173,14 @@ icon = ExtResource("9_thd6u")
 icon_alignment = 1
 
 [node name="OverlayLayer" type="Control" parent="." unique_id=1751323313]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="ErrorPopUpLayer" type="CanvasLayer" parent="OverlayLayer" unique_id=302907189]
 

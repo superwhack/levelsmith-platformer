@@ -1,17 +1,10 @@
 [gd_scene format=3 uid="uid://cgqrior0thya8"]
 
 [ext_resource type="Script" uid="uid://e6pkeumdahqd" path="res://Scripts/Editor/TileSwitch.gd" id="1_aauec"]
-[ext_resource type="Texture2D" uid="uid://d3322wnij0k2g" path="res://Assets/Sprites/Tiles/solid.png" id="1_vjuxo"]
-[ext_resource type="Texture2D" uid="uid://df4ruo4g6aono" path="res://Assets/Sprites/Tiles/Sticky.png" id="2_01osu"]
-[ext_resource type="Texture2D" uid="uid://cq8xpjeln1u8t" path="res://Assets/Sprites/Tiles/bounce.png" id="2_aauec"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_krx33"]
 [ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
-[ext_resource type="Texture2D" uid="uid://dvvkbjb1ejkoi" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
-[ext_resource type="Texture2D" uid="uid://lh0kyct8ass4" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
 [ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="3_pggt4"]
-[ext_resource type="Texture2D" uid="uid://crwfvhcm3n1nc" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
 [ext_resource type="Texture2D" uid="uid://bokpof0od4saa" path="res://Assets/UserInterface/TilePlatform.png" id="4_h6q5o"]
-[ext_resource type="Texture2D" uid="uid://tercdgy7ber" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
 [ext_resource type="Texture2D" uid="uid://c78d48ueinqoh" path="res://Assets/UserInterface/TilePlatformOneWay.png" id="5_3tme8"]
 [ext_resource type="Texture2D" uid="uid://bqcpeyb2mb82r" path="res://Assets/UserInterface/TileHazard.png" id="6_xxd6f"]
 [ext_resource type="Texture2D" uid="uid://2qwt8k6fb3cc" path="res://Assets/UserInterface/TileIce.png" id="7_jyj72"]
@@ -95,76 +88,6 @@ layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
 icon = ExtResource("10_ltypp")
-
-[node name="SolidTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=580196334]
-visible = false
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("1_vjuxo")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="OnewayTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1125313123]
-visible = false
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("4_e1a7i")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="DeathTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=427658681]
-visible = false
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("5_02cwx")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="IceTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=423141264]
-visible = false
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("3_lok7c")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="StickyTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=928704748]
-visible = false
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("2_01osu")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="BounceTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1472925597]
-visible = false
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("2_aauec")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="SlopeTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1746073645]
-visible = false
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("3_p43ua")
-ignore_texture_size = true
-stretch_mode = 0
 
 [node name="EntityPickerUI" type="PanelContainer" parent="." unique_id=324821247]
 visible = false
@@ -273,13 +196,13 @@ texture_normal = ExtResource("16_h6q5o")
 ignore_texture_size = true
 stretch_mode = 0
 
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SolidTileButton" to="." method="_on_solid_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/OnewayTileButton" to="." method="_on_oneway_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/DeathTileButton" to="." method="_on_death_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/IceTileButton" to="." method="_on_ice_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/StickyTileButton" to="." method="_on_sticky_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/BounceTileButton" to="." method="_on_bounce_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SlopeTileButton" to="." method="_on_slope_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SolidButton" to="." method="_on_solid_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/OnewayButton" to="." method="_on_oneway_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/DeathButton" to="." method="_on_death_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/IceButton" to="." method="_on_ice_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/StickyButton" to="." method="_on_sticky_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/BounceButton" to="." method="_on_bounce_tile_button_pressed"]
+[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SlopeButton" to="." method="_on_slope_tile_button_pressed"]
 [connection signal="item_selected" from="EntityPickerUI/MarginContainer/Tabs/OptionButton" to="." method="entity_dropdown_select"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]

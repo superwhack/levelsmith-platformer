@@ -103,8 +103,7 @@ func take_damage(amount: int) -> void:
 	
 ## Kill the player and send the global death signal
 func die() -> void:
-	# TODO fix reference later
-	#audioManager.play_effect("PlayerDeath");
+	AudioManager.play_effect("PlayerDeath");
 	Global.death.emit();
 
 ## use raycast to detect enemy collision
@@ -118,7 +117,7 @@ func detect_enemy_bounce(body: Node2D) -> void:
 		if (Input.is_action_pressed("jump")):
 			velocity.y = -jumpHeight * 360;
 		else:
-			velocity.y = -jumpHeight * 180;
+			velocity.y = -jumpHeight * 240;
 		coyoteTimeLeft = 0;
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it

@@ -12,6 +12,8 @@ extends HBoxContainer
 @export var entityTab: HBoxContainer;
 @export var propTab: HBoxContainer;
 
+@export var tileMap: TileMapLayer;
+
 func _ready() -> void:
 	pass;
 

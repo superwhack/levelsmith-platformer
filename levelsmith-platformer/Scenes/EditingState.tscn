@@ -99,10 +99,11 @@ focus_behavior_recursive = 0
 editorManager = NodePath("../..")
 toolManager = NodePath("../../ToolManager")
 
-[node name="TileSwitch" parent="CanvasLayer" unique_id=959816093 node_paths=PackedStringArray("toolManager", "editorManager") instance=ExtResource("7_qupls")]
+[node name="TileSwitch" parent="CanvasLayer" unique_id=959816093 node_paths=PackedStringArray("toolManager", "editorManager", "tileMap") instance=ExtResource("7_qupls")]
 offset_bottom = 104.0
 toolManager = NodePath("../../ToolManager")
 editorManager = NodePath("../..")
+tileMap = NodePath("../../Tiles")
 
 [node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
 visible = false

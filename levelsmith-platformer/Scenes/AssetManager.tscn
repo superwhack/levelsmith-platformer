@@ -30,8 +30,8 @@ theme = ExtResource("1_rshqi")
 script = ExtResource("1_2va5h")
 imagePreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview/ImageAsset")
 imageSelect = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton/FileDialog")
-imagesTab = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Images/VBoxContainer")
-animationsTab = NodePath("")
+imagesTab = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Images/ImagesTabContainer")
+animationsTab = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Animations/AnimationsTabContainer")
 currentAssetLabel = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/CurrentAssetLabel")
 
 [node name="ContentContainer" type="VBoxContainer" parent="." unique_id=1686367830]
@@ -316,7 +316,7 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Images" unique_id=1654478705]
+[node name="ImagesTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Images" unique_id=1654478705]
 layout_mode = 2
 
 [node name="Animations" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs" unique_id=1953296503]
@@ -324,7 +324,7 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Animations" unique_id=1587728475]
+[node name="AnimationsTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Animations" unique_id=1587728475]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -333,7 +333,7 @@ size_flags_vertical = 3
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Audio" unique_id=1395642184]
+[node name="AudioTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Audio" unique_id=1395642184]
 layout_mode = 2
 
 [node name="BottomButtonContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer" unique_id=1762300532]

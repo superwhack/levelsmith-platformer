@@ -94,6 +94,7 @@ thickness = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1qli"]
 bg_color = Color(1, 1, 1, 1)
+corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
@@ -103,14 +104,15 @@ corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ke4fi"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ccokw"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ke4fi"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_bottom = 3
+border_width_bottom = 2
 border_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5devf"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccokw"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_km3k5"]
 
@@ -281,15 +283,16 @@ TextEdit/styles/normal = ExtResource("19_5devf")
 TextListButton/base_type = &"Button"
 TextListButton/colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 TextListButton/colors/font_disabled_color = Color(0.23921569, 0.23921569, 0.23921569, 1)
-TextListButton/colors/font_focus_color = Color(1, 1, 1, 1)
+TextListButton/colors/font_focus_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 TextListButton/colors/font_hover_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 TextListButton/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 TextListButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+TextListButton/fonts/font = ExtResource("38_k2v08")
 TextListButton/styles/disabled = SubResource("StyleBoxEmpty_ke4fi")
-TextListButton/styles/focus = SubResource("StyleBoxEmpty_ccokw")
+TextListButton/styles/focus = ExtResource("40_ccokw")
 TextListButton/styles/hover = SubResource("StyleBoxFlat_ke4fi")
 TextListButton/styles/hover_pressed = ExtResource("40_ccokw")
-TextListButton/styles/normal = SubResource("StyleBoxEmpty_5devf")
+TextListButton/styles/normal = SubResource("StyleBoxFlat_ccokw")
 TextListButton/styles/pressed = ExtResource("40_ccokw")
 TileButton/base_type = &"Button"
 TileButton/colors/icon_disabled_color = Color(1, 1, 1, 1)

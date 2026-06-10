@@ -17,7 +17,8 @@ func _process(delta: float) -> void:
 	pass
 
 func on_pressed() -> void:
-	modulate = Color(0, 0, 0, 1)
+	# BUG: Commented out the following line because it conflicts with global theme
+	# modulate = Color(0, 0, 0, 1)
 	item_selected.emit(self);
 
 func on_focus_exited() -> void:

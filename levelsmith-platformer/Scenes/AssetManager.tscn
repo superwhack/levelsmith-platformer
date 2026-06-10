@@ -71,7 +71,6 @@ text = "Current Asset"
 horizontal_alignment = 1
 
 [node name="ImagePreview" type="Panel" parent="ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=1394480238]
-visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 
@@ -100,6 +99,7 @@ grow_vertical = 2
 texture = ExtResource("3_rshqi")
 
 [node name="AnimationPreview" type="Panel" parent="ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=126647044]
+visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 
@@ -309,7 +309,7 @@ text = "Reset All"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 2
+current_tab = 1
 
 [node name="Images" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs" unique_id=40713710]
 visible = false
@@ -318,23 +318,24 @@ metadata/_tab_index = 0
 
 [node name="ImagesTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Images" unique_id=1654478705]
 layout_mode = 2
+size_flags_horizontal = 0
 
 [node name="Animations" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs" unique_id=1953296503]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
 [node name="AnimationsTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Animations" unique_id=1587728475]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 0
 
 [node name="Audio" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs" unique_id=912303560]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
 [node name="AudioTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Audio" unique_id=1395642184]
 layout_mode = 2
+size_flags_horizontal = 0
 
 [node name="BottomButtonContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer" unique_id=1762300532]
 layout_mode = 2

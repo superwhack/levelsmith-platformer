@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/Universal/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
-[ext_resource type="Texture2D" uid="uid://dt6pg2cjbdcuv" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]

@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var pauseScreen: PanelContainer;
+
 # Is the player paused or running?
 enum PlayState {
 	PAUSE,
@@ -18,9 +20,11 @@ var playerPreset: Resource;
 func pause() -> void:
 	if playState == PlayState.PAUSE:
 		get_tree().paused = false;
+		pauseScreen.hide();
 		playState = PlayState.PLAY;
 	else:
 		get_tree().paused = true;
+		pauseScreen.show();
 		playState = PlayState.PAUSE;
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.

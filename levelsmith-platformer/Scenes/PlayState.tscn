@@ -1,16 +1,21 @@
 [gd_scene format=3 uid="uid://dtt02avvdvee"]
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
-[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_snfl5"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="2_snfl5"]
 [ext_resource type="Texture2D" uid="uid://bw2mins88t48f" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonRestartWhite.png" id="3_jygy8"]
 [ext_resource type="Texture2D" uid="uid://dnd75m1akapxn" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeBuildWhite.png" id="4_habuo"]
+[ext_resource type="Texture2D" uid="uid://d4ei24q10ni7o" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonPauseWhite.png" id="5_jygy8"]
+[ext_resource type="Texture2D" uid="uid://yl0iqt6b7aip" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeResumeWhite.png" id="6_habuo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
+bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
 
 [node name="GameManager" type="Node2D" unique_id=344859815]
 script = ExtResource("1_habuo")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1567020351]
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=762088827]
+[node name="BottomRightMargin" type="MarginContainer" parent="CanvasLayer" unique_id=762088827]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -23,10 +28,10 @@ grow_vertical = 0
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer" unique_id=1808122079]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/BottomRightMargin" unique_id=1808122079]
 layout_mode = 2
 
-[node name="ResetButton" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer" unique_id=1815887631]
+[node name="ResetButton" type="Button" parent="CanvasLayer/BottomRightMargin/HBoxContainer" unique_id=1815887631]
 layout_mode = 2
 size_flags_vertical = 8
 focus_behavior_recursive = 1
@@ -35,12 +40,12 @@ action_mode = 0
 icon = ExtResource("3_jygy8")
 icon_alignment = 1
 
-[node name="Spacer" type="Control" parent="CanvasLayer/MarginContainer/HBoxContainer" unique_id=964069108]
+[node name="Spacer" type="Control" parent="CanvasLayer/BottomRightMargin/HBoxContainer" unique_id=964069108]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PauseButton" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer" unique_id=1339685622]
+[node name="PauseButton" type="Button" parent="CanvasLayer/BottomRightMargin/HBoxContainer" unique_id=1339685622]
 custom_minimum_size = Vector2(265, 0)
 layout_mode = 2
 focus_behavior_recursive = 1
@@ -49,4 +54,63 @@ action_mode = 0
 icon = ExtResource("4_habuo")
 icon_alignment = 1
 
-[connection signal="pressed" from="CanvasLayer/MarginContainer/HBoxContainer/ResetButton" to="." method="reset"]
+[node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer" unique_id=1930773515]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="PauseButton" type="Button" parent="CanvasLayer/TopLeftMargin" unique_id=2000062892]
+layout_mode = 2
+theme = ExtResource("2_snfl5")
+icon = ExtResource("5_jygy8")
+
+[node name="BottomLeftMargin" type="MarginContainer" parent="CanvasLayer" unique_id=420297532]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ControlsLabel" type="Label" parent="CanvasLayer/BottomLeftMargin" unique_id=1113873687]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Move [WASD / Arrow Keys]	     Jump [Space]"
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=610850262]
+visible = false
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ym18m")
+
+[node name="PauseMargin" type="MarginContainer" parent="CanvasLayer/PanelContainer" unique_id=804883370]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PauseContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/PauseMargin" unique_id=1029539904]
+layout_mode = 2
+
+[node name="RenameButton" type="Button" parent="CanvasLayer/PanelContainer/PauseMargin/PauseContainer" unique_id=486615708]
+layout_mode = 2
+theme = ExtResource("2_snfl5")
+icon = ExtResource("6_habuo")
+
+[node name="GamePausedSpacer" type="Control" parent="CanvasLayer/PanelContainer/PauseMargin/PauseContainer" unique_id=1760806949]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GamePausedLabel" type="RichTextLabel" parent="CanvasLayer/PanelContainer/PauseMargin/PauseContainer" unique_id=803833519]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/italics_font_size = 35
+bbcode_enabled = true
+text = "[u][i]Game Paused[/i][/u]"
+
+[connection signal="pressed" from="CanvasLayer/BottomRightMargin/HBoxContainer/ResetButton" to="." method="reset"]

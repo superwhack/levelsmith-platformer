@@ -29,9 +29,18 @@ func take_damage(amount: int = 1) -> void:
 
 ## Handles enemy death
 func die() -> void:
+	AudioManager.play_effect("EnemyDeath");
 	queue_free()
 
+## OVERRIDE
+## Assigns the script of the given ID (located in the Resources/Enemies folder) to an enemy at the given position.
+## id: The ID of the script to assign
+## position: The position of the enemy to assign to the script's appropriate value.
 func assign_script(id: String, position: Vector2i) -> void:
 	pass;
+
+## OVERRIDE
+## Applies the effects of the given properties in the file to the enemy, this function is used by finding the enemy at the location specified in the script.
+## file: The property file to apply to the enemy 
 func apply_script(file: Resource) -> void:
 	pass;

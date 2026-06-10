@@ -1,3 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Others for this project
+/Resources/Enemies/
+/Resources/PlayerPresets/Custom.tres

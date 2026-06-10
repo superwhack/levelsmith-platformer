@@ -101,13 +101,12 @@ func take_damage(amount: int) -> void:
 	
 ## Kill the player and send the global death signal
 func die() -> void:
-	# TODO fix reference later
-	#audioManager.play_effect("PlayerDeath");
+	AudioManager.play_effect("PlayerDeath");
 	Global.death.emit();
 
 ## use raycast to detect enemy collision
 func detect_enemies(body: Node2D) -> void:
-	if body.is_in_group("enemy"):
+	if body.is_in_group("enemy") || body.is_in_group("Projectile"):
 		take_damage(1);
 
 func detect_enemy_bounce(body: Node2D) -> void:

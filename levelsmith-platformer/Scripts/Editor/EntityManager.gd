@@ -42,7 +42,7 @@ func place_entity(clickPosition: Vector2) -> void:
 		return;
 	elif (toolManager.brushObject >= editorManager.tileCount):
 		# If the tile is a prop, use rotation
-		if (toolManager.brushObject >= 12 && toolManager.brushObject <= 17):
+		if (toolManager.brushObject >= Global.EntityType.PROP1 && toolManager.brushObject <= Global.EntityType.PROP6):
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
 
 		# If it's an enemy, create a new property file

@@ -186,7 +186,6 @@ func clone_data(from: String, to: String, directory: String = ""):
 	# Copy all file data.
 	# Erase all files in the destination folder if the source has nothing.
 	var files: PackedStringArray = DirAccess.get_files_at(from + directory);
-	print(files);
 	if (files.size() <= 0):
 		var destinationFiles: PackedStringArray = DirAccess.get_files_at(to + directory);
 		for file in destinationFiles:

@@ -73,7 +73,7 @@ func check_goal_exists() -> bool:
 ## Reset all the enemy positions to the center of their tiles.
 func reset_enemy_positions() -> void:
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
-		if (enemy.propertyFile):
+		if (enemy is EnemyPatrol && enemy.propertyFile):
 			enemy.global_position = tileSet.map_to_local(enemy.propertyFile.position);
 func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues

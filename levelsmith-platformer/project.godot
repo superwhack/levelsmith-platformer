@@ -39,6 +39,7 @@ project/assembly_name="levelsmith-platformer"
 
 Player="Objects that have _physics_process"
 Enemy="Enemies"
+Projectile=""
 
 [input]
 

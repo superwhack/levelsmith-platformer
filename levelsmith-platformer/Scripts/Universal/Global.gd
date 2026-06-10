@@ -5,7 +5,6 @@ signal death;
 signal reload;
 signal complete;
 
-
 # Tile size
 const tileSize: int = 128;
 

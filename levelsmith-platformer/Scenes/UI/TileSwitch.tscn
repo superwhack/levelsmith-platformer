@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bj4n838tdpcf6" path="res://Assets/Sprites/Tiles/solid.png" id="1_vjuxo"]
 [ext_resource type="Texture2D" uid="uid://c4tdi4u3hoayc" path="res://Assets/Sprites/Tiles/Sticky.png" id="2_01osu"]
 [ext_resource type="Texture2D" uid="uid://djug6sv47earm" path="res://Assets/Sprites/Tiles/bounce.png" id="2_aauec"]
+[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_krx33"]
 [ext_resource type="Texture2D" uid="uid://bwodcp7krp0gt" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
 [ext_resource type="Texture2D" uid="uid://d35uanyk0pldh" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
 [ext_resource type="Texture2D" uid="uid://dba85li3gep4a" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
@@ -29,18 +30,14 @@ propTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Props")
 
 [node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
 layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="TilePickerUI" unique_id=1221828212]
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(0.03374115, 0.27284646, 0.40548867, 1)
+theme_override_styles/panel = ExtResource("2_krx33")
 
 [node name="MarginContainer" type="MarginContainer" parent="TilePickerUI" unique_id=2028902409]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
 [node name="Tiles" type="HBoxContainer" parent="TilePickerUI/MarginContainer" unique_id=952326033]
 custom_minimum_size = Vector2(0, 40)

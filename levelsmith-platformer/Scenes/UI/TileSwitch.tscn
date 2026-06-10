@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://e6pkeumdahqd" path="res://Scripts/Editor/TileSwitch.gd" id="1_aauec"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_krx33"]
-[ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
 [ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="3_pggt4"]
 [ext_resource type="Texture2D" uid="uid://bokpof0od4saa" path="res://Assets/UserInterface/TilePlatform.png" id="4_h6q5o"]
 [ext_resource type="Texture2D" uid="uid://c78d48ueinqoh" path="res://Assets/UserInterface/TilePlatformOneWay.png" id="5_3tme8"]
@@ -11,13 +10,14 @@
 [ext_resource type="Texture2D" uid="uid://ovec640c38br" path="res://Assets/UserInterface/TileSticky.png" id="8_vkn71"]
 [ext_resource type="Texture2D" uid="uid://dlh5rny1sjyu7" path="res://Assets/UserInterface/TileBouncy.png" id="9_f1o86"]
 [ext_resource type="Texture2D" uid="uid://b67vf2ulptixk" path="res://Assets/UserInterface/TileSlope.png" id="10_ltypp"]
-[ext_resource type="Texture2D" uid="uid://q4nc7mysxk54" path="res://Assets/UserInterface/Buttons/ButtonIcons/EntityGameGoal.png" id="11_vup42"]
-[ext_resource type="Texture2D" uid="uid://86otc7oid6ve" path="res://Assets/Sprites/Entities/EntityGamePlayer.png" id="12_goodf"]
-[ext_resource type="Texture2D" uid="uid://bgs2p5sbmak42" path="res://Assets/UserInterface/EntityPropArrowSign.png" id="19_mfvlm"]
-[ext_resource type="Texture2D" uid="uid://befishqg68ng2" path="res://Assets/UserInterface/EntityPropStopSign.png" id="20_3tme8"]
-[ext_resource type="Texture2D" uid="uid://bn7x7oh5qe0jq" path="res://Assets/UserInterface/EntityPropHazardSign.png" id="21_xxd6f"]
-[ext_resource type="Texture2D" uid="uid://dfqm44lg1v62k" path="res://Assets/UserInterface/EntityPropFlower.png" id="22_jyj72"]
-[ext_resource type="Texture2D" uid="uid://dptnun4y8871j" path="res://Assets/UserInterface/EntityPropGrass.png" id="23_vkn71"]
+[ext_resource type="Texture2D" uid="uid://q4nc7mysxk54" path="res://Assets/Sprites/Entities/Goal.png" id="11_goodf"]
+[ext_resource type="Texture2D" uid="uid://dlxhq15nuh1bc" path="res://Assets/Sprites/Entities/Dude.png" id="12_goodf"]
+[ext_resource type="Texture2D" uid="uid://bwodcp7krp0gt" path="res://Assets/Defaults/Assets/Sprites/Entities/BadDude.png" id="13_segfj"]
+[ext_resource type="Texture2D" uid="uid://084j38o8pfab" path="res://Assets/Sprites/Entities/Props/Bush.png" id="14_pggt4"]
+[ext_resource type="Texture2D" uid="uid://cejg0xpwj474i" path="res://Assets/Sprites/Entities/Props/DirectionMarker.png" id="15_h6q5o"]
+[ext_resource type="Texture2D" uid="uid://dxl3blvdjwt4m" path="res://Assets/Sprites/Entities/Props/GoalMarker.png" id="16_0gefc"]
+[ext_resource type="Texture2D" uid="uid://dxjyp7sv5bup8" path="res://Assets/Sprites/Entities/Props/StartMarker.png" id="17_g7c4e"]
+[ext_resource type="Texture2D" uid="uid://cldsbtkrgf6k8" path="res://Assets/Sprites/Entities/Props/StopMarker.png" id="18_vup42"]
 
 [node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab")]
 offset_right = 669.0
@@ -130,7 +130,7 @@ theme_override_constants/separation = 8
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
-icon = ExtResource("11_vup42")
+icon = ExtResource("11_goodf")
 
 [node name="SpawnObjectButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1020316722]
 layout_mode = 2
@@ -142,7 +142,7 @@ icon = ExtResource("12_goodf")
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
-icon = ExtResource("2_p43ua")
+icon = ExtResource("13_segfj")
 
 [node name="Props" type="HBoxContainer" parent="EntityPickerUI/MarginContainer/Tabs" unique_id=1986159458]
 visible = false
@@ -153,31 +153,31 @@ theme_override_constants/separation = 8
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
-icon = ExtResource("19_mfvlm")
+icon = ExtResource("15_h6q5o")
 
 [node name="StopButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=58595092]
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
-icon = ExtResource("20_3tme8")
+icon = ExtResource("18_vup42")
 
 [node name="HazardButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=535761077]
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
-icon = ExtResource("21_xxd6f")
+icon = ExtResource("17_g7c4e")
 
 [node name="FlowerButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1451711438]
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
-icon = ExtResource("22_jyj72")
+icon = ExtResource("14_pggt4")
 
 [node name="GrassButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1473814833]
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
-icon = ExtResource("23_vkn71")
+icon = ExtResource("16_0gefc")
 
 [connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SolidButton" to="." method="_on_solid_tile_button_pressed"]
 [connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/OnewayButton" to="." method="_on_oneway_tile_button_pressed"]

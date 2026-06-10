@@ -95,12 +95,14 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 			if (validate_image(image)):
 				# Return the loaded image
 				return image;
-		print("Image not valid");
+		PopUpManager.create_error_popup("Cannot Load Asset","Image not valid. '.png' file required.");
+		#print("Image not valid");
 		return null;
 		
 	# If the path does not exist, print error
 	else:
-		print("No file found");
+		PopUpManager.create_error_popup("Cannot Load Asset","No file found in '" + filePath + "'.");
+		#print("No file found");
 		return null;
 
 ## Finds and loads the first image found in given folder
@@ -156,6 +158,7 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 		return allImages;
 	else:
 		print("Could not open file path");
+		PopUpManager.create_error_popup("","");
 	return [];
 
 ## Gets the amount of files within a folder

@@ -1,24 +1,24 @@
 [gd_scene format=3 uid="uid://cgqrior0thya8"]
 
 [ext_resource type="Script" uid="uid://e6pkeumdahqd" path="res://Scripts/Editor/TileSwitch.gd" id="1_aauec"]
-[ext_resource type="Texture2D" uid="uid://dsjnx6ie35vcy" path="res://Assets/Sprites/Tiles/Sticky.png" id="2_01osu"]
-[ext_resource type="Texture2D" uid="uid://babvjdloy7c3t" path="res://Assets/Sprites/Tiles/bounce.png" id="2_aauec"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_krx33"]
 [ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="2_p43ua"]
 [ext_resource type="PackedScene" uid="uid://dqlxqwdmgred1" path="res://Scenes/UI/TilebarButton.tscn" id="3_krx33"]
-[ext_resource type="Texture2D" uid="uid://dvgxk4sd2a6ip" path="res://Assets/Sprites/Tiles/ice.png" id="3_lok7c"]
-[ext_resource type="Texture2D" uid="uid://b3ejj8ppb8c06" path="res://Assets/Sprites/Tiles/slope.png" id="3_p43ua"]
-[ext_resource type="Texture2D" uid="uid://bcu5p4cee56xc" path="res://Assets/Sprites/Tiles/oneway.png" id="4_e1a7i"]
-[ext_resource type="Texture2D" uid="uid://pjdhb2te74w5" path="res://Assets/Sprites/Tiles/death.png" id="5_02cwx"]
+[ext_resource type="Texture2D" uid="uid://c10hf8oh6jv8b" path="res://Assets/Defaults/Assets/Sprites/Tiles/OneWay.png" id="4_krx33"]
+[ext_resource type="Texture2D" uid="uid://dx73rn5knscwa" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="5_goodf"]
+[ext_resource type="Texture2D" uid="uid://cclkhf0ggl5hm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Ice.png" id="6_krx33"]
+[ext_resource type="Texture2D" uid="uid://c21qhnriopfwm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Sticky.png" id="7_goodf"]
+[ext_resource type="Texture2D" uid="uid://b5i25baa3gfkx" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="8_pggt4"]
 [ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="9_02cwx"]
 [ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="9_e1a7i"]
+[ext_resource type="Texture2D" uid="uid://bnrk2hwvcejik" path="res://Assets/Defaults/Assets/Sprites/Tiles/Slope.png" id="9_h6q5o"]
 [ext_resource type="Texture2D" uid="uid://cejg0xpwj474i" path="res://Assets/Sprites/Entities/Props/DirectionMarker.png" id="12_rf0fx"]
 [ext_resource type="Texture2D" uid="uid://cldsbtkrgf6k8" path="res://Assets/Sprites/Entities/Props/StopMarker.png" id="13_krx33"]
 [ext_resource type="Texture2D" uid="uid://dxjyp7sv5bup8" path="res://Assets/Sprites/Entities/Props/StartMarker.png" id="14_goodf"]
 [ext_resource type="Texture2D" uid="uid://dup6igg1oiimv" path="res://Assets/Sprites/Entities/Props/Bush.png" id="15_pggt4"]
 [ext_resource type="Texture2D" uid="uid://dxl3blvdjwt4m" path="res://Assets/Sprites/Entities/Props/GoalMarker.png" id="16_h6q5o"]
 
-[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab")]
+[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "solidTileButton", "oneWayTileButton", "deathTileButton", "iceTileButton", "stickyTileButton", "bounceTileButton", "slopeTileButton")]
 offset_right = 628.0
 offset_bottom = 100.0
 theme_override_constants/separation = 4
@@ -27,6 +27,13 @@ tiles = NodePath("TilePickerUI")
 entities = NodePath("EntityPickerUI")
 entityTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities")
 propTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Props")
+solidTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SolidTileButton")
+oneWayTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/OneWayTileButton")
+deathTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/DeathTileButton2")
+iceTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/IceTileButton3")
+stickyTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/StickyTileButton4")
+bounceTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/BounceTileButton5")
+slopeTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SlopeTileButton2")
 
 [node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
 layout_mode = 2
@@ -48,59 +55,41 @@ theme_override_constants/separation = 8
 layout_mode = 2
 tilebar = NodePath("../../../..")
 
-[node name="OnewayTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1125313123]
-custom_minimum_size = Vector2(80, 80)
+[node name="OneWayTileButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1204025023 node_paths=PackedStringArray("tilebar") instance=ExtResource("3_krx33")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("4_e1a7i")
-ignore_texture_size = true
-stretch_mode = 0
+texture_normal = ExtResource("4_krx33")
+thisItemID = 2
+tilebar = NodePath("../../../..")
 
-[node name="DeathTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=427658681]
-custom_minimum_size = Vector2(80, 80)
+[node name="DeathTileButton2" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1411619400 node_paths=PackedStringArray("tilebar") instance=ExtResource("3_krx33")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("5_02cwx")
-ignore_texture_size = true
-stretch_mode = 0
+texture_normal = ExtResource("5_goodf")
+thisItemID = 1
+tilebar = NodePath("../../../..")
 
-[node name="IceTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=423141264]
-custom_minimum_size = Vector2(80, 80)
+[node name="IceTileButton3" parent="TilePickerUI/MarginContainer/Tiles" unique_id=580579244 node_paths=PackedStringArray("tilebar") instance=ExtResource("3_krx33")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("3_lok7c")
-ignore_texture_size = true
-stretch_mode = 0
+texture_normal = ExtResource("6_krx33")
+thisItemID = 3
+tilebar = NodePath("../../../..")
 
-[node name="StickyTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=928704748]
-custom_minimum_size = Vector2(80, 80)
+[node name="StickyTileButton4" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1765711494 node_paths=PackedStringArray("tilebar") instance=ExtResource("3_krx33")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("2_01osu")
-ignore_texture_size = true
-stretch_mode = 0
+texture_normal = ExtResource("7_goodf")
+thisItemID = 4
+tilebar = NodePath("../../../..")
 
-[node name="BounceTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1472925597]
-custom_minimum_size = Vector2(80, 80)
+[node name="BounceTileButton5" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1206342482 node_paths=PackedStringArray("tilebar") instance=ExtResource("3_krx33")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("2_aauec")
-ignore_texture_size = true
-stretch_mode = 0
+texture_normal = ExtResource("8_pggt4")
+thisItemID = 5
+tilebar = NodePath("../../../..")
 
-[node name="SlopeTileButton" type="TextureButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1746073645]
-custom_minimum_size = Vector2(80, 80)
+[node name="SlopeTileButton2" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1148734039 node_paths=PackedStringArray("tilebar") instance=ExtResource("3_krx33")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("3_p43ua")
-ignore_texture_size = true
-stretch_mode = 0
+texture_normal = ExtResource("9_h6q5o")
+thisItemID = 6
+tilebar = NodePath("../../../..")
 
 [node name="EntityPickerUI" type="PanelContainer" parent="." unique_id=324821247]
 visible = false
@@ -213,13 +202,6 @@ texture_normal = ExtResource("16_h6q5o")
 ignore_texture_size = true
 stretch_mode = 0
 
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SolidTileButton" to="." method="_on_solid_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/OnewayTileButton" to="." method="_on_oneway_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/DeathTileButton" to="." method="_on_death_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/IceTileButton" to="." method="_on_ice_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/StickyTileButton" to="." method="_on_sticky_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/BounceTileButton" to="." method="_on_bounce_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SlopeTileButton" to="." method="_on_slope_tile_button_pressed"]
 [connection signal="item_selected" from="EntityPickerUI/MarginContainer/Tabs/OptionButton" to="." method="entity_dropdown_select"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]

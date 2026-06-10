@@ -14,8 +14,22 @@ extends HBoxContainer
 
 @export var tileMap: TileMapLayer;
 
+@export var solidTileButton: TextureButton;
+@export var oneWayTileButton: TextureButton;
+@export var deathTileButton: TextureButton;
+@export var iceTileButton: TextureButton;
+@export var stickyTileButton: TextureButton;
+@export var bounceTileButton: TextureButton;
+@export var slopeTileButton: TextureButton;
+
 func _ready() -> void:
-	pass;
+	solidTileButton.pressed.connect(_on_solid_tile_button_pressed);
+	oneWayTileButton.pressed.connect(_on_oneway_tile_button_pressed);
+	deathTileButton.pressed.connect(_on_death_tile_button_pressed);
+	iceTileButton.pressed.connect(_on_ice_tile_button_pressed);
+	stickyTileButton.pressed.connect(_on_sticky_tile_button_pressed);
+	bounceTileButton.pressed.connect(_on_bounce_tile_button_pressed);
+	slopeTileButton.pressed.connect(_on_slope_tile_button_pressed);
 
 ## Toggles visibility of tile selection bar
 ## visibility: desired visibility

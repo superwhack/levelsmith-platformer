@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dv7vnncwwgetg"]
 
-[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_axyiu"]
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_axyiu"]
 [ext_resource type="Script" uid="uid://b1ma0i2l7uotm" path="res://Scripts/AssetItem.gd" id="1_xrvpq"]
 
 [node name="AssetItem" type="Button" unique_id=348862171]

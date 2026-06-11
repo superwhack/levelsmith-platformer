@@ -2,25 +2,27 @@ class_name EnemyShooting;
 extends Enemy
 
 # Direction of fire, stored as float
-@export var direction := 1.0;
+@export var direction : float;
 
 # Firing properties
-@export var shotSpeed : float = 1;
-@export var fireRate : float = 0.0;
+@export var shotSpeed : float;
+@export var fireRate : float;
 
 const projectile = preload("res://Scenes/Entities/Projectile.tscn");
 
-var timeLeft : float = 0;
+var timeLeft : float = 1;
 
 func _physics_process(delta: float) -> void:
 	# Gravity
 	super._physics_process(delta);
-	direction += 1;
+	move_and_slide();
+	# Don't shoot if moving for whatever reason.
+	if (velocity != Vector2(0, 0)):
+		return;
 	timeLeft -= delta;
 	if (timeLeft <= 0.0):
 		shooting_behavior();
 		timeLeft = fireRate;
-	move_and_slide();
 
 ## Shoots in the determined direction
 func shooting_behavior() -> void:
@@ -37,6 +39,7 @@ func assign_script(id: String, position: Vector2i) -> void:
 	direction = propertyFile.direction; 
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
+
 func apply_script(file: Resource) -> void:
 	propertyFile = file;
 	direction = propertyFile.direction; 

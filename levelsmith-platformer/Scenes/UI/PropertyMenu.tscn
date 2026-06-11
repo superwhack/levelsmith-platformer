@@ -6,7 +6,7 @@
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_x85wq"]
 [ext_resource type="PackedScene" uid="uid://cgity27eghw43" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "presetOptions")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "shootingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingShotSpeedSlider", "shootingFireRateSlider", "presetOptions")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,6 +22,7 @@ script = ExtResource("1_tnep3")
 entityName = NodePath("EntityName")
 playerMenu = NodePath("PlayerProperties")
 patrollingMenu = NodePath("PatrollingProperties")
+shootingMenu = NodePath("ShootingProperties")
 playerSpeedSlider = NodePath("PlayerProperties/PlayerSpeed")
 playerJumpSlider = NodePath("PlayerProperties/PlayerJump")
 playerAirControlSlider = NodePath("PlayerProperties/PlayerAirControl")
@@ -29,6 +30,9 @@ playerFallSpeedSlider = NodePath("PlayerProperties/PlayerFallSpeed")
 playerCoyoteTimeSlider = NodePath("PlayerProperties/PlayerCoyoteTime")
 patrollingSpeedSlider = NodePath("PatrollingProperties/PatrollingSpeed")
 patrollingRestrictedCheckbox = NodePath("PatrollingProperties/PatrollingRestricted")
+shootingDirectionSlider = NodePath("ShootingProperties/ShootingDirection")
+shootingShotSpeedSlider = NodePath("ShootingProperties/ShootingShotSpeed")
+shootingFireRateSlider = NodePath("ShootingProperties/ShootingFireRate")
 presetOptions = NodePath("PlayerProperties/PresetOptions")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1879514987]
@@ -61,6 +65,7 @@ theme_override_font_sizes/font_size = 24
 text = "Close"
 
 [node name="PlayerProperties" type="VBoxContainer" parent="." unique_id=1398037876]
+visible = false
 layout_mode = 0
 offset_top = 119.0
 offset_right = 400.0
@@ -123,6 +128,27 @@ minMax = Vector2i(0, 2)
 layout_mode = 2
 propertyName = "Restricted"
 
+[node name="ShootingProperties" type="VBoxContainer" parent="." unique_id=391156619]
+layout_mode = 0
+offset_top = 119.0
+offset_right = 400.0
+offset_bottom = 420.0
+
+[node name="ShootingDirection" parent="ShootingProperties" unique_id=2058309168 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "Direction"
+minMax = Vector2i(0, 360)
+
+[node name="ShootingShotSpeed" parent="ShootingProperties" unique_id=441375088 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "Shot Speed"
+minMax = Vector2i(1, 3)
+
+[node name="ShootingFireRate" parent="ShootingProperties" unique_id=847827901 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "Fire Rate"
+minMax = Vector2i(0, 5)
+
 [connection signal="pressed" from="Button" to="." method="close"]
 [connection signal="drag_ended" from="PlayerProperties/PlayerSpeed" to="." method="_on_drag_ended"]
 [connection signal="drag_ended" from="PlayerProperties/PlayerJump" to="." method="_on_drag_ended"]
@@ -132,3 +158,6 @@ propertyName = "Restricted"
 [connection signal="item_selected" from="PlayerProperties/PresetOptions" to="." method="_on_preset_options_item_selected"]
 [connection signal="drag_ended" from="PatrollingProperties/PatrollingSpeed" to="." method="_on_drag_ended"]
 [connection signal="check_changed" from="PatrollingProperties/PatrollingRestricted" to="." method="update_values"]
+[connection signal="drag_ended" from="ShootingProperties/ShootingDirection" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="ShootingProperties/ShootingShotSpeed" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="ShootingProperties/ShootingFireRate" to="." method="_on_drag_ended"]

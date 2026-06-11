@@ -8,6 +8,7 @@ var selectedEntity: Node2D;
 
 @export var playerMenu: VBoxContainer;
 @export var patrollingMenu: VBoxContainer;
+@export var shootingMenu: VBoxContainer;
 
 # Player values
 var playerSpeed: float;
@@ -26,6 +27,11 @@ var playerCoyoteTime : float;
 # Patrolling inputs
 @export var patrollingSpeedSlider: VBoxContainer;
 @export var patrollingRestrictedCheckbox: VBoxContainer;
+
+# Shooting inputs
+@export var shootingDirectionSlider: VBoxContainer;
+@export var shootingShotSpeedSlider: VBoxContainer;
+@export var shootingFireRateSlider: VBoxContainer;
 
 # Preset Options
 @export var presetOptions: OptionButton;
@@ -90,7 +96,13 @@ func update_sliders() -> void:
 		patrollingRestrictedCheckbox.value = selectedPreset.restricted;
 		patrollingSpeedSlider.update_slider();
 		patrollingRestrictedCheckbox.update_checkbox();
-
+	elif selectedEntity is EnemyShooting:
+		shootingDirectionSlider.value = selectedPreset.direction;
+		shootingShotSpeedSlider.value = selectedPreset.shotSpeed;
+		shootingFireRateSlider.value = selectedPreset.fireRate;
+		shootingDirectionSlider.update_slider();
+		shootingShotSpeedSlider.update_slider();
+		shootingFireRateSlider.update_slider();
 	
 
 ## Update all of the player values based on the sliders
@@ -105,6 +117,11 @@ func update_values() -> void:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
 		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+	elif selectedEntity is EnemyShooting:
+		selectedPreset.direction = shootingDirectionSlider.value;
+		selectedPreset.shotSpeed = shootingShotSpeedSlider.value;
+		selectedPreset.fireRate = shootingFireRateSlider.value;
+		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
@@ -117,9 +134,12 @@ func _on_drag_ended() -> void:
 func show_menu(resource: Resource = null) -> void:
 	playerMenu.hide();
 	patrollingMenu.hide();
-	if selectedEntity is EnemyPatrol:
+	if selectedEntity is Enemy:
 		selectedPreset = resource;
 		update_sliders();
-		patrollingMenu.show();
+		if selectedEntity is EnemyPatrol:
+			patrollingMenu.show();
+		elif selectedEntity is EnemyShooting:
+			shootingMenu.show();
 	else:
 		playerMenu.show();

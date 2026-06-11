@@ -40,6 +40,11 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			data_to_send += '"type":"patrolling", "stats":{';
 			data_to_send += '"speed": ' + str(propertyFile.groundSpeed) + ", ";
 			data_to_send += '"restricted": ' + str(propertyFile.restricted) + '}}';
+		elif enemyProperty.contains("Shooting"):
+			data_to_send += '"type":"shooting", "stats":{';
+			data_to_send += '"direction": ' + str(propertyFile.direction) + ", ";
+			data_to_send += '"shotSpeed": ' + str(propertyFile.shotSpeed) + ", ";
+			data_to_send += '"fireRate": ' + str(propertyFile.fireRate) + '}}';
 		if (enemyPropertyIndex < enemyProperties.size() - 1):
 			data_to_send += ',';
 	
@@ -150,6 +155,14 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 					newPatrolling.groundSpeed = enemy.stats.speed;
 					newPatrolling.restricted = enemy.stats.restricted;
 					ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
+					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
+				"shooting":
+					var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
+					var newShooting: Resource = defaultShooting.duplicate(true);
+					newShooting.direction = enemy.stats.direction;
+					newShooting.shotSpeed = enemy.stats.shotSpeed;
+					newShooting.fireRate = enemy.stats.fireRate;
+					ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	# If any enemy did not get data due to some form of corruption, it needs it.
 	for node in tileMap.get_children():

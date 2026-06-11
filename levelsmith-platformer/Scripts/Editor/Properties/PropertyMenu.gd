@@ -116,11 +116,11 @@ func _on_drag_ended() -> void:
 	
 func show_menu(resource: Resource = null) -> void:
 	# TODO: Re-implement enemy property editing
-	#playerMenu.hide();
-	# patrollingMenu.hide();
-	# if selectedEntity is EnemyPatrol:
-	# 	selectedPreset = resource;
-	#	update_sliders();
-	#	patrollingMenu.show();
-	#else:
+	playerMenu.hide();
+	patrollingMenu.hide();
+	if selectedEntity is EnemyPatrol:
+		selectedPreset = resource;
+		update_sliders();
+		patrollingMenu.show();
+	else:
 		playerMenu.show();

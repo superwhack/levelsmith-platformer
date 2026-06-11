@@ -63,10 +63,13 @@ func entity_dropdown_select(index: int):
 	match index:
 		0:
 			editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);
+			toolManager.update_brush_object(Global.EntityType.PLAYER);
+			toolManager.currentObjectRotation = 0;
 			entityTab.visible = true;
 			propTab.visible = false;
 		1:
 			editorManager.change_current_hotbar(Global.HotbarState.PROPS);
+			toolManager.update_brush_object(Global.EntityType.PROP1);
 			entityTab.visible = false;
 			propTab.visible = true;
 

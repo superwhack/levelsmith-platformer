@@ -30,6 +30,9 @@ func place_entity(clickPosition: Vector2) -> void:
 	&& clickedTileId >= 0)): 
 		return;
 	
+	if (tileSet.get_cell_source_id(clickPosition) >= Global.EntityType.PATROLLING && tileSet.get_cell_source_id(clickPosition) <= Global.EntityType.FLYING):
+		delete_entity(clickPosition);
+	
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER 
 	&& brushObject != Global.EntityType.PLAYER):
 		editorManager.playerExists = false;

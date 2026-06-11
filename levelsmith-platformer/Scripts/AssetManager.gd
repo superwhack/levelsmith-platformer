@@ -32,6 +32,9 @@ var tileTypes: Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Boun
 # All types of entities
 var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyPatrol", "EnemyFlying", "Goal"];
 
+# All types of props
+var propTypes: Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
+
 #All animations
 var animations: Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];
 
@@ -43,12 +46,16 @@ func _ready() -> void:
 		create_file_tree();
 	# Generate all buttons under their tabs
 	generate_buttons("Tiles", imagesTab);
+	generate_buttons("Props", imagesTab);
 	generate_buttons("Entities", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
 	item_selected(firstSelected);
 	# Refresh all assets
 	refresh_assets();
+	ImportExportManager.levelImported.connect(refresh_assets);
+	ImportExportManager.levelImported.connect(item_selected);
 
+# WARNING Only refreshes all files once, might be worth it later to do individually
 ## Generate buttons for each asset
 ## folder: Which folder the assets for a certain group are stored in
 ## container: Which container the list of assets is stored in
@@ -84,8 +91,13 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 		# Create and load an image from the path
 		var image = Image.new();
 		image.load(imagePath);
-		# Return the loaded image
-		return image;
+		if (imagePath.get_extension().to_lower() == "png"):
+			if (validate_image(image)):
+				# Return the loaded image
+				return image;
+		print("Image not valid");
+		return null;
+		
 	# If the path does not exist, print error
 	else:
 		print("No file found");
@@ -97,7 +109,6 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 func find_image_in_folder(folderPath: String) -> Image:
 	# Opens the folder at the given folderName path
 	var dir = DirAccess.open(folderPath);
-	print(folderPath)
 	# If a folder was sucessfully opened
 	if (dir):
 		# Initialize file stream
@@ -115,12 +126,17 @@ func find_image_in_folder(folderPath: String) -> Image:
 			image.load(folderPath + "/" + imageName);
 			# Close file stream
 			dir.list_dir_end();
-			# Return loaded image
-			return image;
+			if (imageName.get_extension().to_lower() == "png"):
+				if (validate_image(image)):
+					# Return loaded image
+					return image;
+			print("Image not valid");
+			return null;
 	else:
 		print("Could not open file path");
 		return null;
 
+# WARNING Get Sten/Bee's input on if it should only be 128x128 or resize
 func validate_image(image: Image) -> bool:
 	if (!image): return false;
 	var imageWidth = image.get_width();
@@ -167,6 +183,11 @@ func refresh_assets() -> void:
 		var tileImage: Image = find_image_in_folder(find_directory_by_name(tileTypes[i]));
 		var defaultTileImage: Image = find_image(tileTypes[i] + ".png", "res://Assets/Defaults");
 		change_tile_texture(i, tileImage if tileImage else defaultTileImage, mainTileMap);
+		
+	for i in range(propTypes.size()):
+		var propImage: Image = find_image_in_folder(find_directory_by_name(propTypes[i]));
+		var defaultPropImage: Image = find_image(propTypes[i] + ".png", "res://Assets/Defaults");
+		change_tile_texture(Global.EntityType.PROP1 + i, propImage if propImage else defaultPropImage, mainTileMap);
 	pass;
 
 ## Clears any images in the replacement directory
@@ -187,10 +208,18 @@ func clear_image() -> DirAccess:
 func replace_image(newImagePath: String) -> void:
 	var targetFilePath: String = find_directory_by_name(imageNameToReplace);
 	var targetDirectory: DirAccess = clear_image();
-	targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
+	if (newImagePath.get_extension().to_lower() == "png"):
+		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
+	else:
+		print("File must be PNG format");
+		# TODO: Implement pop up
 	
 	refresh_assets();
-	imagePreview.texture = ImageTexture.create_from_image(find_image_in_folder(targetFilePath));
+	var replacementImage = find_image_in_folder(targetFilePath);
+	if (replacementImage):
+		imagePreview.texture = ImageTexture.create_from_image(replacementImage);
+	else:
+		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 
 func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 	pass;
@@ -206,14 +235,16 @@ func reset_audio(audioName: String) -> void:
 func return_all_to_default(categoryName: String) -> void:
 	pass;
 
-func item_selected(selectedItem: AssetItem) -> void:
+func item_selected(selectedItem: AssetItem = firstSelected) -> void:
 	imageNameToReplace = selectedItem.assetName;
 	imageToReplace = find_image_in_folder(find_directory_by_name(imageNameToReplace));
-	
-	var replacementTexture = ImageTexture.create_from_image(imageToReplace);
-	if (!replacementTexture): 
+	if (imageToReplace):
+		var replacementTexture = ImageTexture.create_from_image(imageToReplace);
+		if (replacementTexture): 
+			imagePreview.texture = ImageTexture.create_from_image(imageToReplace);
+	else:
 		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
-	else: imagePreview.texture = ImageTexture.create_from_image(imageToReplace);
+	
 	currentAssetLabel.text = selectedItem.displayName;
 
 ## Change the texture of an atlas tile to a new image texture
@@ -222,7 +253,7 @@ func item_selected(selectedItem: AssetItem) -> void:
 ## tileMap: The tileMap being changed
 ## NOTE: Only works with images >= 128px x 128px
 func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
-	if (!validate_image(newImage)):
+	if (newImage == null):
 		return;
 	# Create a Texture2D from the image
 	var newTexture: Texture2D = ImageTexture.create_from_image(newImage);
@@ -306,6 +337,9 @@ func create_file_tree() -> void:
 	# Create all folders for tile types
 	for type: String in tileTypes:
 		dir.make_dir_recursive(filePath + "/Images/Tiles/" + type);
+	# Create all folders for prop types
+	for type: String in propTypes:
+		dir.make_dir_recursive(filePath + "/Images/Props/" + type);	
 	# Create all folders for enitity types
 	for type: String in entityTypes:
 		dir.make_dir_recursive(filePath + "/Images/Entities/" + type);

@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
 [ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
-[ext_resource type="Texture2D" uid="uid://bh8waatyaurop" path="res://Assets/Sprites/UI/Play.png" id="10_njgpr"]
+[ext_resource type="Texture2D" uid="uid://bh8waatyaurop" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
@@ -47,13 +47,14 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_0h7mo")
 sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileSet", "previewTileSet", "playButton", "assetManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileSet", "previewTileSet", "playButton", "assetManager", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
 tileSet = NodePath("Tiles")
 previewTileSet = NodePath("PreviewTile")
 playButton = NodePath("CanvasLayer/PlayButton")
 assetManager = NodePath("CanvasLayer/AssetManager")
+customCursorManager = NodePath("CustomCursorManager")
 
 [node name="Tiles" type="TileMapLayer" parent="." unique_id=1452837543]
 tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAAAAAADAAcAAwAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAKAAYABAAAAAAAAAALAAYABAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAANAAUAAQAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAADAAkAAAAAAAAAAAACAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAD//wkAAAAAAAAAAAAJAAYABgAAAAAAAGAMAAUABgAAAAAAAGACAAUABQAAAAAAAAAGAAUABQAAAAAAAAAAAAAAAAAAAAAAAAA=")
@@ -98,10 +99,11 @@ focus_behavior_recursive = 0
 editorManager = NodePath("../..")
 toolManager = NodePath("../../ToolManager")
 
-[node name="TileSwitch" parent="CanvasLayer" unique_id=959816093 node_paths=PackedStringArray("toolManager", "editorManager") instance=ExtResource("7_qupls")]
+[node name="TileSwitch" parent="CanvasLayer" unique_id=959816093 node_paths=PackedStringArray("toolManager", "editorManager", "tileMap") instance=ExtResource("7_qupls")]
 offset_bottom = 104.0
 toolManager = NodePath("../../ToolManager")
 editorManager = NodePath("../..")
+tileMap = NodePath("../../Tiles")
 
 [node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
 visible = false

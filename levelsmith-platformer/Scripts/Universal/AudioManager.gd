@@ -52,15 +52,15 @@ func audio_finished(player: AudioStreamPlayer) -> void:
 func update_volume() -> void:
 	musicPlayer.volume_db = (lowestDB * masterVolume * musicVolume) - lowestDB;
 	if musicPlayer.volume_db == -lowestDB:
-			musicPlayer.volume_db = -100;
+			musicPlayer.volume_db = -1000;
 	for i in inusePlayers.size():
 		inusePlayers[i].volume_db = (lowestDB * masterVolume * SFXVolume) - lowestDB;
 		if inusePlayers[i].volume_db == -lowestDB:
-			inusePlayers[i].volume_db = -100;
+			inusePlayers[i].volume_db = -1000;
 	for i in availablePlayers.size():
 		availablePlayers[i].volume_db = (lowestDB * masterVolume * SFXVolume) - lowestDB;
 		if availablePlayers[i].volume_db == -lowestDB:
-			availablePlayers[i].volume_db = -100;
+			availablePlayers[i].volume_db = -1000;
 
 ## NOTE: These two functions can probably be shortened since we know that the associated files have specific filePaths
 ## Play the music track for the builder

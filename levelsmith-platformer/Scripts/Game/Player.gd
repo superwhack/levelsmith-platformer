@@ -1,3 +1,4 @@
+class_name Player;
 extends CharacterBody2D
 
 # The player settings that can be changed in editor
@@ -48,11 +49,12 @@ func _ready() -> void:
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
-	# Add the gravity; reduce coyoteTimeLeft if in midair
+	# Add the gravity; reduce coyoteTimeLeft if in midair, and reset friction.
 	if not is_on_floor():
 		if coyoteTimeLeft > 0:
 			coyoteTimeLeft -= delta;
 		velocity += get_gravity() * delta * fallSpeed;
+		currentFriction = 1.0;
 	else:
 		coyoteTimeLeft = coyoteTime;
 	if Input.is_action_just_pressed("jump"):
@@ -60,6 +62,7 @@ func _physics_process(delta: float) -> void:
 			# Don't allow double jumps by reducing coyoteTimeLeft to 0
 			coyoteTimeLeft = 0;
 			jump();
+	
 	# Handle A and D inputs, as well as lack of directional input
 	run();
 	# Look at what the player is colliding with and apply effects
@@ -68,8 +71,7 @@ func _physics_process(delta: float) -> void:
 
 ## Make the player jump
 func jump() -> void:
-	# TODO fix reference later
-	#audioManager.play_effect("PlayerJump");
+	AudioManager.play_effect("PlayerJump");
 	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
@@ -101,9 +103,22 @@ func take_damage(amount: int) -> void:
 	
 ## Kill the player and send the global death signal
 func die() -> void:
-	# TODO fix reference later
-	#audioManager.play_effect("PlayerDeath");
+	AudioManager.play_effect("PlayerDeath");
 	Global.death.emit();
+
+## use raycast to detect enemy collision
+func detect_enemies(body: Node2D) -> void:
+	if body.is_in_group("enemy"):
+		take_damage(1);
+
+func detect_enemy_bounce(body: Node2D) -> void:
+	if body.is_in_group("enemy"):
+		body.die();
+		if (Input.is_action_pressed("jump")):
+			velocity.y = -jumpHeight * 360;
+		else:
+			velocity.y = -jumpHeight * 240;
+		coyoteTimeLeft = 0;
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
@@ -125,23 +140,8 @@ func detect_tiles() -> void:
 		if (finishedCollisions.has(collider)):
 			continue;
 		finishedCollisions.append(collider);
-		# Check for collisions with enemies
-		if slideCollisions[i].get_collider() is RigidBody2D:
-			# Landed on top of one, kill them and bounce
-			if downwardsRaycasts.has(slideCollisions[i]):
-				AudioManager.play_effect("EnemyDeath");
-				slideCollisions[i].get_collider().queue_free();
-				if (Input.is_action_pressed("jump")):
-					velocity.y = -jumpHeight * 360;
-				else:
-					velocity.y = -jumpHeight * 180;
-				coyoteTimeLeft = 0;
-			# Ran into them or enemy dropped on head, take damage
-			else:
-				take_damage(1);
 		# Only have collisions confer effects if they are below the player
-		if slideCollisions[i].get_collider() is TileMapLayer:
-			#collider = slideCollisions[i].get_collider();
+		if collider is TileMapLayer:
 			# Use the global coord to find tile collision
 			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position);
 			var tileData = collider.get_cell_tile_data(tilePos);

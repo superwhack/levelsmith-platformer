@@ -24,9 +24,10 @@ offset_left = 573.0
 offset_top = 102.0
 offset_right = 873.0
 offset_bottom = 152.0
-current_tab = 0
+current_tab = 2
 
 [node name="Images" type="ScrollContainer" parent="Tabs" unique_id=40713710]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -42,7 +43,6 @@ metadata/_tab_index = 1
 layout_mode = 2
 
 [node name="Audio" type="ScrollContainer" parent="Tabs" unique_id=912303560]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -122,7 +122,7 @@ title = "Open a File"
 position = Vector2i(0, 36)
 file_mode = 0
 access = 2
-filters = PackedStringArray("*.png", "*.jpeg", "*.webp", "*.svg")
+filters = PackedStringArray("*.png")
 
 [node name="ResetButton" type="Button" parent="." unique_id=2035131409]
 layout_mode = 1

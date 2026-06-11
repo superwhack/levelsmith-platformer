@@ -28,6 +28,18 @@ tiles = NodePath("TilePickerUI")
 entities = NodePath("EntityPickerUI")
 entityTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities")
 propTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Props")
+solidTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SolidTileButton")
+oneWayTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/OneWayTileButton")
+deathTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/DeathTileButton2")
+iceTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/IceTileButton3")
+stickyTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/StickyTileButton4")
+bounceTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/BounceTileButton5")
+slopeTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SlopeTileButton2")
+propOneButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropOneButton")
+propTwoButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropTwoButton")
+propThreeButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropThreeButton")
+propFourButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFourButton")
+propFiveButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFiveButton")
 
 [node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
 layout_mode = 2
@@ -186,10 +198,12 @@ icon = ExtResource("16_0gefc")
 [connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/StickyButton" to="." method="_on_sticky_tile_button_pressed"]
 [connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/BounceButton" to="." method="_on_bounce_tile_button_pressed"]
 [connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SlopeButton" to="." method="_on_slope_tile_button_pressed"]
+
 [connection signal="item_selected" from="EntityPickerUI/MarginContainer/Tabs/OptionButton" to="." method="entity_dropdown_select"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]
+
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/DirectionMarkerButton" to="." method="_on_direction_marker_prop_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/StopButton" to="." method="_on_stop_marker_prop_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/HazardButton" to="." method="_on_start_marker_prop_button_pressed"]

@@ -352,7 +352,7 @@ title = "Open a File"
 position = Vector2i(0, 36)
 file_mode = 0
 access = 2
-filters = PackedStringArray("*.png", "*.jpeg", "*.webp", "*.svg")
+filters = PackedStringArray("*.png")
 
 [node name="ResetButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=2035131409]
 layout_mode = 2

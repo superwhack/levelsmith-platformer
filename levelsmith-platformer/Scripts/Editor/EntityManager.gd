@@ -11,6 +11,8 @@ extends Node2D
 var goalCount: int = 0;
 @onready var brushObject: int = toolManager.brushObject;
 
+var movingResource: Resource;
+
 func _process(_delta: float) -> void:
 	editorManager.goalExists = goalCount > 0;
 	brushObject = toolManager.brushObject;
@@ -32,17 +34,35 @@ func place_entity(clickPosition: Vector2) -> void:
 	&& brushObject != Global.EntityType.PLAYER):
 		editorManager.playerExists = false;
 	
-	if (brushObject == Global.EntityType.PLAYER):
-		if (editorManager.playerExists): return;
+	if (toolManager.brushObject == Global.EntityType.PLAYER 
+	&& !editorManager.playerExists):
+		editorManager.playerExists = true;
+		tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
+	elif (toolManager.brushObject == Global.EntityType.PLAYER):
+		return;
+	elif (toolManager.brushObject >= editorManager.tileCount):
+		# If the tile is a prop, use rotation
+		if (toolManager.brushObject >= 12 && toolManager.brushObject <= 17):
+			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
+
+		# If it's an enemy, create a new property file
+		elif (toolManager.brushObject == Global.EntityType.PATROLLING):
+			var time = Time.get_ticks_msec();
+			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
+			# Wait five frames, I really don't like doing it like this but I'm not sure of a better way.
+			for frame in range(1, 5):
+				await get_tree().process_frame;
+			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
+			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
+			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol" + str(time) + ".tres");
+			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
+		else:
+			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
+	else:
+		tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
 		
 		editorManager.playerExists = true;
 		tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
-	else:
-		# If the tile is a prop, use rotation
-		if (brushObject >= Global.EntityType.PROP1):
-			tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
-		else:
-			tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
 	
 	if (brushObject == Global.EntityType.GOAL): goalCount += 1;
 
@@ -53,7 +73,9 @@ func delete_entity (clickPosition: Vector2) -> void:
 	
 	var clickedTileId: int = tileSet.get_cell_source_id(clickPosition);
 	if (clickedTileId < editorManager.tileCount): return;
-	
+	if get_scene_at_cell(clickPosition) is Enemy:
+		DirAccess.remove_absolute("res://Resources/Enemies/" + get_scene_at_cell(clickPosition).name + ".tres");
+		get_scene_at_cell(clickPosition).queue_free();
 	tileSet.erase_cell(clickPosition);
 	
 	if (clickedTileId == Global.EntityType.PLAYER): editorManager.playerExists = false;
@@ -63,17 +85,19 @@ func delete_entity (clickPosition: Vector2) -> void:
 ## clickPosition: position that the mouse has clicked at
 func edit_properties(clickPosition: Vector2) -> void:
 	propertyMenu.selectedEntity = get_scene_at_cell(clickPosition);
+	if get_scene_at_cell(clickPosition) is Enemy:
+		propertyMenu.show_menu(get_scene_at_cell(clickPosition).propertyFile);
+	else:
+		propertyMenu.show_menu();
 	propertyMenu.show();
 	
 ## Retrieves a reference to the scene at a specific cell in the tile set
 ## gridPosition: position of the cell being checked
 ## returns: the node at the cell if there is one, null otherwise
 func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
-	# The global position of the target cell that is clicked
-	var targetGlobalPos = tileSet.map_to_local(gridPosition) + tileSet.global_position;
 	# Iterate through each node in the tileset, if any have the same global position return it
 	for node in tileSet.get_children():
-		if node.global_position == targetGlobalPos:
+		if tileSet.local_to_map(node.global_position) == gridPosition:
 			return node;
 	return null;
 
@@ -86,6 +110,8 @@ func move_entity() -> void:
 	await get_tree().process_frame;
 	toolManager.brushObject = tileSet.get_cell_source_id(editorManager.currentMousePosition);
 	toolManager.currentObjectRotation = tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
+	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy:
+		movingResource = get_scene_at_cell(editorManager.currentMousePosition).propertyFile;
 	delete_entity(editorManager.currentMousePosition);
 	toolManager.isMoving = true;
 	
@@ -96,3 +122,19 @@ func drop_entity() -> void:
 		toolManager.brushObject = toolManager.prevEntity;
 	toolManager.prevEntity = -1;
 	toolManager.isMoving = false;
+	for frame in range(1, 5):
+		await get_tree().process_frame;
+	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy && movingResource:
+		movingResource.position = editorManager.currentMousePosition;
+		get_scene_at_cell(editorManager.currentMousePosition).apply_script(movingResource);
+		ResourceSaver.save(movingResource, "res://Resources/Enemies/" + get_scene_at_cell(editorManager.currentMousePosition).name + ".tres");
+		movingResource = null;
+		editorManager.reset_enemy_positions();
+
+func scan_goals(xSize: int, ySize: int) -> void:
+	goalCount = 0;
+	for x in xSize:
+		for y in ySize:
+			if tileSet.get_cell_source_id(Vector2(x, y)) == Global.EntityType.GOAL:
+				goalCount += 1;
+	editorManager.goalExists = goalCount > 0;

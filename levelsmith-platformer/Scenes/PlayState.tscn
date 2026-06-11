@@ -1,11 +1,16 @@
 [gd_scene format=3 uid="uid://dtt02avvdvee"]
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
+<<<<<<< HEAD
 [ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="2_snfl5"]
 [ext_resource type="Texture2D" uid="uid://bw2mins88t48f" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonRestartWhite.png" id="3_jygy8"]
 [ext_resource type="Texture2D" uid="uid://dnd75m1akapxn" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeBuildWhite.png" id="4_habuo"]
 [ext_resource type="Texture2D" uid="uid://d4ei24q10ni7o" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonPauseWhite.png" id="5_jygy8"]
 [ext_resource type="Texture2D" uid="uid://yl0iqt6b7aip" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeResumeWhite.png" id="6_habuo"]
+=======
+[ext_resource type="Texture2D" uid="uid://0tp3tr2xeug0" path="res://Assets/Sprites/UI/Pause.png" id="2_ym18m"]
+[ext_resource type="Texture2D" uid="uid://s8voaudouj61" path="res://Assets/Sprites/UI/Reset.png" id="4_x53pn"]
+>>>>>>> origin/main
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)

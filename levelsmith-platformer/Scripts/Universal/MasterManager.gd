@@ -32,7 +32,16 @@ func _ready() -> void:
 	ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
+<<<<<<< HEAD
 	playButton.pressed.connect(play);
+=======
+	
+	# NOTE: This probably shouldn't be here for the final build
+	# Create the Enemies folder, github can't push empty folders
+	if !DirAccess.dir_exists_absolute("res://Resources/Enemies/"):
+		DirAccess.make_dir_absolute("res://Resources/Enemies/");
+		
+>>>>>>> origin/main
 	edit();
 
 ## When the level is completed, validate it and automatically return to editor
@@ -52,9 +61,12 @@ func edit() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
-	editorManagerCanvas.show()
+	editorManagerCanvas.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
+	for frame in range(1, 3):
+		await get_tree().process_frame;
+	editorManager.reset_enemy_positions();
 
 ## Swap to play state
 func play() -> void:
@@ -85,7 +97,7 @@ func play() -> void:
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
 	gameManager.reset();
-	gameManager.playerPreset = propertyMenu.selectedPreset;
+	gameManager.playerPreset = propertyMenu.selectedPlayerPreset;
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
@@ -105,7 +117,7 @@ func load_tilemap() -> void:
 		gameManager.remove_child(loadedMap);
 		loadedMap.queue_free();
 	# Load the saved map from the resource folder
-	var savedMap = load("user://SavedTileMap.tscn");
+	var savedMap = ResourceLoader.load("user://SavedTileMap.tscn");
 	# Instantiate the map as a scene instance
 	var sceneInstance = savedMap.instantiate();
 	# Add that instance to the top of the GameManager's hierarchy
@@ -114,12 +126,17 @@ func load_tilemap() -> void:
 	
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
+	gameManager.tileSet = loadedMap;
 
 ## THESE ARE TEMPORARY AND SHOULD BE CHANGED WHEN BUTTONS ARE PUT IN
 func _process(_delta: float) -> void:
 	if (Input.is_action_just_pressed("tempSave")):
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
 	if (Input.is_action_just_pressed("tempLoad")):
-		var result = ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
+		propertyMenu.close();
+		ImportExportManager.clear_enemies_folder();
+		var result = await ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
 		if (result != 0):
 			editorManager.playerExists = result - 1;
+			editorManager.reset_enemy_positions();
+		editorManager.check_goal_exists();

@@ -112,7 +112,8 @@ func process_build_camera(delta: float) -> void:
 	
 	global_position += inputVector.normalized() * moveSpeed * speedModifier * delta;
 	
-	process_edge_scrolling(delta);
+	if (!get_viewport().gui_get_hovered_control()):
+		process_edge_scrolling(delta);
 
 ## Processes editor edge scrolling
 func process_edge_scrolling(delta: float) -> void:

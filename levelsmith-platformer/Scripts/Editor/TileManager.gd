@@ -28,11 +28,11 @@ func place_tile(clickPosition: Vector2) -> void:
 	|| clickedTileId >= editorManager.tileCount): 
 		return;
 	
-	if (brushObject != Global.TileType.ONEWAY):
+	if (brushObject == Global.TileType.SLOPE):
 		tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
 	else:
 		tileSet.set_cell(clickPosition, brushObject, Vector2i.ZERO);
-		
+
 ## Deletes a tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_tile (clickPosition: Vector2) -> void:

@@ -122,8 +122,6 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 			col += 1;
 		row += 1;
 	CSVFile.close();
-	for frame in range(1, 5):
-		await get_tree().process_frame;
 	
 	clone_data(levelAssetPath, "user://Assets/");
 	levelImported.emit();
@@ -134,6 +132,9 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 	# 2: Import succeeded with player
 	return int(playerExists) + 1;
 
+## Import the JSON file
+## tileMap: Tile map for searching for enemies
+## playerData: The panel that contains player data to adjust it
 func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	# Read JSON to file and close it
 	var JSONFile = FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);

@@ -130,7 +130,7 @@ func _process(_delta: float) -> void:
 			childNode.free();
 		propertyMenu.close();
 		ImportExportManager.clear_enemies_folder();
-		var result = await ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
+		var result = ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
 		if (result != 0):
 			editorManager.playerExists = result - 1;
 			editorManager.reset_enemy_positions();

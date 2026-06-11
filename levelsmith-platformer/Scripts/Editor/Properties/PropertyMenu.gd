@@ -30,6 +30,7 @@ var playerCoyoteTime : float;
 
 # Shooting inputs
 @export var shootingDirectionSlider: VBoxContainer;
+@export var shootingDirectionArrow: Sprite2D;
 @export var shootingShotSpeedSlider: VBoxContainer;
 @export var shootingFireRateSlider: VBoxContainer;
 
@@ -132,14 +133,18 @@ func _on_drag_ended() -> void:
 		_on_preset_options_item_selected(4);
 	
 func show_menu(resource: Resource = null) -> void:
+	shootingDirectionArrow.visible = false;
 	playerMenu.hide();
 	patrollingMenu.hide();
+	shootingMenu.hide();
 	if selectedEntity is Enemy:
 		selectedPreset = resource;
 		update_sliders();
 		if selectedEntity is EnemyPatrol:
 			patrollingMenu.show();
 		elif selectedEntity is EnemyShooting:
+			shootingDirectionArrow.visible = true;
+			shootingDirectionArrow.global_position = selectedEntity.global_position;
 			shootingMenu.show();
 	else:
 		playerMenu.show();

@@ -108,8 +108,6 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 
 ## Moves the entity at the clicked position
 func move_entity() -> void:
-	# NOTE: THIS COMMENT BREAKS IT, BUT WE STILL SHOULD SAVE ROTATIONS SOMEWHERE
-	#toolManager.currentObjectRotation = entityManager.tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
 	# Await is needed to it has time to update selectedTile
 	toolManager.prevEntity = toolManager.brushObject;
 	await get_tree().process_frame;
@@ -122,7 +120,8 @@ func move_entity() -> void:
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
-	place_entity(editorManager.currentMousePosition);
+#tileSet.set_cell(editorManager.currentMousePosition, brushObject, Vector2i.ZERO, 1);
+	await place_entity(editorManager.currentMousePosition);
 	if (toolManager.prevEntity != -2):
 		toolManager.brushObject = toolManager.prevEntity;
 	toolManager.prevEntity = -1;

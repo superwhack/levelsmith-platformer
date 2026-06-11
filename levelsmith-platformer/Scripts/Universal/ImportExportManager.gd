@@ -101,10 +101,6 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 	if !FileAccess.file_exists(levelPath + "Tiles.CSV"):
 		PopUpManager.createErrorPopUp("Level Tile Map Doesn't Exist!", "The directory " + levelPath + " does not have a file Tiles.CSV.");
 		return 0;
-
-	# Clear the current tile map
-	for node in tileMap.get_children():
-		node.queue_free();
 	
 	# Read tileData in the form of a CSV file
 	var CSVFile = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.READ);
@@ -116,16 +112,19 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 		for tileData in currentLine:
 			# Rotated tiles
 			if tileData.contains("|"):
-				if (int(tileData[0]) == Global.EntityType.PLAYER):
+				var entityTileData = tileData.split("|");
+				if (int(entityTileData[0]) == Global.EntityType.PLAYER):
 					playerExists = true;
-				var rotatedTileData = tileData.split("|");
-				tileMap.set_cell(Vector2(col, row), int(rotatedTileData[0]), Vector2i.ZERO, int(rotatedTileData[1]));
+				tileMap.set_cell(Vector2(col, row), int(entityTileData[0]), Vector2i.ZERO, int(entityTileData[1]));
 			else:
 				tileMap.set_cell(Vector2(col, row), int(tileData), Vector2i.ZERO);
 			col += 1;
 		row += 1;
 	CSVFile.close();
-	
+
+	for frame in range(1, 5):
+		await get_tree().process_frame;
+		
 	# Read JSON to file and close it
 	var JSONFile = FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
 	var json_as_dict = JSON.parse_string(JSONFile.get_as_text());
@@ -139,8 +138,6 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 	playerData.playerCoyoteTime = player.coyoteTime;
 	playerData.update_custom();
 	
-	for frame in range(1, 5):
-		await get_tree().process_frame;
 	
 	# Enemy information read
 	var enemies = json_as_dict.enemies;
@@ -174,6 +171,12 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
 			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol-" + nodePos + ".tres");
+			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
+		if node is EnemyShooting:
+			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
+			var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
+			var newShooting: Resource = defaultShooting.duplicate(true);
+			ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
 	
 	JSONFile.close();

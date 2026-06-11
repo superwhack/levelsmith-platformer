@@ -10,8 +10,8 @@ var propertyFile : Resource;
 #@onready var sprites: AnimatedSprite2D = $AnimatedSprite2D
 
 ## Initializing, add to the group named enemy
-func _ready() -> void:
-	add_to_group("enemy")
+#func _ready() -> void:
+#	add_to_group("enemy")
 
 ## process gravity every frame
 func _physics_process(delta: float) -> void:

@@ -141,7 +141,10 @@ func _process(_delta: float) -> void:
 	if (Input.is_action_just_pressed("tempSave")):
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
 	if (Input.is_action_just_pressed("tempLoad")):
+		propertyMenu.close();
+		ImportExportManager.clear_enemies_folder();
 		var result = await ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
 		if (result != 0):
 			editorManager.playerExists = result - 1;
+			editorManager.reset_enemy_positions();
 		editorManager.check_goal_exists();

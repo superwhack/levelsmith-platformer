@@ -32,6 +32,9 @@ var tileTypes: Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Boun
 # All types of entities
 var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyPatrol", "EnemyFlying", "Goal"];
 
+# All types of props
+var propTypes: Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
+
 #All animations
 var animations: Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];
 
@@ -43,12 +46,16 @@ func _ready() -> void:
 		create_file_tree();
 	# Generate all buttons under their tabs
 	generate_buttons("Tiles", imagesTab);
+	generate_buttons("Props", imagesTab);
 	generate_buttons("Entities", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
 	item_selected(firstSelected);
 	# Refresh all assets
 	refresh_assets();
+	ImportExportManager.levelImported.connect(refresh_assets);
+	ImportExportManager.levelImported.connect(item_selected);
 
+# WARNING Only refreshes all files once, might be worth it later to do individually
 ## Generate buttons for each asset
 ## folder: Which folder the assets for a certain group are stored in
 ## container: Which container the list of assets is stored in
@@ -129,6 +136,7 @@ func find_image_in_folder(folderPath: String) -> Image:
 		print("Could not open file path");
 		return null;
 
+# WARNING Get Sten/Bee's input on if it should only be 128x128 or resize
 func validate_image(image: Image) -> bool:
 	if (!image): return false;
 	var imageWidth = image.get_width();
@@ -175,6 +183,11 @@ func refresh_assets() -> void:
 		var tileImage: Image = find_image_in_folder(find_directory_by_name(tileTypes[i]));
 		var defaultTileImage: Image = find_image(tileTypes[i] + ".png", "res://Assets/Defaults");
 		change_tile_texture(i, tileImage if tileImage else defaultTileImage, mainTileMap);
+		
+	for i in range(propTypes.size()):
+		var propImage: Image = find_image_in_folder(find_directory_by_name(propTypes[i]));
+		var defaultPropImage: Image = find_image(propTypes[i] + ".png", "res://Assets/Defaults");
+		change_tile_texture(Global.EntityType.PROP1 + i, propImage if propImage else defaultPropImage, mainTileMap);
 	pass;
 
 ## Clears any images in the replacement directory
@@ -222,7 +235,7 @@ func reset_audio(audioName: String) -> void:
 func return_all_to_default(categoryName: String) -> void:
 	pass;
 
-func item_selected(selectedItem: AssetItem) -> void:
+func item_selected(selectedItem: AssetItem = firstSelected) -> void:
 	imageNameToReplace = selectedItem.assetName;
 	imageToReplace = find_image_in_folder(find_directory_by_name(imageNameToReplace));
 	if (imageToReplace):
@@ -324,6 +337,9 @@ func create_file_tree() -> void:
 	# Create all folders for tile types
 	for type: String in tileTypes:
 		dir.make_dir_recursive(filePath + "/Images/Tiles/" + type);
+	# Create all folders for prop types
+	for type: String in propTypes:
+		dir.make_dir_recursive(filePath + "/Images/Props/" + type);	
 	# Create all folders for enitity types
 	for type: String in entityTypes:
 		dir.make_dir_recursive(filePath + "/Images/Entities/" + type);

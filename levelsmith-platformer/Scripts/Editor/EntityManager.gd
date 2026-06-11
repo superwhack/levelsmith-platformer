@@ -123,13 +123,13 @@ func move_entity() -> void:
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
-	await place_entity(editorManager.currentMousePosition);
+	place_entity(editorManager.currentMousePosition);
+	for frame in range(1, 5):
+		await get_tree().process_frame;
 	if (toolManager.prevEntity != -2):
 		toolManager.brushObject = toolManager.prevEntity;
 	toolManager.prevEntity = -1;
 	toolManager.isMoving = false;
-	for frame in range(1, 5):
-		await get_tree().process_frame;
 	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy && movingResource:
 		movingResource.position = editorManager.currentMousePosition;
 		get_scene_at_cell(editorManager.currentMousePosition).apply_script(movingResource);

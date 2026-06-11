@@ -13,12 +13,6 @@ const projectile = preload("res://Scenes/Entities/Projectile.tscn");
 var timeLeft : float = 1;
 
 func _physics_process(delta: float) -> void:
-	# Gravity
-	super._physics_process(delta);
-	move_and_slide();
-	# Don't shoot if moving for whatever reason.
-	if (velocity != Vector2(0, 0)):
-		return;
 	timeLeft -= delta;
 	if (timeLeft <= 0.0):
 		shooting_behavior();

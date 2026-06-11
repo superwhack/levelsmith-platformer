@@ -19,6 +19,7 @@ var boxBrushState: Global.BoxBrushState = Global.BoxBrushState.INACTIVE
 
 # The previously selected tile before dragging
 var prevEntity : int = -1;
+var prevRotation : int = 0;
 var brushObject: int = 0;
 
 # A timer to differentiate between click and holding click

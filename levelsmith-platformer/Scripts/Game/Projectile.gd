@@ -20,7 +20,7 @@ func delete_projectile(body: Node2D = null) -> void:
 	elif body is TileMapLayer:
 		queue_free();
 
-
+## Player takes damage when they hit the projectile
 func _on_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("Player"):
 		area.get_parent().take_damage(1);

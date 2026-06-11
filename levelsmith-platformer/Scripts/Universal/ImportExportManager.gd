@@ -101,7 +101,10 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 	if !FileAccess.file_exists(levelPath + "Tiles.CSV"):
 		PopUpManager.createErrorPopUp("Level Tile Map Doesn't Exist!", "The directory " + levelPath + " does not have a file Tiles.CSV.");
 		return 0;
-	
+
+	# Clear the current tile map
+	for node in tileMap.get_children():
+		node.queue_free();
 	
 	# Read tileData in the form of a CSV file
 	var CSVFile = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.READ);

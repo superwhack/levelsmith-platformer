@@ -32,16 +32,13 @@ func _ready() -> void:
 	ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
-<<<<<<< HEAD
 	playButton.pressed.connect(play);
-=======
 	
 	# NOTE: This probably shouldn't be here for the final build
 	# Create the Enemies folder, github can't push empty folders
 	if !DirAccess.dir_exists_absolute("res://Resources/Enemies/"):
 		DirAccess.make_dir_absolute("res://Resources/Enemies/");
 		
->>>>>>> origin/main
 	edit();
 
 ## When the level is completed, validate it and automatically return to editor

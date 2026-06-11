@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://dtt02avvdvee"]
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
-[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="2_snfl5"]
-[ext_resource type="Texture2D" uid="uid://bw2mins88t48f" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonRestartWhite.png" id="3_jygy8"]
-[ext_resource type="Texture2D" uid="uid://dnd75m1akapxn" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeBuildWhite.png" id="4_habuo"]
-[ext_resource type="Texture2D" uid="uid://d4ei24q10ni7o" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonPauseWhite.png" id="5_jygy8"]
-[ext_resource type="Texture2D" uid="uid://yl0iqt6b7aip" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeResumeWhite.png" id="6_habuo"]
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_ym18m"]
+[ext_resource type="Texture2D" uid="uid://cac4ja4s12xun" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonRestartWhite.png" id="3_jygy8"]
+[ext_resource type="Texture2D" uid="uid://4m28733rlp7e" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeBuildWhite.png" id="4_habuo"]
+[ext_resource type="Texture2D" uid="uid://dv4prgld7ti1y" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonPauseWhite.png" id="5_jygy8"]
+[ext_resource type="Texture2D" uid="uid://b1hadfl28cryv" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeResumeWhite.png" id="6_habuo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
@@ -46,7 +46,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 8
 focus_behavior_recursive = 1
-theme = ExtResource("2_snfl5")
+theme = ExtResource("2_ym18m")
 action_mode = 0
 icon = ExtResource("3_jygy8")
 icon_alignment = 1
@@ -60,7 +60,7 @@ size_flags_horizontal = 3
 custom_minimum_size = Vector2(265, 0)
 layout_mode = 2
 focus_behavior_recursive = 1
-theme = ExtResource("2_snfl5")
+theme = ExtResource("2_ym18m")
 action_mode = 0
 icon = ExtResource("4_habuo")
 icon_alignment = 1
@@ -74,7 +74,7 @@ theme_override_constants/margin_top = 20
 
 [node name="PauseButton" type="Button" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin" unique_id=2000062892]
 layout_mode = 2
-theme = ExtResource("2_snfl5")
+theme = ExtResource("2_ym18m")
 icon = ExtResource("5_jygy8")
 
 [node name="BottomLeftMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=420297532]
@@ -114,7 +114,7 @@ layout_mode = 2
 
 [node name="ResumeButton" type="Button" parent="CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer" unique_id=486615708]
 layout_mode = 2
-theme = ExtResource("2_snfl5")
+theme = ExtResource("2_ym18m")
 icon = ExtResource("6_habuo")
 
 [node name="GamePausedSpacer" type="Control" parent="CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer" unique_id=1760806949]

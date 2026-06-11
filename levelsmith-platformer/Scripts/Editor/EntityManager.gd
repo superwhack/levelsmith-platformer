@@ -120,7 +120,6 @@ func move_entity() -> void:
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
-#tileSet.set_cell(editorManager.currentMousePosition, brushObject, Vector2i.ZERO, 1);
 	await place_entity(editorManager.currentMousePosition);
 	if (toolManager.prevEntity != -2):
 		toolManager.brushObject = toolManager.prevEntity;

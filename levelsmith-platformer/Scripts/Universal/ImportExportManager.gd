@@ -116,15 +116,25 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 				if (int(entityTileData[0]) == Global.EntityType.PLAYER):
 					playerExists = true;
 				tileMap.set_cell(Vector2(col, row), int(entityTileData[0]), Vector2i.ZERO, int(entityTileData[1]));
+				tileMap.update_internals()
 			else:
 				tileMap.set_cell(Vector2(col, row), int(tileData), Vector2i.ZERO);
 			col += 1;
 		row += 1;
 	CSVFile.close();
-
 	for frame in range(1, 5):
 		await get_tree().process_frame;
-		
+	
+	clone_data(levelAssetPath, "user://Assets/");
+	levelImported.emit();
+	
+	# Int is based on state of the player in the imported level
+	# 0: Import failed
+	# 1: Import succeeded, but no player
+	# 2: Import succeeded with player
+	return int(playerExists) + 1;
+
+func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	# Read JSON to file and close it
 	var JSONFile = FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
 	var json_as_dict = JSON.parse_string(JSONFile.get_as_text());
@@ -180,15 +190,8 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
 	
 	JSONFile.close();
-	
-	clone_data(levelAssetPath, "user://Assets/");
-	levelImported.emit();
-	
-	# Int is based on state of the player in the imported level
-	# 0: Import failed
-	# 1: Import succeeded, but no player
-	# 2: Import succeeded with player
-	return int(playerExists) + 1;
+
+
 
 ## Clone all of the data from the user asset folder 
 ## from: the source directory

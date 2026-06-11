@@ -51,15 +51,16 @@ func place_entity(clickPosition: Vector2) -> void:
 		# If it's an enemy, create a new property file
 		elif (toolManager.brushObject >= Global.EntityType.PATROLLING && toolManager.brushObject <= Global.EntityType.STATIONARY):
 			var time = Time.get_ticks_msec();
+			var saveBrush = toolManager.brushObject;
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
 			# Wait five frames, I really don't like doing it like this but I'm not sure of a better way.
 			for frame in range(1, 5):
 				await get_tree().process_frame;
-			if (toolManager.brushObject == Global.EntityType.PATROLLING):
+			if (saveBrush == Global.EntityType.PATROLLING):
 				var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 				var newPatrolling: Resource = defaultPatrolling.duplicate(true);
 				ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol" + str(time) + ".tres");
-			elif (toolManager.brushObject == Global.EntityType.SHOOTING):
+			elif (saveBrush == Global.EntityType.SHOOTING):
 				var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 				var newShooting: Resource = defaultShooting.duplicate(true);
 				ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting" + str(time) + ".tres");
@@ -124,12 +125,12 @@ func move_entity() -> void:
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
 	place_entity(editorManager.currentMousePosition);
-	for frame in range(1, 5):
-		await get_tree().process_frame;
 	if (toolManager.prevEntity != -2):
 		toolManager.brushObject = toolManager.prevEntity;
 	toolManager.prevEntity = -1;
 	toolManager.isMoving = false;
+	for frame in range(1, 5):
+		await get_tree().process_frame;
 	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy && movingResource:
 		movingResource.position = editorManager.currentMousePosition;
 		get_scene_at_cell(editorManager.currentMousePosition).apply_script(movingResource);

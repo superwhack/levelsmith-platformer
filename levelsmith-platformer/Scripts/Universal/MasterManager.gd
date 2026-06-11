@@ -10,6 +10,7 @@ var state : Global.State = Global.State.EDIT;
 @export var audioManager: Node;
 @export var editorManagerCanvas: CanvasLayer;
 @export var gameManagerCanvas: CanvasLayer;
+@export var mainMenuControl: Control;
 
 # Reference to tileset
 @export var tileSet: TileMapLayer;
@@ -36,7 +37,8 @@ func _ready() -> void:
 	if !DirAccess.dir_exists_absolute("res://Resources/Enemies/"):
 		DirAccess.make_dir_absolute("res://Resources/Enemies/");
 		
-	edit();
+	#edit();
+	main_menu();
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
@@ -45,6 +47,17 @@ func level_complete() -> void:
 	editorManager.isValidated = true;
 	print("LEVEL COMPLETE")
 
+## Swap to main menu state
+func main_menu() -> void:
+	
+	gameManager.hide();
+	gameManagerCanvas.hide();
+	editorManager.hide();
+	editorManagerCanvas.hide();
+	mainMenuControl.show();
+	
+	state = Global.State.MAIN_MENU;
+
 ## Swap to edit state
 func edit() -> void:
 	AudioManager.play_UI_music("EditorMusic");
@@ -52,6 +65,7 @@ func edit() -> void:
 	# Update state variable
 	state = Global.State.EDIT;
 	# Change scene to edit scene
+	mainMenuControl.hide();
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();

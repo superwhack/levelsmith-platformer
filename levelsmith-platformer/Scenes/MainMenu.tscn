@@ -1,8 +1,9 @@
 [gd_scene format=4 uid="uid://bjx53xjckex6r"]
 
-[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GeneralTheme.tres" id="1_df05h"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_df05h"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_df05h"]
+[ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_loo7a"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_8um5k"]
 [ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="4_xim88"]
 [ext_resource type="Texture2D" uid="uid://cfmy5pk58n8fx" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
@@ -40,7 +41,7 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_ce3w2")
 sources/2 = SubResource("TileSetAtlasSource_n45e2")
 
-[node name="MainMenu" type="Control" unique_id=422065839]
+[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelX", "fieldNewLevelY", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "panelInvalidPath")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,6 +49,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_df05h")
+script = ExtResource("2_loo7a")
+buttonNewLevel = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/NewLevelButton")
+buttonImportLevel = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/ImportLevelButton")
+buttonLoadExample = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/LoadExampleButton")
+buttonQuit = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/QuitButton")
+overlayNewLevel = NodePath("NewLevelOverlay")
+overlayImportLevel = NodePath("ImportLevelOverlay")
+buttonNewLevelCreate = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow/CreateButton")
+buttonNewLevelCancel = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow/CancelButton")
+fieldNewLevelName = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/NameRow/NameInput")
+fieldNewLevelX = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX/XInput")
+fieldNewLevelY = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY/YInput")
+buttonImportLevelCancel = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/CancelButton")
+buttonImportLevelOpen = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/OpenButton")
+buttonImportLevelBrowse = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/BrowseButton")
+fieldImportLevelPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/FilePathInput")
+panelInvalidPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ErrorBanner")
 
 [node name="Background" type="ColorRect" parent="." unique_id=2093246532]
 layout_mode = 1
@@ -401,6 +419,7 @@ texture_pressed = ExtResource("7_loo7a")
 texture_hover = ExtResource("8_if7li")
 
 [node name="ErrorBanner" type="PanelContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=2119281141]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("9_rrcx7")
 

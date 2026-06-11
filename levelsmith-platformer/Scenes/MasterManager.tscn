@@ -3,10 +3,11 @@
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/Universal/MasterManager.gd" id="1_3ngsi"]
 [ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/Universal/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
+[ext_resource type="PackedScene" uid="uid://bjx53xjckex6r" path="res://Scenes/MainMenu.tscn" id="2_gojh1"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
-[ext_resource type="Texture2D" uid="uid://dt6pg2cjbdcuv" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -62,7 +63,7 @@ sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8fjml"]
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "audioManager", "editorManagerCanvas", "gameManagerCanvas", "tileSet", "previewTileMap", "propertyMenu")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "audioManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "tileSet", "previewTileMap", "propertyMenu")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
@@ -70,6 +71,7 @@ gameManager = NodePath("GameManager")
 audioManager = NodePath("AudioManager")
 editorManagerCanvas = NodePath("EditorManager/CanvasLayer")
 gameManagerCanvas = NodePath("GameManager/CanvasLayer")
+mainMenuControl = NodePath("MainMenuCanvasLayer/MainMenu")
 tileSet = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
 worldSize = Vector2i(14, 8)
@@ -128,7 +130,16 @@ offset_right = 1914.0
 offset_bottom = 195.0
 text = "Generic PopUp Test"
 
+[node name="CustomCursorManager" parent="EditorManager" index="5" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
+masterManager = NodePath("../..")
+
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
+
+[node name="MainMenuCanvasLayer" type="CanvasLayer" parent="." unique_id=1285763636]
+
+[node name="MainMenu" parent="MainMenuCanvasLayer" unique_id=422065839 node_paths=PackedStringArray("masterManager") instance=ExtResource("2_gojh1")]
+masterManager = NodePath("../..")
+metadata/_edit_group_ = true
 
 [node name="PopUps" type="CanvasLayer" parent="." unique_id=1234008250]
 layer = 5

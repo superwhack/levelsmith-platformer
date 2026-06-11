@@ -5,6 +5,7 @@ extends Node2D
 @export var editorManager: Node2D;
 @export var toolManager: Node2D;
 @export var entityManager: Node2D;
+@export var masterManager: Node2D;
 
 # State of the selector frame
 enum SelectorState {
@@ -45,11 +46,14 @@ func _ready() -> void:
 	selectorFrame.texture = selectorFrameSprite;
 	add_child(selectorFrame);
 	
-	Input.set_custom_mouse_cursor(brushIcon);
-
+	Input.set_custom_mouse_cursor(cursorIcon);
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	# If global state is not in edit, set to cursor icon and bail out
+	if (masterManager.state != Global.State.EDIT):
+		Input.set_custom_mouse_cursor(cursorIcon);
+		return;
 	currentMousePosition = editorManager.currentMousePosition;
 	selectorFrame.global_position = currentMousePosition * Global.tileSize + Vector2(Global.tileSize / 2.0, Global.tileSize / 2.0);
 	invalidSprite.global_position = get_global_mouse_position();

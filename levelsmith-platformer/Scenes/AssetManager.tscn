@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d2ud25a3qonvp"]
 
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
-[ext_resource type="Texture2D" uid="uid://d21j834524jcc" path="res://icon.svg" id="3_rshqi"]
+[ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="3_rshqi"]
 
 [node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel")]
 process_mode = 2

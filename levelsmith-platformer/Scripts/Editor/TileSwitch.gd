@@ -15,26 +15,26 @@ extends HBoxContainer
 @export var tileMap: TileMapLayer;
 
 # References to all Tile buttons
-@export var solidTileButton: TextureButton;
-@export var oneWayTileButton: TextureButton;
-@export var deathTileButton: TextureButton;
-@export var iceTileButton: TextureButton;
-@export var stickyTileButton: TextureButton;
-@export var bounceTileButton: TextureButton;
-@export var slopeTileButton: TextureButton;
+@export var solidTileButton: Button;
+@export var oneWayTileButton: Button;
+@export var deathTileButton: Button;
+@export var iceTileButton: Button;
+@export var stickyTileButton: Button;
+@export var bounceTileButton: Button;
+@export var slopeTileButton: Button;
 
 # Entities
-@export var spawnButton: TextureButton;
-@export var goalButton: TextureButton;
-@export var patrollingButton: TextureButton;
-@export var shootingButton: TextureButton;
+@export var spawnButton: Button;
+@export var goalButton: Button;
+@export var patrollingButton: Button;
+@export var shootingButton: Button;
 
 # References to all Prop buttons
-@export var propOneButton: TextureButton;
-@export var propTwoButton: TextureButton;
-@export var propThreeButton: TextureButton;
-@export var propFourButton: TextureButton;
-@export var propFiveButton: TextureButton;
+@export var propOneButton: Button;
+@export var propTwoButton: Button;
+@export var propThreeButton: Button;
+@export var propFourButton: Button;
+@export var propFiveButton: Button;
 
 func _ready() -> void:
 	# Connect all Tile button signals
@@ -75,10 +75,13 @@ func entity_dropdown_select(index: int):
 	match index:
 		0:
 			editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);
+			toolManager.update_brush_object(Global.EntityType.PLAYER);
+			toolManager.currentObjectRotation = 0;
 			entityTab.visible = true;
 			propTab.visible = false;
 		1:
 			editorManager.change_current_hotbar(Global.HotbarState.PROPS);
+			toolManager.update_brush_object(Global.EntityType.PROP1);
 			entityTab.visible = false;
 			propTab.visible = true;
 

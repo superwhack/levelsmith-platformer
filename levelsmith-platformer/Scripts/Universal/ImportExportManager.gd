@@ -93,13 +93,13 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 	levelPath = "user://Levels/" + directory + "/";
 	levelAssetPath = levelPath + "Assets/"
 	if !DirAccess.dir_exists_absolute(levelPath):
-		PopUpManager.createErrorPopUp("Level Directory Doesn't Exist!", "The directory " + levelPath + " could not be found.");
+		PopUpManager.create_error_popup("Level Directory Doesn't Exist!", "The directory " + levelPath + " could not be found.");
 		return 0;
 	if !FileAccess.file_exists(levelPath + "Settings.JSON"):
-		PopUpManager.createErrorPopUp("Level Properties Don't Exist!", "The directory " + levelPath + " does not have a file Settings.JSON.");
+		PopUpManager.create_error_popup("Level Properties Don't Exist!", "The directory " + levelPath + " does not have a file Settings.JSON.");
 		return 0;
 	if !FileAccess.file_exists(levelPath + "Tiles.CSV"):
-		PopUpManager.createErrorPopUp("Level Tile Map Doesn't Exist!", "The directory " + levelPath + " does not have a file Tiles.CSV.");
+		PopUpManager.create_error_popup("Level Tile Map Doesn't Exist!", "The directory " + levelPath + " does not have a file Tiles.CSV.");
 		return 0;
 	
 	# Read tileData in the form of a CSV file

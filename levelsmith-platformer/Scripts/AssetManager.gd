@@ -181,11 +181,10 @@ func file_count_in_folder(folderName: String) -> int:
 	return -1;
 
 func refresh_assets() -> void:
-	for i in range(0,1):
+	for i in range(tileTypes.size()):
 		var tileImage: Image = find_image_in_folder(find_directory_by_name(tileTypes[i]));
 		var defaultTileImage: Image = find_image(tileTypes[i] + ".png", "res://Assets/Defaults");
 		change_tile_texture(i, tileImage if tileImage else defaultTileImage, mainTileMap);
-	return
 	for i in range(propTypes.size()):
 		var propImage: Image = find_image_in_folder(find_directory_by_name(propTypes[i]));
 		var defaultPropImage: Image = find_image(propTypes[i] + ".png", "res://Assets/Defaults");

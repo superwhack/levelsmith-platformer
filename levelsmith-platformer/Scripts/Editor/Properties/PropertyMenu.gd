@@ -54,6 +54,8 @@ func _process(delta: float) -> void:
 	if (selectedEntity != null):
 		if selectedEntity is EnemyPatrol:
 			entityName.text = "Patrolling Enemy";
+		elif selectedEntity is EnemyShooting:
+			entityName.text = "Shooting Enemy";
 		elif selectedEntity is Player:
 			entityName.text = "Player";
 	else:
@@ -146,8 +148,8 @@ func show_menu(resource: Resource = null) -> void:
 		if selectedEntity is EnemyPatrol:
 			patrollingMenu.show();
 		elif selectedEntity is EnemyShooting:
-			shootingDirectionArrow.visible = true;
-			shootingDirectionArrow.global_position = selectedEntity.global_position;
+			#shootingDirectionArrow.visible = true;
+			#shootingDirectionArrow.global_position = selectedEntity.global_position;
 			shootingMenu.show();
 	else:
 		playerMenu.show();

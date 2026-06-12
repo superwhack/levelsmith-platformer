@@ -24,12 +24,15 @@ var loadedMap: TileMapLayer;
 
 @export var propertyMenu : Panel;
 
+@export var playButton : Button;
+
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
 	ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
+	playButton.pressed.connect(play);
 	
 	# NOTE: This probably shouldn't be here for the final build
 	# Create the Enemies folder, github can't push empty folders
@@ -65,13 +68,13 @@ func edit() -> void:
 ## Swap to play state
 func play() -> void:
 	if (!editorManager.playerExists && !editorManager.goalExists):
-		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no goal or player placed down!");
+		PopUpManager.create_error_popup("Cannot Start Level", "Level cannot be started, there is no goal or player placed down!");
 		return;
 	elif (!editorManager.playerExists):
-		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no player placed down!");
+		PopUpManager.create_error_popup("Cannot Start Level", "Level cannot be started, there is no player placed down!");
 		return;
 	elif (!editorManager.goalExists):
-		PopUpManager.createErrorPopUp("Cannot Start Level", "Level cannot be started, there is no goal placed down!");
+		PopUpManager.create_error_popup("Cannot Start Level", "Level cannot be started, there is no goal placed down!");
 		return;
 	propertyMenu.hide();
 	AudioManager.play_music("LevelMusic");

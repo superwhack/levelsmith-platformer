@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/Universal/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
-[ext_resource type="Texture2D" uid="uid://dt6pg2cjbdcuv" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -40,40 +40,19 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_8vbpr")
 sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_knx5t"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mg0h4"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ggjfv"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i0d1j"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64b2s"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8vbpr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gojh1"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0vixy"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4q5nt"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iwvbt"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8fjml"]
-
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "audioManager", "editorManagerCanvas", "gameManagerCanvas", "tileSet", "previewTileMap", "propertyMenu")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "audioManager", "editorManagerCanvas", "gameManagerCanvas", "tileSet", "previewTileMap", "propertyMenu", "playButton")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
 gameManager = NodePath("GameManager")
 audioManager = NodePath("AudioManager")
-editorManagerCanvas = NodePath("EditorManager/CanvasLayer")
+editorManagerCanvas = NodePath("EditorManager/ScreenUI")
 gameManagerCanvas = NodePath("GameManager/CanvasLayer")
 tileSet = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
 worldSize = Vector2i(14, 8)
 propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
+playButton = NodePath("EditorManager/ScreenUI/BottomRightAnchor/PlayButton")
 
 [node name="AudioManager" type="Node" parent="." unique_id=62565252]
 script = ExtResource("2_8vbpr")
@@ -83,8 +62,9 @@ script = ExtResource("4_mg0h4")
 masterManager = NodePath("..")
 tileSet = NodePath("../EditorManager/Tiles")
 
-[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager") instance=ExtResource("2_430ed")]
+[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "playButton") instance=ExtResource("2_430ed")]
 masterManager = NodePath("..")
+playButton = NodePath("ScreenUI/BottomRightAnchor/PlayButton")
 
 [node name="Tiles" parent="EditorManager" index="0" unique_id=1452837543]
 position = Vector2(1, 0)
@@ -101,43 +81,15 @@ modulate = Color(1, 1, 1, 1)
 position = Vector2(0, -1)
 collision_enabled = true
 
-[node name="PlayButton" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="0" unique_id=745550610]
-theme_override_styles/normal = SubResource("StyleBoxEmpty_knx5t")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mg0h4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_ggjfv")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_i0d1j")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_64b2s")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8vbpr")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_gojh1")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0vixy")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_4q5nt")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_iwvbt")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8fjml")
-
-[node name="PopUpTest" type="Button" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="4" unique_id=1804951339]
-offset_left = 1819.0
-offset_top = 116.0
-offset_right = 1914.0
-offset_bottom = 147.0
-text = "Popup Test"
-
-[node name="GenericPopUpTest" type="Button" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="5" unique_id=1938217455]
-offset_left = 1754.0
-offset_top = 164.0
-offset_right = 1914.0
-offset_bottom = 195.0
-text = "Generic PopUp Test"
-
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 
 [node name="PopUps" type="CanvasLayer" parent="." unique_id=1234008250]
 layer = 5
 script = ExtResource("7_8vbpr")
 
-[connection signal="pressed" from="EditorManager/CanvasLayer/PlayButton" to="." method="play"]
-[connection signal="pressed" from="EditorManager/CanvasLayer/PopUpTest" to="PopUps" method="createTestPopUp"]
-[connection signal="pressed" from="EditorManager/CanvasLayer/GenericPopUpTest" to="PopUps" method="createGenericTestPopUp"]
-[connection signal="pressed" from="GameManager/CanvasLayer/PauseButton" to="." method="edit"]
+[connection signal="pressed" from="EditorManager/ScreenUI/BottomLeftAnchor/BottomLeftRow/AssetManagerButton" to="EditorManager" method="open_asset_manager"]
+[connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
+[connection signal="pressed" from="GameManager/CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ReturnEditorButton" to="." method="edit"]
 
 [editable path="EditorManager"]
 [editable path="EditorManager/CanvasLayer/AssetManager"]

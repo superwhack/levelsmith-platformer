@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://buk5nj35b0fuf" path="res://Assets/Sprites/UI/BlankDoubleChevronDownMedium.png" id="3_blppq"]
 [ext_resource type="Texture2D" uid="uid://b88f0rfl1f7l6" path="res://Assets/Sprites/UI/BoxChecked.png" id="4_n6we1"]
 [ext_resource type="Texture2D" uid="uid://b2doutbpyoq2i" path="res://Assets/Sprites/UI/play.png" id="5_blppq"]
+[ext_resource type="Texture2D" uid="uid://b4uvmd0mtjmou" path="res://Assets/Sprites/UI/TestIconMedium.png" id="5_hd2lr"]
+[ext_resource type="Texture2D" uid="uid://dmi32a0c74puf" path="res://Assets/Sprites/UI/TestIconMediumCropped.png" id="6_vrvwj"]
 
 [node name="Control" type="Control" unique_id=1993821239]
 layout_mode = 3
@@ -27,6 +29,7 @@ offset_left = 27.0
 offset_top = 70.0
 offset_right = 237.0
 offset_bottom = 100.0
+theme_type_variation = &"TextListButton"
 text = "Button Text"
 
 [node name="Button3" type="Button" parent="." unique_id=366412493]
@@ -47,12 +50,48 @@ offset_bottom = 233.0
 text = "Button Text"
 icon = ExtResource("3_blppq")
 
+[node name="Tool Button" type="Button" parent="." unique_id=1014683419]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 117.0
+offset_right = 71.0
+offset_bottom = 149.0
+theme_type_variation = &"ToolButton"
+icon = ExtResource("3_blppq")
+
+[node name="Tool Button2" type="Button" parent="." unique_id=1151308150]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 120.0
+offset_right = 159.0
+offset_bottom = 200.0
+theme_type_variation = &"TileButton"
+icon = ExtResource("2_75eu0")
+
+[node name="Tool Button3" type="Button" parent="." unique_id=797699856]
+layout_mode = 0
+offset_left = 181.0
+offset_top = 122.0
+offset_right = 261.0
+offset_bottom = 202.0
+theme_type_variation = &"ToolButton"
+icon = ExtResource("5_hd2lr")
+
+[node name="Tool Button4" type="Button" parent="." unique_id=810064504]
+layout_mode = 0
+offset_left = 278.0
+offset_top = 120.0
+offset_right = 358.0
+offset_bottom = 200.0
+theme_type_variation = &"ToolButton"
+icon = ExtResource("6_vrvwj")
+
 [node name="TabBar" type="TabBar" parent="." unique_id=2036239913]
 layout_mode = 0
-offset_left = 31.0
-offset_top = 202.0
-offset_right = 689.0
-offset_bottom = 242.0
+offset_left = 29.0
+offset_top = 230.0
+offset_right = 687.0
+offset_bottom = 275.0
 theme = ExtResource("1_byp4v")
 current_tab = 0
 tab_count = 4
@@ -63,56 +102,56 @@ tab_2/title = "dsfsdfsdf"
 
 [node name="TextEdit" type="TextEdit" parent="." unique_id=1426495625]
 layout_mode = 0
-offset_left = 570.0
-offset_top = 17.0
-offset_right = 782.0
-offset_bottom = 148.0
+offset_left = 568.0
+offset_top = 45.0
+offset_right = 780.0
+offset_bottom = 176.0
 
 [node name="LineEdit" type="LineEdit" parent="." unique_id=357384977]
 layout_mode = 0
-offset_left = 288.0
-offset_top = 157.0
-offset_right = 539.0
-offset_bottom = 182.0
+offset_left = 940.0
+offset_top = 189.0
+offset_right = 1191.0
+offset_bottom = 225.0
 
 [node name="Button5" type="Button" parent="." unique_id=320914937]
 layout_mode = 0
-offset_left = 211.0
-offset_top = 32.0
-offset_right = 235.0
-offset_bottom = 40.0
+offset_left = 222.0
+offset_top = 33.0
+offset_right = 260.0
+offset_bottom = 55.0
 icon = ExtResource("4_n6we1")
 
 [node name="SpinBox" type="SpinBox" parent="." unique_id=1880800145]
 layout_mode = 0
-offset_left = 45.0
-offset_top = 265.0
-offset_right = 263.0
-offset_bottom = 290.0
+offset_left = 43.0
+offset_top = 293.0
+offset_right = 261.0
+offset_bottom = 329.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1073643887]
 layout_mode = 0
-offset_left = 276.0
-offset_top = 252.0
-offset_right = 521.0
-offset_bottom = 312.0
+offset_left = 274.0
+offset_top = 280.0
+offset_right = 519.0
+offset_bottom = 340.0
 text = "Dude my text is SOOO rich..."
 
 [node name="Label" type="Label" parent="." unique_id=541666828]
 layout_mode = 0
-offset_left = 277.0
-offset_top = 304.0
-offset_right = 489.0
-offset_bottom = 326.0
+offset_left = 275.0
+offset_top = 332.0
+offset_right = 592.0
+offset_bottom = 365.0
 text = "This text is not rich."
 
 [node name="PlayButton" type="Button" parent="." unique_id=845139126]
 z_index = 2
 layout_mode = 0
-offset_left = 285.0
-offset_top = 12.0
-offset_right = 549.0
-offset_bottom = 148.0
+offset_left = 1141.0
+offset_top = 28.0
+offset_right = 1421.0
+offset_bottom = 164.0
 focus_behavior_recursive = 1
 action_mode = 0
 icon = ExtResource("5_blppq")
@@ -120,10 +159,10 @@ icon = ExtResource("5_blppq")
 [node name="OptionButton" type="OptionButton" parent="." unique_id=711476018]
 custom_minimum_size = Vector2(140, 50)
 layout_mode = 0
-offset_left = 33.0
-offset_top = 118.0
-offset_right = 200.0
-offset_bottom = 168.0
+offset_left = 39.0
+offset_top = 341.0
+offset_right = 206.0
+offset_bottom = 391.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 selected = 0
@@ -135,7 +174,16 @@ popup/item_1/id = 1
 
 [node name="HSlider" type="HSlider" parent="." unique_id=2036216041]
 layout_mode = 0
-offset_left = 314.0
-offset_top = 359.0
-offset_right = 678.0
-offset_bottom = 375.0
+offset_left = 312.0
+offset_top = 387.0
+offset_right = 676.0
+offset_bottom = 403.0
+
+[node name="LinkButton" type="LinkButton" parent="." unique_id=498365425]
+layout_mode = 0
+offset_left = 277.0
+offset_top = 36.0
+offset_right = 483.0
+offset_bottom = 76.0
+text = "link"
+underline = 1

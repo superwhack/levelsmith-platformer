@@ -5,16 +5,22 @@
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
+[ext_resource type="Texture2D" uid="uid://bd4p61avbou82" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonHomeWhite.png" id="8_rdu5w"]
 [ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
-[ext_resource type="Texture2D" uid="uid://bh8waatyaurop" path="res://Assets/Sprites/UI/play.png" id="10_njgpr"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
+[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="11_fnjh2"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
+[ext_resource type="Texture2D" uid="uid://brn23iof6rncf" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonSaveWhite.png" id="12_vrcqo"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
+[ext_resource type="Texture2D" uid="uid://cyv36kpfksb3b" path="res://Assets/UserInterface/IconButtonAssetManagerWhite.png" id="13_racgb"]
+[ext_resource type="Texture2D" uid="uid://cpnh5eiw0m5fv" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
+[ext_resource type="Texture2D" uid="uid://pc63ho3uson2" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -47,12 +53,15 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_0h7mo")
 sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileSet", "previewTileSet", "playButton", "assetManager", "customCursorManager")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6fw3s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63w0a"]
+
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileSet", "previewTileSet", "assetManager", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
 tileSet = NodePath("Tiles")
 previewTileSet = NodePath("PreviewTile")
-playButton = NodePath("CanvasLayer/PlayButton")
 assetManager = NodePath("CanvasLayer/AssetManager")
 customCursorManager = NodePath("CustomCursorManager")
 
@@ -75,51 +84,209 @@ editorManager = NodePath("..")
 toolManager = NodePath("../ToolManager")
 tileSet = NodePath("../Tiles")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
+[node name="ScreenUI" type="CanvasLayer" parent="." unique_id=189680016]
 
-[node name="PlayButton" type="Button" parent="CanvasLayer" unique_id=745550610]
-z_index = 2
-offset_left = 1629.0
-offset_top = 922.0
-offset_right = 1893.0
-offset_bottom = 1058.0
-focus_behavior_recursive = 1
-action_mode = 0
-icon = ExtResource("10_njgpr")
+[node name="OverlayLayer" type="Control" parent="ScreenUI" unique_id=1751323313]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="ToolSwitch" parent="CanvasLayer" unique_id=1469240724 node_paths=PackedStringArray("editorManager", "toolManager") instance=ExtResource("6_iws6f")]
+[node name="ErrorPopUpLayer" type="CanvasLayer" parent="ScreenUI/OverlayLayer" unique_id=302907189]
+visible = false
+
+[node name="TopLeftAnchor" type="MarginContainer" parent="ScreenUI" unique_id=760650006]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 20
+metadata/_edit_use_anchors_ = true
+
+[node name="TopLeftRow" type="HBoxContainer" parent="ScreenUI/TopLeftAnchor" unique_id=1851750065]
+layout_mode = 2
+
+[node name="HomeButton" type="Button" parent="ScreenUI/TopLeftAnchor/TopLeftRow" unique_id=1385633318]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme = ExtResource("7_ditat")
+theme_type_variation = &"ToolButton"
+icon = ExtResource("8_rdu5w")
+icon_alignment = 1
+
+[node name="HomeTileSpacer" type="Control" parent="ScreenUI/TopLeftAnchor/TopLeftRow" unique_id=1725752072]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TilePaletteFrame" type="PanelContainer" parent="ScreenUI/TopLeftAnchor/TopLeftRow" unique_id=589019375]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6fw3s")
+
+[node name="TilePaletteMargin" type="MarginContainer" parent="ScreenUI/TopLeftAnchor/TopLeftRow/TilePaletteFrame" unique_id=202133051]
+layout_mode = 2
+
+[node name="TileSwitch" parent="ScreenUI/TopLeftAnchor/TopLeftRow/TilePaletteFrame/TilePaletteMargin" unique_id=959816093 node_paths=PackedStringArray("toolManager", "editorManager", "tileMap") instance=ExtResource("7_qupls")]
+layout_mode = 2
+toolManager = NodePath("../../../../../../ToolManager")
+editorManager = NodePath("../../../../../..")
+tileMap = NodePath("../../../../../../Tiles")
+
+[node name="TopRightAnchor" type="MarginContainer" parent="ScreenUI" unique_id=1893306717]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -313.0
-offset_right = 0.0
-offset_bottom = 104.0
+offset_left = -40.0
+offset_bottom = 40.0
 grow_horizontal = 0
-focus_behavior_recursive = 0
-editorManager = NodePath("../..")
-toolManager = NodePath("../../ToolManager")
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+metadata/_edit_use_anchors_ = true
 
-[node name="TileSwitch" parent="CanvasLayer" unique_id=959816093 node_paths=PackedStringArray("toolManager", "editorManager", "tileMap") instance=ExtResource("7_qupls")]
-offset_bottom = 104.0
-toolManager = NodePath("../../ToolManager")
-editorManager = NodePath("../..")
-tileMap = NodePath("../../Tiles")
+[node name="TopRightRow" type="HBoxContainer" parent="ScreenUI/TopRightAnchor" unique_id=1668837166]
+layout_mode = 2
 
-[node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
-visible = false
+[node name="ToolSwitchFrame" type="PanelContainer" parent="ScreenUI/TopRightAnchor/TopRightRow" unique_id=138272491]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_63w0a")
+
+[node name="ToolSwitchMargin" type="MarginContainer" parent="ScreenUI/TopRightAnchor/TopRightRow/ToolSwitchFrame" unique_id=88052593]
+layout_mode = 2
+
+[node name="ToolSwitch" parent="ScreenUI/TopRightAnchor/TopRightRow/ToolSwitchFrame/ToolSwitchMargin" unique_id=1469240724 node_paths=PackedStringArray("editorManager", "toolManager") instance=ExtResource("6_iws6f")]
+layout_mode = 2
+editorManager = NodePath("../../../../../..")
+toolManager = NodePath("../../../../../../ToolManager")
+
+[node name="ToolSaveSpacer" type="Control" parent="ScreenUI/TopRightAnchor/TopRightRow" unique_id=1260674054]
+custom_minimum_size = Vector2(18, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SavePanel" type="PanelContainer" parent="ScreenUI/TopRightAnchor/TopRightRow" unique_id=992085748]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("11_fnjh2")
+
+[node name="SaveMargin" type="MarginContainer" parent="ScreenUI/TopRightAnchor/TopRightRow/SavePanel" unique_id=464922728]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="SaveButton" type="Button" parent="ScreenUI/TopRightAnchor/TopRightRow/SavePanel/SaveMargin" unique_id=778830983]
+layout_mode = 2
+theme = ExtResource("7_ditat")
+theme_type_variation = &"ToolButton"
+icon = ExtResource("12_vrcqo")
+icon_alignment = 1
+
+[node name="BottomLeftAnchor" type="MarginContainer" parent="ScreenUI" unique_id=714724835]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_bottom = 20
+metadata/_edit_use_anchors_ = true
+
+[node name="BottomLeftRow" type="HBoxContainer" parent="ScreenUI/BottomLeftAnchor" unique_id=1343700794]
+layout_mode = 2
+
+[node name="AssetManagerButton" type="Button" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow" unique_id=446918555]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme = ExtResource("7_ditat")
+theme_type_variation = &"ToolButton"
+icon = ExtResource("13_racgb")
+icon_alignment = 1
+
+[node name="AssetCameraSpacer" type="Control" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow" unique_id=658580539]
+custom_minimum_size = Vector2(18, 0)
+layout_mode = 2
+
+[node name="CameraManagerButton" type="Button" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow" unique_id=1547112782]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme = ExtResource("7_ditat")
+theme_type_variation = &"ToolButton"
+icon = ExtResource("14_hh704")
+icon_alignment = 1
+
+[node name="HintMargin" type="MarginContainer" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow" unique_id=1622998153]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="PanHintLabel" type="Label" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow/HintMargin" unique_id=1701832382]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 25
+text = "Pan [WASD / MMB]"
+
+[node name="ZoomHintLabel" type="Label" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow" unique_id=1218916426]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 25
+text = "Zoom In/Out [+ - / Scroll]"
+
+[node name="BottomRightAnchor" type="MarginContainer" parent="ScreenUI" unique_id=873233202]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayButton" type="Button" parent="ScreenUI/BottomRightAnchor" unique_id=1821933362]
+custom_minimum_size = Vector2(265, 0)
+layout_mode = 2
+focus_behavior_recursive = 1
+theme = ExtResource("7_ditat")
+action_mode = 0
+icon = ExtResource("15_k6ut3")
+icon_alignment = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 
 [node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("mainTileMap", "previewTileSet") instance=ExtResource("11_bpoex")]
 visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -300.0
+offset_right = 450.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
 mainTileMap = NodePath("../../Tiles")
 previewTileSet = NodePath("../../PreviewTile")
 
-[node name="AssetManagerButton" type="Button" parent="CanvasLayer" unique_id=1025084523]
-custom_minimum_size = Vector2(150, 75)
-offset_left = 54.0
-offset_top = 924.0
-offset_right = 204.0
-offset_bottom = 999.0
-text = "Assets"
+[node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
+visible = false
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -350.0
+offset_right = 0.0
+offset_bottom = 350.0
+grow_horizontal = 0
 
 [node name="HotkeyManager" type="Node2D" parent="." unique_id=1848065233 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager")]
 script = ExtResource("10_bpoex")
@@ -139,7 +306,7 @@ script = ExtResource("12_20xd7")
 editorManager = NodePath("..")
 entityManager = NodePath("EntityManager")
 tileManager = NodePath("TileManager")
-tileSwitch = NodePath("../CanvasLayer/TileSwitch")
+tileSwitch = NodePath("../ScreenUI/TopLeftAnchor/TopLeftRow/TilePaletteFrame/TilePaletteMargin/TileSwitch")
 propertyMenu = NodePath("../CanvasLayer/PropertyMenu")
 previewTile = NodePath("../PreviewTile")
 
@@ -156,8 +323,5 @@ editorManager = NodePath("../..")
 toolManager = NodePath("..")
 tileSet = NodePath("../../Tiles")
 propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
-
-[connection signal="pressed" from="CanvasLayer/AssetManager/CloseButton" to="." method="close_asset_manager"]
-[connection signal="pressed" from="CanvasLayer/AssetManagerButton" to="." method="open_asset_manager"]
 
 [editable path="CanvasLayer/AssetManager"]

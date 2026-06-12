@@ -1,94 +1,89 @@
 [gd_scene format=3 uid="uid://d2ud25a3qonvp"]
 
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
-[ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="3_rshqi"]
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_rshqi"]
+[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
+[ext_resource type="Texture2D" uid="uid://d21j834524jcc" path="res://icon.svg" id="3_rshqi"]
+[ext_resource type="Texture2D" uid="uid://b265lhxnenhhc" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
+[ext_resource type="FontFile" uid="uid://ibgv3ey3taus" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="6_rrs8o"]
+[ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
+[ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
+[ext_resource type="Texture2D" uid="uid://cq6ndlm5t7xwj" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbbei"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+bg_color = Color(0.03137255, 0.11764706, 0.27058825, 0.49803922)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_top = 2.0
+expand_margin_bottom = 3.0
 
 [node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel")]
 process_mode = 2
 custom_minimum_size = Vector2(900, 600)
-offset_left = 525.0
-offset_top = 219.0
-offset_right = 1425.0
-offset_bottom = 819.0
+offset_right = 900.0
+offset_bottom = 600.0
+theme = ExtResource("1_rshqi")
 script = ExtResource("1_2va5h")
-imagePreview = NodePath("PreviewWindow/ImagePreview")
-imageSelect = NodePath("LoadFileButton/FileDialog")
-imagesTab = NodePath("Tabs/Images/VBoxContainer")
-animationsTab = NodePath("Tabs/Animations/VBoxContainer")
-currentAssetLabel = NodePath("CurrentAssetLabel")
+imagePreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview/ImageAsset")
+imageSelect = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton/FileDialog")
+imagesTab = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Images/ImagesTabContainer")
+animationsTab = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Animations/AnimationsTabContainer")
+currentAssetLabel = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/CurrentAssetLabel")
 
-[node name="Tabs" type="TabContainer" parent="." unique_id=1214091300]
-custom_minimum_size = Vector2(300, 400)
-layout_mode = 0
-offset_left = 573.0
-offset_top = 102.0
-offset_right = 873.0
-offset_bottom = 152.0
-current_tab = 2
+[node name="ContentContainer" type="VBoxContainer" parent="." unique_id=1686367830]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
 
-[node name="Images" type="ScrollContainer" parent="Tabs" unique_id=40713710]
-visible = false
+[node name="Title" type="Label" parent="ContentContainer" unique_id=1534252912]
 layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Images" unique_id=1654478705]
-layout_mode = 2
-
-[node name="Animations" type="ScrollContainer" parent="Tabs" unique_id=1953296503]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Animations" unique_id=1715688617]
-layout_mode = 2
-
-[node name="Audio" type="ScrollContainer" parent="Tabs" unique_id=912303560]
-layout_mode = 2
-metadata/_tab_index = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Audio" unique_id=1395642184]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=1550632889]
-layout_mode = 2
-text = "ewyeherh"
-
-[node name="Label2" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=967186754]
-layout_mode = 2
-text = "gesgsgds"
-
-[node name="Label3" type="Label" parent="Tabs/Audio/VBoxContainer" unique_id=583971705]
-layout_mode = 2
-text = "segsd"
-
-[node name="Title" type="Label" parent="." unique_id=1534252912]
-layout_mode = 0
-offset_left = 61.0
-offset_top = 40.0
-offset_right = 239.0
-offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("3_mhodq")
+theme_override_font_sizes/font_size = 40
 text = "Custom Asset Manager"
 
-[node name="CurrentAssetLabel" type="Label" parent="." unique_id=1120158356]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 224.0
-offset_top = 78.0
-offset_right = 363.0
-offset_bottom = 108.0
-theme_override_font_sizes/font_size = 21
+[node name="HSeparator" type="HSeparator" parent="ContentContainer" unique_id=457032284]
+layout_mode = 2
+
+[node name="MainContentContainer" type="HBoxContainer" parent="ContentContainer" unique_id=950802687]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+alignment = 2
+
+[node name="LeftColumnContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer" unique_id=58018460]
+layout_mode = 2
+
+[node name="CurrentAssetLabel" type="Label" parent="ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=1120158356]
+layout_mode = 2
 text = "Current Asset"
 horizontal_alignment = 1
 
-[node name="PreviewWindow" type="Panel" parent="." unique_id=1394480238]
+[node name="ImagePreview" type="Panel" parent="ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=1394480238]
 custom_minimum_size = Vector2(400, 400)
-layout_mode = 0
-offset_left = 89.0
-offset_top = 111.0
-offset_right = 489.0
-offset_bottom = 511.0
+layout_mode = 2
 
-[node name="ImagePreview" type="TextureRect" parent="PreviewWindow" unique_id=777284124]
+[node name="Background" type="TextureRect" parent="ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview" unique_id=1490567814]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_e4k77")
+
+[node name="ImageAsset" type="TextureRect" parent="ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview" unique_id=777284124]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -103,20 +98,255 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_rshqi")
 
-[node name="LoadFileButton" type="Button" parent="." unique_id=857868498]
+[node name="AnimationPreview" type="Panel" parent="ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=126647044]
+visible = false
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+
+[node name="Background" type="TextureRect" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview" unique_id=1121889977]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.707
-anchor_top = 0.86500007
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -0.30004883
-offset_top = -6.1035156e-05
-offset_right = -210.75604
-offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_e4k77")
+
+[node name="ImageAsset" type="TextureRect" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview" unique_id=1321888421]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_rshqi")
+
+[node name="FrameCountLabel" type="Label" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview" unique_id=1192766192]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -72.0
+offset_top = -41.0
+offset_right = 72.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("6_rrs8o")
+theme_override_font_sizes/font_size = 20
+text = "Frame 1/12"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="FrameButtonContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview" unique_id=1202222031]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -76.0
+offset_top = -40.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="PrevFrameButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer" unique_id=51178185]
+layout_mode = 2
+theme_type_variation = &"ToolButton"
+icon = ExtResource("7_clgtw")
+
+[node name="NextFrameButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer" unique_id=2054824461]
+layout_mode = 2
+theme_type_variation = &"ToolButton"
+icon = ExtResource("8_ukhnw")
+
+[node name="AnimButtonContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview" unique_id=311396109]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_top = 8.0
+offset_right = 120.0
+offset_bottom = 40.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="PrevAnimButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=1355417284]
+layout_mode = 2
+theme_type_variation = &"ToolButton"
+icon = ExtResource("7_clgtw")
+
+[node name="AnimNameLabel" type="Label" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=803745770]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_mhodq")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_qbbei")
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextAnimButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=71301328]
+layout_mode = 2
+theme_type_variation = &"ToolButton"
+icon = ExtResource("8_ukhnw")
+
+[node name="BottomButtonContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview" unique_id=91646301]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 8.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="PlayPauseButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1544968013]
+layout_mode = 2
+text = "Play/Pause
+"
+
+[node name="StopButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=284005067]
+layout_mode = 2
+text = "Stop
+"
+
+[node name="AudioPreview" type="Panel" parent="ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=1493625619]
+visible = false
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=2080426857]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=1751057131]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer" unique_id=116285012]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AudioIconBackground" type="ColorRect" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer/MarginContainer" unique_id=1855316572]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.23921569, 0.23921569, 0.23921569, 1)
+
+[node name="AudioIcon" type="TextureRect" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer/MarginContainer" unique_id=241379034]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("9_ssly3")
+stretch_mode = 4
+
+[node name="AudioTimeline" type="HSlider" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer" unique_id=428290432]
+layout_mode = 2
+
+[node name="BottomButtonContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=1727755463]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 8.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="PlayPauseButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" unique_id=1125072521]
+layout_mode = 2
+text = "Play/Pause
+"
+
+[node name="StopButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" unique_id=780017080]
+layout_mode = 2
+text = "Stop
+"
+
+[node name="RightColumnContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer" unique_id=761220124]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="TopButtonContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer" unique_id=743653075]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="ResetButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer" unique_id=1493047528]
+layout_mode = 2
+text = "Reset
+"
+
+[node name="ResetAllButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer" unique_id=1076102221]
+layout_mode = 2
+text = "Reset All"
+
+[node name="Tabs" type="TabContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer" unique_id=1214091300]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Images" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs" unique_id=40713710]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="ImagesTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Images" unique_id=1654478705]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Animations" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs" unique_id=1953296503]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="AnimationsTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Animations" unique_id=1587728475]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Audio" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs" unique_id=912303560]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="AudioTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Audio" unique_id=1395642184]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="BottomButtonContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer" unique_id=1762300532]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="LoadFileButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=857868498]
+layout_mode = 2
 text = "Load"
 
-[node name="FileDialog" type="FileDialog" parent="LoadFileButton" unique_id=267413043]
+[node name="FileDialog" type="FileDialog" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton" unique_id=267413043]
 oversampling_override = 1.0
 title = "Open a File"
 position = Vector2i(0, 36)
@@ -124,31 +354,18 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.png")
 
-[node name="ResetButton" type="Button" parent="." unique_id=2035131409]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.638
-anchor_top = 0.86500007
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -0.2000122
-offset_top = -6.1035156e-05
-offset_right = -273.0
-offset_bottom = -30.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ResetButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=2035131409]
+layout_mode = 2
 text = "Reset"
 
-[node name="CloseButton" type="Button" parent="." unique_id=334412884]
-custom_minimum_size = Vector2(100, 50)
-layout_mode = 0
-offset_left = 772.0
-offset_top = 522.0
-offset_right = 872.0
-offset_bottom = 572.0
+[node name="Spacer" type="Control" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=1680277936]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=334412884]
+layout_mode = 2
 text = "Close"
 
-[connection signal="pressed" from="LoadFileButton" to="." method="open_image_selector"]
-[connection signal="file_selected" from="LoadFileButton/FileDialog" to="." method="replace_image"]
-[connection signal="pressed" from="ResetButton" to="." method="reset_image"]
-[connection signal="pressed" from="CloseButton" to="." method="close"]
+[connection signal="pressed" from="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton" to="." method="open_image_selector"]
+[connection signal="file_selected" from="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton/FileDialog" to="." method="replace_image"]
+[connection signal="pressed" from="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/ResetButton" to="." method="reset_image"]

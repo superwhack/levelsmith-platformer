@@ -97,13 +97,15 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 			if (validate_image(image)):
 				# Return the loaded image
 				return image;
-		print("Image not valid");
+		PopUpManager.create_error_popup("Cannot Load Asset","Image not valid. '.png' file required.");
+		#print("Image not valid");
 		return null;
 		
 	# If the path does not exist, print error
 	else:
-		print("No file found, fallback being used");
+		PopUpManager.create_error_popup("Cannot Load Asset","No file found in '" + filePath + "'.");
 		return get_missing_image();
+
 
 ## Finds and loads the first image found in given folder
 ## folderPath: Path to the folder
@@ -117,9 +119,8 @@ func find_image_in_folder(folderPath: String) -> Image:
 		dir.list_dir_begin();
 		# Get the image name in the folder
 		var imageName: String = dir.get_next();
-		# If there is no image in the folder, print error
+		# If there is no image in the folder, return null
 		if (imageName == ""):
-			print("No file found");
 			return null;
 		else:
 			# Initialize an image
@@ -132,10 +133,11 @@ func find_image_in_folder(folderPath: String) -> Image:
 				if (validate_image(image)):
 					# Return loaded image
 					return image;
-			print("Image not valid");
+			PopUpManager.create_error_popup("Image not valid", "Image must be .png");
 			return null;
 	else:
 		print("Could not open file path");
+		PopUpManager.create_error_popup("Could not open file path", "Could not open file at " + folderPath + ".");
 		return null;
 
 # WARNING Get Sten/Bee's input on if it should only be 128x128 or resize
@@ -157,7 +159,7 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 			allImages.append(find_image(imageName));
 		return allImages;
 	else:
-		print("Could not open file path");
+		PopUpManager.create_error_popup("Could not find folder","Could not find folder with name " + folderName + ".");
 	return [];
 
 ## Gets the amount of files within a folder
@@ -177,7 +179,7 @@ func file_count_in_folder(folderName: String) -> int:
 	# If there is no path to the folder
 	else:
 		# Print error
-		print("Folder not found");
+		PopUpManager.create_error_popup("Folder not found", "Could not find folder with name " + folderName + ".")
 	return -1;
 
 func refresh_assets() -> void:
@@ -214,7 +216,7 @@ func replace_image(newImagePath: String) -> void:
 		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
 	else:
 		print("File must be PNG format");
-		# TODO: Implement pop up
+		PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
 	
 	refresh_assets();
 	var replacementImage = find_image_in_folder(targetFilePath);

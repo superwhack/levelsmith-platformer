@@ -7,6 +7,7 @@ var state : Global.State = Global.State.EDIT;
 @export var editorManager: Node2D;
 @export var toolManager: Node2D;
 @export var gameManager: Node2D;
+@export var entityManager: Node2D;
 @export var audioManager: Node;
 @export var cameraManager: Camera2D;
 @export var editorManagerCanvas: CanvasLayer;
@@ -61,6 +62,9 @@ func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	#AudioManager.update_volume();
 	print("NEW LEVEL SET UP");
 	tileSet.clear();
+	editorManager.playerExists = false;
+	editorManager.goalExists = false;
+	entityManager.goalCount = 0;
 	gridLines.fill_grid_lines();
 	cameraManager.refresh_bounds();
 	edit();

@@ -41,11 +41,12 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_8vbpr")
 sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "audioManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "tileSet", "previewTileMap", "gridLines", "propertyMenu", "playButton")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "audioManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "tileSet", "previewTileMap", "gridLines", "propertyMenu", "playButton")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
 gameManager = NodePath("GameManager")
+entityManager = NodePath("EditorManager/ToolManager/EntityManager")
 audioManager = NodePath("AudioManager")
 cameraManager = NodePath("Camera2D")
 editorManagerCanvas = NodePath("EditorManager/ScreenUI")

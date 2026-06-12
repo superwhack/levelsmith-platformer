@@ -3,9 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://dgbrgmufcdnj0" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
 [ext_resource type="Texture2D" uid="uid://bgu3tf17p5rpf" path="res://Assets/Sprites/Tiles/death.png" id="2_cn8lu"]
 [ext_resource type="Texture2D" uid="uid://crwfvhcm3n1nc" path="res://Assets/Sprites/Tiles/oneway.png" id="3_alyph"]
-[ext_resource type="PackedScene" path="res://Scenes/Entities/Shooting.tscn" id="3_k4kw2"]
+[ext_resource type="PackedScene" uid="uid://bf3q4v3br7j4o" path="res://Scenes/Entities/Shooting.tscn" id="3_k4kw2"]
 [ext_resource type="Texture2D" uid="uid://yosj58n3qm8i" path="res://Assets/Sprites/Entities/Props/Prop1.png" id="3_r4n42"]
-[ext_resource type="PackedScene" path="res://Scenes/Preview/ShootingPreview.tscn" id="4_3boqi"]
+[ext_resource type="PackedScene" uid="uid://kbh8ioojr3r4" path="res://Scenes/Preview/ShootingPreview.tscn" id="4_3boqi"]
 [ext_resource type="Texture2D" uid="uid://dvvkbjb1ejkoi" path="res://Assets/Sprites/Tiles/ice.png" id="4_6ba2f"]
 [ext_resource type="Texture2D" uid="uid://kektaa6ws5im" path="res://Assets/Sprites/Entities/Props/Prop2.png" id="4_c2nft"]
 [ext_resource type="Texture2D" uid="uid://3no57vbdqn51" path="res://Assets/Sprites/Tiles/Sticky.png" id="5_8sjof"]
@@ -141,8 +141,8 @@ sources/8 = SubResource("TileSetScenesCollectionSource_6ba2f")
 sources/9 = SubResource("TileSetScenesCollectionSource_8sjof")
 sources/7 = SubResource("TileSetScenesCollectionSource_4m7s0")
 sources/10 = SubResource("TileSetScenesCollectionSource_pqfav")
-sources/17 = SubResource("TileSetAtlasSource_eqdrb")
-sources/16 = SubResource("TileSetAtlasSource_pqfav")
-sources/15 = SubResource("TileSetAtlasSource_3boqi")
-sources/14 = SubResource("TileSetAtlasSource_k4kw2")
-sources/13 = SubResource("TileSetAtlasSource_eksy4")
+sources/12 = SubResource("TileSetAtlasSource_eksy4")
+sources/13 = SubResource("TileSetAtlasSource_k4kw2")
+sources/14 = SubResource("TileSetAtlasSource_3boqi")
+sources/15 = SubResource("TileSetAtlasSource_pqfav")
+sources/16 = SubResource("TileSetAtlasSource_eqdrb")

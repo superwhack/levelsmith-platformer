@@ -23,12 +23,6 @@ extends HBoxContainer
 @export var bounceTileButton: Button;
 @export var slopeTileButton: Button;
 
-# Entities
-@export var spawnButton: Button;
-@export var goalButton: Button;
-@export var patrollingButton: Button;
-@export var shootingButton: Button;
-
 # References to all Prop buttons
 @export var propOneButton: Button;
 @export var propTwoButton: Button;
@@ -45,12 +39,6 @@ func _ready() -> void:
 	stickyTileButton.pressed.connect(_on_sticky_tile_button_pressed);
 	bounceTileButton.pressed.connect(_on_bounce_tile_button_pressed);
 	slopeTileButton.pressed.connect(_on_slope_tile_button_pressed);
-	
-	# Connect entities
-	goalButton.pressed.connect(_on_goal_object_button_pressed);
-	spawnButton.pressed.connect(_on_spawn_object_button_pressed);
-	patrollingButton.pressed.connect(_on_patrolling_object_button_pressed);
-	shootingButton.pressed.connect(_on_shooting_object_button_pressed);
 	
 	# Connect all Prop button signals
 	propOneButton.pressed.connect(_on_prop_one_button_pressed);

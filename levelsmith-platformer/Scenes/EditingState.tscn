@@ -8,19 +8,19 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
-[ext_resource type="Texture2D" uid="uid://b2ow242dw3qqa" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonHomeWhite.png" id="8_rdu5w"]
-[ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
+[ext_resource type="Texture2D" uid="uid://bd4p61avbou82" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonHomeWhite.png" id="8_rdu5w"]
+[ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="11_fnjh2"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
-[ext_resource type="Texture2D" uid="uid://cmufqmh610kct" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonSaveWhite.png" id="12_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://brn23iof6rncf" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonSaveWhite.png" id="12_vrcqo"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Texture2D" uid="uid://eomv5jxbtkju" path="res://Assets/UserInterface/IconButtonAssetManagerWhite.png" id="13_racgb"]
-[ext_resource type="Texture2D" uid="uid://kedeb3vd63r6" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_hh704"]
+[ext_resource type="Texture2D" uid="uid://cyv36kpfksb3b" path="res://Assets/UserInterface/IconButtonAssetManagerWhite.png" id="13_racgb"]
+[ext_resource type="Texture2D" uid="uid://cpnh5eiw0m5fv" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="Texture2D" uid="uid://dmqrt6ulj2tqw" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
+[ext_resource type="Texture2D" uid="uid://pc63ho3uson2" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -129,10 +129,11 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_6fw3s")
 [node name="TilePaletteMargin" type="MarginContainer" parent="ScreenUI/TopLeftAnchor/TopLeftRow/TilePaletteFrame" unique_id=202133051]
 layout_mode = 2
 
-[node name="TileSwitch" parent="ScreenUI/TopLeftAnchor/TopLeftRow/TilePaletteFrame/TilePaletteMargin" unique_id=959816093 node_paths=PackedStringArray("toolManager", "editorManager") instance=ExtResource("7_qupls")]
+[node name="TileSwitch" parent="ScreenUI/TopLeftAnchor/TopLeftRow/TilePaletteFrame/TilePaletteMargin" unique_id=959816093 node_paths=PackedStringArray("toolManager", "editorManager", "tileMap") instance=ExtResource("7_qupls")]
 layout_mode = 2
 toolManager = NodePath("../../../../../../ToolManager")
 editorManager = NodePath("../../../../../..")
+tileMap = NodePath("../../../../../../Tiles")
 
 [node name="TopRightAnchor" type="MarginContainer" parent="ScreenUI" unique_id=1893306717]
 anchors_preset = 1
@@ -272,7 +273,6 @@ offset_right = 450.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("7_ditat")
 mainTileMap = NodePath("../../Tiles")
 previewTileSet = NodePath("../../PreviewTile")
 

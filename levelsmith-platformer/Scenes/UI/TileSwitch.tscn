@@ -3,21 +3,21 @@
 [ext_resource type="Script" uid="uid://e6pkeumdahqd" path="res://Scripts/Editor/TileSwitch.gd" id="1_aauec"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_krx33"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="3_pggt4"]
-[ext_resource type="Texture2D" uid="uid://dsb5cnbq8skt1" path="res://Assets/UserInterface/TilePlatform.png" id="4_h6q5o"]
-[ext_resource type="Texture2D" uid="uid://dmbucdv05fooi" path="res://Assets/UserInterface/TilePlatformOneWay.png" id="5_3tme8"]
-[ext_resource type="Texture2D" uid="uid://57cl6k03bm7j" path="res://Assets/UserInterface/TileHazard.png" id="6_xxd6f"]
-[ext_resource type="Texture2D" uid="uid://shdmwscmi8ch" path="res://Assets/UserInterface/TileIce.png" id="7_jyj72"]
-[ext_resource type="Texture2D" uid="uid://byahe7vekjlj" path="res://Assets/UserInterface/TileSticky.png" id="8_vkn71"]
-[ext_resource type="Texture2D" uid="uid://dh34neu2twxpt" path="res://Assets/UserInterface/TileBouncy.png" id="9_f1o86"]
-[ext_resource type="Texture2D" uid="uid://hytwe7pafe1y" path="res://Assets/UserInterface/TileSlope.png" id="10_ltypp"]
-[ext_resource type="Texture2D" uid="uid://dyyiao0qcmh5b" path="res://Assets/Sprites/Entities/goal.png" id="11_goodf"]
+[ext_resource type="Texture2D" uid="uid://c10hf8oh6jv8b" path="res://Assets/Defaults/Assets/Sprites/Tiles/OneWay.png" id="4_goodf"]
+[ext_resource type="Texture2D" uid="uid://dx73rn5knscwa" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="5_pggt4"]
+[ext_resource type="Texture2D" uid="uid://cclkhf0ggl5hm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Ice.png" id="6_h6q5o"]
+[ext_resource type="Texture2D" uid="uid://c21qhnriopfwm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Sticky.png" id="7_0gefc"]
+[ext_resource type="Texture2D" uid="uid://b5i25baa3gfkx" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="8_g7c4e"]
+[ext_resource type="Texture2D" uid="uid://bnrk2hwvcejik" path="res://Assets/Defaults/Assets/Sprites/Tiles/Slope.png" id="9_vup42"]
+[ext_resource type="PackedScene" uid="uid://dqlxqwdmgred1" path="res://Scenes/UI/TilebarButton.tscn" id="10_goodf"]
+[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="11_goodf"]
 [ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="12_goodf"]
-[ext_resource type="Texture2D" uid="uid://bwodcp7krp0gt" path="res://Assets/Sprites/Entities/BadDude.png" id="13_segfj"]
-[ext_resource type="Texture2D" uid="uid://084j38o8pfab" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="14_pggt4"]
-[ext_resource type="Texture2D" uid="uid://cejg0xpwj474i" path="res://Assets/Sprites/Entities/Props/Prop1.png" id="15_h6q5o"]
-[ext_resource type="Texture2D" uid="uid://dxl3blvdjwt4m" path="res://Assets/Sprites/Entities/Props/Prop5.png" id="16_0gefc"]
-[ext_resource type="Texture2D" uid="uid://dxjyp7sv5bup8" path="res://Assets/Sprites/Entities/Props/Prop3.png" id="17_g7c4e"]
-[ext_resource type="Texture2D" uid="uid://cldsbtkrgf6k8" path="res://Assets/Sprites/Entities/Props/Prop2.png" id="18_vup42"]
+[ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/BadDude.png" id="13_segfj"]
+[ext_resource type="Texture2D" uid="uid://fw1c2mc23nvb" path="res://Assets/Defaults/Assets/Sprites/Props/Prop1.png" id="14_goodf"]
+[ext_resource type="Texture2D" uid="uid://7yqp8snp2itd" path="res://Assets/Defaults/Assets/Sprites/Props/Prop2.png" id="15_pggt4"]
+[ext_resource type="Texture2D" uid="uid://b2qwc4suhjs0h" path="res://Assets/Defaults/Assets/Sprites/Props/Prop3.png" id="16_h6q5o"]
+[ext_resource type="Texture2D" uid="uid://cuylo1k47tj50" path="res://Assets/Defaults/Assets/Sprites/Props/Prop4.png" id="17_0gefc"]
+[ext_resource type="Texture2D" uid="uid://urjqry67fl4u" path="res://Assets/Defaults/Assets/Sprites/Props/Prop5.png" id="18_g7c4e"]
 
 [node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "solidTileButton", "oneWayTileButton", "deathTileButton", "iceTileButton", "stickyTileButton", "bounceTileButton", "slopeTileButton", "propOneButton", "propTwoButton", "propThreeButton", "propFourButton", "propFiveButton")]
 offset_right = 669.0
@@ -29,17 +29,17 @@ entities = NodePath("EntityPickerUI")
 entityTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities")
 propTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Props")
 solidTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SolidButton")
-oneWayTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/OnewayButton")
+oneWayTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/OneWayButton")
 deathTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/DeathButton")
 iceTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/IceButton")
 stickyTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/StickyButton")
 bounceTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/BounceButton")
 slopeTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SlopeButton")
-propOneButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/DirectionMarkerButton")
-propTwoButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/StopButton")
-propThreeButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/HazardButton")
-propFourButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/FlowerButton")
-propFiveButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/GrassButton")
+propOneButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropOneButton")
+propTwoButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropTwoButton")
+propThreeButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropThreeButton")
+propFourButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFourButton")
+propFiveButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFiveButton")
 
 [node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
 layout_mode = 2
@@ -59,47 +59,45 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="SolidButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=963860115]
+[node name="SolidButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1067245290 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("4_h6q5o")
+tilebar = NodePath("../../../..")
 
-[node name="OnewayButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1586201939]
+[node name="OneWayButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=45805104 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("5_3tme8")
+icon = ExtResource("4_goodf")
+thisItemID = 2
+tilebar = NodePath("../../../..")
 
-[node name="DeathButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=557548775]
+[node name="DeathButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=810406606 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("6_xxd6f")
+icon = ExtResource("5_pggt4")
+thisItemID = 1
+tilebar = NodePath("../../../..")
 
-[node name="IceButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1134266503]
+[node name="IceButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1696596209 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("7_jyj72")
+icon = ExtResource("6_h6q5o")
+thisItemID = 3
+tilebar = NodePath("../../../..")
 
-[node name="StickyButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1753056153]
+[node name="StickyButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1990788713 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("8_vkn71")
+icon = ExtResource("7_0gefc")
+thisItemID = 4
+tilebar = NodePath("../../../..")
 
-[node name="BounceButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=38339817]
+[node name="BounceButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=850045818 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("9_f1o86")
+icon = ExtResource("8_g7c4e")
+thisItemID = 5
+tilebar = NodePath("../../../..")
 
-[node name="SlopeButton" type="Button" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1166373907]
+[node name="SlopeButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=456412869 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("10_ltypp")
+icon = ExtResource("9_vup42")
+thisItemID = 6
+tilebar = NodePath("../../../..")
 
 [node name="EntityPickerUI" type="PanelContainer" parent="." unique_id=324821247]
 visible = false
@@ -161,49 +159,37 @@ visible = false
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="DirectionMarkerButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1313858916]
+[node name="PropOneButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1349934672 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("15_h6q5o")
+icon = ExtResource("14_goodf")
+thisItemID = 12
+tilebar = NodePath("../../../../..")
 
-[node name="StopButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=58595092]
+[node name="PropTwoButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=425089871 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("18_vup42")
+icon = ExtResource("15_pggt4")
+thisItemID = 13
+tilebar = NodePath("../../../../..")
 
-[node name="HazardButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=535761077]
+[node name="PropThreeButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=766602216 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("17_g7c4e")
+icon = ExtResource("16_h6q5o")
+thisItemID = 14
+tilebar = NodePath("../../../../..")
 
-[node name="FlowerButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1451711438]
+[node name="PropFourButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=448831461 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("14_pggt4")
+icon = ExtResource("17_0gefc")
+thisItemID = 15
+tilebar = NodePath("../../../../..")
 
-[node name="GrassButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1473814833]
+[node name="PropFiveButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1555120042 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
-icon = ExtResource("16_0gefc")
+icon = ExtResource("18_g7c4e")
+thisItemID = 16
+tilebar = NodePath("../../../../..")
 
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SolidButton" to="." method="_on_solid_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/OnewayButton" to="." method="_on_oneway_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/DeathButton" to="." method="_on_death_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/IceButton" to="." method="_on_ice_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/StickyButton" to="." method="_on_sticky_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/BounceButton" to="." method="_on_bounce_tile_button_pressed"]
-[connection signal="pressed" from="TilePickerUI/MarginContainer/Tiles/SlopeButton" to="." method="_on_slope_tile_button_pressed"]
 [connection signal="item_selected" from="EntityPickerUI/MarginContainer/Tabs/OptionButton" to="." method="entity_dropdown_select"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/DirectionMarkerButton" to="." method="_on_direction_marker_prop_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/StopButton" to="." method="_on_stop_marker_prop_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/HazardButton" to="." method="_on_start_marker_prop_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/FlowerButton" to="." method="_on_end_marker_prop_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Props/GrassButton" to="." method="_on_goal_marker_prop_button_pressed"]

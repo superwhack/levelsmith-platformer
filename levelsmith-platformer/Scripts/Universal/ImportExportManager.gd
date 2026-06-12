@@ -85,7 +85,7 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 ## directory: Source level directory
 ## returns: An int that depends on the state of the import
 func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -> int:
-	levelPath = "user://Levels/" + directory + "/";
+	levelPath = directory;
 	levelAssetPath = levelPath + "Assets/"
 	if !DirAccess.dir_exists_absolute(levelPath):
 		PopUpManager.create_error_popup("Level Directory Doesn't Exist!", "The directory " + levelPath + " could not be found.");

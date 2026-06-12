@@ -41,8 +41,7 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_8vbpr")
 sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "audioManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "tileSet", "previewTileMap", "gridLines", "propertyMenu")]
-
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "audioManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "tileSet", "previewTileMap", "gridLines", "propertyMenu", "playButton")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
@@ -84,6 +83,9 @@ modulate = Color(1, 1, 1, 1)
 position = Vector2(0, -1)
 collision_enabled = true
 
+[node name="CustomCursorManager" parent="EditorManager" index="6" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
+masterManager = NodePath("../..")
+
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 
 [node name="MainMenuCanvasLayer" type="CanvasLayer" parent="." unique_id=1285763636]
@@ -96,6 +98,7 @@ metadata/_edit_group_ = true
 layer = 5
 script = ExtResource("7_8vbpr")
 
+[connection signal="pressed" from="EditorManager/ScreenUI/TopLeftAnchor/TopLeftRow/HomeButton" to="." method="main_menu"]
 [connection signal="pressed" from="EditorManager/ScreenUI/BottomLeftAnchor/BottomLeftRow/AssetManagerButton" to="EditorManager" method="open_asset_manager"]
 [connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
 [connection signal="pressed" from="GameManager/CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ReturnEditorButton" to="." method="edit"]

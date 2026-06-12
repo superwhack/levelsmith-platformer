@@ -47,10 +47,6 @@ func _ready() -> void:
 	buttonQuit.pressed.connect( exit_program )
 	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-		
 func import_level() -> void:
 	panelInvalidPath.show();
 		
@@ -60,13 +56,15 @@ func import_cancel() -> void:
 		
 func create_new_level() -> void:
 	if ( fieldNewLevelName.text.strip_edges().is_empty() ):
-		print( "Level has no name." );
+		PopUpManager.create_error_popup("Creation Failed!", "Level has no name!");
 		return;
-	masterManager.level_setup( fieldNewLevelName.text, 
-								Vector2i( 
-									int(spinBoxNewLevelX.value), 
-									int(spinBoxNewLevelY.value) ) 
-								);
+	overlayNewLevel.hide();
+	masterManager.level_setup( 
+		fieldNewLevelName.text, 
+		Vector2i( 
+			int(spinBoxNewLevelX.value), 
+			int(spinBoxNewLevelY.value) ) 
+		);
 
 func exit_program() -> void:
 	get_tree().quit();

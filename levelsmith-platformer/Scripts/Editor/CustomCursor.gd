@@ -60,7 +60,7 @@ func _process(_delta: float) -> void:
 	
 	isEditing = toolManager.currentTool == Global.Tool.CURSOR && editorManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount;
 	
-	update_selector_state();
+	update_selector_state();	
 	match (selectorState):
 		SelectorState.DEFAULT:
 			selectorFrame.modulate = Color(1, 1, 1);

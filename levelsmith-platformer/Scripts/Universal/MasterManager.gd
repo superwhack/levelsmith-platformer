@@ -8,6 +8,7 @@ var state : Global.State = Global.State.EDIT;
 @export var toolManager: Node2D;
 @export var gameManager: Node2D;
 @export var audioManager: Node;
+@export var cameraManager: Camera2D;
 @export var editorManagerCanvas: CanvasLayer;
 @export var gameManagerCanvas: CanvasLayer;
 @export var mainMenuControl: Control;
@@ -22,7 +23,7 @@ var loadedMap: TileMapLayer;
 
 ## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
-@export var worldSize: Vector2i = Vector2i(8, 14);
+@export var worldSize: Vector2i;
 
 @export var propertyMenu : Panel;
 
@@ -58,6 +59,7 @@ func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	print("NEW LEVEL SET UP");
 	tileSet.clear();
 	gridLines.fill_grid_lines();
+	cameraManager.refresh_bounds();
 	edit();
 
 ## Swap to main menu state

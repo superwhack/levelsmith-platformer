@@ -169,31 +169,31 @@ theme_override_constants/separation = 8
 [node name="PropOneButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1349934672 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("14_goodf")
-thisItemID = 12
+thisItemID = 13
 tilebar = NodePath("../../../../..")
 
 [node name="PropTwoButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=425089871 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("15_pggt4")
-thisItemID = 13
+thisItemID = 14
 tilebar = NodePath("../../../../..")
 
 [node name="PropThreeButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=766602216 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("16_h6q5o")
-thisItemID = 14
+thisItemID = 15
 tilebar = NodePath("../../../../..")
 
 [node name="PropFourButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=448831461 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("17_0gefc")
-thisItemID = 15
+thisItemID = 16
 tilebar = NodePath("../../../../..")
 
 [node name="PropFiveButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1555120042 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("18_g7c4e")
-thisItemID = 16
+thisItemID = 17
 tilebar = NodePath("../../../../..")
 
 [connection signal="item_selected" from="EntityPickerUI/MarginContainer/Tabs/OptionButton" to="." method="entity_dropdown_select"]

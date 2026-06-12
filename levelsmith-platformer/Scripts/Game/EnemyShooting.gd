@@ -16,7 +16,7 @@ func _physics_process(delta: float) -> void:
 	timeLeft -= delta;
 	if (timeLeft <= 0.0):
 		shooting_behavior();
-		timeLeft = fireRate;
+		timeLeft = 1 / fireRate;
 
 ## Shoots in the determined direction
 func shooting_behavior() -> void:
@@ -39,4 +39,4 @@ func apply_script(file: Resource) -> void:
 	direction = propertyFile.direction; 
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
-	timeLeft = fireRate;
+	timeLeft = 1;

@@ -163,7 +163,7 @@ minMax = Vector2(0, 360)
 
 [node name="ShootingShotSpeed" parent="MainMargin/RootVBox/ShootingProperties" unique_id=441375088 instance=ExtResource("2_w5eld")]
 layout_mode = 2
-propertyName = "Shot Speed"
+propertyName = "Projectile Speed"
 minMax = Vector2(0.2, 5)
 
 [node name="ShootingFireRate" parent="MainMargin/RootVBox/ShootingProperties" unique_id=847827901 instance=ExtResource("2_w5eld")]

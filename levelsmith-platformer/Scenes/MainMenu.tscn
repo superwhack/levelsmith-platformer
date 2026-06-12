@@ -1,14 +1,14 @@
 [gd_scene format=4 uid="uid://bjx53xjckex6r"]
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_df05h"]
-[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
+[ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_df05h"]
 [ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_loo7a"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_8um5k"]
 [ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="4_xim88"]
-[ext_resource type="Texture2D" uid="uid://cfmy5pk58n8fx" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
-[ext_resource type="Texture2D" uid="uid://dxoqpsw52s2ii" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="7_loo7a"]
-[ext_resource type="Texture2D" uid="uid://21my6qjib5ao" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="8_if7li"]
+[ext_resource type="Texture2D" uid="uid://caw5vfrla8ry1" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
+[ext_resource type="Texture2D" uid="uid://cn52j7r73ygot" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="7_loo7a"]
+[ext_resource type="Texture2D" uid="uid://5qon1fxclb4n" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="8_if7li"]
 [ext_resource type="StyleBox" uid="uid://c4nxvw40uptk2" path="res://Resources/UIStyles/WarningPanelStyle.tres" id="9_rrcx7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -149,6 +149,7 @@ text = "New Level"
 [node name="ImportLevelButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1546369652]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
+disabled = true
 text = "Import Level"
 
 [node name="LoadExampleButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1890658956]
@@ -468,7 +469,7 @@ text = "Cancel"
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1904639915]
 oversampling_override = 1.0
-title = "Open a Level File"
+title = "Open a File"
 position = Vector2i(0, 36)
 size = Vector2i(1280, 720)
 file_mode = 0

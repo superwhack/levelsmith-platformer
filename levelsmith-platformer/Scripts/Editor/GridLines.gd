@@ -12,9 +12,13 @@ func _ready() -> void:
 	
 	print("Level Height:", gridSize.y);
 	print("Level Width:", gridSize.x);
+	
+func _process( _delta: float ) -> void:
+	gridSize = masterManager.worldSize;
 
 ## Fills the grid with grid lines tiles.
 func fill_grid_lines() -> void:
+	clear();
 	for height in range(0, gridSize.y + 1):
 		for width in range(0, gridSize.x + 1):
 			self.set_cell(Vector2i(width, height), 1, Vector2i.ZERO);

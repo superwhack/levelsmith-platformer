@@ -41,7 +41,7 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_ce3w2")
 sources/2 = SubResource("TileSetAtlasSource_n45e2")
 
-[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelX", "fieldNewLevelY", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "panelInvalidPath")]
+[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "spinBoxNewLevelX", "spinBoxNewLevelY", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "panelInvalidPath", "fileExplorer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,13 +59,14 @@ overlayImportLevel = NodePath("ImportLevelOverlay")
 buttonNewLevelCreate = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow/CreateButton")
 buttonNewLevelCancel = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow/CancelButton")
 fieldNewLevelName = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/NameRow/NameInput")
-fieldNewLevelX = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX/XInput")
-fieldNewLevelY = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY/YInput")
+spinBoxNewLevelX = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX/XSpinBox")
+spinBoxNewLevelY = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY/YSpinBox")
 buttonImportLevelCancel = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/CancelButton")
 buttonImportLevelOpen = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/OpenButton")
 buttonImportLevelBrowse = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/BrowseButton")
 fieldImportLevelPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/FilePathInput")
 panelInvalidPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ErrorBanner")
+fileExplorer = NodePath("FileDialog")
 
 [node name="Background" type="ColorRect" parent="." unique_id=2093246532]
 layout_mode = 1
@@ -204,7 +205,6 @@ theme_override_styles/panel = ExtResource("3_8um5k")
 item_count = 1
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=120086451]
-visible = false
 custom_minimum_size = Vector2(630, 425)
 layout_mode = 1
 anchors_preset = 15
@@ -301,9 +301,12 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 text = "X: "
 
-[node name="XInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=1837442565]
+[node name="XSpinBox" type="SpinBox" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=1445349375]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+min_value = 2.0
+max_value = 9999.0
+value = 2.0
+update_on_text_changed = true
 
 [node name="GridRowY" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=993765537]
 layout_mode = 2
@@ -317,9 +320,12 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 text = "Y: "
 
-[node name="YInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY" unique_id=1090946014]
+[node name="YSpinBox" type="SpinBox" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY" unique_id=739478448]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+min_value = 2.0
+max_value = 9999.0
+value = 2.0
+update_on_text_changed = true
 
 [node name="BottomSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=2094910545]
 custom_minimum_size = Vector2(0, 100)
@@ -344,6 +350,7 @@ theme_override_font_sizes/font_size = 30
 text = "Cancel"
 
 [node name="ImportLevelOverlay" type="ColorRect" parent="." unique_id=684861186]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -458,3 +465,10 @@ custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
 text = "Cancel"
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1904639915]
+oversampling_override = 1.0
+title = "Open a Level File"
+position = Vector2i(0, 36)
+size = Vector2i(1280, 720)
+file_mode = 0

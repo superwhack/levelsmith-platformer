@@ -15,6 +15,7 @@ var state : Global.State = Global.State.EDIT;
 # Reference to tileset
 @export var tileSet: TileMapLayer;
 @export var previewTileMap: TileMapLayer;
+@export var gridLines: TileMapLayer;
 
 # Map that is currently loaded in the Play scene
 var loadedMap: TileMapLayer;
@@ -26,9 +27,9 @@ var loadedMap: TileMapLayer;
 @export var propertyMenu : Panel;
 
 func _ready() -> void:
-	Global.reload.connect(load_tilemap);
-	Global.complete.connect(level_complete);
-	ImportExportManager.make_new_level("Level01");
+	#Global.reload.connect(load_tilemap);
+	#Global.complete.connect(level_complete);
+	#ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
 	
@@ -45,7 +46,19 @@ func _ready() -> void:
 func level_complete() -> void:
 	edit();
 	editorManager.isValidated = true;
-	print("LEVEL COMPLETE")
+	print("LEVEL COMPLETE");
+	
+func level_setup( levelName: String, newSize: Vector2i ) -> void:
+	worldSize = newSize;
+	ImportExportManager.make_new_level( levelName );
+	Global.reload.connect(load_tilemap);
+	Global.complete.connect(level_complete);
+	#AudioManager.masterVolume = 0;
+	#AudioManager.update_volume();
+	print("NEW LEVEL SET UP");
+	tileSet.clear();
+	gridLines.fill_grid_lines();
+	edit();
 
 ## Swap to main menu state
 func main_menu() -> void:

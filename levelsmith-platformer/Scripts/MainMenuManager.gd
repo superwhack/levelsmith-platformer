@@ -17,8 +17,8 @@ extends Control
 @export var buttonNewLevelCreate: Button;
 @export var buttonNewLevelCancel: Button;
 @export var fieldNewLevelName: LineEdit;
-@export var fieldNewLevelX: LineEdit;
-@export var fieldNewLevelY: LineEdit;
+@export var spinBoxNewLevelX: SpinBox;
+@export var spinBoxNewLevelY: SpinBox;
 
 # Import level overlay children
 @export var buttonImportLevelCancel: Button;
@@ -27,7 +27,7 @@ extends Control
 @export var fieldImportLevelPath: LineEdit;
 @export var panelInvalidPath: PanelContainer;
 
-var fileExplorer: FileDialog;
+@export var fileExplorer: FileDialog;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,41 +35,39 @@ func _ready() -> void:
 	overlayNewLevel.hide();
 	panelInvalidPath.hide();
 	
-	fileExplorer = FileDialog.new();
-	add_child(fileExplorer);
-
-	fileExplorer.file_mode = FileDialog.FILE_MODE_OPEN_FILE;
-	fileExplorer.access = FileDialog.ACCESS_FILESYSTEM;
+	buttonNewLevel.pressed.connect( overlayNewLevel.show );
+	buttonNewLevelCreate.pressed.connect( create_new_level );
+	buttonNewLevelCancel.pressed.connect( overlayNewLevel.hide );
+	
+	buttonImportLevel.pressed.connect( overlayImportLevel.show );
+	buttonImportLevelOpen.pressed.connect( import_level );
+	buttonImportLevelCancel.pressed.connect( import_cancel );
+	buttonImportLevelBrowse.pressed.connect( fileExplorer.popup_file_dialog );
+	
+	buttonQuit.pressed.connect( exit_program )
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
-	# New level overlay
-	if (buttonNewLevel.button_pressed):
-		overlayNewLevel.show();
-	# create
-	if (buttonNewLevelCreate.button_pressed):
-		masterManager.edit();
-	# cancel
-	elif (buttonNewLevelCancel.button_pressed):
-		overlayNewLevel.hide();
+	pass
 		
-	# Import level button overlay
-	if (buttonImportLevel.button_pressed):
-		overlayImportLevel.show();
-	# open
-	if (buttonImportLevelOpen.button_pressed):
-		panelInvalidPath.show();
-	# cancel
-	elif (buttonImportLevelCancel.button_pressed):
-		overlayImportLevel.hide();
-		panelInvalidPath.hide();
-	# browse
-	elif (buttonImportLevelBrowse.button_pressed):
-		fileExplorer.popup_centered();
-	
-	# Quit button
-	if (buttonQuit.button_pressed):
-		get_tree().quit();
-	
-	
+func import_level() -> void:
+	panelInvalidPath.show();
+		
+func import_cancel() -> void:
+	overlayImportLevel.hide();
+	panelInvalidPath.hide();
+		
+func create_new_level() -> void:
+	if ( fieldNewLevelName.text.strip_edges().is_empty() ):
+		print( "Level has no name." );
+		return;
+	masterManager.level_setup( fieldNewLevelName.text, 
+								Vector2i( 
+									int(spinBoxNewLevelX.value), 
+									int(spinBoxNewLevelY.value) ) 
+								);
+
+func exit_program() -> void:
+	get_tree().quit();
+		

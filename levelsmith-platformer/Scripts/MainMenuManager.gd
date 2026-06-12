@@ -63,7 +63,8 @@ func create_new_level() -> void:
 		fieldNewLevelName.text, 
 		Vector2i( 
 			int(spinBoxNewLevelX.value), 
-			int(spinBoxNewLevelY.value) ) 
+			int(spinBoxNewLevelY.value) 
+			) 
 		);
 
 func exit_program() -> void:

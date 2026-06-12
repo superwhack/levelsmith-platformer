@@ -1,14 +1,17 @@
 [gd_scene format=3 uid="uid://dqlxqwdmgred1"]
 
-[ext_resource type="Texture2D" uid="uid://6ik31jce0t7d" path="res://Assets/Sprites/Tiles/solid.png" id="1_ts6pb"]
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_tgw4b"]
 [ext_resource type="Script" uid="uid://cay1awblww6u8" path="res://Scripts/Editor/TilebarButton.gd" id="2_4u4rl"]
+[ext_resource type="Texture2D" uid="uid://bk1w277pn28od" path="res://Assets/Defaults/Assets/Sprites/Tiles/Solid.png" id="2_cr0v7"]
 
-[node name="TilebarButton" type="TextureButton" unique_id=1280605269]
+[node name="TilebarButton" type="Button" unique_id=1067245290]
 process_mode = 3
 custom_minimum_size = Vector2(80, 80)
+offset_right = 80.0
+offset_bottom = 80.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("1_ts6pb")
-ignore_texture_size = true
-stretch_mode = 0
+theme = ExtResource("1_tgw4b")
+theme_type_variation = &"TileButton"
+icon = ExtResource("2_cr0v7")
 script = ExtResource("2_4u4rl")

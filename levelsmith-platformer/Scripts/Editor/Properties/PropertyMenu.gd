@@ -115,6 +115,7 @@ func _on_drag_ended() -> void:
 		_on_preset_options_item_selected(4);
 	
 func show_menu(resource: Resource = null) -> void:
+	# TODO: Re-implement enemy property editing
 	playerMenu.hide();
 	patrollingMenu.hide();
 	if selectedEntity is EnemyPatrol:

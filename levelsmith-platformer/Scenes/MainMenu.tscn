@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_df05h"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_8um5k"]
 [ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="4_xim88"]
-[ext_resource type="Texture2D" uid="uid://cfmy5pk58n8fx" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
-[ext_resource type="Texture2D" uid="uid://dxoqpsw52s2ii" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="7_loo7a"]
-[ext_resource type="Texture2D" uid="uid://21my6qjib5ao" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="8_if7li"]
+[ext_resource type="Texture2D" uid="uid://caw5vfrla8ry1" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
+[ext_resource type="Texture2D" uid="uid://cn52j7r73ygot" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="7_loo7a"]
+[ext_resource type="Texture2D" uid="uid://5qon1fxclb4n" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="8_if7li"]
 [ext_resource type="StyleBox" uid="uid://c4nxvw40uptk2" path="res://Resources/UIStyles/WarningPanelStyle.tres" id="9_rrcx7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -286,6 +286,7 @@ text = "X: "
 [node name="XInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=1837442565]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+max_length = 4
 
 [node name="GridRowY" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=993765537]
 layout_mode = 2

@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/Editor/Properties/PropertyMenu.gd" id="1_tnep3"]
 [ext_resource type="PackedScene" uid="uid://c3ype5vn62yxp" path="res://Scenes/UI/PropertySlider.tscn" id="2_w5eld"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_x85wq"]
-[ext_resource type="PackedScene" uid="uid://cgity27eghw43" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
+[ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
 
 [node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "presetOptions")]
 anchors_preset = 15
@@ -19,80 +19,102 @@ grow_vertical = 2
 theme = ExtResource("1_afykx")
 theme_override_styles/panel = ExtResource("2_x85wq")
 script = ExtResource("1_tnep3")
-entityName = NodePath("EntityName")
-playerMenu = NodePath("PlayerProperties")
-patrollingMenu = NodePath("PatrollingProperties")
-playerSpeedSlider = NodePath("PlayerProperties/PlayerSpeed")
-playerJumpSlider = NodePath("PlayerProperties/PlayerJump")
-playerAirControlSlider = NodePath("PlayerProperties/PlayerAirControl")
-playerFallSpeedSlider = NodePath("PlayerProperties/PlayerFallSpeed")
-playerCoyoteTimeSlider = NodePath("PlayerProperties/PlayerCoyoteTime")
-patrollingSpeedSlider = NodePath("PatrollingProperties/PatrollingSpeed")
-patrollingRestrictedCheckbox = NodePath("PatrollingProperties/PatrollingRestricted")
-presetOptions = NodePath("PlayerProperties/PresetOptions")
+entityName = NodePath("MainMargin/RootVBox/EntityNameVBox/EntityName")
+playerMenu = NodePath("MainMargin/RootVBox/PlayerProperties")
+patrollingMenu = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties")
+playerSpeedSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerSpeed")
+playerJumpSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerJump")
+playerAirControlSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerAirControl")
+playerFallSpeedSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerFallSpeed")
+playerCoyoteTimeSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime")
+patrollingSpeedSlider = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed")
+patrollingRestrictedCheckbox = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingRestricted")
+presetOptions = NodePath("MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1879514987]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="MainMargin" type="MarginContainer" parent="." unique_id=1879514987]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="Label" type="Label" parent="." unique_id=1756571384]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-theme_override_font_sizes/font_size = 32
+[node name="RootVBox" type="VBoxContainer" parent="MainMargin" unique_id=1625453061]
+layout_mode = 2
+
+[node name="HeaderVBox" type="VBoxContainer" parent="MainMargin/RootVBox" unique_id=13925519]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MainMargin/RootVBox/HeaderVBox" unique_id=1756571384]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
 text = "Properties"
 
-[node name="EntityName" type="Label" parent="." unique_id=1377298632]
-layout_mode = 0
-offset_top = 61.0
-offset_right = 161.0
-offset_bottom = 106.0
+[node name="HSeparator" type="HSeparator" parent="MainMargin/RootVBox/HeaderVBox" unique_id=490860200]
+layout_mode = 2
+
+[node name="EntityNameVBox" type="VBoxContainer" parent="MainMargin/RootVBox" unique_id=1528860545]
+layout_mode = 2
+
+[node name="EntityName" type="Label" parent="MainMargin/RootVBox/EntityNameVBox" unique_id=1377298632]
+layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Name"
 
-[node name="Button" type="Button" parent="." unique_id=429960597]
-layout_mode = 0
-offset_left = 302.0
-offset_top = 634.0
-offset_right = 372.0
-offset_bottom = 676.0
-theme_override_font_sizes/font_size = 24
-text = "Close"
+[node name="PlayerProperties" type="VBoxContainer" parent="MainMargin/RootVBox" unique_id=1398037876]
+visible = false
+layout_mode = 2
 
-[node name="PlayerProperties" type="VBoxContainer" parent="." unique_id=1398037876]
-layout_mode = 0
-offset_top = 119.0
-offset_right = 400.0
-offset_bottom = 603.0
-
-[node name="PlayerSpeed" parent="PlayerProperties" unique_id=305056832 instance=ExtResource("2_w5eld")]
+[node name="PlayerSpeed" parent="MainMargin/RootVBox/PlayerProperties" unique_id=305056832 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Speed"
 minMax = Vector2i(0, 5)
 
-[node name="PlayerJump" parent="PlayerProperties" unique_id=1835714671 instance=ExtResource("2_w5eld")]
+[node name="PlayerJump" parent="MainMargin/RootVBox/PlayerProperties" unique_id=1835714671 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Jump Height"
 minMax = Vector2i(0, 5)
 
-[node name="PlayerAirControl" parent="PlayerProperties" unique_id=985825086 instance=ExtResource("2_w5eld")]
+[node name="PlayerAirControl" parent="MainMargin/RootVBox/PlayerProperties" unique_id=985825086 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Air Control"
 minMax = Vector2i(0, 1)
 
-[node name="PlayerFallSpeed" parent="PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
+[node name="PlayerFallSpeed" parent="MainMargin/RootVBox/PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Fall Speed"
 minMax = Vector2i(0, 5)
 
-[node name="PlayerCoyoteTime" parent="PlayerProperties" unique_id=2022302843 instance=ExtResource("2_w5eld")]
+[node name="PlayerCoyoteTime" parent="MainMargin/RootVBox/PlayerProperties" unique_id=2022302843 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Coyote Time"
 minMax = Vector2i(0, 1)
 
-[node name="PresetOptions" type="OptionButton" parent="PlayerProperties" unique_id=1677451211]
+[node name="PresetMargin" type="MarginContainer" parent="MainMargin/RootVBox/PlayerProperties" unique_id=413274506]
 layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="PresetHBox" type="HBoxContainer" parent="MainMargin/RootVBox/PlayerProperties/PresetMargin" unique_id=1201100021]
+layout_mode = 2
+
+[node name="PresetLabel" type="Label" parent="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox" unique_id=164513532]
+layout_mode = 2
+text = "Preset Options "
+
+[node name="PresetSpacer" type="Control" parent="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox" unique_id=878301671]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PresetOptions" type="OptionButton" parent="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox" unique_id=1677451211]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
 selected = 0
 allow_reselect = true
 item_count = 5
@@ -107,28 +129,43 @@ popup/item_3/id = 3
 popup/item_4/text = "Custom"
 popup/item_4/id = 4
 
-[node name="PatrollingProperties" type="VBoxContainer" parent="." unique_id=1428467899]
-visible = false
-layout_mode = 0
-offset_top = 119.0
-offset_right = 400.0
-offset_bottom = 420.0
-
-[node name="PatrollingSpeed" parent="PatrollingProperties" unique_id=1211665616 instance=ExtResource("2_w5eld")]
+[node name="PatrollingMargin" type="MarginContainer" parent="MainMargin/RootVBox" unique_id=1301200759]
 layout_mode = 2
+theme_override_constants/margin_left = 10
+
+[node name="PatrollingProperties" type="VBoxContainer" parent="MainMargin/RootVBox/PatrollingMargin" unique_id=997973556]
+layout_mode = 2
+
+[node name="PatrollingSpeed" parent="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties" unique_id=608969889 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+size_flags_horizontal = 0
 propertyName = "Speed"
 minMax = Vector2i(0, 2)
 
-[node name="PatrollingRestricted" parent="PatrollingProperties" unique_id=1482315026 instance=ExtResource("3_1mv14")]
+[node name="PatrollingRestricted" parent="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties" unique_id=574029748 instance=ExtResource("3_1mv14")]
 layout_mode = 2
+size_flags_horizontal = 0
 propertyName = "Restricted"
 
-[connection signal="pressed" from="Button" to="." method="close"]
-[connection signal="drag_ended" from="PlayerProperties/PlayerSpeed" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="PlayerProperties/PlayerJump" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="PlayerProperties/PlayerAirControl" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="PlayerProperties/PlayerFallSpeed" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="PlayerProperties/PlayerCoyoteTime" to="." method="_on_drag_ended"]
-[connection signal="item_selected" from="PlayerProperties/PresetOptions" to="." method="_on_preset_options_item_selected"]
-[connection signal="drag_ended" from="PatrollingProperties/PatrollingSpeed" to="." method="_on_drag_ended"]
-[connection signal="check_changed" from="PatrollingProperties/PatrollingRestricted" to="." method="update_values"]
+[node name="BottomSpacer" type="Control" parent="MainMargin/RootVBox" unique_id=1741289699]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMargin/RootVBox" unique_id=600370838]
+layout_direction = 3
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="MainMargin/RootVBox/HBoxContainer" unique_id=429960597]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Close"
+
+[connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerSpeed" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerJump" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerAirControl" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerFallSpeed" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime" to="." method="_on_drag_ended"]
+[connection signal="item_selected" from="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions" to="." method="_on_preset_options_item_selected"]
+[connection signal="drag_ended" from="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed" to="." method="_on_drag_ended"]
+[connection signal="check_changed" from="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingRestricted" to="." method="update_values"]
+[connection signal="pressed" from="MainMargin/RootVBox/HBoxContainer/CloseButton" to="." method="close"]

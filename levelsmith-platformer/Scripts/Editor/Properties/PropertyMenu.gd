@@ -45,11 +45,10 @@ func close() -> void:
 func _process(delta: float) -> void:
 	# If there is a selected entity, set the name in the property menu, otherwise close
 	if (selectedEntity != null):
-		match selectedEntity:
-			is EnemyPatrol:
-				entityName.text = "Patrolling Enemy";
-			is Player:
-				entityName.text = "Player";
+		if selectedEntity is EnemyPatrol:
+			entityName.text = "Patrolling Enemy";
+		elif selectedEntity is Player:
+			entityName.text = "Player";
 	else:
 		hide();
 

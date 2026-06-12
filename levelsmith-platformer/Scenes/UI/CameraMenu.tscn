@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bj3ux7rusonfj"]
 
-[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GeneralTheme.tres" id="1_0cny5"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GeneralTheme.tres" id="1_keug2"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_lqvvn"]
 [ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="3_oqa3u"]
 
@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_0cny5")
+theme = ExtResource("1_keug2")
 
 [node name="MainMargin" type="MarginContainer" parent="." unique_id=136846140]
 self_modulate = Color(1, 1, 1, 0.7882353)

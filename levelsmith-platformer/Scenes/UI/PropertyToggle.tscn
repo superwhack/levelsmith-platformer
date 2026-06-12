@@ -5,17 +5,17 @@
 [node name="PropertySlider" type="VBoxContainer" unique_id=305056832 node_paths=PackedStringArray("nameLabel", "checkBox")]
 size_flags_horizontal = 4
 script = ExtResource("1_adaxu")
-nameLabel = NodePath("Name")
+nameLabel = NodePath("HBoxContainer/Name")
 checkBox = NodePath("HBoxContainer/CheckBox")
-
-[node name="Name" type="Label" parent="." unique_id=671881686]
-layout_mode = 2
-text = "Name"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1927265922]
 layout_mode = 2
 
 [node name="CheckBox" type="CheckBox" parent="HBoxContainer" unique_id=472627819]
 layout_mode = 2
+
+[node name="Name" type="Label" parent="HBoxContainer" unique_id=671881686]
+layout_mode = 2
+text = "Name"
 
 [connection signal="pressed" from="HBoxContainer/CheckBox" to="." method="_box_clicked"]

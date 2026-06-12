@@ -1,10 +1,15 @@
-[gd_scene format=3 uid="uid://senog1nd1523"]
+[gd_scene format=3 uid="uid://c2l5c0wss88qr"]
 
-[ext_resource type="Texture2D" uid="uid://ygnltxfbdvg4" path="res://Assets/UserInterface/Buttons/HomeButtonDefault.png" id="1_advkd"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="1_ef2s3"]
+[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_oeklc"]
+[ext_resource type="Texture2D" uid="uid://bd4p61avbou82" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonHomeWhite.png" id="2_6fw3s"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="2_albdw"]
-[ext_resource type="Texture2D" uid="uid://ciuh2cysj5o88" path="res://Assets/UserInterface/Buttons/HomeButtonHover.png" id="2_v30ws"]
+[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="5_6fw3s"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="5_oeklc"]
+[ext_resource type="Texture2D" uid="uid://brn23iof6rncf" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonSaveWhite.png" id="6_63w0a"]
+[ext_resource type="Texture2D" uid="uid://cyv36kpfksb3b" path="res://Assets/UserInterface/IconButtonAssetManagerWhite.png" id="7_63w0a"]
+[ext_resource type="Texture2D" uid="uid://cpnh5eiw0m5fv" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="8_thd6u"]
+[ext_resource type="Texture2D" uid="uid://pc63ho3uson2" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="9_thd6u"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6fw3s"]
 
@@ -18,18 +23,20 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 20
+metadata/_edit_use_anchors_ = true
 
 [node name="TopLeftRow" type="HBoxContainer" parent="TopLeftAnchor" unique_id=1851750065]
 layout_mode = 2
 
-[node name="HomeButton" type="TextureButton" parent="TopLeftAnchor/TopLeftRow" unique_id=767012667]
-custom_minimum_size = Vector2(115, 50)
+[node name="HomeButton" type="Button" parent="TopLeftAnchor/TopLeftRow" unique_id=1385633318]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-texture_normal = ExtResource("1_advkd")
-texture_hover = ExtResource("2_v30ws")
-stretch_mode = 5
+theme = ExtResource("1_oeklc")
+theme_type_variation = &"ToolButton"
+icon = ExtResource("2_6fw3s")
+icon_alignment = 1
 
-[node name="Control" type="Control" parent="TopLeftAnchor/TopLeftRow" unique_id=1725752072]
+[node name="HomeTileSpacer" type="Control" parent="TopLeftAnchor/TopLeftRow" unique_id=1725752072]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -53,6 +60,7 @@ offset_bottom = 40.0
 grow_horizontal = 0
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
+metadata/_edit_use_anchors_ = true
 
 [node name="TopRightRow" type="HBoxContainer" parent="TopRightAnchor" unique_id=1668837166]
 layout_mode = 2
@@ -67,8 +75,28 @@ layout_mode = 2
 [node name="ToolSwitch" parent="TopRightAnchor/TopRightRow/ToolSwitchFrame/ToolSwitchMargin" unique_id=1469240724 instance=ExtResource("2_albdw")]
 layout_mode = 2
 
-[node name="SaveButton" type="TextureButton" parent="TopRightAnchor/TopRightRow/ToolSwitchFrame" unique_id=736504717]
+[node name="ToolSaveSpacer" type="Control" parent="TopRightAnchor/TopRightRow" unique_id=1260674054]
+custom_minimum_size = Vector2(18, 0)
 layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SavePanel" type="PanelContainer" parent="TopRightAnchor/TopRightRow" unique_id=992085748]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("5_6fw3s")
+
+[node name="SaveMargin" type="MarginContainer" parent="TopRightAnchor/TopRightRow/SavePanel" unique_id=464922728]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="SaveButton" type="Button" parent="TopRightAnchor/TopRightRow/SavePanel/SaveMargin" unique_id=778830983]
+layout_mode = 2
+theme = ExtResource("1_oeklc")
+theme_type_variation = &"ToolButton"
+icon = ExtResource("6_63w0a")
+icon_alignment = 1
 
 [node name="BottomLeftAnchor" type="MarginContainer" parent="." unique_id=714724835]
 anchors_preset = 2
@@ -79,21 +107,47 @@ offset_right = 40.0
 grow_vertical = 0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_bottom = 20
+metadata/_edit_use_anchors_ = true
 
 [node name="BottomLeftRow" type="HBoxContainer" parent="BottomLeftAnchor" unique_id=1343700794]
 layout_mode = 2
 
-[node name="AssetManagerButton" type="TextureButton" parent="BottomLeftAnchor/BottomLeftRow" unique_id=128228433]
+[node name="AssetManagerButton" type="Button" parent="BottomLeftAnchor/BottomLeftRow" unique_id=446918555]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme = ExtResource("1_oeklc")
+theme_type_variation = &"ToolButton"
+icon = ExtResource("7_63w0a")
+icon_alignment = 1
+
+[node name="AssetCameraSpacer" type="Control" parent="BottomLeftAnchor/BottomLeftRow" unique_id=658580539]
+custom_minimum_size = Vector2(18, 0)
 layout_mode = 2
 
-[node name="CameraManagerButton" type="TextureButton" parent="BottomLeftAnchor/BottomLeftRow" unique_id=1707642920]
+[node name="CameraManagerButton" type="Button" parent="BottomLeftAnchor/BottomLeftRow" unique_id=1547112782]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+theme = ExtResource("1_oeklc")
+theme_type_variation = &"ToolButton"
+icon = ExtResource("8_thd6u")
+icon_alignment = 1
 
-[node name="PanHintLabel" type="Label" parent="BottomLeftAnchor/BottomLeftRow" unique_id=1701832382]
+[node name="HintMargin" type="MarginContainer" parent="BottomLeftAnchor/BottomLeftRow" unique_id=1622998153]
 layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="PanHintLabel" type="Label" parent="BottomLeftAnchor/BottomLeftRow/HintMargin" unique_id=1701832382]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 25
+text = "Pan [WASD / MMB]"
 
 [node name="ZoomHintLabel" type="Label" parent="BottomLeftAnchor/BottomLeftRow" unique_id=1218916426]
 layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 25
+text = "Zoom In/Out [+ - / Scroll]"
 
 [node name="BottomRightAnchor" type="MarginContainer" parent="." unique_id=873233202]
 anchors_preset = 3
@@ -107,17 +161,26 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
+metadata/_edit_use_anchors_ = true
 
-[node name="PlayButton" type="TextureButton" parent="BottomRightAnchor" unique_id=76946062]
+[node name="PlayButton" type="Button" parent="BottomRightAnchor" unique_id=1821933362]
+custom_minimum_size = Vector2(265, 0)
 layout_mode = 2
+focus_behavior_recursive = 1
+theme = ExtResource("1_oeklc")
+action_mode = 0
+icon = ExtResource("9_thd6u")
+icon_alignment = 1
 
 [node name="OverlayLayer" type="Control" parent="." unique_id=1751323313]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="ErrorPopUpLayer" type="CanvasLayer" parent="OverlayLayer" unique_id=302907189]
 

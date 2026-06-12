@@ -27,12 +27,15 @@ var loadedMap: TileMapLayer;
 
 @export var propertyMenu : Panel;
 
+@export var playButton : Button;
+
 func _ready() -> void:
 	#Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
 	#ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
+	playButton.pressed.connect(play);
 	
 	# NOTE: This probably shouldn't be here for the final build
 	# Create the Enemies folder, github can't push empty folders

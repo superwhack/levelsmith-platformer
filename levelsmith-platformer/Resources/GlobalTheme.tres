@@ -24,8 +24,10 @@
 [ext_resource type="StyleBox" uid="uid://bj7s0u4gefpgn" path="res://Assets/UserInterface/OptionSelectedStyleBox.tres" id="22_j7er6"]
 [ext_resource type="StyleBox" uid="uid://c1uhsadputufm" path="res://Assets/UserInterface/PanelStyleBox.tres" id="22_nvaf8"]
 [ext_resource type="StyleBox" uid="uid://bi2avgb580ef6" path="res://Assets/UserInterface/DropDownStyleBox.tres" id="23_2d6mn"]
-[ext_resource type="Texture2D" uid="uid://b1bjqoi4qrp8k" path="res://Assets/Sprites/UI/BlankArrowDownSmall.png" id="26_8ylos"]
-[ext_resource type="Texture2D" uid="uid://b8wetv4xd30wg" path="res://Assets/Sprites/UI/BlankArrowUpSmall.png" id="27_n23f4"]
+[ext_resource type="Texture2D" uid="uid://bl8eu1lkyjiss" path="res://Assets/Sprites/UI/MediumGrab.png" id="24_4tmrm"]
+[ext_resource type="Texture2D" uid="uid://0u0pk810hutg" path="res://Assets/Sprites/UI/MediumGrabInvert.png" id="25_5devf"]
+[ext_resource type="Texture2D" uid="uid://di1d7dwg3hwbq" path="res://Assets/Sprites/UI/BlankArrowDownSmall.png" id="26_8ylos"]
+[ext_resource type="Texture2D" uid="uid://djfxqxoy8yjn4" path="res://Assets/Sprites/UI/BlankArrowUpSmall.png" id="27_n23f4"]
 [ext_resource type="StyleBox" uid="uid://dhfkj4xl4btne" path="res://Assets/UserInterface/DownArrowStyleBox.tres" id="28_km3k5"]
 [ext_resource type="StyleBox" uid="uid://dj2aecnt5v8ok" path="res://Assets/UserInterface/TabFocusStyleBox.tres" id="29_p7whp"]
 [ext_resource type="StyleBox" uid="uid://c12nwqqnc5kqt" path="res://Assets/UserInterface/DownArrowHoverStyleBox.tres" id="29_wg75p"]
@@ -43,7 +45,16 @@
 [ext_resource type="StyleBox" uid="uid://bwclbl24ey6hw" path="res://Assets/UserInterface/VSeparatorLine.tres" id="37_apnec"]
 [ext_resource type="FontFile" uid="uid://bjvuowr03n5wu" path="res://Assets/Fonts/Variable/JetBrainsMono-VariableFont_wght.ttf" id="38_k2v08"]
 [ext_resource type="Texture2D" uid="uid://cyvay03qvsu6l" path="res://Assets/Sprites/UI/Decrement.png" id="39_km3k5"]
+[ext_resource type="StyleBox" uid="uid://b0bwc6kq7kfl3" path="res://Assets/UserInterface/TextListButtonPressedStyleBox.tres" id="40_ccokw"]
+[ext_resource type="StyleBox" uid="uid://csnvdq0u2kbg5" path="res://Assets/UserInterface/ToolButtonFocusStyleBox.tres" id="40_g1adj"]
+[ext_resource type="StyleBox" uid="uid://blvx1jpl8wk6y" path="res://Assets/UserInterface/TileButtonFocusStyleBox.tres" id="40_ke4fi"]
+[ext_resource type="StyleBox" uid="uid://bcx2ixaf8mxjd" path="res://Assets/UserInterface/ToolButtonNormalStyleBox.tres" id="40_km3k5"]
 [ext_resource type="Texture2D" uid="uid://de45lgysplr4h" path="res://Assets/Sprites/UI/Increment.png" id="40_wg75p"]
+[ext_resource type="StyleBox" uid="uid://de7k1e7p5nyw8" path="res://Assets/UserInterface/TileButtonHoverStyleBox.tres" id="41_ccokw"]
+[ext_resource type="StyleBox" uid="uid://blnb73c6181oq" path="res://Assets/UserInterface/ToolButtonHoverStyleBox.tres" id="41_p21lw"]
+[ext_resource type="StyleBox" uid="uid://depwd8khx6b5m" path="res://Assets/UserInterface/TileButtonSelectStyleBox.tres" id="42_5jgur"]
+[ext_resource type="StyleBox" uid="uid://0p7omelnc5u2" path="res://Assets/UserInterface/ToolButtonSelectStyleBox.tres" id="42_hrj3f"]
+[ext_resource type="StyleBox" uid="uid://buxbdeangr5th" path="res://Assets/UserInterface/TileButtonNormalStyleBox.tres" id="43_4tmrm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2jud"]
 
@@ -69,13 +80,10 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_du07a"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pwa3"]
-bg_color = Color(1, 1, 1, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4tmrm"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 3
 border_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
-corner_radius_top_left = 11
-corner_radius_top_right = 11
-corner_radius_bottom_right = 11
-corner_radius_bottom_left = 11
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_74mva"]
 color = Color(0.03137255, 0.11764706, 0.27058825, 1)
@@ -85,12 +93,25 @@ thickness = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1qli"]
 bg_color = Color(1, 1, 1, 1)
+corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2a08w"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wg48r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ke4fi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ke4fi"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 2
+border_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccokw"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_km3k5"]
 
@@ -168,6 +189,11 @@ LineEdit/colors/font_color = Color(0, 0, 0, 1)
 LineEdit/styles/focus = ExtResource("18_4tmrm")
 LineEdit/styles/normal = ExtResource("19_5devf")
 LineEdit/styles/read_only = ExtResource("20_lxdnb")
+LinkButton/colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+LinkButton/colors/font_focus_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+LinkButton/colors/font_hover_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+LinkButton/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+LinkButton/colors/font_pressed_color = Color(1, 1, 1, 1)
 MenuButton/colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 MenuButton/colors/font_disabled_color = Color(0.23921569, 0.23921569, 0.23921569, 1)
 MenuButton/colors/font_focus_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
@@ -185,13 +211,14 @@ OptionButton/styles/hover = ExtResource("22_3vm5f")
 OptionButton/styles/hover_pressed = ExtResource("22_j7er6")
 OptionButton/styles/pressed = ExtResource("22_j7er6")
 Panel/styles/panel = ExtResource("22_nvaf8")
-PopupMenu/colors/font_color = Color(1, 1, 1, 1)
+PopupMenu/colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 PopupMenu/colors/font_hover_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+PopupMenu/constants/h_separation = 8
 PopupMenu/font_sizes/font_separator_size = 16
 PopupMenu/font_sizes/font_size = 24
-PopupMenu/icons/radio_checked = ExtResource("15_ke4fi")
-PopupMenu/icons/radio_unchecked = ExtResource("8_km3k5")
-PopupMenu/styles/hover = SubResource("StyleBoxFlat_7pwa3")
+PopupMenu/icons/radio_checked = ExtResource("24_4tmrm")
+PopupMenu/icons/radio_unchecked = ExtResource("25_5devf")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_4tmrm")
 PopupMenu/styles/panel = ExtResource("23_2d6mn")
 PopupMenu/styles/separator = SubResource("StyleBoxLine_74mva")
 RichTextLabel/colors/default_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
@@ -237,6 +264,7 @@ TabContainer/colors/font_disabled_color = Color(0.7372549, 0.7372549, 0.7372549,
 TabContainer/colors/font_hovered_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 TabContainer/colors/font_selected_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 TabContainer/colors/font_unselected_color = Color(1, 1, 1, 1)
+TabContainer/constants/side_margin = 0
 TabContainer/fonts/font = ExtResource("33_nva8e")
 TabContainer/icons/decrement = ExtResource("39_km3k5")
 TabContainer/icons/decrement_highlight = ExtResource("39_km3k5")
@@ -252,6 +280,40 @@ TabContainer/styles/tabbar_background = SubResource("StyleBoxEmpty_wg48r")
 TextEdit/colors/font_color = Color(0, 0, 0, 1)
 TextEdit/styles/focus = ExtResource("18_4tmrm")
 TextEdit/styles/normal = ExtResource("19_5devf")
+TextListButton/base_type = &"Button"
+TextListButton/colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+TextListButton/colors/font_disabled_color = Color(0.23921569, 0.23921569, 0.23921569, 1)
+TextListButton/colors/font_focus_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+TextListButton/colors/font_hover_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+TextListButton/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+TextListButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+TextListButton/fonts/font = ExtResource("38_k2v08")
+TextListButton/styles/disabled = SubResource("StyleBoxEmpty_ke4fi")
+TextListButton/styles/focus = ExtResource("40_ccokw")
+TextListButton/styles/hover = SubResource("StyleBoxFlat_ke4fi")
+TextListButton/styles/hover_pressed = ExtResource("40_ccokw")
+TextListButton/styles/normal = SubResource("StyleBoxFlat_ccokw")
+TextListButton/styles/pressed = ExtResource("40_ccokw")
+TileButton/base_type = &"Button"
+TileButton/colors/icon_disabled_color = Color(1, 1, 1, 1)
+TileButton/colors/icon_focus_color = Color(1, 1, 1, 1)
+TileButton/colors/icon_hover_color = Color(1, 1, 1, 1)
+TileButton/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+TileButton/colors/icon_normal_color = Color(1, 1, 1, 1)
+TileButton/colors/icon_pressed_color = Color(1, 1, 1, 1)
+TileButton/constants/icon_max_width = 56
+TileButton/styles/focus = ExtResource("40_ke4fi")
+TileButton/styles/hover = ExtResource("41_ccokw")
+TileButton/styles/hover_pressed = ExtResource("42_5jgur")
+TileButton/styles/normal = ExtResource("43_4tmrm")
+TileButton/styles/pressed = ExtResource("42_5jgur")
+ToolButton/base_type = &"Button"
+ToolButton/constants/icon_max_width = 72
+ToolButton/styles/focus = ExtResource("40_g1adj")
+ToolButton/styles/hover = ExtResource("41_p21lw")
+ToolButton/styles/hover_pressed = ExtResource("42_hrj3f")
+ToolButton/styles/normal = ExtResource("40_km3k5")
+ToolButton/styles/pressed = ExtResource("42_hrj3f")
 TooltipLabel/colors/font_color = Color(1, 1, 1, 1)
 TooltipLabel/font_sizes/font_size = 14
 TooltipLabel/fonts/font = ExtResource("33_nva8e")

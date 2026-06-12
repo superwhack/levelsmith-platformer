@@ -107,6 +107,7 @@ func move_entity() -> void:
 	#toolManager.currentObjectRotation = entityManager.tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
 	# Await is needed to it has time to update selectedTile
 	toolManager.prevEntity = toolManager.brushObject;
+	toolManager.prevRotation = toolManager.currentObjectRotation;
 	await get_tree().process_frame;
 	toolManager.brushObject = tileSet.get_cell_source_id(editorManager.currentMousePosition);
 	toolManager.currentObjectRotation = tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
@@ -121,6 +122,7 @@ func drop_entity() -> void:
 	if (toolManager.prevEntity != -2):
 		toolManager.brushObject = toolManager.prevEntity;
 	toolManager.prevEntity = -1;
+	toolManager.currentObjectRotation = toolManager.prevRotation;
 	toolManager.isMoving = false;
 	for frame in range(1, 5):
 		await get_tree().process_frame;

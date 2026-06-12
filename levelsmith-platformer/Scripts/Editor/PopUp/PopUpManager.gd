@@ -15,7 +15,7 @@ func _ready() -> void:
 ## Creates an error popup with customizable content
 ## title: Title of error
 ## body: Body content of error
-func createErrorPopUp(title: String = "Error", body: String = "An error has occurred") -> void:
+func create_error_popup(title: String = "Error", body: String = "An error has occurred") -> void:
 	var newPopUp: Panel = ERROR_TEMPLATE.instantiate();
 	
 	# Add desired content to popup
@@ -41,12 +41,3 @@ func createErrorPopUp(title: String = "Error", body: String = "An error has occu
 	#POP_UP_STACK.clear();
 	#print("Stack cleared");
 	
-## Test function with sole purpose of creating example popUp outside of code
-## Delete later
-func createTestPopUp() -> void:
-	createErrorPopUp("My awesome title", "Misc Body Text");
-
-## Test function with sole purpose of creating generic example popUp outside of code
-## Delete later
-func createGenericTestPopUp() -> void:
-	createErrorPopUp();

@@ -26,6 +26,8 @@ var firstSelected: AssetItem = null;
 
 const ASSET_BUTTON = preload("res://Scenes/UI/AssetItem.tscn");
 
+const MISSING_TEXTURE := "res://Assets/Defaults/Assets/Sprites/Missing.png";
+
 # All types of tiles
 var tileTypes: Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
 
@@ -102,8 +104,8 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 	# If the path does not exist, print error
 	else:
 		PopUpManager.create_error_popup("Cannot Load Asset","No file found in '" + filePath + "'.");
-		#print("No file found");
-		return null;
+		return get_missing_image();
+
 
 ## Finds and loads the first image found in given folder
 ## folderPath: Path to the folder
@@ -356,3 +358,10 @@ func create_file_tree() -> void:
 func open_image_selector() -> void:
 	imageSelect.title = "Replace " + imageNameToReplace;
 	imageSelect.popup_file_dialog();
+	
+## Creates a new missing texture for use when a texture is... missing.
+func get_missing_image() -> Image:
+	var image := Image.new();
+	image.load(MISSING_TEXTURE);
+	validate_image(image);
+	return image;

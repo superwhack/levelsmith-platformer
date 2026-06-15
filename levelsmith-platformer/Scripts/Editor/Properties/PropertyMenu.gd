@@ -33,6 +33,7 @@ var playerCoyoteTime : float;
 @export var shootingDirectionArrow: Sprite2D;
 @export var shootingShotSpeedSlider: VBoxContainer;
 @export var shootingFireRateSlider: VBoxContainer;
+@export var shootingProjectileBounce: VBoxContainer;
 
 # Preset Options
 @export var presetOptions: OptionButton;
@@ -106,9 +107,11 @@ func update_sliders() -> void:
 		shootingDirectionSlider.value = selectedPreset.direction;
 		shootingShotSpeedSlider.value = selectedPreset.shotSpeed;
 		shootingFireRateSlider.value = selectedPreset.fireRate;
+		shootingProjectileBounce.value = selectedPreset.projBounce;
 		shootingDirectionSlider.update_slider();
 		shootingShotSpeedSlider.update_slider();
 		shootingFireRateSlider.update_slider();
+		shootingProjectileBounce.update_checkbox();
 	
 
 ## Update all of the player values based on the sliders
@@ -127,6 +130,7 @@ func update_values() -> void:
 		selectedPreset.direction = shootingDirectionSlider.value;
 		selectedPreset.shotSpeed = shootingShotSpeedSlider.value;
 		selectedPreset.fireRate = shootingFireRateSlider.value;
+		selectedPreset.projBounce = shootingProjectileBounce.value;
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset

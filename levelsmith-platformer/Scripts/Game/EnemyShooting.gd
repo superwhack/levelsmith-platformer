@@ -7,6 +7,7 @@ extends Enemy
 # Firing properties
 @export var shotSpeed : float;
 @export var fireRate : float;
+@export var projBounce : bool;
 
 const projectile = preload("res://Scenes/Entities/Projectile.tscn");
 
@@ -24,6 +25,7 @@ func shooting_behavior() -> void:
 	projectileFired.speed = shotSpeed;
 	projectileFired.global_position = position;
 	projectileFired.global_rotation_degrees = direction;
+	projectileFired.bouncable = projBounce;
 	get_parent().add_child(projectileFired);
 
 func assign_script(id: String, position: Vector2i) -> void:
@@ -33,10 +35,12 @@ func assign_script(id: String, position: Vector2i) -> void:
 	direction = propertyFile.direction; 
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
+	projBounce = propertyFile.projBounce;
 
 func apply_script(file: Resource) -> void:
 	propertyFile = file;
 	direction = propertyFile.direction; 
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
+	projBounce = propertyFile.projBounce;
 	timeLeft = 1;

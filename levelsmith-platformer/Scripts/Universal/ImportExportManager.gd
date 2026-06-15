@@ -44,7 +44,8 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			data_to_send += '"type":"shooting", "stats":{';
 			data_to_send += '"direction": ' + str(propertyFile.direction) + ", ";
 			data_to_send += '"shotSpeed": ' + str(propertyFile.shotSpeed) + ", ";
-			data_to_send += '"fireRate": ' + str(propertyFile.fireRate) + '}}';
+			data_to_send += '"fireRate": ' + str(propertyFile.fireRate) + ', ';
+			data_to_send += '"projBounce": ' + str(propertyFile.projBounce) + '}}';
 		if (enemyPropertyIndex < enemyProperties.size() - 1):
 			data_to_send += ',';
 	
@@ -173,6 +174,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 					newShooting.direction = enemy.stats.direction;
 					newShooting.shotSpeed = enemy.stats.shotSpeed;
 					newShooting.fireRate = enemy.stats.fireRate;
+					newShooting.projBounce = enemy.stats.projBounce;
 					ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	# If any enemy did not get data due to some form of corruption, it needs it.

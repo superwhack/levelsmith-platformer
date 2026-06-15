@@ -7,3 +7,4 @@ extends Resource
 @export var direction : float;
 @export var shotSpeed : float;
 @export var fireRate : float;
+@export var projBounce : bool;

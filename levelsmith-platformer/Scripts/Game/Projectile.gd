@@ -4,6 +4,7 @@ extends Area2D
 
 #var direction : float;
 var speed : float;
+var bouncable : bool;
 
 func _ready() -> void:
 	body_entered.connect(delete_projectile);
@@ -23,7 +24,7 @@ func delete_projectile(body: Node2D = null) -> void:
 ## Player takes damage when they hit the projectile
 func _on_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("Player"):
-		if area.name == "EnemyBounceCollision":
+		if area.name == "EnemyBounceCollision" && bouncable:
 			area.get_parent().bounce();
 			queue_free();
 		else:

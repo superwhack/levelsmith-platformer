@@ -53,6 +53,7 @@ func start() -> void:
 		for node in tileSet.get_children():
 			if tileSet.local_to_map(node.global_position) == propertyFile.position:
 				(node as Enemy).apply_script(propertyFile);
+				break;
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
 

@@ -90,7 +90,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		Global.Tool.CURSOR:
 			if (event.is_action_released("left-click") && prevEntity == -1):
 				# If the clicked cell is an entity and the click was short, edit its properties
-				if (entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= 6 && holdTimer > -.5):
+				if (entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL && holdTimer > -.5):
 					entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:
@@ -133,7 +133,7 @@ func change_tool(tool: Global.Tool) -> void:
 		update_brush_object(Global.EntityType.GOAL);
 		tileSwitch.display_tiles(false);
 		tileSwitch.display_entities(true);
-	propertyMenu.hide();
+	propertyMenu.close();
 	previewTile.clear();
 	
 	match currentTool:

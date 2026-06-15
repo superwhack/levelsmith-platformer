@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://kbh8ioojr3r4"]
+
+[ext_resource type="Texture2D" uid="uid://b8b4yjwi01cw3" path="res://Assets/Defaults/Assets/Sprites/Entities/ShootingStill.png" id="1_0uiq4"]
+
+[node name="Sprite2D" type="Sprite2D" unique_id=365024342]
+texture = ExtResource("1_0uiq4")

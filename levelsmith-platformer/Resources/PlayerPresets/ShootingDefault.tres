@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ShootingPreset" format=3 uid="uid://bxmf57qjs0pis"]
+
+[ext_resource type="Script" uid="uid://cddwp83pwyxk5" path="res://Scripts/Editor/Properties/ShootingPreset.gd" id="1_pkqak"]
+
+[resource]
+script = ExtResource("1_pkqak")
+shotSpeed = 3.0
+fireRate = 1.0

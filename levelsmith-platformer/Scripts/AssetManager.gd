@@ -32,7 +32,7 @@ const MISSING_TEXTURE := "res://Assets/Defaults/Assets/Sprites/Missing.png";
 var tileTypes: Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
 
 # All types of entities
-var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyPatrol", "EnemyFlying", "Goal"];
+var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyShooting", "EnemyPatrol", "EnemyFlying", "Goal"];
 
 # All types of props
 var propTypes: Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
@@ -268,7 +268,8 @@ func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
 	if source:
 		source.texture = newTexture;
 		# NOTE: TEMPORARY FIX PT 2
-		await get_tree().process_frame;
+		for frame in range(0, 5):
+			await get_tree().process_frame;
 		mainTileMap.get_parent().clear_enemies();
 
 

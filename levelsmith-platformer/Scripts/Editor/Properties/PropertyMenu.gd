@@ -8,6 +8,7 @@ var selectedEntity: Node2D;
 
 @export var playerMenu: VBoxContainer;
 @export var patrollingMenu: VBoxContainer;
+@export var shootingMenu: VBoxContainer;
 
 # Player values
 var playerSpeed: float;
@@ -27,6 +28,13 @@ var playerCoyoteTime : float;
 @export var patrollingSpeedSlider: VBoxContainer;
 @export var patrollingRestrictedCheckbox: VBoxContainer;
 
+# Shooting inputs
+@export var shootingDirectionSlider: VBoxContainer;
+var shootingDirectionArrow: Sprite2D;
+@export var shootingShotSpeedSlider: VBoxContainer;
+@export var shootingFireRateSlider: VBoxContainer;
+@export var shootingProjectileBounce: VBoxContainer;
+
 # Preset Options
 @export var presetOptions: OptionButton;
 var selectedPreset: Resource;
@@ -39,6 +47,9 @@ func _ready() -> void:
 
 ## Close the property menu and set the selected entity to null
 func close() -> void:
+	if shootingDirectionArrow:
+		shootingDirectionArrow.hide();
+		shootingDirectionArrow = null;
 	hide();
 	selectedEntity = null;
 
@@ -47,6 +58,9 @@ func _process(delta: float) -> void:
 	if (selectedEntity != null):
 		if selectedEntity is EnemyPatrol:
 			entityName.text = "Patrolling Enemy";
+		elif selectedEntity is EnemyShooting:
+			entityName.text = "Shooting Enemy";
+			selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
 		elif selectedEntity is Player:
 			entityName.text = "Player";
 	else:
@@ -93,7 +107,15 @@ func update_sliders() -> void:
 		patrollingRestrictedCheckbox.value = selectedPreset.restricted;
 		patrollingSpeedSlider.update_slider();
 		patrollingRestrictedCheckbox.update_checkbox();
-
+	elif selectedEntity is EnemyShooting:
+		shootingDirectionSlider.value = -selectedPreset.direction;
+		shootingShotSpeedSlider.value = selectedPreset.shotSpeed;
+		shootingFireRateSlider.value = selectedPreset.fireRate;
+		shootingProjectileBounce.value = selectedPreset.projBounce;
+		shootingDirectionSlider.update_slider();
+		shootingShotSpeedSlider.update_slider();
+		shootingFireRateSlider.update_slider();
+		shootingProjectileBounce.update_checkbox();
 	
 
 ## Update all of the player values based on the sliders
@@ -108,6 +130,12 @@ func update_values() -> void:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
 		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+	elif selectedEntity is EnemyShooting:
+		selectedPreset.direction = -shootingDirectionSlider.value;
+		selectedPreset.shotSpeed = shootingShotSpeedSlider.value;
+		selectedPreset.fireRate = shootingFireRateSlider.value;
+		selectedPreset.projBounce = shootingProjectileBounce.value;
+		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
@@ -118,12 +146,20 @@ func _on_drag_ended() -> void:
 		_on_preset_options_item_selected(4);
 	
 func show_menu(resource: Resource = null) -> void:
-	# TODO: Re-implement enemy property editing
+	if shootingDirectionArrow:
+		shootingDirectionArrow.hide();
+		shootingDirectionArrow = null;
 	playerMenu.hide();
 	patrollingMenu.hide();
-	if selectedEntity is EnemyPatrol:
+	shootingMenu.hide();
+	if selectedEntity is Enemy:
 		selectedPreset = resource;
 		update_sliders();
-		patrollingMenu.show();
+		if selectedEntity is EnemyPatrol:
+			patrollingMenu.show();
+		elif selectedEntity is EnemyShooting:
+			shootingDirectionArrow = selectedEntity.directionArrow;
+			shootingDirectionArrow.show();
+			shootingMenu.show();
 	else:
 		playerMenu.show();

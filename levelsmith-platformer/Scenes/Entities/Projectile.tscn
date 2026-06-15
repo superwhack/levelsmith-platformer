@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dw3xar5nrf1h3"]
+
+[ext_resource type="Texture2D" uid="uid://dnelcxa6o83eh" path="res://Assets/Defaults/Assets/Sprites/Projectile.png" id="1_058gr"]
+[ext_resource type="Script" uid="uid://wko1dsv81sau" path="res://Scripts/Game/Projectile.gd" id="1_akala"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_akala"]
+radius = 16.0
+
+[node name="Projectile" type="Area2D" unique_id=1865549045 node_paths=PackedStringArray("onScreen") groups=["Projectile"]]
+collision_layer = 6
+collision_mask = 6
+script = ExtResource("1_akala")
+onScreen = NodePath("VisibleOnScreenEnabler2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1149895723]
+texture = ExtResource("1_058gr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=715857269]
+shape = SubResource("CircleShape2D_akala")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1062702783]
+rect = Rect2(-22, -22, 44, 44)
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

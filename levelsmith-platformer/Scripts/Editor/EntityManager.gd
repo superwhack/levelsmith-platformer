@@ -30,10 +30,13 @@ func place_entity(clickPosition: Vector2) -> void:
 	&& clickedTileId >= 0)): 
 		return;
 	
-	if (tileSet.get_cell_source_id(clickPosition) >= Global.EntityType.PATROLLING && tileSet.get_cell_source_id(clickPosition) <= Global.EntityType.FLYING):
+	if toolManager.brushObject >= Global.EntityType.PROP1 && (clickedTileId <= Global.EntityType.PROP1 && clickedTileId >= Global.EntityType.GOAL):
+		return;
+	
+	if (clickedTileId >= Global.EntityType.PATROLLING && clickedTileId <= Global.EntityType.STATIONARY):
 		delete_entity(clickPosition);
 	
-	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER 
+	if (clickedTileId == Global.EntityType.PLAYER 
 	&& brushObject != Global.EntityType.PLAYER):
 		editorManager.playerExists = false;
 	

@@ -140,6 +140,7 @@ popup/item_4/text = "Custom"
 popup/item_4/id = 4
 
 [node name="PatrollingMargin" type="MarginContainer" parent="MainMargin/RootVBox" unique_id=1301200759]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 
@@ -163,6 +164,7 @@ layout_mode = 2
 
 [node name="ShootingDirection" parent="MainMargin/RootVBox/ShootingProperties" unique_id=2058309168 instance=ExtResource("2_w5eld")]
 layout_mode = 2
+size_flags_horizontal = 0
 propertyName = "Direction"
 minMax = Vector2(0, 360)
 sliderStep = 1.0
@@ -171,12 +173,14 @@ valueAppend = "°"
 [node name="ShootingShotSpeed" parent="MainMargin/RootVBox/ShootingProperties" unique_id=441375088 instance=ExtResource("2_w5eld")]
 layout_direction = 2
 layout_mode = 2
+size_flags_horizontal = 0
 propertyName = "Projectile Speed"
 minMax = Vector2(0.2, 8)
 sliderStep = 0.1
 
 [node name="ShootingFireRate" parent="MainMargin/RootVBox/ShootingProperties" unique_id=847827901 instance=ExtResource("2_w5eld")]
 layout_mode = 2
+size_flags_horizontal = 0
 propertyName = "Fire Rate"
 minMax = Vector2(0.2, 5)
 sliderStep = 0.1

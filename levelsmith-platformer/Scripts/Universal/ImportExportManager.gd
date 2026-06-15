@@ -85,24 +85,27 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	
 	clone_data("user://Assets/", levelAssetPath);
 
-## Imports a level at the specified directory.
-## tileMap: The Tile map layer to map the level terrain to
-## playerData: The player's stats being imported
+## Validates a level import at a given directory
 ## directory: Source level directory
-## returns: An int that depends on the state of the import
-func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -> int:
+## returns: false if it fails, true otherwise
+func validate_import(directory: String) -> bool:
 	levelPath = "user://Levels/" + directory + "/";
 	levelAssetPath = levelPath + "Assets/"
 	if !DirAccess.dir_exists_absolute(levelPath):
 		PopUpManager.create_error_popup("Level Directory Doesn't Exist!", "The directory " + levelPath + " could not be found.");
-		return 0;
+		return false;
 	if !FileAccess.file_exists(levelPath + "Settings.JSON"):
 		PopUpManager.create_error_popup("Level Properties Don't Exist!", "The directory " + levelPath + " does not have a file Settings.JSON.");
-		return 0;
+		return false;
 	if !FileAccess.file_exists(levelPath + "Tiles.CSV"):
 		PopUpManager.create_error_popup("Level Tile Map Doesn't Exist!", "The directory " + levelPath + " does not have a file Tiles.CSV.");
-		return 0;
-	
+		return false;
+	return true;
+## Imports a level at the specified directory.
+## tileMap: The Tile map layer to map the level terrain to
+## playerData: The player's stats being imported
+## returns: if the player exists, true if they do
+func import_level_CSV(tileMap: TileMapLayer, playerData: Panel) -> bool:
 	# Read tileData in the form of a CSV file
 	var CSVFile = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.READ);
 	var row = 0;
@@ -126,12 +129,8 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 	await get_tree().process_frame;
 	clone_data(levelAssetPath, "user://Assets/");
 	levelImported.emit();
-	
-	# Int is based on state of the player in the imported level
-	# 0: Import failed
-	# 1: Import succeeded, but no player
-	# 2: Import succeeded with player
-	return int(playerExists) + 1;
+
+	return playerExists;
 
 ## Import the JSON file
 ## tileMap: Tile map for searching for enemies

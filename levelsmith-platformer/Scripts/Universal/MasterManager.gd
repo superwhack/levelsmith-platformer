@@ -129,13 +129,13 @@ func _process(_delta: float) -> void:
 	if (Input.is_action_just_pressed("tempSave")):
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
 	if (Input.is_action_just_pressed("tempLoad")):
-		for childNode in editorManager.tileSet.get_children():
-			childNode.free();
 		propertyMenu.close();
-		ImportExportManager.clear_enemies_folder();
-		var result = await ImportExportManager.import_level(editorManager.tileSet, propertyMenu, "Level01");
-		if (result != 0):
-			editorManager.playerExists = result - 1;
+		var result = ImportExportManager.validate_import("Level01");
+		if (result):
+			ImportExportManager.clear_enemies_folder();
+			for childNode in editorManager.tileSet.get_children():
+				childNode.free();
+			editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileSet, propertyMenu);
 			editorManager.reset_enemy_positions();
 			await get_tree().process_frame;
 			ImportExportManager.import_JSON(editorManager.tileSet, propertyMenu)

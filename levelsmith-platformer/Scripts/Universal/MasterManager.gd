@@ -109,7 +109,7 @@ func play() -> void:
 	elif (!editorManager.goalExists):
 		PopUpManager.create_error_popup("Cannot Start Level", "Level cannot be started, there is no goal placed down!");
 		return;
-	propertyMenu.hide();
+	propertyMenu.close();
 	AudioManager.play_music("LevelMusic");
 	# Update state variable
 	state = Global.State.PLAY;
@@ -157,17 +157,19 @@ func load_tilemap() -> void:
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
 	gameManager.tileSet = loadedMap;
-
 ## THESE ARE TEMPORARY AND SHOULD BE CHANGED WHEN BUTTONS ARE PUT IN
 func _process(_delta: float) -> void:
 	if (Input.is_action_just_pressed("tempSave")):
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
 	if (Input.is_action_just_pressed("tempLoad")):
 		propertyMenu.close();
-		ImportExportManager.clear_enemies_folder();
-		var importedLevelName = ImportExportManager.levelPath;
-		var result = await ImportExportManager.import_level(editorManager.tileSet, propertyMenu, importedLevelName);
-		if (result != 0):
-			editorManager.playerExists = result - 1;
+		var result = ImportExportManager.validate_import("Level01");
+		if (result):
+			ImportExportManager.clear_enemies_folder();
+			for childNode in editorManager.tileSet.get_children():
+				childNode.free();
+			editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileSet, propertyMenu);
 			editorManager.reset_enemy_positions();
+			await get_tree().process_frame;
+			ImportExportManager.import_JSON(editorManager.tileSet, propertyMenu)
 		editorManager.check_goal_exists();

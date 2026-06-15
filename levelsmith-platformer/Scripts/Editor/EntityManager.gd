@@ -30,6 +30,9 @@ func place_entity(clickPosition: Vector2) -> void:
 	&& clickedTileId >= 0)): 
 		return;
 	
+	if (tileSet.get_cell_source_id(clickPosition) >= Global.EntityType.PATROLLING && tileSet.get_cell_source_id(clickPosition) <= Global.EntityType.FLYING):
+		delete_entity(clickPosition);
+	
 	if (tileSet.get_cell_source_id(clickPosition) == Global.EntityType.PLAYER 
 	&& brushObject != Global.EntityType.PLAYER):
 		editorManager.playerExists = false;
@@ -42,19 +45,25 @@ func place_entity(clickPosition: Vector2) -> void:
 		return;
 	elif (toolManager.brushObject >= editorManager.tileCount):
 		# If the tile is a prop, use rotation
-		if (toolManager.brushObject >= 12 && toolManager.brushObject <= 17):
+		if (toolManager.brushObject >= Global.EntityType.PROP1 && toolManager.brushObject <= Global.EntityType.PROP6):
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
 
 		# If it's an enemy, create a new property file
-		elif (toolManager.brushObject == Global.EntityType.PATROLLING):
+		elif (toolManager.brushObject >= Global.EntityType.PATROLLING && toolManager.brushObject <= Global.EntityType.STATIONARY):
 			var time = Time.get_ticks_msec();
+			var saveBrush = toolManager.brushObject;
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
 			# Wait five frames, I really don't like doing it like this but I'm not sure of a better way.
 			for frame in range(1, 5):
 				await get_tree().process_frame;
-			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
-			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
-			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol" + str(time) + ".tres");
+			if (saveBrush == Global.EntityType.PATROLLING):
+				var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
+				var newPatrolling: Resource = defaultPatrolling.duplicate(true);
+				ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol" + str(time) + ".tres");
+			elif (saveBrush == Global.EntityType.SHOOTING):
+				var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
+				var newShooting: Resource = defaultShooting.duplicate(true);
+				ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting" + str(time) + ".tres");
 			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
@@ -103,8 +112,6 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 
 ## Moves the entity at the clicked position
 func move_entity() -> void:
-	# NOTE: THIS COMMENT BREAKS IT, BUT WE STILL SHOULD SAVE ROTATIONS SOMEWHERE
-	#toolManager.currentObjectRotation = entityManager.tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
 	# Await is needed to it has time to update selectedTile
 	toolManager.prevEntity = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;

@@ -54,12 +54,13 @@ enum EntityType {
 	GOAL = 7,
 	PLAYER = 8,
 	PATROLLING = 9,
-	STATIONARY = 10, 
+	SHOOTING = 10, 
 	FLYING = 11,
-	PROP1 = 12,
-	PROP2 = 13,
-	PROP3 = 14,
-	PROP4 = 15,
-	PROP5 = 16, 
-	PROP6 = 17
+	STATIONARY = 12, 
+	PROP1 = 13,
+	PROP2 = 14,
+	PROP3 = 15,
+	PROP4 = 16,
+	PROP5 = 17, 
+	PROP6 = 18
 }

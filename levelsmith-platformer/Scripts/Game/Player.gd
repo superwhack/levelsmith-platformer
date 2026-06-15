@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var groundSpeed := 1.0;
 @export var jumpHeight := 2.0;
 # Friction in midair
+# BUG: Air Control doesn't work the frame you land on a bouncy tile, allowing you to change direction beofre bouncing back up
 @export var airControl := 1.0;
 @export var fallSpeed := 1.0;
 # Determines how long after leaving a platform you can still jump
@@ -57,16 +58,20 @@ func _physics_process(delta: float) -> void:
 		currentFriction = 1.0;
 	else:
 		coyoteTimeLeft = coyoteTime;
+	
+	# Detect tiles before jumping and running so slow and ice tiles apply affects before inputs
+	detect_tiles();
+
+	# Jumping with W or Space
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() or coyoteTimeLeft > 0.0:
 			# Don't allow double jumps by reducing coyoteTimeLeft to 0
 			coyoteTimeLeft = 0;
 			jump();
-	
 	# Handle A and D inputs, as well as lack of directional input
 	run();
+	
 	# Look at what the player is colliding with and apply effects
-	detect_tiles();
 	move_and_slide();
 
 ## Make the player jump
@@ -107,18 +112,23 @@ func die() -> void:
 	Global.death.emit();
 
 ## use raycast to detect enemy collision
+# Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
 func detect_enemies(body: Node2D) -> void:
-	if body.is_in_group("enemy"):
+	await get_tree().process_frame;
+	if body && body.is_in_group("enemy"):
 		take_damage(1);
 
 func detect_enemy_bounce(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
-		body.die();
-		if (Input.is_action_pressed("jump")):
-			velocity.y = -jumpHeight * 360;
-		else:
-			velocity.y = -jumpHeight * 240;
-		coyoteTimeLeft = 0;
+		bounce();
+		body.queue_free();
+
+func bounce() -> void:
+	if (Input.is_action_pressed("jump")):
+		velocity.y = -jumpHeight * 360;
+	else:
+		velocity.y = -jumpHeight * 240;
+	coyoteTimeLeft = 0;
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
@@ -145,11 +155,22 @@ func detect_tiles() -> void:
 			# Use the global coord to find tile collision
 			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position);
 			var tileData = collider.get_cell_tile_data(tilePos);
-			if tileData and (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i])):
-				#print(tilePos, " ", tileData.get_custom_data("name"));
+			# STRETCH: Parts of this code would be used to get the player to bounce when hitting bounce tiles at different angles
+			# it needs an adjustment to acceleration/velocity x logic to work.
+			#if tileData && (tileData.get_custom_data("name") == "bounce"):
+				#if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
+					#if slideCollisions[i].target_position.x < 0:
+						#velocity.x += 1000 * tileData.get_custom_data("bounce");
+					#else:
+						#velocity.x += 1000 * tileData.get_custom_data("bounce");
+				#else:
+					#if slideCollisions[i].target_position.y < 0:
+						#velocity.y += 1000 * tileData.get_custom_data("bounce");
+					#else:
+						#velocity.y += -1000 * tileData.get_custom_data("bounce");
+			if tileData && (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i])):
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):
-					## NOTE: Theoretical code for the player to drop down through one-ways, works fine but it's a no go for a feature
 					"oneway":
 						if Input.is_action_just_pressed("down"):
 							position += Vector2(0, 1);

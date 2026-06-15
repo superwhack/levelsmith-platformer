@@ -6,7 +6,7 @@
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_x85wq"]
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "presetOptions")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "shootingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "presetOptions")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,6 +22,7 @@ script = ExtResource("1_tnep3")
 entityName = NodePath("MainMargin/RootVBox/EntityNameVBox/EntityName")
 playerMenu = NodePath("MainMargin/RootVBox/PlayerProperties")
 patrollingMenu = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties")
+shootingMenu = NodePath("MainMargin/RootVBox/ShootingProperties")
 playerSpeedSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerSpeed")
 playerJumpSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerJump")
 playerAirControlSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerAirControl")
@@ -29,6 +30,10 @@ playerFallSpeedSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerFal
 playerCoyoteTimeSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime")
 patrollingSpeedSlider = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed")
 patrollingRestrictedCheckbox = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingRestricted")
+shootingDirectionSlider = NodePath("MainMargin/RootVBox/ShootingProperties/ShootingDirection")
+shootingShotSpeedSlider = NodePath("MainMargin/RootVBox/ShootingProperties/ShootingShotSpeed")
+shootingFireRateSlider = NodePath("MainMargin/RootVBox/ShootingProperties/ShootingFireRate")
+shootingProjectileBounce = NodePath("MainMargin/RootVBox/ShootingProperties/ShootingBounce")
 presetOptions = NodePath("MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions")
 
 [node name="MainMargin" type="MarginContainer" parent="." unique_id=1879514987]
@@ -72,27 +77,32 @@ layout_mode = 2
 [node name="PlayerSpeed" parent="MainMargin/RootVBox/PlayerProperties" unique_id=305056832 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Speed"
-minMax = Vector2i(0, 5)
+minMax = Vector2(0, 5)
+sliderStep = 0.1
 
 [node name="PlayerJump" parent="MainMargin/RootVBox/PlayerProperties" unique_id=1835714671 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Jump Height"
-minMax = Vector2i(0, 5)
+minMax = Vector2(0, 3)
+sliderStep = 0.1
 
 [node name="PlayerAirControl" parent="MainMargin/RootVBox/PlayerProperties" unique_id=985825086 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Air Control"
-minMax = Vector2i(0, 1)
+minMax = Vector2(0, 1)
+sliderStep = 0.1
 
 [node name="PlayerFallSpeed" parent="MainMargin/RootVBox/PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Fall Speed"
-minMax = Vector2i(0, 5)
+minMax = Vector2(0, 3)
+sliderStep = 0.1
 
 [node name="PlayerCoyoteTime" parent="MainMargin/RootVBox/PlayerProperties" unique_id=2022302843 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Coyote Time"
-minMax = Vector2i(0, 1)
+minMax = Vector2(0, 1)
+sliderStep = 0.1
 
 [node name="PresetMargin" type="MarginContainer" parent="MainMargin/RootVBox/PlayerProperties" unique_id=413274506]
 layout_mode = 2
@@ -130,6 +140,7 @@ popup/item_4/text = "Custom"
 popup/item_4/id = 4
 
 [node name="PatrollingMargin" type="MarginContainer" parent="MainMargin/RootVBox" unique_id=1301200759]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 
@@ -140,12 +151,44 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Speed"
-minMax = Vector2i(0, 2)
+minMax = Vector2(0, 5)
+sliderStep = 0.1
 
 [node name="PatrollingRestricted" parent="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties" unique_id=574029748 instance=ExtResource("3_1mv14")]
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Restricted"
+
+[node name="ShootingProperties" type="VBoxContainer" parent="MainMargin/RootVBox" unique_id=391156619]
+layout_mode = 2
+
+[node name="ShootingDirection" parent="MainMargin/RootVBox/ShootingProperties" unique_id=2058309168 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Direction"
+minMax = Vector2(0, 360)
+sliderStep = 1.0
+valueAppend = "°"
+
+[node name="ShootingShotSpeed" parent="MainMargin/RootVBox/ShootingProperties" unique_id=441375088 instance=ExtResource("2_w5eld")]
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Projectile Speed"
+minMax = Vector2(0.2, 8)
+sliderStep = 0.1
+
+[node name="ShootingFireRate" parent="MainMargin/RootVBox/ShootingProperties" unique_id=847827901 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Fire Rate"
+minMax = Vector2(0.2, 5)
+sliderStep = 0.1
+
+[node name="ShootingBounce" parent="MainMargin/RootVBox/ShootingProperties" unique_id=1978534166 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Projecile Bounce"
 
 [node name="BottomSpacer" type="Control" parent="MainMargin/RootVBox" unique_id=1741289699]
 layout_mode = 2
@@ -168,4 +211,8 @@ text = "Close"
 [connection signal="item_selected" from="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions" to="." method="_on_preset_options_item_selected"]
 [connection signal="drag_ended" from="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed" to="." method="_on_drag_ended"]
 [connection signal="check_changed" from="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingRestricted" to="." method="update_values"]
+[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingProperties/ShootingDirection" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingProperties/ShootingShotSpeed" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingProperties/ShootingFireRate" to="." method="_on_drag_ended"]
+[connection signal="check_changed" from="MainMargin/RootVBox/ShootingProperties/ShootingBounce" to="." method="update_values"]
 [connection signal="pressed" from="MainMargin/RootVBox/HBoxContainer/CloseButton" to="." method="close"]

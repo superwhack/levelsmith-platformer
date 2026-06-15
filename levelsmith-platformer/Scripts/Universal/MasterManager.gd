@@ -7,29 +7,33 @@ var state : Global.State = Global.State.EDIT;
 @export var editorManager: Node2D;
 @export var toolManager: Node2D;
 @export var gameManager: Node2D;
+@export var entityManager: Node2D;
 @export var audioManager: Node;
+@export var cameraManager: Camera2D;
 @export var editorManagerCanvas: CanvasLayer;
 @export var gameManagerCanvas: CanvasLayer;
+@export var mainMenuControl: Control;
 
 # Reference to tileset
 @export var tileSet: TileMapLayer;
 @export var previewTileMap: TileMapLayer;
+@export var gridLines: TileMapLayer;
 
 # Map that is currently loaded in the Play scene
 var loadedMap: TileMapLayer;
 
 ## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
-@export var worldSize: Vector2i = Vector2i(8, 14);
+@export var worldSize: Vector2i;
 
 @export var propertyMenu : Panel;
 
 @export var playButton : Button;
 
 func _ready() -> void:
-	Global.reload.connect(load_tilemap);
-	Global.complete.connect(level_complete);
-	ImportExportManager.make_new_level("Level01");
+	#Global.reload.connect(load_tilemap);
+	#Global.complete.connect(level_complete);
+	#ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
 	playButton.pressed.connect(play);
@@ -39,14 +43,42 @@ func _ready() -> void:
 	if !DirAccess.dir_exists_absolute("res://Resources/Enemies/"):
 		DirAccess.make_dir_absolute("res://Resources/Enemies/");
 		
-	edit();
+	#edit();
+	main_menu();
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
 func level_complete() -> void:
 	edit();
 	editorManager.isValidated = true;
-	print("LEVEL COMPLETE")
+	print("LEVEL COMPLETE");
+	
+func level_setup( levelName: String, newSize: Vector2i ) -> void:
+	worldSize = newSize;
+	ImportExportManager.make_new_level( levelName );
+	Global.reload.connect(load_tilemap);
+	Global.complete.connect(level_complete);
+	#AudioManager.masterVolume = 0;
+	#AudioManager.update_volume();
+	print("NEW LEVEL SET UP");
+	tileSet.clear();
+	editorManager.playerExists = false;
+	editorManager.goalExists = false;
+	entityManager.goalCount = 0;
+	gridLines.fill_grid_lines();
+	cameraManager.refresh_bounds();
+	edit();
+
+## Swap to main menu state
+func main_menu() -> void:
+	
+	gameManager.hide();
+	gameManagerCanvas.hide();
+	editorManager.hide();
+	editorManagerCanvas.hide();
+	mainMenuControl.show();
+	
+	state = Global.State.MAIN_MENU;
 
 ## Swap to edit state
 func edit() -> void:
@@ -55,6 +87,7 @@ func edit() -> void:
 	# Update state variable
 	state = Global.State.EDIT;
 	# Change scene to edit scene
+	mainMenuControl.hide();
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();

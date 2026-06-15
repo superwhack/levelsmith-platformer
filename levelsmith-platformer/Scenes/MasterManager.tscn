@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/Universal/MasterManager.gd" id="1_3ngsi"]
 [ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/Universal/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
+[ext_resource type="PackedScene" uid="uid://bjx53xjckex6r" path="res://Scenes/MainMenu.tscn" id="2_gojh1"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://dt6pg2cjbdcuv" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
@@ -40,17 +41,20 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_8vbpr")
 sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "audioManager", "editorManagerCanvas", "gameManagerCanvas", "tileSet", "previewTileMap", "propertyMenu", "playButton")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "audioManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "tileSet", "previewTileMap", "gridLines", "propertyMenu", "playButton")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
 gameManager = NodePath("GameManager")
+entityManager = NodePath("EditorManager/ToolManager/EntityManager")
 audioManager = NodePath("AudioManager")
+cameraManager = NodePath("Camera2D")
 editorManagerCanvas = NodePath("EditorManager/ScreenUI")
 gameManagerCanvas = NodePath("GameManager/CanvasLayer")
+mainMenuControl = NodePath("MainMenuCanvasLayer/MainMenu")
 tileSet = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
-worldSize = Vector2i(14, 8)
+gridLines = NodePath("EditorManager/GridLines")
 propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
 playButton = NodePath("EditorManager/ScreenUI/BottomRightAnchor/PlayButton")
 
@@ -72,7 +76,6 @@ tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAA
 
 [node name="GridLines" parent="EditorManager" index="1" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
 z_index = 0
-tile_map_data = PackedByteArray()
 tile_set = SubResource("TileSet_0vixy")
 masterManager = NodePath("../..")
 
@@ -81,12 +84,22 @@ modulate = Color(1, 1, 1, 1)
 position = Vector2(0, -1)
 collision_enabled = true
 
+[node name="CustomCursorManager" parent="EditorManager" index="6" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
+masterManager = NodePath("../..")
+
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
+
+[node name="MainMenuCanvasLayer" type="CanvasLayer" parent="." unique_id=1285763636]
+
+[node name="MainMenu" parent="MainMenuCanvasLayer" unique_id=422065839 node_paths=PackedStringArray("masterManager") instance=ExtResource("2_gojh1")]
+masterManager = NodePath("../..")
+metadata/_edit_group_ = true
 
 [node name="PopUps" type="CanvasLayer" parent="." unique_id=1234008250]
 layer = 5
 script = ExtResource("7_8vbpr")
 
+[connection signal="pressed" from="EditorManager/ScreenUI/TopLeftAnchor/TopLeftRow/HomeButton" to="." method="main_menu"]
 [connection signal="pressed" from="EditorManager/ScreenUI/BottomLeftAnchor/BottomLeftRow/AssetManagerButton" to="EditorManager" method="open_asset_manager"]
 [connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
 [connection signal="pressed" from="GameManager/CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ReturnEditorButton" to="." method="edit"]

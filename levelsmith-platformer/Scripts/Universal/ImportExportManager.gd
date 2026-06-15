@@ -101,6 +101,7 @@ func validate_import(directory: String) -> bool:
 		PopUpManager.create_error_popup("Level Tile Map Doesn't Exist!", "The directory " + levelPath + " does not have a file Tiles.CSV.");
 		return false;
 	return true;
+
 ## Imports a level at the specified directory.
 ## tileMap: The Tile map layer to map the level terrain to
 ## playerData: The player's stats being imported

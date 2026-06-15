@@ -21,5 +21,6 @@ texture = ExtResource("2_0p30m")
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=1346299203]
 visible = false
-scale = Vector2(1.5, 1.5)
+z_index = 4
+scale = Vector2(2, 2)
 texture = ExtResource("3_3c58l")

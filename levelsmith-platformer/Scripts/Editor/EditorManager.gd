@@ -43,11 +43,20 @@ func _process(_delta: float) -> void:
 	
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
-	
+
 	playButton.modulate = Color(1, 1, 1) if playerExists && goalExists else Color(1, 1, 1, 0.5);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
+
+
+## NOTE: TEMPORARY FIX FUNCTION PT 1
+## Clear all enemies without a property file
+func clear_enemies() -> void:
+	for child in tileSet.get_children():
+		if child is Enemy:
+			if child.propertyFile == null:
+				child.queue_free();
 
 ## Changes current hotbar state (used for hotkeys)
 ## newState: Global.HotbarState

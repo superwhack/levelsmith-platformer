@@ -112,8 +112,10 @@ func die() -> void:
 	Global.death.emit();
 
 ## use raycast to detect enemy collision
+# Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
 func detect_enemies(body: Node2D) -> void:
-	if body.is_in_group("enemy"):
+	await get_tree().process_frame;
+	if body && body.is_in_group("enemy"):
 		take_damage(1);
 
 func detect_enemy_bounce(body: Node2D) -> void:

@@ -20,8 +20,8 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBounceCollision" unique_id=1814510334]
-position = Vector2(0, 65.5)
-scale = Vector2(6, 0.4)
+position = Vector2(0, 61.5)
+scale = Vector2(6, 0.8)
 shape = SubResource("RectangleShape2D_agccv")
 
 [node name="EnemyCollision" type="Area2D" parent="." unique_id=1504755063]
@@ -29,8 +29,8 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyCollision" unique_id=255986313]
-position = Vector2(0, -5)
-scale = Vector2(6.3, 6)
+position = Vector2(0, -8)
+scale = Vector2(6.3, 5.6)
 shape = SubResource("RectangleShape2D_agccv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]

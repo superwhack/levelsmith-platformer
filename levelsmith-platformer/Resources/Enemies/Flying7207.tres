@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FlyingPreset" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Editor/Properties/FlyingPreset.gd" id="1_0b3ah"]
+
+[resource]
+script = ExtResource("1_0b3ah")
+position = Vector2i(11, 4)
+speed = 448.0
+pointBOffset = Vector2(128, 128)

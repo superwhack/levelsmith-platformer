@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://gwlm3kxvsr22"]
+
+[ext_resource type="Texture2D" path="res://Assets/Defaults/Assets/Sprites/Entities/the-flying-evil-jumo-pixilart.png" id="1_tbfol"]
+
+[node name="Sprite2D" type="Sprite2D" unique_id=365024342]
+texture = ExtResource("1_tbfol")

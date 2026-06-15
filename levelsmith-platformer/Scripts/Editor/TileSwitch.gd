@@ -69,7 +69,9 @@ func _on_spawn_object_button_pressed() -> void:
 
 func _on_patrolling_object_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.PATROLLING);
-	
+
+func _on_flying_object_button_pressed() -> void:
+	toolManager.update_brush_object(Global.EntityType.FLYING);
 
 # Prop Buttons
 func _on_direction_marker_prop_button_pressed() -> void:

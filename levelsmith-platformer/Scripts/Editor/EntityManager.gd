@@ -56,6 +56,19 @@ func place_entity(clickPosition: Vector2) -> void:
 			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
 			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol" + str(time) + ".tres");
 			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
+
+		elif (toolManager.brushObject == Global.EntityType.FLYING):
+			var time = Time.get_ticks_msec();
+			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
+			# Wait five frames, I really don't like doing it like this but I'm not sure of a better way.
+			for frame in range(1, 5):
+				await get_tree().process_frame;
+			var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
+			var newFlying: Resource = defaultFlying.duplicate(true);
+			ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying" + str(time) + ".tres");
+			print(get_scene_at_cell(clickPosition))
+			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
+
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
 	else:
@@ -117,7 +130,7 @@ func move_entity() -> void:
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
-	place_entity(editorManager.currentMousePosition);
+	await place_entity(editorManager.currentMousePosition);
 	if (toolManager.prevEntity != -2):
 		toolManager.brushObject = toolManager.prevEntity;
 	toolManager.prevEntity = -1;

@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://bwguyxq8bjrjk"]
 
-[ext_resource type="Theme" path="res://Resources/GlobalTheme.tres" id="1_afykx"]
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_afykx"]
 [ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/Editor/Properties/PropertyMenu.gd" id="1_tnep3"]
 [ext_resource type="PackedScene" uid="uid://c3ype5vn62yxp" path="res://Scenes/UI/PropertySlider.tscn" id="2_w5eld"]
-[ext_resource type="PackedScene" uid="uid://cgity27eghw43" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_x85wq"]
+[ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "presetOptions")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "flyingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "presetOptions")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,6 +22,7 @@ script = ExtResource("1_tnep3")
 entityName = NodePath("EntityName")
 playerMenu = NodePath("PlayerProperties")
 patrollingMenu = NodePath("PatrollingProperties")
+flyingMenu = NodePath("FlyingProperties")
 playerSpeedSlider = NodePath("PlayerProperties/PlayerSpeed")
 playerJumpSlider = NodePath("PlayerProperties/PlayerJump")
 playerAirControlSlider = NodePath("PlayerProperties/PlayerAirControl")
@@ -29,6 +30,9 @@ playerFallSpeedSlider = NodePath("PlayerProperties/PlayerFallSpeed")
 playerCoyoteTimeSlider = NodePath("PlayerProperties/PlayerCoyoteTime")
 patrollingSpeedSlider = NodePath("PatrollingProperties/PatrollingSpeed")
 patrollingRestrictedCheckbox = NodePath("PatrollingProperties/PatrollingRestricted")
+flyingSpeedSlider = NodePath("FlyingProperties/FlyingSpeed")
+flyingOffsetXSlider = NodePath("FlyingProperties/OffsetX")
+flyingOffsetYSlider = NodePath("FlyingProperties/OffsetY")
 presetOptions = NodePath("PlayerProperties/PresetOptions")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1879514987]
@@ -117,6 +121,25 @@ propertyName = "Speed"
 layout_mode = 2
 propertyName = "Restricted"
 
+[node name="FlyingProperties" type="VBoxContainer" parent="." unique_id=633918746]
+visible = false
+layout_mode = 0
+offset_top = 119.0
+offset_right = 400.0
+offset_bottom = 420.0
+
+[node name="FlyingSpeed" parent="FlyingProperties" unique_id=1245252013 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "Speed"
+
+[node name="OffsetX" parent="FlyingProperties" unique_id=1473938345 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "offset x"
+
+[node name="OffsetY" parent="FlyingProperties" unique_id=1150626343 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+propertyName = "offset y"
+
 [connection signal="pressed" from="Button" to="." method="close"]
 [connection signal="drag_ended" from="PlayerProperties/PlayerSpeed" to="." method="_on_drag_ended"]
 [connection signal="drag_ended" from="PlayerProperties/PlayerJump" to="." method="_on_drag_ended"]
@@ -126,3 +149,6 @@ propertyName = "Restricted"
 [connection signal="item_selected" from="PlayerProperties/PresetOptions" to="." method="_on_preset_options_item_selected"]
 [connection signal="drag_ended" from="PatrollingProperties/PatrollingSpeed" to="." method="_on_drag_ended"]
 [connection signal="check_changed" from="PatrollingProperties/PatrollingRestricted" to="." method="update_values"]
+[connection signal="drag_ended" from="FlyingProperties/FlyingSpeed" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="FlyingProperties/OffsetX" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="FlyingProperties/OffsetY" to="." method="_on_drag_ended"]

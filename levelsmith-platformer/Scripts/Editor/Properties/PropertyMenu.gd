@@ -8,6 +8,7 @@ var selectedEntity: Node2D;
 
 @export var playerMenu: VBoxContainer;
 @export var patrollingMenu: VBoxContainer;
+@export var flyingMenu: VBoxContainer;
 
 # Player values
 var playerSpeed: float;
@@ -26,6 +27,11 @@ var playerCoyoteTime : float;
 # Patrolling inputs
 @export var patrollingSpeedSlider: VBoxContainer;
 @export var patrollingRestrictedCheckbox: VBoxContainer;
+
+# Flying inputs
+@export var flyingSpeedSlider: VBoxContainer;
+@export var flyingOffsetXSlider: VBoxContainer;
+@export var flyingOffsetYSlider: VBoxContainer;
 
 # Preset Options
 @export var presetOptions: OptionButton;
@@ -91,7 +97,13 @@ func update_sliders() -> void:
 		patrollingSpeedSlider.update_slider();
 		patrollingRestrictedCheckbox.update_checkbox();
 
-	
+	if selectedEntity is EnemyFlyer:
+		flyingSpeedSlider.value = selectedPreset.speed;
+		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x;
+		flyingOffsetYSlider.value = selectedPreset.pointBOffset.y;
+		flyingSpeedSlider.update_slider();
+		flyingOffsetXSlider.update_slider();
+		flyingOffsetYSlider.update_slider();
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:
@@ -105,9 +117,16 @@ func update_values() -> void:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
 		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+	
+	if selectedEntity is EnemyFlyer:
+		selectedPreset.speed = flyingSpeedSlider.value;
+		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+		print(selectedPreset.pointBOffset)
+		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres")
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
+	print("DRAG ENDED")
 	update_values();
 	if selectedEntity is Player:
 		update_custom();
@@ -117,9 +136,14 @@ func _on_drag_ended() -> void:
 func show_menu(resource: Resource = null) -> void:
 	playerMenu.hide();
 	patrollingMenu.hide();
+	flyingMenu.hide();
 	if selectedEntity is EnemyPatrol:
 		selectedPreset = resource;
 		update_sliders();
 		patrollingMenu.show();
+	elif selectedEntity is EnemyFlyer:
+		selectedPreset = resource;
+		update_sliders();
+		flyingMenu.show();
 	else:
 		playerMenu.show();

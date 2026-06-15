@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PatrollingPreset" format=3 uid="uid://b2q7utx1xa3f0"]
 
-[ext_resource type="Script" uid="uid://baynj1pvmtay1" path="res://Scripts/Editor/Properties/PatrollingPreset.gd" id="1_3ovdx"]
+[ext_resource type="Script" path="res://Scripts/Editor/Properties/PatrollingPreset.gd" id="1_3ovdx"]
 
 [resource]
 script = ExtResource("1_3ovdx")

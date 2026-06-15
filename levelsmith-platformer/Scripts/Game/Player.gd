@@ -86,7 +86,7 @@ func run() -> void:
 	var direction := Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if direction:
-		accelerationX = direction * trueSpeed;
+		accelerationX = direction * trueSpeed * .5;
 	else:
 		accelerationX = -velocity.x;
 	
@@ -95,9 +95,13 @@ func run() -> void:
 	if not is_on_floor():
 		accelerationX *= airControl * airControl;
 
+	if (abs(velocity.x) > trueSpeed):
+		accelerationX = 0;
+		velocity.x *= .9;
+	else:
 	# Adjust velocity by acceleration
-	velocity.x += accelerationX;
-	velocity.x = clamp(velocity.x, -trueSpeed, trueSpeed);
+		velocity.x += accelerationX;
+	#velocity.x = clamp(velocity.x, -trueSpeed, trueSpeed);
 
 ## Have the player take damage
 ## amount: damage to deal
@@ -150,35 +154,32 @@ func detect_tiles() -> void:
 		if (finishedCollisions.has(collider)):
 			continue;
 		finishedCollisions.append(collider);
-		# Only have collisions confer effects if they are below the player
+		# Have collisions with tiles confer effects
 		if collider is TileMapLayer:
 			# Use the global coord to find tile collision
-			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position);
+			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position + slideCollisions[i].target_position * .1);
 			var tileData = collider.get_cell_tile_data(tilePos);
-			# STRETCH: Parts of this code would be used to get the player to bounce when hitting bounce tiles at different angles
-			# it needs an adjustment to acceleration/velocity x logic to work.
-			#if tileData && (tileData.get_custom_data("name") == "bounce"):
-				#if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
-					#if slideCollisions[i].target_position.x < 0:
-						#velocity.x += 1000 * tileData.get_custom_data("bounce");
-					#else:
-						#velocity.x += 1000 * tileData.get_custom_data("bounce");
-				#else:
-					#if slideCollisions[i].target_position.y < 0:
-						#velocity.y += 1000 * tileData.get_custom_data("bounce");
-					#else:
-						#velocity.y += -1000 * tileData.get_custom_data("bounce");
+			print(tilePos)
+			# Bounce tile collisions
+			if tileData:
+				print(str(i) + tileData.get_custom_data("name"));
+			if tileData && (tileData.get_custom_data("name") == "bounce"):
+				if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
+					if slideCollisions[i].target_position.x < 0:
+						velocity.x = 3000 * tileData.get_custom_data("bounce");
+					else:
+						velocity.x = -3000 * tileData.get_custom_data("bounce");
+				else:
+					if slideCollisions[i].target_position.y < 0:
+						velocity.y = 1000 * tileData.get_custom_data("bounce");
+					else:
+						velocity.y = -1000 * tileData.get_custom_data("bounce");
 			if tileData && (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i])):
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):
 					"oneway":
 						if Input.is_action_just_pressed("down"):
 							position += Vector2(0, 1);
-					# Bounce the player up
-					"bounce":
-						velocity.y = -1000 * tileData.get_custom_data("bounce");
-						coyoteTimeLeft = 0;
-					# Deal damage to the player
 					"hazard":
 						take_damage(1);
 					# Set friction for the player to slide

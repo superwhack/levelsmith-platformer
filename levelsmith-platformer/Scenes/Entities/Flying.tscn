@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dbyqq48s1okmk"]
 
-[ext_resource type="Script" path="res://Scripts/Game/EnemyFlyer.gd" id="1_e2l54"]
-[ext_resource type="Texture2D" path="res://Assets/Defaults/Assets/Sprites/Entities/the-flying-evil-jumo-pixilart.png" id="2_e2l54"]
+[ext_resource type="Script" uid="uid://bg77a50ql5qcs" path="res://Scripts/Game/EnemyFlyer.gd" id="1_e2l54"]
+[ext_resource type="Texture2D" uid="uid://cko7n3rnho5cx" path="res://Assets/Sprites/Entities/flying-enemy.png" id="2_e2l54"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 

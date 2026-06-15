@@ -41,7 +41,7 @@ func patrol_behavior() -> void:
 	# Check for collisions with other enemies and bounce
 	for currentCollision in get_slide_collision_count():
 		var collider = get_slide_collision(currentCollision).get_collider();
-		if collider != null && collider.is_in_group("Enemy"):
+		if collider != null && collider.is_in_group("Enemy") && collider.position.y < position.y + 40 && collider.position.y > position.y - 40:
 			if collider.position.x < position.x:
 				direction = 1;
 			else:

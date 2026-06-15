@@ -116,13 +116,13 @@ func import_level(tileMap: TileMapLayer, playerData: Panel, directory: String) -
 				if (int(entityTileData[0]) == Global.EntityType.PLAYER):
 					playerExists = true;
 				tileMap.set_cell(Vector2(col, row), int(entityTileData[0]), Vector2i.ZERO, int(entityTileData[1]));
-				tileMap.update_internals()
 			else:
 				tileMap.set_cell(Vector2(col, row), int(tileData), Vector2i.ZERO);
 			col += 1;
 		row += 1;
 	CSVFile.close();
 	
+	await get_tree().process_frame;
 	clone_data(levelAssetPath, "user://Assets/");
 	levelImported.emit();
 	

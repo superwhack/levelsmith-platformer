@@ -78,26 +78,31 @@ layout_mode = 2
 layout_mode = 2
 propertyName = "Speed"
 minMax = Vector2(0, 5)
+sliderStep = 0.1
 
 [node name="PlayerJump" parent="MainMargin/RootVBox/PlayerProperties" unique_id=1835714671 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Jump Height"
 minMax = Vector2(0, 3)
+sliderStep = 0.1
 
 [node name="PlayerAirControl" parent="MainMargin/RootVBox/PlayerProperties" unique_id=985825086 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Air Control"
 minMax = Vector2(0, 1)
+sliderStep = 0.1
 
 [node name="PlayerFallSpeed" parent="MainMargin/RootVBox/PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Fall Speed"
 minMax = Vector2(0, 3)
+sliderStep = 0.1
 
 [node name="PlayerCoyoteTime" parent="MainMargin/RootVBox/PlayerProperties" unique_id=2022302843 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Coyote Time"
 minMax = Vector2(0, 1)
+sliderStep = 0.1
 
 [node name="PresetMargin" type="MarginContainer" parent="MainMargin/RootVBox/PlayerProperties" unique_id=413274506]
 layout_mode = 2
@@ -146,6 +151,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Speed"
 minMax = Vector2(0, 5)
+sliderStep = 0.1
 
 [node name="PatrollingRestricted" parent="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties" unique_id=574029748 instance=ExtResource("3_1mv14")]
 layout_mode = 2
@@ -159,17 +165,21 @@ layout_mode = 2
 layout_mode = 2
 propertyName = "Direction"
 minMax = Vector2(0, 360)
+sliderStep = 1.0
+valueAppend = "°"
 
 [node name="ShootingShotSpeed" parent="MainMargin/RootVBox/ShootingProperties" unique_id=441375088 instance=ExtResource("2_w5eld")]
 layout_direction = 2
 layout_mode = 2
 propertyName = "Projectile Speed"
 minMax = Vector2(0.2, 8)
+sliderStep = 0.1
 
 [node name="ShootingFireRate" parent="MainMargin/RootVBox/ShootingProperties" unique_id=847827901 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 propertyName = "Fire Rate"
 minMax = Vector2(0.2, 5)
+sliderStep = 0.1
 
 [node name="ShootingBounce" parent="MainMargin/RootVBox/ShootingProperties" unique_id=1978534166 instance=ExtResource("3_1mv14")]
 layout_mode = 2

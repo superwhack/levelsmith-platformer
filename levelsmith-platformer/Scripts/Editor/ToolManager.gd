@@ -133,7 +133,7 @@ func change_tool(tool: Global.Tool) -> void:
 		update_brush_object(Global.EntityType.GOAL);
 		tileSwitch.display_tiles(false);
 		tileSwitch.display_entities(true);
-	propertyMenu.hide();
+	propertyMenu.close();
 	previewTile.clear();
 	
 	match currentTool:

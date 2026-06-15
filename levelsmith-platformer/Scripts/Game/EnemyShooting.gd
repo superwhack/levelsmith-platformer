@@ -9,6 +9,8 @@ extends Enemy
 @export var fireRate : float;
 @export var projBounce : bool;
 
+@export var directionArrow : Sprite2D;
+
 const projectile = preload("res://Scenes/Entities/Projectile.tscn");
 
 var timeLeft : float = 1;
@@ -18,6 +20,12 @@ func _physics_process(delta: float) -> void:
 	if (timeLeft <= 0.0):
 		shooting_behavior();
 		timeLeft = 1 / fireRate;
+
+func adjust_arrow(angle: float) -> void:
+	directionArrow.rotation_degrees = angle;
+	directionArrow.position.x = sin(deg_to_rad(directionArrow.rotation_degrees)) * 90;
+	directionArrow.position.y = -cos(deg_to_rad(directionArrow.rotation_degrees)) * 90;
+
 
 ## Shoots in the determined direction
 func shooting_behavior() -> void:

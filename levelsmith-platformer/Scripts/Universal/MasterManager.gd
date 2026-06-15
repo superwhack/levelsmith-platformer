@@ -76,7 +76,7 @@ func play() -> void:
 	elif (!editorManager.goalExists):
 		PopUpManager.create_error_popup("Cannot Start Level", "Level cannot be started, there is no goal placed down!");
 		return;
-	propertyMenu.hide();
+	propertyMenu.close();
 	AudioManager.play_music("LevelMusic");
 	# Update state variable
 	state = Global.State.PLAY;

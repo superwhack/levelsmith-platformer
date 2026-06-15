@@ -30,7 +30,7 @@ var playerCoyoteTime : float;
 
 # Shooting inputs
 @export var shootingDirectionSlider: VBoxContainer;
-@export var shootingDirectionArrow: Sprite2D;
+var shootingDirectionArrow: Sprite2D;
 @export var shootingShotSpeedSlider: VBoxContainer;
 @export var shootingFireRateSlider: VBoxContainer;
 @export var shootingProjectileBounce: VBoxContainer;
@@ -47,6 +47,9 @@ func _ready() -> void:
 
 ## Close the property menu and set the selected entity to null
 func close() -> void:
+	if shootingDirectionArrow:
+		shootingDirectionArrow.hide();
+		shootingDirectionArrow = null;
 	hide();
 	selectedEntity = null;
 
@@ -57,6 +60,7 @@ func _process(delta: float) -> void:
 			entityName.text = "Patrolling Enemy";
 		elif selectedEntity is EnemyShooting:
 			entityName.text = "Shooting Enemy";
+			selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
 		elif selectedEntity is Player:
 			entityName.text = "Player";
 	else:
@@ -104,7 +108,7 @@ func update_sliders() -> void:
 		patrollingSpeedSlider.update_slider();
 		patrollingRestrictedCheckbox.update_checkbox();
 	elif selectedEntity is EnemyShooting:
-		shootingDirectionSlider.value = selectedPreset.direction;
+		shootingDirectionSlider.value = -selectedPreset.direction;
 		shootingShotSpeedSlider.value = selectedPreset.shotSpeed;
 		shootingFireRateSlider.value = selectedPreset.fireRate;
 		shootingProjectileBounce.value = selectedPreset.projBounce;
@@ -127,7 +131,7 @@ func update_values() -> void:
 		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyShooting:
-		selectedPreset.direction = shootingDirectionSlider.value;
+		selectedPreset.direction = -shootingDirectionSlider.value;
 		selectedPreset.shotSpeed = shootingShotSpeedSlider.value;
 		selectedPreset.fireRate = shootingFireRateSlider.value;
 		selectedPreset.projBounce = shootingProjectileBounce.value;
@@ -142,7 +146,9 @@ func _on_drag_ended() -> void:
 		_on_preset_options_item_selected(4);
 	
 func show_menu(resource: Resource = null) -> void:
-	shootingDirectionArrow.visible = false;
+	if shootingDirectionArrow:
+		shootingDirectionArrow.hide();
+		shootingDirectionArrow = null;
 	playerMenu.hide();
 	patrollingMenu.hide();
 	shootingMenu.hide();
@@ -152,8 +158,8 @@ func show_menu(resource: Resource = null) -> void:
 		if selectedEntity is EnemyPatrol:
 			patrollingMenu.show();
 		elif selectedEntity is EnemyShooting:
-			#shootingDirectionArrow.visible = true;
-			#shootingDirectionArrow.global_position = selectedEntity.global_position;
+			shootingDirectionArrow = selectedEntity.directionArrow;
+			shootingDirectionArrow.show();
 			shootingMenu.show();
 	else:
 		playerMenu.show();

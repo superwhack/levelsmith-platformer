@@ -40,8 +40,5 @@ func _drag_ended(value_changed: bool) -> void:
 	emit_signal("drag_ended");
 
 ## Update the slider value
-func update_slider(angle: bool = false) -> void:
-	if angle:
-		slider.value = value;
-	else:
-		slider.value = (int(value));
+func update_slider() -> void:
+	slider.value = value;

@@ -10,6 +10,7 @@ const tileSize: int = 128;
 
 # Application State
 enum State {
+	MAIN_MENU,
 	EDIT,
 	PLAY
 }

@@ -7,7 +7,7 @@ var selectedEntity: Node2D;
 @export var entityName: Label;
 
 @export var playerMenu: VBoxContainer;
-@export var patrollingMenu: VBoxContainer;
+@export var patrollingMenu: MarginContainer;
 @export var shootingMenu: VBoxContainer;
 
 # Player values

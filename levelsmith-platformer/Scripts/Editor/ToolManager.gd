@@ -47,6 +47,8 @@ func _process(_delta: float):
 func _unhandled_input(event: InputEvent) -> void:	
 	match (currentTool):
 		Global.Tool.BRUSH:
+			if (get_viewport().gui_get_hovered_control()): return;
+			
 			if (event.is_action_pressed("left-click")):
 				isPainting = true;
 			elif (event.is_action_released("left-click")):

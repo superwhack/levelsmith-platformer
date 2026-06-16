@@ -1,8 +1,9 @@
 [gd_scene format=4 uid="uid://bjx53xjckex6r"]
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_df05h"]
-[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
+[ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_df05h"]
+[ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_loo7a"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_8um5k"]
 [ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="4_xim88"]
 [ext_resource type="Texture2D" uid="uid://caw5vfrla8ry1" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
@@ -40,7 +41,7 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_ce3w2")
 sources/2 = SubResource("TileSetAtlasSource_n45e2")
 
-[node name="MainMenu" type="Control" unique_id=422065839]
+[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "spinBoxNewLevelX", "spinBoxNewLevelY", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "panelInvalidPath", "fileExplorer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,6 +49,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_df05h")
+script = ExtResource("2_loo7a")
+buttonNewLevel = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/NewLevelButton")
+buttonImportLevel = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/ImportLevelButton")
+buttonLoadExample = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/LoadExampleButton")
+buttonQuit = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/QuitButton")
+overlayNewLevel = NodePath("NewLevelOverlay")
+overlayImportLevel = NodePath("ImportLevelOverlay")
+buttonNewLevelCreate = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow/CreateButton")
+buttonNewLevelCancel = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow/CancelButton")
+fieldNewLevelName = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/NameRow/NameInput")
+spinBoxNewLevelX = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX/XSpinBox")
+spinBoxNewLevelY = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY/YSpinBox")
+buttonImportLevelCancel = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/CancelButton")
+buttonImportLevelOpen = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/OpenButton")
+buttonImportLevelBrowse = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/BrowseButton")
+fieldImportLevelPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/FilePathInput")
+panelInvalidPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ErrorBanner")
+fileExplorer = NodePath("FileDialog")
 
 [node name="Background" type="ColorRect" parent="." unique_id=2093246532]
 layout_mode = 1
@@ -130,6 +149,7 @@ text = "New Level"
 [node name="ImportLevelButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1546369652]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
+disabled = true
 text = "Import Level"
 
 [node name="LoadExampleButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1890658956]
@@ -186,7 +206,6 @@ theme_override_styles/panel = ExtResource("3_8um5k")
 item_count = 1
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=120086451]
-visible = false
 custom_minimum_size = Vector2(630, 425)
 layout_mode = 1
 anchors_preset = 15
@@ -283,10 +302,11 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 text = "X: "
 
-[node name="XInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=1837442565]
+[node name="XSpinBox" type="SpinBox" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=1445349375]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
-max_length = 4
+min_value = 2.0
+max_value = 9999.0
+value = 2.0
 
 [node name="GridRowY" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=993765537]
 layout_mode = 2
@@ -300,9 +320,11 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 text = "Y: "
 
-[node name="YInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY" unique_id=1090946014]
+[node name="YSpinBox" type="SpinBox" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY" unique_id=739478448]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+min_value = 2.0
+max_value = 9999.0
+value = 2.0
 
 [node name="BottomSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=2094910545]
 custom_minimum_size = Vector2(0, 100)
@@ -327,6 +349,7 @@ theme_override_font_sizes/font_size = 30
 text = "Cancel"
 
 [node name="ImportLevelOverlay" type="ColorRect" parent="." unique_id=684861186]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -402,6 +425,7 @@ texture_pressed = ExtResource("7_loo7a")
 texture_hover = ExtResource("8_if7li")
 
 [node name="ErrorBanner" type="PanelContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=2119281141]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("9_rrcx7")
 
@@ -440,3 +464,10 @@ custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
 text = "Cancel"
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1904639915]
+oversampling_override = 1.0
+title = "Open a File"
+position = Vector2i(0, 36)
+size = Vector2i(1280, 720)
+file_mode = 0

@@ -2,10 +2,11 @@
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_ym18m"]
-[ext_resource type="Texture2D" uid="uid://cac4ja4s12xun" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonRestartWhite.png" id="3_jygy8"]
-[ext_resource type="Texture2D" uid="uid://4m28733rlp7e" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeBuildWhite.png" id="4_habuo"]
-[ext_resource type="Texture2D" uid="uid://dv4prgld7ti1y" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonPauseWhite.png" id="5_jygy8"]
-[ext_resource type="Texture2D" uid="uid://b1hadfl28cryv" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeResumeWhite.png" id="6_habuo"]
+[ext_resource type="Texture2D" uid="uid://bw2mins88t48f" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonRestartWhite.png" id="3_jygy8"]
+[ext_resource type="Texture2D" uid="uid://dnd75m1akapxn" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeBuildWhite.png" id="4_habuo"]
+[ext_resource type="Texture2D" uid="uid://d4ei24q10ni7o" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonPauseWhite.png" id="5_jygy8"]
+[ext_resource type="Texture2D" uid="uid://yl0iqt6b7aip" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeResumeWhite.png" id="6_habuo"]
+[ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
@@ -94,15 +95,18 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Move [WASD / Arrow Keys]	     Jump [Space]"
 
-[node name="PausedScreenContainer" type="PanelContainer" parent="CanvasLayer" unique_id=610850262]
-process_mode = 2
+[node name="PausedScreenContainer" type="PanelContainer" parent="CanvasLayer" unique_id=610850262 node_paths=PackedStringArray("gameManager")]
+process_mode = 3
 visible = false
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ym18m")
+script = ExtResource("6_ym18m")
+gameManager = NodePath("../..")
 
 [node name="PauseMargin" type="MarginContainer" parent="CanvasLayer/PausedScreenContainer" unique_id=804883370]
+process_mode = 2
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20

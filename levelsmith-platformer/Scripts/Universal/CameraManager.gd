@@ -31,10 +31,8 @@ var searchForPlayer := true;
 func _ready() -> void:
 	make_current();
 	# Center camera on rect2 of the entire level
-	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.tileSize);
+	refresh_bounds();
 	set_global_position(levelBounds.get_center());  
-	
-	roamBounds = get_camera_bounds();
 	
 	# Start zoomed out
 	zoom = Vector2.ONE * maxZoomOut;
@@ -43,6 +41,10 @@ func _ready() -> void:
 #func _input(event):
 	#if event is InputEventMouseButton:
 		#print("Mouse button:", event.button_index, "pressed:", event.pressed)
+
+func refresh_bounds() -> void:
+	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.tileSize);
+	roamBounds = get_camera_bounds();
 
 func reset_camera() -> void:
 	playerReference = null;

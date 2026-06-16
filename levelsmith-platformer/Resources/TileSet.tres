@@ -1,40 +1,47 @@
 [gd_resource type="TileSet" format=3 uid="uid://d1n0acfj67o7r"]
 
-[ext_resource type="Texture2D" uid="uid://dgbrgmufcdnj0" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
-[ext_resource type="Texture2D" uid="uid://bgu3tf17p5rpf" path="res://Assets/Sprites/Tiles/death.png" id="2_cn8lu"]
-[ext_resource type="Texture2D" uid="uid://crwfvhcm3n1nc" path="res://Assets/Sprites/Tiles/oneway.png" id="3_alyph"]
+[ext_resource type="Texture2D" uid="uid://mqhonpbo41vu" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
+[ext_resource type="Texture2D" uid="uid://pjdhb2te74w5" path="res://Assets/Sprites/Tiles/death.png" id="2_cn8lu"]
+[ext_resource type="Texture2D" uid="uid://wjjbxovl5eji" path="res://Assets/Sprites/Tiles/oneway.png" id="3_alyph"]
 [ext_resource type="PackedScene" uid="uid://bf3q4v3br7j4o" path="res://Scenes/Entities/Shooting.tscn" id="3_k4kw2"]
-[ext_resource type="Texture2D" uid="uid://yosj58n3qm8i" path="res://Assets/Sprites/Entities/Props/Prop1.png" id="3_r4n42"]
+[ext_resource type="Texture2D" uid="uid://bmkcamrqk2ycb" path="res://Assets/Sprites/Entities/Props/Prop1.png" id="3_r4n42"]
 [ext_resource type="PackedScene" uid="uid://kbh8ioojr3r4" path="res://Scenes/Preview/ShootingPreview.tscn" id="4_3boqi"]
-[ext_resource type="Texture2D" uid="uid://dvvkbjb1ejkoi" path="res://Assets/Sprites/Tiles/ice.png" id="4_6ba2f"]
-[ext_resource type="Texture2D" uid="uid://kektaa6ws5im" path="res://Assets/Sprites/Entities/Props/Prop2.png" id="4_c2nft"]
-[ext_resource type="Texture2D" uid="uid://3no57vbdqn51" path="res://Assets/Sprites/Tiles/Sticky.png" id="5_8sjof"]
-[ext_resource type="Texture2D" uid="uid://fvq7t3hrytr3" path="res://Assets/Sprites/Entities/Props/Prop3.png" id="5_nbee4"]
-[ext_resource type="Texture2D" uid="uid://cq8xpjeln1u8t" path="res://Assets/Sprites/Tiles/bounce.png" id="6_me1w5"]
-[ext_resource type="Texture2D" uid="uid://dpl3ctolmpbb" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="6_nbee4"]
-[ext_resource type="Texture2D" uid="uid://b1qp7tonvpsvk" path="res://Assets/Sprites/Entities/Props/Prop5.png" id="7_eksy4"]
-[ext_resource type="Texture2D" uid="uid://lh0kyct8ass4" path="res://Assets/Sprites/Tiles/slope.png" id="7_jbnof"]
+[ext_resource type="Texture2D" uid="uid://kylq2ewrtct7" path="res://Assets/Sprites/Tiles/ice.png" id="4_6ba2f"]
+[ext_resource type="Texture2D" uid="uid://dhkaxpnyice7q" path="res://Assets/Sprites/Entities/Props/Prop2.png" id="4_c2nft"]
+[ext_resource type="Texture2D" uid="uid://c4tdi4u3hoayc" path="res://Assets/Sprites/Tiles/Sticky.png" id="5_8sjof"]
+[ext_resource type="Texture2D" uid="uid://fa087075jo5q" path="res://Assets/Sprites/Entities/Props/Prop3.png" id="5_nbee4"]
+[ext_resource type="Texture2D" uid="uid://babvjdloy7c3t" path="res://Assets/Sprites/Tiles/bounce.png" id="6_me1w5"]
+[ext_resource type="Texture2D" uid="uid://b3s4y2bfc4wd" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="6_nbee4"]
+[ext_resource type="Texture2D" uid="uid://dg2131vb2y8s8" path="res://Assets/Sprites/Entities/Props/Prop5.png" id="7_eksy4"]
+[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Sprites/Tiles/slope.png" id="7_jbnof"]
 [ext_resource type="PackedScene" uid="uid://87eq7bxythec" path="res://Scenes/Entities/Player.tscn" id="8_alyph"]
 [ext_resource type="PackedScene" uid="uid://1wme1ton08gv" path="res://Scenes/Entities/Goal.tscn" id="8_jbnof"]
 [ext_resource type="PackedScene" uid="uid://c0lnvjeoj8xif" path="res://Scenes/Preview/GoalPreview.tscn" id="9_5jxy7"]
 [ext_resource type="PackedScene" uid="uid://bj66b8ccvl345" path="res://Scenes/Preview/PlayerPreview.tscn" id="9_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://b3k624sctovph" path="res://Scenes/Entities/Patrolling.tscn" id="10_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://bwtswvrxxful5" path="res://Scenes/Preview/PatrollingPreview.tscn" id="11_8sjof"]
+[ext_resource type="Texture2D" uid="uid://bfihlk8cogb0q" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="21_3boqi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rjqkl"]
 texture = ExtResource("1_00q1o")
 texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 2
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64, -64, -64)
 0:0/0/custom_data_3 = "solid"
+0:0/1 = 1
+0:0/1/modulate = Color(1, 0, 0, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d2bti"]
 texture = ExtResource("2_cn8lu")
 texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 2
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 63.311325, -64, 63.311325)
 0:0/0/custom_data_2 = 5
 0:0/0/custom_data_3 = "hazard"
+0:0/1 = 1
+0:0/1/modulate = Color(0.6666667, 0, 0, 1)
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_pqfav"]
 resource_name = "Shooting"
@@ -59,6 +66,7 @@ texture_region_size = Vector2i(128, 128)
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pqfav"]
 texture = ExtResource("6_nbee4")
 texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 4
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eqdrb"]
@@ -69,40 +77,64 @@ texture_region_size = Vector2i(128, 128)
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_flf07"]
 texture = ExtResource("3_alyph")
 texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 2
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, -64, -26.620003, 64, -26.620003, 64, -64, -64, -64)
 0:0/0/physics_layer_0/polygon_0/one_way = true
 0:0/0/custom_data_3 = "oneway"
+0:0/1 = 1
+0:0/1/modulate = Color(1, 0, 0, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ta5nu"]
 texture = ExtResource("4_6ba2f")
 texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 2
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
 0:0/0/custom_data_1 = 0.3
 0:0/0/custom_data_3 = "ice"
+0:0/1 = 1
+0:0/1/modulate = Color(1, 0, 0, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k73cj"]
 texture = ExtResource("5_8sjof")
 texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 2
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
 0:0/0/custom_data_3 = "slow"
+0:0/1 = 1
+0:0/1/modulate = Color(1, 0, 0, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hqns4"]
 texture = ExtResource("6_me1w5")
 texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 2
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, -64, 64, 64, 64, 64, -64)
 0:0/0/custom_data_0 = 1.0
 0:0/0/custom_data_3 = "bounce"
+0:0/1 = 1
+0:0/1/modulate = Color(1, 0, 0, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x0ka3"]
 texture = ExtResource("7_jbnof")
 texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 5
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, 64, -64, 64)
 0:0/0/custom_data_3 = "slope"
+0:0/1 = 1
+0:0/1/modulate = Color(1, 0, 0, 1)
+0:0/7 = 7
+0:0/7/flip_h = true
+0:0/7/modulate = Color(1, 0, 0, 1)
+0:0/4 = 4
+0:0/4/transpose = true
+0:0/4/modulate = Color(1, 0, 0, 1)
+0:0/6 = 6
+0:0/6/flip_v = true
+0:0/6/modulate = Color(1, 0, 0, 1)
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_4m7s0"]
 resource_name = "Goal"
@@ -118,6 +150,11 @@ scenes/2/scene = ExtResource("9_6ba2f")
 resource_name = "Patrolling"
 scenes/1/scene = ExtResource("10_6ba2f")
 scenes/2/scene = ExtResource("11_8sjof")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mtirn"]
+texture = ExtResource("21_3boqi")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
 
 [resource]
 tile_size = Vector2i(128, 128)
@@ -146,3 +183,4 @@ sources/16 = SubResource("TileSetAtlasSource_pqfav")
 sources/15 = SubResource("TileSetAtlasSource_3boqi")
 sources/14 = SubResource("TileSetAtlasSource_k4kw2")
 sources/13 = SubResource("TileSetAtlasSource_eksy4")
+sources/99 = SubResource("TileSetAtlasSource_mtirn")

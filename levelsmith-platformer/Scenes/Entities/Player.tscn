@@ -47,54 +47,20 @@ position = Vector2(-50, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 64)
 
-[node name="RayCastDown2" type="RayCast2D" parent="." unique_id=293320335]
-scale = Vector2(1.1, 1.1)
-target_position = Vector2(0, 64)
-
 [node name="RayCastDown3" type="RayCast2D" parent="." unique_id=1487377010]
 position = Vector2(50, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 64)
 
-[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=612742126]
-position = Vector2(0, -50)
-scale = Vector2(1.1, 1.1)
-target_position = Vector2(-64, 0)
-
 [node name="RayCastLeft2" type="RayCast2D" parent="." unique_id=225528529]
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(-64, 0)
-
-[node name="RayCastLeft3" type="RayCast2D" parent="." unique_id=340096030]
-position = Vector2(0, 50)
-scale = Vector2(1.1, 1.1)
-target_position = Vector2(-64, 0)
-
-[node name="RayCastRight" type="RayCast2D" parent="." unique_id=825406346]
-position = Vector2(0, -50)
-scale = Vector2(1.1, 1.1)
-target_position = Vector2(64, 0)
 
 [node name="RayCastRight2" type="RayCast2D" parent="." unique_id=1096570450]
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(64, 0)
 
-[node name="RayCastRight3" type="RayCast2D" parent="." unique_id=2116599832]
-position = Vector2(0, 50)
-scale = Vector2(1.1, 1.1)
-target_position = Vector2(64, 0)
-
-[node name="RayCastUp" type="RayCast2D" parent="." unique_id=1566366355]
-position = Vector2(-50, 0)
-scale = Vector2(1.1, 1.1)
-target_position = Vector2(0, -58)
-
 [node name="RayCastUp2" type="RayCast2D" parent="." unique_id=1451835448]
-scale = Vector2(1.1, 1.1)
-target_position = Vector2(0, -58)
-
-[node name="RayCastUp3" type="RayCast2D" parent="." unique_id=1603373987]
-position = Vector2(50, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -58)
 

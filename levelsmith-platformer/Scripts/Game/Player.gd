@@ -52,7 +52,6 @@ func _physics_process(delta: float) -> void:
 		if coyoteTimeLeft > 0:
 			coyoteTimeLeft -= delta;
 		velocity += get_gravity() * delta * fallSpeed;
-		currentFriction = 1.0;
 	else:
 		coyoteTimeLeft = coyoteTime;
 	
@@ -74,6 +73,7 @@ func _physics_process(delta: float) -> void:
 ## Make the player jump
 func jump() -> void:
 	AudioManager.play_effect("PlayerJump");
+	currentFriction = 1.0;
 	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
@@ -87,6 +87,7 @@ func run() -> void:
 	else:
 		accelerationX = -velocity.x;
 	
+	print(currentFriction);
 	# Friction and air control
 	if not is_on_floor():
 		accelerationX *= airControl * airControl;

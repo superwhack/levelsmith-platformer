@@ -117,8 +117,8 @@ func update_sliders() -> void:
 		patrollingRestrictedCheckbox.update_checkbox();
 	if selectedEntity is EnemyFlyer:
 		flyingSpeedSlider.value = selectedPreset.speed;
-		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x;
-		flyingOffsetYSlider.value = selectedPreset.pointBOffset.y;
+		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.tileSize;
+		flyingOffsetYSlider.value = selectedPreset.pointBOffset.y / Global.tileSize;
 		flyingSpeedSlider.update_slider();
 		flyingOffsetXSlider.update_slider();
 		flyingOffsetYSlider.update_slider();
@@ -131,7 +131,6 @@ func update_sliders() -> void:
 		shootingShotSpeedSlider.update_slider();
 		shootingFireRateSlider.update_slider();
 		shootingProjectileBounce.update_checkbox();
-	
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:
@@ -147,7 +146,7 @@ func update_values() -> void:
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	if selectedEntity is EnemyFlyer:
 		selectedPreset.speed = flyingSpeedSlider.value;
-		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.tileSize, flyingOffsetYSlider.value * Global.tileSize);
 		print(selectedPreset.pointBOffset)
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres")
 	elif selectedEntity is EnemyShooting:

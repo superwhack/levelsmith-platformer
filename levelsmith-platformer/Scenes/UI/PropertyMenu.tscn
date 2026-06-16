@@ -203,24 +203,23 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Flight Speed"
-minMax = Vector2(0, 300)
-sliderStep = 3.0
-valueAppend = "°"
+minMax = Vector2(0, 10)
+sliderStep = 1.0
 
 [node name="Xoffset" parent="MainMargin/RootVBox/FlyingProperties" unique_id=1638288870 instance=ExtResource("2_w5eld")]
 layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Horizontal offset"
-minMax = Vector2(-1028, 1028)
-sliderStep = 4.0
+minMax = Vector2(-10, 10)
+sliderStep = 1.0
 
 [node name="Yoffset" parent="MainMargin/RootVBox/FlyingProperties" unique_id=1157425119 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "vertical offset"
-minMax = Vector2(-1028, 1028)
-sliderStep = 4.0
+minMax = Vector2(-10, 10)
+sliderStep = 1.0
 
 [node name="BottomSpacer" type="Control" parent="MainMargin/RootVBox" unique_id=1741289699]
 layout_mode = 2

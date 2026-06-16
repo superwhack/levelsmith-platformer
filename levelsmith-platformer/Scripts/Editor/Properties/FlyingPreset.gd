@@ -5,7 +5,7 @@ extends Resource;
 @export var position: Vector2i;
 
 # Flying speed of the enemy.
-@export var speed: float = 300.0;
+@export var speed: float;
 
 # Relative offset from Point A to Point B.
-@export var pointBOffset: Vector2 = Vector2(128, 0);
+@export var pointBOffset: Vector2;

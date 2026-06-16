@@ -2,7 +2,7 @@ class_name EnemyFlyer;
 extends Enemy;
 
 # Movement speed of the enemy.
-@export var speed: float = 300.0;
+@export var speed: float = 1.0;
 
 # First movement point, spawn position.
 var pointA: Vector2;
@@ -46,7 +46,7 @@ func fly_behavior() -> void:
 		switch_target();
 		return;
 
-	velocity = direction.normalized() * speed;
+	velocity = direction.normalized() * speed * 100;
 
 
 ## Switches the active destination.

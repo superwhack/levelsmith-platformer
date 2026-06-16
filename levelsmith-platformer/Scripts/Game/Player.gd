@@ -179,7 +179,14 @@ func detect_tiles() -> void:
 			if tileData && (tileData.get_custom_data("name") == "slow"):
 				# Horizontal Stick
 				if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
-					velocity.y *= (.75);
+					velocity.y *= .75;
+					# NOTE: Comment this out if we don't want this functionality to be possible
+					if Input.is_action_just_pressed("jump"):
+						if slideCollisions[i].target_position.x < 0:
+							velocity.x = jumpHeight * 520;
+						else:
+							velocity.x = -jumpHeight * 520;
+						velocity.y = -jumpHeight * 220;;
 				# Vertical Stick
 				else:
 					if slideCollisions[i].target_position.y < 0:
@@ -198,9 +205,6 @@ func detect_tiles() -> void:
 					# Set friction for the player to slide
 					"ice":
 						currentFriction = tileData.get_custom_data("friction");
-					# Apply a slowdown to player movement and jumps
-					"slow":
-						currentSlowdown = .5;
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> void:
 	var masterManager : Node2D = get_tree().current_scene;

@@ -22,7 +22,7 @@ script = ExtResource("1_tnep3")
 entityName = NodePath("MainMargin/RootVBox/EntityNameVBox/EntityName")
 playerMenu = NodePath("MainMargin/RootVBox/PlayerProperties")
 patrollingMenu = NodePath("MainMargin/RootVBox/PatrollingMargin")
-shootingMenu = NodePath("MainMargin/RootVBox/ShootingProperties")
+shootingMenu = NodePath("MainMargin/RootVBox/ShootingMargin")
 playerSpeedSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerSpeed")
 playerJumpSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerJump")
 playerAirControlSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerAirControl")
@@ -30,10 +30,10 @@ playerFallSpeedSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerFal
 playerCoyoteTimeSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime")
 patrollingSpeedSlider = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed")
 patrollingRestrictedCheckbox = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingRestricted")
-shootingDirectionSlider = NodePath("MainMargin/RootVBox/ShootingProperties/ShootingDirection")
-shootingShotSpeedSlider = NodePath("MainMargin/RootVBox/ShootingProperties/ShootingShotSpeed")
-shootingFireRateSlider = NodePath("MainMargin/RootVBox/ShootingProperties/ShootingFireRate")
-shootingProjectileBounce = NodePath("MainMargin/RootVBox/ShootingProperties/ShootingBounce")
+shootingDirectionSlider = NodePath("MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingDirection")
+shootingShotSpeedSlider = NodePath("MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingShotSpeed")
+shootingFireRateSlider = NodePath("MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingFireRate")
+shootingProjectileBounce = NodePath("MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingBounce")
 presetOptions = NodePath("MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions")
 
 [node name="MainMargin" type="MarginContainer" parent="." unique_id=1879514987]
@@ -151,7 +151,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Speed"
-minMax = Vector2(0, 5)
+minMax = Vector2(0, 3)
 sliderStep = 0.1
 
 [node name="PatrollingRestricted" parent="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties" unique_id=574029748 instance=ExtResource("3_1mv14")]
@@ -159,10 +159,15 @@ layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Restricted"
 
-[node name="ShootingProperties" type="VBoxContainer" parent="MainMargin/RootVBox" unique_id=391156619]
+[node name="ShootingMargin" type="MarginContainer" parent="MainMargin/RootVBox" unique_id=1975563573]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+
+[node name="ShootingProperties" type="VBoxContainer" parent="MainMargin/RootVBox/ShootingMargin" unique_id=391156619]
 layout_mode = 2
 
-[node name="ShootingDirection" parent="MainMargin/RootVBox/ShootingProperties" unique_id=2058309168 instance=ExtResource("2_w5eld")]
+[node name="ShootingDirection" parent="MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=2058309168 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Direction"
@@ -170,7 +175,7 @@ minMax = Vector2(0, 360)
 sliderStep = 1.0
 valueAppend = "°"
 
-[node name="ShootingShotSpeed" parent="MainMargin/RootVBox/ShootingProperties" unique_id=441375088 instance=ExtResource("2_w5eld")]
+[node name="ShootingShotSpeed" parent="MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=441375088 instance=ExtResource("2_w5eld")]
 layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 0
@@ -178,14 +183,14 @@ propertyName = "Projectile Speed"
 minMax = Vector2(0.2, 8)
 sliderStep = 0.1
 
-[node name="ShootingFireRate" parent="MainMargin/RootVBox/ShootingProperties" unique_id=847827901 instance=ExtResource("2_w5eld")]
+[node name="ShootingFireRate" parent="MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=847827901 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Fire Rate"
 minMax = Vector2(0.2, 5)
 sliderStep = 0.1
 
-[node name="ShootingBounce" parent="MainMargin/RootVBox/ShootingProperties" unique_id=1978534166 instance=ExtResource("3_1mv14")]
+[node name="ShootingBounce" parent="MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=1978534166 instance=ExtResource("3_1mv14")]
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Projecile Bounce"
@@ -211,8 +216,8 @@ text = "Close"
 [connection signal="item_selected" from="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions" to="." method="_on_preset_options_item_selected"]
 [connection signal="drag_ended" from="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed" to="." method="_on_drag_ended"]
 [connection signal="check_changed" from="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingRestricted" to="." method="update_values"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingProperties/ShootingDirection" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingProperties/ShootingShotSpeed" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingProperties/ShootingFireRate" to="." method="_on_drag_ended"]
-[connection signal="check_changed" from="MainMargin/RootVBox/ShootingProperties/ShootingBounce" to="." method="update_values"]
+[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingDirection" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingShotSpeed" to="." method="_on_drag_ended"]
+[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingFireRate" to="." method="_on_drag_ended"]
+[connection signal="check_changed" from="MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingBounce" to="." method="update_values"]
 [connection signal="pressed" from="MainMargin/RootVBox/HBoxContainer/CloseButton" to="." method="close"]

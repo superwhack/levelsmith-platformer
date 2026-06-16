@@ -2,10 +2,10 @@ class_name EnemyPatrol;
 extends Enemy
 
 # Movement variables
-@export var groundSpeed := 1.0;
-@export var direction := 1;
+var groundSpeed := 1.0;
+var direction := 1;
 
-@export var restricted : bool;
+var restricted : bool;
 
 # Detection variables for directional change
 @export var rayCastLeft : RayCast2D;
@@ -13,8 +13,6 @@ extends Enemy
 
 @export var rayCastDownL : RayCast2D;
 @export var rayCastDownR : RayCast2D;
-
-@export var teleCast : RayCast2D;
 
 func _physics_process(delta: float) -> void:
 	# Gravity
@@ -46,10 +44,6 @@ func patrol_behavior() -> void:
 				direction = 1;
 			else:
 				direction = -1;
-	
-	# NOTE: A better solution would need to be found in order to get the enemy to stick to slopes
-	#if teleCast.is_colliding() && velocity.y > 17:
-	#	velocity.y = teleCast.get_collision_point().y;
 
 func assign_script(id: String, position: Vector2i) -> void:
 	propertyFile = load("res://Resources/Enemies/Patrol" + id + ".tres");

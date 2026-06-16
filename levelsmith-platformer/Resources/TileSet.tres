@@ -67,13 +67,6 @@ texture = ExtResource("6_nbee4")
 texture_region_size = Vector2i(128, 128)
 0:0/next_alternative_id = 4
 0:0/0 = 0
-0:0/1 = 1
-0:0/1/flip_h = true
-0:0/1/transpose = true
-0:0/2 = 2
-0:0/2/flip_v = true
-0:0/3 = 3
-0:0/3/transpose = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eqdrb"]
 texture = ExtResource("7_eksy4")

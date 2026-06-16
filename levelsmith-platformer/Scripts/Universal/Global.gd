@@ -64,3 +64,5 @@ enum EntityType {
 	PROP5 = 17, 
 	PROP6 = 18
 }
+
+const ERASING_TILE: int = 99;

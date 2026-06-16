@@ -91,17 +91,22 @@ func run() -> void:
 		accelerationX = -velocity.x;
 	
 	# Friction and air control
-	accelerationX *= currentFriction * currentFriction;
 	if not is_on_floor():
 		accelerationX *= airControl * airControl;
-
-	if (abs(velocity.x) > trueSpeed):
+	if (currentFriction != 1.0):
+		accelerationX *= currentFriction * currentFriction;
+		if (abs(velocity.x) > trueSpeed):
+			accelerationX *= .25;
+			#velocity.x *= .95;
+		elif (abs(velocity.x) > trueSpeed * 2.5):
+			accelerationX = 0;
+			velocity.x *= .9;
+	
+	if (abs(velocity.x) > trueSpeed && currentFriction == 1.0):
 		accelerationX = 0;
 		velocity.x *= .9;
-	else:
 	# Adjust velocity by acceleration
-		velocity.x += accelerationX;
-	#velocity.x = clamp(velocity.x, -trueSpeed, trueSpeed);
+	velocity.x += accelerationX;
 
 ## Have the player take damage
 ## amount: damage to deal
@@ -163,12 +168,25 @@ func detect_tiles() -> void:
 						velocity.x = 3000 * tileData.get_custom_data("bounce");
 					else:
 						velocity.x = -3000 * tileData.get_custom_data("bounce");
+					if Input.is_action_pressed("jump"):
+						velocity.y = -500 * tileData.get_custom_data("bounce");
 				# Vertical Bounces
 				else:
 					if slideCollisions[i].target_position.y < 0:
 						velocity.y = 1000 * tileData.get_custom_data("bounce");
 					else:
 						velocity.y = -1000 * tileData.get_custom_data("bounce");
+			if tileData && (tileData.get_custom_data("name") == "slow"):
+				# Horizontal Stick
+				if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
+					velocity.y *= (.75);
+				# Vertical Stick
+				else:
+					if slideCollisions[i].target_position.y < 0:
+						velocity.y = -1000 * tileData.get_custom_data("bounce");
+						if Input.is_action_just_pressed("down"):
+								position += Vector2(0, 2);
+					currentSlowdown = .5;
 			if tileData && (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i])):
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):

@@ -74,6 +74,6 @@ func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
 			if (tileSet.get_cell_source_id(currentCell) < editorManager.tileCount):
 				if (toolManager.boxBrushState == Global.BoxBrushState.DELETE || 
 				toolManager.boxBrushState == Global.BoxBrushState.DELETE_CONFIRM):
-					update_preview_object(currentCell, currentCell, Global.TileType.DEATH, true);
+					update_preview_object(currentCell, currentCell, Global.ERASING_TILE, true);
 				else: 
 					update_preview_object(currentCell, currentCell, brushObject, editorManager.check_out_of_bounds(currentCell));

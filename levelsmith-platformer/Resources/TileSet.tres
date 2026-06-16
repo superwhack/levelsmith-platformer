@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://bj66b8ccvl345" path="res://Scenes/Preview/PlayerPreview.tscn" id="9_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://b3k624sctovph" path="res://Scenes/Entities/Patrolling.tscn" id="10_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://bwtswvrxxful5" path="res://Scenes/Preview/PatrollingPreview.tscn" id="11_8sjof"]
+[ext_resource type="Texture2D" uid="uid://bfihlk8cogb0q" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="21_3boqi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rjqkl"]
 texture = ExtResource("1_00q1o")
@@ -150,6 +151,11 @@ resource_name = "Patrolling"
 scenes/1/scene = ExtResource("10_6ba2f")
 scenes/2/scene = ExtResource("11_8sjof")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mtirn"]
+texture = ExtResource("21_3boqi")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
 [resource]
 tile_size = Vector2i(128, 128)
 physics_layer_0/collision_layer = 3
@@ -177,3 +183,4 @@ sources/16 = SubResource("TileSetAtlasSource_pqfav")
 sources/15 = SubResource("TileSetAtlasSource_3boqi")
 sources/14 = SubResource("TileSetAtlasSource_k4kw2")
 sources/13 = SubResource("TileSetAtlasSource_eksy4")
+sources/99 = SubResource("TileSetAtlasSource_mtirn")

@@ -38,6 +38,7 @@ func _process(_delta: float):
 	elif (Input.is_action_just_released("left-click")):
 		holdTimer = holdTimeCap;
 	
+	
 	if (boxBrushState == Global.BoxBrushState.PLACE || boxBrushState == Global.BoxBrushState.DELETE):
 		secondBoxCorner = editorManager.currentMousePosition;
 	
@@ -45,6 +46,10 @@ func _process(_delta: float):
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
 func _unhandled_input(event: InputEvent) -> void:	
+	if editorManager.returnClick:
+		if (Input.is_action_just_released("click")):
+			editorManager.returnClick = false;
+		return;
 	match (currentTool):
 		Global.Tool.BRUSH:
 			if (event.is_action_pressed("left-click")):

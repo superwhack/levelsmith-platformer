@@ -124,6 +124,8 @@ func change_tool(tool: Global.Tool) -> void:
 	if currentTool == tool:
 		return;
 	
+	reset_tool_states();
+	
 	if (currentTool == Global.Tool.BOX_BRUSH): disable_box_brush();
 	currentTool = tool;
 	
@@ -163,3 +165,9 @@ func rotate_object() -> void:
 			currentObjectRotation = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V;
 		_:
 			currentObjectRotation = 0;
+	
+## Reset tool states 
+func reset_tool_states() -> void:
+	isPainting = false;
+	isErasing = false;
+	# isMoving is not neccesary.

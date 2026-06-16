@@ -60,9 +60,3 @@ func start() -> void:
 ## Just connect death
 func _ready() -> void:
 	Global.death.connect(reset);
-
-## Runs every frame during the play state
-## _delta: The amount of time that has passed
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("pause"):
-		pause();

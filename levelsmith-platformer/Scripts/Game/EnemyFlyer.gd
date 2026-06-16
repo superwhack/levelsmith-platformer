@@ -19,6 +19,7 @@ var obstacleCooldown: float = 0.0;
 # Delay between obstacle-triggered reversals.
 const OBSTACLE_COOLDOWN_DURATION: float = 0.25;
 
+@export var previewLine: Line2D;
 
 ## Initializes patrol points when the enemy is created.
 func _ready() -> void:
@@ -42,7 +43,7 @@ func _physics_process(delta: float) -> void:
 func fly_behavior() -> void:
 	var direction: Vector2 = targetPoint - global_position;
 
-	if direction.length() < 20.0:
+	if direction.length() < 5.0:
 		switch_target();
 		return;
 

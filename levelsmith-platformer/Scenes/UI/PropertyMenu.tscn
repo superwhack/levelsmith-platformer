@@ -151,7 +151,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Speed"
-minMax = Vector2(0, 5)
+minMax = Vector2(0, 3)
 sliderStep = 0.1
 
 [node name="PatrollingRestricted" parent="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties" unique_id=574029748 instance=ExtResource("3_1mv14")]

@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
 size = Vector2(20, 19.999996)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_agccv"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_agccv"]
 
 [node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts") groups=["Player"]]
 floor_snap_length = 32.0
@@ -35,8 +35,8 @@ scale = Vector2(5.8, 5.524)
 shape = SubResource("RectangleShape2D_agccv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]
-scale = Vector2(5.5, 4)
-shape = SubResource("CapsuleShape2D_agccv")
+scale = Vector2(6.2, 6.2)
+shape = SubResource("CircleShape2D_agccv")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=290798525]
 texture = ExtResource("2_gntrk")

@@ -148,7 +148,6 @@ func detect_tiles() -> void:
 			slideCollisions.push_back(raycast);
 	
 	# Check all current collisions
-	var curCount = 0;
 	for i in slideCollisions.size():
 		var collider = slideCollisions[i].get_collider();
 		# Have collisions with tiles confer effects
@@ -156,11 +155,7 @@ func detect_tiles() -> void:
 			# Use the global coord to find tile collision
 			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position + slideCollisions[i].target_position * .1);
 			var tileData = collider.get_cell_tile_data(tilePos);
-			print(tilePos)
 			# Bounce tile collisions
-			if tileData:
-				curCount += 1;
-				print(str(i) + tileData.get_custom_data("name"));
 			if tileData && (tileData.get_custom_data("name") == "bounce"):
 				# Horizontal Bounces
 				if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
@@ -188,7 +183,6 @@ func detect_tiles() -> void:
 					# Apply a slowdown to player movement and jumps
 					"slow":
 						currentSlowdown = .5;
-	print("Collisions Read: " + str(slideCollisions.size()) + ", Tile Collisions: " + str(curCount));
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> void:
 	var masterManager : Node2D = get_tree().current_scene;

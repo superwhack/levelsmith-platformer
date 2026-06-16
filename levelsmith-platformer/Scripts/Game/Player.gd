@@ -21,9 +21,6 @@ var spawnpoint := Vector2(0, 0);
 @export var raycasts : Array[RayCast2D];
 @export var downwardsRaycasts : Array[RayCast2D];
 
-# Audio manager export
-#@export var audioManager : Node;
-
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
 const maxHealth := 1;
 var health := maxHealth

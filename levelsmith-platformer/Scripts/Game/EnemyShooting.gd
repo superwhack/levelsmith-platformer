@@ -2,12 +2,12 @@ class_name EnemyShooting;
 extends Enemy
 
 # Direction of fire, stored as float
-@export var direction : float;
+var direction : float;
 
 # Firing properties
-@export var shotSpeed : float;
-@export var fireRate : float;
-@export var projBounce : bool;
+var shotSpeed : float;
+var fireRate : float;
+var projBounce : bool;
 
 @export var directionArrow : Sprite2D;
 

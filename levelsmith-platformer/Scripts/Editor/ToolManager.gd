@@ -47,8 +47,6 @@ func _process(_delta: float):
 func _unhandled_input(event: InputEvent) -> void:	
 	match (currentTool):
 		Global.Tool.BRUSH:
-			if (get_viewport().gui_get_hovered_control()): return;
-			
 			if (event.is_action_pressed("left-click")):
 				isPainting = true;
 			elif (event.is_action_released("left-click")):
@@ -125,21 +123,24 @@ func change_tool(tool: Global.Tool) -> void:
 		return;
 	
 	reset_tool_states();
-	
-	if (currentTool == Global.Tool.BOX_BRUSH): disable_box_brush();
+
+	if (currentTool == Global.Tool.CURSOR):
+		brushObject = Global.TileType.SOLID;
+	elif (tool == Global.Tool.CURSOR):
+		brushObject = Global.EntityType.GOAL;
+	if (currentTool == Global.Tool.BOX_BRUSH): 
+		disable_box_brush();
 	currentTool = tool;
 	
 	if (currentTool != Global.Tool.CURSOR):
-		update_brush_object(Global.TileType.SOLID);
 		tileSwitch.display_tiles(true);
 		tileSwitch.display_entities(false);
 	else:
-		update_brush_object(Global.EntityType.GOAL);
 		tileSwitch.display_tiles(false);
 		tileSwitch.display_entities(true);
 	propertyMenu.close();
 	previewTile.clear();
-	
+	return;
 	match currentTool:
 		Global.Tool.CURSOR:
 			update_brush_object(Global.EntityType.GOAL);

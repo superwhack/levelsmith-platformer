@@ -87,7 +87,6 @@ func run() -> void:
 	else:
 		accelerationX = -velocity.x;
 	
-	print(currentFriction);
 	# Friction and air control
 	if not is_on_floor():
 		accelerationX *= airControl * airControl;

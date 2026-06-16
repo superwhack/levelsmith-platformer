@@ -13,6 +13,12 @@ var pointB: Vector2;
 # Current destination point.
 var targetPoint: Vector2;
 
+# Time remaining before another collision reversal is allowed.
+var obstacleCooldown: float = 0.0;
+
+# Delay between obstacle-triggered reversals.
+const OBSTACLE_COOLDOWN_DURATION: float = 0.25;
+
 
 ## Initializes patrol points when the enemy is created.
 func _ready() -> void:
@@ -25,6 +31,8 @@ func _ready() -> void:
 
 ## Processes flying movement and collision handling.
 func _physics_process(delta: float) -> void:
+	if obstacleCooldown > 0.0:
+		obstacleCooldown -= delta;
 	fly_behavior();
 	move_and_slide();
 	handle_obstacles();
@@ -51,11 +59,16 @@ func switch_target() -> void:
 
 ## Reverses direction if the enemy collides with terrain.
 func handle_obstacles() -> void:
+	if obstacleCooldown > 0.0:
+		return;
+
 	for k in get_slide_collision_count():
 		var collision: KinematicCollision2D = get_slide_collision(k);
 
 		if collision.get_collider() is TileMapLayer:
+			velocity = Vector2.ZERO;
 			switch_target();
+			obstacleCooldown = OBSTACLE_COOLDOWN_DURATION;
 			break;
 
 

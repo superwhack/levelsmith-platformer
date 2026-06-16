@@ -6,7 +6,7 @@
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_x85wq"]
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "shootingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "presetOptions")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "flyingMenu", "shootingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "shootingDirectionSlider", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "presetOptions")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,6 +22,7 @@ script = ExtResource("1_tnep3")
 entityName = NodePath("MainMargin/RootVBox/EntityNameVBox/EntityName")
 playerMenu = NodePath("MainMargin/RootVBox/PlayerProperties")
 patrollingMenu = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties")
+flyingMenu = NodePath("MainMargin/RootVBox/FlyingProperties")
 shootingMenu = NodePath("MainMargin/RootVBox/ShootingProperties")
 playerSpeedSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerSpeed")
 playerJumpSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerJump")
@@ -30,6 +31,9 @@ playerFallSpeedSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerFal
 playerCoyoteTimeSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime")
 patrollingSpeedSlider = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed")
 patrollingRestrictedCheckbox = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingRestricted")
+flyingSpeedSlider = NodePath("MainMargin/RootVBox/FlyingProperties/FlightSpeed")
+flyingOffsetXSlider = NodePath("MainMargin/RootVBox/FlyingProperties/Xoffset")
+flyingOffsetYSlider = NodePath("MainMargin/RootVBox/FlyingProperties/Yoffset")
 shootingDirectionSlider = NodePath("MainMargin/RootVBox/ShootingProperties/ShootingDirection")
 shootingShotSpeedSlider = NodePath("MainMargin/RootVBox/ShootingProperties/ShootingShotSpeed")
 shootingFireRateSlider = NodePath("MainMargin/RootVBox/ShootingProperties/ShootingFireRate")
@@ -160,6 +164,7 @@ size_flags_horizontal = 0
 propertyName = "Restricted"
 
 [node name="ShootingProperties" type="VBoxContainer" parent="MainMargin/RootVBox" unique_id=391156619]
+visible = false
 layout_mode = 2
 
 [node name="ShootingDirection" parent="MainMargin/RootVBox/ShootingProperties" unique_id=2058309168 instance=ExtResource("2_w5eld")]
@@ -197,25 +202,25 @@ layout_mode = 2
 [node name="FlightSpeed" parent="MainMargin/RootVBox/FlyingProperties" unique_id=526862623 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 size_flags_horizontal = 0
-propertyName = "Direction"
-minMax = Vector2(0, 100)
-sliderStep = 1.0
+propertyName = "Flight Speed"
+minMax = Vector2(0, 300)
+sliderStep = 3.0
 valueAppend = "°"
 
 [node name="Xoffset" parent="MainMargin/RootVBox/FlyingProperties" unique_id=1638288870 instance=ExtResource("2_w5eld")]
 layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 0
-propertyName = "Projectile Speed"
-minMax = Vector2(-256, 256)
-sliderStep = 0.1
+propertyName = "Horizontal offset"
+minMax = Vector2(-1028, 1028)
+sliderStep = 4.0
 
 [node name="Yoffset" parent="MainMargin/RootVBox/FlyingProperties" unique_id=1157425119 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 size_flags_horizontal = 0
-propertyName = "Fire Rate"
-minMax = Vector2(-256, 256)
-sliderStep = 0.1
+propertyName = "vertical offset"
+minMax = Vector2(-1028, 1028)
+sliderStep = 4.0
 
 [node name="BottomSpacer" type="Control" parent="MainMargin/RootVBox" unique_id=1741289699]
 layout_mode = 2

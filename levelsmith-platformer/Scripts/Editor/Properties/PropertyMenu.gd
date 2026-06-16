@@ -8,6 +8,7 @@ var selectedEntity: Node2D;
 
 @export var playerMenu: VBoxContainer;
 @export var patrollingMenu: VBoxContainer;
+@export var flyingMenu: VBoxContainer;
 @export var shootingMenu: VBoxContainer;
 
 # Player values
@@ -27,6 +28,11 @@ var playerCoyoteTime : float;
 # Patrolling inputs
 @export var patrollingSpeedSlider: VBoxContainer;
 @export var patrollingRestrictedCheckbox: VBoxContainer;
+
+# Flying inputs
+@export var flyingSpeedSlider: VBoxContainer;
+@export var flyingOffsetXSlider: VBoxContainer;
+@export var flyingOffsetYSlider: VBoxContainer;
 
 # Shooting inputs
 @export var shootingDirectionSlider: VBoxContainer;
@@ -58,6 +64,8 @@ func _process(delta: float) -> void:
 	if (selectedEntity != null):
 		if selectedEntity is EnemyPatrol:
 			entityName.text = "Patrolling Enemy";
+		elif  selectedEntity is EnemyFlyer:
+			entityName.text = "Flying Enemy";
 		elif selectedEntity is EnemyShooting:
 			entityName.text = "Shooting Enemy";
 			selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
@@ -107,6 +115,13 @@ func update_sliders() -> void:
 		patrollingRestrictedCheckbox.value = selectedPreset.restricted;
 		patrollingSpeedSlider.update_slider();
 		patrollingRestrictedCheckbox.update_checkbox();
+	if selectedEntity is EnemyFlyer:
+		flyingSpeedSlider.value = selectedPreset.speed;
+		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x;
+		flyingOffsetYSlider.value = selectedPreset.pointBOffset.y;
+		flyingSpeedSlider.update_slider();
+		flyingOffsetXSlider.update_slider();
+		flyingOffsetYSlider.update_slider();
 	elif selectedEntity is EnemyShooting:
 		shootingDirectionSlider.value = -selectedPreset.direction;
 		shootingShotSpeedSlider.value = selectedPreset.shotSpeed;
@@ -130,6 +145,11 @@ func update_values() -> void:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
 		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+	if selectedEntity is EnemyFlyer:
+		selectedPreset.speed = flyingSpeedSlider.value;
+		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+		print(selectedPreset.pointBOffset)
+		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres")
 	elif selectedEntity is EnemyShooting:
 		selectedPreset.direction = -shootingDirectionSlider.value;
 		selectedPreset.shotSpeed = shootingShotSpeedSlider.value;
@@ -151,12 +171,15 @@ func show_menu(resource: Resource = null) -> void:
 		shootingDirectionArrow = null;
 	playerMenu.hide();
 	patrollingMenu.hide();
+	flyingMenu.hide();
 	shootingMenu.hide();
 	if selectedEntity is Enemy:
 		selectedPreset = resource;
 		update_sliders();
 		if selectedEntity is EnemyPatrol:
 			patrollingMenu.show();
+		elif selectedEntity is EnemyFlyer:
+			flyingMenu.show();
 		elif selectedEntity is EnemyShooting:
 			shootingDirectionArrow = selectedEntity.directionArrow;
 			shootingDirectionArrow.show();

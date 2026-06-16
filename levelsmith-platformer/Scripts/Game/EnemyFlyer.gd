@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 func fly_behavior() -> void:
 	var direction: Vector2 = targetPoint - global_position;
 
-	if direction.length() < 5.0:
+	if direction.length() < 20.0:
 		switch_target();
 		return;
 

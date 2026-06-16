@@ -47,10 +47,11 @@ func _process(_delta: float):
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
 func _unhandled_input(event: InputEvent) -> void:	
-	if editorManager.returnClick:
-		if (Input.is_action_just_released("click")):
+	if editorManager.returnClick :
+		if (Input.is_action_just_released("left-click")):
 			editorManager.returnClick = false;
-		return;
+		if (currentTool != Global.Tool.BRUSH):
+			return;
 	match (currentTool):
 		Global.Tool.BRUSH:
 			if (event.is_action_pressed("left-click")):

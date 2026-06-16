@@ -64,7 +64,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		Global.Tool.BOX_BRUSH:
 			match (boxBrushState):
 				Global.BoxBrushState.INACTIVE, Global.BoxBrushState.PLACE_CONFIRM, Global.BoxBrushState.DELETE_CONFIRM:
-					if (event.is_action_pressed("jump") && boxBrushState != Global.BoxBrushState.INACTIVE):
+					if (event.is_action_pressed("ui_accept") && boxBrushState != Global.BoxBrushState.INACTIVE):
 						if (boxBrushState == Global.BoxBrushState.PLACE_CONFIRM):
 							tileManager.box_place(firstBoxCorner, secondBoxCorner);
 						elif (boxBrushState == Global.BoxBrushState.DELETE_CONFIRM):

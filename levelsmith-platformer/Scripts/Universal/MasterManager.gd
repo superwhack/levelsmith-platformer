@@ -91,6 +91,7 @@ func edit() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
+	editorManager.returnClick = true;
 	editorManagerCanvas.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;

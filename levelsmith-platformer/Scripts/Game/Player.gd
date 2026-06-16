@@ -190,9 +190,11 @@ func detect_tiles() -> void:
 				# Vertical Stick
 				else:
 					if slideCollisions[i].target_position.y < 0:
-						velocity.y = -1000 * tileData.get_custom_data("bounce");
+						velocity.y = 0;
 						if Input.is_action_just_pressed("down"):
-								position += Vector2(0, 2);
+							while slideCollisions[i].is_colliding():
+								position += Vector2(0, 1);
+								slideCollisions[i].force_raycast_update();
 					currentSlowdown = .5;
 			if tileData && (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i])):
 				# Depending on the tile type, apply a different effect

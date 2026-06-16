@@ -46,6 +46,7 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
+	check_out_of_bounds();
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair, and reset friction.
 	if not is_on_floor():
@@ -66,6 +67,7 @@ func _physics_process(delta: float) -> void:
 			jump();
 	# Handle A and D inputs, as well as lack of directional input
 	run();
+	
 	
 	# Look at what the player is colliding with and apply effects
 	move_and_slide();
@@ -204,6 +206,7 @@ func detect_tiles() -> void:
 					# Set friction for the player to slide
 					"ice":
 						currentFriction = tileData.get_custom_data("friction");
+
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> void:
 	var masterManager : Node2D = get_tree().current_scene;

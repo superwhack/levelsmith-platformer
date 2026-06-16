@@ -34,7 +34,7 @@ scale = Vector2(6.3, 6)
 shape = SubResource("RectangleShape2D_agccv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]
-scale = Vector2(6.3, 6.3)
+scale = Vector2(6.2, 6.2)
 shape = SubResource("CircleShape2D_agccv")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=290798525]
@@ -60,7 +60,7 @@ target_position = Vector2(64, 0)
 
 [node name="RayCastUp2" type="RayCast2D" parent="." unique_id=1451835448]
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(0, -68)
+target_position = Vector2(0, -58)
 
 [connection signal="body_entered" from="EnemyBounceCollision" to="." method="detect_enemy_bounce"]
 [connection signal="body_entered" from="EnemyCollision" to="." method="detect_enemies"]

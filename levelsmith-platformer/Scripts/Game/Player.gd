@@ -75,7 +75,6 @@ func _physics_process(delta: float) -> void:
 ## Make the player jump
 func jump() -> void:
 	AudioManager.play_effect("PlayerJump");
-	currentFriction = 1.0;
 	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
@@ -140,10 +139,6 @@ func bounce() -> void:
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
-	# If there is a collision then reset savedFriction and savedSlowdown
-	if get_slide_collision_count() != 0:
-		currentFriction = 1.0;
-		currentSlowdown = 1.0;
 	
 	# Check all collisions with raycasts
 	var slideCollisions: Array[RayCast2D] = [];
@@ -196,6 +191,9 @@ func detect_tiles() -> void:
 								slideCollisions[i].force_raycast_update();
 					currentSlowdown = .5;
 			if tileData && (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i])):
+				if tileData.get_custom_data("name") != "bounce":
+					currentFriction = 1.0;
+					currentSlowdown = 1.0;
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):
 					"oneway":
@@ -213,9 +211,10 @@ func check_out_of_bounds() -> void:
 	
 	# There is a 1 tile leeway given to players who leave bounds, before deth
 	if (self.global_position.x < (-1) * Global.tileSize
-	|| self.global_position.x > (masterManager.worldSize.y + 2) * Global.tileSize
+	|| self.global_position.x > (masterManager.worldSize.x + 2) * Global.tileSize
 	|| self.global_position.y < (-1) * Global.tileSize
-	|| self.global_position.y > (masterManager.worldSize.x + 2) * Global.tileSize):
+	|| self.global_position.y > (masterManager.worldSize.y + 2) * Global.tileSize):
+		print(masterManager.worldSize);
 		print("Player OOB: ", self.global_position)
 		die();
 

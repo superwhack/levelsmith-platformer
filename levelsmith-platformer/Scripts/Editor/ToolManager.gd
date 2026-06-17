@@ -118,8 +118,8 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
 func update_brush_object(objectId: int) -> void:
-	if isMoving:
-		return;
+	if isMoving: return;
+	
 	if currentTool == Global.Tool.CURSOR && objectId >= editorManager.tileCount:
 		brushObject = objectId;
 	elif currentTool != Global.Tool.CURSOR && objectId < editorManager.tileCount:
@@ -149,15 +149,8 @@ func change_tool(tool: Global.Tool) -> void:
 		tileSwitch.display_entities(true);
 	propertyMenu.close();
 	previewTile.clear();
+	
 	return;
-	match currentTool:
-		Global.Tool.CURSOR:
-			update_brush_object(Global.EntityType.GOAL);
-		Global.Tool.BOX_BRUSH:
-			update_brush_object(Global.TileType.SOLID);
-		Global.Tool.BRUSH:
-			update_brush_object(Global.TileType.SOLID);
-	print("Current Tool: ", currentTool);
 
 ## Deactivates the box brush.
 func disable_box_brush() -> void:

@@ -139,8 +139,16 @@ func drop_entity() -> void:
 		position = editorManager.currentMousePosition;
 	place_entity(position);
 	
+	if (toolManager.prevEntity != -2):
+		toolManager.brushObject = toolManager.prevEntity;
+	toolManager.prevEntity = -1;
+	toolManager.prevPosition = Vector2(0,0);
+	toolManager.currentObjectRotation = toolManager.prevRotation;
+	toolManager.isMoving = false;
+	
 	for frame in range(1, 5):
 		await get_tree().process_frame;
+		
 	if get_scene_at_cell(position) is Enemy && movingResource:
 		movingResource.position = position;
 		get_scene_at_cell(position).apply_script(movingResource);
@@ -150,13 +158,6 @@ func drop_entity() -> void:
 		ResourceSaver.save(movingResource, "res://Resources/Enemies/" + get_scene_at_cell(position).name + ".tres");
 		movingResource = null;
 		editorManager.reset_enemy_positions();
-	
-	if (toolManager.prevEntity != -2):
-		toolManager.brushObject = toolManager.prevEntity;
-	toolManager.prevEntity = -1;
-	toolManager.prevPosition = Vector2(0,0);
-	toolManager.currentObjectRotation = toolManager.prevRotation;
-	toolManager.isMoving = false;
 
 func scan_goals(xSize: int, ySize: int) -> void:
 	goalCount = 0;

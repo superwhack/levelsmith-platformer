@@ -89,6 +89,7 @@ func run() -> void:
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if direction:
 		accelerationX = direction * trueSpeed;
+	# NOTE: I'd love to get this to work nicer since right now moving can feel a little jagged.
 	else:
 		accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 	
@@ -207,7 +208,7 @@ func detect_tiles() -> void:
 						take_damage(1);
 					# Set friction for the player to slide
 					"ice":
-						currentFriction = .5;
+						currentFriction = tileData.get_custom_data("friction");
 
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> bool:

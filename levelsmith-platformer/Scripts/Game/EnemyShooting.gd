@@ -16,6 +16,7 @@ const projectile = preload("res://Scenes/Entities/Projectile.tscn");
 var timeLeft : float = 1;
 
 func _physics_process(delta: float) -> void:
+	directionArrow.hide();
 	timeLeft -= delta;
 	if (timeLeft <= 0.0):
 		shooting_behavior();

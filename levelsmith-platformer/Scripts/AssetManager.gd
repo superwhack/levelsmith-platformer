@@ -107,7 +107,6 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 				# Return the loaded image
 				return image;
 		PopUpManager.create_error_popup("Cannot Load Asset","Image not valid. '.png' file required.");
-		#print("Image not valid");
 		return null;
 		
 	# If the path does not exist, print error

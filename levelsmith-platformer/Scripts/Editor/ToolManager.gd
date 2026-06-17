@@ -118,6 +118,8 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
 func update_brush_object(objectId: int) -> void:
+	if isMoving:
+		return;
 	if currentTool == Global.Tool.CURSOR && objectId >= editorManager.tileCount:
 		brushObject = objectId;
 	elif currentTool != Global.Tool.CURSOR && objectId < editorManager.tileCount:

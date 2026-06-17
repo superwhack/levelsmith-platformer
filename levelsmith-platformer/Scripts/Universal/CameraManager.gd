@@ -114,10 +114,12 @@ func process_build_camera(delta: float) -> void:
 	
 	global_position += inputVector.normalized() * moveSpeed * speedModifier * delta;
 	
-	if (!get_viewport().gui_get_hovered_control()):
-		process_edge_scrolling(delta);
+	# Edge scrolling currently commented out
+	#if (!get_viewport().gui_get_hovered_control()):
+		#process_edge_scrolling(delta);
 
 ## Processes editor edge scrolling
+## NOTE: Currently edge scrolling is unused as it leads to more issues than it's worth
 func process_edge_scrolling(delta: float) -> void:
 	var mousePos: Vector2 = get_viewport().get_mouse_position();
 	var viewportSize: Vector2 = get_viewport_rect().size;

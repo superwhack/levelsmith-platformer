@@ -128,7 +128,7 @@ func update_brush_object(objectId: int) -> void:
 func change_tool(tool: Global.Tool) -> void:
 	if currentTool == tool:
 		return;
-	
+	editorManager.returnClick = false;
 	reset_tool_states();
 
 	if (currentTool == Global.Tool.CURSOR):

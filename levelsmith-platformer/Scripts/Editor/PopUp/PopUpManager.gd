@@ -23,10 +23,33 @@ func create_error_popup(title: String = "Error", body: String = "An error has oc
 	var popUpTitle: Label = newPopUp.find_child("Title");
 	var popUpBody: RichTextLabel = newPopUp.find_child("Body");
 	popUpTitle.text = title;
-	popUpBody.text = body;
+	popUpBody.text = " - " + body;
 	
 	# Add popup to scene and stack
 	#POP_UP_STACK.append(newPopUp);
+	add_child(newPopUp);
+
+## Creates an error popup that contains multiple errors
+## title: Title of error
+## body: Body content of error as an array
+func create_multi_error_popup(title: String = "Error", body: Array[String] = []) -> void:
+	# If there's only one body string, create a single popup
+	if body.size() == 1:
+		return create_error_popup(title, body[0]);
+	var newPopUp: Panel = ERROR_TEMPLATE.instantiate();
+	
+	# Add desired content to popup
+	# WARNING I wonder if there is a better way to do this
+	var popUpTitle: Label = newPopUp.find_child("Title");
+	var popUpBody: RichTextLabel = newPopUp.find_child("Body");
+	popUpTitle.text = title;
+	popUpBody.text = "";
+	for messageNum in range(0, body.size()):
+		popUpBody.text += " - " + body[messageNum];
+		if messageNum != body.size() - 1:
+			popUpBody.text += "\n"
+	
+	# Add popup to scene and stack
 	add_child(newPopUp);
 	
 ## Removes specific popup from popup stack

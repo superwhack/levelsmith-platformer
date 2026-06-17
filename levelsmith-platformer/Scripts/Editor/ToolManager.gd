@@ -149,15 +149,8 @@ func change_tool(tool: Global.Tool) -> void:
 		tileSwitch.display_entities(true);
 	propertyMenu.close();
 	previewTile.clear();
+	
 	return;
-	match currentTool:
-		Global.Tool.CURSOR:
-			update_brush_object(Global.EntityType.GOAL);
-		Global.Tool.BOX_BRUSH:
-			update_brush_object(Global.TileType.SOLID);
-		Global.Tool.BRUSH:
-			update_brush_object(Global.TileType.SOLID);
-	print("Current Tool: ", currentTool);
 
 ## Deactivates the box brush.
 func disable_box_brush() -> void:

@@ -67,6 +67,7 @@ func place_entity(clickPosition: Vector2) -> void:
 				var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 				var newShooting: Resource = defaultShooting.duplicate(true);
 				get_scene_at_cell(clickPosition).adjust_arrow(90);
+				get_scene_at_cell(clickPosition).directionArrow.scale = Vector2(1, 1);
 				ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting" + str(time) + ".tres");
 			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
 		else:
@@ -150,7 +151,6 @@ func drop_entity() -> void:
 		movingResource = null;
 		editorManager.reset_enemy_positions();
 	
-	print(toolManager.prevEntity);
 	if (toolManager.prevEntity != -2):
 		toolManager.brushObject = toolManager.prevEntity;
 	toolManager.prevEntity = -1;

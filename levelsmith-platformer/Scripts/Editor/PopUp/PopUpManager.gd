@@ -16,6 +16,9 @@ func _ready() -> void:
 ## title: Title of error
 ## body: Body content of error
 func create_error_popup(title: String = "Error", body: String = "An error has occurred") -> void:
+	if get_child_count() != 0:
+		get_child(0).find_child("Body").text += "\n - " + body;
+		return;
 	var newPopUp: Panel = ERROR_TEMPLATE.instantiate();
 	
 	# Add desired content to popup

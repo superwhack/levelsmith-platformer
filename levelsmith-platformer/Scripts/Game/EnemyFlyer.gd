@@ -66,7 +66,7 @@ func handle_obstacles() -> void:
 	for k in get_slide_collision_count():
 		var collision: KinematicCollision2D = get_slide_collision(k);
 
-		if collision.get_collider() is TileMapLayer:
+		if collision.get_collider() is TileMapLayer or Enemy:
 			velocity = Vector2.ZERO;
 			switch_target();
 			obstacleCooldown = OBSTACLE_COOLDOWN_DURATION;

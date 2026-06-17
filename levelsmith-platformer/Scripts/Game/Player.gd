@@ -49,7 +49,8 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
-	check_out_of_bounds();
+	if check_out_of_bounds():
+		return;
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair, and reset friction.
 	if not is_on_floor():
@@ -87,24 +88,25 @@ func run() -> void:
 	var direction := Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if direction:
-		accelerationX = direction * trueSpeed * .5;
+		accelerationX = direction * trueSpeed;
 	else:
-		accelerationX = -velocity.x;
+		accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 	
 	# Friction and air control
 	if not is_on_floor():
 		accelerationX *= airControl * airControl;
 	if (currentFriction != 1.0):
-		accelerationX *= currentFriction * currentFriction;
+		accelerationX *= currentFriction * currentFriction * currentFriction;
 		if (abs(velocity.x) > trueSpeed * iceSpeedCap):
 			accelerationX = 0;
 			velocity.x *= .9;
 		elif (abs(velocity.x) > trueSpeed):
-			accelerationX *= .25;
-	
-	if (abs(velocity.x) > trueSpeed && currentFriction == 1.0):
+			if (velocity.x < 0 && accelerationX < 0) || (velocity.x > 0 && accelerationX > 0):
+				accelerationX *= .1;
+	elif (abs(velocity.x) > trueSpeed && currentFriction == 1.0):
 		accelerationX = 0;
 		velocity.x *= .9;
+		
 	# Adjust velocity by acceleration
 	velocity.x += accelerationX;
 
@@ -205,10 +207,10 @@ func detect_tiles() -> void:
 						take_damage(1);
 					# Set friction for the player to slide
 					"ice":
-						currentFriction = tileData.get_custom_data("friction");
+						currentFriction = .5;
 
 ## When the player walks/falls out of bounds, force kill them
-func check_out_of_bounds() -> void:
+func check_out_of_bounds() -> bool:
 	var masterManager : Node2D = get_tree().current_scene;
 	
 	# There is a 1 tile leeway given to players who leave bounds, before deth
@@ -218,6 +220,8 @@ func check_out_of_bounds() -> void:
 	|| self.global_position.y > (masterManager.worldSize.y + 2) * Global.tileSize):
 		print("Player OOB: ", self.global_position)
 		die();
+		return true;
+	return false;
 
 ## Applies the player selected player movement preset to the player
 func apply_preset(preset: PlayerMovementPreset) -> void:

@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_1qm3p")
-groundSpeed = 5.0
+groundSpeed = 1.0
 jumpHeight = 2.0
 airControl = 1.0
 fallSpeed = 1.0

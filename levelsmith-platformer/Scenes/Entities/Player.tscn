@@ -2,20 +2,22 @@
 
 [ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Game/Player.gd" id="1_kyqiw"]
 [ext_resource type="Resource" uid="uid://nd3ng1cl05pa" path="res://Resources/PlayerPresets/Default.tres" id="2_agccv"]
-[ext_resource type="Texture2D" uid="uid://2hfbf5bqyhy4" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
+[ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
 size = Vector2(20, 19.999996)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_agccv"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "enemyBounceCollision", "enemyCollision") groups=["Player"]]
 scale = Vector2(0.9, 0.9)
 floor_snap_length = 32.0
 script = ExtResource("1_kyqiw")
 raycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastLeft2"), NodePath("RayCastRight2"), NodePath("RayCastUp2")]
 downwardsRaycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3")]
 playerMovementPreset = ExtResource("2_agccv")
+enemyBounceCollision = NodePath("EnemyBounceCollision")
+enemyCollision = NodePath("EnemyCollision")
 
 [node name="EnemyBounceCollision" type="Area2D" parent="." unique_id=164049749]
 collision_layer = 4
@@ -63,6 +65,3 @@ target_position = Vector2(64, 0)
 [node name="RayCastUp2" type="RayCast2D" parent="." unique_id=1451835448]
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -58)
-
-[connection signal="body_entered" from="EnemyBounceCollision" to="." method="detect_enemy_bounce"]
-[connection signal="body_entered" from="EnemyCollision" to="." method="detect_enemies"]

@@ -4,13 +4,16 @@ extends CharacterBody2D
 # The player settings that can be changed in editor
 @export var groundSpeed := 1.0;
 @export var jumpHeight := 2.0;
+
 # Friction in midair
 # BUG: Air Control doesn't work the frame you land on a bouncy tile, allowing you to change direction beofre bouncing back up
 @export var airControl := 1.0;
 @export var fallSpeed := 1.0;
+
 # Determines how long after leaving a platform you can still jump
 @export var coyoteTime := 0.2;
 var coyoteTimeLeft = 0;
+
 # TODO: Make FPS dependant on a global FPS initailly instead of being set to 24
 # TODO: Impliment animations and use this
 @export var FPS := 24;
@@ -36,8 +39,15 @@ var trueSpeed : float;
 # TODO: Make it so that it selects the DefaultMovement preset automatically 
 @export var playerMovementPreset : PlayerMovementPreset;
 
+# Enemy collision hitboxes for hooking signals
+@export var enemyBounceCollision: Area2D;
+@export var enemyCollision: Area2D
+
 ## Runs once on instantiation
 func _ready() -> void:
+	enemyBounceCollision.body_entered.connect(detect_enemy_bounce);
+	enemyCollision.body_entered.connect(detect_enemies);
+	
 	# Applies the preset on ready	
 	if (playerMovementPreset):
 		print("Applying ", playerMovementPreset, " player movement preset.");

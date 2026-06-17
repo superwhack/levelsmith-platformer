@@ -27,6 +27,9 @@ var brushObject: int = 0;
 const holdTimeCap = .15;
 var holdTimer := holdTimeCap;
 
+# If the user starts a click on a UI element.
+var clickOnUI : bool = false;
+
 var firstBoxCorner : Vector2;
 var secondBoxCorner : Vector2;
 var isPainting : bool;
@@ -34,6 +37,10 @@ var isErasing : bool;
 var isMoving : bool;
 
 func _process(_delta: float):
+	# Return early if clicking on UI as there is nothing to process
+	if (clickOnUI):
+		return;
+	
 	if (Input.is_action_pressed("left-click")):
 		holdTimer -= _delta;
 	elif (Input.is_action_just_released("left-click")):
@@ -42,12 +49,24 @@ func _process(_delta: float):
 	
 	if (boxBrushState == Global.BoxBrushState.PLACE || boxBrushState == Global.BoxBrushState.DELETE):
 		secondBoxCorner = editorManager.currentMousePosition;
-	
+
+## One of the first input handles to run, catches if the user clicked on a UI element.
+func _input(event: InputEvent) -> void:
+	# Check viewport if the user is hovering over a UI element
+	if event.is_action_pressed("left-click"):
+		clickOnUI = get_viewport().gui_get_hovered_control() != null;
+	# When released, the bool gets reset no matter what.
+	elif event.is_action_released("left-click"):
+		clickOnUI = false;
 
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
-func _unhandled_input(event: InputEvent) -> void:	
-	if editorManager.returnClick :
+func _unhandled_input(event: InputEvent) -> void:
+	# Return early if clicking on UI, to fix key release issues.
+	if (clickOnUI):
+		return;
+	
+	if editorManager.returnClick:
 		if (Input.is_action_just_released("left-click")):
 			editorManager.returnClick = false;
 		if (currentTool != Global.Tool.BRUSH):

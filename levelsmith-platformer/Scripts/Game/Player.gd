@@ -154,7 +154,7 @@ func detect_tiles() -> void:
 		# Have collisions with tiles confer effects
 		if collider is TileMapLayer:
 			# Use the global coord to find tile collision
-			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position + slideCollisions[i].target_position * .1);
+			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position * 1.1);
 			var tileData = collider.get_cell_tile_data(tilePos);
 			# Bounce tile collisions
 			if tileData && (tileData.get_custom_data("name") == "bounce"):
@@ -216,7 +216,6 @@ func check_out_of_bounds() -> void:
 	|| self.global_position.x > (masterManager.worldSize.x + 2) * Global.tileSize
 	|| self.global_position.y < (-1) * Global.tileSize
 	|| self.global_position.y > (masterManager.worldSize.y + 2) * Global.tileSize):
-		print(masterManager.worldSize);
 		print("Player OOB: ", self.global_position)
 		die();
 

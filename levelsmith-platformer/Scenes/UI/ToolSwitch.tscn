@@ -3,17 +3,20 @@
 [ext_resource type="Script" uid="uid://bc0t4fwnf3jge" path="res://Scripts/Editor/ToolSwitch.gd" id="1_8le6k"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_bma6q"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="3_0ykeq"]
-[ext_resource type="Texture2D" uid="uid://dqe8h86pkjebk" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBrushWhite.png" id="4_8yt78"]
-[ext_resource type="Texture2D" uid="uid://dqnjeyamv0fev" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBoxWhite.png" id="8_bma6q"]
-[ext_resource type="Texture2D" uid="uid://w1tlre5h74qo" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolCursorWhite.png" id="12_126op"]
+[ext_resource type="Texture2D" uid="uid://cc85uk0ba7r73" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBrushWhite.png" id="4_8yt78"]
+[ext_resource type="Texture2D" uid="uid://kqxcpbn4i32k" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBoxWhite.png" id="8_bma6q"]
+[ext_resource type="Texture2D" uid="uid://ccof3ja31cgcx" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolCursorWhite.png" id="12_126op"]
 
-[node name="ToolSwitch" type="HBoxContainer" unique_id=1469240724]
+[node name="ToolSwitch" type="HBoxContainer" unique_id=1469240724 node_paths=PackedStringArray("brushButton", "boxBrushButton", "cursorButton")]
 offset_right = 313.0
 offset_bottom = 100.0
 focus_behavior_recursive = 1
 theme = ExtResource("3_0ykeq")
 theme_override_constants/separation = 25
 script = ExtResource("1_8le6k")
+brushButton = NodePath("TileEditingToolUI/MarginContainer/TileTools/BrushButton")
+boxBrushButton = NodePath("TileEditingToolUI/MarginContainer/TileTools/BoxBrushButton")
+cursorButton = NodePath("EntityEditingToolsUI/MarginContainer/EntityTools/CursorButton")
 
 [node name="TileEditingToolUI" type="PanelContainer" parent="." unique_id=1533380283]
 layout_mode = 2
@@ -61,7 +64,3 @@ layout_mode = 2
 layout_mode = 2
 theme_type_variation = &"ToolButton"
 icon = ExtResource("12_126op")
-
-[connection signal="pressed" from="TileEditingToolUI/MarginContainer/TileTools/BrushButton" to="." method="_on_brush_button_pressed"]
-[connection signal="pressed" from="TileEditingToolUI/MarginContainer/TileTools/BoxBrushButton" to="." method="_on_box_brush_button_pressed"]
-[connection signal="pressed" from="EntityEditingToolsUI/MarginContainer/EntityTools/CursorButton" to="." method="_on_cursor_button_pressed"]

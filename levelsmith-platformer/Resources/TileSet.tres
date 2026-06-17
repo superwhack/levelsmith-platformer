@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://bj66b8ccvl345" path="res://Scenes/Preview/PlayerPreview.tscn" id="9_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://b3k624sctovph" path="res://Scenes/Entities/Patrolling.tscn" id="10_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://bwtswvrxxful5" path="res://Scenes/Preview/PatrollingPreview.tscn" id="11_8sjof"]
-[ext_resource type="Texture2D" uid="uid://dx73rn5knscwa" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="21_3boqi"]
+[ext_resource type="Texture2D" uid="uid://caj3o14oh4crl" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="21_3boqi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rjqkl"]
 texture = ExtResource("1_00q1o")
@@ -49,11 +49,6 @@ texture_region_size = Vector2i(128, 128)
 resource_name = "Shooting"
 scenes/1/scene = ExtResource("3_k4kw2")
 scenes/2/scene = ExtResource("4_3boqi")
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_eqdrb"]
-resource_name = "Flying"
-scenes/1/scene = ExtResource("5_3boqi")
-scenes/2/scene = ExtResource("6_pqfav")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eksy4"]
 texture = ExtResource("3_r4n42")

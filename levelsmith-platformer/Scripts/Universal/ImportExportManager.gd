@@ -91,16 +91,17 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 func validate_import(directory: String) -> bool:
 	levelPath = "user://Levels/" + directory + "/";
 	levelAssetPath = levelPath + "Assets/"
+	var errors : Array[String];
 	if !DirAccess.dir_exists_absolute(levelPath):
-		PopUpManager.create_error_popup("Level Directory Doesn't Exist!", "The directory " + levelPath + " could not be found.");
-		return false;
+		errors.append("Directory " + levelPath + " does not exist!");
 	if !FileAccess.file_exists(levelPath + "Settings.JSON"):
-		PopUpManager.create_error_popup("Level Properties Don't Exist!", "The directory " + levelPath + " does not have a file Settings.JSON.");
-		return false;
+		errors.append(levelPath + "Settings.JSON does not exist!");
 	if !FileAccess.file_exists(levelPath + "Tiles.CSV"):
-		PopUpManager.create_error_popup("Level Tile Map Doesn't Exist!", "The directory " + levelPath + " does not have a file Tiles.CSV.");
-		return false;
-	return true;
+		errors.append(levelPath + "Tiles.CSV does not exist!");
+	if errors.size() == 0:
+		return true;
+	PopUpManager.create_multi_error_popup("Level Import Failed from directory " + levelPath + "!", errors);
+	return false;
 
 ## Imports a level at the specified directory.
 ## tileMap: The Tile map layer to map the level terrain to

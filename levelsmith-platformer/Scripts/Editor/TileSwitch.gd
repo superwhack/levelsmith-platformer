@@ -108,9 +108,6 @@ func _on_patrolling_object_button_pressed() -> void:
 func _on_shooting_object_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.SHOOTING);
 
-func _on_flying_object_button_pressed() -> void:
-	toolManager.update_brush_object(Global.EntityType.FLYING);
-
 # Prop Buttons
 func _on_prop_one_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.PROP1);

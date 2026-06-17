@@ -20,6 +20,7 @@ var boxBrushState: Global.BoxBrushState = Global.BoxBrushState.INACTIVE
 # The previously selected tile before dragging
 var prevEntity : int = -1;
 var prevRotation : int = 0;
+var prevPosition: Vector2;
 var brushObject: int = 0;
 
 # A timer to differentiate between click and holding click
@@ -38,6 +39,7 @@ func _process(_delta: float):
 	elif (Input.is_action_just_released("left-click")):
 		holdTimer = holdTimeCap;
 	
+	
 	if (boxBrushState == Global.BoxBrushState.PLACE || boxBrushState == Global.BoxBrushState.DELETE):
 		secondBoxCorner = editorManager.currentMousePosition;
 	
@@ -45,6 +47,11 @@ func _process(_delta: float):
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
 func _unhandled_input(event: InputEvent) -> void:	
+	if editorManager.returnClick :
+		if (Input.is_action_just_released("left-click")):
+			editorManager.returnClick = false;
+		if (currentTool != Global.Tool.BRUSH):
+			return;
 	match (currentTool):
 		Global.Tool.BRUSH:
 			if (event.is_action_pressed("left-click")):
@@ -121,7 +128,7 @@ func update_brush_object(objectId: int) -> void:
 func change_tool(tool: Global.Tool) -> void:
 	if currentTool == tool:
 		return;
-	
+	editorManager.returnClick = false;
 	reset_tool_states();
 
 	if (currentTool == Global.Tool.CURSOR):

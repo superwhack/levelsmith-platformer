@@ -52,12 +52,12 @@ func place_entity(clickPosition: Vector2) -> void:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
 
 		# If it's an enemy, create a new property file
-		elif (toolManager.brushObject >= Global.EntityType.PATROLLING && toolManager.brushObject <= Global.EntityType.STATIONARY):
+		elif (toolManager.brushObject >= Global.EntityType.PATROLLING && toolManager.brushObject <= Global.EntityType.FLYING):
 			var time = Time.get_ticks_msec();
 			var saveBrush = toolManager.brushObject;
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
 			# Wait five frames, I really don't like doing it like this but I'm not sure of a better way.
-			for frame in range(1, 5):
+			while get_scene_at_cell(clickPosition) == null:
 				await get_tree().process_frame;
 			if (saveBrush == Global.EntityType.PATROLLING):
 				var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
@@ -66,7 +66,13 @@ func place_entity(clickPosition: Vector2) -> void:
 			elif (saveBrush == Global.EntityType.SHOOTING):
 				var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 				var newShooting: Resource = defaultShooting.duplicate(true);
+				get_scene_at_cell(clickPosition).adjust_arrow(90);
+				get_scene_at_cell(clickPosition).directionArrow.scale = Vector2(1, 1);
 				ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting" + str(time) + ".tres");
+			elif (saveBrush == Global.EntityType.FLYING):
+				var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
+				var newFlying: Resource = defaultFlying.duplicate(true);
+				ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying" + str(time) + ".tres");
 			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
@@ -116,6 +122,7 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 ## Moves the entity at the clicked position
 func move_entity() -> void:
 	# Await is needed to it has time to update selectedTile
+	toolManager.prevPosition = editorManager.currentMousePosition;
 	toolManager.prevEntity = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;
 	await get_tree().process_frame;
@@ -128,20 +135,32 @@ func move_entity() -> void:
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
-	place_entity(editorManager.currentMousePosition);
+	var position : Vector2;
+	if tileSet.get_cell_source_id(editorManager.currentMousePosition) >= Global.TileType.SOLID && tileSet.get_cell_source_id(editorManager.currentMousePosition) <= Global.EntityType.GOAL:
+		editorManager.isPlaceable = true;
+		position = toolManager.prevPosition;
+	else:
+		position = editorManager.currentMousePosition;
+	place_entity(position);
+	
+	for frame in range(1, 5):
+		await get_tree().process_frame;
+	if get_scene_at_cell(position) is Enemy && movingResource:
+		movingResource.position = position;
+		get_scene_at_cell(position).apply_script(movingResource);
+		if get_scene_at_cell(position) is EnemyShooting:
+			get_scene_at_cell(position).adjust_arrow(get_scene_at_cell(position).direction + 90);
+			get_scene_at_cell(position).directionArrow.scale = Vector2(1, 1);
+		ResourceSaver.save(movingResource, "res://Resources/Enemies/" + get_scene_at_cell(position).name + ".tres");
+		movingResource = null;
+		editorManager.reset_enemy_positions();
+	
 	if (toolManager.prevEntity != -2):
 		toolManager.brushObject = toolManager.prevEntity;
 	toolManager.prevEntity = -1;
+	toolManager.prevPosition = Vector2(0,0);
 	toolManager.currentObjectRotation = toolManager.prevRotation;
 	toolManager.isMoving = false;
-	for frame in range(1, 5):
-		await get_tree().process_frame;
-	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy && movingResource:
-		movingResource.position = editorManager.currentMousePosition;
-		get_scene_at_cell(editorManager.currentMousePosition).apply_script(movingResource);
-		ResourceSaver.save(movingResource, "res://Resources/Enemies/" + get_scene_at_cell(editorManager.currentMousePosition).name + ".tres");
-		movingResource = null;
-		editorManager.reset_enemy_positions();
 
 func scan_goals(xSize: int, ySize: int) -> void:
 	goalCount = 0;

@@ -82,6 +82,7 @@ func main_menu() -> void:
 
 ## Swap to edit state
 func edit() -> void:
+	toolManager.change_tool(Global.Tool.BRUSH);
 	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
@@ -91,6 +92,7 @@ func edit() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
+	editorManager.returnClick = true;
 	editorManagerCanvas.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
@@ -100,14 +102,13 @@ func edit() -> void:
 
 ## Swap to play state
 func play() -> void:
-	if (!editorManager.playerExists && !editorManager.goalExists):
-		PopUpManager.create_error_popup("Cannot Start Level", "Level cannot be started, there is no goal or player placed down!");
-		return;
-	elif (!editorManager.playerExists):
-		PopUpManager.create_error_popup("Cannot Start Level", "Level cannot be started, there is no player placed down!");
-		return;
-	elif (!editorManager.goalExists):
-		PopUpManager.create_error_popup("Cannot Start Level", "Level cannot be started, there is no goal placed down!");
+	var errors : Array[String];
+	if (!editorManager.playerExists):
+		errors.append("There is no player placed down.")
+	if (!editorManager.goalExists):
+		errors.append("There is no goal placed down.")
+	if errors.size() != 0:
+		PopUpManager.create_multi_error_popup("Cannot Start Level", errors);
 		return;
 	propertyMenu.close();
 	AudioManager.play_music("LevelMusic");

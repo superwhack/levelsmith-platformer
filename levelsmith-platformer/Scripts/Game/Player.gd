@@ -10,6 +10,9 @@ extends CharacterBody2D
 @export var fallSpeed := 1.0;
 # Determines how long after leaving a platform you can still jump
 @export var coyoteTime := 0.2;
+
+@export var iceSpeedCap := 10;
+
 var coyoteTimeLeft = 0;
 # TODO: Make FPS dependant on a global FPS initailly instead of being set to 24
 # TODO: Impliment animations and use this
@@ -93,12 +96,11 @@ func run() -> void:
 		accelerationX *= airControl * airControl;
 	if (currentFriction != 1.0):
 		accelerationX *= currentFriction * currentFriction;
-		if (abs(velocity.x) > trueSpeed):
-			accelerationX *= .25;
-			#velocity.x *= .95;
-		elif (abs(velocity.x) > trueSpeed * 2.5):
+		if (abs(velocity.x) > trueSpeed * iceSpeedCap):
 			accelerationX = 0;
 			velocity.x *= .9;
+		elif (abs(velocity.x) > trueSpeed):
+			accelerationX *= .25;
 	
 	if (abs(velocity.x) > trueSpeed && currentFriction == 1.0):
 		accelerationX = 0;

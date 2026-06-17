@@ -21,9 +21,6 @@ var spawnpoint := Vector2(0, 0);
 @export var raycasts : Array[RayCast2D];
 @export var downwardsRaycasts : Array[RayCast2D];
 
-# Audio manager export
-#@export var audioManager : Node;
-
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
 const maxHealth := 1;
 var health := maxHealth
@@ -49,13 +46,13 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
+	check_out_of_bounds();
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair, and reset friction.
 	if not is_on_floor():
 		if coyoteTimeLeft > 0:
 			coyoteTimeLeft -= delta;
 		velocity += get_gravity() * delta * fallSpeed;
-		currentFriction = 1.0;
 	else:
 		coyoteTimeLeft = coyoteTime;
 	
@@ -71,12 +68,14 @@ func _physics_process(delta: float) -> void:
 	# Handle A and D inputs, as well as lack of directional input
 	run();
 	
+	
 	# Look at what the player is colliding with and apply effects
 	move_and_slide();
 
 ## Make the player jump
 func jump() -> void:
 	AudioManager.play_effect("PlayerJump");
+	currentFriction = 1.0;
 	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
@@ -86,18 +85,27 @@ func run() -> void:
 	var direction := Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if direction:
-		accelerationX = direction * trueSpeed;
+		accelerationX = direction * trueSpeed * .5;
 	else:
 		accelerationX = -velocity.x;
 	
 	# Friction and air control
-	accelerationX *= currentFriction * currentFriction;
 	if not is_on_floor():
 		accelerationX *= airControl * airControl;
-
+	if (currentFriction != 1.0):
+		accelerationX *= currentFriction * currentFriction;
+		if (abs(velocity.x) > trueSpeed):
+			accelerationX *= .25;
+			#velocity.x *= .95;
+		elif (abs(velocity.x) > trueSpeed * 2.5):
+			accelerationX = 0;
+			velocity.x *= .9;
+	
+	if (abs(velocity.x) > trueSpeed && currentFriction == 1.0):
+		accelerationX = 0;
+		velocity.x *= .9;
 	# Adjust velocity by acceleration
 	velocity.x += accelerationX;
-	velocity.x = clamp(velocity.x, -trueSpeed, trueSpeed);
 
 ## Have the player take damage
 ## amount: damage to deal
@@ -143,51 +151,62 @@ func detect_tiles() -> void:
 		if raycast.is_colliding():
 			slideCollisions.push_back(raycast);
 	
-	var finishedCollisions : Array;
 	# Check all current collisions
 	for i in slideCollisions.size():
 		var collider = slideCollisions[i].get_collider();
-		if (finishedCollisions.has(collider)):
-			continue;
-		finishedCollisions.append(collider);
-		# Only have collisions confer effects if they are below the player
+		# Have collisions with tiles confer effects
 		if collider is TileMapLayer:
 			# Use the global coord to find tile collision
-			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position);
+			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position + slideCollisions[i].target_position * .1);
 			var tileData = collider.get_cell_tile_data(tilePos);
-			# STRETCH: Parts of this code would be used to get the player to bounce when hitting bounce tiles at different angles
-			# it needs an adjustment to acceleration/velocity x logic to work.
-			#if tileData && (tileData.get_custom_data("name") == "bounce"):
-				#if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
-					#if slideCollisions[i].target_position.x < 0:
-						#velocity.x += 1000 * tileData.get_custom_data("bounce");
-					#else:
-						#velocity.x += 1000 * tileData.get_custom_data("bounce");
-				#else:
-					#if slideCollisions[i].target_position.y < 0:
-						#velocity.y += 1000 * tileData.get_custom_data("bounce");
-					#else:
-						#velocity.y += -1000 * tileData.get_custom_data("bounce");
+			# Bounce tile collisions
+			if tileData && (tileData.get_custom_data("name") == "bounce"):
+				# Horizontal Bounces
+				if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
+					if slideCollisions[i].target_position.x < 0:
+						velocity.x = 3000 * tileData.get_custom_data("bounce");
+					else:
+						velocity.x = -3000 * tileData.get_custom_data("bounce");
+					if Input.is_action_pressed("jump"):
+						velocity.y = -500 * tileData.get_custom_data("bounce");
+				# Vertical Bounces
+				else:
+					if slideCollisions[i].target_position.y < 0:
+						velocity.y = 1000 * tileData.get_custom_data("bounce");
+					else:
+						velocity.y = -1000 * tileData.get_custom_data("bounce");
+			if tileData && (tileData.get_custom_data("name") == "slow"):
+				# Horizontal Stick
+				if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
+					velocity.y *= .75;
+					# NOTE: Uncomment this out if we want to be able to wall jump on sticky tiles
+					#if Input.is_action_just_pressed("jump") && !is_on_floor():
+					#	if slideCollisions[i].target_position.x < 0:
+					#		velocity.x = jumpHeight * 520;
+					#	else:
+					#		velocity.x = -jumpHeight * 520;
+					#	velocity.y = -jumpHeight * 220;;
+				# Vertical Stick
+				else:
+					if slideCollisions[i].target_position.y < 0:
+						velocity.y = 0;
+						if Input.is_action_just_pressed("down"):
+							while slideCollisions[i].is_colliding():
+								position += Vector2(0, 1);
+								slideCollisions[i].force_raycast_update();
+					currentSlowdown = .5;
 			if tileData && (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i])):
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):
 					"oneway":
 						if Input.is_action_just_pressed("down"):
 							position += Vector2(0, 1);
-					# Bounce the player up
-					"bounce":
-						velocity.y = -1000 * tileData.get_custom_data("bounce");
-						coyoteTimeLeft = 0;
-					# Deal damage to the player
 					"hazard":
 						take_damage(1);
 					# Set friction for the player to slide
 					"ice":
 						currentFriction = tileData.get_custom_data("friction");
-					# Apply a slowdown to player movement and jumps
-					"slow":
-						currentSlowdown = .5;
-						
+
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> void:
 	var masterManager : Node2D = get_tree().current_scene;

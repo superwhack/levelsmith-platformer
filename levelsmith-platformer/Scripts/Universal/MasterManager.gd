@@ -91,6 +91,7 @@ func edit() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
+	editorManager.returnClick = true;
 	editorManagerCanvas.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
@@ -172,4 +173,5 @@ func _process(_delta: float) -> void:
 			editorManager.reset_enemy_positions();
 			await get_tree().process_frame;
 			ImportExportManager.import_JSON(editorManager.tileSet, propertyMenu)
+			propertyMenu._on_preset_options_item_selected(4);
 		editorManager.check_goal_exists();

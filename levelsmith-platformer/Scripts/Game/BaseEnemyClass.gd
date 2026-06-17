@@ -15,6 +15,7 @@ func _ready() -> void:
 
 ## process gravity every frame
 func _physics_process(delta: float) -> void:
+	check_out_of_bounds();
 	apply_gravity(delta)
 
 ## Adds gravity
@@ -31,6 +32,18 @@ func take_damage(amount: int = 1) -> void:
 func die() -> void:
 	AudioManager.play_effect("EnemyDeath");
 	queue_free()
+
+## When the enemy walks/falls out of bounds, force kill them
+func check_out_of_bounds() -> void:
+	var masterManager : Node2D = get_tree().current_scene;
+	
+	# There is a 1 tile leeway given to enemies who leave bounds, before death
+	if (global_position.x < (-1) * Global.tileSize
+	|| global_position.x > (masterManager.worldSize.y + 1) * Global.tileSize
+	|| global_position.y < (-1) * Global.tileSize
+	|| global_position.y > (masterManager.worldSize.x + 1) * Global.tileSize):
+		print("Player OOB: ", global_position)
+		die();
 
 ## OVERRIDE
 ## Assigns the script of the given ID (located in the Resources/Enemies folder) to an enemy at the given position.

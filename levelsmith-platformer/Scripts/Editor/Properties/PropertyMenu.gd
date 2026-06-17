@@ -9,7 +9,7 @@ var selectedEntity: Node2D;
 @export var playerMenu: VBoxContainer;
 @export var flyingMenu: VBoxContainer;
 @export var patrollingMenu: MarginContainer;
-@export var shootingMenu: VBoxContainer;
+@export var shootingMenu: MarginContainer;
 
 # Player values
 var playerSpeed: float;

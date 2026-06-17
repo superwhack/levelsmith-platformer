@@ -14,7 +14,10 @@ var restricted : bool;
 @export var rayCastDownL : RayCast2D;
 @export var rayCastDownR : RayCast2D;
 
+@export var directionArrow : Sprite2D;
+
 func _physics_process(delta: float) -> void:
+	directionArrow.hide();
 	# Gravity
 	super._physics_process(delta);
 	
@@ -45,14 +48,22 @@ func patrol_behavior() -> void:
 			else:
 				direction = -1;
 
+func adjust_arrow(angle: float) -> void:
+	directionArrow.rotation_degrees = angle;
+	directionArrow.position.x = sin(deg_to_rad(directionArrow.rotation_degrees)) * 90;
+	directionArrow.position.y = -cos(deg_to_rad(directionArrow.rotation_degrees)) * 90;
+
 func assign_script(id: String, position: Vector2i) -> void:
 	propertyFile = load("res://Resources/Enemies/Patrol" + id + ".tres");
 	name = "Patrol" + id;
 	propertyFile.position = position;
 	groundSpeed = propertyFile.groundSpeed; 
+	direction = -(int(propertyFile.direction) * 2 - 1);
 	restricted = propertyFile.restricted; 
 
 func apply_script(file: Resource) -> void:
 	propertyFile = file;
 	groundSpeed = propertyFile.groundSpeed;
+	print(direction);
+	direction = -(int(propertyFile.direction) * 2 - 1);
 	restricted = propertyFile.restricted;  

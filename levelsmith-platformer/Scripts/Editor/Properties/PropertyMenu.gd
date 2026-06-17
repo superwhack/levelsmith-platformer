@@ -27,6 +27,7 @@ var playerCoyoteTime : float;
 
 # Patrolling inputs
 @export var patrollingSpeedSlider: VBoxContainer;
+@export var patrollingDirectionCheckbox: VBoxContainer;
 @export var patrollingRestrictedCheckbox: VBoxContainer;
 
 # Flying inputs
@@ -67,6 +68,7 @@ func _process(delta: float) -> void:
 	if (selectedEntity != null):
 		if selectedEntity is EnemyPatrol:
 			entityName.text = "Patrolling Enemy";
+			selectedEntity.adjust_arrow(int(patrollingDirectionCheckbox.value) * 180 + 90);
 		elif  selectedEntity is EnemyFlyer:
 			entityName.text = "Flying Enemy";
 		elif selectedEntity is EnemyShooting:
@@ -124,8 +126,10 @@ func update_sliders() -> void:
 	# Enemies
 	if selectedEntity is EnemyPatrol:
 		patrollingSpeedSlider.value = selectedPreset.groundSpeed;
+		patrollingDirectionCheckbox.value = selectedPreset.direction;
 		patrollingRestrictedCheckbox.value = selectedPreset.restricted;
 		patrollingSpeedSlider.update_slider();
+		patrollingDirectionCheckbox.update_checkbox();
 		patrollingRestrictedCheckbox.update_checkbox();
 	if selectedEntity is EnemyFlyer:
 		flyingSpeedSlider.value = selectedPreset.speed;
@@ -154,12 +158,12 @@ func update_values() -> void:
 	
 	if selectedEntity is EnemyPatrol:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
+		selectedPreset.direction = patrollingDirectionCheckbox.value;
 		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	if selectedEntity is EnemyFlyer:
 		selectedPreset.speed = flyingSpeedSlider.value;
 		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.tileSize, flyingOffsetYSlider.value * Global.tileSize);
-		print(selectedPreset.pointBOffset);
 		update_flying_preview();
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyShooting:
@@ -189,6 +193,7 @@ func show_menu(resource: Resource = null) -> void:
 		selectedPreset = resource;
 		update_sliders();
 		if selectedEntity is EnemyPatrol:
+			shootingDirectionArrow = selectedEntity.directionArrow;
 			patrollingMenu.show();
 		elif selectedEntity is EnemyFlyer:
 			flyingMenu.show()

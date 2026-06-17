@@ -39,6 +39,7 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 		if enemyProperty.contains("Patrol"):
 			data_to_send += '"type":"patrolling", "stats":{';
 			data_to_send += '"speed": ' + str(propertyFile.groundSpeed) + ", ";
+			data_to_send += '"direction": ' + str(propertyFile.direction) + ", ";
 			data_to_send += '"restricted": ' + str(propertyFile.restricted) + '}}';
 		elif enemyProperty.contains("Shooting"):
 			data_to_send += '"type":"shooting", "stats":{';
@@ -166,6 +167,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 					var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 					var newPatrolling: Resource = defaultPatrolling.duplicate(true);
 					newPatrolling.groundSpeed = enemy.stats.speed;
+					newPatrolling.direction = enemy.stats.direction;
 					newPatrolling.restricted = enemy.stats.restricted;
 					ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));

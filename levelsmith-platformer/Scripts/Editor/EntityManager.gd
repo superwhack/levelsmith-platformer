@@ -64,6 +64,8 @@ func place_entity(clickPosition: Vector2) -> void:
 			if (saveBrush == Global.EntityType.PATROLLING):
 				var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 				var newPatrolling: Resource = defaultPatrolling.duplicate(true);
+				get_scene_at_cell(clickPosition).adjust_arrow(90);
+				get_scene_at_cell(clickPosition).directionArrow.scale = Vector2(1, 1);
 				ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol" + str(time) + ".tres");
 			elif (saveBrush == Global.EntityType.SHOOTING):
 				var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
@@ -161,6 +163,9 @@ func drop_entity() -> void:
 		get_scene_at_cell(position).apply_script(movingResource);
 		if get_scene_at_cell(position) is EnemyShooting:
 			get_scene_at_cell(position).adjust_arrow(get_scene_at_cell(position).direction + 90);
+			get_scene_at_cell(position).directionArrow.scale = Vector2(1, 1);
+		elif get_scene_at_cell(position) is EnemyPatrol:
+			get_scene_at_cell(position).adjust_arrow(int(get_scene_at_cell(position).direction) * 180 + 90);
 			get_scene_at_cell(position).directionArrow.scale = Vector2(1, 1);
 		ResourceSaver.save(movingResource, "res://Resources/Enemies/" + get_scene_at_cell(position).name + ".tres");
 		movingResource = null;

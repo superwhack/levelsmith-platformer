@@ -5,4 +5,5 @@ extends Resource
 
 # Variables for enemy movement stats
 @export var groundSpeed : float;
+@export var direction : bool;
 @export var restricted : bool;

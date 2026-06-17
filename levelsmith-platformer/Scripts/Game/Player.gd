@@ -10,6 +10,9 @@ extends CharacterBody2D
 @export var fallSpeed := 1.0;
 # Determines how long after leaving a platform you can still jump
 @export var coyoteTime := 0.2;
+
+@export var iceSpeedCap := 10;
+
 var coyoteTimeLeft = 0;
 # TODO: Make FPS dependant on a global FPS initailly instead of being set to 24
 # TODO: Impliment animations and use this
@@ -46,7 +49,8 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
-	check_out_of_bounds();
+	if check_out_of_bounds():
+		return;
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair, and reset friction.
 	if not is_on_floor():
@@ -75,7 +79,6 @@ func _physics_process(delta: float) -> void:
 ## Make the player jump
 func jump() -> void:
 	AudioManager.play_effect("PlayerJump");
-	currentFriction = 1.0;
 	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
@@ -85,25 +88,26 @@ func run() -> void:
 	var direction := Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if direction:
-		accelerationX = direction * trueSpeed * .5;
+		accelerationX = direction * trueSpeed;
+	# NOTE: I'd love to get this to work nicer since right now moving can feel a little jagged.
 	else:
-		accelerationX = -velocity.x;
+		accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 	
 	# Friction and air control
 	if not is_on_floor():
 		accelerationX *= airControl * airControl;
 	if (currentFriction != 1.0):
-		accelerationX *= currentFriction * currentFriction;
-		if (abs(velocity.x) > trueSpeed):
-			accelerationX *= .25;
-			#velocity.x *= .95;
-		elif (abs(velocity.x) > trueSpeed * 2.5):
+		accelerationX *= currentFriction * currentFriction * currentFriction;
+		if (abs(velocity.x) > trueSpeed * iceSpeedCap):
 			accelerationX = 0;
 			velocity.x *= .9;
-	
-	if (abs(velocity.x) > trueSpeed && currentFriction == 1.0):
+		elif (abs(velocity.x) > trueSpeed):
+			if (velocity.x < 0 && accelerationX < 0) || (velocity.x > 0 && accelerationX > 0):
+				accelerationX *= .1;
+	elif (abs(velocity.x) > trueSpeed && currentFriction == 1.0):
 		accelerationX = 0;
 		velocity.x *= .9;
+		
 	# Adjust velocity by acceleration
 	velocity.x += accelerationX;
 
@@ -140,10 +144,6 @@ func bounce() -> void:
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
-	# If there is a collision then reset savedFriction and savedSlowdown
-	if get_slide_collision_count() != 0:
-		currentFriction = 1.0;
-		currentSlowdown = 1.0;
 	
 	# Check all collisions with raycasts
 	var slideCollisions: Array[RayCast2D] = [];
@@ -157,7 +157,7 @@ func detect_tiles() -> void:
 		# Have collisions with tiles confer effects
 		if collider is TileMapLayer:
 			# Use the global coord to find tile collision
-			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position + slideCollisions[i].target_position * .1);
+			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position * 1.1);
 			var tileData = collider.get_cell_tile_data(tilePos);
 			# Bounce tile collisions
 			if tileData && (tileData.get_custom_data("name") == "bounce"):
@@ -196,6 +196,9 @@ func detect_tiles() -> void:
 								slideCollisions[i].force_raycast_update();
 					currentSlowdown = .5;
 			if tileData && (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i])):
+				if tileData.get_custom_data("name") != "bounce":
+					currentFriction = 1.0;
+					currentSlowdown = 1.0;
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):
 					"oneway":
@@ -208,16 +211,18 @@ func detect_tiles() -> void:
 						currentFriction = tileData.get_custom_data("friction");
 
 ## When the player walks/falls out of bounds, force kill them
-func check_out_of_bounds() -> void:
+func check_out_of_bounds() -> bool:
 	var masterManager : Node2D = get_tree().current_scene;
 	
 	# There is a 1 tile leeway given to players who leave bounds, before deth
 	if (self.global_position.x < (-1) * Global.tileSize
-	|| self.global_position.x > (masterManager.worldSize.y + 2) * Global.tileSize
+	|| self.global_position.x > (masterManager.worldSize.x + 2) * Global.tileSize
 	|| self.global_position.y < (-1) * Global.tileSize
-	|| self.global_position.y > (masterManager.worldSize.x + 2) * Global.tileSize):
+	|| self.global_position.y > (masterManager.worldSize.y + 2) * Global.tileSize):
 		print("Player OOB: ", self.global_position)
 		die();
+		return true;
+	return false;
 
 ## Applies the player selected player movement preset to the player
 func apply_preset(preset: PlayerMovementPreset) -> void:

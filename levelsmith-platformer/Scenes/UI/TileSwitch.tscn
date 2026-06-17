@@ -3,22 +3,23 @@
 [ext_resource type="Script" uid="uid://e6pkeumdahqd" path="res://Scripts/Editor/TileSwitch.gd" id="1_aauec"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_krx33"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="3_pggt4"]
-[ext_resource type="Texture2D" uid="uid://nbyf7ntsvf5t" path="res://Assets/Defaults/Assets/Sprites/Tiles/OneWay.png" id="4_goodf"]
-[ext_resource type="Texture2D" uid="uid://caj3o14oh4crl" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="5_pggt4"]
-[ext_resource type="Texture2D" uid="uid://b63gckij8dqfm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Ice.png" id="6_h6q5o"]
-[ext_resource type="Texture2D" uid="uid://jmf5gtsq1567" path="res://Assets/Defaults/Assets/Sprites/Tiles/Sticky.png" id="7_0gefc"]
-[ext_resource type="Texture2D" uid="uid://bkcc0w1hmvglm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="8_g7c4e"]
-[ext_resource type="Texture2D" uid="uid://bbcy0kmr8f8fs" path="res://Assets/Defaults/Assets/Sprites/Tiles/Slope.png" id="9_vup42"]
+[ext_resource type="Texture2D" uid="uid://c2cmw8sxi6w3t" path="res://Assets/Defaults/Assets/Sprites/Tiles/OneWay.png" id="4_goodf"]
+[ext_resource type="Texture2D" uid="uid://bfihlk8cogb0q" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="5_pggt4"]
+[ext_resource type="Texture2D" uid="uid://cv27ok0ogc0qq" path="res://Assets/Defaults/Assets/Sprites/Tiles/Ice.png" id="6_h6q5o"]
+[ext_resource type="Texture2D" uid="uid://dgmuwffx12gix" path="res://Assets/Defaults/Assets/Sprites/Tiles/Sticky.png" id="7_0gefc"]
+[ext_resource type="Texture2D" uid="uid://djug6sv47earm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="8_g7c4e"]
+[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Defaults/Assets/Sprites/Tiles/Slope.png" id="9_vup42"]
 [ext_resource type="PackedScene" uid="uid://dqlxqwdmgred1" path="res://Scenes/UI/TilebarButton.tscn" id="10_goodf"]
-[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="11_goodf"]
-[ext_resource type="Texture2D" uid="uid://2hfbf5bqyhy4" path="res://Assets/Sprites/Entities/dude.png" id="12_goodf"]
-[ext_resource type="Texture2D" uid="uid://bggaro288ywls" path="res://Assets/Sprites/Entities/baddude.png" id="13_segfj"]
-[ext_resource type="Texture2D" uid="uid://dudaj286mtb5r" path="res://Assets/Defaults/Assets/Sprites/Props/Prop1.png" id="14_goodf"]
-[ext_resource type="Texture2D" uid="uid://ley11fufty2q" path="res://Assets/Defaults/Assets/Sprites/Entities/ShootingStill.png" id="14_pggt4"]
-[ext_resource type="Texture2D" uid="uid://chggq6e7ba445" path="res://Assets/Defaults/Assets/Sprites/Props/Prop2.png" id="15_pggt4"]
-[ext_resource type="Texture2D" uid="uid://dcqjir1mjbsba" path="res://Assets/Defaults/Assets/Sprites/Props/Prop3.png" id="16_h6q5o"]
-[ext_resource type="Texture2D" uid="uid://bid37wc2jht51" path="res://Assets/Defaults/Assets/Sprites/Props/Prop4.png" id="17_0gefc"]
-[ext_resource type="Texture2D" uid="uid://b6mjrxfs8pect" path="res://Assets/Defaults/Assets/Sprites/Props/Prop5.png" id="18_g7c4e"]
+[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Defaults/Assets/Sprites/Entities/Goal.png" id="11_goodf"]
+[ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="12_goodf"]
+[ext_resource type="Texture2D" uid="uid://hlyall14hts0" path="res://Assets/Sprites/Entities/baddude.png" id="13_segfj"]
+[ext_resource type="Texture2D" uid="uid://cf8kf58h2lt2s" path="res://Assets/Defaults/Assets/Sprites/Props/Prop1.png" id="14_goodf"]
+[ext_resource type="Texture2D" uid="uid://b8ss2paod0h8x" path="res://Assets/Defaults/Assets/Sprites/Entities/ShootingStill.png" id="14_pggt4"]
+[ext_resource type="Texture2D" uid="uid://dxv2aa1ba656r" path="res://Assets/Sprites/Entities/Flying.png" id="15_h6q5o"]
+[ext_resource type="Texture2D" uid="uid://dt2a383mg845m" path="res://Assets/Defaults/Assets/Sprites/Props/Prop2.png" id="15_pggt4"]
+[ext_resource type="Texture2D" uid="uid://bq4ixludyuv4l" path="res://Assets/Defaults/Assets/Sprites/Props/Prop3.png" id="16_h6q5o"]
+[ext_resource type="Texture2D" uid="uid://biqnms6vul5oa" path="res://Assets/Defaults/Assets/Sprites/Props/Prop4.png" id="17_0gefc"]
+[ext_resource type="Texture2D" uid="uid://dm3c7xg21m00w" path="res://Assets/Defaults/Assets/Sprites/Props/Prop5.png" id="18_g7c4e"]
 
 [node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "solidTileButton", "oneWayTileButton", "deathTileButton", "iceTileButton", "stickyTileButton", "bounceTileButton", "slopeTileButton", "propOneButton", "propTwoButton", "propThreeButton", "propFourButton", "propFiveButton")]
 offset_right = 669.0
@@ -161,6 +162,12 @@ theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
 icon = ExtResource("14_pggt4")
 
+[node name="FlyingObjectButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=709802387]
+layout_mode = 2
+theme = ExtResource("3_pggt4")
+theme_type_variation = &"TileButton"
+icon = ExtResource("15_h6q5o")
+
 [node name="Props" type="HBoxContainer" parent="EntityPickerUI/MarginContainer/Tabs" unique_id=1986159458]
 visible = false
 layout_mode = 2
@@ -201,3 +208,4 @@ tilebar = NodePath("../../../../..")
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]
 [connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/ShootingObjectButton" to="." method="_on_shooting_object_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/FlyingObjectButton" to="." method="_on_flying_object_button_pressed"]

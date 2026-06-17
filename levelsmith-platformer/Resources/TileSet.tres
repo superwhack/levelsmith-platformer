@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://fa087075jo5q" path="res://Assets/Sprites/Entities/Props/Prop3.png" id="5_nbee4"]
 [ext_resource type="Texture2D" uid="uid://babvjdloy7c3t" path="res://Assets/Sprites/Tiles/bounce.png" id="6_me1w5"]
 [ext_resource type="Texture2D" uid="uid://b3s4y2bfc4wd" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="6_nbee4"]
-[ext_resource type="PackedScene" uid="uid://cpu8sjs1orke7" path="res://Scenes/Preview/FlyingPreview.tscn" id="6_pqfav"]
+[ext_resource type="PackedScene" uid="uid://bl34k1jvcme78" path="res://Scenes/Preview/FlyingPreview.tscn" id="6_pqfav"]
 [ext_resource type="Texture2D" uid="uid://dg2131vb2y8s8" path="res://Assets/Sprites/Entities/Props/Prop5.png" id="7_eksy4"]
 [ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Sprites/Tiles/slope.png" id="7_jbnof"]
 [ext_resource type="PackedScene" uid="uid://87eq7bxythec" path="res://Scenes/Entities/Player.tscn" id="8_alyph"]
@@ -49,6 +49,11 @@ texture_region_size = Vector2i(128, 128)
 resource_name = "Shooting"
 scenes/1/scene = ExtResource("3_k4kw2")
 scenes/2/scene = ExtResource("4_3boqi")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_eqdrb"]
+resource_name = "Flying"
+scenes/1/scene = ExtResource("5_3boqi")
+scenes/2/scene = ExtResource("6_pqfav")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eksy4"]
 texture = ExtResource("3_r4n42")

@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://cpu8sjs1orke7"]
-
-[ext_resource type="Texture2D" uid="uid://cn6as0kfe2yl1" path="res://Assets/Defaults/Assets/Sprites/Entities/FlyingStill.png" id="1_vc2xk"]
-
-[node name="Sprite2D" type="Sprite2D" unique_id=1656018661]
-texture = ExtResource("1_vc2xk")

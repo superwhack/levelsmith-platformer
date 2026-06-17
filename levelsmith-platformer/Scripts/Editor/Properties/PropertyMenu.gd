@@ -7,7 +7,6 @@ var selectedEntity: Node2D;
 @export var entityName: Label;
 
 @export var playerMenu: VBoxContainer;
-@export var flyingMenu: VBoxContainer;
 @export var patrollingMenu: MarginContainer;
 @export var shootingMenu: MarginContainer;
 
@@ -29,12 +28,6 @@ var playerCoyoteTime : float;
 @export var patrollingSpeedSlider: VBoxContainer;
 @export var patrollingRestrictedCheckbox: VBoxContainer;
 
-# Flying inputs
-@export var flyingSpeedSlider: VBoxContainer;
-@export var flyingOffsetXSlider: VBoxContainer;
-@export var flyingOffsetYSlider: VBoxContainer;
-var previewLine: Line2D;
-
 # Shooting inputs
 @export var shootingDirectionSlider: VBoxContainer;
 var shootingDirectionArrow: Sprite2D;
@@ -54,8 +47,6 @@ func _ready() -> void:
 
 ## Close the property menu and set the selected entity to null
 func close() -> void:
-	if previewLine:
-		previewLine.hide()
 	if shootingDirectionArrow:
 		shootingDirectionArrow.scale = Vector2(1,1);
 		shootingDirectionArrow = null;
@@ -67,8 +58,6 @@ func _process(delta: float) -> void:
 	if (selectedEntity != null):
 		if selectedEntity is EnemyPatrol:
 			entityName.text = "Patrolling Enemy";
-		elif  selectedEntity is EnemyFlyer:
-			entityName.text = "Flying Enemy";
 		elif selectedEntity is EnemyShooting:
 			entityName.text = "Shooting Enemy";
 			selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
@@ -99,15 +88,6 @@ func update_custom() -> void:
 	customPreset.coyoteTime = playerCoyoteTime;
 	ResourceSaver.save(customPreset, "res://Resources/PlayerPresets/Custom.tres");
 
-func update_flying_preview() -> void:
-	if selectedEntity == null:
-		return;
-	var offset := Vector2(flyingOffsetXSlider.value * Global.tileSize,flyingOffsetYSlider.value * Global.tileSize);
-	previewLine.global_position = selectedEntity.global_position;
-	previewLine.clear_points()
-	previewLine.add_point(Vector2.ZERO)
-	previewLine.add_point(offset)
-
 ## Update all sliders according to the values
 func update_sliders() -> void:
 	playerSpeedSlider.value = playerSpeed;
@@ -127,13 +107,6 @@ func update_sliders() -> void:
 		patrollingRestrictedCheckbox.value = selectedPreset.restricted;
 		patrollingSpeedSlider.update_slider();
 		patrollingRestrictedCheckbox.update_checkbox();
-	if selectedEntity is EnemyFlyer:
-		flyingSpeedSlider.value = selectedPreset.speed;
-		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.tileSize;
-		flyingOffsetYSlider.value = selectedPreset.pointBOffset.y / Global.tileSize;
-		flyingSpeedSlider.update_slider();
-		flyingOffsetXSlider.update_slider();
-		flyingOffsetYSlider.update_slider();
 	elif selectedEntity is EnemyShooting:
 		shootingDirectionSlider.value = -selectedPreset.direction;
 		shootingShotSpeedSlider.value = selectedPreset.shotSpeed;
@@ -143,6 +116,7 @@ func update_sliders() -> void:
 		shootingShotSpeedSlider.update_slider();
 		shootingFireRateSlider.update_slider();
 		shootingProjectileBounce.update_checkbox();
+	
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:
@@ -155,12 +129,6 @@ func update_values() -> void:
 	if selectedEntity is EnemyPatrol:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
 		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
-		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
-	if selectedEntity is EnemyFlyer:
-		selectedPreset.speed = flyingSpeedSlider.value;
-		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.tileSize, flyingOffsetYSlider.value * Global.tileSize);
-		print(selectedPreset.pointBOffset);
-		update_flying_preview();
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyShooting:
 		selectedPreset.direction = -shootingDirectionSlider.value;
@@ -183,19 +151,12 @@ func show_menu(resource: Resource = null) -> void:
 		shootingDirectionArrow = null;
 	playerMenu.hide();
 	patrollingMenu.hide();
-	flyingMenu.hide();
 	shootingMenu.hide();
 	if selectedEntity is Enemy:
 		selectedPreset = resource;
 		update_sliders();
 		if selectedEntity is EnemyPatrol:
 			patrollingMenu.show();
-		elif selectedEntity is EnemyFlyer:
-			flyingMenu.show()
-			previewLine = selectedEntity.previewLine
-			if previewLine:
-				previewLine.show()
-				update_flying_preview()
 		elif selectedEntity is EnemyShooting:
 			shootingDirectionArrow = selectedEntity.directionArrow;
 			shootingDirectionArrow.scale = Vector2(2,2);

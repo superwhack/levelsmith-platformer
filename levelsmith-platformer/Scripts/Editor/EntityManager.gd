@@ -52,7 +52,7 @@ func place_entity(clickPosition: Vector2) -> void:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
 
 		# If it's an enemy, create a new property file
-		elif (toolManager.brushObject >= Global.EntityType.PATROLLING && toolManager.brushObject <= Global.EntityType.FLYING):
+		elif (toolManager.brushObject >= Global.EntityType.PATROLLING && toolManager.brushObject <= Global.EntityType.STATIONARY):
 			var time = Time.get_ticks_msec();
 			var saveBrush = toolManager.brushObject;
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
@@ -69,10 +69,6 @@ func place_entity(clickPosition: Vector2) -> void:
 				get_scene_at_cell(clickPosition).adjust_arrow(90);
 				get_scene_at_cell(clickPosition).directionArrow.scale = Vector2(1, 1);
 				ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting" + str(time) + ".tres");
-			elif (saveBrush == Global.EntityType.FLYING):
-				var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
-				var newFlying: Resource = defaultFlying.duplicate(true);
-				ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying" + str(time) + ".tres");
 			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);

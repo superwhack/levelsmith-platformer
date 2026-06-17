@@ -306,7 +306,7 @@ text = "X: "
 layout_mode = 2
 min_value = 2.0
 max_value = 9999.0
-value = 2.0
+value = 20.0
 
 [node name="GridRowY" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=993765537]
 layout_mode = 2
@@ -324,7 +324,7 @@ text = "Y: "
 layout_mode = 2
 min_value = 2.0
 max_value = 9999.0
-value = 2.0
+value = 20.0
 
 [node name="BottomSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=2094910545]
 custom_minimum_size = Vector2(0, 100)

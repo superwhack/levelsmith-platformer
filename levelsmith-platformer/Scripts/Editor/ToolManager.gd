@@ -54,7 +54,6 @@ func _process(_delta: float):
 func _input(event: InputEvent) -> void:
 	# Check viewport if the user is hovering over a UI element
 	if event.is_action_pressed("left-click"):
-		print("UI DETECTED")
 		clickOnUI = get_viewport().gui_get_hovered_control() != null;
 	# When released, the bool gets reset no matter what.
 	elif event.is_action_released("left-click"):

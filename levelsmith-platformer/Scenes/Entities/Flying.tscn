@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dbyqq48s1okmk"]
+
+[ext_resource type="Script" uid="uid://bg77a50ql5qcs" path="res://Scripts/Game/EnemyFlyer.gd" id="1_e2l54"]
+[ext_resource type="Texture2D" uid="uid://cko7n3rnho5cx" path="res://Assets/Sprites/Entities/flying-enemy.png" id="2_e2l54"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
+
+[node name="FlyingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("previewLine") groups=["Enemy"]]
+collision_layer = 6
+collision_mask = 6
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_e2l54")
+previewLine = NodePath("Line2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
+scale = Vector2(6.3, 6.3)
+shape = SubResource("CircleShape2D_lurgl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
+texture = ExtResource("2_e2l54")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
+default_color = Color(0.78039217, 0, 0.05490196, 0.8352941)

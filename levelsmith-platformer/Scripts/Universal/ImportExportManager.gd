@@ -100,7 +100,7 @@ func validate_import(directory: String) -> bool:
 		errors.append(levelPath + "Tiles.CSV does not exist!");
 	if errors.size() == 0:
 		return true;
-	PopUpManager.create_multi_error_popup("Level Import Failed from directory + " + levelPath + "!", errors);
+	PopUpManager.create_multi_error_popup("Level Import Failed from directory " + levelPath + "!", errors);
 	return false;
 
 ## Imports a level at the specified directory.

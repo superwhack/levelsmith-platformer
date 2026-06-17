@@ -48,7 +48,7 @@ func _ready() -> void:
 ## Close the property menu and set the selected entity to null
 func close() -> void:
 	if shootingDirectionArrow:
-		shootingDirectionArrow.hide();
+		shootingDirectionArrow.scale = Vector2(1,1);
 		shootingDirectionArrow = null;
 	hide();
 	selectedEntity = null;
@@ -147,7 +147,7 @@ func _on_drag_ended() -> void:
 	
 func show_menu(resource: Resource = null) -> void:
 	if shootingDirectionArrow:
-		shootingDirectionArrow.hide();
+		shootingDirectionArrow.scale = Vector2(1,1);
 		shootingDirectionArrow = null;
 	playerMenu.hide();
 	patrollingMenu.hide();
@@ -159,7 +159,7 @@ func show_menu(resource: Resource = null) -> void:
 			patrollingMenu.show();
 		elif selectedEntity is EnemyShooting:
 			shootingDirectionArrow = selectedEntity.directionArrow;
-			shootingDirectionArrow.show();
+			shootingDirectionArrow.scale = Vector2(2,2);
 			shootingMenu.show();
 	else:
 		playerMenu.show();

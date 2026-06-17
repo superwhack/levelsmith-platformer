@@ -33,8 +33,10 @@ func place_entity(clickPosition: Vector2) -> void:
 	if toolManager.brushObject >= Global.EntityType.PROP1 && (clickedTileId <= Global.EntityType.PROP1 && clickedTileId >= Global.EntityType.GOAL):
 		return;
 	
-	if (clickedTileId >= Global.EntityType.PATROLLING && clickedTileId <= Global.EntityType.STATIONARY):
+	if (clickedTileId >= Global.EntityType.PATROLLING && clickedTileId <= Global.EntityType.STATIONARY) || clickedTileId == Global.EntityType.GOAL:
 		delete_entity(clickPosition);
+		while get_scene_at_cell(clickPosition) != null:
+				await get_tree().process_frame;
 	
 	if (clickedTileId == Global.EntityType.PLAYER 
 	&& brushObject != Global.EntityType.PLAYER):
@@ -132,7 +134,8 @@ func move_entity() -> void:
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
 	var position : Vector2;
-	if tileSet.get_cell_source_id(editorManager.currentMousePosition) >= Global.TileType.SOLID && tileSet.get_cell_source_id(editorManager.currentMousePosition) <= Global.EntityType.GOAL:
+	var currentTile = tileSet.get_cell_source_id(editorManager.currentMousePosition);
+	if (currentTile >= Global.TileType.SOLID && currentTile < Global.EntityType.GOAL) || currentTile == Global.EntityType.PLAYER:
 		editorManager.isPlaceable = true;
 		position = toolManager.prevPosition;
 	else:

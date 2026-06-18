@@ -34,6 +34,10 @@ var returnClick: bool = false;
 # Stores the number of tiles made
 var tileCount : int = Global.TileType.size();
 
+## Runs when the node first enters the tree
+func _ready() -> void:
+	assetManagerButton.pressed.connect(open_asset_manager);
+
 ## Runs every frame during the editing state
 ## _delta: how much time has passed
 func _process(_delta: float) -> void:
@@ -48,7 +52,6 @@ func _process(_delta: float) -> void:
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
 
 	playButton.modulate = Color(1, 1, 1) if playerExists && goalExists else Color(1, 1, 1, 0.5);
-	assetManagerButton.pressed.connect(open_asset_manager);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;

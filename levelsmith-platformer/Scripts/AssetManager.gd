@@ -22,6 +22,10 @@ var audioToReplace: AudioStream;
 @export var animationsTab: VBoxContainer;
 @export var currentAssetLabel: Label;
 
+# Button references for connecting signals
+@export var loadFileButton: Button;
+@export var resetButton: Button;
+
 var firstSelected: AssetItem = null;
 
 const ASSET_BUTTON = preload("res://Scenes/UI/AssetItem.tscn");
@@ -42,6 +46,11 @@ var animations: Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "Enemy
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	loadFileButton.pressed.connect(open_image_selector);
+	resetButton.pressed.connect(reset_image);
+	imageSelect.file_selected.connect(replace_image);
+	
 	# Checks if the user has an assets root folder, creates one if not
 	var dir = DirAccess.open(filePath);
 	if (!dir):
@@ -98,7 +107,6 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 				# Return the loaded image
 				return image;
 		PopUpManager.create_error_popup("Cannot Load Asset","Image not valid. '.png' file required.");
-		#print("Image not valid");
 		return null;
 		
 	# If the path does not exist, print error

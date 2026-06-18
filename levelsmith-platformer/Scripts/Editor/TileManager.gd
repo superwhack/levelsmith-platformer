@@ -24,7 +24,7 @@ func place_tile(clickPosition: Vector2) -> void:
 	var clickedTileId = tileSet.get_cell_source_id(clickPosition);
 	
 	# If the cell is already of the same type, or if the cell is occupied by an entity, don't overwrite
-	if (clickedTileId == brushObject 
+	if ((clickedTileId != Global.TileType.SLOPE && clickedTileId == brushObject) 
 	|| clickedTileId >= editorManager.tileCount): 
 		return;
 	

@@ -23,12 +23,22 @@ extends HBoxContainer
 @export var bounceTileButton: Button;
 @export var slopeTileButton: Button;
 
+# References to all Entity buttons;
+@export var goalEntityButton: Button;
+@export var playerEntityButton: Button;
+@export var patrollingEntityButton: Button;
+@export var shootingEntityButton: Button;
+@export var flyingEntityButton: Button;
+
 # References to all Prop buttons
 @export var propOneButton: Button;
 @export var propTwoButton: Button;
 @export var propThreeButton: Button;
 @export var propFourButton: Button;
 @export var propFiveButton: Button;
+
+# Misc object references
+@export var entityPropDropdown : OptionButton;
 
 func _ready() -> void:
 	# Connect all Tile button signals
@@ -40,12 +50,21 @@ func _ready() -> void:
 	bounceTileButton.pressed.connect(_on_bounce_tile_button_pressed);
 	slopeTileButton.pressed.connect(_on_slope_tile_button_pressed);
 	
+	# Connect all Entity button signals
+	goalEntityButton.pressed.connect(_on_goal_entity_button_pressed);
+	playerEntityButton.pressed.connect(_on_player_entity_button_pressed);
+	patrollingEntityButton.pressed.connect(_on_patrolling_entity_button_pressed);
+	shootingEntityButton.pressed.connect(_on_shooting_entity_button_pressed);
+	flyingEntityButton.pressed.connect(_on_flying_entity_button_pressed);
+	
 	# Connect all Prop button signals
 	propOneButton.pressed.connect(_on_prop_one_button_pressed);
 	propTwoButton.pressed.connect(_on_prop_two_button_pressed);
 	propThreeButton.pressed.connect(_on_prop_three_button_pressed);
 	propFourButton.pressed.connect(_on_prop_four_button_pressed);
 	propFiveButton.pressed.connect(_on_prop_five_button_pressed);
+	
+	entityPropDropdown.item_selected.connect(entity_dropdown_select);
 
 ## Toggles visibility of tile selection bar
 ## visibility: desired visibility
@@ -96,17 +115,20 @@ func _on_slope_tile_button_pressed() -> void:
 	toolManager.update_brush_object(Global.TileType.SLOPE);
 
 # Object Buttons
-func _on_goal_object_button_pressed() -> void:
+func _on_goal_entity_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.GOAL);
 
-func _on_spawn_object_button_pressed() -> void:
+func _on_player_entity_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.PLAYER);
 
-func _on_patrolling_object_button_pressed() -> void:
+func _on_patrolling_entity_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.PATROLLING);
 
-func _on_shooting_object_button_pressed() -> void:
+func _on_shooting_entity_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.SHOOTING);
+
+func _on_flying_entity_button_pressed() -> void:
+	toolManager.update_brush_object(Global.EntityType.FLYING);
 
 # Prop Buttons
 func _on_prop_one_button_pressed() -> void:

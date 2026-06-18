@@ -14,6 +14,11 @@ var state : Global.State = Global.State.EDIT;
 @export var gameManagerCanvas: CanvasLayer;
 @export var mainMenuControl: Control;
 
+# References to relevant buttons
+@export var editorHomeButton: Button;
+@export var editorPlayButton: Button;
+@export var returnToEditorButton: Button;
+
 # Reference to tileset
 @export var tileSet: TileMapLayer;
 @export var previewTileMap: TileMapLayer;
@@ -28,15 +33,17 @@ var loadedMap: TileMapLayer;
 
 @export var propertyMenu : Panel;
 
-@export var playButton : Button;
-
 func _ready() -> void:
 	#Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
 	#ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
-	playButton.pressed.connect(play);
+	
+	# Connect all button signals
+	editorHomeButton.pressed.connect(main_menu);
+	editorPlayButton.pressed.connect(play);
+	returnToEditorButton.pressed.connect(edit);
 	
 	# NOTE: This probably shouldn't be here for the final build
 	# Create the Enemies folder, github can't push empty folders
@@ -82,6 +89,7 @@ func main_menu() -> void:
 
 ## Swap to edit state
 func edit() -> void:
+	toolManager.change_tool(Global.Tool.BRUSH);
 	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
@@ -91,6 +99,7 @@ func edit() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
+	editorManager.returnClick = true;
 	editorManagerCanvas.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
@@ -100,14 +109,13 @@ func edit() -> void:
 
 ## Swap to play state
 func play() -> void:
-	if (!editorManager.playerExists && !editorManager.goalExists):
-		PopUpManager.create_error_popup("Cannot Start Level", "Level cannot be started, there is no goal or player placed down!");
-		return;
-	elif (!editorManager.playerExists):
-		PopUpManager.create_error_popup("Cannot Start Level", "Level cannot be started, there is no player placed down!");
-		return;
-	elif (!editorManager.goalExists):
-		PopUpManager.create_error_popup("Cannot Start Level", "Level cannot be started, there is no goal placed down!");
+	var errors : Array[String];
+	if (!editorManager.playerExists):
+		errors.append("There is no player placed down.")
+	if (!editorManager.goalExists):
+		errors.append("There is no goal placed down.")
+	if errors.size() != 0:
+		PopUpManager.create_multi_error_popup("Cannot Start Level", errors);
 		return;
 	propertyMenu.close();
 	AudioManager.play_music("LevelMusic");

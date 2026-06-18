@@ -8,8 +8,9 @@ extends Node2D
 @export var tileSet: TileMapLayer;
 @export var previewTileSet: TileMapLayer;
 
-# Play button
+# Relevant button elements
 @export var playButton: Button;
+@export var assetManagerButton: Button;
 
 @export var assetManager: Control;
 
@@ -28,6 +29,8 @@ var isPlaceable: bool = true;
 var playerExists: bool = false;
 var goalExists: bool = false;
 
+var returnClick: bool = false;
+
 # Stores the number of tiles made
 var tileCount : int = Global.TileType.size();
 
@@ -45,6 +48,7 @@ func _process(_delta: float) -> void:
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
 
 	playButton.modulate = Color(1, 1, 1) if playerExists && goalExists else Color(1, 1, 1, 0.5);
+	assetManagerButton.pressed.connect(open_asset_manager);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;

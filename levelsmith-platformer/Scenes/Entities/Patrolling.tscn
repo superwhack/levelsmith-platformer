@@ -18,6 +18,7 @@ rayCastDownR = NodePath("RayCastDownR")
 directionArrow = NodePath("DirectionArrow")
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=320029135]
+visible = false
 z_index = 4
 position = Vector2(0, -90)
 rotation = 1.5707964

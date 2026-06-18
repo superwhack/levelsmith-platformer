@@ -78,6 +78,7 @@ func place_entity(clickPosition: Vector2) -> void:
 				var newFlying: Resource = defaultFlying.duplicate(true);
 				ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying" + str(time) + ".tres");
 			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
+			editorManager.reset_enemy_positions();
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
 	else:

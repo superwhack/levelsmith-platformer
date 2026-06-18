@@ -129,7 +129,7 @@ func update_sliders() -> void:
 		patrollingDirectionCheckbox.value = selectedPreset.direction;
 		patrollingRestrictedCheckbox.value = selectedPreset.restricted;
 		patrollingSpeedSlider.update_slider();
-		patrollingDirectionCheckbox.update_checkbox();
+		patrollingDirectionCheckbox.update_dropdown();
 		patrollingRestrictedCheckbox.update_checkbox();
 	if selectedEntity is EnemyFlyer:
 		flyingSpeedSlider.value = selectedPreset.speed;

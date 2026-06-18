@@ -86,6 +86,8 @@ func reset_enemy_positions() -> void:
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
 		if (enemy is Enemy && enemy.propertyFile):
 			enemy.global_position = tileSet.map_to_local(enemy.propertyFile.position);
+			if enemy is EnemyPatrol || enemy is EnemyShooting:
+				enemy.directionArrow.show();
 func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;

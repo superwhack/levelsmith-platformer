@@ -55,6 +55,7 @@ func level_complete() -> void:
 	
 func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
+	cameraManager.initialize_camera();
 	ImportExportManager.make_new_level( levelName );
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);

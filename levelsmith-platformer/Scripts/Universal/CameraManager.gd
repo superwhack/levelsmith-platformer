@@ -32,16 +32,27 @@ func _ready() -> void:
 	make_current();
 	# Center camera on rect2 of the entire level
 	refresh_bounds();
-	set_global_position(levelBounds.get_center());  
+	
+	zoom = Vector2.ONE * maxZoomOut;
+	global_position = levelBounds.get_center();
 	
 	# Start zoomed out
-	zoom = Vector2.ONE * maxZoomOut;
 	Global.reload.connect(reset_camera);
 
 #func _input(event):
 	#if event is InputEventMouseButton:
 		#print("Mouse button:", event.button_index, "pressed:", event.pressed)
-
+		
+## For initializing a camera on level load/creation. 
+## Almost the same as _ready(), but called not just on ready.
+func initialize_camera() -> void:
+	refresh_bounds();
+	zoom = Vector2.ONE * maxZoomOut;
+	global_position = levelBounds.get_center();
+	clamp_camera_to_level();
+	print("center:", levelBounds.get_center());
+	print("camera:", global_position);
+	
 func refresh_bounds() -> void:
 	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.tileSize);
 	roamBounds = get_camera_bounds();

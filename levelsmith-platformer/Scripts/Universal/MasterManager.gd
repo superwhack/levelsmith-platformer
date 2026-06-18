@@ -165,7 +165,7 @@ func _process(_delta: float) -> void:
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
 	if (Input.is_action_just_pressed("tempLoad")):
 		propertyMenu.close();
-		var result = ImportExportManager.validate_import("Level01");
+		var result = ImportExportManager.validate_import(ImportExportManager.levelPathName);
 		if (result):
 			ImportExportManager.clear_enemies_folder();
 			for childNode in editorManager.tileSet.get_children():
@@ -174,5 +174,5 @@ func _process(_delta: float) -> void:
 			editorManager.reset_enemy_positions();
 			await get_tree().process_frame;
 			ImportExportManager.import_JSON(editorManager.tileSet, propertyMenu)
-			propertyMenu._on_preset_options_item_selected(4);
-		editorManager.check_goal_exists();
+			#propertyMenu._on_preset_options_item_selected(4);
+		entityManager.scan_goals(worldSize.x + 1, worldSize.y + 1);

@@ -7,9 +7,13 @@ const defaultPath := "res://Assets/Defaults/";
 
 signal levelImported;
 
+## NOTE: TEMPORARY VARIABLE FOR STORING LEVEL'S NAME
+var levelPathName : String;
+
 ## Create a new level, cloning from the default folder
 ## levelName: Name of the new level, indicates where it'll go in the folder
 func make_new_level(levelName: String) -> void:
+	levelPathName = levelName;
 	clear_enemies_folder();
 	DirAccess.make_dir_absolute("user://Levels/");
 	levelPath = "user://Levels/" + levelName + "/";
@@ -88,10 +92,10 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	clone_data("user://Assets/", levelAssetPath);
 
 ## Validates a level import at a given directory
-## directory: Source level directory
+## name: Source level name
 ## returns: false if it fails, true otherwise
-func validate_import(directory: String) -> bool:
-	levelPath = "user://Levels/" + directory + "/";
+func validate_import(name: String) -> bool:
+	levelPath = "user://Levels/" + name + "/";
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
 	if !DirAccess.dir_exists_absolute(levelPath):
@@ -170,7 +174,13 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 					newPatrolling.groundSpeed = enemy.stats.speed;
 					newPatrolling.direction = enemy.stats.direction;
 					newPatrolling.restricted = enemy.stats.restricted;
-					ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
+					var path = "res://Resources/Enemies/Patrol-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres";
+					ResourceSaver.save(newPatrolling, path);
+					var loadPatrolling = ResourceLoader.load(path,"",ResourceLoader.CACHE_MODE_IGNORE)
+					print(newPatrolling.groundSpeed);
+					print(loadPatrolling.groundSpeed);
+					print(newPatrolling);
+					print(loadPatrolling)
 					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 				"shooting":
 					var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
@@ -184,13 +194,13 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	# If any enemy did not get data due to some form of corruption, it needs it.
 	for node in tileMap.get_children():
-		if node is EnemyPatrol:
+		if node is EnemyPatrol && node.propertyFile == null:
 			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
 			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
-		if node is EnemyShooting:
+		if node is EnemyShooting && node.propertyFile == null:
 			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 			var newShooting: Resource = defaultShooting.duplicate(true);

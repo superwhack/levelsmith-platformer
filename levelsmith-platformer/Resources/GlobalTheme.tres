@@ -11,20 +11,32 @@
 [ext_resource type="Texture2D" uid="uid://bn0uohdiojkbm" path="res://Assets/Sprites/UI/BoxUnchecked.png" id="9_wg75p"]
 [ext_resource type="Texture2D" uid="uid://bc5en51l7hpq" path="res://Assets/Sprites/UI/SwitchOn.png" id="10_u6y6t"]
 [ext_resource type="Texture2D" uid="uid://bsy8p1h6nbdtb" path="res://Assets/Sprites/UI/SwitchOff.png" id="11_g1adj"]
+[ext_resource type="Texture2D" uid="uid://bokwi0m4fmi0e" path="res://Assets/Sprites/UI/ArrowLeftMedium.PNG" id="12_2d6mn"]
 [ext_resource type="StyleBox" uid="uid://bjfoydscacqbd" path="res://Assets/UserInterface/WindowBorderStyleBox.tres" id="12_5devf"]
 [ext_resource type="StyleBox" uid="uid://cixip2eyb83r1" path="res://Assets/UserInterface/ScrollGrabStyleBox.tres" id="12_p21lw"]
+[ext_resource type="Texture2D" uid="uid://4k8sp2olvr6h" path="res://Assets/Sprites/UI/ArrowRightMedium.PNG" id="13_2y7gw"]
 [ext_resource type="StyleBox" uid="uid://cwo782d4sgcr7" path="res://Assets/UserInterface/ScrollAreaStyleBox.tres" id="13_hrj3f"]
+[ext_resource type="Texture2D" uid="uid://cxtv67vt02wib" path="res://Assets/Sprites/UI/CloseMedium.PNG" id="13_ofwiu"]
+[ext_resource type="Texture2D" uid="uid://b5lpkvodh8h1v" path="res://Assets/Sprites/UI/FavoriteMedium.PNG" id="13_p7whp"]
+[ext_resource type="Texture2D" uid="uid://dsp8kbeo823wu" path="res://Assets/Sprites/UI/ClosePressedMedium.PNG" id="14_3sr2t"]
+[ext_resource type="Texture2D" uid="uid://fjtjb06rhbgs" path="res://Assets/Sprites/UI/ArrowUpMedium.PNG" id="14_hnftp"]
 [ext_resource type="StyleBox" uid="uid://c7y2n7kpvwjmu" path="res://Assets/UserInterface/HSeparatorLine.tres" id="14_vsidl"]
 [ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="15_ke4fi"]
+[ext_resource type="Texture2D" uid="uid://cb0e4g73m0jjs" path="res://Assets/Sprites/UI/ResetMedium.PNG" id="15_xat3a"]
 [ext_resource type="StyleBox" uid="uid://d0dnc4expn1x0" path="res://Assets/UserInterface/SliderStyleBox.tres" id="17_5jgur"]
+[ext_resource type="Texture2D" uid="uid://drktsticy1mv2" path="res://Assets/Sprites/UI/ListModeMedium.PNG" id="17_a0yo8"]
 [ext_resource type="StyleBox" uid="uid://kpc3pw6w1747" path="res://Assets/UserInterface/TextEntryFocusStyleBox.tres" id="18_4tmrm"]
 [ext_resource type="StyleBox" uid="uid://nqweanxgm6cj" path="res://Assets/UserInterface/TextEntryStyleBox.tres" id="19_5devf"]
 [ext_resource type="StyleBox" uid="uid://be7kkb87oloe4" path="res://Assets/UserInterface/ReadOnlyStyleBox.tres" id="20_lxdnb"]
+[ext_resource type="Texture2D" uid="uid://r1e5pf7evu84" path="res://Assets/Sprites/UI/SortListMedium.PNG" id="20_ofwiu"]
+[ext_resource type="Texture2D" uid="uid://vr7s35h7h741" path="res://Assets/Sprites/UI/ThumbnailModeMedium.PNG" id="21_3sr2t"]
 [ext_resource type="Texture2D" uid="uid://buk5nj35b0fuf" path="res://Assets/Sprites/UI/BlankDoubleChevronDownMedium.png" id="21_g3sj8"]
 [ext_resource type="StyleBox" uid="uid://dpixxuncsv8pr" path="res://Assets/UserInterface/OptionHoverStyleBox.tres" id="22_3vm5f"]
 [ext_resource type="StyleBox" uid="uid://bj7s0u4gefpgn" path="res://Assets/UserInterface/OptionSelectedStyleBox.tres" id="22_j7er6"]
+[ext_resource type="Texture2D" uid="uid://cm2exx8ai3fvy" path="res://Assets/Sprites/UI/FilterMedium.PNG" id="22_nva8e"]
 [ext_resource type="StyleBox" uid="uid://c1uhsadputufm" path="res://Assets/UserInterface/PanelStyleBox.tres" id="22_nvaf8"]
 [ext_resource type="StyleBox" uid="uid://bi2avgb580ef6" path="res://Assets/UserInterface/DropDownStyleBox.tres" id="23_2d6mn"]
+[ext_resource type="Texture2D" uid="uid://b0uys4jwjmw03" path="res://Assets/Sprites/UI/ToggleHiddenMedium.PNG" id="23_k74kl"]
 [ext_resource type="Texture2D" uid="uid://bx10a4ef74i0s" path="res://Assets/Sprites/UI/MediumGrab.png" id="24_4tmrm"]
 [ext_resource type="Texture2D" uid="uid://bb2ke4gfjgp5r" path="res://Assets/Sprites/UI/MediumGrabInvert.png" id="25_5devf"]
 [ext_resource type="Texture2D" uid="uid://b1bjqoi4qrp8k" path="res://Assets/Sprites/UI/BlankArrowDownSmall.png" id="26_8ylos"]
@@ -181,6 +193,27 @@ CheckButton/styles/hover = SubResource("StyleBoxEmpty_uusg4")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_5ihoh")
 CheckButton/styles/normal = SubResource("StyleBoxEmpty_46rmy")
 CheckButton/styles/pressed = SubResource("StyleBoxEmpty_gm0r7")
+FileDialog/colors/icon_focus_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+FileDialog/colors/icon_hover_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+FileDialog/colors/icon_normal_color = Color(1, 1, 1, 1)
+FileDialog/colors/icon_pressed_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+FileDialog/constants/close_h_offset = 24
+FileDialog/constants/close_v_offset = 28
+FileDialog/fonts/title_font = ExtResource("1_g3sj8")
+FileDialog/icons/back_folder = ExtResource("12_2d6mn")
+FileDialog/icons/close = ExtResource("13_ofwiu")
+FileDialog/icons/close_pressed = ExtResource("14_3sr2t")
+FileDialog/icons/favorite = ExtResource("13_p7whp")
+FileDialog/icons/favorite_down = ExtResource("26_8ylos")
+FileDialog/icons/favorite_up = ExtResource("27_n23f4")
+FileDialog/icons/forward_folder = ExtResource("13_2y7gw")
+FileDialog/icons/list_mode = ExtResource("17_a0yo8")
+FileDialog/icons/parent_folder = ExtResource("14_hnftp")
+FileDialog/icons/reload = ExtResource("15_xat3a")
+FileDialog/icons/sort = ExtResource("20_ofwiu")
+FileDialog/icons/thumbnail_mode = ExtResource("21_3sr2t")
+FileDialog/icons/toggle_filename_filter = ExtResource("22_nva8e")
+FileDialog/icons/toggle_hidden = ExtResource("23_k74kl")
 FileDialog/styles/embedded_border = ExtResource("12_5devf")
 FileDialog/styles/embedded_unfocused_border = ExtResource("12_5devf")
 FileDialog/styles/panel = SubResource("StyleBoxFlat_5devf")

@@ -3,6 +3,11 @@ extends Node2D
 @export var pauseScreen: PanelContainer;
 @export var bottomScreenGroup: Control;
 
+# Button references for signals
+@export var resetButton: Button;
+@export var pauseButton: Button;
+@export var resumeButton: Button;
+
 # Is the player paused or running?
 enum PlayState {
 	PAUSE,
@@ -61,3 +66,6 @@ func start() -> void:
 ## Just connect death
 func _ready() -> void:
 	Global.death.connect(reset);
+	resetButton.pressed.connect(reset);
+	pauseButton.pressed.connect(pause);
+	resumeButton.pressed.connect(pause);

@@ -21,16 +21,21 @@
 [ext_resource type="Texture2D" uid="uid://dsp8kbeo823wu" path="res://Assets/Sprites/UI/ClosePressedMedium.PNG" id="14_3sr2t"]
 [ext_resource type="Texture2D" uid="uid://fjtjb06rhbgs" path="res://Assets/Sprites/UI/ArrowUpMedium.PNG" id="14_hnftp"]
 [ext_resource type="StyleBox" uid="uid://c7y2n7kpvwjmu" path="res://Assets/UserInterface/HSeparatorLine.tres" id="14_vsidl"]
+[ext_resource type="Texture2D" uid="uid://vi46s2ak3k84" path="res://Assets/Sprites/UI/AddFolderMedium.PNG" id="15_3caln"]
 [ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="15_ke4fi"]
 [ext_resource type="Texture2D" uid="uid://cb0e4g73m0jjs" path="res://Assets/Sprites/UI/ResetMedium.PNG" id="15_xat3a"]
 [ext_resource type="StyleBox" uid="uid://d0dnc4expn1x0" path="res://Assets/UserInterface/SliderStyleBox.tres" id="17_5jgur"]
 [ext_resource type="Texture2D" uid="uid://drktsticy1mv2" path="res://Assets/Sprites/UI/ListModeMedium.PNG" id="17_a0yo8"]
 [ext_resource type="StyleBox" uid="uid://kpc3pw6w1747" path="res://Assets/UserInterface/TextEntryFocusStyleBox.tres" id="18_4tmrm"]
+[ext_resource type="Texture2D" uid="uid://cmo3gl2w5fjeo" path="res://Assets/Sprites/UI/FileLarge.PNG" id="18_nva8e"]
 [ext_resource type="StyleBox" uid="uid://nqweanxgm6cj" path="res://Assets/UserInterface/TextEntryStyleBox.tres" id="19_5devf"]
+[ext_resource type="Texture2D" uid="uid://cslg6xmn8t4jv" path="res://Assets/Sprites/UI/FileMedium.PNG" id="19_apnec"]
+[ext_resource type="Texture2D" uid="uid://bbn361u6ti6j8" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_k74kl"]
 [ext_resource type="StyleBox" uid="uid://be7kkb87oloe4" path="res://Assets/UserInterface/ReadOnlyStyleBox.tres" id="20_lxdnb"]
 [ext_resource type="Texture2D" uid="uid://r1e5pf7evu84" path="res://Assets/Sprites/UI/SortListMedium.PNG" id="20_ofwiu"]
 [ext_resource type="Texture2D" uid="uid://vr7s35h7h741" path="res://Assets/Sprites/UI/ThumbnailModeMedium.PNG" id="21_3sr2t"]
 [ext_resource type="Texture2D" uid="uid://buk5nj35b0fuf" path="res://Assets/Sprites/UI/BlankDoubleChevronDownMedium.png" id="21_g3sj8"]
+[ext_resource type="Texture2D" uid="uid://ifs1ouox2lqt" path="res://Assets/Sprites/UI/FolderMedium.PNG" id="21_k2v08"]
 [ext_resource type="StyleBox" uid="uid://dpixxuncsv8pr" path="res://Assets/UserInterface/OptionHoverStyleBox.tres" id="22_3vm5f"]
 [ext_resource type="StyleBox" uid="uid://bj7s0u4gefpgn" path="res://Assets/UserInterface/OptionSelectedStyleBox.tres" id="22_j7er6"]
 [ext_resource type="Texture2D" uid="uid://cm2exx8ai3fvy" path="res://Assets/Sprites/UI/FilterMedium.PNG" id="22_nva8e"]
@@ -203,9 +208,14 @@ FileDialog/fonts/title_font = ExtResource("1_g3sj8")
 FileDialog/icons/back_folder = ExtResource("12_2d6mn")
 FileDialog/icons/close = ExtResource("13_ofwiu")
 FileDialog/icons/close_pressed = ExtResource("14_3sr2t")
+FileDialog/icons/create_folder = ExtResource("15_3caln")
 FileDialog/icons/favorite = ExtResource("13_p7whp")
 FileDialog/icons/favorite_down = ExtResource("26_8ylos")
 FileDialog/icons/favorite_up = ExtResource("27_n23f4")
+FileDialog/icons/file = ExtResource("19_apnec")
+FileDialog/icons/file_thumbnail = ExtResource("18_nva8e")
+FileDialog/icons/folder = ExtResource("21_k2v08")
+FileDialog/icons/folder_thumbnail = ExtResource("19_k74kl")
 FileDialog/icons/forward_folder = ExtResource("13_2y7gw")
 FileDialog/icons/list_mode = ExtResource("17_a0yo8")
 FileDialog/icons/parent_folder = ExtResource("14_hnftp")

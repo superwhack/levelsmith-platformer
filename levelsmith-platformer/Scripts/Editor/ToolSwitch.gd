@@ -4,23 +4,25 @@ extends HBoxContainer
 @export var editorManager : Node2D;
 @export var toolManager : Node2D;
 
-#func _on_brush_tool_button_pressed() -> void:
-#	toolManager.change_tool(Global.Tool.BRUSH);
-#	editorManager.change_current_hotbar(Global.HotbarState.TILES);
+# Button references for signal connections
+@export var brushButton : Button;
+@export var boxBrushButton : Button;
+@export var cursorButton : Button;
 
-#func _on_box_brush_tool_button_pressed() -> void:
-#	toolManager.change_tool(Global.Tool.BOX_BRUSH);
-#	editorManager.change_current_hotbar(Global.HotbarState.TILES);
+# Runs when the node is first created. Used for connecting signals.
+func _ready() -> void:
+	brushButton.pressed.connect(swap_to_brush);
+	boxBrushButton.pressed.connect(swap_to_box_brush);
+	cursorButton.pressed.connect(swap_to_cursor);
 
-func _on_cursor_button_pressed() -> void:
-	toolManager.change_tool(Global.Tool.CURSOR);
-	editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);
-
-
-func _on_brush_button_pressed() -> void:
+func swap_to_brush() -> void:
 	toolManager.change_tool(Global.Tool.BRUSH);
 	editorManager.change_current_hotbar(Global.HotbarState.TILES);
 
-func _on_box_brush_button_pressed() -> void:
+func swap_to_box_brush() -> void:
 	toolManager.change_tool(Global.Tool.BOX_BRUSH);
 	editorManager.change_current_hotbar(Global.HotbarState.TILES);
+
+func swap_to_cursor() -> void:
+	toolManager.change_tool(Global.Tool.CURSOR);
+	editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);

@@ -22,7 +22,6 @@ visible = false
 z_index = 4
 position = Vector2(0, -90)
 rotation = 1.5707964
-scale = Vector2(2, 2)
 texture = ExtResource("2_n0k27")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]

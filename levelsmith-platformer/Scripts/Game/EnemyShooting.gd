@@ -23,6 +23,7 @@ func _physics_process(delta: float) -> void:
 		timeLeft = 1 / fireRate;
 
 func adjust_arrow(angle: float) -> void:
+	directionArrow.show();
 	directionArrow.rotation_degrees = angle;
 	directionArrow.position.x = sin(deg_to_rad(directionArrow.rotation_degrees)) * 90;
 	directionArrow.position.y = -cos(deg_to_rad(directionArrow.rotation_degrees)) * 90;
@@ -45,6 +46,7 @@ func assign_script(id: String, position: Vector2i) -> void:
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;
+	adjust_arrow(direction + 90);
 
 func apply_script(file: Resource) -> void:
 	propertyFile = file;

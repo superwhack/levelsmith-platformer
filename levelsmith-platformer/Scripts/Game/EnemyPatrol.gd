@@ -49,6 +49,7 @@ func patrol_behavior() -> void:
 				direction = -1;
 
 func adjust_arrow(angle: float) -> void:
+	directionArrow.show();
 	directionArrow.rotation_degrees = angle;
 	directionArrow.position.x = sin(deg_to_rad(directionArrow.rotation_degrees)) * 90;
 	directionArrow.position.y = -cos(deg_to_rad(directionArrow.rotation_degrees)) * 90;
@@ -60,10 +61,11 @@ func assign_script(id: String, position: Vector2i) -> void:
 	groundSpeed = propertyFile.groundSpeed; 
 	direction = -(int(propertyFile.direction) * 2 - 1);
 	restricted = propertyFile.restricted; 
+	adjust_arrow(int(propertyFile.direction) * 180 + 90);
+	directionArrow.scale = Vector2(1, 1);
 
 func apply_script(file: Resource) -> void:
 	propertyFile = file;
 	groundSpeed = propertyFile.groundSpeed;
-	print(direction);
 	direction = -(int(propertyFile.direction) * 2 - 1);
 	restricted = propertyFile.restricted;  

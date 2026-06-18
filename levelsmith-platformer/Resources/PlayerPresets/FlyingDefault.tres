@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="FlyingPreset" format=3 uid="uid://7lqfnodu5bsp"]
 
-[ext_resource type="Script" uid="uid://bk6db4xe8546n" path="res://Scripts/Editor/Properties/FlyingPreset.gd" id="1_yyfty"]
+[ext_resource type="Script" uid="uid://bop2ymp6kjrej" path="res://Scripts/Editor/Properties/FlyingPreset.gd" id="1_yyfty"]
 
 [resource]
 script = ExtResource("1_yyfty")
+speed = 2.0

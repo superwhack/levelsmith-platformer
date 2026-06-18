@@ -38,16 +38,19 @@ var previewLine: Line2D;
 
 # Shooting inputs
 @export var shootingDirectionSlider: VBoxContainer;
-var shootingDirectionArrow: Sprite2D;
 @export var shootingShotSpeedSlider: VBoxContainer;
 @export var shootingFireRateSlider: VBoxContainer;
 @export var shootingProjectileBounce: VBoxContainer;
+@export var shootingGravity: VBoxContainer;
 
 # Preset Options
 @export var presetOptions: OptionButton;
 var selectedPreset: Resource;
 
 var selectedPlayerPreset: Resource;
+
+# Direction arrow for shooting and patrolling enemies
+var shootingDirectionArrow: Sprite2D;
 
 ## When this starts, select the default option
 func _ready() -> void:
@@ -143,10 +146,12 @@ func update_sliders() -> void:
 		shootingShotSpeedSlider.value = selectedPreset.shotSpeed;
 		shootingFireRateSlider.value = selectedPreset.fireRate;
 		shootingProjectileBounce.value = selectedPreset.projBounce;
+		shootingGravity.value = selectedPreset.gravity;
 		shootingDirectionSlider.update_slider();
 		shootingShotSpeedSlider.update_slider();
 		shootingFireRateSlider.update_slider();
 		shootingProjectileBounce.update_checkbox();
+		shootingGravity.update_checkbox();
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:
@@ -171,6 +176,7 @@ func update_values() -> void:
 		selectedPreset.shotSpeed = shootingShotSpeedSlider.value;
 		selectedPreset.fireRate = shootingFireRateSlider.value;
 		selectedPreset.projBounce = shootingProjectileBounce.value;
+		selectedPreset.gravity = shootingGravity.value
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset

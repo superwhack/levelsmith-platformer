@@ -54,10 +54,10 @@ func _process(_delta: float) -> void:
 
 ## NOTE: TEMPORARY FIX FUNCTION PT 1
 ## Clear all enemies without a property file
-func clear_enemies() -> void:
+func clear_enemies(alwaysClear: bool = false) -> void:
 	for child in tileSet.get_children():
 		if child is Enemy:
-			if child.propertyFile == null:
+			if alwaysClear || child.propertyFile == null:
 				child.queue_free();
 
 ## Changes current hotbar state (used for hotkeys)

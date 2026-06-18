@@ -75,6 +75,7 @@ func main_menu() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.hide();
+	editorManager.clear_enemies(true);
 	editorManagerCanvas.hide();
 	mainMenuControl.show();
 	

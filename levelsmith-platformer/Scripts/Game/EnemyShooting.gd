@@ -9,6 +9,8 @@ var shotSpeed : float;
 var fireRate : float;
 var projBounce : bool;
 
+var gravityOn : bool;
+
 @export var directionArrow : Sprite2D;
 
 const projectile = preload("res://Scenes/Entities/Projectile.tscn");
@@ -16,6 +18,9 @@ const projectile = preload("res://Scenes/Entities/Projectile.tscn");
 var timeLeft : float = 1;
 
 func _physics_process(delta: float) -> void:
+	if gravityOn:
+		super._physics_process(delta);
+		move_and_slide();
 	directionArrow.hide();
 	timeLeft -= delta;
 	if (timeLeft <= 0.0):
@@ -46,6 +51,7 @@ func assign_script(id: String, position: Vector2i) -> void:
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;
+	gravityOn = propertyFile.gravity;
 	adjust_arrow(direction + 90);
 
 func apply_script(file: Resource) -> void:
@@ -54,4 +60,5 @@ func apply_script(file: Resource) -> void:
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;
+	gravityOn = propertyFile.gravity;
 	timeLeft = 1;

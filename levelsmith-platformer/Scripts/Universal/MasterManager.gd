@@ -14,6 +14,11 @@ var state : Global.State = Global.State.EDIT;
 @export var gameManagerCanvas: CanvasLayer;
 @export var mainMenuControl: Control;
 
+# References to relevant buttons
+@export var editorHomeButton: Button;
+@export var editorPlayButton: Button;
+@export var returnToEditorButton: Button;
+
 # Reference to tileset
 @export var tileSet: TileMapLayer;
 @export var previewTileMap: TileMapLayer;
@@ -28,15 +33,17 @@ var loadedMap: TileMapLayer;
 
 @export var propertyMenu : Panel;
 
-@export var playButton : Button;
-
 func _ready() -> void:
 	#Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
 	#ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
-	playButton.pressed.connect(play);
+	
+	# Connect all button signals
+	editorHomeButton.pressed.connect(main_menu);
+	editorPlayButton.pressed.connect(play);
+	returnToEditorButton.pressed.connect(edit);
 	
 	# NOTE: This probably shouldn't be here for the final build
 	# Create the Enemies folder, github can't push empty folders

@@ -60,9 +60,9 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	data_to_send += '"coyoteTime": ' + str(playerData.playerCoyoteTime);
 	data_to_send += '}}';
 	
-	var notJSON = FileAccess.open(levelPath + "Temp.txt", FileAccess.WRITE);
-	notJSON.store_string(data_to_send);
-	notJSON.close();
+	#var notJSON = FileAccess.open(levelPath + "Temp.txt", FileAccess.WRITE);
+	#notJSON.store_string(data_to_send);
+	#notJSON.close();
 	
 	var json = JSON.parse_string(data_to_send)
 	var json_string = JSON.stringify(json);

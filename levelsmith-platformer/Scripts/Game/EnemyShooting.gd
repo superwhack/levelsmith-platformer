@@ -27,6 +27,8 @@ func _physics_process(delta: float) -> void:
 		shooting_behavior();
 		timeLeft = 1 / fireRate;
 
+## Adjust the direction of the indicator arrow
+## angle: the angle that the arrow should be pointing at.
 func adjust_arrow(angle: float) -> void:
 	directionArrow.show();
 	directionArrow.rotation_degrees = angle;
@@ -44,7 +46,7 @@ func shooting_behavior() -> void:
 	get_parent().add_child(projectileFired);
 
 func assign_script(id: String, position: Vector2i) -> void:
-	propertyFile = load("res://Resources/Enemies/Shooting" + id + ".tres");
+	propertyFile = ResourceLoader.load("res://Resources/Enemies/Shooting" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	name = "Shooting" + id;
 	propertyFile.position = position;
 	direction = propertyFile.direction; 

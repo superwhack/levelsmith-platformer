@@ -76,11 +76,7 @@ func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 ## returns: True if the mouse is out of bounds
 func check_out_of_bounds(mousePosition: Vector2i) -> bool:
 	return mousePosition.x < 0 || mousePosition.x >= get_parent().worldSize.x || mousePosition.y < 0 || mousePosition.y >= get_parent().worldSize.y;
-
-func check_goal_exists() -> bool:
-	toolManager.entityManager.scan_goals(get_parent().worldSize.x + 1, get_parent().worldSize.y + 1);
-	return goalExists;
-
+	
 ## Reset all the enemy positions to the center of their tiles.
 func reset_enemy_positions() -> void:
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
@@ -88,6 +84,8 @@ func reset_enemy_positions() -> void:
 			enemy.global_position = tileSet.map_to_local(enemy.propertyFile.position);
 			if enemy is EnemyPatrol || enemy is EnemyShooting:
 				enemy.directionArrow.show();
+				
+## Opens the asset manager
 func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;

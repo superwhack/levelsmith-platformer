@@ -175,12 +175,8 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 					newPatrolling.direction = enemy.stats.direction;
 					newPatrolling.restricted = enemy.stats.restricted;
 					var path = "res://Resources/Enemies/Patrol-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres";
+					newPatrolling.take_over_path(path);
 					ResourceSaver.save(newPatrolling, path);
-					var loadPatrolling = ResourceLoader.load(path,"",ResourceLoader.CACHE_MODE_IGNORE)
-					print(newPatrolling.groundSpeed);
-					print(loadPatrolling.groundSpeed);
-					print(newPatrolling);
-					print(loadPatrolling)
 					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 				"shooting":
 					var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");

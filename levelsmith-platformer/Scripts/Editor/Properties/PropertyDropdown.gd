@@ -15,11 +15,11 @@ func _ready() -> void:
 	nameLabel.text = propertyName + ": ";
 	optionButton.item_selected.connect(_option_selected);
 
-## Update the checkbox value
+## Update the dropdown's value
 func update_dropdown() -> void:
 	optionButton.select(int(value));
 
-## Runs when the checkbox gets pressed
+## Runs when the dropdown gets selected
 func _option_selected(index: int) -> void:
 	value = bool(index);
 	emit_signal("dropdown_changed");

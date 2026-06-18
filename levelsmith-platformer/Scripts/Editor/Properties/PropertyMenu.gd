@@ -104,6 +104,7 @@ func update_custom() -> void:
 	customPreset.coyoteTime = playerCoyoteTime;
 	ResourceSaver.save(customPreset, "res://Resources/PlayerPresets/Custom.tres");
 
+## Update the preview for the flying enemy
 func update_flying_preview() -> void:
 	if selectedEntity == null:
 		return;
@@ -115,6 +116,7 @@ func update_flying_preview() -> void:
 
 ## Update all sliders according to the values
 func update_sliders() -> void:
+	# Player stats
 	playerSpeedSlider.value = playerSpeed;
 	playerSpeedSlider.update_slider();
 	playerJumpSlider.value = playerJumpHeight;
@@ -124,8 +126,7 @@ func update_sliders() -> void:
 	playerFallSpeedSlider.value = playerFallSpeed;
 	playerFallSpeedSlider.update_slider();
 	playerCoyoteTimeSlider.value = playerCoyoteTime;
-	playerCoyoteTimeSlider.update_slider();
-	
+	playerCoyoteTimeSlider.update_slider();	
 	# Enemies
 	if selectedEntity is EnemyPatrol:
 		patrollingSpeedSlider.value = selectedPreset.groundSpeed;
@@ -134,7 +135,7 @@ func update_sliders() -> void:
 		patrollingSpeedSlider.update_slider();
 		patrollingDirectionCheckbox.update_dropdown();
 		patrollingRestrictedCheckbox.update_checkbox();
-	if selectedEntity is EnemyFlyer:
+	elif selectedEntity is EnemyFlyer:
 		flyingSpeedSlider.value = selectedPreset.speed;
 		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.tileSize;
 		flyingOffsetYSlider.value = selectedPreset.pointBOffset.y / Global.tileSize;
@@ -166,7 +167,7 @@ func update_values() -> void:
 		selectedPreset.direction = patrollingDirectionCheckbox.value;
 		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
-	if selectedEntity is EnemyFlyer:
+	elif selectedEntity is EnemyFlyer:
 		selectedPreset.speed = flyingSpeedSlider.value;
 		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.tileSize, flyingOffsetYSlider.value * Global.tileSize);
 		update_flying_preview();
@@ -186,7 +187,9 @@ func _on_drag_ended() -> void:
 		update_custom();
 		presetOptions.select(4);
 		_on_preset_options_item_selected(4);
-	
+
+## Show the property menu, different sections pop up depending on the currently selected entity type
+## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
 	if shootingDirectionArrow:
 		shootingDirectionArrow.scale = Vector2(1,1);

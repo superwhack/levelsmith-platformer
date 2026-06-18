@@ -2,20 +2,22 @@
 
 [ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Game/Player.gd" id="1_kyqiw"]
 [ext_resource type="Resource" uid="uid://nd3ng1cl05pa" path="res://Resources/PlayerPresets/Default.tres" id="2_agccv"]
-[ext_resource type="Texture2D" uid="uid://2hfbf5bqyhy4" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
+[ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
 size = Vector2(20, 19.999996)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_agccv"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "enemyBounceCollision", "enemyCollision") groups=["Player"]]
 scale = Vector2(0.9, 0.9)
 floor_snap_length = 32.0
 script = ExtResource("1_kyqiw")
-raycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastLeft2"), NodePath("RayCastRight2"), NodePath("RayCastUp2")]
-downwardsRaycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3")]
+raycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastLeft2"), NodePath("RayCastRight2"), NodePath("RayCastUp2"), NodePath("RayCastDown2"), NodePath("RayCastLeft"), NodePath("RayCastLeft3"), NodePath("RayCastRight"), NodePath("RayCastRight3"), NodePath("RayCastUp"), NodePath("RayCastUp3")]
+downwardsRaycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastDown2")]
 playerMovementPreset = ExtResource("2_agccv")
+enemyBounceCollision = NodePath("EnemyBounceCollision")
+enemyCollision = NodePath("EnemyCollision")
 
 [node name="EnemyBounceCollision" type="Area2D" parent="." unique_id=164049749]
 collision_layer = 4
@@ -47,22 +49,54 @@ position = Vector2(-50, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 64)
 
+[node name="RayCastDown2" type="RayCast2D" parent="." unique_id=2122338036]
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(0, 64)
+
 [node name="RayCastDown3" type="RayCast2D" parent="." unique_id=1487377010]
 position = Vector2(50, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 64)
 
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1414877206]
+position = Vector2(0, -60)
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(-64, 0)
+
 [node name="RayCastLeft2" type="RayCast2D" parent="." unique_id=225528529]
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(-64, 0)
+
+[node name="RayCastLeft3" type="RayCast2D" parent="." unique_id=1158609575]
+position = Vector2(0, 60)
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(-64, 0)
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=464775608]
+position = Vector2(0, -60)
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(64, 0)
 
 [node name="RayCastRight2" type="RayCast2D" parent="." unique_id=1096570450]
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(64, 0)
 
+[node name="RayCastRight3" type="RayCast2D" parent="." unique_id=1866021346]
+position = Vector2(0, 60)
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(64, 0)
+
+[node name="RayCastUp" type="RayCast2D" parent="." unique_id=365446800]
+position = Vector2(-50, 0)
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(0, -58)
+
 [node name="RayCastUp2" type="RayCast2D" parent="." unique_id=1451835448]
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -58)
 
-[connection signal="body_entered" from="EnemyBounceCollision" to="." method="detect_enemy_bounce"]
-[connection signal="body_entered" from="EnemyCollision" to="." method="detect_enemies"]
+[node name="RayCastUp3" type="RayCast2D" parent="." unique_id=596214337]
+position = Vector2(50, 0)
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(0, -58)
+

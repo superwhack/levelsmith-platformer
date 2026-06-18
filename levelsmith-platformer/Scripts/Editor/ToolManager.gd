@@ -27,6 +27,9 @@ var brushObject: int = 0;
 const holdTimeCap = .15;
 var holdTimer := holdTimeCap;
 
+# If the user starts a click on a UI element.
+var clickOnUI : bool = false;
+
 var firstBoxCorner : Vector2;
 var secondBoxCorner : Vector2;
 var isPainting : bool;
@@ -34,6 +37,10 @@ var isErasing : bool;
 var isMoving : bool;
 
 func _process(_delta: float):
+	# Return early if clicking on UI as there is nothing to process
+	if (clickOnUI):
+		return;
+	
 	if (Input.is_action_pressed("left-click")):
 		holdTimer -= _delta;
 	elif (Input.is_action_just_released("left-click")):
@@ -42,12 +49,24 @@ func _process(_delta: float):
 	
 	if (boxBrushState == Global.BoxBrushState.PLACE || boxBrushState == Global.BoxBrushState.DELETE):
 		secondBoxCorner = editorManager.currentMousePosition;
-	
+
+## One of the first input handles to run, catches if the user clicked on a UI element.
+func _input(event: InputEvent) -> void:
+	# Check viewport if the user is hovering over a UI element
+	if event.is_action_pressed("left-click"):
+		clickOnUI = get_viewport().gui_get_hovered_control() != null;
+	# When released, the bool gets reset no matter what.
+	elif event.is_action_released("left-click"):
+		clickOnUI = false;
 
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
-func _unhandled_input(event: InputEvent) -> void:	
-	if editorManager.returnClick :
+func _unhandled_input(event: InputEvent) -> void:
+	# Return early if clicking on UI, to fix key release issues.
+	if (clickOnUI):
+		return;
+	
+	if editorManager.returnClick:
 		if (Input.is_action_just_released("left-click")):
 			editorManager.returnClick = false;
 		if (currentTool != Global.Tool.BRUSH):
@@ -118,8 +137,8 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
 func update_brush_object(objectId: int) -> void:
-	if isMoving:
-		return;
+	if isMoving: return;
+	
 	if currentTool == Global.Tool.CURSOR && objectId >= editorManager.tileCount:
 		brushObject = objectId;
 	elif currentTool != Global.Tool.CURSOR && objectId < editorManager.tileCount:
@@ -149,15 +168,8 @@ func change_tool(tool: Global.Tool) -> void:
 		tileSwitch.display_entities(true);
 	propertyMenu.close();
 	previewTile.clear();
+	
 	return;
-	match currentTool:
-		Global.Tool.CURSOR:
-			update_brush_object(Global.EntityType.GOAL);
-		Global.Tool.BOX_BRUSH:
-			update_brush_object(Global.TileType.SOLID);
-		Global.Tool.BRUSH:
-			update_brush_object(Global.TileType.SOLID);
-	print("Current Tool: ", currentTool);
 
 ## Deactivates the box brush.
 func disable_box_brush() -> void:

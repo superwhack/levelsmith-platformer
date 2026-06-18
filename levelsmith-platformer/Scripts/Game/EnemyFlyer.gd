@@ -41,12 +41,13 @@ func _physics_process(delta: float) -> void:
 
 ## Moves the enemy toward current destination.
 func fly_behavior() -> void:
-	var direction: Vector2 = targetPoint - global_position;
-
-	if direction.length() < 5.0:
+	var direction := targetPoint - global_position;
+	var move_distance := speed * 100 * get_physics_process_delta_time();
+	if direction.length() <= move_distance:
+		global_position = targetPoint;
+		velocity = Vector2.ZERO;
 		switch_target();
 		return;
-
 	velocity = direction.normalized() * speed * 100;
 
 
@@ -63,7 +64,7 @@ func handle_obstacles() -> void:
 	if obstacleCooldown > 0.0:
 		return;
 
-	for k in get_slide_collision_count():
+	for k in range(get_slide_collision_count()):
 		var collision: KinematicCollision2D = get_slide_collision(k);
 
 		if collision.get_collider() is TileMapLayer or Enemy:

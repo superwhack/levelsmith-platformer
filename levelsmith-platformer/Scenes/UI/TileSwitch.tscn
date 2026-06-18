@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cv27ok0ogc0qq" path="res://Assets/Defaults/Assets/Sprites/Tiles/Ice.png" id="6_h6q5o"]
 [ext_resource type="Texture2D" uid="uid://dgmuwffx12gix" path="res://Assets/Defaults/Assets/Sprites/Tiles/Sticky.png" id="7_0gefc"]
 [ext_resource type="Texture2D" uid="uid://djug6sv47earm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="8_g7c4e"]
-[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Defaults/Assets/Sprites/Tiles/Slope.png" id="9_vup42"]
+[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Sprites/Tiles/slope.png" id="9_vup42"]
 [ext_resource type="PackedScene" uid="uid://dqlxqwdmgred1" path="res://Scenes/UI/TilebarButton.tscn" id="10_goodf"]
 [ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Defaults/Assets/Sprites/Entities/Goal.png" id="11_goodf"]
 [ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="12_goodf"]
@@ -21,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://biqnms6vul5oa" path="res://Assets/Defaults/Assets/Sprites/Props/Prop4.png" id="17_0gefc"]
 [ext_resource type="Texture2D" uid="uid://dm3c7xg21m00w" path="res://Assets/Defaults/Assets/Sprites/Props/Prop5.png" id="18_g7c4e"]
 
-[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "solidTileButton", "oneWayTileButton", "deathTileButton", "iceTileButton", "stickyTileButton", "bounceTileButton", "slopeTileButton", "propOneButton", "propTwoButton", "propThreeButton", "propFourButton", "propFiveButton")]
+[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "solidTileButton", "oneWayTileButton", "deathTileButton", "iceTileButton", "stickyTileButton", "bounceTileButton", "slopeTileButton", "propOneButton", "propTwoButton", "propThreeButton", "propFourButton", "propFiveButton", "entityPropDropdown")]
 offset_right = 669.0
 offset_bottom = 100.0
 theme_override_constants/separation = 4
@@ -42,6 +42,7 @@ propTwoButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropTwoButto
 propThreeButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropThreeButton")
 propFourButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFourButton")
 propFiveButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFiveButton")
+entityPropDropdown = NodePath("EntityPickerUI/MarginContainer/Tabs/EntityPropDropdown")
 
 [node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
 layout_mode = 2
@@ -117,7 +118,7 @@ theme_override_constants/margin_bottom = 10
 [node name="Tabs" type="HBoxContainer" parent="EntityPickerUI/MarginContainer" unique_id=1816441022]
 layout_mode = 2
 
-[node name="OptionButton" type="OptionButton" parent="EntityPickerUI/MarginContainer/Tabs" unique_id=316198321]
+[node name="EntityPropDropdown" type="OptionButton" parent="EntityPickerUI/MarginContainer/Tabs" unique_id=316198321]
 custom_minimum_size = Vector2(140, 50)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -138,31 +139,31 @@ size_flags_horizontal = 3
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="GoalObjectButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1294945927]
+[node name="GoalEntityButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1294945927]
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
 icon = ExtResource("11_goodf")
 
-[node name="SpawnObjectButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1020316722]
+[node name="PlayerEntityButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1020316722]
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
 icon = ExtResource("12_goodf")
 
-[node name="PatrollingObjectButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=547161943]
+[node name="PatrollingEntityButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=547161943]
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
 icon = ExtResource("13_segfj")
 
-[node name="ShootingObjectButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1196881829]
+[node name="ShootingEntityButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1196881829]
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
 icon = ExtResource("14_pggt4")
 
-[node name="FlyingObjectButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=709802387]
+[node name="FlyingEntityButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=709802387]
 layout_mode = 2
 theme = ExtResource("3_pggt4")
 theme_type_variation = &"TileButton"
@@ -203,9 +204,8 @@ icon = ExtResource("18_g7c4e")
 thisItemID = 17
 tilebar = NodePath("../../../../..")
 
-[connection signal="item_selected" from="EntityPickerUI/MarginContainer/Tabs/OptionButton" to="." method="entity_dropdown_select"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/GoalObjectButton" to="." method="_on_goal_object_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/SpawnObjectButton" to="." method="_on_spawn_object_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingObjectButton" to="." method="_on_patrolling_object_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/ShootingObjectButton" to="." method="_on_shooting_object_button_pressed"]
-[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/FlyingObjectButton" to="." method="_on_flying_object_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/GoalEntityButton" to="." method="_on_goal_object_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/PlayerEntityButton" to="." method="_on_spawn_object_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingEntityButton" to="." method="_on_patrolling_object_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/ShootingEntityButton" to="." method="_on_shooting_object_button_pressed"]
+[connection signal="pressed" from="EntityPickerUI/MarginContainer/Tabs/Entities/FlyingEntityButton" to="." method="_on_flying_object_button_pressed"]

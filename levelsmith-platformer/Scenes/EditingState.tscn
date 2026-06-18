@@ -57,11 +57,13 @@ sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63w0a"]
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileSet", "previewTileSet", "assetManager", "customCursorManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileSet", "previewTileSet", "playButton", "assetManagerButton", "assetManager", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
 tileSet = NodePath("Tiles")
 previewTileSet = NodePath("PreviewTile")
+playButton = NodePath("ScreenUI/BottomRightAnchor/PlayButton")
+assetManagerButton = NodePath("ScreenUI/BottomLeftAnchor/BottomLeftRow/AssetManagerButton")
 assetManager = NodePath("CanvasLayer/AssetManager")
 customCursorManager = NodePath("CustomCursorManager")
 

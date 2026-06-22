@@ -55,7 +55,6 @@ func start() -> void:
 	var enemyProperties = DirAccess.get_files_at("res://Resources/Enemies/");
 	for enemyProperty in enemyProperties:
 		var propertyFile = load("res://Resources/Enemies/" + enemyProperty);
-		var file = FileAccess.open("res://Resources/Enemies/" + enemyProperty, FileAccess.READ);
 		for node in tileSet.get_children():
 			if tileSet.local_to_map(node.global_position) == propertyFile.position:
 				(node as Enemy).apply_script(propertyFile);
@@ -63,7 +62,7 @@ func start() -> void:
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
 
-## Just connect death
+## Make all connections
 func _ready() -> void:
 	Global.death.connect(reset);
 	resetButton.pressed.connect(reset);

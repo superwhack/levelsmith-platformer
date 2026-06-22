@@ -81,11 +81,12 @@ func assign_script(id: String, position: Vector2i) -> void:
 	propertyFile = ResourceLoader.load("res://Resources/Enemies/Flying" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	
 	name = "Flying" + id;
-	print(propertyFile.speed);
+	propertyFile.position = position;
 	speed = propertyFile.speed;
 	pointA = global_position;
 	pointB = pointA + propertyFile.pointBOffset;
 	targetPoint = pointB;
+	ResourceSaver.save(propertyFile);
 
 	apply_script(propertyFile);
 

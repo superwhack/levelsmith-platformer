@@ -59,11 +59,13 @@ func adjust_arrow(angle: float) -> void:
 func assign_script(id: String, position: Vector2i) -> void:
 	propertyFile = load("res://Resources/Enemies/Patrol" + id + ".tres")
 	name = "Patrol" + id;
+	propertyFile.position = position;
 	groundSpeed = propertyFile.groundSpeed; 
 	direction = -(int(propertyFile.direction) * 2 - 1);
 	restricted = propertyFile.restricted; 
 	adjust_arrow(int(propertyFile.direction) * 180 + 90);
 	directionArrow.scale = Vector2(1, 1);
+	ResourceSaver.save(propertyFile);
 
 func apply_script(file: Resource) -> void:
 	propertyFile = file;

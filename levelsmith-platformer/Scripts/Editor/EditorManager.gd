@@ -82,7 +82,7 @@ func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 ## mousePosition: Where the mouse is during this check 
 ## returns: True if the mouse is out of bounds
 func check_out_of_bounds(mousePosition: Vector2i) -> bool:
-	return mousePosition.x < 0 || mousePosition.x >= get_parent().worldSize.x || mousePosition.y < 0 || mousePosition.y >= get_parent().worldSize.y;
+	return mousePosition.x < 0 || mousePosition.x >= masterManager.worldSize.x || mousePosition.y < 0 || mousePosition.y >= masterManager.worldSize.y;
 	
 ## Reset all the enemy positions to the center of their tiles.
 func reset_enemy_positions() -> void:

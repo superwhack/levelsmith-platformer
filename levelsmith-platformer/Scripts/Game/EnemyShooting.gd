@@ -48,7 +48,6 @@ func shooting_behavior() -> void:
 func assign_script(id: String, position: Vector2i) -> void:
 	propertyFile = ResourceLoader.load("res://Resources/Enemies/Shooting" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	name = "Shooting" + id;
-	propertyFile.position = position;
 	direction = propertyFile.direction; 
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;

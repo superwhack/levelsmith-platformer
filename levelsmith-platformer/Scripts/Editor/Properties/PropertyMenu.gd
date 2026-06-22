@@ -63,6 +63,7 @@ func _ready() -> void:
 	playerAirControlSlider.drag_ended.connect(_on_drag_ended);
 	playerFallSpeedSlider.drag_ended.connect(_on_drag_ended);
 	playerCoyoteTimeSlider.drag_ended.connect(_on_drag_ended);
+	presetOptions.item_selected.connect(_on_preset_options_item_selected);
 	
 	patrollingSpeedSlider.drag_ended.connect(_on_drag_ended);
 	patrollingDirectionDropdown.dropdown_changed.connect(update_values);

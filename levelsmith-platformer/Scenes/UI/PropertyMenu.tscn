@@ -251,5 +251,3 @@ layout_direction = 3
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Close"
-
-[connection signal="item_selected" from="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions" to="." method="_on_preset_options_item_selected"]

@@ -36,10 +36,6 @@ func _process(delta: float) -> void:
 	label.text = newLabel;
 	value = slider.value;
 
-## When drag is finished, emit drag ended signal
-func _drag_ended(value_changed: bool) -> void:
-	emit_signal("drag_ended");
-
 ## Update the slider value
 func update_slider() -> void:
 	slider.value = value;

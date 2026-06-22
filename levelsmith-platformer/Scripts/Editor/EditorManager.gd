@@ -12,8 +12,10 @@ extends Node2D
 @export var playButton: Button;
 @export var assetManagerButton: Button;
 
+# Asset Manager
 @export var assetManager: Control;
 
+# Cursor Manager
 @export var customCursorManager: Node2D;
 
 # Mouse position variables
@@ -39,21 +41,21 @@ func _ready() -> void:
 	assetManagerButton.pressed.connect(open_asset_manager);
 
 ## Runs every frame during the editing state
-## _delta: how much time has passed
+## _delta: how much time has passed since the last frame
 func _process(_delta: float) -> void:
-	# record the position of the mouse on this frame
+	# Record the position of the mouse on this frame
 	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
-	
+	# Check if the tile is placeable in this spot
 	isPlaceable = !check_out_of_bounds(currentMousePosition);
 	if (toolManager.currentTool == Global.Tool.BRUSH && tileSet.get_cell_source_id(currentMousePosition) >= tileCount): isPlaceable = false; 
 	if (toolManager.currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(currentMousePosition) < tileCount && tileSet.get_cell_source_id(currentMousePosition) >= 0): isPlaceable = false; 
-	
+	# Pause the player and enemies
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
 
 	playButton.modulate = Color(1, 1, 1) if playerExists && goalExists else Color(1, 1, 1, 0.5);
 	
-	# save the mouse position to the previous frame
+	# Save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
 
 

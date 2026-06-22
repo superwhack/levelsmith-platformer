@@ -59,7 +59,10 @@ func level_complete() -> void:
 	edit();
 	editorManager.isValidated = true;
 	print("LEVEL COMPLETE");
-	
+
+## Set up a new level
+## levelName: Name of the level
+## newSize: The width and height of the level
 func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	ImportExportManager.make_new_level( levelName );
@@ -78,14 +81,14 @@ func level_setup( levelName: String, newSize: Vector2i ) -> void:
 
 ## Swap to main menu state
 func main_menu() -> void:
-	
+	# Hide all non-menu states, show Main Menu scene
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.hide();
 	editorManager.clear_enemies(true);
 	editorManagerCanvas.hide();
 	mainMenuControl.show();
-	
+	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 
 ## Swap to edit state
@@ -111,6 +114,7 @@ func edit() -> void:
 ## Swap to play state
 func play() -> void:
 	var errors : Array[String];
+	# Check that the game can be run
 	if (!editorManager.playerExists):
 		errors.append("There is no player placed down.")
 	if (!editorManager.goalExists):
@@ -168,8 +172,10 @@ func load_tilemap() -> void:
 	gameManager.tileSet = loadedMap;
 ## THESE ARE TEMPORARY AND SHOULD BE CHANGED WHEN BUTTONS ARE PUT IN
 func _process(_delta: float) -> void:
+	# If the save hotkey is pressed, export the level
 	if (Input.is_action_just_pressed("tempSave")):
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
+	# If the load hotkey is pressed, import a level
 	if (Input.is_action_just_pressed("tempLoad")):
 		propertyMenu.close();
 		var result = ImportExportManager.validate_import(ImportExportManager.levelPathName);

@@ -13,6 +13,11 @@ var goalCount: int = 0;
 
 var movingResource: Resource;
 
+func _ready() -> void:
+	var clearGoalCount = func () -> void:
+		goalCount = 0;
+	Global.levelCreated.connect(clearGoalCount);
+
 func _process(_delta: float) -> void:
 	editorManager.goalExists = goalCount > 0;
 	brushObject = toolManager.brushObject;

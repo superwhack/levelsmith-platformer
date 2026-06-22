@@ -8,3 +8,4 @@ extends Resource
 @export var shotSpeed : float;
 @export var fireRate : float;
 @export var projBounce : bool;
+@export var gravity : bool;

@@ -1,31 +1,31 @@
 extends Node2D
 
 # Our exported managers for easy access
-@export var editorManager: Node2D;
-@export var entityManager: Node2D;
-@export var tileManager: Node2D;
+@export var editorManager : Node2D;
+@export var entityManager : Node2D;
+@export var tileManager : Node2D;
 
 # references to UI elements
-@export var tileSwitch: HBoxContainer;
-@export var propertyMenu: Panel;
+@export var tileSwitch : HBoxContainer;
+@export var propertyMenu : Panel;
 
 # reference to preview tile map
-@export var previewTile: TileMapLayer;
+@export var previewTile : TileMapLayer;
 
-# Vars that tools will utilize
-var currentObjectRotation: int;
-var currentTool:  Global.Tool = Global.Tool.BRUSH;
-var boxBrushState: Global.BoxBrushState = Global.BoxBrushState.INACTIVE
+# Variables that tools will utilize
+var currentObjectRotation : int;
+var currentTool :  Global.Tool = Global.Tool.BRUSH;
+var boxBrushState : Global.BoxBrushState = Global.BoxBrushState.INACTIVE
 
 # The previously selected tile before dragging
 var prevEntity : int = -1;
 var prevRotation : int = 0;
-var prevPosition: Vector2;
-var brushObject: int = 0;
+var prevPosition : Vector2;
+var brushObject : int = 0;
 
 # A timer to differentiate between click and holding click
-const holdTimeCap = .15;
-var holdTimer := holdTimeCap;
+const HOLD_TIME_CAP : float = .15;
+var holdTimer : float = HOLD_TIME_CAP;
 
 # If the user starts a click on a UI element.
 var clickOnUI : bool = false;
@@ -36,27 +36,30 @@ var isPainting : bool;
 var isErasing : bool;
 var isMoving : bool;
 
-func _process(_delta: float):
+## A frame-by-frame process
+## delta: time since previous frame
+func _process(delta: float) -> void:
 	# Return early if clicking on UI as there is nothing to process
 	if (clickOnUI):
 		return;
 	
 	if (Input.is_action_pressed("left-click")):
-		holdTimer -= _delta;
+		holdTimer -= delta;
 	elif (Input.is_action_just_released("left-click")):
-		holdTimer = holdTimeCap;
+		holdTimer = HOLD_TIME_CAP;
 	
 	
 	if (boxBrushState == Global.BoxBrushState.PLACE || boxBrushState == Global.BoxBrushState.DELETE):
 		secondBoxCorner = editorManager.currentMousePosition;
 
 ## One of the first input handles to run, catches if the user clicked on a UI element.
+## event: the captured input event
 func _input(event: InputEvent) -> void:
 	# Check viewport if the user is hovering over a UI element
-	if event.is_action_pressed("left-click"):
+	if (event.is_action_pressed("left-click")):
 		clickOnUI = get_viewport().gui_get_hovered_control() != null;
 	# When released, the bool gets reset no matter what.
-	elif event.is_action_released("left-click"):
+	elif (event.is_action_released("left-click")):
 		clickOnUI = false;
 
 ## Input manager for any clicks or key presses that aren't on UI elements
@@ -69,8 +72,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if editorManager.returnClick:
 		if (Input.is_action_just_released("left-click")):
 			editorManager.returnClick = false;
+			
 		if (currentTool != Global.Tool.BRUSH):
 			return;
+			
 	match (currentTool):
 		Global.Tool.BRUSH:
 			if (event.is_action_pressed("left-click")):
@@ -83,10 +88,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			elif (event.is_action_released("right-click")):
 				isErasing = false;
 				
-			if isPainting: 
+			if (isPainting): 
 				tileManager.place_tile(editorManager.currentMousePosition);
-			elif isErasing:
+			elif (isErasing):
 				tileManager.delete_tile(editorManager.currentMousePosition);
+				
 		Global.Tool.BOX_BRUSH:
 			match (boxBrushState):
 				Global.BoxBrushState.INACTIVE, Global.BoxBrushState.PLACE_CONFIRM, Global.BoxBrushState.DELETE_CONFIRM:
@@ -131,24 +137,25 @@ func _unhandled_input(event: InputEvent) -> void:
 			elif (holdTimer < 0 && prevEntity == -1):
 				prevEntity = -2;
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
-			elif (holdTimer == holdTimeCap && prevEntity != -1):
+			elif (holdTimer == HOLD_TIME_CAP && prevEntity != -1):
 				entityManager.drop_entity();
 
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
 func update_brush_object(objectId: int) -> void:
-	if isMoving: return;
+	if (isMoving): return;
 	
-	if currentTool == Global.Tool.CURSOR && objectId >= editorManager.tileCount:
+	if (currentTool == Global.Tool.CURSOR && objectId >= editorManager.tileCount):
 		brushObject = objectId;
-	elif currentTool != Global.Tool.CURSOR && objectId < editorManager.tileCount:
+	elif (currentTool != Global.Tool.CURSOR && objectId < editorManager.tileCount):
 		brushObject = objectId;
 
 ## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.
 ## tool: The tool to change to
 func change_tool(tool: Global.Tool) -> void:
-	if currentTool == tool:
+	if (currentTool == tool):
 		return;
+
 	editorManager.returnClick = false;
 	reset_tool_states();
 
@@ -156,6 +163,7 @@ func change_tool(tool: Global.Tool) -> void:
 		brushObject = Global.TileType.SOLID;
 	elif (tool == Global.Tool.CURSOR):
 		brushObject = Global.EntityType.PROP1 if tileSwitch.entityPropDropdown.get_selected_id() == 1 else Global.EntityType.GOAL;
+
 	if (currentTool == Global.Tool.BOX_BRUSH): 
 		disable_box_brush();
 	currentTool = tool;
@@ -166,11 +174,11 @@ func change_tool(tool: Global.Tool) -> void:
 	else:
 		tileSwitch.display_tiles(false);
 		tileSwitch.display_entities(true);
+
 	propertyMenu.close();
 	previewTile.clear();
 	
-	return;
-
+	
 ## Deactivates the box brush.
 func disable_box_brush() -> void:
 	boxBrushState = Global.BoxBrushState.INACTIVE;
@@ -178,7 +186,7 @@ func disable_box_brush() -> void:
 ## Rotate currently selected object
 ## NOTE: SceneCollection rotations work most likely by selecting the scene and rotating it, you can't spawn it rotated
 func rotate_object() -> void:
-	match currentObjectRotation:
+	match (currentObjectRotation):
 		0:
 			currentObjectRotation = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H;
 		TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H:

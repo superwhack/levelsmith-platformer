@@ -191,6 +191,7 @@ func _on_drag_ended() -> void:
 ## Show the property menu, different sections pop up depending on the currently selected entity type
 ## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
+	show();
 	if shootingDirectionArrow:
 		shootingDirectionArrow.scale = Vector2(1,1);
 		shootingDirectionArrow = null;

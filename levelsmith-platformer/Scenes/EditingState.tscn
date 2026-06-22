@@ -319,11 +319,11 @@ toolManager = NodePath("..")
 tileSet = NodePath("../../Tiles")
 previewTile = NodePath("../../PreviewTile")
 
-[node name="EntityManager" type="Node2D" parent="ToolManager" unique_id=1126944329 node_paths=PackedStringArray("editorManager", "toolManager", "tileSet", "propertyMenu")]
+[node name="EntityManager" type="Node2D" parent="ToolManager" unique_id=1126944329 node_paths=PackedStringArray("editorManager", "toolManager", "tileMap", "propertyMenu")]
 script = ExtResource("14_pkt5f")
 editorManager = NodePath("../..")
 toolManager = NodePath("..")
-tileSet = NodePath("../../Tiles")
+tileMap = NodePath("../../Tiles")
 propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
 
 [editable path="CanvasLayer/AssetManager"]

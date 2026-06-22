@@ -116,7 +116,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		Global.Tool.CURSOR:
 			if (event.is_action_released("left-click") && prevEntity == -1):
 				# If the clicked cell is an entity and the click was short, edit its properties
-				if (entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL && holdTimer > -.5):
+				if (entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL && holdTimer > -.5):
 					entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:
@@ -125,7 +125,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				entityManager.delete_entity(editorManager.currentMousePosition);
 			
 			# If left click is being held, pick up the current tile unless it's empty air.
-			if (holdTimer < 0 && prevEntity == -1 && entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) != -1) && entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount:
+			if (holdTimer < 0 && prevEntity == -1 && entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) != -1) && entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount:
 				entityManager.move_entity();
 			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
 			elif (holdTimer < 0 && prevEntity == -1):

@@ -22,6 +22,7 @@ func _ready() -> void:
 	slider.min_value = snapped(minMax.x, 0.01);
 	slider.max_value = snapped(minMax.y, 0.01);
 	slider.step = sliderStep;
+	slider.drag_ended.connect(drag_ended.emit);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -69,12 +69,23 @@ func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	#AudioManager.update_volume();
 	print("NEW LEVEL SET UP");
 	tileSet.clear();
+	create_bedrock_border();
 	editorManager.playerExists = false;
 	editorManager.goalExists = false;
 	entityManager.goalCount = 0;
 	gridLines.fill_grid_lines();
 	cameraManager.refresh_bounds();
 	edit();
+
+func create_bedrock_border() -> void:
+	print("Creating bedrock border")
+	for x in range(-1, worldSize.x + 1):
+		tileSet.set_cell(Vector2i(x, -1), Global.BEDROCK_TILE, Vector2i.ZERO)
+		tileSet.set_cell(Vector2i(x, worldSize.y), Global.BEDROCK_TILE, Vector2i.ZERO)
+	for y in range(0, worldSize.y):
+		tileSet.set_cell(Vector2i(-1, y), Global.BEDROCK_TILE, Vector2i.ZERO)
+		tileSet.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_TILE, Vector2i.ZERO)
+	print(tileSet.get_used_rect())
 
 ## Swap to main menu state
 func main_menu() -> void:

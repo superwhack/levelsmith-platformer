@@ -18,6 +18,7 @@ var panSpeed: float = 1.0;
 
 # Tilemap bound
 @export var tileSet: TileMapLayer;
+@export var gridLines: TileMapLayer;
 var levelBounds: Rect2;
 var roamBounds: Rect2;
 
@@ -105,7 +106,7 @@ func _input(event: InputEvent) -> void:
 
 	# Pan while dragging
 	if event is InputEventMouseMotion and isPanning:
-		global_position -= event.relative / zoom;
+		global_position -= event.relative / zoom * (1.8);
 		clamp_camera_to_level();
 		
 	if Input.is_action_just_pressed("shift"):
@@ -182,11 +183,17 @@ func process_zoom(zoomAmount: float) -> void:
 	newZoom = clamp(newZoom, fitZoom, maxZoomIn);
 
 	zoom = Vector2.ONE * newZoom;
+	if (zoom.x <= 0.3):
+		gridLines.visible = false;
+	else:
+		gridLines.visible = true;
 	
 	# Mouse world position AFTER zoom
 	var mouseWorldAfter: Vector2 = get_global_mouse_position();
+	
 	# Offset camera so zoom focuses on mouse
 	global_position += mouseWorldBefore - mouseWorldAfter;
+	# If zoomed out enough, hide the grid layer.
 
 
 func process_zoom_input() -> void:
@@ -266,10 +273,13 @@ func get_camera_rect() -> Rect2:
 ## Getting the maximum possible zoom out for the roam bounds to be contained.
 ## Returns a float of the max zoom.
 func get_min_zoom_to_fit_roam() -> float:
-	var viewportSize = get_viewport_rect().size
-	var roamSize = roamBounds.size
+	# Getting the viewport and roaming area (where the camera can go) sizes
+	var viewportSize = get_viewport_rect().size;
+	var roamSize = roamBounds.size;
 
-	var zoomX = viewportSize.x / roamSize.x
-	var zoomY = viewportSize.y / roamSize.y
+	# Get the scale ratio between the x/y values for the minimum zoom
+	var zoomX = viewportSize.x / roamSize.x;
+	var zoomY = viewportSize.y / roamSize.y;
 
-	return min(zoomX, zoomY)
+	# Get the minimum between both options
+	return min(zoomX, zoomY);

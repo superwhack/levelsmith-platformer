@@ -163,7 +163,8 @@ func drop_entity() -> void:
 	toolManager.prevPosition = Vector2(0,0);
 	toolManager.currentObjectRotation = toolManager.prevRotation;
 	
-	for frame in range(1, 5):
+	var curScene = get_scene_at_cell(position)
+	while get_scene_at_cell(position) == curScene:
 		await get_tree().process_frame;
 		
 	if get_scene_at_cell(position) is Enemy && movingResource:

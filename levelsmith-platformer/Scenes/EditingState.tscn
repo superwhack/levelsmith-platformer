@@ -289,11 +289,12 @@ offset_right = 0.0
 offset_bottom = 350.0
 grow_horizontal = 0
 
-[node name="HotkeyManager" type="Node2D" parent="." unique_id=1848065233 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager")]
+[node name="HotkeyManager" type="Node2D" parent="." unique_id=1848065233 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager", "tileSwitch")]
 script = ExtResource("10_bpoex")
 editorManager = NodePath("..")
 toolManager = NodePath("../ToolManager")
 entityManager = NodePath("../ToolManager/EntityManager")
+tileSwitch = NodePath("../ScreenUI/TopLeftAnchor/TopLeftRow/TilePaletteFrame/TilePaletteMargin/TileSwitch")
 
 [node name="CustomCursorManager" type="Node2D" parent="." unique_id=1871670420 node_paths=PackedStringArray("tileSet", "editorManager", "toolManager", "entityManager")]
 script = ExtResource("11_rllk2")

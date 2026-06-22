@@ -101,8 +101,10 @@ func run() -> void:
 		accelerationX = direction * trueSpeed;
 	# NOTE: I'd love to get this to work nicer since right now moving can feel a little jagged.
 	else:
-		accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
-	
+		if (currentFriction != 1.0):
+			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
+		else:
+			accelerationX = -velocity.x;
 	# Friction and air control
 	if not is_on_floor():
 		accelerationX *= airControl * airControl;

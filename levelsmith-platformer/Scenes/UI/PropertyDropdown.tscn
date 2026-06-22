@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://d33iu75vytjse"]
+
+[ext_resource type="Script" uid="uid://16tn4kottvty" path="res://Scripts/Editor/Properties/PropertyDropdown.gd" id="1_uqmkm"]
+
+[node name="PropertyDropDown" type="VBoxContainer" unique_id=305056832 node_paths=PackedStringArray("nameLabel", "optionButton")]
+size_flags_horizontal = 4
+script = ExtResource("1_uqmkm")
+nameLabel = NodePath("HBoxContainer/Name")
+optionButton = NodePath("HBoxContainer/MenuButton")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1927265922]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="HBoxContainer" unique_id=671881686]
+layout_mode = 2
+text = "Name"
+
+[node name="MenuButton" type="OptionButton" parent="HBoxContainer" unique_id=894803744]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Right"
+popup/item_0/id = 0
+popup/item_1/text = "Left"
+popup/item_1/id = 1

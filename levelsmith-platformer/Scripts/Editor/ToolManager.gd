@@ -155,7 +155,7 @@ func change_tool(tool: Global.Tool) -> void:
 	if (currentTool == Global.Tool.CURSOR):
 		brushObject = Global.TileType.SOLID;
 	elif (tool == Global.Tool.CURSOR):
-		brushObject = Global.EntityType.GOAL;
+		brushObject = Global.EntityType.PROP1 if tileSwitch.entityPropDropdown.get_selected_id() == 1 else Global.EntityType.GOAL;
 	if (currentTool == Global.Tool.BOX_BRUSH): 
 		disable_box_brush();
 	currentTool = tool;

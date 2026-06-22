@@ -20,5 +20,6 @@ shape = SubResource("CircleShape2D_lurgl")
 texture = ExtResource("2_0p30m")
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=1346299203]
+visible = false
 z_index = 4
 texture = ExtResource("3_3c58l")

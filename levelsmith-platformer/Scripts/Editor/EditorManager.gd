@@ -34,6 +34,10 @@ var returnClick: bool = false;
 # Stores the number of tiles made
 var tileCount : int = Global.TileType.size();
 
+## Runs when the node first enters the tree
+func _ready() -> void:
+	assetManagerButton.pressed.connect(open_asset_manager);
+
 ## Runs every frame during the editing state
 ## _delta: how much time has passed
 func _process(_delta: float) -> void:
@@ -48,7 +52,6 @@ func _process(_delta: float) -> void:
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
 
 	playButton.modulate = Color(1, 1, 1) if playerExists && goalExists else Color(1, 1, 1, 0.5);
-	assetManagerButton.pressed.connect(open_asset_manager);
 	
 	# save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
@@ -56,10 +59,10 @@ func _process(_delta: float) -> void:
 
 ## NOTE: TEMPORARY FIX FUNCTION PT 1
 ## Clear all enemies without a property file
-func clear_enemies() -> void:
+func clear_enemies(alwaysClear: bool = false) -> void:
 	for child in tileSet.get_children():
 		if child is Enemy:
-			if child.propertyFile == null:
+			if alwaysClear || child.propertyFile == null:
 				child.queue_free();
 
 ## Changes current hotbar state (used for hotkeys)
@@ -78,16 +81,16 @@ func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 ## returns: True if the mouse is out of bounds
 func check_out_of_bounds(mousePosition: Vector2i) -> bool:
 	return mousePosition.x < 0 || mousePosition.x >= get_parent().worldSize.x || mousePosition.y < 0 || mousePosition.y >= get_parent().worldSize.y;
-
-func check_goal_exists() -> bool:
-	toolManager.entityManager.scan_goals(get_parent().worldSize.x + 1, get_parent().worldSize.y + 1);
-	return goalExists;
-
+	
 ## Reset all the enemy positions to the center of their tiles.
 func reset_enemy_positions() -> void:
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
 		if (enemy is Enemy && enemy.propertyFile):
 			enemy.global_position = tileSet.map_to_local(enemy.propertyFile.position);
+			if enemy is EnemyPatrol || enemy is EnemyShooting:
+				enemy.directionArrow.show();
+				
+## Opens the asset manager
 func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;

@@ -13,6 +13,11 @@ var goalCount: int = 0;
 
 var movingResource: Resource;
 
+func _ready() -> void:
+	var clearGoalCount = func () -> void:
+		goalCount = 0;
+	Global.levelCreated.connect(clearGoalCount);
+
 func _process(_delta: float) -> void:
 	editorManager.goalExists = goalCount > 0;
 	brushObject = toolManager.brushObject;
@@ -81,7 +86,8 @@ func place_entity(clickPosition: Vector2) -> void:
 				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
 			ResourceSaver.save(newEntity, file);
 			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
-#			get_scene_at_cell(clickPosition).propertyFile.position = clickPosition;
+			get_scene_at_cell(clickPosition).propertyFile.position = clickPosition;
+			ResourceSaver.save(get_scene_at_cell(clickPosition).propertyFile);
 			editorManager.reset_enemy_positions();
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);

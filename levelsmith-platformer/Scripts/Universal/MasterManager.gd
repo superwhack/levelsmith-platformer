@@ -30,15 +30,17 @@ var loadedMap: TileMapLayer;
 ## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
 @export var worldSize: Vector2i;
-
 @export var propertyMenu : Panel;
 
 func _ready() -> void:
-	#Global.reload.connect(load_tilemap);
-	#Global.complete.connect(level_complete);
 	#ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
+	
+	Global.reload.connect(load_tilemap);
+	Global.complete.connect(level_complete);
+	Global.levelCreated.connect(tileSet.clear);
+	Global.levelCreated.connect(edit);
 	
 	# Connect all button signals
 	editorHomeButton.pressed.connect(main_menu);
@@ -62,30 +64,13 @@ func level_complete() -> void:
 	
 func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
+	cameraManager.initialize_camera();
 	ImportExportManager.make_new_level( levelName );
-	Global.reload.connect(load_tilemap);
-	Global.complete.connect(level_complete);
+	
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	print("NEW LEVEL SET UP");
-	tileSet.clear();
-	create_bedrock_border();
-	editorManager.playerExists = false;
-	editorManager.goalExists = false;
-	entityManager.goalCount = 0;
-	gridLines.fill_grid_lines();
-	cameraManager.refresh_bounds();
-	edit();
-
-func create_bedrock_border() -> void:
-	print("Creating bedrock border")
-	for x in range(-1, worldSize.x + 1):
-		tileSet.set_cell(Vector2i(x, -1), Global.BEDROCK_TILE, Vector2i.ZERO)
-		tileSet.set_cell(Vector2i(x, worldSize.y), Global.BEDROCK_TILE, Vector2i.ZERO)
-	for y in range(0, worldSize.y):
-		tileSet.set_cell(Vector2i(-1, y), Global.BEDROCK_TILE, Vector2i.ZERO)
-		tileSet.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_TILE, Vector2i.ZERO)
-	print(tileSet.get_used_rect())
+	Global.levelCreated.emit();
 
 ## Swap to main menu state
 func main_menu() -> void:

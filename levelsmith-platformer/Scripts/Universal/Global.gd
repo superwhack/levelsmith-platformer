@@ -4,6 +4,7 @@ extends Node
 signal death;
 signal reload;
 signal complete;
+signal levelCreated;
 
 # Tile size
 const tileSize: int = 128;

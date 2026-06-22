@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
 [ext_resource type="Texture2D" uid="uid://bd4p61avbou82" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonHomeWhite.png" id="8_rdu5w"]
-[ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
+[ext_resource type="Texture2D" uid="uid://b5a6dmqxy3cqf" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="11_fnjh2"]
@@ -261,7 +261,7 @@ icon_alignment = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 
-[node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("mainTileMap", "previewTileSet") instance=ExtResource("11_bpoex")]
+[node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("mainTileMap", "previewTileSet", "editorManager") instance=ExtResource("11_bpoex")]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -276,6 +276,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mainTileMap = NodePath("../../Tiles")
 previewTileSet = NodePath("../../PreviewTile")
+editorManager = NodePath("../..")
 
 [node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
 visible = false

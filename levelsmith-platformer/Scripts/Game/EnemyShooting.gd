@@ -43,7 +43,7 @@ func shooting_behavior() -> void:
 	projectileFired.global_position = position;
 	projectileFired.global_rotation_degrees = direction;
 	projectileFired.bounceable = projBounce;
-	get_parent().add_child(projectileFired);
+	add_sibling(projectileFired);
 
 func assign_script(id: String, position: Vector2i) -> void:
 	propertyFile = ResourceLoader.load("res://Resources/Enemies/Shooting" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)

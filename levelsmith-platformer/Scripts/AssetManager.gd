@@ -26,6 +26,8 @@ var audioToReplace: AudioStream;
 @export var loadFileButton: Button;
 @export var resetButton: Button;
 
+@export var editorManager: Node2D;
+
 var firstSelected: AssetItem = null;
 
 const ASSET_BUTTON = preload("res://Scenes/UI/AssetItem.tscn");
@@ -278,7 +280,7 @@ func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
 		# NOTE: TEMPORARY FIX PT 2
 		for frame in range(0, 5):
 			await get_tree().process_frame;
-		mainTileMap.get_parent().clear_enemies();
+		editorManager.clear_enemies();
 
 
 ## Recursively searches directories for a file of a specific name

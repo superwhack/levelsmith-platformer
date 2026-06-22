@@ -126,7 +126,7 @@ func process_build_camera(delta: float) -> void:
 	# If shift is being held, make it move faster.
 	if Input.is_action_pressed("shift"): speedModifier = 3;
 	
-	global_position += inputVector.normalized() * moveSpeed * speedModifier * delta;
+	global_position += inputVector.normalized() * moveSpeed * speedModifier * delta * (1.8 / zoom.x);
 	
 	# Edge scrolling currently commented out
 	#if (!get_viewport().gui_get_hovered_control()):

@@ -39,6 +39,7 @@ func _ready() -> void:
 	
 	# Start zoomed out
 	Global.reload.connect(reset_camera);
+	Global.levelCreated.connect(refresh_bounds);
 
 #func _input(event):
 	#if event is InputEventMouseButton:

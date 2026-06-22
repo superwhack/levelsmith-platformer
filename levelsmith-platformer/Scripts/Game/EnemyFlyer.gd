@@ -82,7 +82,6 @@ func assign_script(id: String, position: Vector2i) -> void:
 	
 	name = "Flying" + id;
 	print(propertyFile.speed);
-	propertyFile.position = position;
 	speed = propertyFile.speed;
 	pointA = global_position;
 	pointB = pointA + propertyFile.pointBOffset;

@@ -36,7 +36,12 @@ var tileCount : int = Global.TileType.size();
 
 ## Runs when the node first enters the tree
 func _ready() -> void:
+	var reset_player_and_goal = func() -> void:
+		playerExists = false;
+		goalExists = false;
+	
 	assetManagerButton.pressed.connect(open_asset_manager);
+	Global.levelCreated.connect(reset_player_and_goal);
 
 ## Runs every frame during the editing state
 ## _delta: how much time has passed

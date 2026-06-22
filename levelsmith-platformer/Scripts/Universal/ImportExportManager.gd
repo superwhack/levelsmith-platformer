@@ -7,9 +7,13 @@ const defaultPath := "res://Assets/Defaults/";
 
 signal levelImported;
 
+## NOTE: TEMPORARY VARIABLE FOR STORING LEVEL'S NAME
+var levelPathName : String;
+
 ## Create a new level, cloning from the default folder
 ## levelName: Name of the new level, indicates where it'll go in the folder
 func make_new_level(levelName: String) -> void:
+	levelPathName = levelName;
 	clear_enemies_folder();
 	DirAccess.make_dir_absolute("user://Levels/");
 	levelPath = "user://Levels/" + levelName + "/";
@@ -39,13 +43,19 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 		if enemyProperty.contains("Patrol"):
 			data_to_send += '"type":"patrolling", "stats":{';
 			data_to_send += '"speed": ' + str(propertyFile.groundSpeed) + ", ";
+			data_to_send += '"direction": ' + str(propertyFile.direction) + ", ";
 			data_to_send += '"restricted": ' + str(propertyFile.restricted) + '}}';
 		elif enemyProperty.contains("Shooting"):
 			data_to_send += '"type":"shooting", "stats":{';
 			data_to_send += '"direction": ' + str(propertyFile.direction) + ", ";
 			data_to_send += '"shotSpeed": ' + str(propertyFile.shotSpeed) + ", ";
 			data_to_send += '"fireRate": ' + str(propertyFile.fireRate) + ', ';
-			data_to_send += '"projBounce": ' + str(propertyFile.projBounce) + '}}';
+			data_to_send += '"projBounce": ' + str(propertyFile.projBounce) + ', ';
+			data_to_send += '"gravity": ' + str(propertyFile.gravity) + '}}';
+		elif enemyProperty.contains("Flying"):
+			data_to_send += '"type":"flying", "stats":{';
+			data_to_send += '"speed": ' + str(propertyFile.speed) + ", ";
+			data_to_send += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}}}';
 		if (enemyPropertyIndex < enemyProperties.size() - 1):
 			data_to_send += ',';
 	
@@ -57,10 +67,6 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	data_to_send += '"fallSpeed": ' + str(playerData.playerFallSpeed) + ", ";
 	data_to_send += '"coyoteTime": ' + str(playerData.playerCoyoteTime);
 	data_to_send += '}}';
-	
-	var notJSON = FileAccess.open(levelPath + "Temp.txt", FileAccess.WRITE);
-	notJSON.store_string(data_to_send);
-	notJSON.close();
 	
 	var json = JSON.parse_string(data_to_send)
 	var json_string = JSON.stringify(json);
@@ -86,10 +92,10 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	clone_data("user://Assets/", levelAssetPath);
 
 ## Validates a level import at a given directory
-## directory: Source level directory
+## name: Source level name
 ## returns: false if it fails, true otherwise
-func validate_import(directory: String) -> bool:
-	levelPath = "user://Levels/" + directory + "/";
+func validate_import(name: String) -> bool:
+	levelPath = "user://Levels/" + name + "/";
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
 	if !DirAccess.dir_exists_absolute(levelPath):
@@ -166,8 +172,11 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 					var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 					var newPatrolling: Resource = defaultPatrolling.duplicate(true);
 					newPatrolling.groundSpeed = enemy.stats.speed;
+					newPatrolling.direction = enemy.stats.direction;
 					newPatrolling.restricted = enemy.stats.restricted;
-					ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
+					var path = "res://Resources/Enemies/Patrol-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres";
+					newPatrolling.take_over_path(path);
+					ResourceSaver.save(newPatrolling, path);
 					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 				"shooting":
 					var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
@@ -176,21 +185,36 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 					newShooting.shotSpeed = enemy.stats.shotSpeed;
 					newShooting.fireRate = enemy.stats.fireRate;
 					newShooting.projBounce = enemy.stats.projBounce;
+					newShooting.gravity = enemy.stats.gravity;
 					ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
+					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
+				"flying":
+					var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
+					var newFlying: Resource = defaultFlying.duplicate(true);
+					newFlying.speed = enemy.stats.speed;
+					newFlying.pointBOffset.x = enemy.stats.endpoint.x;
+					newFlying.pointBOffset.y = enemy.stats.endpoint.y;
+					ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	# If any enemy did not get data due to some form of corruption, it needs it.
 	for node in tileMap.get_children():
-		if node is EnemyPatrol:
+		if node is EnemyPatrol && node.propertyFile == null:
 			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
 			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
-		if node is EnemyShooting:
+		elif node is EnemyShooting && node.propertyFile == null:
 			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 			var newShooting: Resource = defaultShooting.duplicate(true);
 			ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + nodePos + ".tres");
+			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
+		elif node is EnemyFlyer && node.propertyFile == null:
+			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
+			var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
+			var newFlying: Resource = defaultFlying.duplicate(true);
+			ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
 	
 	JSONFile.close();

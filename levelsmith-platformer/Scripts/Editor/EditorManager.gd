@@ -1,37 +1,37 @@
 extends Node2D
 
 # References to other managers
-@export var toolManager: Node2D;
-@export var masterManager: Node2D;
+@export var toolManager : Node2D;
+@export var masterManager : Node2D;
 
 # References to grid TileMapLayer child nodes
-@export var tileSet: TileMapLayer;
-@export var previewTileSet: TileMapLayer;
+@export var tileSet : TileMapLayer;
+@export var previewTileSet : TileMapLayer;
 
 # Relevant button elements
-@export var playButton: Button;
-@export var assetManagerButton: Button;
+@export var playButton : Button;
+@export var assetManagerButton : Button;
 
 # Asset Manager
-@export var assetManager: Control;
+@export var assetManager : Control;
 
 # Cursor Manager
-@export var customCursorManager: Node2D;
+@export var customCursorManager : Node2D;
 
 # Mouse position variables
-var currentMousePosition: Vector2;
-var prevMousePosition: Vector2;
+var currentMousePosition : Vector2;
+var prevMousePosition : Vector2;
 
 # State of the hotbar
 var currentHotbarState : Global.HotbarState;
 
 # Flags
-var isValidated: bool = false;
-var isPlaceable: bool = true;
-var playerExists: bool = false;
-var goalExists: bool = false;
+var isValidated : bool = false;
+var isPlaceable : bool = true;
+var playerExists : bool = false;
+var goalExists : bool = false;
 
-var returnClick: bool = false;
+var returnClick : bool = false;
 
 # Stores the number of tiles made
 var tileCount : int = Global.TileType.size();
@@ -47,8 +47,11 @@ func _process(_delta: float) -> void:
 	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
 	# Check if the tile is placeable in this spot
 	isPlaceable = !check_out_of_bounds(currentMousePosition);
+	
 	if (toolManager.currentTool == Global.Tool.BRUSH && tileSet.get_cell_source_id(currentMousePosition) >= tileCount): isPlaceable = false; 
-	if (toolManager.currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(currentMousePosition) < tileCount && tileSet.get_cell_source_id(currentMousePosition) >= 0): isPlaceable = false; 
+	
+	if (toolManager.currentTool == Global.Tool.CURSOR && tileSet.get_cell_source_id(currentMousePosition) < tileCount && tileSet.get_cell_source_id(currentMousePosition) >= 0): isPlaceable = false;
+	 
 	# Pause the player and enemies
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
@@ -82,7 +85,7 @@ func get_grid_mouse_position(mousePosition: Vector2) -> Vector2:
 ## mousePosition: Where the mouse is during this check 
 ## returns: True if the mouse is out of bounds
 func check_out_of_bounds(mousePosition: Vector2i) -> bool:
-	return mousePosition.x < 0 || mousePosition.x >= get_parent().worldSize.x || mousePosition.y < 0 || mousePosition.y >= get_parent().worldSize.y;
+	return mousePosition.x < 0 || mousePosition.x >= masterManager.worldSize.x || mousePosition.y < 0 || mousePosition.y >= masterManager.worldSize.y;
 	
 ## Reset all the enemy positions to the center of their tiles.
 func reset_enemy_positions() -> void:

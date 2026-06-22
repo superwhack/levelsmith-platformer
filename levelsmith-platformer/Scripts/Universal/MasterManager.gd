@@ -47,7 +47,7 @@ func _ready() -> void:
 	
 	# NOTE: This probably shouldn't be here for the final build
 	# Create the Enemies folder, github can't push empty folders
-	if !DirAccess.dir_exists_absolute("res://Resources/Enemies/"):
+	if (!DirAccess.dir_exists_absolute("res://Resources/Enemies/")):
 		DirAccess.make_dir_absolute("res://Resources/Enemies/");
 		
 	#edit();
@@ -119,7 +119,7 @@ func play() -> void:
 		errors.append("There is no player placed down.")
 	if (!editorManager.goalExists):
 		errors.append("There is no goal placed down.")
-	if errors.size() != 0:
+	if (errors.size() != 0):
 		PopUpManager.create_multi_error_popup("Cannot Start Level", errors);
 		return;
 	propertyMenu.close();

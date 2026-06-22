@@ -35,7 +35,7 @@ func place_entity(clickPosition: Vector2) -> void:
 	&& clickedTileId >= 0)): 
 		return;
 	
-	if toolManager.brushObject >= Global.EntityType.PROP1 && (clickedTileId <= Global.EntityType.PROP1 && clickedTileId >= Global.EntityType.GOAL):
+	if toolManager.brushObject >= Global.EntityType.PROP1 && (clickedTileId < Global.EntityType.PROP1 && clickedTileId >= Global.EntityType.GOAL):
 		return;
 	
 	if (clickedTileId >= Global.EntityType.PATROLLING && clickedTileId <= Global.EntityType.STATIONARY) || clickedTileId == Global.EntityType.GOAL:
@@ -73,7 +73,7 @@ func place_entity(clickPosition: Vector2) -> void:
 				newEntity = defaultPatrolling.duplicate(true);
 				get_scene_at_cell(clickPosition).adjust_arrow(90);
 				get_scene_at_cell(clickPosition).directionArrow.scale = Vector2(1, 1);
-				file = "res://Resources/Enemies/Patrol" + str(time) + ".tres";
+				file = "res://Resources/Enemies/Patrolling" + str(time) + ".tres";
 			elif (saveBrush == Global.EntityType.SHOOTING):
 				var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 				newEntity = defaultShooting.duplicate(true);
@@ -86,8 +86,6 @@ func place_entity(clickPosition: Vector2) -> void:
 				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
 			ResourceSaver.save(newEntity, file);
 			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
-			get_scene_at_cell(clickPosition).propertyFile.position = clickPosition;
-			ResourceSaver.save(get_scene_at_cell(clickPosition).propertyFile);
 			editorManager.reset_enemy_positions();
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);

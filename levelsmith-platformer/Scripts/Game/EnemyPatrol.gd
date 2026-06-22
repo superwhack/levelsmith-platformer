@@ -60,7 +60,6 @@ func assign_script(id: String, position: Vector2i) -> void:
 	propertyFile = load("res://Resources/Enemies/Patrol" + id + ".tres")
 	name = "Patrol" + id;
 	groundSpeed = propertyFile.groundSpeed; 
-	propertyFile.position = position;
 	direction = -(int(propertyFile.direction) * 2 - 1);
 	restricted = propertyFile.restricted; 
 	adjust_arrow(int(propertyFile.direction) * 180 + 90);

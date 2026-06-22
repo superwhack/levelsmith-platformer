@@ -30,15 +30,17 @@ var loadedMap: TileMapLayer;
 ## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
 @export var worldSize: Vector2i;
-
 @export var propertyMenu : Panel;
 
 func _ready() -> void:
-	#Global.reload.connect(load_tilemap);
-	#Global.complete.connect(level_complete);
 	#ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
+	
+	Global.reload.connect(load_tilemap);
+	Global.complete.connect(level_complete);
+	Global.levelCreated.connect(tileSet.clear);
+	Global.levelCreated.connect(edit);
 	
 	# Connect all button signals
 	editorHomeButton.pressed.connect(main_menu);
@@ -63,18 +65,11 @@ func level_complete() -> void:
 func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	ImportExportManager.make_new_level( levelName );
-	Global.reload.connect(load_tilemap);
-	Global.complete.connect(level_complete);
+	
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	print("NEW LEVEL SET UP");
-	tileSet.clear();
-	editorManager.playerExists = false;
-	editorManager.goalExists = false;
-	entityManager.goalCount = 0;
-	gridLines.fill_grid_lines();
-	cameraManager.refresh_bounds();
-	edit();
+	Global.levelCreated.emit();
 
 ## Swap to main menu state
 func main_menu() -> void:

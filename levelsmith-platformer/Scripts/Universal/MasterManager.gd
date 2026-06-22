@@ -39,7 +39,7 @@ func _ready() -> void:
 	
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
-	Global.levelCreated.connect(tileSet.clear);
+	Global.levelCreated.connect(on_level_created);
 	Global.levelCreated.connect(edit);
 	
 	# Connect all button signals
@@ -71,6 +71,33 @@ func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	#AudioManager.update_volume();
 	print("NEW LEVEL SET UP");
 	Global.levelCreated.emit();
+
+func on_level_created() -> void:
+	tileSet.clear();
+
+	editorManager.playerExists = false;
+	editorManager.goalExists = false;
+	entityManager.goalCount = 0;
+
+	create_bedrock_border();
+
+	gridLines.fill_grid_lines();
+	cameraManager.refresh_bounds();
+
+func create_bedrock_border() -> void:
+	for x in range(-1, worldSize.x + 1):
+		tileSet.set_cell(Vector2i(x, -1), Global.BEDROCK_TILE, Vector2i.ZERO);
+		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileSet.set_cell( Vector2i(x, worldSize.y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+
+	for y in range(0, worldSize.y):
+		tileSet.set_cell(Vector2i(-1, y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileSet.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+
+	print("Bedrock border created: ", tileSet.get_used_rect());
 
 ## Swap to main menu state
 func main_menu() -> void:

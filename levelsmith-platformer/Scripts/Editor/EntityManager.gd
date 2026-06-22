@@ -135,19 +135,18 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 	return null;
 
 ## Moves the entity at the clicked position
-func move_entity() -> void:
+func move_entity(previousClickPos: Vector2) -> void:
 	propertyMenu.close();
 	# Await is needed to it has time to update selectedTile
-	toolManager.prevPosition = editorManager.currentMousePosition;
+	toolManager.prevPosition = previousClickPos;
 	toolManager.prevEntity = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;
 	await get_tree().process_frame;
-	toolManager.brushObject = tileSet.get_cell_source_id(editorManager.currentMousePosition);
-	toolManager.currentObjectRotation = tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
-	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy:
-		movingResource = get_scene_at_cell(editorManager.currentMousePosition).propertyFile;
-	delete_entity(editorManager.currentMousePosition);
-	toolManager.isMoving = true;
+	toolManager.brushObject = tileSet.get_cell_source_id(previousClickPos);
+	toolManager.currentObjectRotation = tileSet.get_cell_alternative_tile(previousClickPos);
+	if get_scene_at_cell(previousClickPos) is Enemy:
+		movingResource = get_scene_at_cell(previousClickPos).propertyFile;
+	delete_entity(previousClickPos);
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
@@ -165,7 +164,6 @@ func drop_entity() -> void:
 	toolManager.prevEntity = -1;
 	toolManager.prevPosition = Vector2(0,0);
 	toolManager.currentObjectRotation = toolManager.prevRotation;
-	toolManager.isMoving = false;
 	
 	for frame in range(1, 5):
 		await get_tree().process_frame;

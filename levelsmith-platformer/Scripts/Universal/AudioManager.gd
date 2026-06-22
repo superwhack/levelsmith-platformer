@@ -22,12 +22,18 @@ var availablePlayers : Array[AudioStreamPlayer];
 var inusePlayers : Array[AudioStreamPlayer]
 var queue : Array[String];
 
+# Audio player for the asset manager
+var assetManagerPlayer : AudioStreamPlayer
+
 ## Create all players and connect them properly
 func _ready() -> void:
 	musicPlayer = AudioStreamPlayer.new();
+	assetManagerPlayer = AudioStreamPlayer.new();
 	add_child(musicPlayer);
+	add_child(assetManagerPlayer);
 	musicPlayer.finished.connect(music_loop.bind(musicPlayer));
 	musicPlayer.bus = "master";
+	assetManagerPlayer.bus = "master";
 	
 	# Loop through and create every potential audioPlayer for use with UI and in game
 	for i in audioPlayerCount:
@@ -118,6 +124,18 @@ func reset_audio() -> void:
 		availablePlayers.append(inusePlayers[i]);
 	inusePlayers.clear();
 	musicPlayer.stop();
+
+## Play the sound for an asset when in the assetmanager
+## assetName: the name of the file to play from, no extentions
+func play_asset(assetName: String) -> void:
+	var fullPath : String = audioLibraryPath + assetName;
+	if FileAccess.file_exists(fullPath + ".mp3"):
+		assetManagerPlayer.stream = AudioStreamMP3.load_from_file(fullPath + ".mp3");
+	elif FileAccess.file_exists(fullPath + ".wav"):
+		assetManagerPlayer.stream = AudioStreamWAV.load_from_file(fullPath + ".wav");
+	else:
+		print(assetName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
+	assetManagerPlayer.play();
 
 ## If there are any current sounds in the queue and any avaliable players, start playing the sound.
 ## delta: unused

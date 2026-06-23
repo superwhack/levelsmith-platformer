@@ -183,25 +183,6 @@ func detect_enemies(body: Node2D) -> void:
 			enemiesInside.append(body);
 		take_damage(1, direction.normalized());
 
-## Detect collisions with projectiles
-## area: the area being collided with
-func detect_projectiles(area: Area2D) -> void:
-	# Wait one frame to see if the projectile has been bounced on
-	await get_tree().process_frame;
-	if (area && area.is_in_group("Projectile")):
-		take_damage(1);
-		area.queue_free();
-
-## Detect collisions between projectiles and the bounce area
-## area: the area being collided with
-func detect_projectile_bounce(area: Area2D) -> void:
-	if (area.is_in_group("Projectile")):
-		if area.bounceable:
-			bounce();
-		else:
-			take_damage(1);
-		area.queue_free();
-
 ## Detect collisions between enemies and the bounce area
 ## body: the body being collided with
 func detect_enemy_bounce(body: Node2D) -> void:

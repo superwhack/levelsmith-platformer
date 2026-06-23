@@ -45,12 +45,13 @@ func check_out_of_bounds() -> bool:
 	var masterManager : Node2D = get_tree().current_scene;
 	
 	# There is a 1 tile leeway given to enemies who leave bounds, before death
-	if (global_position.x < (-1) * Global.tileSize
-	|| global_position.x > (masterManager.worldSize.x + 1) * Global.tileSize
-	|| global_position.y < (-1) * Global.tileSize
-	|| global_position.y > (masterManager.worldSize.y + 1) * Global.tileSize):
+	if (global_position.x < (-1) * Global.TILE_SIZE
+	|| global_position.x > (masterManager.worldSize.x + 1) * Global.TILE_SIZE
+	|| global_position.y < (-1) * Global.TILE_SIZE
+	|| global_position.y > (masterManager.worldSize.y + 1) * Global.TILE_SIZE):
 		print("Player OOB: ", global_position)
-		die();
+		return true;
+	return false;
 
 ## OVERRIDE -
 ## Assigns the script of the given ID (located in the Resources/Enemies folder) to an enemy at the given position.

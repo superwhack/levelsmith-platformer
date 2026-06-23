@@ -31,6 +31,7 @@ var playerPreset: Resource;
 
 ## When pause is pressed, flip the current state
 func pause() -> void:
+
 	if playState == PlayState.PAUSE:
 		get_tree().paused = false;
 		pauseScreen.hide();
@@ -52,11 +53,13 @@ func start() -> void:
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
 	for frame in range(1, 5):
 		await get_tree().process_frame;
+
 	# Get a reference to the player and apply its preset
 	player = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1];
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
+
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
 	var enemyProperties = DirAccess.get_files_at("res://Resources/Enemies/");
@@ -67,11 +70,12 @@ func start() -> void:
 			if tileSet.local_to_map(node.global_position) == propertyFile.position:
 				(node as Enemy).apply_script(propertyFile);
 				break;
+
 	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
 
-## Just connect death
+## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:
 	Global.death.connect(reset);
 	resetButton.pressed.connect(reset);

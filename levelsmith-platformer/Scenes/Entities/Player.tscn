@@ -10,6 +10,7 @@ size = Vector2(20, 19.999996)
 [sub_resource type="CircleShape2D" id="CircleShape2D_agccv"]
 
 [node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "enemyBounceCollision", "enemyCollision") groups=["Player"]]
+position = Vector2(0, 10)
 scale = Vector2(0.9, 0.9)
 floor_snap_length = 32.0
 script = ExtResource("1_kyqiw")

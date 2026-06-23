@@ -155,72 +155,143 @@ func bounce() -> void:
 	coyoteTimeLeft = 0;
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
+#func detect_tiles() -> void:
+	#
+	## Check all collisions with raycasts
+	#var slideCollisions: Array[RayCast2D] = [];
+	#for raycast in raycasts:
+		#if raycast.is_colliding():
+			#slideCollisions.push_back(raycast);
+	#
+	## Check all current collisions
+	#for i in slideCollisions.size():
+		#var collider = slideCollisions[i].get_collider();
+		## Have collisions with tiles confer effects
+		#if collider is TileMapLayer:
+			## Use the global coord to find tile collision
+			#var tilePos = collider.local_to_map(position + slideCollisions[i].target_position * 1.1);
+			#var tileData = collider.get_cell_tile_data(tilePos);
+			## Bounce tile collisions
+			#if tileData && (tileData.get_custom_data("name") == "bounce"):
+				## Horizontal Bounces
+				#if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
+					#if slideCollisions[i].target_position.x < 0:
+						#velocity.x = 3000 * tileData.get_custom_data("bounce");
+					#else:
+						#velocity.x = -3000 * tileData.get_custom_data("bounce");
+					#if Input.is_action_pressed("jump"):
+						#velocity.y = -500 * tileData.get_custom_data("bounce");
+				## Vertical Bounces
+				#else:
+					#if slideCollisions[i].target_position.y < 0:
+						#velocity.y = 1000 * tileData.get_custom_data("bounce");
+					#else:
+						#velocity.y = -1000 * tileData.get_custom_data("bounce");
+			#if tileData && (tileData.get_custom_data("name") == "slow"):
+				## Horizontal Stick
+				#if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
+					#velocity.y *= .75;
+					## NOTE: Uncomment this out if we want to be able to wall jump on sticky tiles
+					##if Input.is_action_just_pressed("jump") && !is_on_floor():
+					##	if slideCollisions[i].target_position.x < 0:
+					##		velocity.x = jumpHeight * 520;
+					##	else:
+					##		velocity.x = -jumpHeight * 520;
+					##	velocity.y = -jumpHeight * 220;;
+				## Vertical Stick
+				#else:
+					#if slideCollisions[i].target_position.y < 0:
+						#velocity.y = 0;
+						#if Input.is_action_just_pressed("down"):
+							#while slideCollisions[i].is_colliding():
+								#position += Vector2(0, 1);
+								#slideCollisions[i].force_raycast_update();
+					#currentSlowdown = .5;
+			#if tileData && (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i])):
+				#if tileData.get_custom_data("name") != "bounce":
+					#currentFriction = 1.0;
+					#currentSlowdown = 1.0;
+				## Depending on the tile type, apply a different effect
+				#match (tileData.get_custom_data("name")):
+					#"oneway":
+						#if Input.is_action_just_pressed("down"):
+							#position += Vector2(0, 1);
+					#"hazard":
+						#take_damage(1);
+					## Set friction for the player to slide
+					#"ice":
+						#currentFriction = tileData.get_custom_data("friction");
 func detect_tiles() -> void:
-	
-	# Check all collisions with raycasts
 	var slideCollisions: Array[RayCast2D] = [];
 	for raycast in raycasts:
 		if raycast.is_colliding():
 			slideCollisions.push_back(raycast);
-	
-	# Check all current collisions
-	for i in slideCollisions.size():
-		var collider = slideCollisions[i].get_collider();
-		# Have collisions with tiles confer effects
-		if collider is TileMapLayer:
-			# Use the global coord to find tile collision
-			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position * 1.1);
-			var tileData = collider.get_cell_tile_data(tilePos);
-			# Bounce tile collisions
-			if tileData && (tileData.get_custom_data("name") == "bounce"):
-				# Horizontal Bounces
-				if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
-					if slideCollisions[i].target_position.x < 0:
-						velocity.x = 3000 * tileData.get_custom_data("bounce");
-					else:
-						velocity.x = -3000 * tileData.get_custom_data("bounce");
-					if Input.is_action_pressed("jump"):
-						velocity.y = -500 * tileData.get_custom_data("bounce");
-				# Vertical Bounces
+
+	for raycast in slideCollisions:
+		var collider = raycast.get_collider();
+		if not (collider is TileMapLayer):
+			continue;
+
+		var tileLayer := collider as TileMapLayer;
+
+		var hitGlobal: Vector2 = raycast.get_collision_point();
+		var hitNormal: Vector2 = raycast.get_collision_normal();
+		var probeGlobal: Vector2 = hitGlobal - hitNormal * 0.5;
+		var probeLocal: Vector2 = tileLayer.to_local(probeGlobal);
+		var tilePos: Vector2i = tileLayer.local_to_map(probeLocal);
+		var tileData = tileLayer.get_cell_tile_data(tilePos);
+
+		if tileData == null:
+			continue;
+
+		var tileName = tileData.get_custom_data("name");
+		var rayDir: Vector2 = raycast.target_position;
+
+		# Bounce tile collisions
+		if tileName == "bounce":
+			# Horizontal bounces
+			if abs(rayDir.x) > abs(rayDir.y):
+				if rayDir.x < 0:
+					velocity.x = 3000 * tileData.get_custom_data("bounce");
 				else:
-					if slideCollisions[i].target_position.y < 0:
-						velocity.y = 1000 * tileData.get_custom_data("bounce");
-					else:
-						velocity.y = -1000 * tileData.get_custom_data("bounce");
-			if tileData && (tileData.get_custom_data("name") == "slow"):
-				# Horizontal Stick
-				if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
-					velocity.y *= .75;
-					# NOTE: Uncomment this out if we want to be able to wall jump on sticky tiles
-					#if Input.is_action_just_pressed("jump") && !is_on_floor():
-					#	if slideCollisions[i].target_position.x < 0:
-					#		velocity.x = jumpHeight * 520;
-					#	else:
-					#		velocity.x = -jumpHeight * 520;
-					#	velocity.y = -jumpHeight * 220;;
-				# Vertical Stick
+					velocity.x = -3000 * tileData.get_custom_data("bounce");
+				if Input.is_action_pressed("jump"):
+					velocity.y = -500 * tileData.get_custom_data("bounce");
+			# Vertical bounces
+			else:
+				if rayDir.y < 0:
+					velocity.y = 1000 * tileData.get_custom_data("bounce");
 				else:
-					if slideCollisions[i].target_position.y < 0:
-						velocity.y = 0;
-						if Input.is_action_just_pressed("down"):
-							while slideCollisions[i].is_colliding():
-								position += Vector2(0, 1);
-								slideCollisions[i].force_raycast_update();
-					currentSlowdown = .5;
-			if tileData && (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i])):
-				if tileData.get_custom_data("name") != "bounce":
-					currentFriction = 1.0;
-					currentSlowdown = 1.0;
-				# Depending on the tile type, apply a different effect
-				match (tileData.get_custom_data("name")):
-					"oneway":
-						if Input.is_action_just_pressed("down"):
+					velocity.y = -1000 * tileData.get_custom_data("bounce");
+
+		if tileName == "slow":
+			# Horizontal stick
+			if abs(rayDir.x) > abs(rayDir.y):
+				velocity.y *= 0.75;
+			# Vertical stick
+			else:
+				if rayDir.y < 0:
+					velocity.y = 0;
+					if Input.is_action_just_pressed("down"):
+						while raycast.is_colliding():
 							position += Vector2(0, 1);
-					"hazard":
-						take_damage(1);
-					# Set friction for the player to slide
-					"ice":
-						currentFriction = tileData.get_custom_data("friction");
+							raycast.force_raycast_update();
+				currentSlowdown = 0.5;
+
+		# Only downward rays should drive floor tile effects (except hazard)
+		if tileName == "hazard" or downwardsRaycasts.has(raycast):
+			if tileName != "bounce":
+				currentFriction = 1.0;
+				currentSlowdown = 1.0;
+
+			match tileName:
+				"oneway":
+					if Input.is_action_just_pressed("down"):
+						position += Vector2(0, 1);
+				"hazard":
+					take_damage(1);
+				"ice":
+					currentFriction = tileData.get_custom_data("friction");
 
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> bool:

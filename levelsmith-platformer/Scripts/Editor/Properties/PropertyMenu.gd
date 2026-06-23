@@ -1,58 +1,58 @@
 extends Panel
 
 # Entity currently selected for editing
-var selectedEntity: Node2D;
+var selectedEntity : Node2D;
 
 # Name displayed on property menu
-@export var entityName: Label;
+@export var entityName : Label;
 
-@export var playerMenu: VBoxContainer;
-@export var flyingMenu: VBoxContainer;
-@export var patrollingMenu: MarginContainer;
-@export var shootingMenu: MarginContainer;
+@export var playerMenu : VBoxContainer;
+@export var flyingMenu : VBoxContainer;
+@export var patrollingMenu : MarginContainer;
+@export var shootingMenu : MarginContainer;
 
 # Player values
-var playerSpeed: float;
+var playerSpeed : float;
 var playerJumpHeight : float;
 var playerAirControl : float;
 var playerFallSpeed : float;
 var playerCoyoteTime : float;
 
 # Player value sliders
-@export var playerSpeedSlider: VBoxContainer;
-@export var playerJumpSlider: VBoxContainer;
-@export var playerAirControlSlider: VBoxContainer;
-@export var playerFallSpeedSlider: VBoxContainer;
-@export var playerCoyoteTimeSlider: VBoxContainer;
+@export var playerSpeedSlider : VBoxContainer;
+@export var playerJumpSlider : VBoxContainer;
+@export var playerAirControlSlider : VBoxContainer;
+@export var playerFallSpeedSlider : VBoxContainer;
+@export var playerCoyoteTimeSlider : VBoxContainer;
 
 # Patrolling inputs
-@export var patrollingSpeedSlider: VBoxContainer;
-@export var patrollingDirectionDropdown: VBoxContainer;
-@export var patrollingRestrictedCheckbox: VBoxContainer;
+@export var patrollingSpeedSlider : VBoxContainer;
+@export var patrollingDirectionDropdown : VBoxContainer;
+@export var patrollingRestrictedCheckbox : VBoxContainer;
 
 # Flying inputs
-@export var flyingSpeedSlider: VBoxContainer;
-@export var flyingOffsetXSlider: VBoxContainer;
-@export var flyingOffsetYSlider: VBoxContainer;
+@export var flyingSpeedSlider : VBoxContainer;
+@export var flyingOffsetXSlider : VBoxContainer;
+@export var flyingOffsetYSlider : VBoxContainer;
 var previewLine: Line2D;
 
 # Shooting inputs
-@export var shootingDirectionSlider: VBoxContainer;
-@export var shootingShotSpeedSlider: VBoxContainer;
-@export var shootingFireRateSlider: VBoxContainer;
-@export var shootingProjectileBounce: VBoxContainer;
-@export var shootingGravity: VBoxContainer;
+@export var shootingDirectionSlider : VBoxContainer;
+@export var shootingShotSpeedSlider : VBoxContainer;
+@export var shootingFireRateSlider : VBoxContainer;
+@export var shootingProjectileBounce : VBoxContainer;
+@export var shootingGravity : VBoxContainer;
 
 # Preset Options
-@export var presetOptions: OptionButton;
-var selectedPreset: Resource;
+@export var presetOptions : OptionButton;
+var selectedPreset : Resource;
 
-var selectedPlayerPreset: Resource;
+var selectedPlayerPreset : Resource;
 
 # Direction arrow for shooting and patrolling enemies
-var shootingDirectionArrow: Sprite2D;
+var shootingDirectionArrow : Sprite2D;
 
-@export var closeButton: Button;
+@export var closeButton : Button;
 
 ## When this starts, select the default option
 func _ready() -> void:
@@ -91,22 +91,24 @@ func close() -> void:
 	hide();
 	selectedEntity = null;
 
+## Runs every frame. Sets the text and arrows when an entity is selected
+## _delta: Time passed since the last frame
 func _process(_delta: float) -> void:
 	# If there is a selected entity, set the name in the property menu, otherwise close
-	if (selectedEntity != null):
-		if selectedEntity is EnemyPatrol:
-			entityName.text = "Patrolling Enemy";
-			selectedEntity.adjust_arrow(int(patrollingDirectionDropdown.value) * 180 + 90);
-		elif  selectedEntity is EnemyFlyer:
-			entityName.text = "Flying Enemy";
-		elif selectedEntity is EnemyShooting:
-			entityName.text = "Shooting Enemy";
-			selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
-		elif selectedEntity is Player:
-			entityName.text = "Player";
-	else:
+	if (!selectedEntity):
 		hide();
-
+		return;
+		
+	if selectedEntity is EnemyPatrol:
+		entityName.text = "Patrolling Enemy";
+		selectedEntity.adjust_arrow(int(patrollingDirectionDropdown.value) * 180 + 90);
+	elif  selectedEntity is EnemyFlyer:
+		entityName.text = "Flying Enemy";
+	elif selectedEntity is EnemyShooting:
+		entityName.text = "Shooting Enemy";
+		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
+	elif selectedEntity is Player:
+		entityName.text = "Player";
 
 ## When a preset option is selected, load that preset and set all values to that preset
 ## index: the index of the preset selected
@@ -121,7 +123,7 @@ func _on_preset_options_item_selected(index: int) -> void:
 
 ## Load and update the custom preset, then save its changes
 func update_custom() -> void:
-	var customPreset = load("res://Resources/PlayerPresets/Custom.tres");
+	var customPreset : Resource = load("res://Resources/PlayerPresets/Custom.tres");
 	customPreset.groundSpeed = playerSpeed;
 	customPreset.jumpHeight = playerJumpHeight;
 	customPreset.airControl = playerAirControl;
@@ -133,7 +135,7 @@ func update_custom() -> void:
 func update_flying_preview() -> void:
 	if selectedEntity == null:
 		return;
-	var offset := Vector2(flyingOffsetXSlider.value * Global.tileSize,flyingOffsetYSlider.value * Global.tileSize);
+	var offset : Vector2 = Vector2(flyingOffsetXSlider.value * Global.tileSize,flyingOffsetYSlider.value * Global.tileSize);
 	previewLine.global_position = selectedEntity.global_position;
 	previewLine.clear_points()
 	previewLine.add_point(Vector2.ZERO)

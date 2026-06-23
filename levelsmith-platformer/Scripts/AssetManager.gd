@@ -13,7 +13,6 @@ var audioToReplace: AudioStream;
 
 # References to both tile maps
 @export var mainTileMap: TileMapLayer;
-@export var previewTileSet: TileMapLayer;
 
 # References to preview and file dialog
 @export var imagePreview: TextureRect;

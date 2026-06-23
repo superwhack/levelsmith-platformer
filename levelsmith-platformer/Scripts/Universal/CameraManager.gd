@@ -18,7 +18,6 @@ var panSpeed: float = 1.0;
 @export var playZoom: float = 0.7;
 
 # Tilemap bound
-@export var tileSet: TileMapLayer;
 @export var gridLines: TileMapLayer;
 var levelBounds: Rect2;
 var roamBounds: Rect2;

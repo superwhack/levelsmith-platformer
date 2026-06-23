@@ -24,7 +24,7 @@ var player: CharacterBody2D;
 var playerStartingPosition: Vector2;
 
 # Reference to the tile set
-var tileSet: TileMapLayer;
+var tileMap: TileMapLayer;
 
 # Reference to the selected player preset
 var playerPreset: Resource;
@@ -65,8 +65,8 @@ func start() -> void:
 	var enemyProperties = DirAccess.get_files_at("res://Resources/Enemies/");
 	for enemyProperty in enemyProperties:
 		var propertyFile = load("res://Resources/Enemies/" + enemyProperty);
-		for node in tileSet.get_children():
-			if tileSet.local_to_map(node.global_position) == propertyFile.position:
+		for node in tileMap.get_children():
+			if tileMap.local_to_map(node.global_position) == propertyFile.position:
 				(node as Enemy).apply_script(propertyFile);
 				break;
 

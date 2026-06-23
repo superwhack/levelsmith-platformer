@@ -1,6 +1,6 @@
 extends Node2D
 
-## Managers and tileset for easy access.
+## Managers and tile maps for easy access.
 @export var editorManager: Node2D;
 @export var toolManager: Node2D;
 @export var tileMap : TileMapLayer;

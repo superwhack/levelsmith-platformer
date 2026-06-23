@@ -51,7 +51,6 @@ var trueSpeed : float;
 @export var enemyCollision: Area2D;
 
 var enemiesInside : Array[Node2D];
-var projectilesInside : Array[Area2D];
 
 ## Runs once on instantiation
 func _ready() -> void:
@@ -60,7 +59,6 @@ func _ready() -> void:
 	enemyCollision.body_exited.connect(remove_enemy);
 	enemyBounceCollision.area_entered.connect(detect_projectile_bounce);
 	enemyCollision.area_entered.connect(detect_projectiles);
-	enemyCollision.area_exited.connect(remove_projectile);
 	# Applies the preset on ready
 	if (playerMovementPreset):
 		print("Applying ", playerMovementPreset, " player movement preset.");
@@ -73,8 +71,6 @@ func _physics_process(delta: float) -> void:
 		return;
 	for enemy in enemiesInside:
 		detect_enemies(enemy);
-	for projectile in projectilesInside:
-		detect_projectiles(projectile);
 	if invulnerabilityCurrent > 0:
 		invulnerabilityCurrent -= delta;
 		flashTimer -= delta;
@@ -168,13 +164,10 @@ func die() -> void:
 	Global.death.emit();
 
 ## Remove enemies or projectiles when no longer inside of them
-## body/area: the body or area to remove from the array
+## body: the body or area to remove from the array
 func remove_enemy(body: Node2D):
 	if enemiesInside.find(body) != -1:
 		enemiesInside.remove_at(enemiesInside.find(body));
-func remove_projectile(area: Area2D):
-	if projectilesInside.find(area) != -1:
-		projectilesInside.remove_at(projectilesInside.find(area));
 
 ## use raycast to detect enemy collision
 # Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
@@ -198,8 +191,6 @@ func detect_projectiles(area: Area2D) -> void:
 	await get_tree().process_frame;
 	if (area && area.is_in_group("Projectile")):
 		var direction : Vector2 = position - area.position;
-		if projectilesInside.find(area) == -1:
-			projectilesInside.append(area);
 		take_damage(1, direction.normalized());
 		area.queue_free();
 
@@ -211,8 +202,6 @@ func detect_projectile_bounce(area: Area2D) -> void:
 			bounce();
 		else:
 			var direction : Vector2 = position - area.position;
-			if projectilesInside.find(area) == -1:
-				projectilesInside.append(area);
 			take_damage(1, direction.normalized());
 		area.queue_free();
 

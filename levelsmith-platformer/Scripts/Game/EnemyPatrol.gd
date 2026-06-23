@@ -56,11 +56,11 @@ func adjust_arrow(angle: float) -> void:
 	directionArrow.position.x = sin(deg_to_rad(directionArrow.rotation_degrees)) * 90;
 	directionArrow.position.y = -cos(deg_to_rad(directionArrow.rotation_degrees)) * 90;
 
-func assign_script(id: String, position: Vector2i) -> void:
+func assign_script(id: String, assignPosition: Vector2i) -> void:
 	propertyFile = load("res://Resources/Enemies/Patrol" + id + ".tres")
 	name = "Patrol" + id;
 	groundSpeed = propertyFile.groundSpeed; 
-	propertyFile.position = position;
+	propertyFile.position = assignPosition;
 	direction = -(int(propertyFile.direction) * 2 - 1);
 	restricted = propertyFile.restricted; 
 	adjust_arrow(int(propertyFile.direction) * 180 + 90);

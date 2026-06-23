@@ -53,8 +53,8 @@ func initialize_camera() -> void:
 	zoom = Vector2.ONE * maxZoomOut;
 	global_position = levelBounds.get_center();
 	clamp_camera_to_level();
-	print("center:", levelBounds.get_center());
-	print("camera:", global_position);
+	#print("center:", levelBounds.get_center());
+	#print("camera:", global_position);
 
 ## Retrieve the level bounds and the camera roaming bounds.
 func refresh_bounds() -> void:
@@ -90,14 +90,14 @@ func try_find_player() -> void:
 	playerReference = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1] as CharacterBody2D;
 	
 	if playerReference != null:
-		print("From CameraManager: player found");
+		#print("From CameraManager: player found");
 		searchForPlayer = false;
 		return;
 	
 	playerSearchAttempts += 1
 	
 	if playerSearchAttempts >= maxPlayerSearchAttempts:
-		print("From CameraManager: ERROR - fail to find player");
+		#print("From CameraManager: ERROR - fail to find player");
 		searchForPlayer = false;
 
 ## Handles mouse middle-click panning

@@ -4,32 +4,32 @@ extends Node2D
 var state : Global.State = Global.State.EDIT;
 
 # References to state managers and canvas components
-@export var editorManager: Node2D;
-@export var toolManager: Node2D;
-@export var gameManager: Node2D;
-@export var entityManager: Node2D;
-@export var audioManager: Node;
-@export var cameraManager: Camera2D;
-@export var editorManagerCanvas: CanvasLayer;
-@export var gameManagerCanvas: CanvasLayer;
-@export var mainMenuControl: Control;
+@export var editorManager : Node2D;
+@export var toolManager : Node2D;
+@export var gameManager : Node2D;
+@export var entityManager : Node2D;
+@export var audioManager : Node;
+@export var cameraManager : Camera2D;
+@export var editorManagerCanvas : CanvasLayer;
+@export var gameManagerCanvas : CanvasLayer;
+@export var mainMenuControl : Control;
 
 # References to relevant buttons
-@export var editorHomeButton: Button;
-@export var editorPlayButton: Button;
-@export var returnToEditorButton: Button;
+@export var editorHomeButton : Button;
+@export var editorPlayButton : Button;
+@export var returnToEditorButton : Button;
 
 # Reference to tile maps
-@export var tileMap: TileMapLayer;
-@export var previewTileMap: TileMapLayer;
-@export var gridLines: TileMapLayer;
+@export var tileMap : TileMapLayer;
+@export var previewTileMap : TileMapLayer;
+@export var gridLines : TileMapLayer;
 
 # Map that is currently loaded in the Play scene
-var loadedMap: TileMapLayer;
+var loadedMap : TileMapLayer;
 
 ## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
-@export var worldSize: Vector2i;
+@export var worldSize : Vector2i;
 @export var propertyMenu : Panel;
 
 func _ready() -> void:
@@ -157,9 +157,9 @@ func play() -> void:
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
 	# Reference the tile map as the node to be saved\
-	var nodeToSave = tileMap;
+	var nodeToSave : Node = tileMap;
 	# Create a PackedScene
-	var scene = PackedScene.new();
+	var scene : PackedScene = PackedScene.new();
 	# Pack the node to save as a scene
 	scene.pack(nodeToSave)
 	# Save that scene to the resource folder
@@ -172,9 +172,9 @@ func load_tilemap() -> void:
 		gameManager.remove_child(loadedMap);
 		loadedMap.queue_free();
 	# Load the saved map from the resource folder
-	var savedMap = ResourceLoader.load("user://SavedTileMap.tscn");
+	var savedMap : Resource = ResourceLoader.load("user://SavedTileMap.tscn");
 	# Instantiate the map as a scene instance
-	var sceneInstance = savedMap.instantiate();
+	var sceneInstance : Node = savedMap.instantiate();
 	# Add that instance to the top of the GameManager's hierarchy
 	gameManager.add_child(sceneInstance);
 	gameManager.move_child(sceneInstance, 0);
@@ -190,7 +190,7 @@ func _process(_delta: float) -> void:
 	# If the load hotkey is pressed, import a level
 	if (Input.is_action_just_pressed("tempLoad")):
 		propertyMenu.close();
-		var result = ImportExportManager.validate_import(ImportExportManager.levelPathName);
+		var result : bool = ImportExportManager.validate_import(ImportExportManager.levelPathName);
 		if (result):
 			ImportExportManager.clear_enemies_folder();
 			for childNode in editorManager.tileMap.get_children():

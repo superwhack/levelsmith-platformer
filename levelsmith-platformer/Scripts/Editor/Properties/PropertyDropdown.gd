@@ -8,7 +8,7 @@ extends VBoxContainer
 signal dropdown_changed;
 
 # Value of the CheckBox
-var value: bool;
+var value : bool;
 
 ## When started, set the text of the name label to the name of the property
 func _ready() -> void:

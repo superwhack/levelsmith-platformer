@@ -1,55 +1,55 @@
 extends Panel
 
 # Path to the root folder of all assets
-var filePath: String = "user://Assets";
+var filePath : String = "user://Assets";
 
 # References to images
-var imageToReplace: Image;
-var imageNameToReplace: String;
+var imageToReplace : Image;
+var imageNameToReplace : String;
 
 # References to audio
-var newAudio: AudioStream;
-var audioToReplace: AudioStream;
+var newAudio : AudioStream;
+var audioToReplace : AudioStream;
 
 # References to both tile maps
-@export var mainTileMap: TileMapLayer;
+@export var mainTileMap : TileMapLayer;
 
 # References to preview and file dialog
-@export var imagePreview: TextureRect;
-@export var imageSelect: FileDialog;
+@export var imagePreview : TextureRect;
+@export var imageSelect : FileDialog;
 
 # References to different elements of the menu
-@export var imagesTab: VBoxContainer;
-@export var animationsTab: VBoxContainer;
-@export var currentAssetLabel: Label;
+@export var imagesTab : VBoxContainer;
+@export var animationsTab : VBoxContainer;
+@export var currentAssetLabel : Label;
 
 # Button references for connecting signals
-@export var loadFileButton: Button;
-@export var resetButton: Button;
+@export var loadFileButton : Button;
+@export var resetButton : Button;
 
 # Reference to the editor manager
-@export var editorManager: Node2D;
+@export var editorManager : Node2D;
 
 # Keep track of the first selected item
-var firstSelected: AssetItem = null;
+var firstSelected : AssetItem = null;
 
 # Reference to the asset button scene for instantiating
-const ASSET_BUTTON = preload("res://Scenes/UI/AssetItem.tscn");
+const ASSET_BUTTON : PackedScene = preload("res://Scenes/UI/AssetItem.tscn");
 
 # Reference to the Missing texture in case the default textures are removed
-const MISSING_TEXTURE := "res://Assets/Defaults/Assets/Sprites/Missing.png";
+const MISSING_TEXTURE : String = "res://Assets/Defaults/Assets/Sprites/Missing.png";
 
 # All types of tiles
-var tileTypes: Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
+var tileTypes : Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
 
 # All types of entities
-var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyShooting", "EnemyPatrol", "EnemyFlying", "Goal"];
+var entityTypes : Array[String] = ["Player", "EnemyStationary", "EnemyShooting", "EnemyPatrol", "EnemyFlying", "Goal"];
 
 # All types of props
-var propTypes: Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
+var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
 
 # All animations
-var animations: Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];
+var animations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -60,7 +60,7 @@ func _ready() -> void:
 	Global.levelCreated.connect(refresh_assets);
 	
 	# Checks if the user has an assets root folder, creates one if not
-	var dir = DirAccess.open(filePath);
+	var dir : DirAccess = DirAccess.open(filePath);
 	if (!dir):
 		create_file_tree();
 	# Generate all buttons under their tabs
@@ -81,16 +81,16 @@ func _ready() -> void:
 ## type: What type the asset is - Image, Animation, or Audio 
 func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.AssetType = AssetItem.AssetType.IMAGE):
 	# Set the file path to the folder
-	var categoryFilePath: String = find_directory_by_name(folder);
+	var categoryFilePath : String = find_directory_by_name(folder);
 	# Open the folder at the path
-	var dir = DirAccess.open(categoryFilePath);
+	var dir : DirAccess = DirAccess.open(categoryFilePath);
 	# If the folder is successfully opened
 	if (dir):
 		# Get all directories within the folder
-		var allDirectories = dir.get_directories();
+		var allDirectories : PackedStringArray = dir.get_directories();
 		# For each directory within, instantiate a button and set its properties based on the folder name
 		for directory: String in allDirectories:
-			var newButton = ASSET_BUTTON.instantiate();
+			var newButton : Button = ASSET_BUTTON.instantiate();
 			newButton.assetName = directory;
 			newButton.displayName = directory.capitalize();
 			container.add_child(newButton);
@@ -104,11 +104,11 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 ## returns: Loaded image
 func find_image(imageName: String, currentDirectory: String = filePath) -> Image:
 	# Get the path to the image
-	var imagePath = find_file_by_name(imageName, currentDirectory);
+	var imagePath : String = find_file_by_name(imageName, currentDirectory);
 	# If the path exists
 	if (imagePath):
 		# Create and load an image from the path
-		var image = Image.new();
+		var image : Image = Image.new();
 		image.load(imagePath);
 		if (imagePath.get_extension().to_lower() == "png"):
 			if (validate_image(image)):
@@ -128,19 +128,19 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 ## returns: Image loaded if it is found
 func find_image_in_folder(folderPath: String) -> Image:
 	# Opens the folder at the given folderName path
-	var dir = DirAccess.open(folderPath);
+	var dir : DirAccess = DirAccess.open(folderPath);
 	# If a folder was sucessfully opened
 	if (dir):
 		# Initialize file stream
 		dir.list_dir_begin();
 		# Get the image name in the folder
-		var imageName: String = dir.get_next();
+		var imageName : String = dir.get_next();
 		# If there is no image in the folder, return null
 		if (imageName == ""):
 			return null;
 		else:
 			# Initialize an image
-			var image: Image = Image.new();
+			var image : Image = Image.new();
 			# Load the image based on it's file path
 			image.load(folderPath + "/" + imageName);
 			# Close file stream
@@ -159,8 +159,8 @@ func find_image_in_folder(folderPath: String) -> Image:
 func validate_image(image: Image) -> bool:
 	# If there is no valid image, return false
 	if (!image): return false;
-	var imageWidth = image.get_width();
-	var imageHeight = image.get_height();
+	var imageWidth : int = image.get_width();
+	var imageHeight : int = image.get_height();
 	# If the width and height are not 128, resize it to be
 	if (imageWidth != 128 || imageHeight != 128):
 		image.resize(128, 128, Image.INTERPOLATE_LANCZOS);
@@ -171,12 +171,12 @@ func validate_image(image: Image) -> bool:
 ## Returns: Array of all frames for animation
 func get_animation_from_folder(folderName: String) -> Array[Image]:
 	# Get the path to the folder
-	var pathToFolder: String = find_directory_by_name(folderName);
+	var pathToFolder : String = find_directory_by_name(folderName);
 	# If the path is found, retrieve all files and add to array
 	if (pathToFolder):
-		var dir = DirAccess.open(pathToFolder);
-		var allImageNames = dir.get_files();
-		var allImages: Array[Image] = [];
+		var dir : DirAccess = DirAccess.open(pathToFolder);
+		var allImageNames : PackedStringArray = dir.get_files();
+		var allImages : Array[Image] = [];
 		for imageName in allImageNames:
 			allImages.append(find_image(imageName));
 		return allImages;
@@ -189,13 +189,13 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 ## returns: The amount of files in the folder
 func file_count_in_folder(folderName: String) -> int:
 	# Get the path to the folder
-	var pathToFolder: String = find_directory_by_name(folderName);
+	var pathToFolder : String = find_directory_by_name(folderName);
 	# If there is a path to the folder
 	if (pathToFolder):
 		# Open the directory at the path
-		var dir = DirAccess.open(pathToFolder);
+		var dir : DirAccess = DirAccess.open(pathToFolder);
 		# Store all files in that path in an array
-		var allFiles = dir.get_files();
+		var allFiles : PackedStringArray = dir.get_files();
 		# Return the size of that array
 		return allFiles.size();
 	# If there is no path to the folder
@@ -208,24 +208,24 @@ func file_count_in_folder(folderName: String) -> int:
 func refresh_assets() -> void:
 	# Change all tiles to their textures
 	for i in range(tileTypes.size()):
-		var tileImage: Image = find_image_in_folder(find_directory_by_name(tileTypes[i]));
-		var defaultTileImage: Image = find_image(tileTypes[i] + ".png", "res://Assets/Defaults");
+		var tileImage : Image = find_image_in_folder(find_directory_by_name(tileTypes[i]));
+		var defaultTileImage : Image = find_image(tileTypes[i] + ".png", "res://Assets/Defaults");
 		change_tile_texture(i, tileImage if tileImage else defaultTileImage, mainTileMap);
 	# Change all props to their textures
 	for i in range(propTypes.size()):
-		var propImage: Image = find_image_in_folder(find_directory_by_name(propTypes[i]));
-		var defaultPropImage: Image = find_image(propTypes[i] + ".png", "res://Assets/Defaults");
+		var propImage : Image = find_image_in_folder(find_directory_by_name(propTypes[i]));
+		var defaultPropImage : Image = find_image(propTypes[i] + ".png", "res://Assets/Defaults");
 		change_tile_texture(Global.EntityType.PROP1 + i, propImage if propImage else defaultPropImage, mainTileMap);
 	pass;
 
 ## Clears any images in the replacement directory
 ## returns: The replacement directory
 func clear_image() -> DirAccess:
-	var targetFilePath: String = find_directory_by_name(imageNameToReplace);
-	var targetDirectory: DirAccess  = DirAccess.open(targetFilePath);
+	var targetFilePath : String = find_directory_by_name(imageNameToReplace);
+	var targetDirectory : DirAccess  = DirAccess.open(targetFilePath);
 	
 	if(!targetDirectory): return;
-	var existingFiles: PackedStringArray = targetDirectory.get_files();
+	var existingFiles : PackedStringArray = targetDirectory.get_files();
 	# Remove any files in the directory
 	for file in existingFiles:
 		targetDirectory.remove(file); 
@@ -234,8 +234,8 @@ func clear_image() -> DirAccess:
 ## Replaces the currently previewed image with one chosen via file dialog.
 ## newImagePath: The file path of the new image replacing the old one.x 
 func replace_image(newImagePath: String) -> void:
-	var targetFilePath: String = find_directory_by_name(imageNameToReplace);
-	var targetDirectory: DirAccess = clear_image();
+	var targetFilePath : String = find_directory_by_name(imageNameToReplace);
+	var targetDirectory : DirAccess = clear_image();
 	# If the image is a png, create a copy
 	if (newImagePath.get_extension().to_lower() == "png"):
 		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
@@ -243,7 +243,7 @@ func replace_image(newImagePath: String) -> void:
 		PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
 	
 	refresh_assets();
-	var replacementImage = find_image_in_folder(targetFilePath);
+	var replacementImage : Image = find_image_in_folder(targetFilePath);
 	if (replacementImage):
 		imagePreview.texture = ImageTexture.create_from_image(replacementImage);
 	else:
@@ -269,7 +269,7 @@ func item_selected(selectedItem: AssetItem = firstSelected) -> void:
 	imageNameToReplace = selectedItem.assetName;
 	imageToReplace = find_image_in_folder(find_directory_by_name(imageNameToReplace));
 	if (imageToReplace):
-		var replacementTexture = ImageTexture.create_from_image(imageToReplace);
+		var replacementTexture : Texture2D = ImageTexture.create_from_image(imageToReplace);
 		if (replacementTexture): 
 			imagePreview.texture = ImageTexture.create_from_image(imageToReplace);
 	else:
@@ -286,11 +286,11 @@ func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
 	if (newImage == null):
 		return;
 	# Create a Texture2D from the image
-	var newTexture: Texture2D = ImageTexture.create_from_image(newImage);
+	var newTexture : Texture2D = ImageTexture.create_from_image(newImage);
 	# Set a reference to the tile map's tile set
-	var tileSet = tileMap.tile_set;
+	var tileSet : TileSet = tileMap.tile_set;
 	# Set a reference to the source in the tile set
-	var source = tileSet.get_source(sourceID) as TileSetAtlasSource;
+	var source : TileSetAtlasSource = tileSet.get_source(sourceID) as TileSetAtlasSource;
 	# If the source is found, set the texture to the image
 	if (source):
 		source.texture = newTexture;
@@ -306,21 +306,21 @@ func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
 ## returns: File path to the file with that name
 func find_file_by_name(targetFileName: String, currentDirectory: String = filePath) -> String:
 	# Opens the folder at the given currentDirectory path
-	var dir = DirAccess.open(currentDirectory);
+	var dir : DirAccess = DirAccess.open(currentDirectory);
 	# If the directory opened successfully
 	if (dir):
 		# Initialize the file stream
 		dir.list_dir_begin();
 		# Set the current file name to the next file in the directory
-		var currentFileName = dir.get_next();
+		var currentFileName : String = dir.get_next();
 		# Loop if the current name exists
 		while (currentFileName != ""):
 			# Instantiate a variable to represent the full path currently being accessed
-			var fullPath = currentDirectory + "/" + currentFileName;
+			var fullPath : String = currentDirectory + "/" + currentFileName;
 			# If the current item is a directory
 			if (dir.current_is_dir()):
 				# Call this function on the directory currently being accessed
-				var result = find_file_by_name(targetFileName, fullPath);
+				var result : String = find_file_by_name(targetFileName, fullPath);
 				# If the result is something, return it
 				if (result != ""):
 					return result;
@@ -339,17 +339,17 @@ func find_file_by_name(targetFileName: String, currentDirectory: String = filePa
 ## returns: Path to the directory
 func find_directory_by_name(targetDirectoryName: String, currentDirectory: String = filePath) -> String:
 	# Opens the directory at the currentDirectory path
-	var dir = DirAccess.open(currentDirectory);
+	var dir : DirAccess = DirAccess.open(currentDirectory);
 	# If there is a directory at that path
 	if (dir):
 		# Initialize the file stream
 		dir.list_dir_begin();
 		# Set the currentFileName to the next item being checked
-		var currentFileName = dir.get_next();
+		var currentFileName : String = dir.get_next();
 		# Loop as long as the currentFileName is not empty
 		while (currentFileName != ""):
 			# Track the full path to the file being checked
-			var fullPath = currentDirectory + "/" + currentFileName;
+			var fullPath : String = currentDirectory + "/" + currentFileName;
 			# If the current item being checked is a folder
 			if (dir.current_is_dir()):
 				# If the folder name is equal to the target name, return the path
@@ -358,7 +358,7 @@ func find_directory_by_name(targetDirectoryName: String, currentDirectory: Strin
 				# If the folder name is not the target
 				else:
 					# Call this function with the new path
-					var result = find_directory_by_name(targetDirectoryName, fullPath);
+					var result : String = find_directory_by_name(targetDirectoryName, fullPath);
 					if (result != ""):
 						return result;
 			# Update the currentFileName to be the next file
@@ -368,7 +368,7 @@ func find_directory_by_name(targetDirectoryName: String, currentDirectory: Strin
 ## Creates all folders in tree for the user
 func create_file_tree() -> void:
 	# Open the user root directory
-	var dir = DirAccess.open("user://");
+	var dir : DirAccess = DirAccess.open("user://");
 	# Create all folders for tile types
 	for type: String in tileTypes:
 		dir.make_dir_recursive(filePath + "/Images/Tiles/" + type);
@@ -389,7 +389,7 @@ func open_image_selector() -> void:
 
 ## Creates a new missing texture for use when a texture is... missing.
 func get_missing_image() -> Image:
-	var image := Image.new();
+	var image : Image = Image.new();
 	image.load(MISSING_TEXTURE);
 	validate_image(image);
 	return image;

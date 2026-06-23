@@ -1,29 +1,29 @@
 extends Camera2D;
 
 # A direct reference to the Master Manager.
-@export var masterManager: Node2D;
+@export var masterManager : Node2D;
 
 # Camera movement settings
-@export var roamCellCount: float = 4.0;
-@export var moveSpeed: float = 500.0;
-@export var edgeScrollSpeed: float = 800.0;
-@export var edgeScrollMargin: float = 100.0;
-var isPanning: bool = false;
-var panSpeed: float = 1.0;
+@export var roamCellCount : float = 4.0;
+@export var moveSpeed : float = 500.0;
+@export var edgeScrollSpeed : float = 800.0;
+@export var edgeScrollMargin : float = 100.0;
+var isPanning : bool = false;
+var panSpeed : float = 1.0;
 
 # Camera zoom settings
-@export var zoomSpeed: float = 0.1;
-@export var maxZoomOut: float = 0.5;
-@export var maxZoomIn: float = 2.0;
-@export var playZoom: float = 0.7;
+@export var zoomSpeed : float = 0.1;
+@export var maxZoomOut : float = 0.5;
+@export var maxZoomIn : float = 2.0;
+@export var playZoom : float = 0.7;
 
 # Tilemap bound
-@export var gridLines: TileMapLayer;
-var levelBounds: Rect2;
-var roamBounds: Rect2;
+@export var gridLines : TileMapLayer;
+var levelBounds : Rect2;
+var roamBounds : Rect2;
 
 # Reference to player
-var playerReference: CharacterBody2D = null;
+var playerReference : CharacterBody2D = null;
 var playerSearchAttempts : int = 0;
 const maxPlayerSearchAttempts : int = 60;
 var searchForPlayer : bool = true;
@@ -121,8 +121,8 @@ func _input(event: InputEvent) -> void:
 ## Processes editor camera keypress movement
 ## delta: time since previous frame
 func process_build_camera(delta: float) -> void:
-	var inputVector: Vector2;
-	var speedModifier: int = 1;
+	var inputVector : Vector2;
+	var speedModifier : int = 1;
 	
 	inputVector.x = Input.get_action_strength("right") - Input.get_action_strength("left");
 	
@@ -141,10 +141,10 @@ func process_build_camera(delta: float) -> void:
 ## delta: time since previous frame
 ## NOTE: Currently edge scrolling is unused as it leads to more issues than it's worth
 func process_edge_scrolling(delta: float) -> void:
-	var mousePos: Vector2 = get_viewport().get_mouse_position();
-	var viewportSize: Vector2 = get_viewport_rect().size;
+	var mousePos : Vector2 = get_viewport().get_mouse_position();
+	var viewportSize : Vector2 = get_viewport_rect().size;
 
-	var edgeMovement: Vector2 = Vector2.ZERO;
+	var edgeMovement : Vector2 = Vector2.ZERO;
 
 	# Left edge
 	if mousePos.x <= edgeScrollMargin:
@@ -178,7 +178,7 @@ func process_player_camera(_delta: float) -> void:
 ## zoomAmount: Zoom change amount
 func process_zoom(zoomAmount: float) -> void:
 	# Mouse world position BEFORE zoom
-	var mouseWorldBefore: Vector2 = get_global_mouse_position();
+	var mouseWorldBefore : Vector2 = get_global_mouse_position();
 	
 	var newZoom : float = zoom.x + zoomAmount;
 	
@@ -196,7 +196,7 @@ func process_zoom(zoomAmount: float) -> void:
 		gridLines.visible = true;
 	
 	# Mouse world position AFTER zoom
-	var mouseWorldAfter: Vector2 = get_global_mouse_position();
+	var mouseWorldAfter : Vector2 = get_global_mouse_position();
 	
 	# Offset camera so zoom focuses on mouse
 	global_position += mouseWorldBefore - mouseWorldAfter;
@@ -224,25 +224,25 @@ func process_zoom_input() -> void:
 func get_camera_bounds() -> Rect2:
 	# Convert roam cell count to pixels
 	var roamMargin = roamCellCount * Global.TILE_SIZE;
-	var roamLimit: Vector2 = Vector2(roamMargin, roamMargin);
+	var roamLimit : Vector2 = Vector2(roamMargin, roamMargin);
 	
 	# Expanded roam space adds the limit to the top and bottoms of the level boundary.
-	var size: Vector2 = levelBounds.size + (roamLimit * 2);
+	var size : Vector2 = levelBounds.size + (roamLimit * 2);
 	
 	return Rect2(-roamLimit, size);
 
 ## Prevents the camera from leaving the level
 func clamp_camera_to_level() -> void:
-	var viewportSize: Vector2 = get_viewport_rect().size;
+	var viewportSize : Vector2 = get_viewport_rect().size;
 	
 	# visible world size
-	var visibleSize: Vector2 = viewportSize * 0.5 / zoom;
+	var visibleSize : Vector2 = viewportSize * 0.5 / zoom;
 	
-	var minX = roamBounds.position.x + visibleSize.x;
-	var maxX = roamBounds.end.x - visibleSize.x;
+	var minX : float = roamBounds.position.x + visibleSize.x;
+	var maxX : float = roamBounds.end.x - visibleSize.x;
 	
-	var minY = roamBounds.position.y + visibleSize.y;
-	var maxY = roamBounds.end.y - visibleSize.y;
+	var minY : float = roamBounds.position.y + visibleSize.y;
+	var maxY : float = roamBounds.end.y - visibleSize.y;
 	
 	# If zoom too far out, just center
 	if minX > maxX:
@@ -259,20 +259,16 @@ func clamp_camera_to_level() -> void:
 ## roamingBounds: A rect2 of the camera panning limits
 ## Returns a true or false bool.
 func camera_encloses_roam(roamingBounds: Rect2) -> bool:
-	
-	if (get_camera_rect().encloses(roamingBounds)):
-		return true;
-	
-	return false;
-	
+	return get_camera_rect().encloses(roamingBounds);
+
 ## Get a rect of the camera.
 ## Returns a Rect2 of the camera viewport.
 func get_camera_rect() -> Rect2:
-	var pos = self.global_position;
-	var halfSize = get_viewport_rect().size * 0.5 / zoom;
+	var pos : Vector2 = self.global_position;
+	var halfSize : Vector2 = get_viewport_rect().size * 0.5 / zoom;
 	
-	var topLeft = pos - halfSize;
-	var size = get_viewport_rect().size / zoom;
+	var topLeft : Vector2 = pos - halfSize;
+	var size : Vector2 = get_viewport_rect().size / zoom;
 	
 	return Rect2(topLeft, size);
 	
@@ -280,12 +276,12 @@ func get_camera_rect() -> Rect2:
 ## Returns a float of the max zoom.
 func get_min_zoom_to_fit_roam() -> float:
 	# Getting the viewport and roaming area (where the camera can go) sizes
-	var viewportSize = get_viewport_rect().size;
-	var roamSize = roamBounds.size;
+	var viewportSize : Vector2 = get_viewport_rect().size;
+	var roamSize : Vector2 = roamBounds.size;
 
 	# Get the scale ratio between the x/y values for the minimum zoom
-	var zoomX = viewportSize.x / roamSize.x;
-	var zoomY = viewportSize.y / roamSize.y;
+	var zoomX : float = viewportSize.x / roamSize.x;
+	var zoomY : float = viewportSize.y / roamSize.y;
 
 	# Get the minimum between both options
 	return min(zoomX, zoomY);

@@ -1,13 +1,13 @@
 extends Node2D
 
 # References for other screens
-@export var pauseScreen: PanelContainer;
-@export var bottomScreenGroup: Control;
+@export var pauseScreen : PanelContainer;
+@export var bottomScreenGroup : Control;
 
 # Button references for signals
-@export var resetButton: Button;
-@export var pauseButton: Button;
-@export var resumeButton: Button;
+@export var resetButton : Button;
+@export var pauseButton : Button;
+@export var resumeButton : Button;
 
 # Is the player paused or running?
 enum PlayState {
@@ -20,14 +20,14 @@ var playState : PlayState = PlayState.PLAY;
 var goalReached : bool = false;
 
 # Player and its position
-var player: CharacterBody2D;
-var playerStartingPosition: Vector2;
+var player : CharacterBody2D;
+var playerStartingPosition : Vector2;
 
 # Reference to the tile set
-var tileMap: TileMapLayer;
+var tileMap : TileMapLayer;
 
 # Reference to the selected player preset
-var playerPreset: Resource;
+var playerPreset : Resource;
 
 ## When pause is pressed, flip the current state
 func pause() -> void:
@@ -62,9 +62,9 @@ func start() -> void:
 
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
-	var enemyProperties = DirAccess.get_files_at("res://Resources/Enemies/");
+	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
 	for enemyProperty in enemyProperties:
-		var propertyFile = load("res://Resources/Enemies/" + enemyProperty);
+		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
 		for node in tileMap.get_children():
 			if tileMap.local_to_map(node.global_position) == propertyFile.position:
 				(node as Enemy).apply_script(propertyFile);

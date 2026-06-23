@@ -2,12 +2,12 @@ extends Button
 class_name AssetItem;
 
 # Exported variable for display and asset names.
-@export var displayName: String;
-@export var assetName: String;
+@export var displayName : String;
+@export var assetName : String;
 
 # Enum for the type of asset being modified.
 enum AssetType { IMAGE, ANIMATION, AUDIO };
-@export var type: AssetType;
+@export var type : AssetType;
 
 # An signal for when an item is chosen.
 signal item_selected(selectedItem: AssetItem);

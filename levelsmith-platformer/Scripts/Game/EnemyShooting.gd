@@ -16,7 +16,7 @@ var gravityOn : bool;
 @export var directionArrow : Sprite2D;
 
 # Projectile scene for instantiating
-const PROJECTILE = preload("res://Scenes/Entities/Projectile.tscn");
+const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn");
 
 var timeLeft : float = 1;
 

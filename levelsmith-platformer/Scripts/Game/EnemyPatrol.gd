@@ -4,7 +4,7 @@ extends Enemy
 # Movement variables
 var groundSpeed : float = 1.0;
 var direction : int = 1;
-const SPEED_MODIFIDER : float = 400.0;
+const SPEED_MODIFIER : float = 400.0;
 
 # True = enemies can't fall off ledges
 var restricted : bool;
@@ -43,11 +43,11 @@ func patrol_behavior() -> void:
 			direction = 1;
 		elif (!rayCastDownR.is_colliding()):
 			direction = -1;
-	velocity.x = direction * groundSpeed * SPEED_MODIFIDER;
+	velocity.x = direction * groundSpeed * SPEED_MODIFIER;
 	
 	# Check for collisions with other enemies and bounce
 	for currentCollision in get_slide_collision_count():
-		var collider = get_slide_collision(currentCollision).get_collider();
+		var collider : Object = get_slide_collision(currentCollision).get_collider();
 		if collider != null && collider.is_in_group("Enemy") && collider.position.y < position.y + 40 && collider.position.y > position.y - 40:
 			if collider.position.x < position.x:
 				direction = 1;

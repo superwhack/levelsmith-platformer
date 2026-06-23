@@ -2,38 +2,38 @@ class_name Player;
 extends CharacterBody2D
 
 # The player settings that can be changed in editor
-@export var groundSpeed := 1.0;
-@export var jumpHeight := 2.0;
+@export var groundSpeed : float = 1.0;
+@export var jumpHeight : float = 2.0;
 
 # Friction in midair
 # BUG: Air Control doesn't work the frame you land on a bouncy tile, allowing you to change direction beofre bouncing back up
-@export var airControl := 1.0;
-@export var fallSpeed := 1.0;
+@export var airControl : float = 1.0;
+@export var fallSpeed : float = 1.0;
 
 # Determines how long after leaving a platform you can still jump
-@export var coyoteTime := 0.2;
+@export var coyoteTime : float = 0.2;
 
-@export var iceSpeedCap := 10;
+@export var iceSpeedCap : int = 10;
 
-var coyoteTimeLeft = 0;
+var coyoteTimeLeft : float = 0;
 
 # TODO: Make FPS dependant on a global FPS initailly instead of being set to 24
 # TODO: Impliment animations and use this
-@export var FPS := 24;
+@export var FPS : int = 24;
 
-var spawnpoint := Vector2(0, 0);
+var spawnpoint : Vector2 = Vector2(0, 0);
 
 # Raycasts
 @export var raycasts : Array[RayCast2D];
 @export var downwardsRaycasts : Array[RayCast2D];
 
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
-const maxHealth := 1;
-var health := maxHealth
+const maxHealth : int = 1;
+var health : int = maxHealth
 
 # Stored friction and slowdown, saved so they are maintained while in midair
-var currentFriction := 1.0;
-var currentSlowdown := 1.0;
+var currentFriction : float = 1.0;
+var currentSlowdown : float = 1.0;
 
 # Speed with constant multiplier and slowdown appended in
 var trueSpeed : float;
@@ -43,8 +43,8 @@ var trueSpeed : float;
 @export var playerMovementPreset : PlayerMovementPreset;
 
 # Enemy collision hitboxes for hooking signals
-@export var enemyBounceCollision: Area2D;
-@export var enemyCollision: Area2D
+@export var enemyBounceCollision : Area2D;
+@export var enemyCollision : Area2D
 
 ## Runs once on instantiation
 func _ready() -> void:
@@ -98,7 +98,7 @@ func jump() -> void:
 func run() -> void:
 	# Acceration in the X direction for the player
 	var accelerationX : float;
-	var direction := Input.get_axis("left", "right");
+	var direction : float = Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;
@@ -188,19 +188,19 @@ func bounce() -> void:
 func detect_tiles() -> void:
 	
 	# Check all collisions with raycasts
-	var slideCollisions: Array[RayCast2D] = [];
+	var slideCollisions : Array[RayCast2D] = [];
 	for raycast in raycasts:
 		if (raycast.is_colliding()):
 			slideCollisions.push_back(raycast);
 	
 	# Check all current collisions
 	for i in slideCollisions.size():
-		var collider = slideCollisions[i].get_collider();
+		var collider : Object = slideCollisions[i].get_collider();
 		# Have collisions with tiles confer effects
 		if (collider is TileMapLayer):
 			# Use the global coord to find tile collision
-			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position * 1.1);
-			var tileData = collider.get_cell_tile_data(tilePos);
+			var tilePos : Vector2i = collider.local_to_map(position + slideCollisions[i].target_position * 1.1);
+			var tileData : TileData = collider.get_cell_tile_data(tilePos);
 			
 			# Bounce tile collisions
 			if (tileData && (tileData.get_custom_data("name") == "bounce")):

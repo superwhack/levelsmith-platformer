@@ -49,24 +49,24 @@ func place_entity(clickPosition: Vector2) -> void:
 				await get_tree().process_frame;
 			
 			# Create a property file for the enemy
-			var placedEnemy = get_scene_at_cell(clickPosition);
+			var placedEnemy : Node2D = get_scene_at_cell(clickPosition);
 			var newEntity : Resource;
 			var file : String;
 			var time : int = Time.get_ticks_msec();
 			if (brushObject == Global.EntityType.PATROLLING):
-				var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
+				var defaultPatrolling : Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 				newEntity = defaultPatrolling.duplicate(true);
 				placedEnemy.adjust_arrow(90);
 				placedEnemy.directionArrow.scale = Vector2(1, 1);
 				file = "res://Resources/Enemies/Patrolling" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.SHOOTING):
-				var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
+				var defaultShooting : Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 				newEntity = defaultShooting.duplicate(true);
 				placedEnemy.adjust_arrow(90);
 				placedEnemy.directionArrow.scale = Vector2(1, 1);
 				file = "res://Resources/Enemies/Shooting" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.FLYING):
-				var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
+				var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
 				newEntity = defaultFlying.duplicate(true);
 				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
 			ResourceSaver.save(newEntity, file);

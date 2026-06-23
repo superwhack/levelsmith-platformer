@@ -2,23 +2,23 @@ class_name EnemyFlyer;
 extends Enemy;
 
 # Movement speed of the enemy.
-@export var speed: float = 1.0;
+@export var speed : float = 1.0;
 
 # Movement points, from the spawn position to the preset offset.
-var pointA: Vector2;
-var pointB: Vector2;
+var pointA : Vector2;
+var pointB : Vector2;
 
 # Current destination point.
-var targetPoint: Vector2;
+var targetPoint : Vector2;
 
 # Time remaining before another collision reversal is allowed.
-var obstacleCooldown: float = 0.0;
+var obstacleCooldown : float = 0.0;
 
 # Delay between obstacle-triggered reversals.
-const OBSTACLE_COOLDOWN_DURATION: float = 0.25;
+const OBSTACLE_COOLDOWN_DURATION : float = 0.25;
 const SPEED_MODIFIER : float = 100.0;
 
-@export var previewLine: Line2D;
+@export var previewLine : Line2D;
 
 ## Adds enemy to group and sets up initial points
 func _ready() -> void:
@@ -73,7 +73,7 @@ func handle_obstacles() -> void:
 	
 	# Otherwise, reverse the direction based on the colliding object
 	for k in range(get_slide_collision_count()):
-		var collision: KinematicCollision2D = get_slide_collision(k);
+		var collision : KinematicCollision2D = get_slide_collision(k);
 
 		if collision.get_collider() is TileMapLayer or Enemy:
 			velocity = Vector2.ZERO;

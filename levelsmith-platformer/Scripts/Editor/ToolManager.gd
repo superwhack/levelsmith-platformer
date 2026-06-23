@@ -24,7 +24,7 @@ var prevPosition : Vector2;
 var brushObject : int = 0;
 
 # A timer to differentiate between click and holding click
-const positionDifference = .75;
+const POSITION_DIFFERENCE = .75;
 var previousClickPos : Vector2;
 
 # If the user starts a click on a UI element.
@@ -121,7 +121,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		Global.Tool.CURSOR:
 			if (previousClickPos != Vector2(0,0) && !isMoving):
 				# If the cursor moves a certain distance away from the last click, start moving
-				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > positionDifference;
+				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > POSITION_DIFFERENCE;
 				
 			if (event.is_action_released("left-click") && prevEntity == -1):
 				# If the clicked cell is an entity and the click was short, edit its properties

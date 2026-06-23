@@ -76,13 +76,14 @@ z_index = 1
 tile_set = SubResource("TileSet_nr8wp")
 script = ExtResource("5_2h6au")
 
-[node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485 node_paths=PackedStringArray("editorManager", "toolManager")]
+[node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485 node_paths=PackedStringArray("editorManager", "toolManager", "tileMap")]
 modulate = Color(1, 1, 1, 0.5058824)
 tile_set = ExtResource("2_8t3j3")
 collision_enabled = false
 script = ExtResource("15_wiuwn")
 editorManager = NodePath("..")
 toolManager = NodePath("../ToolManager")
+tileMap = NodePath("../Tiles")
 
 [node name="ScreenUI" type="CanvasLayer" parent="." unique_id=189680016]
 

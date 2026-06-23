@@ -1,20 +1,20 @@
 extends Node
 
 # 0% - 100% volume measured in floats 
-var masterVolume := 1.0;
-var musicVolume := 1.0;
-var SFXVolume := 1.0;
+var masterVolume : float = 1.0;
+var musicVolume : float = 1.0;
+var SFXVolume : float = 1.0;
 
 # Lowest DB, should be inaudible (it's negative)
-const LOWEST_DB = 70;
+const LOWEST_DB : int = 70;
 
 # Max number of audio players to be running at once (excluding one for music)
-const AUDIO_PLAYER_COUNT := 6;
+const AUDIO_PLAYER_COUNT : int = 6;
 
 # All folders for audio
-var audioLibraryPath := "user://Audio/";
-const UI_AUDIO_LIBRARY_PATH := "res://Assets/Audio/";
-const BACKUP_AUDIO_LIBRARY_PATH := "res://Assets/Defaults/Assets/Audio/";
+var audioLibraryPath : String = "user://Audio/";
+const UI_AUDIO_LIBRARY_PATH : String = "res://Assets/Audio/";
+const BACKUP_AUDIO_LIBRARY_PATH : String = "res://Assets/Defaults/Assets/Audio/";
 
 # Players and the queue that holds filepaths to play
 var musicPlayer : AudioStreamPlayer;
@@ -37,7 +37,7 @@ func _ready() -> void:
 	
 	# Loop through and create every potential audioPlayer for use with UI and in game
 	for i in AUDIO_PLAYER_COUNT:
-		var audioPlayer = AudioStreamPlayer.new();
+		var audioPlayer : AudioStreamPlayer = AudioStreamPlayer.new();
 		add_child(audioPlayer);
 		availablePlayers.append(audioPlayer);
 		audioPlayer.finished.connect(audio_finished.bind(audioPlayer));
@@ -147,7 +147,7 @@ func _process(_delta: float) -> void:
 			masterVolume = 0;
 		update_volume();
 	if (!queue.is_empty() && !availablePlayers.is_empty()):
-		var path = queue.pop_front(); 
+		var path : String = queue.pop_front(); 
 		if (path.ends_with(".mp3")):
 			availablePlayers[0].stream = AudioStreamMP3.load_from_file(path);
 		elif (path.ends_with(".wav")):

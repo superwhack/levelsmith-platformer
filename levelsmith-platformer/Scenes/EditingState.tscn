@@ -57,11 +57,11 @@ sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63w0a"]
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileSet", "previewTileSet", "playButton", "assetManagerButton", "assetManager", "customCursorManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileMap", "previewTileMap", "playButton", "assetManagerButton", "assetManager", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
-tileSet = NodePath("Tiles")
-previewTileSet = NodePath("PreviewTile")
+tileMap = NodePath("Tiles")
+previewTileMap = NodePath("PreviewTile")
 playButton = NodePath("ScreenUI/BottomRightAnchor/PlayButton")
 assetManagerButton = NodePath("ScreenUI/BottomLeftAnchor/BottomLeftRow/AssetManagerButton")
 assetManager = NodePath("CanvasLayer/AssetManager")
@@ -76,14 +76,13 @@ z_index = 1
 tile_set = SubResource("TileSet_nr8wp")
 script = ExtResource("5_2h6au")
 
-[node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485 node_paths=PackedStringArray("editorManager", "toolManager", "tileSet")]
+[node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485 node_paths=PackedStringArray("editorManager", "toolManager")]
 modulate = Color(1, 1, 1, 0.5058824)
 tile_set = ExtResource("2_8t3j3")
 collision_enabled = false
 script = ExtResource("15_wiuwn")
 editorManager = NodePath("..")
 toolManager = NodePath("../ToolManager")
-tileSet = NodePath("../Tiles")
 
 [node name="ScreenUI" type="CanvasLayer" parent="." unique_id=189680016]
 
@@ -261,7 +260,7 @@ icon_alignment = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 
-[node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("mainTileMap", "previewTileSet", "editorManager") instance=ExtResource("11_bpoex")]
+[node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("mainTileMap", "editorManager") instance=ExtResource("11_bpoex")]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -275,7 +274,6 @@ offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
 mainTileMap = NodePath("../../Tiles")
-previewTileSet = NodePath("../../PreviewTile")
 editorManager = NodePath("../..")
 
 [node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
@@ -297,9 +295,8 @@ toolManager = NodePath("../ToolManager")
 entityManager = NodePath("../ToolManager/EntityManager")
 tileSwitch = NodePath("../ScreenUI/TopLeftAnchor/TopLeftRow/TilePaletteFrame/TilePaletteMargin/TileSwitch")
 
-[node name="CustomCursorManager" type="Node2D" parent="." unique_id=1871670420 node_paths=PackedStringArray("tileSet", "editorManager", "toolManager", "entityManager")]
+[node name="CustomCursorManager" type="Node2D" parent="." unique_id=1871670420 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager")]
 script = ExtResource("11_rllk2")
-tileSet = NodePath("../Tiles")
 editorManager = NodePath("..")
 toolManager = NodePath("../ToolManager")
 entityManager = NodePath("../ToolManager/EntityManager")

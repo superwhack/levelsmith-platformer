@@ -1,6 +1,6 @@
 extends Node2D
 
-## Managers and tileset for easy access.
+## Managers and tile map for easy access.
 @export var editorManager : Node2D;
 @export var toolManager : Node2D;
 @export var tileMap : TileMapLayer;
@@ -112,7 +112,7 @@ func edit_properties(clickPosition: Vector2) -> void:
 ## gridPosition: position of the cell being checked
 ## returns: the node at the cell if there is one, null otherwise
 func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
-	# Iterate through each node in the tileset, if any have the same global position return it
+	# Iterate through each node in the tile map, if any have the same global position return it
 	for node in tileMap.get_children():
 		if tileMap.local_to_map(node.global_position) == gridPosition:
 			return node;

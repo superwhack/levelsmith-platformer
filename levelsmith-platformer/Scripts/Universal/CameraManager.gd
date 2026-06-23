@@ -18,7 +18,6 @@ var panSpeed: float = 1.0;
 @export var playZoom: float = 0.7;
 
 # Tilemap bound
-@export var tileSet: TileMapLayer;
 @export var gridLines: TileMapLayer;
 var levelBounds: Rect2;
 var roamBounds: Rect2;
@@ -58,7 +57,7 @@ func initialize_camera() -> void:
 
 ## Retrieve the level bounds and the camera roaming bounds.
 func refresh_bounds() -> void:
-	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.tileSize);
+	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.TILE_SIZE);
 	roamBounds = get_camera_bounds();
 
 ## Remove the player reference and restart the search for the player.
@@ -224,7 +223,7 @@ func process_zoom_input() -> void:
 ## Returns a rect of the limits of where the camera is able to go.
 func get_camera_bounds() -> Rect2:
 	# Convert roam cell count to pixels
-	var roamMargin = roamCellCount * Global.tileSize;
+	var roamMargin = roamCellCount * Global.TILE_SIZE;
 	var roamLimit: Vector2 = Vector2(roamMargin, roamMargin);
 	
 	# Expanded roam space adds the limit to the top and bottoms of the level boundary.

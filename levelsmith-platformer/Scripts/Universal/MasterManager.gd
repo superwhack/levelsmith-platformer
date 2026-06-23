@@ -19,8 +19,8 @@ var state : Global.State = Global.State.EDIT;
 @export var editorPlayButton: Button;
 @export var returnToEditorButton: Button;
 
-# Reference to tileset
-@export var tileSet: TileMapLayer;
+# Reference to tile maps
+@export var tileMap: TileMapLayer;
 @export var previewTileMap: TileMapLayer;
 @export var gridLines: TileMapLayer;
 
@@ -39,7 +39,7 @@ func _ready() -> void:
 	
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
-	Global.levelCreated.connect(tileSet.clear);
+	Global.levelCreated.connect(tileMap.clear);
 	Global.levelCreated.connect(create_bedrock_border);
 	Global.levelCreated.connect(edit);
 	
@@ -78,18 +78,18 @@ func level_setup( levelName: String, newSize: Vector2i ) -> void:
 
 func create_bedrock_border() -> void:
 	for x in range(-1, worldSize.x + 1):
-		tileSet.set_cell(Vector2i(x, -1), Global.BEDROCK_TILE, Vector2i.ZERO);
-		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
-		tileSet.set_cell( Vector2i(x, worldSize.y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileMap.set_cell(Vector2i(x, -1), Global.BEDROCK_TILE, Vector2i.ZERO);
+		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileMap.set_cell( Vector2i(x, worldSize.y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
 
 	for y in range(0, worldSize.y):
-		tileSet.set_cell(Vector2i(-1, y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
-		tileSet.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileMap.set_cell(Vector2i(-1, y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileMap.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
 
-	print("Bedrock border created: ", tileSet.get_used_rect());
+	#print("Bedrock border created: ", tileMap.get_used_rect());
 
 ## Swap to main menu state
 func main_menu() -> void:
@@ -157,7 +157,7 @@ func play() -> void:
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
 	# Reference the tile map as the node to be saved\
-	var nodeToSave = tileSet;
+	var nodeToSave = tileMap;
 	# Create a PackedScene
 	var scene = PackedScene.new();
 	# Pack the node to save as a scene
@@ -181,23 +181,23 @@ func load_tilemap() -> void:
 	
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
-	gameManager.tileSet = loadedMap;
+	gameManager.tileMap = loadedMap;
 ## THESE ARE TEMPORARY AND SHOULD BE CHANGED WHEN BUTTONS ARE PUT IN
 func _process(_delta: float) -> void:
 	# If the save hotkey is pressed, export the level
 	if (Input.is_action_just_pressed("tempSave")):
-		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize);
 	# If the load hotkey is pressed, import a level
 	if (Input.is_action_just_pressed("tempLoad")):
 		propertyMenu.close();
 		var result = ImportExportManager.validate_import(ImportExportManager.levelPathName);
 		if (result):
 			ImportExportManager.clear_enemies_folder();
-			for childNode in editorManager.tileSet.get_children():
+			for childNode in editorManager.tileMap.get_children():
 				childNode.free();
-			editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileSet);
+			editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileMap);
 			editorManager.reset_enemy_positions();
 			await get_tree().process_frame;
-			ImportExportManager.import_JSON(editorManager.tileSet, propertyMenu)
+			ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu)
 			#propertyMenu._on_preset_options_item_selected(4);
 		entityManager.scan_goals(worldSize.x + 1, worldSize.y + 1);

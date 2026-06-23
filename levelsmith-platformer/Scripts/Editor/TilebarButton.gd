@@ -7,6 +7,6 @@ extends Button
 # Reference to the tile set
 @onready var tileSet : TileSet = tilebar.tileMap.tile_set;
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Change the texture to the texture currently set in the tile set
 	icon = tileSet.get_source(thisItemID).texture;

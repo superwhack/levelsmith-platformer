@@ -249,19 +249,19 @@ func replace_image(newImagePath: String) -> void:
 	else:
 		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 
-func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
-	pass;
+#func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
+#	pass;
 
 func reset_image() -> void:
 	clear_image();
 	refresh_assets();
 	imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 
-func reset_audio(audioName: String) -> void:
-	pass;
+#func reset_audio(audioName: String) -> void:
+#	pass;
 
-func return_all_to_default(categoryName: String) -> void:
-	pass;
+#func return_all_to_default(categoryName: String) -> void:
+#	pass;
 
 ## Signal that is emitted when an asset in the menu is selected
 ## selectedItem: The item that is selected, defaults to the firstSelected

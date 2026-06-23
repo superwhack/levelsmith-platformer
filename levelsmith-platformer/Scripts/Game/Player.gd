@@ -54,7 +54,8 @@ var trueSpeed : float;
 func _ready() -> void:
 	enemyBounceCollision.body_entered.connect(detect_enemy_bounce);
 	enemyCollision.body_entered.connect(detect_enemies);
-	
+	enemyBounceCollision.area_entered.connect(detect_projectile_bounce);
+	enemyCollision.area_entered.connect(detect_projectiles);
 	# Applies the preset on ready
 	if (playerMovementPreset):
 		print("Applying ", playerMovementPreset, " player movement preset.");
@@ -168,6 +169,28 @@ func detect_enemy_bounce(body: Node2D) -> void:
 		bounce();
 		body.queue_free();
 
+## Detect collisions with projectiles
+## area: the area being collided with
+func detect_projectiles(area: Area2D) -> void:
+	# Wait one frame to see if the projectile has been bounced on
+	await get_tree().process_frame;
+	var direction : Vector2 = position - area.position;
+	if (area && area.is_in_group("Projectile")):
+		take_damage(1, direction.normalized());
+		area.queue_free();
+
+## Detect collisions between projectiles and the bounce area
+## area: the area being collided with
+func detect_projectile_bounce(area: Area2D) -> void:
+	if (area.is_in_group("Projectile")):
+		if area.bounceable:
+			bounce();
+		else:
+			var direction : Vector2 = position - area.position;
+			take_damage(1, direction.normalized());
+		area.queue_free();
+
+## Bounce the player up
 func bounce() -> void:
 	if (Input.is_action_pressed("jump")):
 		velocity.y = -jumpHeight * 360;

@@ -42,7 +42,7 @@ func shooting_behavior() -> void:
 	projectileFired.speed = shotSpeed;
 	projectileFired.global_position = position;
 	projectileFired.global_rotation_degrees = direction;
-	projectileFired.bouncable = projBounce;
+	projectileFired.bounceable = projBounce;
 	get_parent().add_child(projectileFired);
 
 func assign_script(id: String, position: Vector2i) -> void:

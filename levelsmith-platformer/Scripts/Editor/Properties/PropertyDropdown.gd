@@ -1,9 +1,9 @@
 extends VBoxContainer
 
 # Variables for different parts of the CheckBox
-@export var propertyName: String;
-@export var nameLabel: Label; 
-@export var optionButton: OptionButton;
+@export var propertyName : String;
+@export var nameLabel : Label; 
+@export var optionButton : OptionButton;
 
 signal dropdown_changed;
 

@@ -1,20 +1,20 @@
 extends VBoxContainer
 
 # Variables for different parts of the slider
-@export var propertyName: String;
-@export var nameLabel: Label; 
-@export var slider: HSlider;
-@export var label: Label;
+@export var propertyName : String;
+@export var nameLabel : Label; 
+@export var slider : HSlider;
+@export var label : Label;
 
-@export var minMax: Vector2;
-@export var sliderStep: float;
-@export var valueAppend: String;
+@export var minMax : Vector2;
+@export var sliderStep : float;
+@export var valueAppend : String;
 
 # Signal to emit when the slider is done being dragged
 signal drag_ended;
 
 # Value of the slider
-var value: float;
+var value : float;
 
 ## When started, set the text of the name label to the name of the property
 func _ready() -> void:

@@ -2,42 +2,48 @@ class_name EnemyPatrol;
 extends Enemy
 
 # Movement variables
-var groundSpeed := 1.0;
-var direction := 1;
+var groundSpeed : float = 1.0;
+var direction : int = 1;
+const SPEED_MODIFIDER : float = 400.0;
 
+# True = enemies can't fall off ledges
 var restricted : bool;
 
 # Detection variables for directional change
 @export var rayCastLeft : RayCast2D;
 @export var rayCastRight : RayCast2D;
-
 @export var rayCastDownL : RayCast2D;
 @export var rayCastDownR : RayCast2D;
-
 @export var directionArrow : Sprite2D;
 
+## Processes the physics every frame
+## delta: Time since previous frame
 func _physics_process(delta: float) -> void:
+	# When we are processing physics, we are in the game scene, so the direction
+	# arrow can be hidden.
 	directionArrow.hide();
-	# Gravity
+	# Processes gravity from base class
 	super._physics_process(delta);
 	
+	# Executing basic movement behavior.
 	patrol_behavior();
 	move_and_slide();
 
 ## Applies horizontal movements and directional changes triggered by raycasts
 func patrol_behavior() -> void:
-	if rayCastRight.is_colliding():
+	# If either side raycast is colliding, switch direction.
+	if (rayCastRight.is_colliding()):
 		direction = -1;
-	if rayCastLeft.is_colliding():
+	if (rayCastLeft.is_colliding()):
 		direction = 1;
 	
 	# Check for running off of a tile with restricted on
-	if restricted && !(rayCastDownL.is_colliding() && rayCastDownR.is_colliding()):
+	if (restricted && !(rayCastDownL.is_colliding() && rayCastDownR.is_colliding())):
 		if (!rayCastDownL.is_colliding()):
 			direction = 1;
 		elif (!rayCastDownR.is_colliding()):
 			direction = -1;
-	velocity.x = direction * groundSpeed * 400;
+	velocity.x = direction * groundSpeed * SPEED_MODIFIDER;
 	
 	# Check for collisions with other enemies and bounce
 	for currentCollision in get_slide_collision_count():

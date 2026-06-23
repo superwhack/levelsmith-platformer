@@ -78,9 +78,9 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	
 	# Write tileData in the form of a CSV file
 	var CSVFile = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.WRITE);
-	for currentRow in worldSize.y + 1:
+	for currentRow in worldSize.y:
 		var tileRow : Array;
-		for currentCol in worldSize.x + 1:
+		for currentCol in worldSize.x:
 			# If there's a rotation, include it
 			if tileSet.get_cell_alternative_tile(Vector2(currentCol, currentRow)) > 0:
 				tileRow.append(str(tileSet.get_cell_source_id(Vector2(currentCol, currentRow)),"|",tileSet.get_cell_alternative_tile(Vector2(currentCol, currentRow))));
@@ -118,8 +118,8 @@ func import_level_CSV(tileMap: TileMapLayer, playerData: Panel) -> bool:
 	var CSVFile = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.READ);
 	var row = 0;
 	var playerExists = false;
+	var currentLine = CSVFile.get_csv_line();
 	while !CSVFile.eof_reached():
-		var currentLine = CSVFile.get_csv_line();
 		var col = 0;
 		for tileData in currentLine:
 			# Rotated tiles
@@ -132,6 +132,7 @@ func import_level_CSV(tileMap: TileMapLayer, playerData: Panel) -> bool:
 				tileMap.set_cell(Vector2(col, row), int(tileData), Vector2i.ZERO);
 			col += 1;
 		row += 1;
+		currentLine = CSVFile.get_csv_line();
 	CSVFile.close();
 	
 	await get_tree().process_frame;

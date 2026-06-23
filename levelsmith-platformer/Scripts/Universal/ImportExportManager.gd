@@ -119,8 +119,8 @@ func import_level_CSV(tileMap: TileMapLayer, playerData: Panel) -> bool:
 	var CSVFile = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.READ);
 	var row = 0;
 	var playerExists = false;
+	var currentLine = CSVFile.get_csv_line();
 	while !CSVFile.eof_reached():
-		var currentLine = CSVFile.get_csv_line();
 		var col = 0;
 		for tileData in currentLine:
 			# Rotated tiles
@@ -133,6 +133,7 @@ func import_level_CSV(tileMap: TileMapLayer, playerData: Panel) -> bool:
 				tileMap.set_cell(Vector2(col, row), int(tileData), Vector2i.ZERO);
 			col += 1;
 		row += 1;
+		currentLine = CSVFile.get_csv_line();
 	CSVFile.close();
 	
 	await get_tree().process_frame;

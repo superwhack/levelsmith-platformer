@@ -169,8 +169,7 @@ func process_edge_scrolling(delta: float) -> void:
 
 ## Processes player follow camera
 ## delta: time since previous frame
-func process_player_camera(delta: float) -> void:
-
+func process_player_camera(_delta: float) -> void:
 	if playerReference == null:
 		return;
 

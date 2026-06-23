@@ -39,6 +39,7 @@ func _ready() -> void:
 	
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
+	Global.levelCreated.connect(tileSet.clear);
 	Global.levelCreated.connect(create_bedrock_border);
 	Global.levelCreated.connect(edit);
 	

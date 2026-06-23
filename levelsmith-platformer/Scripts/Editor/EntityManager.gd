@@ -58,7 +58,7 @@ func place_entity(clickPosition: Vector2) -> void:
 				newEntity = defaultPatrolling.duplicate(true);
 				placedEnemy.adjust_arrow(90);
 				placedEnemy.directionArrow.scale = Vector2(1, 1);
-				file = "res://Resources/Enemies/Patrol" + str(time) + ".tres";
+				file = "res://Resources/Enemies/Patrolling" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.SHOOTING):
 				var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 				newEntity = defaultShooting.duplicate(true);

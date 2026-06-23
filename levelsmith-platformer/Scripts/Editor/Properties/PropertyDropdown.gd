@@ -22,4 +22,4 @@ func update_dropdown() -> void:
 ## Runs when the dropdown gets selected
 func _option_selected(index: int) -> void:
 	value = bool(index);
-	emit_signal("dropdown_changed");
+	dropdown_changed.emit();

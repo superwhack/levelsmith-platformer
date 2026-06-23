@@ -37,7 +37,7 @@ func _process(_delta: float) -> void:
 	value = slider.value;
 
 ## When drag is finished, emit drag ended signal
-func _drag_ended() -> void:
+func _drag_ended(_value_changed: bool) -> void:
 	drag_ended.emit();
 
 ## Update the slider value

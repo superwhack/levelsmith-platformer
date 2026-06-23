@@ -138,8 +138,8 @@ func drop_entity() -> void:
 	var dropPosition : Vector2;
 	var clickedObjectId : int = tileMap.get_cell_source_id(editorManager.currentMousePosition);
 	
-	if ((clickedObjectId < editorManager.tileCount && clickedObjectId >= 0) || clickedObjectId == Global.EntityType.PLAYER):
-		# Drop the entity on its original spot if landing on a tile or player.
+	# Drop the entity on its original spot if mouse is over any object.
+	if (clickedObjectId >= 0):
 		editorManager.isPlaceable = true;
 		dropPosition = toolManager.prevPosition;
 	else:

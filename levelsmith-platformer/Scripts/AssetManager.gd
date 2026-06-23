@@ -152,7 +152,6 @@ func find_image_in_folder(folderPath: String) -> Image:
 			PopUpManager.create_error_popup("Image not valid", "Image must be .png");
 			return null;
 	else:
-		print("Could not open file path");
 		PopUpManager.create_error_popup("Could not open file path", "Could not open file at " + folderPath + ".");
 		return null;
 
@@ -241,7 +240,6 @@ func replace_image(newImagePath: String) -> void:
 	if (newImagePath.get_extension().to_lower() == "png"):
 		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
 	else:
-		print("File must be PNG format");
 		PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
 	
 	refresh_assets();

@@ -42,7 +42,7 @@ func check_out_of_bounds() -> void:
 	|| global_position.x > (masterManager.worldSize.y + 1) * Global.tileSize
 	|| global_position.y < (-1) * Global.tileSize
 	|| global_position.y > (masterManager.worldSize.x + 1) * Global.tileSize):
-		print("Player OOB: ", global_position)
+		#print("Player OOB: ", global_position)
 		die();
 
 ## OVERRIDE

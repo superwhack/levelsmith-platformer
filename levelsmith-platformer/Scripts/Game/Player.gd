@@ -57,7 +57,7 @@ func _ready() -> void:
 	
 	# Applies the preset on ready	
 	if (playerMovementPreset):
-		print("Applying ", playerMovementPreset, " player movement preset.");
+		#print("Applying ", playerMovementPreset, " player movement preset.");
 		apply_preset(playerMovementPreset);
 
 ## Runs every frame during the play state
@@ -266,7 +266,7 @@ func check_out_of_bounds() -> bool:
 	|| self.global_position.x > (masterManager.worldSize.x + 2) * Global.tileSize
 	|| self.global_position.y < (-1) * Global.tileSize
 	|| self.global_position.y > (masterManager.worldSize.y + 2) * Global.tileSize):
-		print("Player OOB: ", self.global_position)
+		#print("Player OOB: ", self.global_position)
 		die();
 		return true;
 	return false;

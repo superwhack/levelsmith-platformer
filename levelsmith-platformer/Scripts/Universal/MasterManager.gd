@@ -58,7 +58,7 @@ func _ready() -> void:
 func level_complete() -> void:
 	edit();
 	editorManager.isValidated = true;
-	print("LEVEL COMPLETE");
+	#print("LEVEL COMPLETE");
 
 ## Set up a new level
 ## levelName: Name of the level
@@ -70,7 +70,7 @@ func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	Global.complete.connect(level_complete);
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
-	print("NEW LEVEL SET UP");
+	#print("NEW LEVEL SET UP");
 	tileSet.clear();
 	editorManager.playerExists = false;
 	editorManager.goalExists = false;

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/Editor/PopUp/ErrorPopUp.gd" id="1_i0gwu"]
 
-[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("closeButton")]
+[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("closeButton", "title", "body")]
 process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +11,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_i0gwu")
 closeButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/CloseButton")
+title = NodePath("PanelContainer/MarginContainer/VBoxContainer/Title")
+body = NodePath("PanelContainer/MarginContainer/VBoxContainer/Body")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
 layout_mode = 1

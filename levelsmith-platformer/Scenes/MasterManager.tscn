@@ -63,10 +63,11 @@ propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
 [node name="AudioManager" type="Node" parent="." unique_id=62565252]
 script = ExtResource("2_8vbpr")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=101918903 node_paths=PackedStringArray("masterManager", "tileSet")]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=101918903 node_paths=PackedStringArray("masterManager", "tileSet", "gridLines")]
 script = ExtResource("4_mg0h4")
 masterManager = NodePath("..")
 tileSet = NodePath("../EditorManager/Tiles")
+gridLines = NodePath("../EditorManager/GridLines")
 
 [node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager") instance=ExtResource("2_430ed")]
 masterManager = NodePath("..")

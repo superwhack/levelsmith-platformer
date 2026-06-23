@@ -19,11 +19,10 @@ func _process(_delta: float) -> void:
 	
 	match (toolManager.currentTool):
 		Global.Tool.BOX_BRUSH:
-			match (toolManager.boxBrushState):
-				Global.BoxBrushState.INACTIVE:
-					update_preview_object(currentMousePosition, prevMousePosition, brushObject, !editorManager.isPlaceable);
-				_: 
-					update_box_preview(toolManager.firstBoxCorner, toolManager.secondBoxCorner);
+			if (toolManager.boxBrushState == Global.BoxBrushState.INACTIVE):
+				update_preview_object(currentMousePosition, prevMousePosition, brushObject, !editorManager.isPlaceable);
+			else:
+				update_box_preview(toolManager.firstBoxCorner, toolManager.secondBoxCorner);
 		_:
 			update_preview_object(currentMousePosition, prevMousePosition, brushObject, !editorManager.isPlaceable);
 	
@@ -69,11 +68,13 @@ func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
 	clear();
 	for i in abs(secondCorner.y - firstCorner.y) + 1:
 		for j in abs(secondCorner.x - firstCorner.x) + 1:
+			var currentCell: Vector2 = topLeft + Vector2(j, i);
+			#Skip entities
+			if (tileSet.get_cell_source_id(currentCell) >= editorManager.tileCount): continue;
+			
 			# Will appear red when deleting tiles and use standard colors otherwise.
-			var currentCell: Vector2 = topLeft + Vector2(j, i)
-			if (tileSet.get_cell_source_id(currentCell) < editorManager.tileCount):
-				if (toolManager.boxBrushState == Global.BoxBrushState.DELETE || 
-				toolManager.boxBrushState == Global.BoxBrushState.DELETE_CONFIRM):
-					update_preview_object(currentCell, currentCell, Global.ERASING_TILE, true);
-				else: 
-					update_preview_object(currentCell, currentCell, brushObject, editorManager.check_out_of_bounds(currentCell));
+			if (toolManager.boxBrushState == Global.BoxBrushState.DELETE || 
+			toolManager.boxBrushState == Global.BoxBrushState.DELETE_CONFIRM):
+				update_preview_object(currentCell, currentCell, Global.ERASING_TILE, true);
+			else: 
+				update_preview_object(currentCell, currentCell, brushObject, editorManager.check_out_of_bounds(currentCell));

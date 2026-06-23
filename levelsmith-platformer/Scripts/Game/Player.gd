@@ -279,8 +279,10 @@ func detect_tiles() -> void:
 			# Hazards and floor collisions (ice and oneway)
 			if (tileData && (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i]))):
 				if (tileData.get_custom_data("name") != "bounce"):
-					currentFriction = 1.0;
-					currentSlowdown = 1.0;
+					if (tileData.get_custom_data("name") != "ice"):
+						currentFriction = 1.0;
+					if (tileData.get_custom_data("name") != "slow"):
+						currentSlowdown = 1.0;
 				# Depending on the tile type, apply a different effect
 				match (tileData.get_custom_data("name")):
 					"oneway":

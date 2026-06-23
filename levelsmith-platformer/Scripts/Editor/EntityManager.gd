@@ -152,10 +152,11 @@ func drop_entity() -> void:
 	toolManager.prevPosition = Vector2(0,0);
 	toolManager.currentObjectRotation = toolManager.prevRotation;
 	
-	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);
-	while get_scene_at_cell(position) == droppedEntity:
+	# Wait until a node is found at the dropped cell
+	while (!get_scene_at_cell(dropPosition)):
 		await get_tree().process_frame;
 		
+	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);
 	if droppedEntity is not Enemy || !movingResource: return;
 	
 	movingResource.position = dropPosition;

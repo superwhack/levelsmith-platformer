@@ -1,20 +1,20 @@
 [gd_resource type="TileSet" format=3 uid="uid://d1n0acfj67o7r"]
 
-[ext_resource type="Texture2D" uid="uid://d3322wnij0k2g" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
-[ext_resource type="Texture2D" uid="uid://tercdgy7ber" path="res://Assets/Sprites/Tiles/death.png" id="2_cn8lu"]
+[ext_resource type="Texture2D" uid="uid://dgbrgmufcdnj0" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
+[ext_resource type="Texture2D" uid="uid://bgu3tf17p5rpf" path="res://Assets/Sprites/Tiles/death.png" id="2_cn8lu"]
 [ext_resource type="Texture2D" uid="uid://crwfvhcm3n1nc" path="res://Assets/Sprites/Tiles/oneway.png" id="3_alyph"]
 [ext_resource type="PackedScene" uid="uid://bf3q4v3br7j4o" path="res://Scenes/Entities/Shooting.tscn" id="3_k4kw2"]
-[ext_resource type="Texture2D" uid="uid://blps015kdtqdd" path="res://Assets/Sprites/Entities/Props/Prop1.png" id="3_r4n42"]
+[ext_resource type="Texture2D" uid="uid://yosj58n3qm8i" path="res://Assets/Sprites/Entities/Props/Prop1.png" id="3_r4n42"]
 [ext_resource type="PackedScene" uid="uid://kbh8ioojr3r4" path="res://Scenes/Preview/ShootingPreview.tscn" id="4_3boqi"]
 [ext_resource type="Texture2D" uid="uid://dvvkbjb1ejkoi" path="res://Assets/Sprites/Tiles/ice.png" id="4_6ba2f"]
-[ext_resource type="Texture2D" uid="uid://gp42xvpenlt7" path="res://Assets/Sprites/Entities/Props/Prop2.png" id="4_c2nft"]
+[ext_resource type="Texture2D" uid="uid://kektaa6ws5im" path="res://Assets/Sprites/Entities/Props/Prop2.png" id="4_c2nft"]
 [ext_resource type="PackedScene" uid="uid://dbyqq48s1okmk" path="res://Scenes/Entities/Flying.tscn" id="5_3boqi"]
-[ext_resource type="Texture2D" uid="uid://df4ruo4g6aono" path="res://Assets/Sprites/Tiles/Sticky.png" id="5_8sjof"]
-[ext_resource type="Texture2D" uid="uid://cxik6e5oy8wxe" path="res://Assets/Sprites/Entities/Props/Prop3.png" id="5_nbee4"]
+[ext_resource type="Texture2D" uid="uid://3no57vbdqn51" path="res://Assets/Sprites/Tiles/Sticky.png" id="5_8sjof"]
+[ext_resource type="Texture2D" uid="uid://fvq7t3hrytr3" path="res://Assets/Sprites/Entities/Props/Prop3.png" id="5_nbee4"]
 [ext_resource type="Texture2D" uid="uid://cq8xpjeln1u8t" path="res://Assets/Sprites/Tiles/bounce.png" id="6_me1w5"]
-[ext_resource type="Texture2D" uid="uid://eirshpbhdpcx" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="6_nbee4"]
+[ext_resource type="Texture2D" uid="uid://dpl3ctolmpbb" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="6_nbee4"]
 [ext_resource type="PackedScene" uid="uid://bl34k1jvcme78" path="res://Scenes/Preview/FlyingPreview.tscn" id="6_pqfav"]
-[ext_resource type="Texture2D" uid="uid://bmw7jphva44jr" path="res://Assets/Sprites/Entities/Props/Prop5.png" id="7_eksy4"]
+[ext_resource type="Texture2D" uid="uid://b1qp7tonvpsvk" path="res://Assets/Sprites/Entities/Props/Prop5.png" id="7_eksy4"]
 [ext_resource type="Texture2D" uid="uid://lh0kyct8ass4" path="res://Assets/Sprites/Tiles/slope.png" id="7_jbnof"]
 [ext_resource type="PackedScene" uid="uid://87eq7bxythec" path="res://Scenes/Entities/Player.tscn" id="8_alyph"]
 [ext_resource type="PackedScene" uid="uid://1wme1ton08gv" path="res://Scenes/Entities/Goal.tscn" id="8_jbnof"]
@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://bj66b8ccvl345" path="res://Scenes/Preview/PlayerPreview.tscn" id="9_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://b3k624sctovph" path="res://Scenes/Entities/Patrolling.tscn" id="10_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://bwtswvrxxful5" path="res://Scenes/Preview/PatrollingPreview.tscn" id="11_8sjof"]
-[ext_resource type="Texture2D" uid="uid://dx73rn5knscwa" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="21_3boqi"]
+[ext_resource type="Texture2D" uid="uid://caj3o14oh4crl" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="21_3boqi"]
 [ext_resource type="Texture2D" uid="uid://br10hb73uokcq" path="res://Assets/UserInterface/TileBedrock.png" id="23_mtirn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rjqkl"]
@@ -45,42 +45,6 @@ texture_region_size = Vector2i(128, 128)
 0:0/0/custom_data_3 = "hazard"
 0:0/1 = 1
 0:0/1/modulate = Color(0.6666667, 0, 0, 1)
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_pqfav"]
-resource_name = "Shooting"
-scenes/1/scene = ExtResource("3_k4kw2")
-scenes/2/scene = ExtResource("4_3boqi")
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_eqdrb"]
-resource_name = "Flying"
-scenes/1/scene = ExtResource("5_3boqi")
-scenes/2/scene = ExtResource("6_pqfav")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eksy4"]
-texture = ExtResource("3_r4n42")
-texture_region_size = Vector2i(128, 128)
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k4kw2"]
-texture = ExtResource("4_c2nft")
-texture_region_size = Vector2i(128, 128)
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3boqi"]
-texture = ExtResource("5_nbee4")
-texture_region_size = Vector2i(128, 128)
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pqfav"]
-texture = ExtResource("6_nbee4")
-texture_region_size = Vector2i(128, 128)
-0:0/next_alternative_id = 4
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eqdrb"]
-texture = ExtResource("7_eksy4")
-texture_region_size = Vector2i(128, 128)
-0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_flf07"]
 texture = ExtResource("3_alyph")
@@ -125,6 +89,57 @@ texture_region_size = Vector2i(128, 128)
 0:0/1 = 1
 0:0/1/modulate = Color(1, 0, 0, 1)
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_4m7s0"]
+resource_name = "Goal"
+scenes/1/scene = ExtResource("8_jbnof")
+scenes/2/scene = ExtResource("9_5jxy7")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_6ba2f"]
+resource_name = "Player"
+scenes/1/scene = ExtResource("8_alyph")
+scenes/2/scene = ExtResource("9_6ba2f")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_8sjof"]
+resource_name = "Patrolling"
+scenes/1/scene = ExtResource("10_6ba2f")
+scenes/2/scene = ExtResource("11_8sjof")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_pqfav"]
+resource_name = "Shooting"
+scenes/1/scene = ExtResource("3_k4kw2")
+scenes/2/scene = ExtResource("4_3boqi")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_eqdrb"]
+resource_name = "Flying"
+scenes/1/scene = ExtResource("5_3boqi")
+scenes/2/scene = ExtResource("6_pqfav")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eksy4"]
+texture = ExtResource("3_r4n42")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k4kw2"]
+texture = ExtResource("4_c2nft")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3boqi"]
+texture = ExtResource("5_nbee4")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pqfav"]
+texture = ExtResource("6_nbee4")
+texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 4
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eqdrb"]
+texture = ExtResource("7_eksy4")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x0ka3"]
 texture = ExtResource("7_jbnof")
 texture_region_size = Vector2i(128, 128)
@@ -143,21 +158,6 @@ texture_region_size = Vector2i(128, 128)
 0:0/6 = 6
 0:0/6/flip_v = true
 0:0/6/modulate = Color(1, 0, 0, 1)
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_4m7s0"]
-resource_name = "Goal"
-scenes/1/scene = ExtResource("8_jbnof")
-scenes/2/scene = ExtResource("9_5jxy7")
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_6ba2f"]
-resource_name = "Player"
-scenes/1/scene = ExtResource("8_alyph")
-scenes/2/scene = ExtResource("9_6ba2f")
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_8sjof"]
-resource_name = "Patrolling"
-scenes/1/scene = ExtResource("10_6ba2f")
-scenes/2/scene = ExtResource("11_8sjof")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6pq3v"]
 texture = ExtResource("23_mtirn")
@@ -188,15 +188,15 @@ sources/2 = SubResource("TileSetAtlasSource_flf07")
 sources/4 = SubResource("TileSetAtlasSource_k73cj")
 sources/5 = SubResource("TileSetAtlasSource_hqns4")
 sources/6 = SubResource("TileSetAtlasSource_x0ka3")
-sources/8 = SubResource("TileSetScenesCollectionSource_6ba2f")
-sources/9 = SubResource("TileSetScenesCollectionSource_8sjof")
-sources/7 = SubResource("TileSetScenesCollectionSource_4m7s0")
-sources/10 = SubResource("TileSetScenesCollectionSource_pqfav")
-sources/17 = SubResource("TileSetAtlasSource_eqdrb")
-sources/16 = SubResource("TileSetAtlasSource_pqfav")
-sources/15 = SubResource("TileSetAtlasSource_3boqi")
-sources/14 = SubResource("TileSetAtlasSource_k4kw2")
-sources/13 = SubResource("TileSetAtlasSource_eksy4")
-sources/99 = SubResource("TileSetAtlasSource_mtirn")
-sources/11 = SubResource("TileSetScenesCollectionSource_eqdrb")
-sources/98 = SubResource("TileSetAtlasSource_6pq3v")
+sources/500 = SubResource("TileSetScenesCollectionSource_4m7s0")
+sources/501 = SubResource("TileSetScenesCollectionSource_6ba2f")
+sources/502 = SubResource("TileSetScenesCollectionSource_8sjof")
+sources/503 = SubResource("TileSetScenesCollectionSource_pqfav")
+sources/504 = SubResource("TileSetScenesCollectionSource_eqdrb")
+sources/506 = SubResource("TileSetAtlasSource_eksy4")
+sources/507 = SubResource("TileSetAtlasSource_k4kw2")
+sources/508 = SubResource("TileSetAtlasSource_3boqi")
+sources/509 = SubResource("TileSetAtlasSource_pqfav")
+sources/510 = SubResource("TileSetAtlasSource_eqdrb")
+sources/9998 = SubResource("TileSetAtlasSource_6pq3v")
+sources/9999 = SubResource("TileSetAtlasSource_mtirn")

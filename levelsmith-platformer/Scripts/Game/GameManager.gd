@@ -65,7 +65,6 @@ func start() -> void:
 	var enemyProperties = DirAccess.get_files_at("res://Resources/Enemies/");
 	for enemyProperty in enemyProperties:
 		var propertyFile = load("res://Resources/Enemies/" + enemyProperty);
-		var file = FileAccess.open("res://Resources/Enemies/" + enemyProperty, FileAccess.READ);
 		for node in tileSet.get_children():
 			if tileSet.local_to_map(node.global_position) == propertyFile.position:
 				(node as Enemy).apply_script(propertyFile);

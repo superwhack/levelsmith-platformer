@@ -24,7 +24,7 @@ func _ready() -> void:
 	slider.step = sliderStep;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var newLabel = "";
 	if int(sliderStep) == sliderStep:
 		newLabel += str(int(slider.value));
@@ -36,7 +36,7 @@ func _process(delta: float) -> void:
 	value = slider.value;
 
 ## When drag is finished, emit drag ended signal
-func _drag_ended(value_changed: bool) -> void:
+func _drag_ended(_value_changed: bool) -> void:
 	emit_signal("drag_ended");
 
 ## Update the slider value

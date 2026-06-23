@@ -66,7 +66,7 @@ func close() -> void:
 	hide();
 	selectedEntity = null;
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# If there is a selected entity, set the name in the property menu, otherwise close
 	if (selectedEntity != null):
 		if selectedEntity is EnemyPatrol:

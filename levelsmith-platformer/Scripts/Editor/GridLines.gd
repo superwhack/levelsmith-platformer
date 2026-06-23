@@ -10,6 +10,7 @@ func _ready() -> void:
 ## Fills the grid with grid lines tiles.
 func fill_grid_lines() -> void:
 	clear();
+	# Set all cells within the world size to have grid lines
 	for height in range(0, masterManager.worldSize.y):
 		for width in range(0, masterManager.worldSize.x):
 			set_cell(Vector2i(width, height), 1, Vector2i.ZERO);

@@ -7,8 +7,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
 [node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow") groups=["Enemy"]]
-collision_layer = 6
-collision_mask = 6
+collision_layer = 7
+collision_mask = 7
 script = ExtResource("1_0p30m")
 directionArrow = NodePath("DirectionArrow")
 

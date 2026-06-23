@@ -48,14 +48,19 @@ var trueSpeed : float;
 
 # Enemy collision hitboxes for hooking signals
 @export var enemyBounceCollision: Area2D;
-@export var enemyCollision: Area2D
+@export var enemyCollision: Area2D;
+
+var enemiesInside : Array[Node2D];
+var projectilesInside : Array[Area2D];
 
 ## Runs once on instantiation
 func _ready() -> void:
 	enemyBounceCollision.body_entered.connect(detect_enemy_bounce);
 	enemyCollision.body_entered.connect(detect_enemies);
+	enemyCollision.body_exited.connect(remove_enemy);
 	enemyBounceCollision.area_entered.connect(detect_projectile_bounce);
 	enemyCollision.area_entered.connect(detect_projectiles);
+	enemyCollision.area_exited.connect(remove_projectile);
 	# Applies the preset on ready
 	if (playerMovementPreset):
 		print("Applying ", playerMovementPreset, " player movement preset.");
@@ -66,6 +71,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if check_out_of_bounds():
 		return;
+	for enemy in enemiesInside:
+		detect_enemies(enemy);
+	for projectile in projectilesInside:
+		detect_projectiles(projectile);
 	if invulnerabilityCurrent > 0:
 		invulnerabilityCurrent -= delta;
 		flashTimer -= delta;
@@ -158,12 +167,23 @@ func die() -> void:
 	AudioManager.play_effect("PlayerDeath");
 	Global.death.emit();
 
+## Remove enemies or projectiles when no longer inside of them
+## body/area: the body or area to remove from the array
+func remove_enemy(body: Node2D):
+	if enemiesInside.find(body) != 1:
+		enemiesInside.remove_at(enemiesInside.find(body));
+func remove_projectile(area: Area2D):
+	if projectilesInside.find(area) != 1:
+		projectilesInside.remove_at(projectilesInside.find(area));
+
 ## use raycast to detect enemy collision
 # Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
 func detect_enemies(body: Node2D) -> void:
 	await get_tree().process_frame;
 	if body && body.is_in_group("enemy"):
 		var direction : Vector2 = position - body.position;
+		if enemiesInside.find(body) == -1:
+			enemiesInside.append(body);
 		take_damage(1, direction.normalized());
 
 func detect_enemy_bounce(body: Node2D) -> void:
@@ -178,6 +198,8 @@ func detect_projectiles(area: Area2D) -> void:
 	await get_tree().process_frame;
 	if (area && area.is_in_group("Projectile")):
 		var direction : Vector2 = position - area.position;
+		if projectilesInside.find(area) == -1:
+			projectilesInside.append(area);
 		take_damage(1, direction.normalized());
 		area.queue_free();
 
@@ -189,6 +211,8 @@ func detect_projectile_bounce(area: Area2D) -> void:
 			bounce();
 		else:
 			var direction : Vector2 = position - area.position;
+			if projectilesInside.find(area) == -1:
+				projectilesInside.append(area);
 			take_damage(1, direction.normalized());
 		area.queue_free();
 

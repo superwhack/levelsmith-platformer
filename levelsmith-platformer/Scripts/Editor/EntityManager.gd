@@ -13,6 +13,11 @@ var goalCount: int = 0;
 
 var movingResource: Resource;
 
+func _ready() -> void:
+	var clearGoalCount = func () -> void:
+		goalCount = 0;
+	Global.levelCreated.connect(clearGoalCount);
+
 func _process(_delta: float) -> void:
 	editorManager.goalExists = goalCount > 0;
 	brushObject = toolManager.brushObject;
@@ -30,7 +35,7 @@ func place_entity(clickPosition: Vector2) -> void:
 	&& clickedTileId >= 0)): 
 		return;
 	
-	if toolManager.brushObject >= Global.EntityType.PROP1 && (clickedTileId <= Global.EntityType.PROP1 && clickedTileId >= Global.EntityType.GOAL):
+	if toolManager.brushObject >= Global.EntityType.PROP1 && (clickedTileId < Global.EntityType.PROP1 && clickedTileId >= Global.EntityType.GOAL):
 		return;
 	
 	if (clickedTileId >= Global.EntityType.PATROLLING && clickedTileId <= Global.EntityType.STATIONARY) || clickedTileId == Global.EntityType.GOAL:
@@ -61,21 +66,27 @@ func place_entity(clickPosition: Vector2) -> void:
 			# Wait five frames, I really don't like doing it like this but I'm not sure of a better way.
 			while get_scene_at_cell(clickPosition) == null:
 				await get_tree().process_frame;
+			var newEntity : Resource;
+			var file : String;
 			if (saveBrush == Global.EntityType.PATROLLING):
 				var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
-				var newPatrolling: Resource = defaultPatrolling.duplicate(true);
-				ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol" + str(time) + ".tres");
-			elif (saveBrush == Global.EntityType.SHOOTING):
-				var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
-				var newShooting: Resource = defaultShooting.duplicate(true);
+				newEntity = defaultPatrolling.duplicate(true);
 				get_scene_at_cell(clickPosition).adjust_arrow(90);
 				get_scene_at_cell(clickPosition).directionArrow.scale = Vector2(1, 1);
-				ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting" + str(time) + ".tres");
+				file = "res://Resources/Enemies/Patrolling" + str(time) + ".tres";
+			elif (saveBrush == Global.EntityType.SHOOTING):
+				var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
+				newEntity = defaultShooting.duplicate(true);
+				get_scene_at_cell(clickPosition).adjust_arrow(90);
+				get_scene_at_cell(clickPosition).directionArrow.scale = Vector2(1, 1);
+				file = "res://Resources/Enemies/Shooting" + str(time) + ".tres";
 			elif (saveBrush == Global.EntityType.FLYING):
 				var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
-				var newFlying: Resource = defaultFlying.duplicate(true);
-				ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying" + str(time) + ".tres");
+				newEntity = defaultFlying.duplicate(true);
+				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
+			ResourceSaver.save(newEntity, file);
 			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
+			editorManager.reset_enemy_positions();
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
 	else:
@@ -122,18 +133,18 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 	return null;
 
 ## Moves the entity at the clicked position
-func move_entity() -> void:
+func move_entity(previousClickPos: Vector2) -> void:
+	propertyMenu.close();
 	# Await is needed to it has time to update selectedTile
-	toolManager.prevPosition = editorManager.currentMousePosition;
+	toolManager.prevPosition = previousClickPos;
 	toolManager.prevEntity = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;
 	await get_tree().process_frame;
-	toolManager.brushObject = tileSet.get_cell_source_id(editorManager.currentMousePosition);
-	toolManager.currentObjectRotation = tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
-	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy:
-		movingResource = get_scene_at_cell(editorManager.currentMousePosition).propertyFile;
-	delete_entity(editorManager.currentMousePosition);
-	toolManager.isMoving = true;
+	toolManager.brushObject = tileSet.get_cell_source_id(previousClickPos);
+	toolManager.currentObjectRotation = tileSet.get_cell_alternative_tile(previousClickPos);
+	if get_scene_at_cell(previousClickPos) is Enemy:
+		movingResource = get_scene_at_cell(previousClickPos).propertyFile;
+	delete_entity(previousClickPos);
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
@@ -151,9 +162,9 @@ func drop_entity() -> void:
 	toolManager.prevEntity = -1;
 	toolManager.prevPosition = Vector2(0,0);
 	toolManager.currentObjectRotation = toolManager.prevRotation;
-	toolManager.isMoving = false;
 	
-	for frame in range(1, 5):
+	var curScene = get_scene_at_cell(position)
+	while get_scene_at_cell(position) == curScene:
 		await get_tree().process_frame;
 		
 	if get_scene_at_cell(position) is Enemy && movingResource:
@@ -162,10 +173,16 @@ func drop_entity() -> void:
 		if get_scene_at_cell(position) is EnemyShooting:
 			get_scene_at_cell(position).adjust_arrow(get_scene_at_cell(position).direction + 90);
 			get_scene_at_cell(position).directionArrow.scale = Vector2(1, 1);
+		elif get_scene_at_cell(position) is EnemyPatrol:
+			get_scene_at_cell(position).adjust_arrow(int(movingResource.direction) * 180 + 90);
+			get_scene_at_cell(position).directionArrow.scale = Vector2(1, 1);
 		ResourceSaver.save(movingResource, "res://Resources/Enemies/" + get_scene_at_cell(position).name + ".tres");
 		movingResource = null;
 		editorManager.reset_enemy_positions();
 
+## Scan through the grid to see how many goals have been placed.
+## xSize: the x dimension on the level
+## ySize: the y dimension on the level
 func scan_goals(xSize: int, ySize: int) -> void:
 	goalCount = 0;
 	for x in xSize:

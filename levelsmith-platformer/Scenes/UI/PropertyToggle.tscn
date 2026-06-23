@@ -17,5 +17,3 @@ layout_mode = 2
 [node name="Name" type="Label" parent="HBoxContainer" unique_id=671881686]
 layout_mode = 2
 text = "Name"
-
-[connection signal="pressed" from="HBoxContainer/CheckBox" to="." method="_box_clicked"]

@@ -30,15 +30,17 @@ var loadedMap: TileMapLayer;
 ## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
 @export var worldSize: Vector2i;
-
 @export var propertyMenu : Panel;
 
 func _ready() -> void:
-	#Global.reload.connect(load_tilemap);
-	#Global.complete.connect(level_complete);
 	#ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
 	AudioManager.update_volume();
+	
+	Global.reload.connect(load_tilemap);
+	Global.complete.connect(level_complete);
+	Global.levelCreated.connect(on_level_created);
+	Global.levelCreated.connect(edit);
 	
 	# Connect all button signals
 	editorHomeButton.pressed.connect(main_menu);
@@ -62,19 +64,40 @@ func level_complete() -> void:
 	
 func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
+	cameraManager.initialize_camera();
 	ImportExportManager.make_new_level( levelName );
-	Global.reload.connect(load_tilemap);
-	Global.complete.connect(level_complete);
+	
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	print("NEW LEVEL SET UP");
+	Global.levelCreated.emit();
+
+func on_level_created() -> void:
 	tileSet.clear();
+
 	editorManager.playerExists = false;
 	editorManager.goalExists = false;
 	entityManager.goalCount = 0;
+
+	create_bedrock_border();
+
 	gridLines.fill_grid_lines();
 	cameraManager.refresh_bounds();
-	edit();
+
+func create_bedrock_border() -> void:
+	for x in range(-1, worldSize.x + 1):
+		tileSet.set_cell(Vector2i(x, -1), Global.BEDROCK_TILE, Vector2i.ZERO);
+		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileSet.set_cell( Vector2i(x, worldSize.y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+
+	for y in range(0, worldSize.y):
+		tileSet.set_cell(Vector2i(-1, y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileSet.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+
+	print("Bedrock border created: ", tileSet.get_used_rect());
 
 ## Swap to main menu state
 func main_menu() -> void:
@@ -82,6 +105,7 @@ func main_menu() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.hide();
+	editorManager.clear_enemies(true);
 	editorManagerCanvas.hide();
 	mainMenuControl.show();
 	
@@ -171,7 +195,7 @@ func _process(_delta: float) -> void:
 		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
 	if (Input.is_action_just_pressed("tempLoad")):
 		propertyMenu.close();
-		var result = ImportExportManager.validate_import("Level01");
+		var result = ImportExportManager.validate_import(ImportExportManager.levelPathName);
 		if (result):
 			ImportExportManager.clear_enemies_folder();
 			for childNode in editorManager.tileSet.get_children():
@@ -180,5 +204,5 @@ func _process(_delta: float) -> void:
 			editorManager.reset_enemy_positions();
 			await get_tree().process_frame;
 			ImportExportManager.import_JSON(editorManager.tileSet, propertyMenu)
-			propertyMenu._on_preset_options_item_selected(4);
-		editorManager.check_goal_exists();
+			#propertyMenu._on_preset_options_item_selected(4);
+		entityManager.scan_goals(worldSize.x + 1, worldSize.y + 1);

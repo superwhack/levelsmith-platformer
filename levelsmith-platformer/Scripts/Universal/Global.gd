@@ -4,6 +4,7 @@ extends Node
 signal death;
 signal reload;
 signal complete;
+signal levelCreated;
 
 # Tile size
 const tileSize: int = 128;
@@ -65,4 +66,5 @@ enum EntityType {
 	PROP6 = 18
 }
 
+const BEDROCK_TILE: int = 98;
 const ERASING_TILE: int = 99;

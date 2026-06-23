@@ -18,6 +18,7 @@ var panSpeed: float = 1.0;
 
 # Tilemap bound
 @export var tileSet: TileMapLayer;
+@export var gridLines: TileMapLayer;
 var levelBounds: Rect2;
 var roamBounds: Rect2;
 
@@ -32,20 +33,34 @@ func _ready() -> void:
 	make_current();
 	# Center camera on rect2 of the entire level
 	refresh_bounds();
-	set_global_position(levelBounds.get_center());  
+	
+	zoom = Vector2.ONE * maxZoomOut;
+	global_position = levelBounds.get_center();
 	
 	# Start zoomed out
-	zoom = Vector2.ONE * maxZoomOut;
 	Global.reload.connect(reset_camera);
+	Global.levelCreated.connect(refresh_bounds);
 
 #func _input(event):
 	#if event is InputEventMouseButton:
 		#print("Mouse button:", event.button_index, "pressed:", event.pressed)
+		
+## For initializing a camera on level load/creation. 
+## Almost the same as _ready(), but called not just on ready.
+func initialize_camera() -> void:
+	refresh_bounds();
+	zoom = Vector2.ONE * maxZoomOut;
+	global_position = levelBounds.get_center();
+	clamp_camera_to_level();
+	print("center:", levelBounds.get_center());
+	print("camera:", global_position);
 
+## Retrieve the level bounds and the camera roaming bounds.
 func refresh_bounds() -> void:
 	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.tileSize);
 	roamBounds = get_camera_bounds();
 
+## Remove the player reference and restart the search for the player.
 func reset_camera() -> void:
 	playerReference = null;
 	searchForPlayer = true;
@@ -92,7 +107,7 @@ func _input(event: InputEvent) -> void:
 
 	# Pan while dragging
 	if event is InputEventMouseMotion and isPanning:
-		global_position -= event.relative / zoom;
+		global_position -= event.relative / zoom * (1.8);
 		clamp_camera_to_level();
 		
 	if Input.is_action_just_pressed("shift"):
@@ -112,7 +127,7 @@ func process_build_camera(delta: float) -> void:
 	# If shift is being held, make it move faster.
 	if Input.is_action_pressed("shift"): speedModifier = 3;
 	
-	global_position += inputVector.normalized() * moveSpeed * speedModifier * delta;
+	global_position += inputVector.normalized() * moveSpeed * speedModifier * delta * (1.8 / zoom.x);
 	
 	# Edge scrolling currently commented out
 	#if (!get_viewport().gui_get_hovered_control()):
@@ -157,27 +172,30 @@ func process_player_camera(_delta: float) -> void:
 ## Adjusts camera zoom
 ## zoomAmount: Zoom change amount
 func process_zoom(zoomAmount: float) -> void:
-	
 	# Mouse world position BEFORE zoom
 	var mouseWorldBefore: Vector2 = get_global_mouse_position();
-	
-	# Calculate new zoom first
-	var newZoom: float = clamp(
-		zoom.x + zoomAmount,
-		maxZoomOut,
-		maxZoomIn
-	);
-	
-	# Apply zoom
+
+	var newZoom := zoom.x + zoomAmount;
+
+	# Get the minimum zoom to fit the roaming bounds
+	var fitZoom := get_min_zoom_to_fit_roam();
+
+	# clamp the zoom to either the roam bound limits (fitZoom) or the maxZoomIn
+	newZoom = clamp(newZoom, fitZoom, maxZoomIn);
+
 	zoom = Vector2.ONE * newZoom;
+	if (zoom.x <= 0.3):
+		gridLines.visible = false;
+	else:
+		gridLines.visible = true;
 	
 	# Mouse world position AFTER zoom
 	var mouseWorldAfter: Vector2 = get_global_mouse_position();
 	
 	# Offset camera so zoom focuses on mouse
 	global_position += mouseWorldBefore - mouseWorldAfter;
-	
-	clamp_camera_to_level();
+	# If zoomed out enough, hide the grid layer.
+
 
 func process_zoom_input() -> void:
 	if masterManager.state != Global.State.EDIT:
@@ -195,6 +213,8 @@ func process_zoom_input() -> void:
 	if (Input.is_action_just_pressed("scroll_down")):
 		process_zoom(-zoomSpeed);
 
+## Determine the bounds of camera panning.
+## Returns a rect of the limits of where the camera is able to go.
 func get_camera_bounds() -> Rect2:
 	# Convert roam cell count to pixels
 	var roamMargin = roamCellCount * Global.tileSize;
@@ -216,10 +236,10 @@ func clamp_camera_to_level() -> void:
 	var visibleSize: Vector2 = viewportSize * 0.5 / zoom;
 	
 	var minX = roamBounds.position.x + visibleSize.x;
-	var maxX = roamBounds.end.x - visibleSize.x + Global.tileSize;
+	var maxX = roamBounds.end.x - visibleSize.x;
 	
 	var minY = roamBounds.position.y + visibleSize.y;
-	var maxY = roamBounds.end.y - visibleSize.y + Global.tileSize;
+	var maxY = roamBounds.end.y - visibleSize.y;
 	
 	# If zoom too far out, just center
 	if minX > maxX:
@@ -231,3 +251,36 @@ func clamp_camera_to_level() -> void:
 		global_position.y = levelBounds.get_center().y;
 	else:
 		global_position.y = clamp(global_position.y, minY, maxY);
+		
+## Determine if self contains a given rect2.
+## roamingBounds: A rect2 of the camera panning limits
+## Returns a true or false bool.
+func camera_encloses_roam(roamingBounds: Rect2) -> bool:
+	if (get_camera_rect().encloses(roamingBounds)):
+		return true;
+	return false;
+	
+## Get a rect of the camera.
+## Returns a Rect2 of the camera viewport.
+func get_camera_rect() -> Rect2:
+	var pos = self.global_position;
+	var halfSize = get_viewport_rect().size * 0.5 / zoom;
+	
+	var topLeft = pos - halfSize;
+	var size = get_viewport_rect().size / zoom;
+	
+	return Rect2(topLeft, size);
+	
+## Getting the maximum possible zoom out for the roam bounds to be contained.
+## Returns a float of the max zoom.
+func get_min_zoom_to_fit_roam() -> float:
+	# Getting the viewport and roaming area (where the camera can go) sizes
+	var viewportSize = get_viewport_rect().size;
+	var roamSize = roamBounds.size;
+
+	# Get the scale ratio between the x/y values for the minimum zoom
+	var zoomX = viewportSize.x / roamSize.x;
+	var zoomY = viewportSize.y / roamSize.y;
+
+	# Get the minimum between both options
+	return min(zoomX, zoomY);

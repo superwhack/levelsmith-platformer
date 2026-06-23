@@ -5,6 +5,8 @@ extends CanvasLayer
 # Popup templates
 const ERROR_TEMPLATE: PackedScene = preload("res://Scenes/UI/ErrorPopUpTemplate.tscn");
 
+var currentPopup : Panel;
+
 # Stack of messages (possible future addition if needed, would need to change some behavior)
 #const POP_UP_STACK = [];
 
@@ -16,21 +18,19 @@ func _ready() -> void:
 ## title: Title of error
 ## body: Body content of error
 func create_error_popup(title: String = "Error", body: String = "An error has occurred") -> void:
-	if get_child_count() != 0:
-		get_child(0).find_child("Body").text += "\n - " + body;
+	if currentPopup != null:
+		currentPopup.body.text += "\n - " + body;
 		return;
 	var newPopUp: Panel = ERROR_TEMPLATE.instantiate();
 	
 	# Add desired content to popup
-	# WARNING I wonder if there is a better way to do this
-	var popUpTitle: Label = newPopUp.find_child("Title");
-	var popUpBody: RichTextLabel = newPopUp.find_child("Body");
-	popUpTitle.text = title;
-	popUpBody.text = " - " + body;
+	newPopUp.title.text = title;
+	newPopUp.body.text = " - " + body;
 	
 	# Add popup to scene and stack
 	#POP_UP_STACK.append(newPopUp);
 	add_child(newPopUp);
+	currentPopup = newPopUp;
 
 ## Creates an error popup that contains multiple errors
 ## title: Title of error
@@ -42,18 +42,16 @@ func create_multi_error_popup(title: String = "Error", body: Array[String] = [])
 	var newPopUp: Panel = ERROR_TEMPLATE.instantiate();
 	
 	# Add desired content to popup
-	# WARNING I wonder if there is a better way to do this
-	var popUpTitle: Label = newPopUp.find_child("Title");
-	var popUpBody: RichTextLabel = newPopUp.find_child("Body");
-	popUpTitle.text = title;
-	popUpBody.text = "";
+	newPopUp.title.text = title;
+	newPopUp.body.text = "";
 	for messageNum in range(0, body.size()):
-		popUpBody.text += " - " + body[messageNum];
+		newPopUp.body.text += " - " + body[messageNum];
 		if messageNum != body.size() - 1:
-			popUpBody.text += "\n"
+			newPopUp.body.text += "\n"
 	
 	# Add popup to scene and stack
 	add_child(newPopUp);
+	currentPopup = newPopUp;
 	
 ## Removes specific popup from popup stack
 ## item: Panel being removed from stack

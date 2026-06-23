@@ -5,8 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://c3ype5vn62yxp" path="res://Scenes/UI/PropertySlider.tscn" id="2_w5eld"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_x85wq"]
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
+[ext_resource type="PackedScene" uid="uid://d33iu75vytjse" path="res://Scenes/UI/PropertyDropdown.tscn" id="5_ehgsd"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "flyingMenu", "patrollingMenu", "shootingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingRestrictedCheckbox", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "shootingDirectionSlider", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "presetOptions")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "flyingMenu", "patrollingMenu", "shootingMenu", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "shootingDirectionSlider", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "presetOptions", "closeButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -30,6 +31,7 @@ playerAirControlSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerAi
 playerFallSpeedSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerFallSpeed")
 playerCoyoteTimeSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime")
 patrollingSpeedSlider = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed")
+patrollingDirectionDropdown = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingDirection")
 patrollingRestrictedCheckbox = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingRestricted")
 flyingSpeedSlider = NodePath("MainMargin/RootVBox/FlyingProperties/FlightSpeed")
 flyingOffsetXSlider = NodePath("MainMargin/RootVBox/FlyingProperties/Xoffset")
@@ -38,7 +40,9 @@ shootingDirectionSlider = NodePath("MainMargin/RootVBox/ShootingMargin/ShootingP
 shootingShotSpeedSlider = NodePath("MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingShotSpeed")
 shootingFireRateSlider = NodePath("MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingFireRate")
 shootingProjectileBounce = NodePath("MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingBounce")
+shootingGravity = NodePath("MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingGravity")
 presetOptions = NodePath("MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions")
+closeButton = NodePath("MainMargin/RootVBox/HBoxContainer/CloseButton")
 
 [node name="MainMargin" type="MarginContainer" parent="." unique_id=1879514987]
 layout_mode = 1
@@ -158,6 +162,11 @@ propertyName = "Speed"
 minMax = Vector2(0, 3)
 sliderStep = 0.1
 
+[node name="PatrollingDirection" parent="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties" unique_id=1671415258 instance=ExtResource("5_ehgsd")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Direction"
+
 [node name="PatrollingRestricted" parent="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties" unique_id=574029748 instance=ExtResource("3_1mv14")]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -180,9 +189,9 @@ sliderStep = 1.0
 valueAppend = "°"
 
 [node name="ShootingShotSpeed" parent="MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=441375088 instance=ExtResource("2_w5eld")]
-layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 0
+layout_direction = 2
 propertyName = "Projectile Speed"
 minMax = Vector2(0.2, 8)
 sliderStep = 0.1
@@ -199,6 +208,11 @@ layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Projecile Bounce"
 
+[node name="ShootingGravity" parent="MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=708611749 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Gravity"
+
 [node name="FlyingProperties" type="VBoxContainer" parent="MainMargin/RootVBox" unique_id=1573236817]
 visible = false
 layout_mode = 2
@@ -211,9 +225,9 @@ minMax = Vector2(0, 10)
 sliderStep = 1.0
 
 [node name="Xoffset" parent="MainMargin/RootVBox/FlyingProperties" unique_id=1638288870 instance=ExtResource("2_w5eld")]
-layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 0
+layout_direction = 2
 propertyName = "Horizontal offset"
 minMax = Vector2(-10, 10)
 sliderStep = 1.0
@@ -230,27 +244,10 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainMargin/RootVBox" unique_id=600370838]
-layout_direction = 3
 layout_mode = 2
+layout_direction = 3
 
 [node name="CloseButton" type="Button" parent="MainMargin/RootVBox/HBoxContainer" unique_id=429960597]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Close"
-
-[connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerSpeed" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerJump" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerAirControl" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerFallSpeed" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime" to="." method="_on_drag_ended"]
-[connection signal="item_selected" from="MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions" to="." method="_on_preset_options_item_selected"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed" to="." method="_on_drag_ended"]
-[connection signal="check_changed" from="MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingRestricted" to="." method="update_values"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/FlyingProperties/FlightSpeed" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/FlyingProperties/Xoffset" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/FlyingProperties/Yoffset" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingDirection" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingShotSpeed" to="." method="_on_drag_ended"]
-[connection signal="drag_ended" from="MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingFireRate" to="." method="_on_drag_ended"]
-[connection signal="check_changed" from="MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingBounce" to="." method="update_values"]
-[connection signal="pressed" from="MainMargin/RootVBox/HBoxContainer/CloseButton" to="." method="close"]

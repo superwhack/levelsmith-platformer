@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://b3k624sctovph" path="res://Scenes/Entities/Patrolling.tscn" id="10_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://bwtswvrxxful5" path="res://Scenes/Preview/PatrollingPreview.tscn" id="11_8sjof"]
 [ext_resource type="Texture2D" uid="uid://dx73rn5knscwa" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="21_3boqi"]
+[ext_resource type="Texture2D" uid="uid://br10hb73uokcq" path="res://Assets/UserInterface/TileBedrock.png" id="23_mtirn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rjqkl"]
 texture = ExtResource("1_00q1o")
@@ -129,7 +130,7 @@ texture = ExtResource("7_jbnof")
 texture_region_size = Vector2i(128, 128)
 0:0/next_alternative_id = 5
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, 64, -64, 64)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, 64, -63.916412, 63.91641)
 0:0/0/custom_data_3 = "slope"
 0:0/1 = 1
 0:0/1/modulate = Color(1, 0, 0, 1)
@@ -157,6 +158,12 @@ scenes/2/scene = ExtResource("9_6ba2f")
 resource_name = "Patrolling"
 scenes/1/scene = ExtResource("10_6ba2f")
 scenes/2/scene = ExtResource("11_8sjof")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6pq3v"]
+texture = ExtResource("23_mtirn")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64, -64, -64)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mtirn"]
 texture = ExtResource("21_3boqi")
@@ -192,3 +199,4 @@ sources/14 = SubResource("TileSetAtlasSource_k4kw2")
 sources/13 = SubResource("TileSetAtlasSource_eksy4")
 sources/99 = SubResource("TileSetAtlasSource_mtirn")
 sources/11 = SubResource("TileSetScenesCollectionSource_eqdrb")
+sources/98 = SubResource("TileSetAtlasSource_6pq3v")

@@ -135,7 +135,7 @@ func update_custom() -> void:
 func update_flying_preview() -> void:
 	if selectedEntity == null:
 		return;
-	var offset : Vector2 = Vector2(flyingOffsetXSlider.value * Global.tileSize,flyingOffsetYSlider.value * Global.tileSize);
+	var offset : Vector2 = Vector2(flyingOffsetXSlider.value * Global.TILE_SIZE, flyingOffsetYSlider.value * Global.TILE_SIZE);
 	previewLine.global_position = selectedEntity.global_position;
 	previewLine.clear_points()
 	previewLine.add_point(Vector2.ZERO)
@@ -164,8 +164,8 @@ func update_sliders() -> void:
 		patrollingRestrictedCheckbox.update_checkbox();
 	elif selectedEntity is EnemyFlyer:
 		flyingSpeedSlider.value = selectedPreset.speed;
-		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.tileSize;
-		flyingOffsetYSlider.value = selectedPreset.pointBOffset.y / Global.tileSize;
+		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.TILE_SIZE;
+		flyingOffsetYSlider.value = selectedPreset.pointBOffset.y / Global.TILE_SIZE;
 		flyingSpeedSlider.update_slider();
 		flyingOffsetXSlider.update_slider();
 		flyingOffsetYSlider.update_slider();
@@ -196,7 +196,7 @@ func update_values() -> void:
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyFlyer:
 		selectedPreset.speed = flyingSpeedSlider.value;
-		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.tileSize, flyingOffsetYSlider.value * Global.tileSize);
+		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.TILE_SIZE, flyingOffsetYSlider.value * Global.TILE_SIZE);
 		update_flying_preview();
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyShooting:

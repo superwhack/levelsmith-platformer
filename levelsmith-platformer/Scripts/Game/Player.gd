@@ -262,10 +262,10 @@ func check_out_of_bounds() -> bool:
 	var masterManager : Node2D = get_tree().current_scene;
 	
 	# There is a 1 tile leeway given to players who leave bounds, before deth
-	if (self.global_position.x < (-1) * Global.tileSize
-	|| self.global_position.x > (masterManager.worldSize.x + 2) * Global.tileSize
-	|| self.global_position.y < (-1) * Global.tileSize
-	|| self.global_position.y > (masterManager.worldSize.y + 2) * Global.tileSize):
+	if (self.global_position.x < (-1) * Global.TILE_SIZE
+	|| self.global_position.x > (masterManager.worldSize.x + 2) * Global.TILE_SIZE
+	|| self.global_position.y < (-1) * Global.TILE_SIZE
+	|| self.global_position.y > (masterManager.worldSize.y + 2) * Global.TILE_SIZE):
 		#print("Player OOB: ", self.global_position)
 		die();
 		return true;

@@ -58,7 +58,7 @@ func _process(_delta: float) -> void:
 		return;
 	# Set the current mouse position and place the selector frame and invalid sprite to the correct locations
 	currentMousePosition = editorManager.currentMousePosition;
-	selectorFrame.global_position = currentMousePosition * Global.tileSize + Vector2(Global.tileSize / 2.0, Global.tileSize / 2.0);
+	selectorFrame.global_position = currentMousePosition * Global.TILE_SIZE + Vector2(Global.TILE_SIZE / 2.0, Global.TILE_SIZE / 2.0);
 	invalidSprite.global_position = get_global_mouse_position();
 	
 	isEditing = toolManager.currentTool == Global.Tool.CURSOR && editorManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount;

@@ -162,8 +162,8 @@ func die() -> void:
 # Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
 func detect_enemies(body: Node2D) -> void:
 	await get_tree().process_frame;
-	var direction : Vector2 = position - body.position;
 	if body && body.is_in_group("enemy"):
+		var direction : Vector2 = position - body.position;
 		take_damage(1, direction.normalized());
 
 func detect_enemy_bounce(body: Node2D) -> void:
@@ -176,8 +176,8 @@ func detect_enemy_bounce(body: Node2D) -> void:
 func detect_projectiles(area: Area2D) -> void:
 	# Wait one frame to see if the projectile has been bounced on
 	await get_tree().process_frame;
-	var direction : Vector2 = position - area.position;
 	if (area && area.is_in_group("Projectile")):
+		var direction : Vector2 = position - area.position;
 		take_damage(1, direction.normalized());
 		area.queue_free();
 

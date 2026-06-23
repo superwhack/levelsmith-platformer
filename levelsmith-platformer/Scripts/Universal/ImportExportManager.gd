@@ -61,6 +61,7 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	
 	# Player Data
 	data_to_send += '], "player": {';
+	data_to_send += '"health": ' + str(playerData.playerHealth) + ", ";
 	data_to_send += '"speed": ' + str(playerData.playerSpeed) + ", ";
 	data_to_send += '"jump": ' + str(playerData.playerJumpHeight) + ", ";
 	data_to_send += '"airControl": ' + str(playerData.playerAirControl) + ", ";
@@ -150,13 +151,14 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	
 	# Player information read
 	var player = json_as_dict.player;
+	playerData.playerHealth = player.health;
 	playerData.playerSpeed = player.speed;
 	playerData.playerJumpHeight = player.jump;
 	playerData.playerAirControl = player.airControl;
 	playerData.playerFallSpeed  = player.fallSpeed;
 	playerData.playerCoyoteTime = player.coyoteTime;
 	playerData.update_custom();
-	
+	playerData.update_sliders();
 	
 	# Enemy information read
 	var enemies = json_as_dict.enemies;

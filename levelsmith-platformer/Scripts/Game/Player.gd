@@ -28,12 +28,12 @@ var spawnpoint := Vector2(0, 0);
 @export var downwardsRaycasts : Array[RayCast2D];
 
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
-const maxHealth := 3;
+var maxHealth := 3;
 var health := maxHealth
-var invulnerabilityTimer := 0.5;
+const invulnerabilityTimer := 0.5;
 var invulnerabilityCurrent := 0.0;
+const flashTimerCap := .05;
 var flashTimer := 0.0;
-const flashTimerCap = .05;
 
 # Stored friction and slowdown, saved so they are maintained while in midair
 var currentFriction := 1.0;
@@ -284,6 +284,8 @@ func check_out_of_bounds() -> bool:
 ## Applies the player selected player movement preset to the player
 func apply_preset(preset: PlayerMovementPreset) -> void:
 	# Setting all the player variables
+	maxHealth = preset.health;
+	health = maxHealth
 	groundSpeed = preset.groundSpeed;
 	jumpHeight = preset.jumpHeight;
 	airControl = preset.airControl;

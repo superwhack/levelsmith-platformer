@@ -12,6 +12,7 @@ var selectedEntity: Node2D;
 @export var shootingMenu: MarginContainer;
 
 # Player values
+var playerHealth: int;
 var playerSpeed: float;
 var playerJumpHeight : float;
 var playerAirControl : float;
@@ -19,6 +20,7 @@ var playerFallSpeed : float;
 var playerCoyoteTime : float;
 
 # Player value sliders
+@export var playerHealthSlider: VBoxContainer;
 @export var playerSpeedSlider: VBoxContainer;
 @export var playerJumpSlider: VBoxContainer;
 @export var playerAirControlSlider: VBoxContainer;
@@ -58,6 +60,7 @@ var shootingDirectionArrow: Sprite2D;
 func _ready() -> void:
 	_on_preset_options_item_selected(0);
 	
+	playerHealthSlider.drag_ended.connect(_on_drag_ended);
 	playerSpeedSlider.drag_ended.connect(_on_drag_ended);
 	playerJumpSlider.drag_ended.connect(_on_drag_ended);
 	playerAirControlSlider.drag_ended.connect(_on_drag_ended);
@@ -112,6 +115,7 @@ func _process(delta: float) -> void:
 ## index: the index of the preset selected
 func _on_preset_options_item_selected(index: int) -> void:
 	selectedPlayerPreset = load("res://Resources/PlayerPresets/" + presetOptions.get_item_text(index) + ".tres")
+	playerHealth = selectedPlayerPreset.health;
 	playerSpeed = selectedPlayerPreset.groundSpeed;
 	playerJumpHeight = selectedPlayerPreset.jumpHeight;
 	playerAirControl = selectedPlayerPreset.airControl;
@@ -122,6 +126,7 @@ func _on_preset_options_item_selected(index: int) -> void:
 ## Load and update the custom preset, then save its changes
 func update_custom() -> void:
 	var customPreset = load("res://Resources/PlayerPresets/Custom.tres");
+	customPreset.health = playerHealth;
 	customPreset.groundSpeed = playerSpeed;
 	customPreset.jumpHeight = playerJumpHeight;
 	customPreset.airControl = playerAirControl;
@@ -142,6 +147,8 @@ func update_flying_preview() -> void:
 ## Update all sliders according to the values
 func update_sliders() -> void:
 	# Player stats
+	playerHealthSlider.value = playerHealth;
+	playerHealthSlider.update_slider();
 	playerSpeedSlider.value = playerSpeed;
 	playerSpeedSlider.update_slider();
 	playerJumpSlider.value = playerJumpHeight;
@@ -181,6 +188,7 @@ func update_sliders() -> void:
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:
+	playerHealth = playerHealthSlider.value;
 	playerSpeed = playerSpeedSlider.value;
 	playerJumpHeight = playerJumpSlider.value;
 	playerAirControl = playerAirControlSlider.value;

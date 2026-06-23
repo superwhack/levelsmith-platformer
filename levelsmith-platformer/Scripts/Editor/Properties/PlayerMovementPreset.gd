@@ -4,6 +4,7 @@ extends Resource
 class_name PlayerMovementPreset
 
 # Variables for player movement stats
+@export var health : int;
 @export var groundSpeed : float;
 @export var jumpHeight : float;
 @export var airControl : float;

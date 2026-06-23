@@ -4,10 +4,8 @@ extends Enemy;
 # Movement speed of the enemy.
 @export var speed: float = 1.0;
 
-# First movement point, spawn position.
+# Movement points, from the spawn position to the preset offset.
 var pointA: Vector2;
-
-# Second movement point calculated from the preset offset.
 var pointB: Vector2;
 
 # Current destination point.
@@ -18,22 +16,26 @@ var obstacleCooldown: float = 0.0;
 
 # Delay between obstacle-triggered reversals.
 const OBSTACLE_COOLDOWN_DURATION: float = 0.25;
+const SPEED_MODIFIER : float = 100.0;
 
 @export var previewLine: Line2D;
 
-## Initializes patrol points when the enemy is created.
+## Adds enemy to group and sets up initial points
 func _ready() -> void:
 	super._ready();
 
+	# Set all points to its current position
 	pointA = global_position;
 	pointB = pointA;
-	targetPoint = pointB;
+	targetPoint = pointA;
 
 
 ## Processes flying movement and collision handling.
+## delta: Time since previous frame.
 func _physics_process(delta: float) -> void:
-	if obstacleCooldown > 0.0:
+	if (obstacleCooldown > 0.0):
 		obstacleCooldown -= delta;
+
 	fly_behavior();
 	move_and_slide();
 	handle_obstacles();
@@ -41,14 +43,18 @@ func _physics_process(delta: float) -> void:
 
 ## Moves the enemy toward current destination.
 func fly_behavior() -> void:
-	var direction := targetPoint - global_position;
-	var move_distance := speed * 100 * get_physics_process_delta_time();
-	if direction.length() <= move_distance:
+	# Get the direction and distance of movement
+	var direction : Vector2 = targetPoint - global_position;
+	var move_distance : float = speed * SPEED_MODIFIER * get_physics_process_delta_time();
+
+	# If the enemy is close enough to the point, change direction
+	if (direction.length() <= move_distance):
 		global_position = targetPoint;
 		velocity = Vector2.ZERO;
 		switch_target();
 		return;
-	velocity = direction.normalized() * speed * 100;
+
+	velocity = direction.normalized() * speed * SPEED_MODIFIER;
 
 
 ## Switches the active destination.
@@ -61,9 +67,11 @@ func switch_target() -> void:
 
 ## Reverses direction if the enemy collides with terrain.
 func handle_obstacles() -> void:
+	# Early return if the cooldown is not done
 	if obstacleCooldown > 0.0:
 		return;
-
+	
+	# Otherwise, reverse the direction based on the colliding object
 	for k in range(get_slide_collision_count()):
 		var collision: KinematicCollision2D = get_slide_collision(k);
 

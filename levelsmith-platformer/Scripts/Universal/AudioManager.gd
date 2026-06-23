@@ -139,7 +139,7 @@ func play_asset(assetName: String) -> void:
 
 ## If there are any current sounds in the queue and any avaliable players, start playing the sound.
 ## delta: unused
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if (Input.is_action_just_pressed("muteTemporary")):
 		if (masterVolume == 0):
 			masterVolume = .7;

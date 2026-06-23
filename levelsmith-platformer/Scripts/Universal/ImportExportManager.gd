@@ -92,10 +92,10 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	clone_data("user://Assets/", levelAssetPath);
 
 ## Validates a level import at a given directory
-## name: Source level name
+## sourceName: Source level name
 ## returns: false if it fails, true otherwise
-func validate_import(name: String) -> bool:
-	levelPath = "user://Levels/" + name + "/";
+func validate_import(sourceName: String) -> bool:
+	levelPath = "user://Levels/" + sourceName + "/";
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
 	if !DirAccess.dir_exists_absolute(levelPath):
@@ -111,9 +111,8 @@ func validate_import(name: String) -> bool:
 
 ## Imports a level at the specified directory.
 ## tileMap: The Tile map layer to map the level terrain to
-## playerData: The player's stats being imported
 ## returns: if the player exists, true if they do
-func import_level_CSV(tileMap: TileMapLayer, playerData: Panel) -> bool:
+func import_level_CSV(tileMap: TileMapLayer) -> bool:
 	# Read tileData in the form of a CSV file
 	var CSVFile = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.READ);
 	var row = 0;

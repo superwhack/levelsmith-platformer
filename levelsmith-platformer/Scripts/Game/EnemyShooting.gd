@@ -9,11 +9,14 @@ var shotSpeed : float;
 var fireRate : float;
 var projBounce : bool;
 
+# Gravity toggle
 var gravityOn : bool;
 
+# Direction arrow sprite
 @export var directionArrow : Sprite2D;
 
-const projectile = preload("res://Scenes/Entities/Projectile.tscn");
+# Projectile scene for instantiating
+const PROJECTILE = preload("res://Scenes/Entities/Projectile.tscn");
 
 var timeLeft : float = 1;
 
@@ -22,7 +25,9 @@ func _physics_process(delta: float) -> void:
 		super._physics_process(delta);
 		move_and_slide();
 	directionArrow.hide();
+	# Decrease time left
 	timeLeft -= delta;
+	# If cooldown is finished, shoot
 	if (timeLeft <= 0.0):
 		shooting_behavior();
 		timeLeft = 1 / fireRate;
@@ -38,7 +43,7 @@ func adjust_arrow(angle: float) -> void:
 
 ## Shoots in the determined direction
 func shooting_behavior() -> void:
-	var projectileFired = projectile.instantiate();
+	var projectileFired = PROJECTILE.instantiate();
 	projectileFired.speed = shotSpeed;
 	projectileFired.global_position = position;
 	projectileFired.global_rotation_degrees = direction;

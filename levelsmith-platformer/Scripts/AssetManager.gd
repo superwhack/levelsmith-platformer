@@ -15,9 +15,11 @@ var audioToReplace: AudioStream;
 @export var mainTileMap: TileMapLayer;
 @export var previewTileSet: TileMapLayer;
 
+# References to preview and file dialog
 @export var imagePreview: TextureRect;
 @export var imageSelect: FileDialog;
 
+# References to different elements of the menu
 @export var imagesTab: VBoxContainer;
 @export var animationsTab: VBoxContainer;
 @export var currentAssetLabel: Label;
@@ -26,12 +28,16 @@ var audioToReplace: AudioStream;
 @export var loadFileButton: Button;
 @export var resetButton: Button;
 
+# Reference to the editor manager
 @export var editorManager: Node2D;
 
+# Keep track of the first selected item
 var firstSelected: AssetItem = null;
 
+# Reference to the asset button scene for instantiating
 const ASSET_BUTTON = preload("res://Scenes/UI/AssetItem.tscn");
 
+# Reference to the Missing texture in case the default textures are removed
 const MISSING_TEXTURE := "res://Assets/Defaults/Assets/Sprites/Missing.png";
 
 # All types of tiles
@@ -43,12 +49,12 @@ var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyShooting", 
 # All types of props
 var propTypes: Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
 
-#All animations
+# All animations
 var animations: Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
+	# Connect signals
 	loadFileButton.pressed.connect(open_image_selector);
 	resetButton.pressed.connect(reset_image);
 	imageSelect.file_selected.connect(replace_image);
@@ -275,7 +281,7 @@ func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
 	# Set a reference to the source in the tile set
 	var source = tileSet.get_source(sourceID) as TileSetAtlasSource;
 	# If the source is found, set the texture to the image
-	if source:
+	if (source):
 		source.texture = newTexture;
 		# NOTE: TEMPORARY FIX PT 2
 		for frame in range(0, 5):
@@ -369,7 +375,7 @@ func create_file_tree() -> void:
 func open_image_selector() -> void:
 	imageSelect.title = "Replace " + imageNameToReplace;
 	imageSelect.popup_file_dialog();
-	
+
 ## Creates a new missing texture for use when a texture is... missing.
 func get_missing_image() -> Image:
 	var image := Image.new();

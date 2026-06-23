@@ -66,4 +66,5 @@ enum EntityType {
 	PROP6 = 18
 }
 
+const BEDROCK_TILE: int = 98;
 const ERASING_TILE: int = 99;

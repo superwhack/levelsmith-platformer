@@ -23,6 +23,10 @@ func place_tile(clickPosition: Vector2) -> void:
 	
 	var clickedTileId = tileSet.get_cell_source_id(clickPosition);
 	
+	# bedrock
+	if clickedTileId == Global.BEDROCK_TILE:
+		return;
+	
 	# If the cell is already of the same type, or if the cell is occupied by an entity, don't overwrite
 	if ((clickedTileId != Global.TileType.SLOPE && clickedTileId == brushObject) 
 	|| clickedTileId >= editorManager.tileCount): 
@@ -37,6 +41,8 @@ func place_tile(clickPosition: Vector2) -> void:
 ## clickPosition: Where the mouse is during the click.
 func delete_tile (clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
+	if tileSet.get_cell_source_id(clickPosition) == Global.BEDROCK_TILE:
+		return;
 	if (toolManager.currentTool == Global.Tool.CURSOR 
 	|| tileSet.get_cell_source_id(clickPosition) >= editorManager.tileCount 
 	|| editorManager.check_out_of_bounds(clickPosition)):

@@ -167,7 +167,7 @@ func detect_projectile_bounce(area: Area2D) -> void:
 			bounce();
 		else:
 			take_damage(1);
-			area.queue_free();
+		area.queue_free();
 
 ## Detect collisions between enemies and the bounce area
 ## body: the body being collided with

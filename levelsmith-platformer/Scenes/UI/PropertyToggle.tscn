@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d2vwie50ncny6"]
 
-[ext_resource type="Script" path="res://Scripts/Editor/Properties/PropertyToggle.gd" id="1_adaxu"]
+[ext_resource type="Script" uid="uid://cgpg23yvvg60m" path="res://Scripts/Editor/Properties/PropertyToggle.gd" id="1_adaxu"]
 
 [node name="PropertySlider" type="VBoxContainer" unique_id=305056832 node_paths=PackedStringArray("nameLabel", "checkBox")]
 size_flags_horizontal = 4
@@ -17,5 +17,3 @@ layout_mode = 2
 [node name="Name" type="Label" parent="HBoxContainer" unique_id=671881686]
 layout_mode = 2
 text = "Name"
-
-[connection signal="pressed" from="HBoxContainer/CheckBox" to="." method="_box_clicked"]

@@ -58,6 +58,7 @@ func _ready() -> void:
 	loadFileButton.pressed.connect(open_image_selector);
 	resetButton.pressed.connect(reset_image);
 	imageSelect.file_selected.connect(replace_image);
+	Global.levelCreated.connect(refresh_assets);
 	
 	# Checks if the user has an assets root folder, creates one if not
 	var dir = DirAccess.open(filePath);

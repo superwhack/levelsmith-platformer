@@ -16,6 +16,11 @@ var goalCount : int = 0;
 var movingResource : Resource;
 
 ## Runs every frame during the editor state
+func _ready() -> void:
+	var clearGoalCount = func () -> void:
+		goalCount = 0;
+	Global.levelCreated.connect(clearGoalCount);
+
 func _process(_delta: float) -> void:
 	editorManager.goalExists = goalCount > 0;
 	brushObject = toolManager.brushObject;
@@ -114,24 +119,20 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 	return null;
 
 ## Moves the entity at the clicked position
-func move_entity() -> void:
-	var mousePosition : Vector2 = editorManager.currentMousePosition;
-	
+func move_entity(previousClickPos: Vector2) -> void:
 	propertyMenu.close();
 	# Await is needed to it has time to update selectedTile
-	toolManager.prevPosition = mousePosition;
+	toolManager.prevPosition = previousClickPos;
 	toolManager.prevEntity = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;
 	
 	await get_tree().process_frame;
-	
-	toolManager.brushObject = tileMap.get_cell_source_id(mousePosition);
-	toolManager.currentObjectRotation = tileMap.get_cell_alternative_tile(mousePosition);
-	if get_scene_at_cell(mousePosition) is Enemy:
-		movingResource = get_scene_at_cell(mousePosition).propertyFile;
-	delete_entity(mousePosition);
-	toolManager.isMoving = true;
-	
+	toolManager.brushObject = tileMap.get_cell_source_id(previousClickPos);
+	toolManager.currentObjectRotation = tileMap.get_cell_alternative_tile(previousClickPos);
+	if get_scene_at_cell(previousClickPos) is Enemy:
+		movingResource = get_scene_at_cell(previousClickPos).propertyFile;
+	delete_entity(previousClickPos);
+
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
 	var dropPosition : Vector2;
@@ -150,10 +151,9 @@ func drop_entity() -> void:
 	toolManager.prevEntity = -1;
 	toolManager.prevPosition = Vector2(0,0);
 	toolManager.currentObjectRotation = toolManager.prevRotation;
-	toolManager.isMoving = false;
 	
 	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);
-	for frame in range(1, 5):
+	while get_scene_at_cell(position) == droppedEntity:
 		await get_tree().process_frame;
 		
 	if droppedEntity is not Enemy || !movingResource: return;

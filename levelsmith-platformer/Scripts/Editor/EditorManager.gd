@@ -38,7 +38,12 @@ var tileCount : int = Global.TileType.size();
 
 ## Runs when the node first enters the tree
 func _ready() -> void:
+	var reset_player_and_goal = func() -> void:
+		playerExists = false;
+		goalExists = false;
+	
 	assetManagerButton.pressed.connect(open_asset_manager);
+	Global.levelCreated.connect(reset_player_and_goal);
 
 ## Runs every frame during the editing state
 ## _delta: how much time has passed since the last frame
@@ -103,6 +108,7 @@ func open_asset_manager() -> void:
 	customCursorManager.invalidSprite.hide();
 	assetManager.show();
 
+## Closes the asset manager
 func close_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;

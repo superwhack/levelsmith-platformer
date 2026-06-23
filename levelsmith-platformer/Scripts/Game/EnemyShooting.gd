@@ -59,6 +59,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;
 	gravityOn = propertyFile.gravity;
+	ResourceSaver.save(propertyFile);
 	adjust_arrow(direction + 90);
 
 func apply_script(file: Resource) -> void:

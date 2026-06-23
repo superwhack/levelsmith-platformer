@@ -180,20 +180,19 @@ func process_player_camera(_delta: float) -> void:
 func process_zoom(zoomAmount: float) -> void:
 	# Mouse world position BEFORE zoom
 	var mouseWorldBefore: Vector2 = get_global_mouse_position();
-
+	
 	var newZoom : float = zoom.x + zoomAmount;
-
+	
 	# Get the minimum zoom to fit the roaming bounds
 	var fitZoom : float = get_min_zoom_to_fit_roam();
-
+	
 	# clamp the zoom to either the roam bound limits (fitZoom) or the maxZoomIn
 	newZoom = clamp(newZoom, fitZoom, maxZoomIn);
-
+	
 	zoom = Vector2.ONE * newZoom;
-
+	
 	if (zoom.x <= 0.3):
 		gridLines.visible = false;
-
 	else:
 		gridLines.visible = true;
 	
@@ -261,10 +260,10 @@ func clamp_camera_to_level() -> void:
 ## roamingBounds: A rect2 of the camera panning limits
 ## Returns a true or false bool.
 func camera_encloses_roam(roamingBounds: Rect2) -> bool:
-
+	
 	if (get_camera_rect().encloses(roamingBounds)):
 		return true;
-
+	
 	return false;
 	
 ## Get a rect of the camera.

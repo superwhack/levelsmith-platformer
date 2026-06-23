@@ -24,8 +24,8 @@ var prevPosition : Vector2;
 var brushObject : int = 0;
 
 # A timer to differentiate between click and holding click
-const HOLD_TIME_CAP : float = .15;
-var holdTimer : float = HOLD_TIME_CAP;
+const positionDifference = .75;
+var previousClickPos : Vector2;
 
 # If the user starts a click on a UI element.
 var clickOnUI : bool = false;
@@ -38,16 +38,15 @@ var isMoving : bool;
 
 ## A frame-by-frame process
 ## delta: time since previous frame
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Return early if clicking on UI as there is nothing to process
 	if (clickOnUI):
 		return;
-	
-	if (Input.is_action_pressed("left-click")):
-		holdTimer -= delta;
+	if (Input.is_action_just_pressed("left-click")):
+		previousClickPos = editorManager.currentMousePosition;
 	elif (Input.is_action_just_released("left-click")):
-		holdTimer = HOLD_TIME_CAP;
-	
+		previousClickPos = Vector2(0, 0);
+		isMoving = false;
 	
 	if (boxBrushState == Global.BoxBrushState.PLACE || boxBrushState == Global.BoxBrushState.DELETE):
 		secondBoxCorner = editorManager.currentMousePosition;
@@ -120,9 +119,13 @@ func _unhandled_input(event: InputEvent) -> void:
 						boxBrushState = Global.BoxBrushState.DELETE_CONFIRM;
 				
 		Global.Tool.CURSOR:
+			if (previousClickPos != Vector2(0,0) && !isMoving):
+				# If the cursor moves a certain distance away from the last click, start moving
+				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > positionDifference;
+				
 			if (event.is_action_released("left-click") && prevEntity == -1):
 				# If the clicked cell is an entity and the click was short, edit its properties
-				if (entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL && holdTimer > -.5):
+				if (entityManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL && !isMoving):
 					entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:
@@ -131,13 +134,13 @@ func _unhandled_input(event: InputEvent) -> void:
 				entityManager.delete_entity(editorManager.currentMousePosition);
 			
 			# If left click is being held, pick up the current tile unless it's empty air.
-			if (holdTimer < 0 && prevEntity == -1 && entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) != -1) && entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount:
-				entityManager.move_entity();
+			if (isMoving && prevEntity == -1 && entityManager.tileSet.get_cell_source_id(previousClickPos) != -1) && entityManager.tileSet.get_cell_source_id(previousClickPos) >= editorManager.tileCount:
+				entityManager.move_entity(previousClickPos);
 			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
-			elif (holdTimer < 0 && prevEntity == -1):
+			elif (isMoving && prevEntity == -1):
 				prevEntity = -2;
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
-			elif (holdTimer == HOLD_TIME_CAP && prevEntity != -1):
+			elif (!isMoving && prevEntity != -1):
 				entityManager.drop_entity();
 
 ## Change the currently selected tile/entity if possible

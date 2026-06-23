@@ -27,7 +27,7 @@ var playerCoyoteTime : float;
 
 # Patrolling inputs
 @export var patrollingSpeedSlider: VBoxContainer;
-@export var patrollingDirectionCheckbox: VBoxContainer;
+@export var patrollingDirectionDropdown: VBoxContainer;
 @export var patrollingRestrictedCheckbox: VBoxContainer;
 
 # Flying inputs
@@ -52,9 +52,34 @@ var selectedPlayerPreset: Resource;
 # Direction arrow for shooting and patrolling enemies
 var shootingDirectionArrow: Sprite2D;
 
+@export var closeButton: Button;
+
 ## When this starts, select the default option
 func _ready() -> void:
 	_on_preset_options_item_selected(0);
+	
+	playerSpeedSlider.drag_ended.connect(_on_drag_ended);
+	playerJumpSlider.drag_ended.connect(_on_drag_ended);
+	playerAirControlSlider.drag_ended.connect(_on_drag_ended);
+	playerFallSpeedSlider.drag_ended.connect(_on_drag_ended);
+	playerCoyoteTimeSlider.drag_ended.connect(_on_drag_ended);
+	presetOptions.item_selected.connect(_on_preset_options_item_selected);
+	
+	patrollingSpeedSlider.drag_ended.connect(_on_drag_ended);
+	patrollingDirectionDropdown.dropdown_changed.connect(update_values);
+	patrollingRestrictedCheckbox.check_changed.connect(update_values);
+	
+	shootingDirectionSlider.drag_ended.connect(_on_drag_ended);
+	shootingShotSpeedSlider.drag_ended.connect(_on_drag_ended);
+	shootingFireRateSlider.drag_ended.connect(_on_drag_ended);
+	shootingProjectileBounce.check_changed.connect(update_values);
+	shootingGravity.check_changed.connect(update_values);
+	
+	flyingSpeedSlider.drag_ended.connect(_on_drag_ended);
+	flyingOffsetXSlider.drag_ended.connect(_on_drag_ended);
+	flyingOffsetYSlider.drag_ended.connect(_on_drag_ended);
+	
+	closeButton.pressed.connect(close);
 
 ## Close the property menu and set the selected entity to null
 func close() -> void:
@@ -71,7 +96,7 @@ func _process(_delta: float) -> void:
 	if (selectedEntity != null):
 		if selectedEntity is EnemyPatrol:
 			entityName.text = "Patrolling Enemy";
-			selectedEntity.adjust_arrow(int(patrollingDirectionCheckbox.value) * 180 + 90);
+			selectedEntity.adjust_arrow(int(patrollingDirectionDropdown.value) * 180 + 90);
 		elif  selectedEntity is EnemyFlyer:
 			entityName.text = "Flying Enemy";
 		elif selectedEntity is EnemyShooting:
@@ -130,10 +155,10 @@ func update_sliders() -> void:
 	# Enemies
 	if selectedEntity is EnemyPatrol:
 		patrollingSpeedSlider.value = selectedPreset.groundSpeed;
-		patrollingDirectionCheckbox.value = selectedPreset.direction;
+		patrollingDirectionDropdown.value = selectedPreset.direction;
 		patrollingRestrictedCheckbox.value = selectedPreset.restricted;
 		patrollingSpeedSlider.update_slider();
-		patrollingDirectionCheckbox.update_dropdown();
+		patrollingDirectionDropdown.update_dropdown();
 		patrollingRestrictedCheckbox.update_checkbox();
 	elif selectedEntity is EnemyFlyer:
 		flyingSpeedSlider.value = selectedPreset.speed;
@@ -164,7 +189,7 @@ func update_values() -> void:
 	
 	if selectedEntity is EnemyPatrol:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
-		selectedPreset.direction = patrollingDirectionCheckbox.value;
+		selectedPreset.direction = patrollingDirectionDropdown.value;
 		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyFlyer:

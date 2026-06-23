@@ -5,6 +5,8 @@ extends CanvasLayer
 # Popup templates
 const ERROR_TEMPLATE : PackedScene = preload("res://Scenes/UI/ErrorPopUpTemplate.tscn");
 
+var currentPopup : Panel;
+
 # Stack of messages (possible future addition if needed, would need to change some behavior)
 #const POP_UP_STACK = [];
 
@@ -16,8 +18,8 @@ func _ready() -> void:
 ## title: Title of error
 ## body: Body content of error
 func create_error_popup(title : String = "Error", body : String = "An error has occurred") -> void:
-	if get_child_count() != 0:
-		get_child(0).set_body_text("\n - " + body) ;
+	if currentPopup != null:
+		currentPopup.set_body_text("\n - " + body) ;
 		return;
 	var newPopUp: Panel = ERROR_TEMPLATE.instantiate();
 	
@@ -26,6 +28,7 @@ func create_error_popup(title : String = "Error", body : String = "An error has 
 	
 	#POP_UP_STACK.append(newPopUp);
 	add_child(newPopUp);
+	currentPopup = newPopUp;
 
 ## Creates an error popup that contains multiple errors
 ## title: Title of error
@@ -47,6 +50,7 @@ func create_multi_error_popup(title : String = "Error", body : Array[String] = [
 	newPopUp.set_body_text(bodyText);
 	
 	add_child(newPopUp);
+	currentPopup = newPopUp;
 
 ## Removes specific popup from popup stack
 ## item: Panel being removed from stack

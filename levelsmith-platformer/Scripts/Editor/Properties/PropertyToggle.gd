@@ -1,14 +1,14 @@
 extends VBoxContainer
 
 # Variables for different parts of the CheckBox
-@export var propertyName: String;
-@export var nameLabel: Label; 
-@export var checkBox: CheckBox;
+@export var propertyName : String;
+@export var nameLabel : Label; 
+@export var checkBox : CheckBox;
 
 signal check_changed;
 
 # Value of the CheckBox
-var value: bool;
+var value : bool;
 
 ## When started, set the text of the name label to the name of the property
 func _ready() -> void:

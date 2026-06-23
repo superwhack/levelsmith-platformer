@@ -1,15 +1,15 @@
 extends TileMapLayer
 
 # Node references
-@export var editorManager: Node2D;
-@export var toolManager: Node2D;
-@export var tileSet: TileMapLayer;
+@export var editorManager : Node2D;
+@export var toolManager : Node2D;
+@export var tileMap : TileMapLayer;
 
 # Current brushing object (pulled from tool manager)
-var brushObject: int;
+var brushObject : int;
 
-var currentMousePosition: Vector2;
-var prevMousePosition: Vector2;
+var currentMousePosition : Vector2;
+var prevMousePosition : Vector2;
 
 ## Runs every frame during the editing state.
 ## _delta: how much time has passed since the previous frame
@@ -19,11 +19,10 @@ func _process(_delta: float) -> void:
 	
 	match (toolManager.currentTool):
 		Global.Tool.BOX_BRUSH:
-			match (toolManager.boxBrushState):
-				Global.BoxBrushState.INACTIVE:
-					update_preview_object(currentMousePosition, prevMousePosition, brushObject, !editorManager.isPlaceable);
-				_: 
-					update_box_preview(toolManager.firstBoxCorner, toolManager.secondBoxCorner);
+			if (toolManager.boxBrushState == Global.BoxBrushState.INACTIVE):
+				update_preview_object(currentMousePosition, prevMousePosition, brushObject, !editorManager.isPlaceable);
+			else:
+				update_box_preview(toolManager.firstBoxCorner, toolManager.secondBoxCorner);
 		_:
 			update_preview_object(currentMousePosition, prevMousePosition, brushObject, !editorManager.isPlaceable);
 	
@@ -43,7 +42,7 @@ func update_preview_object(mousePosition: Vector2, prevPosition: Vector2, previe
 		# IDs for red alternatives are 4 for top right, 6 for top left and 7 for lower right
 		# based on the respective rotation values of 12288, 20480 and 24576.
 		# TODO: Rework object rotation and have a much easier conversion method.
-		var alternativeId = int(isRed) + toolManager.currentObjectRotation / 4096 if isRed else toolManager.currentObjectRotation;
+		var alternativeId : int = int(isRed) + toolManager.currentObjectRotation / 4096 if isRed else toolManager.currentObjectRotation;
 		set_cell(mousePosition, previewObject, Vector2i.ZERO, alternativeId);
 	elif (previewObject >= editorManager.tileCount):
 		set_cell(mousePosition, previewObject, Vector2i.ZERO, 2);
@@ -62,18 +61,20 @@ func update_preview_object(mousePosition: Vector2, prevPosition: Vector2, previe
 ## secondCorner: The opposite corner to use for the box.
 func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
 	# Find the coordinate of the top left corner of the box.
-	var topLeft: Vector2 = Vector2(
+	var topLeft : Vector2 = Vector2(
 		min(firstCorner.x, secondCorner.x), 
 		min(firstCorner.y, secondCorner.y));
 	
 	clear();
 	for i in abs(secondCorner.y - firstCorner.y) + 1:
 		for j in abs(secondCorner.x - firstCorner.x) + 1:
+			var currentCell : Vector2 = topLeft + Vector2(j, i);
+			#Skip entities
+			if (tileMap.get_cell_source_id(currentCell) >= editorManager.tileCount): continue;
+			
 			# Will appear red when deleting tiles and use standard colors otherwise.
-			var currentCell: Vector2 = topLeft + Vector2(j, i)
-			if (tileSet.get_cell_source_id(currentCell) < editorManager.tileCount):
-				if (toolManager.boxBrushState == Global.BoxBrushState.DELETE || 
-				toolManager.boxBrushState == Global.BoxBrushState.DELETE_CONFIRM):
-					update_preview_object(currentCell, currentCell, Global.ERASING_TILE, true);
-				else: 
-					update_preview_object(currentCell, currentCell, brushObject, editorManager.check_out_of_bounds(currentCell));
+			if (toolManager.boxBrushState == Global.BoxBrushState.DELETE || 
+			toolManager.boxBrushState == Global.BoxBrushState.DELETE_CONFIRM):
+				update_preview_object(currentCell, currentCell, Global.ERASING_TILE, true);
+			else: 
+				update_preview_object(currentCell, currentCell, brushObject, editorManager.check_out_of_bounds(currentCell));

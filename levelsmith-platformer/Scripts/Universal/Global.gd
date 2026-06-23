@@ -7,7 +7,7 @@ signal complete;
 signal levelCreated;
 
 # Tile size
-const tileSize: int = 128;
+const TILE_SIZE : int = 128;
 
 # Application State
 enum State {

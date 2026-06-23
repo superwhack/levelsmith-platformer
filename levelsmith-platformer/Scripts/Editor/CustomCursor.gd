@@ -37,15 +37,18 @@ var isEditing: bool;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Instantiate and hide the invalid sprite
 	invalidSprite = Sprite2D.new();
 	invalidSprite.texture = invalidIcon;
 	add_child(invalidSprite);
 	invalidSprite.hide();
 	
+	# Instantiates the selector frame
 	selectorFrame = Sprite2D.new();
 	selectorFrame.texture = selectorFrameSprite;
 	add_child(selectorFrame);
 	
+	# Set the custom mouse cursor
 	Input.set_custom_mouse_cursor(cursorIcon);
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -54,13 +57,15 @@ func _process(_delta: float) -> void:
 	if (masterManager.state != Global.State.EDIT):
 		Input.set_custom_mouse_cursor(cursorIcon);
 		return;
+	# Set the current mouse position and place the selector frame and invalid sprite to the correct locations
 	currentMousePosition = editorManager.currentMousePosition;
 	selectorFrame.global_position = currentMousePosition * Global.tileSize + Vector2(Global.tileSize / 2.0, Global.tileSize / 2.0);
 	invalidSprite.global_position = get_global_mouse_position();
 	
 	isEditing = toolManager.currentTool == Global.Tool.CURSOR && editorManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount;
 	
-	update_selector_state();	
+	update_selector_state();
+	# Set the color of the selector frame based on the current action
 	match (selectorState):
 		SelectorState.DEFAULT:
 			selectorFrame.modulate = Color(1, 1, 1);

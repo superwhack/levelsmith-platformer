@@ -1,14 +1,14 @@
 extends Node
 
 ## References to other nodes
-@export var editorManager: Node2D
-@export var toolManager: Node2D
-@export var entityManager: Node2D;
-@export var tileSwitch: BoxContainer;
+@export var editorManager : Node2D
+@export var toolManager : Node2D
+@export var entityManager : Node2D;
+@export var tileSwitch : BoxContainer;
 
 ## Handles keyboard inputs.
 ## event: The input event to parse.
-func _unhandled_key_input(event: InputEvent) -> void:
+func _unhandled_key_input(event : InputEvent) -> void:
 	if event.is_action_pressed("rotate"):
 		toolManager.rotate_object();
 	

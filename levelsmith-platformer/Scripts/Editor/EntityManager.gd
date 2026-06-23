@@ -35,7 +35,7 @@ func place_entity(clickPosition: Vector2) -> void:
 	&& clickedTileId >= 0)): 
 		return;
 	
-	if toolManager.brushObject >= Global.EntityType.PROP1 && (clickedTileId <= Global.EntityType.PROP1 && clickedTileId >= Global.EntityType.GOAL):
+	if toolManager.brushObject >= Global.EntityType.PROP1 && (clickedTileId < Global.EntityType.PROP1 && clickedTileId >= Global.EntityType.GOAL):
 		return;
 	
 	if (clickedTileId >= Global.EntityType.PATROLLING && clickedTileId <= Global.EntityType.STATIONARY) || clickedTileId == Global.EntityType.GOAL:
@@ -73,7 +73,7 @@ func place_entity(clickPosition: Vector2) -> void:
 				newEntity = defaultPatrolling.duplicate(true);
 				get_scene_at_cell(clickPosition).adjust_arrow(90);
 				get_scene_at_cell(clickPosition).directionArrow.scale = Vector2(1, 1);
-				file = "res://Resources/Enemies/Patrol" + str(time) + ".tres";
+				file = "res://Resources/Enemies/Patrolling" + str(time) + ".tres";
 			elif (saveBrush == Global.EntityType.SHOOTING):
 				var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 				newEntity = defaultShooting.duplicate(true);
@@ -86,8 +86,6 @@ func place_entity(clickPosition: Vector2) -> void:
 				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
 			ResourceSaver.save(newEntity, file);
 			get_scene_at_cell(clickPosition).assign_script(str(time), clickPosition);
-			get_scene_at_cell(clickPosition).propertyFile.position = clickPosition;
-			ResourceSaver.save(get_scene_at_cell(clickPosition).propertyFile);
 			editorManager.reset_enemy_positions();
 		else:
 			tileSet.set_cell(clickPosition, toolManager.brushObject, Vector2i.ZERO, 1);
@@ -135,19 +133,18 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 	return null;
 
 ## Moves the entity at the clicked position
-func move_entity() -> void:
+func move_entity(previousClickPos: Vector2) -> void:
 	propertyMenu.close();
 	# Await is needed to it has time to update selectedTile
-	toolManager.prevPosition = editorManager.currentMousePosition;
+	toolManager.prevPosition = previousClickPos;
 	toolManager.prevEntity = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;
 	await get_tree().process_frame;
-	toolManager.brushObject = tileSet.get_cell_source_id(editorManager.currentMousePosition);
-	toolManager.currentObjectRotation = tileSet.get_cell_alternative_tile(editorManager.currentMousePosition);
-	if get_scene_at_cell(editorManager.currentMousePosition) is Enemy:
-		movingResource = get_scene_at_cell(editorManager.currentMousePosition).propertyFile;
-	delete_entity(editorManager.currentMousePosition);
-	toolManager.isMoving = true;
+	toolManager.brushObject = tileSet.get_cell_source_id(previousClickPos);
+	toolManager.currentObjectRotation = tileSet.get_cell_alternative_tile(previousClickPos);
+	if get_scene_at_cell(previousClickPos) is Enemy:
+		movingResource = get_scene_at_cell(previousClickPos).propertyFile;
+	delete_entity(previousClickPos);
 	
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
@@ -165,9 +162,9 @@ func drop_entity() -> void:
 	toolManager.prevEntity = -1;
 	toolManager.prevPosition = Vector2(0,0);
 	toolManager.currentObjectRotation = toolManager.prevRotation;
-	toolManager.isMoving = false;
 	
-	for frame in range(1, 5):
+	var curScene = get_scene_at_cell(position)
+	while get_scene_at_cell(position) == curScene:
 		await get_tree().process_frame;
 		
 	if get_scene_at_cell(position) is Enemy && movingResource:

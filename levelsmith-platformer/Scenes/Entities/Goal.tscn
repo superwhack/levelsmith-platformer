@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://1wme1ton08gv"]
 
-[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Defaults/Assets/Sprites/Entities/Goal.png" id="1_7hjqj"]
+[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="1_7hjqj"]
 
 [sub_resource type="GDScript" id="GDScript_yhd88"]
 resource_name = "Goal"

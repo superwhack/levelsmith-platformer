@@ -103,6 +103,7 @@ func open_asset_manager() -> void:
 	customCursorManager.invalidSprite.hide();
 	assetManager.show();
 
+## Closes the asset manager
 func close_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;

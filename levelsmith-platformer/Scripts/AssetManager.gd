@@ -15,9 +15,11 @@ var audioToReplace: AudioStream;
 @export var mainTileMap: TileMapLayer;
 @export var previewTileSet: TileMapLayer;
 
+# References to preview and file dialog
 @export var imagePreview: TextureRect;
 @export var imageSelect: FileDialog;
 
+# References to different elements of the menu
 @export var imagesTab: VBoxContainer;
 @export var animationsTab: VBoxContainer;
 @export var currentAssetLabel: Label;
@@ -26,12 +28,16 @@ var audioToReplace: AudioStream;
 @export var loadFileButton: Button;
 @export var resetButton: Button;
 
+# Reference to the editor manager
 @export var editorManager: Node2D;
 
+# Keep track of the first selected item
 var firstSelected: AssetItem = null;
 
+# Reference to the asset button scene for instantiating
 const ASSET_BUTTON = preload("res://Scenes/UI/AssetItem.tscn");
 
+# Reference to the Missing texture in case the default textures are removed
 const MISSING_TEXTURE := "res://Assets/Defaults/Assets/Sprites/Missing.png";
 
 # All types of tiles
@@ -43,12 +49,12 @@ var entityTypes: Array[String] = ["Player", "EnemyStationary", "EnemyShooting", 
 # All types of props
 var propTypes: Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
 
-#All animations
+# All animations
 var animations: Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
+	# Connect signals
 	loadFileButton.pressed.connect(open_image_selector);
 	resetButton.pressed.connect(reset_image);
 	imageSelect.file_selected.connect(replace_image);
@@ -152,15 +158,22 @@ func find_image_in_folder(folderPath: String) -> Image:
 
 # WARNING Get Sten/Bee's input on if it should only be 128x128 or resize
 func validate_image(image: Image) -> bool:
+	# If there is no valid image, return false
 	if (!image): return false;
 	var imageWidth = image.get_width();
 	var imageHeight = image.get_height();
+	# If the width and height are not 128, resize it to be
 	if (imageWidth != 128 || imageHeight != 128):
 		image.resize(128, 128, Image.INTERPOLATE_LANCZOS);
 	return true;
 
+## Retrieve the frames for an animation from a given folder path
+## folderName: Name of the folder to check
+## Returns: Array of all frames for animation
 func get_animation_from_folder(folderName: String) -> Array[Image]:
+	# Get the path to the folder
 	var pathToFolder: String = find_directory_by_name(folderName);
+	# If the path is found, retrieve all files and add to array
 	if (pathToFolder):
 		var dir = DirAccess.open(pathToFolder);
 		var allImageNames = dir.get_files();
@@ -192,11 +205,14 @@ func file_count_in_folder(folderName: String) -> int:
 		PopUpManager.create_error_popup("Folder not found", "Could not find folder with name " + folderName + ".")
 	return -1;
 
+## Refresh all assets in game
 func refresh_assets() -> void:
+	# Change all tiles to their textures
 	for i in range(tileTypes.size()):
 		var tileImage: Image = find_image_in_folder(find_directory_by_name(tileTypes[i]));
 		var defaultTileImage: Image = find_image(tileTypes[i] + ".png", "res://Assets/Defaults");
 		change_tile_texture(i, tileImage if tileImage else defaultTileImage, mainTileMap);
+	# Change all props to their textures
 	for i in range(propTypes.size()):
 		var propImage: Image = find_image_in_folder(find_directory_by_name(propTypes[i]));
 		var defaultPropImage: Image = find_image(propTypes[i] + ".png", "res://Assets/Defaults");
@@ -221,6 +237,7 @@ func clear_image() -> DirAccess:
 func replace_image(newImagePath: String) -> void:
 	var targetFilePath: String = find_directory_by_name(imageNameToReplace);
 	var targetDirectory: DirAccess = clear_image();
+	# If the image is a png, create a copy
 	if (newImagePath.get_extension().to_lower() == "png"):
 		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
 	else:
@@ -248,6 +265,8 @@ func reset_audio(audioName: String) -> void:
 func return_all_to_default(categoryName: String) -> void:
 	pass;
 
+## Signal that is emitted when an asset in the menu is selected
+## selectedItem: The item that is selected, defaults to the firstSelected
 func item_selected(selectedItem: AssetItem = firstSelected) -> void:
 	imageNameToReplace = selectedItem.assetName;
 	imageToReplace = find_image_in_folder(find_directory_by_name(imageNameToReplace));
@@ -275,7 +294,7 @@ func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
 	# Set a reference to the source in the tile set
 	var source = tileSet.get_source(sourceID) as TileSetAtlasSource;
 	# If the source is found, set the texture to the image
-	if source:
+	if (source):
 		source.texture = newTexture;
 		# NOTE: TEMPORARY FIX PT 2
 		for frame in range(0, 5):
@@ -369,7 +388,7 @@ func create_file_tree() -> void:
 func open_image_selector() -> void:
 	imageSelect.title = "Replace " + imageNameToReplace;
 	imageSelect.popup_file_dialog();
-	
+
 ## Creates a new missing texture for use when a texture is... missing.
 func get_missing_image() -> Image:
 	var image := Image.new();

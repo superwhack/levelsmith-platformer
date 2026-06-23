@@ -102,15 +102,17 @@ func run() -> void:
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;
-	# NOTE: I'd love to get this to work nicer since right now moving can feel a little jagged.
+	# Acceleration
 	else:
 		if (currentFriction != 1.0):
 			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 		else:
 			accelerationX = -velocity.x;
-	# Friction and air control
+	# Air Control
 	if (not is_on_floor()):
 		accelerationX *= airControl * airControl;
+
+	# Friction while on ice
 	if (currentFriction != 1.0):
 		accelerationX *= currentFriction * currentFriction * currentFriction;
 		if (abs(velocity.x) > trueSpeed * iceSpeedCap):
@@ -119,6 +121,8 @@ func run() -> void:
 		elif (abs(velocity.x) > trueSpeed):
 			if (velocity.x < 0 && accelerationX < 0) || (velocity.x > 0 && accelerationX > 0):
 				accelerationX *= .1;
+	
+	# Velocity gets capped so you can't accelerate faster
 	elif (abs(velocity.x) > trueSpeed && currentFriction == 1.0):
 		accelerationX = 0;
 		velocity.x *= .9;
@@ -139,13 +143,15 @@ func die() -> void:
 	Global.death.emit();
 
 ## Use raycast to detect enemy collision
-# Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
+## body: the area being collided with
 func detect_enemies(body: Node2D) -> void:
+	# Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
 	await get_tree().process_frame;
 	if (body && body.is_in_group("enemy")):
 		take_damage(1);
 
 ## Detect collisions with projectiles
+## area: the area being collided with
 func detect_projectiles(area: Area2D) -> void:
 	# Wait one frame to see if the projectile has been bounced on
 	await get_tree().process_frame;
@@ -154,13 +160,17 @@ func detect_projectiles(area: Area2D) -> void:
 		area.queue_free();
 
 ## Detect collisions between projectiles and the bounce area
+## area: the area being collided with
 func detect_projectile_bounce(area: Area2D) -> void:
 	if (area.is_in_group("Projectile")):
 		if area.bounceable:
 			bounce();
-			area.queue_free();
+		else:
+			take_damage(1);
+		area.queue_free();
 
 ## Detect collisions between enemies and the bounce area
+## body: the body being collided with
 func detect_enemy_bounce(body: Node2D) -> void:
 	if (body.is_in_group("enemy")):
 		bounce();
@@ -191,6 +201,7 @@ func detect_tiles() -> void:
 			# Use the global coord to find tile collision
 			var tilePos = collider.local_to_map(position + slideCollisions[i].target_position * 1.1);
 			var tileData = collider.get_cell_tile_data(tilePos);
+			
 			# Bounce tile collisions
 			if (tileData && (tileData.get_custom_data("name") == "bounce")):
 				# Horizontal Bounces
@@ -207,6 +218,8 @@ func detect_tiles() -> void:
 						velocity.y = 1000 * tileData.get_custom_data("bounce");
 					else:
 						velocity.y = -1000 * tileData.get_custom_data("bounce");
+						
+			# Sticky Tiles
 			if (tileData && (tileData.get_custom_data("name") == "slow")):
 				# Horizontal Stick
 				if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
@@ -227,6 +240,8 @@ func detect_tiles() -> void:
 								position += Vector2(0, 1);
 								slideCollisions[i].force_raycast_update();
 					currentSlowdown = .5;
+					
+			# Hazards and floor collisions (ice and oneway)
 			if (tileData && (tileData.get_custom_data("name") == "hazard" || downwardsRaycasts.has(slideCollisions[i]))):
 				if (tileData.get_custom_data("name") != "bounce"):
 					currentFriction = 1.0;

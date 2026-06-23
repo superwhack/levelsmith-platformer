@@ -21,7 +21,7 @@ func place_tile(clickPosition: Vector2) -> void:
 	
 	# If the cell is already of the same type (excluding slopes), or if the cell is occupied by an entity, don't overwrite
 	if ((clickedTileId != Global.TileType.SLOPE && clickedTileId == brushObject) 
-	|| clickedTileId > editorManager.tileCount || clickedTileId == Global.BEDROCK_TILE): 
+	|| clickedTileId >= editorManager.tileCount || clickedTileId == Global.BEDROCK_TILE): 
 		return;
 	
 	if (brushObject == Global.TileType.SLOPE):

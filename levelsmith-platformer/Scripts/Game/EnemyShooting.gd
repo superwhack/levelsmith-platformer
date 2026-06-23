@@ -50,10 +50,10 @@ func shooting_behavior() -> void:
 	projectileFired.bounceable = projBounce;
 	add_sibling(projectileFired);
 
-func assign_script(id: String, position: Vector2i) -> void:
+func assign_script(id: String, assignPosition: Vector2i) -> void:
 	propertyFile = ResourceLoader.load("res://Resources/Enemies/Shooting" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	name = "Shooting" + id;
-	propertyFile.position = position;
+	propertyFile.position = assignPosition;
 	direction = propertyFile.direction; 
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;

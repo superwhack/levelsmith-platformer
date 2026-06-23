@@ -1,5 +1,6 @@
 extends PanelContainer
 
+# Reference to the game manager node.
 @export var gameManager: Node2D;
 
 ## Runs every frame during the play state

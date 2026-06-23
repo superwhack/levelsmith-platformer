@@ -85,11 +85,11 @@ func handle_obstacles() -> void:
 ## Assigns a resource file to the enemy.
 ## id is the unique identifier of the preset.
 ## position: Tilemap position of the enemy.
-func assign_script(id: String, position: Vector2i) -> void:
+func assign_script(id: String, assignPosition: Vector2i) -> void:
 	propertyFile = ResourceLoader.load("res://Resources/Enemies/Flying" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	
 	name = "Flying" + id;
-	propertyFile.position = position;
+	propertyFile.position = assignPosition;
 	speed = propertyFile.speed;
 	pointA = global_position;
 	pointB = pointA + propertyFile.pointBOffset;

@@ -183,7 +183,7 @@ func _process(_delta: float) -> void:
 			ImportExportManager.clear_enemies_folder();
 			for childNode in editorManager.tileSet.get_children():
 				childNode.free();
-			editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileSet, propertyMenu);
+			editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileSet);
 			editorManager.reset_enemy_positions();
 			await get_tree().process_frame;
 			ImportExportManager.import_JSON(editorManager.tileSet, propertyMenu)

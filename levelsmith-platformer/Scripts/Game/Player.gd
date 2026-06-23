@@ -170,10 +170,10 @@ func die() -> void:
 ## Remove enemies or projectiles when no longer inside of them
 ## body/area: the body or area to remove from the array
 func remove_enemy(body: Node2D):
-	if enemiesInside.find(body) != 1:
+	if enemiesInside.find(body) != -1:
 		enemiesInside.remove_at(enemiesInside.find(body));
 func remove_projectile(area: Area2D):
-	if projectilesInside.find(area) != 1:
+	if projectilesInside.find(area) != -1:
 		projectilesInside.remove_at(projectilesInside.find(area));
 
 ## use raycast to detect enemy collision

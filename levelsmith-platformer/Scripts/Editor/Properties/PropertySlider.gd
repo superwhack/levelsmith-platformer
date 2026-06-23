@@ -1,20 +1,20 @@
 extends VBoxContainer
 
 # Variables for different parts of the slider
-@export var propertyName: String;
-@export var nameLabel: Label; 
-@export var slider: HSlider;
-@export var label: Label;
+@export var propertyName : String;
+@export var nameLabel : Label; 
+@export var slider : HSlider;
+@export var label : Label;
 
-@export var minMax: Vector2;
-@export var sliderStep: float;
-@export var valueAppend: String;
+@export var minMax : Vector2;
+@export var sliderStep : float;
+@export var valueAppend : String;
 
 # Signal to emit when the slider is done being dragged
 signal drag_ended;
 
 # Value of the slider
-var value: float;
+var value : float;
 
 ## When started, set the text of the name label to the name of the property
 func _ready() -> void:
@@ -22,6 +22,7 @@ func _ready() -> void:
 	slider.min_value = snapped(minMax.x, 0.01);
 	slider.max_value = snapped(minMax.y, 0.01);
 	slider.step = sliderStep;
+	slider.drag_ended.connect(_drag_ended);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -37,7 +38,7 @@ func _process(_delta: float) -> void:
 
 ## When drag is finished, emit drag ended signal
 func _drag_ended(_value_changed: bool) -> void:
-	emit_signal("drag_ended");
+	drag_ended.emit();
 
 ## Update the slider value
 func update_slider() -> void:

@@ -13,7 +13,6 @@ var audioToReplace: AudioStream;
 
 # References to both tile maps
 @export var mainTileMap: TileMapLayer;
-@export var previewTileSet: TileMapLayer;
 
 # References to preview and file dialog
 @export var imagePreview: TextureRect;
@@ -58,6 +57,7 @@ func _ready() -> void:
 	loadFileButton.pressed.connect(open_image_selector);
 	resetButton.pressed.connect(reset_image);
 	imageSelect.file_selected.connect(replace_image);
+	Global.levelCreated.connect(refresh_assets);
 	
 	# Checks if the user has an assets root folder, creates one if not
 	var dir = DirAccess.open(filePath);

@@ -18,7 +18,6 @@ var panSpeed: float = 1.0;
 @export var playZoom: float = 0.7;
 
 # Tilemap bound
-@export var tileSet: TileMapLayer;
 @export var gridLines: TileMapLayer;
 var levelBounds: Rect2;
 var roamBounds: Rect2;
@@ -58,7 +57,7 @@ func initialize_camera() -> void:
 
 ## Retrieve the level bounds and the camera roaming bounds.
 func refresh_bounds() -> void:
-	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.tileSize);
+	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.TILE_SIZE);
 	roamBounds = get_camera_bounds();
 
 ## Remove the player reference and restart the search for the player.
@@ -180,20 +179,19 @@ func process_player_camera(_delta: float) -> void:
 func process_zoom(zoomAmount: float) -> void:
 	# Mouse world position BEFORE zoom
 	var mouseWorldBefore: Vector2 = get_global_mouse_position();
-
+	
 	var newZoom : float = zoom.x + zoomAmount;
-
+	
 	# Get the minimum zoom to fit the roaming bounds
 	var fitZoom : float = get_min_zoom_to_fit_roam();
-
+	
 	# clamp the zoom to either the roam bound limits (fitZoom) or the maxZoomIn
 	newZoom = clamp(newZoom, fitZoom, maxZoomIn);
-
+	
 	zoom = Vector2.ONE * newZoom;
-
+	
 	if (zoom.x <= 0.3):
 		gridLines.visible = false;
-
 	else:
 		gridLines.visible = true;
 	
@@ -225,7 +223,7 @@ func process_zoom_input() -> void:
 ## Returns a rect of the limits of where the camera is able to go.
 func get_camera_bounds() -> Rect2:
 	# Convert roam cell count to pixels
-	var roamMargin = roamCellCount * Global.tileSize;
+	var roamMargin = roamCellCount * Global.TILE_SIZE;
 	var roamLimit: Vector2 = Vector2(roamMargin, roamMargin);
 	
 	# Expanded roam space adds the limit to the top and bottoms of the level boundary.
@@ -261,10 +259,10 @@ func clamp_camera_to_level() -> void:
 ## roamingBounds: A rect2 of the camera panning limits
 ## Returns a true or false bool.
 func camera_encloses_roam(roamingBounds: Rect2) -> bool:
-
+	
 	if (get_camera_rect().encloses(roamingBounds)):
 		return true;
-
+	
 	return false;
 	
 ## Get a rect of the camera.

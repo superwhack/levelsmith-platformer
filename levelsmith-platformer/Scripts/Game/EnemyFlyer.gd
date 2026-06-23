@@ -94,6 +94,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	pointA = global_position;
 	pointB = pointA + propertyFile.pointBOffset;
 	targetPoint = pointB;
+	ResourceSaver.save(propertyFile);
 
 	apply_script(propertyFile);
 

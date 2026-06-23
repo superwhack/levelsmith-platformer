@@ -6,6 +6,7 @@ extends TileMapLayer
 ## Called when the grid lines tile map layer is created.
 func _ready() -> void:
 	fill_grid_lines();
+	Global.levelCreated.connect(fill_grid_lines);
 
 ## Fills the grid with grid lines tiles.
 func fill_grid_lines() -> void:

@@ -234,37 +234,28 @@ func clear_enemies_folder() -> void:
 ## Matches the enemy type with the correct data, used when importing data
 ## type: The type of enemy, stored as an Enum.
 func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
+	
+	var capitalType = enemy.type[0].to_upper() + enemy.type.substr(1);
+	var defaultResource: Resource = load("res://Resources/PlayerPresets/" + capitalType + "Default.tres");
+	var newResource: Resource = defaultResource.duplicate(true);
+	
 	match enemy.type:
 		"patrolling":
-			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
-			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
-			newPatrolling.groundSpeed = enemy.stats.speed;
-			newPatrolling.direction = enemy.stats.direction;
-			newPatrolling.restricted = enemy.stats.restricted;
-			var path = "res://Resources/Enemies/Patrol-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres";
-			newPatrolling.take_over_path(path);
-			ResourceSaver.save(newPatrolling, path);
-			locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
-
+			newResource.groundSpeed = enemy.stats.speed;
+			newResource.direction = enemy.stats.direction;
+			newResource.restricted = enemy.stats.restricted;
 		"shooting":
-			var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
-			var newShooting: Resource = defaultShooting.duplicate(true);
-			newShooting.direction = enemy.stats.direction;
-			newShooting.shotSpeed = enemy.stats.shotSpeed;
-			newShooting.fireRate = enemy.stats.fireRate;
-			newShooting.projBounce = enemy.stats.projBounce;
-			newShooting.gravity = enemy.stats.gravity;
-			ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
-			locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
-			
+			newResource.direction = enemy.stats.direction;
+			newResource.shotSpeed = enemy.stats.shotSpeed;
+			newResource.fireRate = enemy.stats.fireRate;
+			newResource.projBounce = enemy.stats.projBounce;
+			newResource.gravity = enemy.stats.gravity;
 		"flying":
-			var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
-			var newFlying: Resource = defaultFlying.duplicate(true);
-			newFlying.speed = enemy.stats.speed;
-			newFlying.pointBOffset.x = enemy.stats.endpoint.x;
-			newFlying.pointBOffset.y = enemy.stats.endpoint.y;
-			ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
-			locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
+			newResource.speed = enemy.stats.speed;
+			newResource.pointBOffset.x = enemy.stats.endpoint.x;
+			newResource.pointBOffset.y = enemy.stats.endpoint.y;
+	ResourceSaver.save(newResource, "res://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
+	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 			
 ## If any enemy data is corrupted, we can repair it by giving it default values.
 func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
@@ -273,7 +264,7 @@ func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
 			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
-			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol-" + nodePos + ".tres");
+			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrolling-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
 		elif node is EnemyShooting && node.propertyFile == null:
 			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);

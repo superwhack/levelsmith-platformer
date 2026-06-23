@@ -1,6 +1,6 @@
 extends Node2D
 
-## Managers and tileset for easy access.
+## Managers and tile maps for easy access.
 @export var editorManager: Node2D;
 @export var toolManager: Node2D;
 @export var tileMap : TileMapLayer;
@@ -21,7 +21,7 @@ func place_tile(clickPosition: Vector2) -> void:
 	
 	# If the cell is already of the same type (excluding slopes), or if the cell is occupied by an entity, don't overwrite
 	if ((clickedTileId != Global.TileType.SLOPE && clickedTileId == brushObject) 
-	|| clickedTileId > editorManager.tileCount): 
+	|| clickedTileId > editorManager.tileCount || clickedTileId == Global.BEDROCK_TILE): 
 		return;
 	
 	if (brushObject == Global.TileType.SLOPE):
@@ -33,8 +33,8 @@ func place_tile(clickPosition: Vector2) -> void:
 ## clickPosition: Where the mouse is during the click.
 func delete_tile (clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
-	
-	if (tileMap.get_cell_source_id(clickPosition) >= editorManager.tileCount 
+	if (toolManager.currentTool == Global.Tool.CURSOR 
+	|| tileMap.get_cell_source_id(clickPosition) >= editorManager.tileCount 
 	|| editorManager.check_out_of_bounds(clickPosition)):
 		return;
 	

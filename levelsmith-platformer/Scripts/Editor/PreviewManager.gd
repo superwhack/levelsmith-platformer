@@ -3,7 +3,7 @@ extends TileMapLayer
 # Node references
 @export var editorManager: Node2D;
 @export var toolManager: Node2D;
-@export var tileSet: TileMapLayer;
+@export var tileMap: TileMapLayer;
 
 # Current brushing object (pulled from tool manager)
 var brushObject: int;
@@ -70,7 +70,7 @@ func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
 		for j in abs(secondCorner.x - firstCorner.x) + 1:
 			var currentCell: Vector2 = topLeft + Vector2(j, i);
 			#Skip entities
-			if (tileSet.get_cell_source_id(currentCell) >= editorManager.tileCount): continue;
+			if (tileMap.get_cell_source_id(currentCell) >= editorManager.tileCount): continue;
 			
 			# Will appear red when deleting tiles and use standard colors otherwise.
 			if (toolManager.boxBrushState == Global.BoxBrushState.DELETE || 

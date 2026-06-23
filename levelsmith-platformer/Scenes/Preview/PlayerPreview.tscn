@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://2hfbf5bqyhy4" path="res://Assets/Sprites/Entities/dude.png" id="1_mqccn"]
 
 [node name="Node2D" type="Node2D" unique_id=175340653]
+position = Vector2(0, 10)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1123602151]
 scale = Vector2(0.9, 0.9)

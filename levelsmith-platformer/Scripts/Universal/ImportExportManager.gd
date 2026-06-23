@@ -1,10 +1,13 @@
 extends Node
 
+# Paths to the level and assets for the level
 var levelPath : String;
 var levelAssetPath : String;
 
+# Path for default assets
 const defaultPath := "res://Assets/Defaults/";
 
+# A signal for when a level has been imported
 signal levelImported;
 
 ## NOTE: TEMPORARY VARIABLE FOR STORING LEVEL'S NAME
@@ -13,27 +16,33 @@ var levelPathName : String;
 ## Create a new level, cloning from the default folder
 ## levelName: Name of the new level, indicates where it'll go in the folder
 func make_new_level(levelName: String) -> void:
+	# When making an enemy we need to set the path name and clear all enemies
 	levelPathName = levelName;
 	clear_enemies_folder();
+	
+	# Create a directory under User and set the level and asset path.
 	DirAccess.make_dir_absolute("user://Levels/");
 	levelPath = "user://Levels/" + levelName + "/";
 	levelAssetPath = levelPath + "Assets/";
+	
 	# NOTE: In the future we might want to assign this elsewhere 
 	AudioManager.audioLibraryPath = levelPath + "Assets/Audio/";
+	
+	# Create the directories for the level and asset path.
 	DirAccess.make_dir_absolute(levelPath);
 	DirAccess.make_dir_absolute(levelAssetPath);
 	clone_data("user://Assets/", levelAssetPath);
 
 ## Export the current level
-## tileSet: The tileSet
+## tileMap: The tileMap
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
-func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) -> void:
+func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) -> void:
 	# Create JSON for enemies and player
-	if !DirAccess.dir_exists_absolute(levelPath):
+	if (!DirAccess.dir_exists_absolute(levelPath)):
 		DirAccess.make_dir_absolute(levelPath);
 		
-	# Enemy Data
+	# Creating Enemy Data in JSON.
 	var data_to_send = '{"enemies": [';
 	var enemyProperties = DirAccess.get_files_at("res://Resources/Enemies/");
 	for enemyPropertyIndex in range(0, enemyProperties.size()):
@@ -59,7 +68,7 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 		if (enemyPropertyIndex < enemyProperties.size() - 1):
 			data_to_send += ',';
 	
-	# Player Data
+	# Creating Player Data in JSON.
 	data_to_send += '], "player": {';
 	data_to_send += '"speed": ' + str(playerData.playerSpeed) + ", ";
 	data_to_send += '"jump": ' + str(playerData.playerJumpHeight) + ", ";
@@ -68,6 +77,7 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	data_to_send += '"coyoteTime": ' + str(playerData.playerCoyoteTime);
 	data_to_send += '}}';
 	
+	# Convert our data to a json_string
 	var json = JSON.parse_string(data_to_send)
 	var json_string = JSON.stringify(json);
 	
@@ -76,16 +86,16 @@ func export_level(tileSet: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	JSONFile.store_string(json_string);
 	JSONFile.close();
 	
-	# Write tileData in the form of a CSV file
+	# Write tileData in the form of a CSV file, then close it
 	var CSVFile = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.WRITE);
 	for currentRow in worldSize.y:
 		var tileRow : Array;
 		for currentCol in worldSize.x:
 			# If there's a rotation, include it
-			if tileSet.get_cell_alternative_tile(Vector2(currentCol, currentRow)) > 0:
-				tileRow.append(str(tileSet.get_cell_source_id(Vector2(currentCol, currentRow)),"|",tileSet.get_cell_alternative_tile(Vector2(currentCol, currentRow))));
+			if (tileMap.get_cell_alternative_tile(Vector2(currentCol, currentRow)) > 0):
+				tileRow.append(str(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)),"|",tileMap.get_cell_alternative_tile(Vector2(currentCol, currentRow))));
 			else:
-				tileRow.append(tileSet.get_cell_source_id(Vector2(currentCol, currentRow)));
+				tileRow.append(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)));
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 	
@@ -98,14 +108,20 @@ func validate_import(sourceName: String) -> bool:
 	levelPath = "user://Levels/" + sourceName + "/";
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
-	if !DirAccess.dir_exists_absolute(levelPath):
+	
+	if (!DirAccess.dir_exists_absolute(levelPath)):
 		errors.append("Directory " + levelPath + " does not exist!");
-	if !FileAccess.file_exists(levelPath + "Settings.JSON"):
+		
+	if (!FileAccess.file_exists(levelPath + "Settings.JSON")):
 		errors.append(levelPath + "Settings.JSON does not exist!");
-	if !FileAccess.file_exists(levelPath + "Tiles.CSV"):
+		
+	if (!FileAccess.file_exists(levelPath + "Tiles.CSV")):
 		errors.append(levelPath + "Tiles.CSV does not exist!");
-	if errors.size() == 0:
+		
+	if (errors.size() == 0):
 		return true;
+		
+	# If import fails, send a pop-up to the user.
 	PopUpManager.create_multi_error_popup("Level Import Failed from directory " + levelPath + "!", errors);
 	return false;
 
@@ -118,13 +134,19 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 	var row = 0;
 	var playerExists = false;
 	var currentLine = CSVFile.get_csv_line();
-	while !CSVFile.eof_reached():
+	
+	# While the end of the CSV has not been reached...
+	while (!CSVFile.eof_reached()):
+
 		var col = 0;
+
+		# For every tile in the current line, determine if it is a player,
+		# or place it in the tileMap.
 		for tileData in currentLine:
 			# Rotated tiles
-			if tileData.contains("|"):
+			if (tileData.contains("|")):
 				var entityTileData = tileData.split("|");
-				if (int(entityTileData[0]) == Global.EntityType.PLAYER):
+				if ((int(entityTileData[0]) == Global.EntityType.PLAYER)):
 					playerExists = true;
 				tileMap.set_cell(Vector2(col, row), int(entityTileData[0]), Vector2i.ZERO, int(entityTileData[1]));
 			else:
@@ -164,58 +186,13 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 		# Locate the enemy at the indicated position
 		var locatedEnemy;
 		for node in tileMap.get_children():
-			if tileMap.local_to_map(node.global_position) == Vector2i(enemy.pos.x, enemy.pos.y):
+			if (tileMap.local_to_map(node.global_position) == Vector2i(enemy.pos.x, enemy.pos.y)):
 				locatedEnemy = node;
-		if locatedEnemy != null:
-			match enemy.type:
-				"patrolling":
-					var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
-					var newPatrolling: Resource = defaultPatrolling.duplicate(true);
-					newPatrolling.groundSpeed = enemy.stats.speed;
-					newPatrolling.direction = enemy.stats.direction;
-					newPatrolling.restricted = enemy.stats.restricted;
-					var path = "res://Resources/Enemies/Patrol-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres";
-					newPatrolling.take_over_path(path);
-					ResourceSaver.save(newPatrolling, path);
-					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
-				"shooting":
-					var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
-					var newShooting: Resource = defaultShooting.duplicate(true);
-					newShooting.direction = enemy.stats.direction;
-					newShooting.shotSpeed = enemy.stats.shotSpeed;
-					newShooting.fireRate = enemy.stats.fireRate;
-					newShooting.projBounce = enemy.stats.projBounce;
-					newShooting.gravity = enemy.stats.gravity;
-					ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
-					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
-				"flying":
-					var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
-					var newFlying: Resource = defaultFlying.duplicate(true);
-					newFlying.speed = enemy.stats.speed;
-					newFlying.pointBOffset.x = enemy.stats.endpoint.x;
-					newFlying.pointBOffset.y = enemy.stats.endpoint.y;
-					ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
-					locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
+		if (locatedEnemy != null):
+			match_enemy_type(enemy, locatedEnemy);
+	
 	# If any enemy did not get data due to some form of corruption, it needs it.
-	for node in tileMap.get_children():
-		if node is EnemyPatrol && node.propertyFile == null:
-			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
-			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
-			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
-			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol-" + nodePos + ".tres");
-			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
-		elif node is EnemyShooting && node.propertyFile == null:
-			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
-			var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
-			var newShooting: Resource = defaultShooting.duplicate(true);
-			ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + nodePos + ".tres");
-			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
-		elif node is EnemyFlyer && node.propertyFile == null:
-			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
-			var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
-			var newFlying: Resource = defaultFlying.duplicate(true);
-			ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying-" + nodePos + ".tres");
-			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
+	repair_corrupted_enemies(tileMap);
 	
 	JSONFile.close();
 
@@ -226,7 +203,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 ## to: the destination directory
 ## directory: The current directory being cloned
 func clone_data(from: String, to: String, directory: String = ""):
-	# Recursively loop through all folders
+	# Recursively loop through all folders and clone data to destination directory
 	var childDirectories: PackedStringArray = DirAccess.get_directories_at(from + directory);
 	for currentDirectory in childDirectories:
 		var newPath = directory + currentDirectory + "/";
@@ -248,7 +225,65 @@ func clone_data(from: String, to: String, directory: String = ""):
 	#file.store_string("TESTING");
 	#file.close();
 
+## Gets files in the enemies folder and delete every single file.
 func clear_enemies_folder() -> void:
 	var files = DirAccess.get_files_at("res://Resources/Enemies/");
 	for file in files:
 		DirAccess.remove_absolute("res://Resources/Enemies/" + file);
+		
+## Matches the enemy type with the correct data, used when importing data
+## type: The type of enemy, stored as an Enum.
+func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
+	match enemy.type:
+		"patrolling":
+			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
+			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
+			newPatrolling.groundSpeed = enemy.stats.speed;
+			newPatrolling.direction = enemy.stats.direction;
+			newPatrolling.restricted = enemy.stats.restricted;
+			var path = "res://Resources/Enemies/Patrol-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres";
+			newPatrolling.take_over_path(path);
+			ResourceSaver.save(newPatrolling, path);
+			locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
+
+		"shooting":
+			var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
+			var newShooting: Resource = defaultShooting.duplicate(true);
+			newShooting.direction = enemy.stats.direction;
+			newShooting.shotSpeed = enemy.stats.shotSpeed;
+			newShooting.fireRate = enemy.stats.fireRate;
+			newShooting.projBounce = enemy.stats.projBounce;
+			newShooting.gravity = enemy.stats.gravity;
+			ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
+			locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
+			
+		"flying":
+			var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
+			var newFlying: Resource = defaultFlying.duplicate(true);
+			newFlying.speed = enemy.stats.speed;
+			newFlying.pointBOffset.x = enemy.stats.endpoint.x;
+			newFlying.pointBOffset.y = enemy.stats.endpoint.y;
+			ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
+			locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
+			
+## If any enemy data is corrupted, we can repair it by giving it default values.
+func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
+	for node in tileMap.get_children():
+		if node is EnemyPatrol && node.propertyFile == null:
+			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
+			var defaultPatrolling: Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
+			var newPatrolling: Resource = defaultPatrolling.duplicate(true);
+			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrol-" + nodePos + ".tres");
+			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
+		elif node is EnemyShooting && node.propertyFile == null:
+			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
+			var defaultShooting: Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
+			var newShooting: Resource = defaultShooting.duplicate(true);
+			ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + nodePos + ".tres");
+			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
+		elif node is EnemyFlyer && node.propertyFile == null:
+			var nodePos = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
+			var defaultFlying: Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
+			var newFlying: Resource = defaultFlying.duplicate(true);
+			ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying-" + nodePos + ".tres");
+			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));

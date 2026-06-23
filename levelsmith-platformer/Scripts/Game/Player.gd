@@ -69,10 +69,12 @@ func _physics_process(delta: float) -> void:
 	if invulnerabilityCurrent > 0:
 		invulnerabilityCurrent -= delta;
 		flashTimer -= delta;
+		modulate = Color(1, .5, .5);
 		if flashTimer < 0:
 			flashTimer = flashTimerCap;
 			visible = !visible;
 		if invulnerabilityCurrent <= 0:
+			modulate = Color(1, 1, 1);
 			visible = true;
 			flashTimer = 0;
 	

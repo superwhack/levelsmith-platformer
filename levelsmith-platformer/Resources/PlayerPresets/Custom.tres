@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="PlayerMovementPreset" format=3]
+[gd_resource type="Resource" script_class="PlayerMovementPreset" format=3 uid="uid://cmuoa5ur1vpo"]
 
-[ext_resource type="Script" path="res://Scripts/Editor/Properties/PlayerMovementPreset.gd" id="1_1qm3p"]
+[ext_resource type="Script" uid="uid://bp8erofrb01fc" path="res://Scripts/Editor/Properties/PlayerMovementPreset.gd" id="1_1qm3p"]
 
 [resource]
 script = ExtResource("1_1qm3p")

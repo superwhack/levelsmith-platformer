@@ -2,7 +2,6 @@ extends Area2D
 
 @export var onScreen : VisibleOnScreenEnabler2D;
 
-#var direction : float;
 var speed : float;
 var bouncable : bool;
 
@@ -28,4 +27,5 @@ func _on_area_entered(area: Area2D) -> void:
 			area.get_parent().bounce();
 			queue_free();
 		else:
-			area.get_parent().take_damage(1);
+			var direction = area.get_parent().position - position;
+			area.get_parent().take_damage(1, direction.normalized());

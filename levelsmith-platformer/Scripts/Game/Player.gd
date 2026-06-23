@@ -28,8 +28,12 @@ var spawnpoint := Vector2(0, 0);
 @export var downwardsRaycasts : Array[RayCast2D];
 
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
-const maxHealth := 1;
+const maxHealth := 3;
 var health := maxHealth
+var invulnerabilityTimer := 0.5;
+var invulnerabilityCurrent := 0.0;
+var flashTimer := 0.0;
+const flashTimerCap = .05;
 
 # Stored friction and slowdown, saved so they are maintained while in midair
 var currentFriction := 1.0;
@@ -51,7 +55,7 @@ func _ready() -> void:
 	enemyBounceCollision.body_entered.connect(detect_enemy_bounce);
 	enemyCollision.body_entered.connect(detect_enemies);
 	
-	# Applies the preset on ready	
+	# Applies the preset on ready
 	if (playerMovementPreset):
 		print("Applying ", playerMovementPreset, " player movement preset.");
 		apply_preset(playerMovementPreset);
@@ -61,6 +65,16 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if check_out_of_bounds():
 		return;
+	if invulnerabilityCurrent > 0:
+		invulnerabilityCurrent -= delta;
+		flashTimer -= delta;
+		if flashTimer < 0:
+			flashTimer = flashTimerCap;
+			visible = !visible;
+		if invulnerabilityCurrent <= 0:
+			visible = true;
+			flashTimer = 0;
+	
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair, and reset friction.
 	if not is_on_floor():
@@ -125,7 +139,13 @@ func run() -> void:
 
 ## Have the player take damage
 ## amount: damage to deal
-func take_damage(amount: int) -> void:
+## direction: direction to deal damage in
+func take_damage(amount: int, direction: Vector2) -> void:
+	if invulnerabilityCurrent > 0:
+		return;
+	invulnerabilityCurrent = invulnerabilityTimer;
+	direction.y /= 2;
+	velocity = direction * 1000;
 	health -= amount;
 	if (health <= 0):
 		die();
@@ -139,8 +159,9 @@ func die() -> void:
 # Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
 func detect_enemies(body: Node2D) -> void:
 	await get_tree().process_frame;
+	var direction : Vector2 = position - body.position;
 	if body && body.is_in_group("enemy"):
-		take_damage(1);
+		take_damage(1, direction.normalized());
 
 func detect_enemy_bounce(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
@@ -217,7 +238,8 @@ func detect_tiles() -> void:
 						if Input.is_action_just_pressed("down"):
 							position += Vector2(0, 1);
 					"hazard":
-						take_damage(1);
+						var direction : Vector2 = -slideCollisions[i].target_position;
+						take_damage(1, direction.normalized());
 					# Set friction for the player to slide
 					"ice":
 						currentFriction = tileData.get_custom_data("friction");

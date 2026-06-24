@@ -2,21 +2,20 @@
 
 [ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Game/Player.gd" id="1_kyqiw"]
 [ext_resource type="Resource" uid="uid://nd3ng1cl05pa" path="res://Resources/PlayerPresets/Default.tres" id="2_agccv"]
-[ext_resource type="Texture2D" uid="uid://2hfbf5bqyhy4" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
+[ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
 size = Vector2(20, 19.999996)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_agccv"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "deathCasts", "enemyBounceCollision", "enemyCollision") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "enemyBounceCollision", "enemyCollision") groups=["Player"]]
 position = Vector2(0, 10)
 scale = Vector2(0.9, 0.9)
 floor_snap_length = 32.0
 script = ExtResource("1_kyqiw")
 raycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastLeft2"), NodePath("RayCastRight2"), NodePath("RayCastUp2"), NodePath("RayCastDown2"), NodePath("RayCastLeft"), NodePath("RayCastLeft3"), NodePath("RayCastRight"), NodePath("RayCastRight3"), NodePath("RayCastUp"), NodePath("RayCastUp3")]
 downwardsRaycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastDown2")]
-deathCasts = [NodePath("RayCastDown2"), NodePath("RayCastLeft2"), NodePath("RayCastRight2"), NodePath("RayCastUp2")]
 playerMovementPreset = ExtResource("2_agccv")
 enemyBounceCollision = NodePath("EnemyBounceCollision")
 enemyCollision = NodePath("EnemyCollision")

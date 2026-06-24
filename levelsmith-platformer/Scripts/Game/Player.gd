@@ -125,7 +125,7 @@ func run() -> void:
 		if (currentFriction != 1.0):
 			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 		else:
-			accelerationX = -velocity.x;
+			accelerationX = clamp(-velocity.x, -trueSpeed * .75, trueSpeed * .75);
 	# Air Control
 	if (not is_on_floor()):
 		accelerationX *= airControl * airControl;

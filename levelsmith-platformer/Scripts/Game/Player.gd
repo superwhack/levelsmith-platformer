@@ -148,7 +148,8 @@ func run() -> void:
 	# Velocity gets capped so you can't accelerate faster
 	elif (abs(velocity.x + accelerationX) > trueSpeed):
 		if (abs(velocity.x) > trueSpeed):
-			velocity.x *= .9;
+			var ratio = pow(trueSpeed / abs(velocity.x), .07);
+			velocity.x *= ratio;
 		elif (abs(velocity.x + accelerationX) > trueSpeed):
 			velocity.x += accelerationX;
 			velocity.x = clamp(velocity.x, -trueSpeed, trueSpeed);

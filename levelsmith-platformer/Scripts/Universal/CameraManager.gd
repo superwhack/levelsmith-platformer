@@ -190,10 +190,10 @@ func process_zoom(zoomAmount: float) -> void:
 	
 	zoom = Vector2.ONE * newZoom;
 	
-	if (zoom.x <= 0.3):
-		gridLines.visible = false;
-	else:
-		gridLines.visible = true;
+	#if (zoom.x <= 0.3):
+		#gridLines.visible = false;
+	#else:
+		#gridLines.visible = true;
 	
 	# Mouse world position AFTER zoom
 	var mouseWorldAfter : Vector2 = get_global_mouse_position();

@@ -145,15 +145,11 @@ func run() -> void:
 		else:
 			accelerationX *= .05;
 		
-	## TODO: ALTER ACCELERATION WHEN JUMPING OFF ICE, IT SHOULD BE ABLE TO SLOW YOU DOWN BUT SHOULDN'T WHEN NO INPUT IS PRESSED
 	# Velocity gets capped so you can't accelerate faster
 	elif (abs(velocity.x + accelerationX) > trueSpeed):
+		velocity.x += accelerationX;
+		velocity.x = clamp(velocity.x, -trueSpeed, trueSpeed);
 		accelerationX = 0;
-		if (abs(velocity.x * .9 + accelerationX) > trueSpeed):
-			velocity.x *= 1;
-		elif(abs(velocity.x + accelerationX) > trueSpeed):
-			velocity.x = clamp(velocity.x, -trueSpeed, trueSpeed);
-		
 	# Adjust velocity by acceleration
 	velocity.x += accelerationX;
 

@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b63gckij8dqfm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Ice.png" id="6_h6q5o"]
 [ext_resource type="Texture2D" uid="uid://jmf5gtsq1567" path="res://Assets/Defaults/Assets/Sprites/Tiles/Sticky.png" id="7_0gefc"]
 [ext_resource type="Texture2D" uid="uid://bkcc0w1hmvglm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="8_g7c4e"]
-[ext_resource type="Texture2D" uid="uid://cps73gpq8gpvx" path="res://Assets/Sprites/Tiles/Death.png" id="9_g7c4e"]
+[ext_resource type="Texture2D" uid="uid://bfihlk8cogb0q" path="res://Assets/Sprites/Tiles/Death.png" id="9_g7c4e"]
 [ext_resource type="Texture2D" uid="uid://lh0kyct8ass4" path="res://Assets/Sprites/Tiles/slope.png" id="9_vup42"]
 [ext_resource type="PackedScene" uid="uid://dqlxqwdmgred1" path="res://Scenes/UI/TilebarButton.tscn" id="10_goodf"]
 [ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="11_goodf"]
@@ -112,7 +112,7 @@ tilebar = NodePath("../../../..")
 [node name="SlopeButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=456412869 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("9_vup42")
-thisItemID = 6
+thisItemID = 7
 tilebar = NodePath("../../../..")
 
 [node name="EntityPickerUI" type="PanelContainer" parent="." unique_id=324821247]

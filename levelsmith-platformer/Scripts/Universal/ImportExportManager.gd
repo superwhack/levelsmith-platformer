@@ -236,7 +236,6 @@ func clear_enemies_folder() -> void:
 ## Matches the enemy type with the correct data, used when importing data
 ## type: The type of enemy, stored as an Enum.
 func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
-	
 	var capitalType : String = enemy.type[0].to_upper() + enemy.type.substr(1);
 	var defaultResource : Resource = load("res://Resources/PlayerPresets/" + capitalType + "Default.tres");
 	var newResource : Resource = defaultResource.duplicate(true);

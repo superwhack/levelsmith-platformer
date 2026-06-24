@@ -268,7 +268,19 @@ func reset_image() -> void:
 func reset_all() -> void:
 	delete_folder(filePath);
 	create_file_tree();
+	reset_menu();
 	refresh_assets();
+
+func reset_menu() -> void:
+	for button: Button in imagesTab.get_children():
+		button.queue_free();
+	for button: Button in animationsTab.get_children():
+		button.queue_free();
+	generate_buttons("Tiles", imagesTab);
+	generate_buttons("Props", imagesTab);
+	generate_buttons("Entities", imagesTab);
+	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
+	item_selected(firstSelected);
 
 func delete_folder(folderPath: String) -> void:
 	if (not DirAccess.dir_exists_absolute(folderPath)):

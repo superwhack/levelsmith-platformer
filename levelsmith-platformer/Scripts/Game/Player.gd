@@ -131,7 +131,7 @@ func run() -> void:
 		accelerationX *= airControl * airControl;
 
 	# Friction while on ice
-	if (currentFriction != 1.0):
+	if (currentFriction != 1.0 && is_on_floor()):
 		accelerationX *= currentFriction * currentFriction * currentFriction;
 		if (abs(velocity.x) > trueSpeed * iceSpeedCap):
 			accelerationX = 0;
@@ -139,11 +139,20 @@ func run() -> void:
 		elif (abs(velocity.x) > trueSpeed):
 			if (velocity.x < 0 && accelerationX < 0) || (velocity.x > 0 && accelerationX > 0):
 				accelerationX *= .1;
-	
+	elif (currentFriction != 1.0 && !is_on_floor()):
+		if direction / velocity.x > 0 && abs(velocity.x + accelerationX * .1) > trueSpeed:
+			accelerationX = 0;
+		else:
+			accelerationX *= .05;
+		
+	## TODO: ALTER ACCELERATION WHEN JUMPING OFF ICE, IT SHOULD BE ABLE TO SLOW YOU DOWN BUT SHOULDN'T WHEN NO INPUT IS PRESSED
 	# Velocity gets capped so you can't accelerate faster
-	elif (abs(velocity.x) > trueSpeed && currentFriction == 1.0):
+	elif (abs(velocity.x + accelerationX) > trueSpeed):
 		accelerationX = 0;
-		velocity.x *= .9;
+		if (abs(velocity.x * .9 + accelerationX) > trueSpeed):
+			velocity.x *= 1;
+		elif(abs(velocity.x + accelerationX) > trueSpeed):
+			velocity.x = clamp(velocity.x, -trueSpeed, trueSpeed);
 		
 	# Adjust velocity by acceleration
 	velocity.x += accelerationX;

@@ -26,6 +26,7 @@ var audioToReplace : AudioStream;
 # Button references for connecting signals
 @export var loadFileButton : Button;
 @export var resetButton : Button;
+@export var resetAllButton: Button;
 
 # Reference to the editor manager
 @export var editorManager : Node2D;
@@ -62,6 +63,7 @@ func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_image_selector);
 	resetButton.pressed.connect(reset_image);
+	resetAllButton.pressed.connect(reset_all);
 	imageSelect.file_selected.connect(replace_image);
 	Global.levelCreated.connect(refresh_assets);
 	
@@ -263,6 +265,19 @@ func reset_image() -> void:
 	refresh_assets();
 	imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 
+func reset_all() -> void:
+	delete_folder(filePath);
+	create_file_tree();
+	refresh_assets();
+
+func delete_folder(folderPath: String) -> void:
+	if (not DirAccess.dir_exists_absolute(folderPath)):
+		return;
+	for dirName in DirAccess.get_directories_at(folderPath):
+		delete_folder(str(folderPath + "/" + dirName));
+	for fileName in DirAccess.get_files_at(folderPath):
+		DirAccess.remove_absolute(str(folderPath + "/" + fileName));
+	DirAccess.remove_absolute(folderPath);
 #func reset_audio(audioName: String) -> void:
 #	pass;
 

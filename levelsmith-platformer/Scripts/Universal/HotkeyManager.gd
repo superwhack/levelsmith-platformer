@@ -46,7 +46,7 @@ func _unhandled_key_input(event : InputEvent) -> void:
 			elif event.is_action_pressed("sixth-select"):
 				toolManager.update_brush_object(Global.TileType.BOUNCE);
 			elif event.is_action_pressed("seventh-select"):
-				toolManager.update_brush_object(Global.TileType.HAZARD);
+				toolManager.update_brush_object(Global.TileType.DEATH);
 			elif event.is_action_pressed("eighth-select"):
 				toolManager.update_brush_object(Global.TileType.SLOPE);
 		Global.HotbarState.ENTITIES:

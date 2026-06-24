@@ -15,7 +15,10 @@ var audioToReplace : AudioStream;
 @export var mainTileMap : TileMapLayer;
 
 # References to preview and file dialog
-@export var imagePreview : TextureRect;
+@export var imagePreview : Panel;
+@export var animationPreview : Panel;
+@export var audioPreview : Panel;
+@export var assetTabs : TabContainer;
 @export var imageSelect : FileDialog;
 
 # References to different elements of the menu
@@ -58,6 +61,9 @@ func _ready() -> void:
 	resetButton.pressed.connect(reset_image);
 	imageSelect.file_selected.connect(replace_image);
 	Global.levelCreated.connect(refresh_assets);
+	
+	assetTabs.tab_changed.connect(on_asset_tab_changed);
+	on_asset_tab_changed(assetTabs.current_tab);
 	
 	# Checks if the user has an assets root folder, creates one if not
 	var dir : DirAccess = DirAccess.open(filePath);
@@ -217,6 +223,21 @@ func refresh_assets() -> void:
 		var defaultPropImage : Image = find_image(propTypes[i] + ".png", "res://Assets/Defaults");
 		change_tile_texture(Global.EntityType.PROP1 + i, propImage if propImage else defaultPropImage, mainTileMap);
 	pass;
+	
+## Hadnles the switching of buttons between tab changes
+func on_asset_tab_changed(tabIndex: int) -> void:
+	if tabIndex == 0:
+		imagePreview.show();
+		animationPreview.hide();
+		audioPreview.hide();
+	elif tabIndex == 1:
+		imagePreview.hide();
+		animationPreview.show();
+		audioPreview.hide();
+	elif tabIndex == 2:
+		imagePreview.hide();
+		animationPreview.hide();
+		audioPreview.show();
 
 ## Clears any images in the replacement directory
 ## returns: The replacement directory

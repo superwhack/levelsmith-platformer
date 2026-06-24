@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://d21j834524jcc" path="res://icon.svg" id="3_rshqi"]
 [ext_resource type="Texture2D" uid="uid://b265lhxnenhhc" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
 [ext_resource type="FontFile" uid="uid://dp7iib08p6748" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="6_rrs8o"]
-[ext_resource type="Texture2D" uid="uid://cyvay03qvsu6l" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
-[ext_resource type="Texture2D" uid="uid://de45lgysplr4h" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
+[ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
+[ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
 [ext_resource type="Texture2D" uid="uid://cq6ndlm5t7xwj" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbbei"]
@@ -21,17 +21,20 @@ corner_radius_bottom_left = 12
 expand_margin_top = 2.0
 expand_margin_bottom = 3.0
 
-[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton")]
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "animationPreview", "audioPreview", "assetTabs", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton")]
 process_mode = 2
 custom_minimum_size = Vector2(900, 600)
 offset_right = 900.0
 offset_bottom = 600.0
 theme = ExtResource("1_rshqi")
 script = ExtResource("1_2va5h")
-imagePreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview/ImageAsset")
+imagePreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview")
+animationPreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview")
+audioPreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview")
+assetTabs = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs")
 imageSelect = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton/FileDialog")
-imagesTab = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Images/ImagesTabContainer")
-animationsTab = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Animations/AnimationsTabContainer")
+imagesTab = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs/Images/ImagesTabContainer")
+animationsTab = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs/Animations/AnimationsTabContainer")
 currentAssetLabel = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/CurrentAssetLabel")
 loadFileButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton")
 resetButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/ResetButton")
@@ -73,6 +76,7 @@ text = "Current Asset"
 horizontal_alignment = 1
 
 [node name="ImagePreview" type="Panel" parent="ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=1394480238]
+visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 
@@ -307,35 +311,35 @@ text = "Reset
 layout_mode = 2
 text = "Reset All"
 
-[node name="Tabs" type="TabContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer" unique_id=1214091300]
+[node name="AssetTabs" type="TabContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer" unique_id=1214091300]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="Images" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs" unique_id=40713710]
+[node name="Images" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs" unique_id=40713710]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="ImagesTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Images" unique_id=1654478705]
+[node name="ImagesTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs/Images" unique_id=1654478705]
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="Animations" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs" unique_id=1953296503]
+[node name="Animations" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs" unique_id=1953296503]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="AnimationsTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Animations" unique_id=1587728475]
+[node name="AnimationsTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs/Animations" unique_id=1587728475]
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="Audio" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs" unique_id=912303560]
+[node name="Audio" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs" unique_id=912303560]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="AudioTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/Tabs/Audio" unique_id=1395642184]
+[node name="AudioTabContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs/Audio" unique_id=1395642184]
 layout_mode = 2
 size_flags_horizontal = 0
 

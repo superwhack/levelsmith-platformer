@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c2l5c0wss88qr"]
 
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="1_ef2s3"]
-[ext_resource type="Theme" uid="uid://cf0uq6i6ml5pm" path="res://Resources/GlobalTheme.tres" id="1_oeklc"]
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_oeklc"]
 [ext_resource type="Texture2D" uid="uid://bd4p61avbou82" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonHomeWhite.png" id="2_6fw3s"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="2_albdw"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="5_6fw3s"]

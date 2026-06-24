@@ -1,14 +1,14 @@
 extends VBoxContainer
 
 # Variables for different parts of the CheckBox
-@export var propertyName: String;
-@export var nameLabel: Label; 
-@export var optionButton: OptionButton;
+@export var propertyName : String;
+@export var nameLabel : Label; 
+@export var optionButton : OptionButton;
 
 signal dropdown_changed;
 
 # Value of the CheckBox
-var value: bool;
+var value : bool;
 
 ## When started, set the text of the name label to the name of the property
 func _ready() -> void:
@@ -22,4 +22,4 @@ func update_dropdown() -> void:
 ## Runs when the dropdown gets selected
 func _option_selected(index: int) -> void:
 	value = bool(index);
-	emit_signal("dropdown_changed");
+	dropdown_changed.emit();

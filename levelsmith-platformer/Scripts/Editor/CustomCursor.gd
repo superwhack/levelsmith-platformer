@@ -1,11 +1,10 @@
 extends Node2D
 
 # References to other scripts
-@export var tileSet: TileMapLayer;
-@export var editorManager: Node2D;
-@export var toolManager: Node2D;
-@export var entityManager: Node2D;
-@export var masterManager: Node2D;
+@export var editorManager : Node2D;
+@export var toolManager : Node2D;
+@export var entityManager : Node2D;
+@export var masterManager : Node2D;
 
 # State of the selector frame
 enum SelectorState {
@@ -15,37 +14,40 @@ enum SelectorState {
 	MOVING,
 	INVALID
 }
-var selectorState: SelectorState = SelectorState.DEFAULT;
+var selectorState : SelectorState = SelectorState.DEFAULT;
 
 # instantiated sprites
-var invalidSprite: Sprite2D;
-var selectorFrame: Sprite2D;
+var invalidSprite : Sprite2D;
+var selectorFrame : Sprite2D;
 
 # Image variables
-var brushIcon: Texture2D = preload("res://Assets/Sprites/UI/Brush.png");
-var boxBrushIcon: Texture2D = preload("res://Assets/Sprites/UI/BoxBrush.png");
-var cursorIcon: Texture2D = preload("res://Assets/Sprites/UI/Cursor.png");
-var selectorFrameSprite: Texture2D = preload("res://Assets/Sprites/UI/SelectorFrame.png");
-var invalidIcon: Texture2D = preload("res://Assets/Sprites/UI/Invalid.png"); 
-var uiCursor: Texture2D = cursorIcon;
+var brushIcon : Texture2D = preload("res://Assets/Sprites/UI/Brush.png");
+var boxBrushIcon : Texture2D = preload("res://Assets/Sprites/UI/BoxBrush.png");
+var cursorIcon : Texture2D = preload("res://Assets/Sprites/UI/Cursor.png");
+var selectorFrameSprite : Texture2D = preload("res://Assets/Sprites/UI/SelectorFrame.png");
+var invalidIcon : Texture2D = preload("res://Assets/Sprites/UI/Invalid.png"); 
+var uiCursor : Texture2D = cursorIcon;
 
 # mouse position reference  (always updated)
-var currentMousePosition: Vector2;
+var currentMousePosition : Vector2;
 
 # editing check for yellow state
-var isEditing: bool;
+var isEditing : bool;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Instantiate and hide the invalid sprite
 	invalidSprite = Sprite2D.new();
 	invalidSprite.texture = invalidIcon;
 	add_child(invalidSprite);
 	invalidSprite.hide();
 	
+	# Instantiates the selector frame
 	selectorFrame = Sprite2D.new();
 	selectorFrame.texture = selectorFrameSprite;
 	add_child(selectorFrame);
 	
+	# Set the custom mouse cursor
 	Input.set_custom_mouse_cursor(cursorIcon);
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -54,13 +56,15 @@ func _process(_delta: float) -> void:
 	if (masterManager.state != Global.State.EDIT):
 		Input.set_custom_mouse_cursor(cursorIcon);
 		return;
+	# Set the current mouse position and place the selector frame and invalid sprite to the correct locations
 	currentMousePosition = editorManager.currentMousePosition;
-	selectorFrame.global_position = currentMousePosition * Global.tileSize + Vector2(Global.tileSize / 2.0, Global.tileSize / 2.0);
+	selectorFrame.global_position = currentMousePosition * Global.TILE_SIZE + Vector2(Global.TILE_SIZE / 2.0, Global.TILE_SIZE / 2.0);
 	invalidSprite.global_position = get_global_mouse_position();
 	
-	isEditing = toolManager.currentTool == Global.Tool.CURSOR && editorManager.tileSet.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount;
+	isEditing = toolManager.currentTool == Global.Tool.CURSOR && editorManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount;
 	
-	update_selector_state();	
+	update_selector_state();
+	# Set the color of the selector frame based on the current action
 	match (selectorState):
 		SelectorState.DEFAULT:
 			selectorFrame.modulate = Color(1, 1, 1);

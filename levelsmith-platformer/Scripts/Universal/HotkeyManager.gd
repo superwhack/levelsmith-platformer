@@ -1,29 +1,28 @@
 extends Node
 
 ## References to other nodes
-@export var editorManager: Node2D
-@export var toolManager: Node2D
-@export var entityManager: Node2D;
-@export var tileSwitch: BoxContainer;
+@export var editorManager : Node2D
+@export var toolManager : Node2D
+@export var entityManager : Node2D;
+@export var tileSwitch : BoxContainer;
 
 ## Handles keyboard inputs.
 ## event: The input event to parse.
-func _unhandled_key_input(event: InputEvent) -> void:
+func _unhandled_key_input(event : InputEvent) -> void:
 	if event.is_action_pressed("rotate"):
 		toolManager.rotate_object();
 	
+	# Switching Tools
 	if event.is_action_pressed("brush-tool"):
 		if (toolManager.prevEntity != -1):
 			entityManager.drop_entity();
 		toolManager.change_tool(Global.Tool.BRUSH);
 		editorManager.change_current_hotbar(Global.HotbarState.TILES);
-
 	elif event.is_action_pressed("box-brush-tool"):
 		if (toolManager.prevEntity != -1):
 			entityManager.drop_entity();
 		toolManager.change_tool(Global.Tool.BOX_BRUSH);
 		editorManager.change_current_hotbar(Global.HotbarState.TILES);
-
 	elif event.is_action_pressed("cursor-tool"):
 		toolManager.change_tool(Global.Tool.CURSOR);
 		

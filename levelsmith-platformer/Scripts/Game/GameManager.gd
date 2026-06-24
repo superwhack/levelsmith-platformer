@@ -1,31 +1,37 @@
 extends Node2D
 
-@export var pauseScreen: PanelContainer;
-@export var bottomScreenGroup: Control;
+# References for other screens
+@export var pauseScreen : PanelContainer;
+@export var bottomScreenGroup : Control;
 
 # Button references for signals
-@export var resetButton: Button;
-@export var pauseButton: Button;
-@export var resumeButton: Button;
+@export var resetButton : Button;
+@export var pauseButton : Button;
+@export var resumeButton : Button;
 
 # Is the player paused or running?
 enum PlayState {
 	PAUSE,
 	PLAY
 }
+var playState : PlayState = PlayState.PLAY; 
 
-var playState := PlayState.PLAY; 
-var goalReached := false;
+# Has the goal been reached
+var goalReached : bool = false;
 
-var player: CharacterBody2D;
-var playerStartingPosition: Vector2;
+# Player and its position
+var player : CharacterBody2D;
+var playerStartingPosition : Vector2;
 
-var tileSet: TileMapLayer;
+# Reference to the tile set
+var tileMap : TileMapLayer;
 
-var playerPreset: Resource;
+# Reference to the selected player preset
+var playerPreset : Resource;
 
 ## When pause is pressed, flip the current state
 func pause() -> void:
+
 	if playState == PlayState.PAUSE:
 		get_tree().paused = false;
 		pauseScreen.hide();
@@ -47,22 +53,28 @@ func start() -> void:
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
 	for frame in range(1, 5):
 		await get_tree().process_frame;
+
+	# Get a reference to the player and apply its preset
 	player = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1];
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
+
+	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
-	var enemyProperties = DirAccess.get_files_at("res://Resources/Enemies/");
+	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
 	for enemyProperty in enemyProperties:
-		var propertyFile = load("res://Resources/Enemies/" + enemyProperty);
-		for node in tileSet.get_children():
-			if tileSet.local_to_map(node.global_position) == propertyFile.position:
+		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
+		for node in tileMap.get_children():
+			if tileMap.local_to_map(node.global_position) == propertyFile.position:
 				(node as Enemy).apply_script(propertyFile);
 				break;
+
+	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
 
-## Make all connections
+## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:
 	Global.death.connect(reset);
 	resetButton.pressed.connect(reset);

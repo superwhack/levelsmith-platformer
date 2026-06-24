@@ -3,7 +3,7 @@ extends CanvasLayer
 # TODO Functionality for stack exists, but is commented out until further clarification/dev
 
 # Popup templates
-const ERROR_TEMPLATE: PackedScene = preload("res://Scenes/UI/ErrorPopUpTemplate.tscn");
+const ERROR_TEMPLATE : PackedScene = preload("res://Scenes/UI/ErrorPopUpTemplate.tscn");
 
 var currentPopup : Panel;
 
@@ -12,22 +12,20 @@ var currentPopup : Panel;
 
 ## Set the layer
 func _ready() -> void:
-	self.layer = 5;
+	layer = 5;
 
 ## Creates an error popup with customizable content
 ## title: Title of error
 ## body: Body content of error
-func create_error_popup(title: String = "Error", body: String = "An error has occurred") -> void:
+func create_error_popup(title : String = "Error", body : String = "An error has occurred") -> void:
 	if currentPopup != null:
-		currentPopup.body.text += "\n - " + body;
+		currentPopup.set_body_text("\n - " + body) ;
 		return;
 	var newPopUp: Panel = ERROR_TEMPLATE.instantiate();
 	
-	# Add desired content to popup
-	newPopUp.title.text = title;
-	newPopUp.body.text = " - " + body;
+	newPopUp.set_title(title);
+	newPopUp.set_body_text(" - " + body);
 	
-	# Add popup to scene and stack
 	#POP_UP_STACK.append(newPopUp);
 	add_child(newPopUp);
 	currentPopup = newPopUp;
@@ -35,24 +33,25 @@ func create_error_popup(title: String = "Error", body: String = "An error has oc
 ## Creates an error popup that contains multiple errors
 ## title: Title of error
 ## body: Body content of error as an array
-func create_multi_error_popup(title: String = "Error", body: Array[String] = []) -> void:
+func create_multi_error_popup(title : String = "Error", body : Array[String] = []) -> void:
 	# If there's only one body string, create a single popup
 	if body.size() == 1:
 		return create_error_popup(title, body[0]);
-	var newPopUp: Panel = ERROR_TEMPLATE.instantiate();
+	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
 	
-	# Add desired content to popup
-	newPopUp.title.text = title;
-	newPopUp.body.text = "";
+	newPopUp.set_title(title);
+	
+	# Assemble the body text before adding it to the popup
+	var bodyText : String = "";
 	for messageNum in range(0, body.size()):
-		newPopUp.body.text += " - " + body[messageNum];
+		bodyText += " - " + body[messageNum];
 		if messageNum != body.size() - 1:
-			newPopUp.body.text += "\n"
+			bodyText += "\n"
+	newPopUp.set_body_text(bodyText);
 	
-	# Add popup to scene and stack
 	add_child(newPopUp);
 	currentPopup = newPopUp;
-	
+
 ## Removes specific popup from popup stack
 ## item: Panel being removed from stack
 #func removePopUpFromStack(item: Panel) -> void:

@@ -1,6 +1,7 @@
 extends PanelContainer
 
-@export var gameManager: Node2D;
+# Reference to the game manager node.
+@export var gameManager : Node2D;
 
 ## Runs every frame during the play state
 ## _delta: The amount of time that has passed

@@ -46,42 +46,6 @@ texture_region_size = Vector2i(128, 128)
 0:0/1 = 1
 0:0/1/modulate = Color(0.6666667, 0, 0, 1)
 
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_pqfav"]
-resource_name = "Shooting"
-scenes/1/scene = ExtResource("3_k4kw2")
-scenes/2/scene = ExtResource("4_3boqi")
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_eqdrb"]
-resource_name = "Flying"
-scenes/1/scene = ExtResource("5_3boqi")
-scenes/2/scene = ExtResource("6_pqfav")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eksy4"]
-texture = ExtResource("3_r4n42")
-texture_region_size = Vector2i(128, 128)
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k4kw2"]
-texture = ExtResource("4_c2nft")
-texture_region_size = Vector2i(128, 128)
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3boqi"]
-texture = ExtResource("5_nbee4")
-texture_region_size = Vector2i(128, 128)
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pqfav"]
-texture = ExtResource("6_nbee4")
-texture_region_size = Vector2i(128, 128)
-0:0/next_alternative_id = 4
-0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eqdrb"]
-texture = ExtResource("7_eksy4")
-texture_region_size = Vector2i(128, 128)
-0:0/0 = 0
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_flf07"]
 texture = ExtResource("3_alyph")
 texture_region_size = Vector2i(128, 128)
@@ -125,6 +89,57 @@ texture_region_size = Vector2i(128, 128)
 0:0/1 = 1
 0:0/1/modulate = Color(1, 0, 0, 1)
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_4m7s0"]
+resource_name = "Goal"
+scenes/1/scene = ExtResource("8_jbnof")
+scenes/2/scene = ExtResource("9_5jxy7")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_6ba2f"]
+resource_name = "Player"
+scenes/1/scene = ExtResource("8_alyph")
+scenes/2/scene = ExtResource("9_6ba2f")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_8sjof"]
+resource_name = "Patrolling"
+scenes/1/scene = ExtResource("10_6ba2f")
+scenes/2/scene = ExtResource("11_8sjof")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_pqfav"]
+resource_name = "Shooting"
+scenes/1/scene = ExtResource("3_k4kw2")
+scenes/2/scene = ExtResource("4_3boqi")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_eqdrb"]
+resource_name = "Flying"
+scenes/1/scene = ExtResource("5_3boqi")
+scenes/2/scene = ExtResource("6_pqfav")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eksy4"]
+texture = ExtResource("3_r4n42")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k4kw2"]
+texture = ExtResource("4_c2nft")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3boqi"]
+texture = ExtResource("5_nbee4")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pqfav"]
+texture = ExtResource("6_nbee4")
+texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 4
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eqdrb"]
+texture = ExtResource("7_eksy4")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x0ka3"]
 texture = ExtResource("7_jbnof")
 texture_region_size = Vector2i(128, 128)
@@ -143,21 +158,6 @@ texture_region_size = Vector2i(128, 128)
 0:0/6 = 6
 0:0/6/flip_v = true
 0:0/6/modulate = Color(1, 0, 0, 1)
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_4m7s0"]
-resource_name = "Goal"
-scenes/1/scene = ExtResource("8_jbnof")
-scenes/2/scene = ExtResource("9_5jxy7")
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_6ba2f"]
-resource_name = "Player"
-scenes/1/scene = ExtResource("8_alyph")
-scenes/2/scene = ExtResource("9_6ba2f")
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_8sjof"]
-resource_name = "Patrolling"
-scenes/1/scene = ExtResource("10_6ba2f")
-scenes/2/scene = ExtResource("11_8sjof")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6pq3v"]
 texture = ExtResource("23_mtirn")
@@ -188,15 +188,15 @@ sources/2 = SubResource("TileSetAtlasSource_flf07")
 sources/4 = SubResource("TileSetAtlasSource_k73cj")
 sources/5 = SubResource("TileSetAtlasSource_hqns4")
 sources/6 = SubResource("TileSetAtlasSource_x0ka3")
-sources/8 = SubResource("TileSetScenesCollectionSource_6ba2f")
-sources/9 = SubResource("TileSetScenesCollectionSource_8sjof")
-sources/7 = SubResource("TileSetScenesCollectionSource_4m7s0")
-sources/10 = SubResource("TileSetScenesCollectionSource_pqfav")
-sources/17 = SubResource("TileSetAtlasSource_eqdrb")
-sources/16 = SubResource("TileSetAtlasSource_pqfav")
-sources/15 = SubResource("TileSetAtlasSource_3boqi")
-sources/14 = SubResource("TileSetAtlasSource_k4kw2")
-sources/13 = SubResource("TileSetAtlasSource_eksy4")
-sources/99 = SubResource("TileSetAtlasSource_mtirn")
-sources/11 = SubResource("TileSetScenesCollectionSource_eqdrb")
-sources/98 = SubResource("TileSetAtlasSource_6pq3v")
+sources/500 = SubResource("TileSetScenesCollectionSource_4m7s0")
+sources/501 = SubResource("TileSetScenesCollectionSource_6ba2f")
+sources/502 = SubResource("TileSetScenesCollectionSource_8sjof")
+sources/503 = SubResource("TileSetScenesCollectionSource_pqfav")
+sources/504 = SubResource("TileSetScenesCollectionSource_eqdrb")
+sources/506 = SubResource("TileSetAtlasSource_eksy4")
+sources/507 = SubResource("TileSetAtlasSource_k4kw2")
+sources/508 = SubResource("TileSetAtlasSource_3boqi")
+sources/509 = SubResource("TileSetAtlasSource_pqfav")
+sources/510 = SubResource("TileSetAtlasSource_eqdrb")
+sources/9998 = SubResource("TileSetAtlasSource_6pq3v")
+sources/9999 = SubResource("TileSetAtlasSource_mtirn")

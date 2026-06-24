@@ -138,8 +138,8 @@ func drop_entity() -> void:
 	var dropPosition : Vector2;
 	var clickedObjectId : int = tileMap.get_cell_source_id(editorManager.currentMousePosition);
 	
-	if ((clickedObjectId < editorManager.tileCount && clickedObjectId >= 0) || clickedObjectId == Global.EntityType.PLAYER):
-		# Drop the entity on its original spot if landing on a tile or player.
+	# Drop the entity on its original spot if mouse is over any object.
+	if (clickedObjectId >= 0 || !editorManager.isPlaceable):
 		editorManager.isPlaceable = true;
 		dropPosition = toolManager.prevPosition;
 	else:
@@ -152,10 +152,11 @@ func drop_entity() -> void:
 	toolManager.prevPosition = Vector2(0,0);
 	toolManager.currentObjectRotation = toolManager.prevRotation;
 	
-	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);
-	while get_scene_at_cell(position) == droppedEntity:
+	# Wait until a node is found at the dropped cell
+	while (!get_scene_at_cell(dropPosition)):
 		await get_tree().process_frame;
 		
+	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);
 	if droppedEntity is not Enemy || !movingResource: return;
 	
 	movingResource.position = dropPosition;

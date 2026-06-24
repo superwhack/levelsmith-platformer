@@ -52,19 +52,19 @@ enum TileType {
 
 # Entity Types
 enum EntityType {
-	GOAL = 7,
-	PLAYER = 8,
-	PATROLLING = 9,
-	SHOOTING = 10, 
-	FLYING = 11,
-	STATIONARY = 12, 
-	PROP1 = 13,
-	PROP2 = 14,
-	PROP3 = 15,
-	PROP4 = 16,
-	PROP5 = 17, 
-	PROP6 = 18
+	GOAL = 500,
+	PLAYER = 501,
+	PATROLLING = 502,
+	SHOOTING = 503, 
+	FLYING = 504,
+	STATIONARY = 505, 
+	PROP1 = 506,
+	PROP2 = 507,
+	PROP3 = 508,
+	PROP4 = 509,
+	PROP5 = 510, 
+	PROP6 = 511
 }
 
-const BEDROCK_TILE: int = 98;
-const ERASING_TILE: int = 99;
+const BEDROCK_TILE: int = 9998;
+const ERASING_TILE: int = 9999;

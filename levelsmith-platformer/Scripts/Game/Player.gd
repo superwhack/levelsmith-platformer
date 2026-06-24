@@ -70,6 +70,11 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if (check_out_of_bounds()):
 		return;
+	
+	# Make sure the player exists for physics to apply
+	if !PhysicsServer2D.body_get_space(get_rid()).is_valid():
+		return
+	
 	for enemy in enemiesInside:
 		detect_enemies(enemy);
 	if invulnerabilityCurrent > 0:

@@ -112,6 +112,7 @@ func main_menu() -> void:
 	# Hide all non-menu states, show Main Menu scene
 	gameManager.hide();
 	gameManagerCanvas.hide();
+	tileMap.clear();
 	editorManager.hide();
 	editorManager.clear_enemies(true);
 	editorManagerCanvas.hide();

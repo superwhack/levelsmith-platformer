@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cuw2l4p7dvov2"]
+
+[ext_resource type="Script" uid="uid://b5cfw8am4ff8f" path="res://Scripts/Game/EnemyStationary.gd" id="1_jtxg7"]
+
+[node name="EnemyStationary" type="CharacterBody2D" unique_id=279826983]
+script = ExtResource("1_jtxg7")
+metadata/_custom_type_script = "uid://b5cfw8am4ff8f"

@@ -26,6 +26,7 @@ var spawnpoint : Vector2 = Vector2(0, 0);
 # Raycasts
 @export var raycasts : Array[RayCast2D];
 @export var downwardsRaycasts : Array[RayCast2D];
+@export var deathCasts : Array[RayCast2D];
 
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
 var maxHealth := 3;
@@ -158,9 +159,11 @@ func run() -> void:
 	velocity.x += accelerationX;
 
 ## Have the player take damage
-## amount: damage to deal
+## amount: damage to deal, -1 is instant death
 ## direction: direction to deal damage in
-func take_damage(amount: int, direction: Vector2) -> void:
+func take_damage(amount: int, direction: Vector2 = Vector2(0, 0)) -> void:
+	if amount < 0:
+		return die();
 	if invulnerabilityCurrent > 0:
 		return;
 	invulnerabilityCurrent = invulnerabilityTimer;
@@ -287,9 +290,13 @@ func detect_tiles() -> void:
 							position += Vector2(0, 1);
 							raycast.force_raycast_update();
 				currentSlowdown = .5;
-					
+		if tileName == "hazard" && (hitGlobal - position).length() < 60:
+			var direction : Vector2 = -raycast.target_position;
+			take_damage(1, direction.normalized());
+		elif tileName == "death" && (hitGlobal - position).length() < 60:
+			take_damage(-1);
 		# Only downward rays should drive floor tile effects (except hazard)
-		if tileName == "hazard" or downwardsRaycasts.has(raycast):
+		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):
 			if (tileData.get_custom_data("name") != "bounce"):
 				if (tileData.get_custom_data("name") != "ice"):
 					currentFriction = 1.0;
@@ -300,9 +307,6 @@ func detect_tiles() -> void:
 				"oneway":
 					if Input.is_action_just_pressed("down"):
 						position += Vector2(0, 1);
-				"hazard":
-					var direction : Vector2 = -raycast.target_position;
-					take_damage(1, direction.normalized());
 				"ice":
 					currentFriction = tileData.get_custom_data("friction");
 

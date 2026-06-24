@@ -13,6 +13,9 @@ signal levelImported;
 ## NOTE: TEMPORARY VARIABLE FOR STORING LEVEL'S NAME
 var levelPathName : String;
 
+# Stores size of an imported level
+var importedLevelSize : Vector2;
+
 ## Create a new level, cloning from the default folder
 ## levelName: Name of the new level, indicates where it'll go in the folder
 func make_new_level(levelName: String) -> void:
@@ -106,7 +109,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 ## sourceName: Source level name
 ## returns: false if it fails, true otherwise
 func validate_import(sourceName: String) -> bool:
-	levelPath = "user://Levels/" + sourceName + "/";
+	levelPath = sourceName + "/";
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
 	
@@ -133,14 +136,14 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 	# Read tileData in the form of a CSV file
 	var CSVFile : FileAccess = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.READ);
 	var row : int = 0;
+	var col : int = 0;
 	var playerExists : bool = false;
 	var currentLine : PackedStringArray = CSVFile.get_csv_line();
 	
 	# While the end of the CSV has not been reached...
 	while (!CSVFile.eof_reached()):
-
-		var col : int = 0;
-
+		col = 0;
+		
 		# For every tile in the current line, determine if it is a player,
 		# or place it in the tileMap.
 		for tileData in currentLine:
@@ -157,10 +160,10 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 		currentLine = CSVFile.get_csv_line();
 	CSVFile.close();
 	
+	importedLevelSize = Vector2(row, col);
 	await get_tree().process_frame;
 	clone_data(levelAssetPath, "user://Assets/");
-	levelImported.emit();
-
+	
 	return playerExists;
 
 ## Import the JSON file
@@ -168,7 +171,7 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 ## playerData: The panel that contains player data to adjust it
 func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	# Read JSON to file and close it
-	var JSONFile  : FileAccess= FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
+	var JSONFile : FileAccess= FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
 	var json_as_dict : Variant = JSON.parse_string(JSONFile.get_as_text());
 	
 	# Player information read
@@ -230,9 +233,10 @@ func clone_data(from: String, to: String, directory: String = ""):
 ## Gets files in the enemies folder and delete every single file.
 func clear_enemies_folder() -> void:
 	var files : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
+	
 	for file in files:
 		DirAccess.remove_absolute("res://Resources/Enemies/" + file);
-		
+
 ## Matches the enemy type with the correct data, used when importing data
 ## type: The type of enemy, stored as an Enum.
 func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:

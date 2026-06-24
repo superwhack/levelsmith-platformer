@@ -42,6 +42,8 @@ func _ready() -> void:
 	Global.levelCreated.connect(tileMap.clear);
 	Global.levelCreated.connect(create_bedrock_border);
 	Global.levelCreated.connect(edit);
+	ImportExportManager.levelImported.connect(create_bedrock_border);
+	ImportExportManager.levelImported.connect(edit);
 	
 	# Connect all button signals
 	editorHomeButton.pressed.connect(main_menu);
@@ -91,6 +93,20 @@ func create_bedrock_border() -> void:
 
 	#print("Bedrock border created: ", tileMap.get_used_rect());
 
+## Imports a level 
+func import_level_and_edit() -> void:
+	ImportExportManager.clear_enemies_folder();
+	for childNode in editorManager.tileMap.get_children():
+		childNode.free();
+	editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileMap);
+	worldSize = ImportExportManager.importedLevelSize;
+	entityManager.scan_goals(worldSize.x, worldSize.y);
+	editorManager.reset_enemy_positions();
+	await get_tree().process_frame;
+	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu);
+	ImportExportManager.levelImported.emit();
+	#propertyMenu._on_preset_options_item_selected(4);
+
 ## Swap to main menu state
 func main_menu() -> void:
 	# Hide all non-menu states, show Main Menu scene
@@ -99,7 +115,9 @@ func main_menu() -> void:
 	editorManager.hide();
 	editorManager.clear_enemies(true);
 	editorManagerCanvas.hide();
+	propertyMenu.close();
 	mainMenuControl.show();
+	ImportExportManager.clear_enemies_folder();
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 
@@ -122,6 +140,7 @@ func edit() -> void:
 	for frame in range(1, 3):
 		await get_tree().process_frame;
 	editorManager.reset_enemy_positions();
+	editorManager.clear_enemies();
 
 ## Swap to play state
 func play() -> void:
@@ -142,6 +161,7 @@ func play() -> void:
 	save_tilemap();
 	# Change scene to play 
 	gameManager.show();
+	gameManager.playerPreset = propertyMenu.selectedPlayerPreset;
 	gameManager.start();
 	gameManagerCanvas.show()
 	editorManager.hide();
@@ -152,7 +172,7 @@ func play() -> void:
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
 	gameManager.reset();
-	gameManager.playerPreset = propertyMenu.selectedPlayerPreset;
+	
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
@@ -182,22 +202,3 @@ func load_tilemap() -> void:
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
 	gameManager.tileMap = loadedMap;
-## THESE ARE TEMPORARY AND SHOULD BE CHANGED WHEN BUTTONS ARE PUT IN
-func _process(_delta: float) -> void:
-	# If the save hotkey is pressed, export the level
-	if (Input.is_action_just_pressed("tempSave")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize);
-	# If the load hotkey is pressed, import a level
-	if (Input.is_action_just_pressed("tempLoad")):
-		propertyMenu.close();
-		var result : bool = ImportExportManager.validate_import(ImportExportManager.levelPathName);
-		if (result):
-			ImportExportManager.clear_enemies_folder();
-			for childNode in editorManager.tileMap.get_children():
-				childNode.free();
-			editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileMap);
-			editorManager.reset_enemy_positions();
-			await get_tree().process_frame;
-			ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu)
-			#propertyMenu._on_preset_options_item_selected(4);
-		entityManager.scan_goals(worldSize.x + 1, worldSize.y + 1);

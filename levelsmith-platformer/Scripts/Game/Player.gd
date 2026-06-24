@@ -321,6 +321,8 @@ func check_out_of_bounds() -> bool:
 
 ## Applies the player selected player movement preset to the player
 func apply_preset(preset: PlayerMovementPreset) -> void:
+	if (!preset): return;
+	
 	# Setting all the player variables
 	maxHealth = preset.health;
 	health = maxHealth

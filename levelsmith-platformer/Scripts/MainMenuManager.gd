@@ -25,37 +25,46 @@ extends Control
 @export var buttonImportLevelOpen : Button;
 @export var buttonImportLevelBrowse : TextureButton;
 @export var fieldImportLevelPath : LineEdit;
-@export var panelInvalidPath : PanelContainer;
 
 @export var fileExplorer : FileDialog;
+var importedLevelPath : String;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Hides other screens
 	overlayImportLevel.hide();
 	overlayNewLevel.hide();
-	panelInvalidPath.hide();
 	
 	# Connect signals
-	buttonNewLevel.pressed.connect( overlayNewLevel.show );
-	buttonNewLevelCreate.pressed.connect( create_new_level );
-	buttonNewLevelCancel.pressed.connect( overlayNewLevel.hide );
+	buttonNewLevel.pressed.connect(overlayNewLevel.show);
+	buttonNewLevelCreate.pressed.connect(create_new_level);
+	buttonNewLevelCancel.pressed.connect(overlayNewLevel.hide);
 	
-	buttonImportLevel.pressed.connect( overlayImportLevel.show );
-	buttonImportLevelOpen.pressed.connect( import_level );
-	buttonImportLevelCancel.pressed.connect( import_cancel );
-	buttonImportLevelBrowse.pressed.connect( fileExplorer.popup_file_dialog );
+	buttonImportLevel.pressed.connect(overlayImportLevel.show);
+	buttonImportLevelOpen.pressed.connect(import_level);
+	buttonImportLevelCancel.pressed.connect(import_cancel);
+	buttonImportLevelBrowse.pressed.connect(fileExplorer.popup_file_dialog);
 	
-	buttonQuit.pressed.connect( exit_program )
+	buttonQuit.pressed.connect(exit_program);
+	
+	var set_directory = func (directory: String) -> void:
+		importedLevelPath = directory;
+		fieldImportLevelPath.text = importedLevelPath;
+	
+	fileExplorer.dir_selected.connect(set_directory);
 	
 ## Called when import level button is pressed
+## directory: 
 func import_level() -> void:
-	panelInvalidPath.show();
+	if (!ImportExportManager.validate_import(importedLevelPath)): return;
+	
+	ImportExportManager.clone_data(importedLevelPath + "/", "user://Levels/");
+	masterManager.import_level_and_edit();
+	pass;
 
 ## Called when import level is closed
 func import_cancel() -> void:
 	overlayImportLevel.hide();
-	panelInvalidPath.hide();
 
 ## Opens the menu for setting a name and size for the level
 func create_new_level() -> void:

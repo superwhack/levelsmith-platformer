@@ -4,32 +4,32 @@ extends Node2D
 var state : Global.State = Global.State.EDIT;
 
 # References to state managers and canvas components
-@export var editorManager: Node2D;
-@export var toolManager: Node2D;
-@export var gameManager: Node2D;
-@export var entityManager: Node2D;
-@export var audioManager: Node;
-@export var cameraManager: Camera2D;
-@export var editorManagerCanvas: CanvasLayer;
-@export var gameManagerCanvas: CanvasLayer;
-@export var mainMenuControl: Control;
+@export var editorManager : Node2D;
+@export var toolManager : Node2D;
+@export var gameManager : Node2D;
+@export var entityManager : Node2D;
+@export var audioManager : Node;
+@export var cameraManager : Camera2D;
+@export var editorManagerCanvas : CanvasLayer;
+@export var gameManagerCanvas : CanvasLayer;
+@export var mainMenuControl : Control;
 
 # References to relevant buttons
-@export var editorHomeButton: Button;
-@export var editorPlayButton: Button;
-@export var returnToEditorButton: Button;
+@export var editorHomeButton : Button;
+@export var editorPlayButton : Button;
+@export var returnToEditorButton : Button;
 
-# Reference to tileset
-@export var tileSet: TileMapLayer;
-@export var previewTileMap: TileMapLayer;
-@export var gridLines: TileMapLayer;
+# Reference to tile maps
+@export var tileMap : TileMapLayer;
+@export var previewTileMap : TileMapLayer;
+@export var gridLines : TileMapLayer;
 
 # Map that is currently loaded in the Play scene
-var loadedMap: TileMapLayer;
+var loadedMap : TileMapLayer;
 
 ## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
-@export var worldSize: Vector2i;
+@export var worldSize : Vector2i;
 @export var propertyMenu : Panel;
 
 func _ready() -> void:
@@ -39,7 +39,8 @@ func _ready() -> void:
 	
 	Global.reload.connect(load_tilemap);
 	Global.complete.connect(level_complete);
-	Global.levelCreated.connect(on_level_created);
+	Global.levelCreated.connect(tileMap.clear);
+	Global.levelCreated.connect(create_bedrock_border);
 	Global.levelCreated.connect(edit);
 	
 	# Connect all button signals
@@ -49,7 +50,7 @@ func _ready() -> void:
 	
 	# NOTE: This probably shouldn't be here for the final build
 	# Create the Enemies folder, github can't push empty folders
-	if !DirAccess.dir_exists_absolute("res://Resources/Enemies/"):
+	if (!DirAccess.dir_exists_absolute("res://Resources/Enemies/")):
 		DirAccess.make_dir_absolute("res://Resources/Enemies/");
 		
 	#edit();
@@ -60,8 +61,11 @@ func _ready() -> void:
 func level_complete() -> void:
 	edit();
 	editorManager.isValidated = true;
-	print("LEVEL COMPLETE");
-	
+	#print("LEVEL COMPLETE");
+
+## Set up a new level
+## levelName: Name of the level
+## newSize: The width and height of the level
 func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	cameraManager.initialize_camera();
@@ -69,46 +73,34 @@ func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
-	print("NEW LEVEL SET UP");
+	#print("NEW LEVEL SET UP");
 	Global.levelCreated.emit();
-
-func on_level_created() -> void:
-	tileSet.clear();
-
-	editorManager.playerExists = false;
-	editorManager.goalExists = false;
-	entityManager.goalCount = 0;
-
-	create_bedrock_border();
-
-	gridLines.fill_grid_lines();
-	cameraManager.refresh_bounds();
 
 func create_bedrock_border() -> void:
 	for x in range(-1, worldSize.x + 1):
-		tileSet.set_cell(Vector2i(x, -1), Global.BEDROCK_TILE, Vector2i.ZERO);
-		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
-		tileSet.set_cell( Vector2i(x, worldSize.y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileMap.set_cell(Vector2i(x, -1), Global.BEDROCK_TILE, Vector2i.ZERO);
+		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileMap.set_cell( Vector2i(x, worldSize.y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
 
 	for y in range(0, worldSize.y):
-		tileSet.set_cell(Vector2i(-1, y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
-		tileSet.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		print(tileSet.get_cell_source_id(Vector2i(-1,0))," ",tileSet.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileMap.set_cell(Vector2i(-1, y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
+		tileMap.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_TILE, Vector2i.ZERO);
+		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
 
-	print("Bedrock border created: ", tileSet.get_used_rect());
+	#print("Bedrock border created: ", tileMap.get_used_rect());
 
 ## Swap to main menu state
 func main_menu() -> void:
-	
+	# Hide all non-menu states, show Main Menu scene
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.hide();
 	editorManager.clear_enemies(true);
 	editorManagerCanvas.hide();
 	mainMenuControl.show();
-	
+	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 
 ## Swap to edit state
@@ -134,11 +126,12 @@ func edit() -> void:
 ## Swap to play state
 func play() -> void:
 	var errors : Array[String];
+	# Check that the game can be run
 	if (!editorManager.playerExists):
 		errors.append("There is no player placed down.")
 	if (!editorManager.goalExists):
 		errors.append("There is no goal placed down.")
-	if errors.size() != 0:
+	if (errors.size() != 0):
 		PopUpManager.create_multi_error_popup("Cannot Start Level", errors);
 		return;
 	propertyMenu.close();
@@ -164,9 +157,9 @@ func play() -> void:
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
 	# Reference the tile map as the node to be saved\
-	var nodeToSave = tileSet;
+	var nodeToSave : Node = tileMap;
 	# Create a PackedScene
-	var scene = PackedScene.new();
+	var scene : PackedScene = PackedScene.new();
 	# Pack the node to save as a scene
 	scene.pack(nodeToSave)
 	# Save that scene to the resource folder
@@ -179,30 +172,32 @@ func load_tilemap() -> void:
 		gameManager.remove_child(loadedMap);
 		loadedMap.queue_free();
 	# Load the saved map from the resource folder
-	var savedMap = ResourceLoader.load("user://SavedTileMap.tscn");
+	var savedMap : Resource = ResourceLoader.load("user://SavedTileMap.tscn");
 	# Instantiate the map as a scene instance
-	var sceneInstance = savedMap.instantiate();
+	var sceneInstance : Node = savedMap.instantiate();
 	# Add that instance to the top of the GameManager's hierarchy
 	gameManager.add_child(sceneInstance);
 	gameManager.move_child(sceneInstance, 0);
 	
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
-	gameManager.tileSet = loadedMap;
+	gameManager.tileMap = loadedMap;
 ## THESE ARE TEMPORARY AND SHOULD BE CHANGED WHEN BUTTONS ARE PUT IN
 func _process(_delta: float) -> void:
+	# If the save hotkey is pressed, export the level
 	if (Input.is_action_just_pressed("tempSave")):
-		ImportExportManager.export_level(editorManager.tileSet, propertyMenu, worldSize);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize);
+	# If the load hotkey is pressed, import a level
 	if (Input.is_action_just_pressed("tempLoad")):
 		propertyMenu.close();
-		var result = ImportExportManager.validate_import(ImportExportManager.levelPathName);
+		var result : bool = ImportExportManager.validate_import(ImportExportManager.levelPathName);
 		if (result):
 			ImportExportManager.clear_enemies_folder();
-			for childNode in editorManager.tileSet.get_children():
+			for childNode in editorManager.tileMap.get_children():
 				childNode.free();
-			editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileSet, propertyMenu);
+			editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileMap);
 			editorManager.reset_enemy_positions();
 			await get_tree().process_frame;
-			ImportExportManager.import_JSON(editorManager.tileSet, propertyMenu)
+			ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu)
 			#propertyMenu._on_preset_options_item_selected(4);
 		entityManager.scan_goals(worldSize.x + 1, worldSize.y + 1);

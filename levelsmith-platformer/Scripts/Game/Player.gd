@@ -2,38 +2,38 @@ class_name Player;
 extends CharacterBody2D
 
 # The player settings that can be changed in editor
-@export var groundSpeed := 1.0;
-@export var jumpHeight := 2.0;
+@export var groundSpeed : float = 1.0;
+@export var jumpHeight : float = 2.0;
 
 # Friction in midair
 # BUG: Air Control doesn't work the frame you land on a bouncy tile, allowing you to change direction beofre bouncing back up
-@export var airControl := 1.0;
-@export var fallSpeed := 1.0;
+@export var airControl : float = 1.0;
+@export var fallSpeed : float = 1.0;
 
 # Determines how long after leaving a platform you can still jump
-@export var coyoteTime := 0.2;
+@export var coyoteTime : float = 0.2;
 
-@export var iceSpeedCap := 10;
+@export var iceSpeedCap : int = 10;
 
-var coyoteTimeLeft = 0;
+var coyoteTimeLeft : float = 0;
 
 # TODO: Make FPS dependant on a global FPS initailly instead of being set to 24
 # TODO: Impliment animations and use this
-@export var FPS := 24;
+@export var FPS : int = 24;
 
-var spawnpoint := Vector2(0, 0);
+var spawnpoint : Vector2 = Vector2(0, 0);
 
 # Raycasts
 @export var raycasts : Array[RayCast2D];
 @export var downwardsRaycasts : Array[RayCast2D];
 
 # STRETCH: Make maxHealth an export so the player doesn't always die in one hit
-const maxHealth := 1;
-var health := maxHealth
+const maxHealth : int = 1;
+var health : int = maxHealth
 
 # Stored friction and slowdown, saved so they are maintained while in midair
-var currentFriction := 1.0;
-var currentSlowdown := 1.0;
+var currentFriction : float = 1.0;
+var currentSlowdown : float = 1.0;
 
 # Speed with constant multiplier and slowdown appended in
 var trueSpeed : float;
@@ -43,28 +43,32 @@ var trueSpeed : float;
 @export var playerMovementPreset : PlayerMovementPreset;
 
 # Enemy collision hitboxes for hooking signals
-@export var enemyBounceCollision: Area2D;
-@export var enemyCollision: Area2D
+@export var enemyBounceCollision : Area2D;
+@export var enemyCollision : Area2D
 
 ## Runs once on instantiation
 func _ready() -> void:
 	enemyBounceCollision.body_entered.connect(detect_enemy_bounce);
 	enemyCollision.body_entered.connect(detect_enemies);
 	
+	enemyBounceCollision.area_entered.connect(detect_projectile_bounce);
+	enemyCollision.area_entered.connect(detect_projectiles);
+	
+	
 	# Applies the preset on ready	
 	if (playerMovementPreset):
-		print("Applying ", playerMovementPreset, " player movement preset.");
+		#print("Applying ", playerMovementPreset, " player movement preset.");
 		apply_preset(playerMovementPreset);
 
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
-	if check_out_of_bounds():
+	if (check_out_of_bounds()):
 		return;
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair, and reset friction.
-	if not is_on_floor():
-		if coyoteTimeLeft > 0:
+	if (not is_on_floor()):
+		if (coyoteTimeLeft > 0):
 			coyoteTimeLeft -= delta;
 		velocity += get_gravity() * delta * fallSpeed;
 	else:
@@ -74,14 +78,13 @@ func _physics_process(delta: float) -> void:
 	detect_tiles();
 
 	# Jumping with W or Space
-	if Input.is_action_just_pressed("jump"):
-		if is_on_floor() or coyoteTimeLeft > 0.0:
+	if (Input.is_action_just_pressed("jump")):
+		if (is_on_floor() or coyoteTimeLeft > 0.0):
 			# Don't allow double jumps by reducing coyoteTimeLeft to 0
 			coyoteTimeLeft = 0;
 			jump();
 	# Handle A and D inputs, as well as lack of directional input
 	run();
-	
 	
 	# Look at what the player is colliding with and apply effects
 	move_and_slide();
@@ -95,19 +98,21 @@ func jump() -> void:
 func run() -> void:
 	# Acceration in the X direction for the player
 	var accelerationX : float;
-	var direction := Input.get_axis("left", "right");
+	var direction : float = Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
-	if direction:
+	if (direction):
 		accelerationX = direction * trueSpeed;
-	# NOTE: I'd love to get this to work nicer since right now moving can feel a little jagged.
+	# Acceleration
 	else:
 		if (currentFriction != 1.0):
 			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 		else:
 			accelerationX = -velocity.x;
-	# Friction and air control
-	if not is_on_floor():
+	# Air Control
+	if (not is_on_floor()):
 		accelerationX *= airControl * airControl;
+
+	# Friction while on ice
 	if (currentFriction != 1.0):
 		accelerationX *= currentFriction * currentFriction * currentFriction;
 		if (abs(velocity.x) > trueSpeed * iceSpeedCap):
@@ -116,6 +121,8 @@ func run() -> void:
 		elif (abs(velocity.x) > trueSpeed):
 			if (velocity.x < 0 && accelerationX < 0) || (velocity.x > 0 && accelerationX > 0):
 				accelerationX *= .1;
+	
+	# Velocity gets capped so you can't accelerate faster
 	elif (abs(velocity.x) > trueSpeed && currentFriction == 1.0):
 		accelerationX = 0;
 		velocity.x *= .9;
@@ -135,18 +142,41 @@ func die() -> void:
 	AudioManager.play_effect("PlayerDeath");
 	Global.death.emit();
 
-## use raycast to detect enemy collision
-# Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
+## Use raycast to detect enemy collision
+## body: the area being collided with
 func detect_enemies(body: Node2D) -> void:
+	# Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
 	await get_tree().process_frame;
-	if body && body.is_in_group("enemy"):
+	if (body && body.is_in_group("enemy")):
 		take_damage(1);
 
+## Detect collisions with projectiles
+## area: the area being collided with
+func detect_projectiles(area: Area2D) -> void:
+	# Wait one frame to see if the projectile has been bounced on
+	await get_tree().process_frame;
+	if (area && area.is_in_group("Projectile")):
+		take_damage(1);
+		area.queue_free();
+
+## Detect collisions between projectiles and the bounce area
+## area: the area being collided with
+func detect_projectile_bounce(area: Area2D) -> void:
+	if (area.is_in_group("Projectile")):
+		if area.bounceable:
+			bounce();
+		else:
+			take_damage(1);
+		area.queue_free();
+
+## Detect collisions between enemies and the bounce area
+## body: the body being collided with
 func detect_enemy_bounce(body: Node2D) -> void:
-	if body.is_in_group("enemy"):
+	if (body.is_in_group("enemy")):
 		bounce();
 		body.queue_free();
 
+## Bounce the player
 func bounce() -> void:
 	if (Input.is_action_pressed("jump")):
 		velocity.y = -jumpHeight * 360;
@@ -222,36 +252,37 @@ func bounce() -> void:
 					#"ice":
 						#currentFriction = tileData.get_custom_data("friction");
 func detect_tiles() -> void:
-	var slideCollisions: Array[RayCast2D] = [];
+	
+	# Check all collisions with raycasts
+	var slideCollisions : Array[RayCast2D] = [];
+	
 	for raycast in raycasts:
-		if raycast.is_colliding():
+		if (raycast.is_colliding()):
 			slideCollisions.push_back(raycast);
 
 	for raycast in slideCollisions:
-		var collider = raycast.get_collider();
-		if not (collider is TileMapLayer):
-			continue;
-
-		var tileLayer := collider as TileMapLayer;
-
-		var hitGlobal: Vector2 = raycast.get_collision_point();
-		var hitNormal: Vector2 = raycast.get_collision_normal();
-		var probeGlobal: Vector2 = hitGlobal - hitNormal * 0.5;
-		var probeLocal: Vector2 = tileLayer.to_local(probeGlobal);
-		var tilePos: Vector2i = tileLayer.local_to_map(probeLocal);
-		var tileData = tileLayer.get_cell_tile_data(tilePos);
-
-		if tileData == null:
-			continue;
-
-		var tileName = tileData.get_custom_data("name");
-		var rayDir: Vector2 = raycast.target_position;
+		var collider : Object = raycast.get_collider();
+		if (collider is not TileMapLayer): continue;
+		
+		var tileLayer : TileMapLayer = collider;
+		
+		var hitGlobal : Vector2 = raycast.get_collision_point();
+		var hitNormal : Vector2 = raycast.get_collision_normal();
+		var probeGlobal : Vector2 = hitGlobal - hitNormal * 0.5;
+		var probeLocal : Vector2 = tileLayer.to_local(probeGlobal);
+		var tilePos : Vector2i = tileLayer.local_to_map(probeLocal);
+		var tileData : TileData = tileLayer.get_cell_tile_data(tilePos);
+		
+		if !tileData:continue;
+		
+		var tileName : String = tileData.get_custom_data("name");
+		var rayDirection : Vector2 = raycast.target_position;
 
 		# Bounce tile collisions
-		if tileName == "bounce":
+		if (tileName == "bounce"):
 			# Horizontal bounces
-			if abs(rayDir.x) > abs(rayDir.y):
-				if rayDir.x < 0:
+			if (abs(rayDirection.x) > abs(rayDirection.y)):
+				if rayDirection.x < 0:
 					velocity.x = 3000 * tileData.get_custom_data("bounce");
 				else:
 					velocity.x = -3000 * tileData.get_custom_data("bounce");
@@ -259,18 +290,18 @@ func detect_tiles() -> void:
 					velocity.y = -500 * tileData.get_custom_data("bounce");
 			# Vertical bounces
 			else:
-				if rayDir.y < 0:
+				if (rayDirection.y < 0):
 					velocity.y = 1000 * tileData.get_custom_data("bounce");
 				else:
 					velocity.y = -1000 * tileData.get_custom_data("bounce");
 
 		if tileName == "slow":
 			# Horizontal stick
-			if abs(rayDir.x) > abs(rayDir.y):
+			if (abs(rayDirection.x) > abs(rayDirection.y)):
 				velocity.y *= 0.75;
 			# Vertical stick
 			else:
-				if rayDir.y < 0:
+				if rayDirection.y < 0:
 					velocity.y = 0;
 					if Input.is_action_just_pressed("down"):
 						while raycast.is_colliding():
@@ -298,11 +329,11 @@ func check_out_of_bounds() -> bool:
 	var masterManager : Node2D = get_tree().current_scene;
 	
 	# There is a 1 tile leeway given to players who leave bounds, before deth
-	if (self.global_position.x < (-1) * Global.tileSize
-	|| self.global_position.x > (masterManager.worldSize.x + 2) * Global.tileSize
-	|| self.global_position.y < (-1) * Global.tileSize
-	|| self.global_position.y > (masterManager.worldSize.y + 2) * Global.tileSize):
-		print("Player OOB: ", self.global_position)
+	if (self.global_position.x < (-1) * Global.TILE_SIZE
+	|| self.global_position.x > (masterManager.worldSize.x + 2) * Global.TILE_SIZE
+	|| self.global_position.y < (-1) * Global.TILE_SIZE
+	|| self.global_position.y > (masterManager.worldSize.y + 2) * Global.TILE_SIZE):
+		#print("Player OOB: ", self.global_position)
 		die();
 		return true;
 	return false;

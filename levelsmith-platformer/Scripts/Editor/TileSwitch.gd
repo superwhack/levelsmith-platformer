@@ -1,41 +1,41 @@
 extends HBoxContainer
 
 # Reference to tool manager
-@export var toolManager: Node2D;
-@export var editorManager: Node2D;
+@export var toolManager : Node2D;
+@export var editorManager : Node2D;
 
 # References to button bars
-@export var tiles: PanelContainer;
-@export var entities: PanelContainer;
+@export var tiles : PanelContainer;
+@export var entities : PanelContainer;
 
 # References to tabs in Entity picker
-@export var entityTab: HBoxContainer;
-@export var propTab: HBoxContainer;
+@export var entityTab : HBoxContainer;
+@export var propTab : HBoxContainer;
 
-@export var tileMap: TileMapLayer;
+@export var tileMap : TileMapLayer;
 
 # References to all Tile buttons
-@export var solidTileButton: Button;
-@export var oneWayTileButton: Button;
-@export var deathTileButton: Button;
-@export var iceTileButton: Button;
-@export var stickyTileButton: Button;
-@export var bounceTileButton: Button;
-@export var slopeTileButton: Button;
+@export var solidTileButton : Button;
+@export var oneWayTileButton : Button;
+@export var deathTileButton : Button;
+@export var iceTileButton : Button;
+@export var stickyTileButton : Button;
+@export var bounceTileButton : Button;
+@export var slopeTileButton : Button;
 
 # References to all Entity buttons;
-@export var goalEntityButton: Button;
-@export var playerEntityButton: Button;
-@export var patrollingEntityButton: Button;
-@export var shootingEntityButton: Button;
-@export var flyingEntityButton: Button;
+@export var goalEntityButton : Button;
+@export var playerEntityButton : Button;
+@export var patrollingEntityButton : Button;
+@export var shootingEntityButton : Button;
+@export var flyingEntityButton : Button;
 
 # References to all Prop buttons
-@export var propOneButton: Button;
-@export var propTwoButton: Button;
-@export var propThreeButton: Button;
-@export var propFourButton: Button;
-@export var propFiveButton: Button;
+@export var propOneButton : Button;
+@export var propTwoButton : Button;
+@export var propThreeButton : Button;
+@export var propFourButton : Button;
+@export var propFiveButton : Button;
 
 # Misc object references
 @export var entityPropDropdown : OptionButton;

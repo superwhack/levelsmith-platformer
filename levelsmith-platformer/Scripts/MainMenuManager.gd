@@ -54,12 +54,14 @@ func _ready() -> void:
 	fileExplorer.dir_selected.connect(set_directory);
 	
 ## Called when import level button is pressed
-## directory: 
 func import_level() -> void:
 	if (!ImportExportManager.validate_import(importedLevelPath)): return;
 	
 	ImportExportManager.clone_data(importedLevelPath + "/", "user://Levels/");
 	masterManager.import_level_and_edit();
+	
+	# Resets the ui overlay
+	fieldImportLevelPath.clear();
 	overlayImportLevel.hide();
 	pass;
 

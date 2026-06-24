@@ -40,7 +40,7 @@ const ASSET_BUTTON : PackedScene = preload("res://Scenes/UI/AssetItem.tscn");
 const MISSING_TEXTURE : String = "res://Assets/Defaults/Assets/Sprites/Missing.png";
 
 # All types of tiles
-var tileTypes : Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
+var tileTypes : Array[String] = ["Solid", "Hazard","OneWay","Ice", "Sticky", "Bounce", "Death", "Slope" ];
 
 # All types of entities
 var entityTypes : Array[String] = ["Player", "EnemyStationary", "EnemyShooting", "EnemyPatrol", "EnemyFlying", "Goal"];

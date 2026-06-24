@@ -106,7 +106,7 @@ func _physics_process(delta: float) -> void:
 	# Handle A and D inputs, as well as lack of directional input
 	run();
 	
-	if health >= 0:
+	if health > 0:
 		move_and_slide();
 
 ## Make the player jump

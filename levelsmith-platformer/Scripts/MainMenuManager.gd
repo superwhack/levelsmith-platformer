@@ -60,6 +60,7 @@ func import_level() -> void:
 	
 	ImportExportManager.clone_data(importedLevelPath + "/", "user://Levels/");
 	masterManager.import_level_and_edit();
+	overlayImportLevel.hide();
 	pass;
 
 ## Called when import level is closed

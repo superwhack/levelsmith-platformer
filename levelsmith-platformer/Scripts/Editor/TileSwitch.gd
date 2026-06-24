@@ -25,6 +25,7 @@ extends HBoxContainer
 
 # References to all Entity buttons;
 @export var goalEntityButton : Button;
+@export var coinEntityButton : Button;
 @export var playerEntityButton : Button;
 @export var patrollingEntityButton : Button;
 @export var shootingEntityButton : Button;
@@ -52,6 +53,7 @@ func _ready() -> void:
 	
 	# Connect all Entity button signals
 	goalEntityButton.pressed.connect(_on_goal_entity_button_pressed);
+	coinEntityButton.pressed.connect(_on_coin_entity_button_pressed);
 	playerEntityButton.pressed.connect(_on_player_entity_button_pressed);
 	patrollingEntityButton.pressed.connect(_on_patrolling_entity_button_pressed);
 	shootingEntityButton.pressed.connect(_on_shooting_entity_button_pressed);
@@ -117,6 +119,9 @@ func _on_slope_tile_button_pressed() -> void:
 # Object Buttons
 func _on_goal_entity_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.GOAL);
+
+func _on_coin_entity_button_pressed() -> void:
+	toolManager.update_brush_object(Global.EntityType.COIN);
 
 func _on_player_entity_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.PLAYER);

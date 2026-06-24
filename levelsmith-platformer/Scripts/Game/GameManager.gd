@@ -19,6 +19,10 @@ var playState : PlayState = PlayState.PLAY;
 # Has the goal been reached
 var goalReached : bool = false;
 
+# Coin variables
+var coinCount : int = 0
+var totalCoins : int = 0
+
 # Player and its position
 var player : CharacterBody2D;
 var playerStartingPosition : Vector2;
@@ -73,10 +77,19 @@ func start() -> void:
 	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+	
+	# 
+	coinCount = 0
+	totalCoins = get_tree().get_node_count_in_group("Coin")
 
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:
 	Global.death.connect(reset);
+	Global.onCoinCollected.connect(_on_coin_collected);
 	resetButton.pressed.connect(reset);
 	pauseButton.pressed.connect(pause);
 	resumeButton.pressed.connect(pause);
+
+## 
+func _on_coin_collected() -> void:
+	coinCount += 1

@@ -263,7 +263,7 @@ func detect_tiles() -> void:
 			if (tileData && (tileData.get_custom_data("name") == "slow")):
 				# Horizontal Stick
 				if (abs(slideCollisions[i].target_position.x) > abs(slideCollisions[i].target_position.y)):
-					velocity.y *= .75;
+					velocity.y *= .95;
 					# NOTE: Uncomment this out if we want to be able to wall jump on sticky tiles
 					#if Input.is_action_just_pressed("jump") && !is_on_floor():
 					#	if slideCollisions[i].target_position.x < 0:

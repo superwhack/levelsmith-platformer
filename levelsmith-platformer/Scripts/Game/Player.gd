@@ -292,10 +292,10 @@ func detect_tiles() -> void:
 							position += Vector2(0, 1);
 							raycast.force_raycast_update();
 				currentSlowdown = .5;
-		if tileName == "hazard" && (hitGlobal - position).length() < 60:
+		if tileName == "hazard" && (hitGlobal - position).length() < 57:
 			var direction : Vector2 = -raycast.target_position;
 			take_damage(1, direction.normalized());
-		elif tileName == "death" && (hitGlobal - position).length() < 60:
+		elif tileName == "death" && (hitGlobal - position).length() < 57:
 			take_damage(-1);
 		# Only downward rays should drive floor tile effects (except hazard)
 		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):

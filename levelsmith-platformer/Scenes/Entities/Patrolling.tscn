@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b3k624sctovph"]
 
-[ext_resource type="Texture2D" uid="uid://hlyall14hts0" path="res://Assets/Sprites/Entities/baddude.png" id="1_8ustp"]
+[ext_resource type="Texture2D" uid="uid://bggaro288ywls" path="res://Assets/Sprites/Entities/baddude.png" id="1_8ustp"]
 [ext_resource type="Script" uid="uid://cv0ngpnmx6kwj" path="res://Scripts/Game/EnemyPatrol.gd" id="1_ecr3g"]
-[ext_resource type="Texture2D" uid="uid://btwee51autoih" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="2_n0k27"]
+[ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="2_n0k27"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
@@ -48,11 +48,11 @@ position = Vector2(-10, 0)
 rotation = -6.2831855
 scale = Vector2(1.355, 1.355)
 target_position = Vector2(0, 125)
-collision_mask = 2
+collision_mask = 10
 
 [node name="RayCastDownR" type="RayCast2D" parent="." unique_id=15048655]
 position = Vector2(10, 0)
 rotation = -6.2831855
 scale = Vector2(1.355, 1.355)
 target_position = Vector2(0, 125)
-collision_mask = 2
+collision_mask = 10

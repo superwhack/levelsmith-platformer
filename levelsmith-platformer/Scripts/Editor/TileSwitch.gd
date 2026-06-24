@@ -17,12 +17,11 @@ extends HBoxContainer
 # References to all Tile buttons
 @export var solidTileButton : Button;
 @export var oneWayTileButton : Button;
-@export var hazardTileButton : Button;
+@export var deathTileButton : Button;
 @export var iceTileButton : Button;
 @export var stickyTileButton : Button;
 @export var bounceTileButton : Button;
 @export var slopeTileButton : Button;
-@export var deathTileButton : Button;
 
 # References to all Entity buttons;
 @export var goalEntityButton : Button;
@@ -45,12 +44,11 @@ func _ready() -> void:
 	# Connect all Tile button signals
 	solidTileButton.pressed.connect(_on_solid_tile_button_pressed);
 	oneWayTileButton.pressed.connect(_on_oneway_tile_button_pressed);
-	hazardTileButton.pressed.connect(_on_hazard_tile_button_pressed);
+	deathTileButton.pressed.connect(_on_death_tile_button_pressed);
 	iceTileButton.pressed.connect(_on_ice_tile_button_pressed);
 	stickyTileButton.pressed.connect(_on_sticky_tile_button_pressed);
 	bounceTileButton.pressed.connect(_on_bounce_tile_button_pressed);
 	slopeTileButton.pressed.connect(_on_slope_tile_button_pressed);
-	deathTileButton.pressed.connect(_on_death_tile_button_pressed);
 	
 	# Connect all Entity button signals
 	goalEntityButton.pressed.connect(_on_goal_entity_button_pressed);
@@ -98,8 +96,8 @@ func entity_dropdown_select(index: int):
 func _on_solid_tile_button_pressed() -> void:
 	toolManager.update_brush_object(Global.TileType.SOLID);
 
-func _on_hazard_tile_button_pressed() -> void:
-	toolManager.update_brush_object(Global.TileType.HAZARD);
+func _on_death_tile_button_pressed() -> void:
+	toolManager.update_brush_object(Global.TileType.DEATH);
 
 func _on_oneway_tile_button_pressed() -> void:
 	toolManager.update_brush_object(Global.TileType.ONEWAY);
@@ -115,9 +113,6 @@ func _on_bounce_tile_button_pressed() -> void:
 
 func _on_slope_tile_button_pressed() -> void:
 	toolManager.update_brush_object(Global.TileType.SLOPE);
-
-func _on_death_tile_button_pressed() -> void:
-	toolManager.update_brush_object(Global.TileType.DEATH);
 
 # Object Buttons
 func _on_goal_entity_button_pressed() -> void:

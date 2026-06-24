@@ -42,13 +42,12 @@ enum BoxBrushState {
 # Tile Types
 enum TileType {
 	SOLID = 0,
-	HAZARD = 1, 
+	DEATH = 1, 
 	ONEWAY = 2,
 	ICE = 3,
 	STICKY = 4,
 	BOUNCE = 5, 
-	DEATH = 6,
-	SLOPE = 7,
+	SLOPE = 6,
 }
 
 # Entity Types

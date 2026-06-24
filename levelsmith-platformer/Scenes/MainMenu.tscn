@@ -1,10 +1,11 @@
 [gd_scene format=4 uid="uid://bjx53xjckex6r"]
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_df05h"]
-[ext_resource type="Texture2D" uid="uid://bd5y6vj43vism" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
+[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_df05h"]
 [ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_loo7a"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_8um5k"]
+[ext_resource type="PackedScene" uid="uid://cv3y1gdfsbknd" path="res://Scenes/UI/LevelListItem.tscn" id="3_if7li"]
 [ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="4_xim88"]
 [ext_resource type="Texture2D" uid="uid://caw5vfrla8ry1" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
 [ext_resource type="Texture2D" uid="uid://cn52j7r73ygot" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="7_loo7a"]
@@ -41,7 +42,7 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_ce3w2")
 sources/2 = SubResource("TileSetAtlasSource_n45e2")
 
-[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "spinBoxNewLevelX", "spinBoxNewLevelY", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "panelInvalidPath", "fileExplorer")]
+[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "spinBoxNewLevelX", "spinBoxNewLevelY", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "panelInvalidPath", "fileExplorer", "LevelList")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,6 +68,8 @@ buttonImportLevelBrowse = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/Over
 fieldImportLevelPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/FilePathInput")
 panelInvalidPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ErrorBanner")
 fileExplorer = NodePath("FileDialog")
+LevelList = NodePath("Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer/LevelList")
+LevelListItem = ExtResource("3_if7li")
 
 [node name="Background" type="ColorRect" parent="." unique_id=2093246532]
 layout_mode = 1
@@ -196,16 +199,18 @@ text = "Load Level:"
 layout_mode = 2
 theme_override_styles/separator = ExtResource("4_xim88")
 
-[node name="LevelList" type="ItemList" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox" unique_id=632439816]
+[node name="ScrollContainer" type="ScrollContainer" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox" unique_id=1529046712]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
-theme_override_colors/font_hovered_color = Color(0.08078892, 0.21693686, 0.45689148, 1)
-theme_override_colors/font_hovered_selected_color = Color(0.19205198, 0.4054752, 0.781936, 1)
-theme_override_styles/panel = ExtResource("3_8um5k")
-item_count = 1
+horizontal_scroll_mode = 0
+
+[node name="LevelList" type="VBoxContainer" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer" unique_id=1173936041]
+custom_minimum_size = Vector2(1141, 101)
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=120086451]
+visible = false
 custom_minimum_size = Vector2(630, 425)
 layout_mode = 1
 anchors_preset = 15

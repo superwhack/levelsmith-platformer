@@ -43,13 +43,19 @@ const MISSING_TEXTURE : String = "res://Assets/Defaults/Assets/Sprites/Missing.p
 var tileTypes : Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
 
 # All types of entities
-var entityTypes : Array[String] = ["Player", "EnemyStationary", "EnemyShooting", "EnemyPatrol", "EnemyFlying", "Goal"];
+var animatedEntityTypes : Array[String] = ["Player", "StationaryEnemy", "ShootingEnemy", "PatrollingEnemy", "FlyingEnemy"];
 
 # All types of props
 var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
 
-# All animations
-var animations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];
+# Player Animations
+var playerAnimations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "PlayerFall", "PlayerHurt", "PlayerDeath"];
+
+# All Enemy Animations
+var stationaryEnemyAnimations : Array[String] = ["StationaryIdle", "StationaryDeath"];
+var patrollingEnemyAnimations : Array[String] = ["PatrolWalk", "PatrolDeath"];
+var flyingEnemyAnimations : Array[String] = ["FlyMove", "FlyDeath"];
+var shootingEnemyAnimations : Array[String] = ["EnemyShoot", "ShootIdle", "ShootDeath"];
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -374,13 +380,21 @@ func create_file_tree() -> void:
 		dir.make_dir_recursive(filePath + "/Images/Tiles/" + type);
 	# Create all folders for prop types
 	for type: String in propTypes:
-		dir.make_dir_recursive(filePath + "/Images/Props/" + type);	
-	# Create all folders for enitity types
-	for type: String in entityTypes:
-		dir.make_dir_recursive(filePath + "/Images/Entities/" + type);
+		dir.make_dir_recursive(filePath + "/Images/Props/" + type);
+	# Create folder for goal
+	dir.make_dir_recursive(filePath + "/Images/Entities/Goal");
 	# Create all folders for animations
-	for animation: String in animations:
-		dir.make_dir_recursive(filePath + "/Animations/" + animation);
+	for animation: String in playerAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/Player/" + animation);
+	# Create all folders for enemy animations
+	for animation: String in stationaryEnemyAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/StationaryEnemy/" + animation);
+	for animation: String in patrollingEnemyAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/PatrollingEnemy/" + animation);
+	for animation: String in shootingEnemyAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/ShootingEnemy/" + animation);
+	for animation: String in flyingEnemyAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/FlyingEnemy/" + animation);
 	# TODO: Add folders for audio
 
 func open_image_selector() -> void:

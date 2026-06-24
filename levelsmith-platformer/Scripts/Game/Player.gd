@@ -71,10 +71,6 @@ func _physics_process(delta: float) -> void:
 	if (check_out_of_bounds()):
 		return;
 		
-	# Make sure the player exists for physics to apply
-	if !PhysicsServer2D.body_get_space(get_rid()).is_valid():
-		return;
-		
 	for enemy in enemiesInside:
 		detect_enemies(enemy);
 	if invulnerabilityCurrent > 0:
@@ -110,8 +106,8 @@ func _physics_process(delta: float) -> void:
 	# Handle A and D inputs, as well as lack of directional input
 	run();
 	
-	# Look at what the player is colliding with and apply effects
-	move_and_slide();
+	if health >= 0:
+		move_and_slide();
 
 ## Make the player jump
 func jump() -> void:
@@ -180,6 +176,7 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0)) -> void:
 	
 ## Kill the player and send the global death signal
 func die() -> void:
+	health = 0;
 	AudioManager.play_effect("PlayerDeath");
 	Global.death.emit();
 

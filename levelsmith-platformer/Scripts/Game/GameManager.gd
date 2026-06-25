@@ -75,6 +75,8 @@ func start() -> void:
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
 
+## Record a change in health for the player
+## newHealth: The new health of the player
 func change_health(newHealth : int):
 	print("Health: ", newHealth);
 

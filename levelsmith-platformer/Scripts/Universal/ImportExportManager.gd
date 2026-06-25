@@ -201,8 +201,6 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	
 	JSONFile.close();
 
-
-
 ## Clone all of the data from the user asset folder 
 ## from: the source directory
 ## to: the destination directory

@@ -21,7 +21,7 @@ corner_radius_bottom_left = 12
 expand_margin_top = 2.0
 expand_margin_bottom = 3.0
 
-[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imagePreviewTexture", "animationPreview", "audioPreview", "assetTabs", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton")]
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imagePreviewTexture", "animationPreview", "animationPreviewTexture", "audioPreview", "assetTabs", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "animationPreviewRightButton", "animationPreviewLeftButton", "animationName", "frameRightButton", "frameLeftButton")]
 process_mode = 2
 custom_minimum_size = Vector2(900, 600)
 offset_right = 900.0
@@ -31,6 +31,7 @@ script = ExtResource("1_2va5h")
 imagePreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview")
 imagePreviewTexture = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview/ImageAsset")
 animationPreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview")
+animationPreviewTexture = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/ImageAsset")
 audioPreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview")
 assetTabs = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs")
 imageSelect = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton/FileDialog")
@@ -40,6 +41,11 @@ currentAssetLabel = NodePath("ContentContainer/MainContentContainer/LeftColumnCo
 loadFileButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton")
 resetButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/ResetButton")
 resetAllButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer/ResetAllButton")
+animationPreviewRightButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer/NextAnimButton")
+animationPreviewLeftButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer/PrevAnimButton")
+animationName = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer/AnimNameLabel")
+frameRightButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer/NextFrameButton")
+frameLeftButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer/PrevFrameButton")
 
 [node name="ContentContainer" type="VBoxContainer" parent="." unique_id=1686367830]
 layout_mode = 1
@@ -107,7 +113,6 @@ grow_vertical = 2
 texture = ExtResource("3_rshqi")
 
 [node name="AnimationPreview" type="Panel" parent="ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=126647044]
-visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 

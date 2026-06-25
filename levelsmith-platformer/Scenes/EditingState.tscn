@@ -261,7 +261,7 @@ icon_alignment = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 
-[node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("mainTileMap", "editorManager") instance=ExtResource("11_bpoex")]
+[node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("mainTileMap", "imagePreview", "editorManager") instance=ExtResource("11_bpoex")]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -275,7 +275,11 @@ offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
 mainTileMap = NodePath("../../Tiles")
+imagePreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview/ImageAsset")
 editorManager = NodePath("../..")
+
+[node name="ImagePreview" parent="CanvasLayer/AssetManager/ContentContainer/MainContentContainer/LeftColumnContainer" parent_id_path=PackedInt32Array(468653693, 58018460) index="1" unique_id=1394480238]
+visible = true
 
 [node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
 visible = false

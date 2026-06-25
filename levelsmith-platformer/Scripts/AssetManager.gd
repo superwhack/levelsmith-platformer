@@ -8,6 +8,12 @@ var filePath : String = "user://Assets";
 var imageToReplace : Image;
 var imageNameToReplace : String;
 
+var selectedEntityType : String;
+var animationPreviewToReplace : Image;
+var animationPreviewNameToReplace : String;
+var currentAnimationIndex : int = 0;
+var animationFrameIndex : int = 0;
+
 # References to audio
 var newAudio : AudioStream;
 var audioToReplace : AudioStream;
@@ -19,6 +25,7 @@ var audioToReplace : AudioStream;
 @export var imagePreview : Panel;
 @export var imagePreviewTexture : TextureRect;
 @export var animationPreview : Panel;
+@export var animationPreviewTexture : TextureRect;
 @export var audioPreview : Panel;
 @export var assetTabs : TabContainer;
 @export var imageSelect : FileDialog;
@@ -35,6 +42,13 @@ var audioToReplace : AudioStream;
 
 # Reference to the editor manager
 @export var editorManager : Node2D;
+
+@export var animationPreviewRightButton : Button;
+@export var animationPreviewLeftButton : Button;
+@export var animationName : Label;
+@export var frameRightButton : Button;
+@export var frameLeftButton : Button;
+@export var frameCountLabel : Label;
 
 # Keep track of the first selected item
 var firstSelected : AssetItem = null;
@@ -71,6 +85,8 @@ func _ready() -> void:
 	resetAllButton.pressed.connect(reset_all);
 	imageSelect.file_selected.connect(replace_image);
 	Global.levelCreated.connect(refresh_assets);
+	animationPreviewRightButton.pressed.connect(anim_change.bind(true));
+	animationPreviewLeftButton.pressed.connect(anim_change.bind(false));
 	
 	assetTabs.tab_changed.connect(on_asset_tab_changed);
 	on_asset_tab_changed(assetTabs.current_tab);
@@ -294,16 +310,45 @@ func reset_menu() -> void:
 ## Signal that is emitted when an asset in the menu is selected
 ## selectedItem: The item that is selected, defaults to the firstSelected
 func item_selected(selectedItem: AssetItem = firstSelected) -> void:
-	imageNameToReplace = selectedItem.assetName;
-	imageToReplace = find_image_in_folder(FileSearch.find_directory_by_name(imageNameToReplace));
-	if (imageToReplace):
-		var replacementTexture : Texture2D = ImageTexture.create_from_image(imageToReplace);
-		if (replacementTexture): 
-			imagePreviewTexture.texture = ImageTexture.create_from_image(imageToReplace);
-	else:
-		imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
-	
+	if (selectedItem.type == AssetItem.AssetType.IMAGE):
+		imageNameToReplace = selectedItem.assetName;
+		imageToReplace = find_image_in_folder(FileSearch.find_directory_by_name(imageNameToReplace));
+		if (imageToReplace):
+			var replacementTexture : Texture2D = ImageTexture.create_from_image(imageToReplace);
+			if (replacementTexture): 
+				imagePreviewTexture.texture = ImageTexture.create_from_image(imageToReplace);
+		else:
+			imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
+	elif (selectedItem.type == AssetItem.AssetType.ANIMATION):
+		currentAnimationIndex = 0;
+		animationFrameIndex = 0;
+		selectedEntityType = selectedItem.assetName;
+		update_animation_preview();
 	currentAssetLabel.text = selectedItem.displayName;
+
+func anim_change(next : bool):
+	if (next):
+		currentAnimationIndex += 1;
+	else:
+		currentAnimationIndex -= 1;
+	var animationsCount : int = DirAccess.get_directories_at(FileSearch.find_directory_by_name(selectedEntityType)).size();
+	if (currentAnimationIndex >= animationsCount):
+		currentAnimationIndex = 0;
+	elif (currentAnimationIndex < 0):
+		currentAnimationIndex = animationsCount - 1;
+	update_animation_preview();
+
+func update_animation_preview() -> void:
+	animationPreviewNameToReplace = DirAccess.get_directories_at(FileSearch.find_directory_by_name(selectedEntityType))[currentAnimationIndex];
+	animationName.text = animationPreviewNameToReplace;
+	if (FileSearch.file_count_in_folder(animationPreviewNameToReplace) > 0):
+		animationPreviewToReplace = get_animation_from_folder(animationPreviewNameToReplace)[animationFrameIndex];
+	else:
+		animationPreviewToReplace = null;
+	if (animationPreviewToReplace):
+		var replacementTexture : Texture2D = ImageTexture.create_from_image(animationPreviewToReplace);
+		if (replacementTexture):
+			animationPreviewTexture.texture = ImageTexture.create_from_image(animationPreviewToReplace);
 
 ## Change the texture of an atlas tile to a new image texture
 ## sourceID: Source ID of the tile being changed

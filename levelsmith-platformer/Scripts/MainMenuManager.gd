@@ -127,10 +127,6 @@ func fill_level_list() -> void:
 				else:
 					print("Failed to load image: ", levelThumbnailPath);
 
-			if (iteration % 2 == 1):
-				item.buttonColor = item.ButtonColor.WHITE;
-			else:
-				item.buttonColor = item.ButtonColor.BLUE;
 			item.apply_colors();
 				
 			# Get the next folder

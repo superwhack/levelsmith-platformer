@@ -206,10 +206,14 @@ theme_override_constants/scrollbar_h_separation = 6
 horizontal_scroll_mode = 0
 
 [node name="LevelList" type="VBoxContainer" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer" unique_id=1173936041]
-custom_minimum_size = Vector2(1141, 101)
+custom_minimum_size = Vector2(1141, 176.13)
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 16
+offset_transform_enabled = true
+theme_override_constants/separation = 77
+
+[node name="LevelListItem" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer/LevelList" unique_id=2067988774 instance=ExtResource("3_if7li")]
+layout_mode = 2
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=120086451]
 visible = false

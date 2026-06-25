@@ -64,6 +64,7 @@ func start() -> void:
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
+	player.healthChanged.connect(change_health);
 
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
@@ -87,6 +88,9 @@ func start() -> void:
 		if tileMap.is_ancestor_of(coin):
 			totalCoins += 1;
 	update_coin_counter();
+
+func change_health(newHealth : int):
+	print("Health: ", newHealth);
 
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:

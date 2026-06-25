@@ -146,7 +146,7 @@ func drop_entity() -> void:
 		dropPosition = toolManager.prevPosition;
 	else:
 		dropPosition = editorManager.currentMousePosition;
-	place_entity(dropPosition);
+	await place_entity(dropPosition);
 	
 	if (toolManager.prevEntity != -2):
 		toolManager.brushObject = toolManager.prevEntity;

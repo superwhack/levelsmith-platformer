@@ -30,4 +30,5 @@ func play_all_animations() -> void:
 func get_all_sprites() -> void:
 	var playerNode = get_tree().get_first_node_in_group("Player");
 	playerSprite = playerNode.find_child("AnimatedSprite2D");
-	for enemy in get_tree().get_nodes_in_group("Enemy");
+	#for enemy in get_tree().get_nodes_in_group("Enemy"):
+		#if (enemy.)

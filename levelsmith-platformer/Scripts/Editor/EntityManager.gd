@@ -145,7 +145,11 @@ func drop_entity() -> void:
 		dropPosition = toolManager.prevPosition;
 	else:
 		dropPosition = editorManager.currentMousePosition;
-	await place_entity(dropPosition);
+	place_entity(dropPosition);
+	
+	# Wait until a node is found at the dropped cell
+	while (!get_scene_at_cell(dropPosition)):
+		await get_tree().process_frame;
 	
 	if (toolManager.prevEntity != -2):
 		toolManager.brushObject = toolManager.prevEntity;
@@ -153,9 +157,6 @@ func drop_entity() -> void:
 	toolManager.prevPosition = Vector2(0,0);
 	toolManager.currentObjectRotation = toolManager.prevRotation;
 	
-	# Wait until a node is found at the dropped cell
-	while (!get_scene_at_cell(dropPosition)):
-		await get_tree().process_frame;
 		
 	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);
 	if droppedEntity is not Enemy || !movingResource: return;
@@ -165,7 +166,7 @@ func drop_entity() -> void:
 	
 	# Reset direciton arrows
 	if droppedEntity is EnemyShooting:
-		droppedEntity.adjust_arrow(droppedEntity.direction + 90);
+		droppedEntity.adjust_arrow(droppedEntity.fireDirection + 90);
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
 	elif droppedEntity is EnemyPatrol:
 		droppedEntity.adjust_arrow(int(movingResource.direction) * 180 + 90);

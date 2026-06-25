@@ -48,11 +48,11 @@ func patrol_behavior() -> void:
 		direction = 1;
 	
 	# Check for running off of a tile with restricted on
-	if (restricted && !(rayCastDownL.is_colliding() && rayCastDownR.is_colliding())):
-		if (!rayCastDownL.is_colliding()):
-			direction = 1;
-		elif (!rayCastDownR.is_colliding()):
+	if (restricted && ((rayCastDownL.is_colliding() && !rayCastDownR.is_colliding()) || (!rayCastDownL.is_colliding() && rayCastDownR.is_colliding()))):
+		if (rayCastDownL.is_colliding()):
 			direction = -1;
+		elif (rayCastDownR.is_colliding()):
+			direction = 1;
 	velocity.x = direction * groundSpeed * SPEED_MODIFIER;
 	
 	# Check for collisions with other enemies and bounce

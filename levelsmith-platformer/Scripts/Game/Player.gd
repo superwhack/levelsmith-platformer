@@ -28,9 +28,12 @@ var spawnpoint : Vector2 = Vector2(0, 0);
 @export var downwardsRaycasts : Array[RayCast2D];
 @export var deathCasts : Array[RayCast2D];
 
-# STRETCH: Make maxHealth an export so the player doesn't always die in one hit
+signal healthChanged(newHealth);
 var maxHealth := 3;
-var health := maxHealth
+var health := maxHealth:
+	set(newHealth):
+		health = newHealth;
+		healthChanged.emit(health);
 const invulnerabilityTimer := 0.5;
 var invulnerabilityCurrent := 0.0;
 const flashTimerCap := .05;
@@ -292,10 +295,10 @@ func detect_tiles() -> void:
 							position += Vector2(0, 1);
 							raycast.force_raycast_update();
 				currentSlowdown = .5;
-		if tileName == "hazard" && (hitGlobal - position).length() < 60:
+		if tileName == "hazard" && (hitGlobal - position).length() < 57:
 			var direction : Vector2 = -raycast.target_position;
 			take_damage(1, direction.normalized());
-		elif tileName == "death" && (hitGlobal - position).length() < 60:
+		elif tileName == "death" && (hitGlobal - position).length() < 57:
 			take_damage(-1);
 		# Only downward rays should drive floor tile effects (except hazard)
 		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):

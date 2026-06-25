@@ -191,7 +191,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Direction"
 minMax = Vector2(0, 360)
-sliderStep = 5.0
+sliderStep = 1.0
 valueAppend = "°"
 
 [node name="ShootingShotSpeed" parent="MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=441375088 instance=ExtResource("2_w5eld")]

@@ -59,7 +59,8 @@ func start() -> void:
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
-	player.healthChanged.connect(change_health);
+	if !player.healthChanged.is_connected(change_health):
+		player.healthChanged.connect(change_health);
 
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);

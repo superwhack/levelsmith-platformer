@@ -28,9 +28,12 @@ var spawnpoint : Vector2 = Vector2(0, 0);
 @export var downwardsRaycasts : Array[RayCast2D];
 @export var deathCasts : Array[RayCast2D];
 
-# STRETCH: Make maxHealth an export so the player doesn't always die in one hit
+signal healthChanged(newHealth);
 var maxHealth := 3;
-var health := maxHealth
+var health := maxHealth:
+	set(newHealth):
+		health = newHealth;
+		healthChanged.emit(health);
 const invulnerabilityTimer := 0.5;
 var invulnerabilityCurrent := 0.0;
 const flashTimerCap := .05;

@@ -51,7 +51,8 @@ var audioToReplace : AudioStream;
 @export var frameCountLabel : Label;
 
 # Keep track of the first selected item
-var firstSelected : AssetItem = null;
+var firstImageSelected : AssetItem = null;
+var firstAnimationSelected : AssetItem = null;
 
 # Reference to the asset button scene for instantiating
 const ASSET_BUTTON : PackedScene = preload("res://Scenes/UI/AssetItem.tscn");
@@ -87,9 +88,10 @@ func _ready() -> void:
 	Global.levelCreated.connect(refresh_assets);
 	animationPreviewRightButton.pressed.connect(anim_change.bind(true));
 	animationPreviewLeftButton.pressed.connect(anim_change.bind(false));
+	frameRightButton.pressed.connect(frame_change.bind(true));
+	frameLeftButton.pressed.connect(frame_change.bind(false));
 	
 	assetTabs.tab_changed.connect(on_asset_tab_changed);
-	on_asset_tab_changed(assetTabs.current_tab);
 	
 	# Checks if the user has an assets root folder, creates one if not
 	var dir : DirAccess = DirAccess.open(filePath);
@@ -100,7 +102,8 @@ func _ready() -> void:
 	generate_buttons("Props", imagesTab);
 	generate_buttons("Entities", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
-	item_selected(firstSelected);
+	item_selected(firstImageSelected);
+	on_asset_tab_changed(assetTabs.current_tab);
 	# Refresh all assets
 	refresh_assets();
 	ImportExportManager.levelImported.connect(refresh_assets);
@@ -128,8 +131,10 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 			container.add_child(newButton);
 			newButton.pressed.connect(item_selected.bind(newButton));
 			newButton.type = type;
-			if (!firstSelected):
-				firstSelected = newButton;
+			if (type == AssetItem.AssetType.IMAGE && !firstImageSelected):
+				firstImageSelected = newButton;
+			if (type == AssetItem.AssetType.ANIMATION && !firstAnimationSelected):
+				firstAnimationSelected = newButton;
 
 ## Finds an image by its name
 ## imageName: Name of the image
@@ -229,7 +234,6 @@ func refresh_assets() -> void:
 		var propImage : Image = find_image_in_folder(FileSearch.find_directory_by_name(propTypes[i]));
 		var defaultPropImage : Image = find_image(propTypes[i] + ".png", "res://Assets/Defaults");
 		change_tile_texture(Global.EntityType.PROP1 + i, propImage if propImage else defaultPropImage, mainTileMap);
-	pass;
 	
 ## Hadnles the switching of buttons between tab changes
 func on_asset_tab_changed(tabIndex: int) -> void:
@@ -239,8 +243,10 @@ func on_asset_tab_changed(tabIndex: int) -> void:
 	
 	if tabIndex == 0:
 		imagePreview.show();
+		item_selected(firstImageSelected);
 	elif tabIndex == 1:
 		animationPreview.show();
+		item_selected(firstAnimationSelected);
 	elif tabIndex == 2:
 		audioPreview.show();
 
@@ -298,7 +304,7 @@ func reset_menu() -> void:
 	generate_buttons("Props", imagesTab);
 	generate_buttons("Entities", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
-	item_selected(firstSelected);
+	item_selected(firstImageSelected);
 
 
 #func reset_audio(audioName: String) -> void:
@@ -308,8 +314,8 @@ func reset_menu() -> void:
 #	pass;
 
 ## Signal that is emitted when an asset in the menu is selected
-## selectedItem: The item that is selected, defaults to the firstSelected
-func item_selected(selectedItem: AssetItem = firstSelected) -> void:
+## selectedItem: The item that is selected, defaults to the firstImageSelected
+func item_selected(selectedItem: AssetItem = firstImageSelected) -> void:
 	if (selectedItem.type == AssetItem.AssetType.IMAGE):
 		imageNameToReplace = selectedItem.assetName;
 		imageToReplace = find_image_in_folder(FileSearch.find_directory_by_name(imageNameToReplace));
@@ -336,6 +342,7 @@ func anim_change(next : bool):
 		currentAnimationIndex = 0;
 	elif (currentAnimationIndex < 0):
 		currentAnimationIndex = animationsCount - 1;
+	animationFrameIndex = 0;
 	update_animation_preview();
 
 func frame_change(next : bool):

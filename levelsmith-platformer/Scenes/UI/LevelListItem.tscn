@@ -2,17 +2,18 @@
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_v6rci"]
 [ext_resource type="Script" uid="uid://bwa6vqp2x282t" path="res://Scripts/LevelListItem.gd" id="2_3yt47"]
-[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_om4tf"]
+[ext_resource type="Theme" uid="uid://dsbkv6718ooq1" path="res://Resources/LevelListItem.tres" id="3_3yt47"]
 [ext_resource type="Texture2D" uid="uid://bd2218b002s17" path="res://Assets/Sprites/Entities/dude.png" id="3_a8u2b"]
 [ext_resource type="Texture2D" uid="uid://eirshpbhdpcx" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="4_yqi52"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nh84e"]
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
-[node name="LevelListItem" type="Control" unique_id=2067988774 node_paths=PackedStringArray("levelThumbnail", "levelTitle", "levelSize")]
+[node name="LevelListItem" type="Control" unique_id=2067988774 node_paths=PackedStringArray("levelThumbnail", "thumbnailContainer", "levelTitle", "levelAuthor", "levelSize", "levelButton")]
 custom_minimum_size = Vector2(1141, 101)
 layout_mode = 3
 anchors_preset = 15
@@ -24,9 +25,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_v6rci")
 script = ExtResource("2_3yt47")
-levelThumbnail = NodePath("LevelMarginContainer/LevelCard/LevelHBoxContainer/PanelContainer/LevelThumbnail")
+levelThumbnail = NodePath("LevelMarginContainer/LevelCard/LevelHBoxContainer/MarginContainer/ThumbnailContainer/LevelThumbnail")
+thumbnailContainer = NodePath("LevelMarginContainer/LevelCard/LevelHBoxContainer/MarginContainer/ThumbnailContainer")
 levelTitle = NodePath("LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/HBoxContainer/LevelTitle")
+levelAuthor = NodePath("LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelAuthor")
 levelSize = NodePath("LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelSize")
+levelButton = NodePath("LevelMarginContainer/LevelCard")
 
 [node name="LevelMarginContainer" type="MarginContainer" parent="." unique_id=727232242]
 custom_maximum_size = Vector2(1141, 101)
@@ -34,21 +38,32 @@ layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 284.0
 
-[node name="LevelCard" type="PanelContainer" parent="LevelMarginContainer" unique_id=1690928228]
+[node name="LevelCard" type="Button" parent="LevelMarginContainer" unique_id=1645077814]
 custom_minimum_size = Vector2(700, 450)
 layout_mode = 2
-theme_override_styles/panel = ExtResource("2_om4tf")
+theme = ExtResource("3_3yt47")
+theme_type_variation = &"LevelItemWhite"
 
 [node name="LevelHBoxContainer" type="HBoxContainer" parent="LevelMarginContainer/LevelCard" unique_id=1106093210]
 custom_maximum_size = Vector2(1141, 101)
-layout_mode = 2
+layout_mode = 0
+offset_right = 1141.0
+offset_bottom = 101.0
 
-[node name="PanelContainer" type="PanelContainer" parent="LevelMarginContainer/LevelCard/LevelHBoxContainer" unique_id=700087687]
-clip_children = 2
+[node name="MarginContainer" type="MarginContainer" parent="LevelMarginContainer/LevelCard/LevelHBoxContainer" unique_id=16165546]
 layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="ThumbnailContainer" type="PanelContainer" parent="LevelMarginContainer/LevelCard/LevelHBoxContainer/MarginContainer" unique_id=700087687]
+clip_children = 2
+custom_maximum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_nh84e")
 
-[node name="LevelThumbnail" type="TextureRect" parent="LevelMarginContainer/LevelCard/LevelHBoxContainer/PanelContainer" unique_id=1329783747]
+[node name="LevelThumbnail" type="TextureRect" parent="LevelMarginContainer/LevelCard/LevelHBoxContainer/MarginContainer/ThumbnailContainer" unique_id=1329783747]
 custom_minimum_size = Vector2(100, 100)
 custom_maximum_size = Vector2(100, 100)
 layout_mode = 2
@@ -75,6 +90,12 @@ texture = ExtResource("4_yqi52")
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Default Level"
+
+[node name="LevelAuthor" type="Label" parent="LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1336969358]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 22
+text = "ABBCDEJSTZZ"
 
 [node name="LevelSize" type="Label" parent="LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1253071652]
 layout_mode = 2

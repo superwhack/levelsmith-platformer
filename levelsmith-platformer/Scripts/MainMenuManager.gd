@@ -97,6 +97,7 @@ func fill_level_list() -> void:
 	
 	var folderName : String = levelListDir.get_next();
 	
+	var iteration : int = 0;
 	# So long as the folder name is not null...
 	while folderName != "":
 		if (levelListDir.current_is_dir() and not folderName.begins_with(".")):
@@ -126,8 +127,15 @@ func fill_level_list() -> void:
 				else:
 					print("Failed to load image: ", levelThumbnailPath);
 
+			if (iteration % 2 == 1):
+				item.buttonColor = item.ButtonColor.WHITE;
+			else:
+				item.buttonColor = item.ButtonColor.BLUE;
+			item.apply_colors();
+				
 			# Get the next folder
 			folderName = levelListDir.get_next();
+			iteration += 1;
 
 ## Retrieves the world size from a CSV file.
 ## filePath: the file path of the CSV file.

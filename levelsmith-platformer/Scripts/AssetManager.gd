@@ -338,10 +338,24 @@ func anim_change(next : bool):
 		currentAnimationIndex = animationsCount - 1;
 	update_animation_preview();
 
+func frame_change(next : bool):
+	if (next):
+		animationFrameIndex += 1;
+	else:
+		animationFrameIndex -= 1;
+	var frameCount : int = FileSearch.file_count_in_folder(animationPreviewNameToReplace);
+	if (animationFrameIndex >= frameCount):
+		animationFrameIndex = 0;
+	elif (animationFrameIndex < 0):
+		animationFrameIndex = frameCount - 1;
+	update_animation_preview();
+
 func update_animation_preview() -> void:
 	animationPreviewNameToReplace = DirAccess.get_directories_at(FileSearch.find_directory_by_name(selectedEntityType))[currentAnimationIndex];
 	animationName.text = animationPreviewNameToReplace;
-	if (FileSearch.file_count_in_folder(animationPreviewNameToReplace) > 0):
+	var frameCount = FileSearch.file_count_in_folder(animationPreviewNameToReplace);
+	frameCountLabel.text = str("Frame ", animationFrameIndex + 1, "/", frameCount)
+	if (frameCount > 0):
 		animationPreviewToReplace = get_animation_from_folder(animationPreviewNameToReplace)[animationFrameIndex];
 	else:
 		animationPreviewToReplace = null;

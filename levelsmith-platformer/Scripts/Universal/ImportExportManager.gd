@@ -39,7 +39,7 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	DirAccess.make_dir_absolute(levelAssetPath);
 	
 	# Generate default JSON file
-	var defaultPlayerJSON : String = '{"enemies": [], player": {';
+	var defaultPlayerJSON : String = '{"enemies": [], "player": {';
 	defaultPlayerJSON += '"health": ' + str(playerDefault.health) + ", ";
 	defaultPlayerJSON += '"speed": ' + str(playerDefault.groundSpeed) + ", ";
 	defaultPlayerJSON += '"jump": ' + str(playerDefault.jumpHeight) + ", ";

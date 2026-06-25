@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://8iq5mrynufah"]
+
+[ext_resource type="Texture2D" uid="uid://cnosv0durnybp" path="res://Assets/Sprites/Entities/dude.png" id="1_dg4ca"]
+
+[node name="StationaryPreview" type="Sprite2D" unique_id=709007533]
+modulate = Color(0.9882353, 0, 0, 1)
+texture = ExtResource("1_dg4ca")

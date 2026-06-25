@@ -9,10 +9,17 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dhqy0"]
 
 [node name="EnemyStationary" type="CharacterBody2D" unique_id=279826983]
+collision_layer = 6
+collision_mask = 6
+floor_snap_length = 128.0
 script = ExtResource("1_jtxg7")
 metadata/_custom_type_script = "uid://b5cfw8am4ff8f"
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=1905151101]
+visible = false
+z_index = 4
+position = Vector2(0, -90)
+rotation = 1.5707964
 scale = Vector2(6.3, 6.3)
 texture = ExtResource("2_3thal")
 

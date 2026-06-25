@@ -57,7 +57,13 @@ func _ready() -> void:
 func import_level() -> void:
 	if (!ImportExportManager.validate_import(importedLevelPath)): return;
 	
-	ImportExportManager.clone_data(importedLevelPath + "/", "user://Levels/");
+	# Extract the name of the folder from the file path
+	var importedLevelArray : Array = importedLevelPath.split("/");
+	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
+	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
+	
+	DirAccess.make_dir_absolute(importDirectory);
+	ImportExportManager.clone_data(importedLevelPath + "/", importDirectory);
 	masterManager.import_level_and_edit();
 	
 	# Resets the ui overlay

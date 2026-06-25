@@ -46,10 +46,10 @@ func check_out_of_bounds() -> bool:
 	
 	# There is a 1 tile leeway given to enemies who leave bounds, before death
 	if (global_position.x < (-1) * Global.TILE_SIZE
-	|| global_position.x > (masterManager.worldSize.y + 1) * Global.TILE_SIZE
+	|| global_position.x > (masterManager.worldSize.x + 1) * Global.TILE_SIZE
 	|| global_position.y < (-1) * Global.TILE_SIZE
-	|| global_position.y > (masterManager.worldSize.x + 1) * Global.TILE_SIZE):
-		print("Enemy OOB: ", global_position)
+	|| global_position.y > (masterManager.worldSize.y + 1) * Global.TILE_SIZE):
+		print("Player OOB: ", global_position)
 		return true;
 	return false;
 

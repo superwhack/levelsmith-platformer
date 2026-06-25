@@ -71,13 +71,15 @@ icon_alignment = 1
 
 [node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=1930773515]
 layout_mode = 0
-offset_right = 108.0
+offset_right = 292.0
 offset_bottom = 92.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 
 [node name="PauseButton" type="Button" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin" unique_id=2000062892]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 theme = ExtResource("2_ym18m")
 icon = ExtResource("5_jygy8")
 

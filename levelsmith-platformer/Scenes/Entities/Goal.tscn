@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://1wme1ton08gv"]
 
-[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="1_7hjqj"]
+[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Defaults/Assets/Sprites/Entities/Goal.png" id="1_7hjqj"]
 [ext_resource type="Script" uid="uid://cplua8142i8c3" path="res://Scripts/Game/Goal.gd" id="1_vs13i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7hjqj"]

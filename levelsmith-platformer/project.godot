@@ -24,6 +24,7 @@ Global="*uid://ddgi8vrr1tdwj"
 AudioManager="*uid://b2na8kblsdcth"
 ImportExportManager="*uid://osd05p20la73"
 PopUpManager="*uid://balrchnavex6a"
+FileSearch="*uid://b3f0un6fg5832"
 
 [debug]
 

@@ -7,6 +7,7 @@ extends CharacterBody2D
 var bounceMovementBoost := 1.0;
 var propertyFile : Resource;
 var direction := 1;
+var active = false;
 
 @export var leftRaycast : RayCast2D;
 @export var rightRaycast : RayCast2D;
@@ -14,7 +15,7 @@ var direction := 1;
 @export var upRaycast : RayCast2D;
 @export var raycastHelper : Node;
 
-@export var onScreen : VisibleOnScreenEnabler2D;
+@export var onScreen : VisibleOnScreenNotifier2D;
 
 # Sprite reference
 #@onready var sprites: AnimatedSprite2D = $AnimatedSprite2D

@@ -70,6 +70,7 @@ func start() -> void:
 		for node in tileMap.get_children():
 			if tileMap.local_to_map(node.global_position) == propertyFile.position:
 				(node as Enemy).apply_script(propertyFile);
+				(node as Enemy).active = false;
 				break;
 
 	# Unpause player

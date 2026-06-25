@@ -24,5 +24,4 @@ texture = ExtResource("2_e2l54")
 [node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
 default_color = Color(0.78039217, 0, 0.05490196, 0.8352941)
 
-[node name="OnScreen" type="VisibleOnScreenEnabler2D" parent="." unique_id=488902254]
-rect = Rect2(-64, -64, 128, 120)
+[node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1562874782]

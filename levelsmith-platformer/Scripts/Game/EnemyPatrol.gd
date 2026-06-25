@@ -21,10 +21,10 @@ var restricted : bool;
 ## Processes the physics every frame
 ## delta: Time since previous frame
 func _physics_process(delta: float) -> void:
-	if onScreen:
+	if !active:
 		if !onScreen.is_on_screen():
 			return;
-		onScreen.queue_free();
+		active = true;
 	# When we are processing physics, we are in the game scene, so the direction
 	# arrow can be hidden.
 	directionArrow.hide();

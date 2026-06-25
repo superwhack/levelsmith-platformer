@@ -33,10 +33,10 @@ func _ready() -> void:
 ## Processes flying movement and collision handling.
 ## delta: Time since previous frame.
 func _physics_process(delta: float) -> void:
-	if onScreen:
+	if !active:
 		if !onScreen.is_on_screen():
 			return;
-		onScreen.queue_free();
+		active = true;;
 	if (obstacleCooldown > 0.0):
 		obstacleCooldown -= delta;
 

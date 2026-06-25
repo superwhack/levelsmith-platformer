@@ -16,6 +16,7 @@ var audioToReplace : AudioStream;
 
 # References to preview and file dialog
 @export var imagePreview : Panel;
+@export var imagePreviewTexture : TextureRect;
 @export var animationPreview : Panel;
 @export var audioPreview : Panel;
 @export var assetTabs : TabContainer;
@@ -272,9 +273,9 @@ func replace_image(newImagePath: String) -> void:
 	refresh_assets();
 	var replacementImage : Image = find_image_in_folder(targetFilePath);
 	if (replacementImage):
-		imagePreview.texture = ImageTexture.create_from_image(replacementImage);
+		imagePreviewTexture.texture = ImageTexture.create_from_image(replacementImage);
 	else:
-		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
+		imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 
 #func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 #	pass;
@@ -282,7 +283,7 @@ func replace_image(newImagePath: String) -> void:
 func reset_image() -> void:
 	clear_image();
 	refresh_assets();
-	imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
+	imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 
 func reset_all() -> void:
 	delete_folder(filePath);
@@ -323,9 +324,9 @@ func item_selected(selectedItem: AssetItem = firstSelected) -> void:
 	if (imageToReplace):
 		var replacementTexture : Texture2D = ImageTexture.create_from_image(imageToReplace);
 		if (replacementTexture): 
-			imagePreview.texture = ImageTexture.create_from_image(imageToReplace);
+			imagePreviewTexture.texture = ImageTexture.create_from_image(imageToReplace);
 	else:
-		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
+		imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 	
 	currentAssetLabel.text = selectedItem.displayName;
 

@@ -21,7 +21,7 @@ corner_radius_bottom_left = 12
 expand_margin_top = 2.0
 expand_margin_bottom = 3.0
 
-[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "animationPreview", "audioPreview", "assetTabs", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton")]
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imagePreviewTexture", "animationPreview", "audioPreview", "assetTabs", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton")]
 process_mode = 2
 custom_minimum_size = Vector2(900, 600)
 offset_right = 900.0
@@ -29,6 +29,7 @@ offset_bottom = 600.0
 theme = ExtResource("1_rshqi")
 script = ExtResource("1_2va5h")
 imagePreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview")
+imagePreviewTexture = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview/ImageAsset")
 animationPreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview")
 audioPreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview")
 assetTabs = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs")

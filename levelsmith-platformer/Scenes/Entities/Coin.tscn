@@ -5,7 +5,7 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7hjqj"]
 
-[node name="Goal" type="Area2D" unique_id=2133231128]
+[node name="Coin" type="Area2D" unique_id=2133231128]
 script = ExtResource("1_nsiks")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1006454652]

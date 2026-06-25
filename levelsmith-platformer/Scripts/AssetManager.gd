@@ -49,6 +49,10 @@ var audioToReplace : AudioStream;
 @export var frameRightButton : Button;
 @export var frameLeftButton : Button;
 @export var frameCountLabel : Label;
+@export var playButton : Button;
+var playingAnimation : bool;
+var FPS : float = 12;
+var animTimer : float = 0;
 
 # Keep track of the first selected item
 var firstImageSelected : AssetItem = null;
@@ -90,6 +94,7 @@ func _ready() -> void:
 	animationPreviewLeftButton.pressed.connect(anim_change.bind(false));
 	frameRightButton.pressed.connect(frame_change.bind(true));
 	frameLeftButton.pressed.connect(frame_change.bind(false));
+	playButton.pressed.connect(play_preview_animation);
 	
 	assetTabs.tab_changed.connect(on_asset_tab_changed);
 	
@@ -108,6 +113,13 @@ func _ready() -> void:
 	refresh_assets();
 	ImportExportManager.levelImported.connect(refresh_assets);
 	ImportExportManager.levelImported.connect(item_selected);
+
+func _process(delta: float) -> void:
+	if (playingAnimation):
+		animTimer += delta;
+		if (animTimer >= 1/FPS):
+			frame_change();
+			animTimer = 0;
 
 # WARNING Only refreshes all files once, might be worth it later to do individually
 ## Generate buttons for each asset
@@ -316,6 +328,7 @@ func reset_menu() -> void:
 ## Signal that is emitted when an asset in the menu is selected
 ## selectedItem: The item that is selected, defaults to the firstImageSelected
 func item_selected(selectedItem: AssetItem = firstImageSelected) -> void:
+	playingAnimation = false;
 	if (selectedItem.type == AssetItem.AssetType.IMAGE):
 		imageNameToReplace = selectedItem.assetName;
 		imageToReplace = find_image_in_folder(FileSearch.find_directory_by_name(imageNameToReplace));
@@ -333,6 +346,7 @@ func item_selected(selectedItem: AssetItem = firstImageSelected) -> void:
 	currentAssetLabel.text = selectedItem.displayName;
 
 func anim_change(next : bool):
+	playingAnimation = false;
 	if (next):
 		currentAnimationIndex += 1;
 	else:
@@ -345,7 +359,7 @@ func anim_change(next : bool):
 	animationFrameIndex = 0;
 	update_animation_preview();
 
-func frame_change(next : bool):
+func frame_change(next : bool = true):
 	if (next):
 		animationFrameIndex += 1;
 	else:
@@ -431,3 +445,6 @@ func get_missing_image() -> Image:
 	image.load(MISSING_TEXTURE);
 	validate_image(image);
 	return image;
+
+func play_preview_animation() -> void:
+	playingAnimation = !playingAnimation;

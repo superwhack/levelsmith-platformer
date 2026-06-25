@@ -21,7 +21,7 @@ corner_radius_bottom_left = 12
 expand_margin_top = 2.0
 expand_margin_bottom = 3.0
 
-[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imagePreviewTexture", "animationPreview", "animationPreviewTexture", "audioPreview", "assetTabs", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "animationPreviewRightButton", "animationPreviewLeftButton", "animationName", "frameRightButton", "frameLeftButton", "frameCountLabel")]
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imagePreviewTexture", "animationPreview", "animationPreviewTexture", "audioPreview", "assetTabs", "imageSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "animationPreviewRightButton", "animationPreviewLeftButton", "animationName", "frameRightButton", "frameLeftButton", "frameCountLabel", "playButton")]
 process_mode = 2
 custom_minimum_size = Vector2(900, 600)
 offset_right = 900.0
@@ -47,6 +47,7 @@ animationName = NodePath("ContentContainer/MainContentContainer/LeftColumnContai
 frameRightButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer/NextFrameButton")
 frameLeftButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer/PrevFrameButton")
 frameCountLabel = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameCountLabel")
+playButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/PlayPauseButton")
 
 [node name="ContentContainer" type="VBoxContainer" parent="." unique_id=1686367830]
 layout_mode = 1

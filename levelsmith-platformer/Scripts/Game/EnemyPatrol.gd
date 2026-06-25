@@ -18,9 +18,15 @@ var restricted : bool;
 @export var rayCastDownR : RayCast2D;
 @export var directionArrow : Sprite2D;
 
+@export var onScreen : VisibleOnScreenEnabler2D;
+
 ## Processes the physics every frame
 ## delta: Time since previous frame
 func _physics_process(delta: float) -> void:
+	if onScreen:
+		if !onScreen.is_on_screen():
+			return;
+		onScreen.queue_free();
 	# When we are processing physics, we are in the game scene, so the direction
 	# arrow can be hidden.
 	directionArrow.hide();

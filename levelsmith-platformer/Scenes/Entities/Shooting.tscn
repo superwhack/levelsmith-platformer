@@ -12,8 +12,8 @@ collision_layer = 6
 collision_mask = 7
 script = ExtResource("1_0p30m")
 directionArrow = NodePath("DirectionArrow")
-leftRaycast = NodePath("RayCastLeft")
-rightRaycast = NodePath("RayCastRight")
+leftRaycast = NodePath("")
+rightRaycast = NodePath("")
 downRaycast = NodePath("RayCastDown")
 upRaycast = NodePath("RayCastUp")
 raycastHelper = NodePath("RaycastHelper")
@@ -29,16 +29,6 @@ texture = ExtResource("2_0p30m")
 visible = false
 z_index = 4
 texture = ExtResource("3_3c58l")
-
-[node name="RayCastRight" type="RayCast2D" parent="." unique_id=1014126874]
-rotation = -3.1415925
-target_position = Vector2(-66, 0)
-collision_mask = 2
-
-[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1470599111]
-rotation = 3.1415925
-target_position = Vector2(66, 0)
-collision_mask = 2
 
 [node name="RayCastUp" type="RayCast2D" parent="." unique_id=852169096]
 target_position = Vector2(0, -66)

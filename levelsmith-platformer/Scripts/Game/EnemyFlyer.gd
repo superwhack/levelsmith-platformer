@@ -20,6 +20,8 @@ const SPEED_MODIFIER : float = 100.0;
 
 @export var previewLine : Line2D;
 
+@export var onScreen : VisibleOnScreenEnabler2D;
+
 ## Adds enemy to group and sets up initial points
 func _ready() -> void:
 	super._ready();
@@ -33,6 +35,10 @@ func _ready() -> void:
 ## Processes flying movement and collision handling.
 ## delta: Time since previous frame.
 func _physics_process(delta: float) -> void:
+	if onScreen:
+		if !onScreen.is_on_screen():
+			return;
+		onScreen.queue_free();
 	if (obstacleCooldown > 0.0):
 		obstacleCooldown -= delta;
 

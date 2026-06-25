@@ -212,8 +212,9 @@ func detect_enemies(body: Node2D) -> void:
 ## body: the body being collided with
 func detect_enemy_bounce(body: Node2D) -> void:
 	if (body.is_in_group("enemy")):
-		bounce();
-		body.queue_free();
+		if (velocity.y > 0 || body.velocity.y - velocity.y <= 0):
+			bounce();
+			body.queue_free();
 
 ## Detect collisions with projectiles
 ## area: the area being collided with
@@ -304,7 +305,7 @@ func detect_tiles() -> void:
 		if (tileData && (tileData.get_custom_data("name") == "slow")):
 				# Horizontal Stick
 			if (abs(raycast.target_position.x) > abs(raycast.target_position.y)):
-				velocity.y *= .95;
+				velocity.y *= .93;
 				# Vertical Stick
 			else:
 				if (raycast.target_position.y < 0):

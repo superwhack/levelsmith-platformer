@@ -2,7 +2,7 @@ class_name EnemyPatrol;
 extends Enemy
 
 # Movement variables
-var groundSpeed : float = 1.0;
+var groundSpeed : float = 0.0;
 const SPEED_MODIFIER : float = 400.0;
 var bounceBoost := 1.0;
 

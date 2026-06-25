@@ -4,7 +4,11 @@ extends CharacterBody2D
 # The player settings that can be changed in editor
 @export var groundSpeed : float = 1.0;
 @export var jumpHeight : float = 2.0;
+@export var doubleJump : bool = true;
+var doubleJumpAvailable : bool = doubleJump;
 
+@export var wallJump : bool = true;
+var wallJumpCount : int = 0;
 # Friction in midair
 # BUG: Air Control doesn't work the frame you land on a bouncy tile, allowing you to change direction beofre bouncing back up
 @export var airControl : float = 1.0;
@@ -71,6 +75,7 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
+	var justWallJumped = false;
 	if (check_out_of_bounds()):
 		return;
 		
@@ -95,15 +100,18 @@ func _physics_process(delta: float) -> void:
 			coyoteTimeLeft -= delta;
 		velocity += get_gravity() * delta * fallSpeed;
 	else:
+		doubleJumpAvailable = doubleJump;
+		wallJumpCount = 0;
 		coyoteTimeLeft = coyoteTime;
 	
 	# Detect tiles before jumping and running so slow and ice tiles apply affects before inputs
 	detect_tiles();
 
 	# Jumping with W or Space
-	if (Input.is_action_just_pressed("jump")):
-		if (is_on_floor() or coyoteTimeLeft > 0.0):
-			# Don't allow double jumps by reducing coyoteTimeLeft to 0
+	if (Input.is_action_just_pressed("jump") && !justWallJumped):
+		if (is_on_floor() || coyoteTimeLeft > 0.0 || doubleJumpAvailable):
+			if !(is_on_floor() || coyoteTimeLeft > 0.0):
+				doubleJumpAvailable = false;
 			coyoteTimeLeft = 0;
 			jump();
 	# Handle A and D inputs, as well as lack of directional input
@@ -241,6 +249,7 @@ func detect_tiles() -> void:
 	
 	# Check all collisions with raycasts
 	var slideCollisions : Array[RayCast2D] = [];
+	var slideCollisionsHit : Array[TileData] = [];
 	
 	for raycast in raycasts:
 		if (raycast.is_colliding()):
@@ -259,10 +268,20 @@ func detect_tiles() -> void:
 		var tilePos : Vector2i = tileLayer.local_to_map(probeLocal);
 		var tileData : TileData = tileLayer.get_cell_tile_data(tilePos);
 		
-		if !tileData:continue;
-		
+		if !tileData || slideCollisionsHit.find(tileData) > -1:
+			continue;
+		slideCollisionsHit.push_back(tileData);
 		var tileName : String = tileData.get_custom_data("name");
 		var rayDirection : Vector2 = raycast.target_position;
+
+		if rayDirection.x < 0 && Input.is_action_just_pressed("jump"):
+			wallJumpCount += 1;
+			velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount);
+			velocity.x = 1500;
+		elif rayDirection.x > 0 && Input.is_action_just_pressed("jump"):
+			wallJumpCount += 1;
+			velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount);
+			velocity.x = -1500;
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):
@@ -294,6 +313,8 @@ func detect_tiles() -> void:
 						while raycast.is_colliding():
 							position += Vector2(0, 1);
 							raycast.force_raycast_update();
+					velocity.x = clamp(velocity.x, -trueSpeed * .5, trueSpeed * .5);
+					currentFriction = 1;
 				currentSlowdown = .5;
 		if tileName == "hazard" && (hitGlobal - position).length() < 57:
 			var direction : Vector2 = -raycast.target_position;

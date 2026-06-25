@@ -16,9 +16,12 @@ var levelPathName : String;
 # Stores size of an imported level
 var importedLevelSize : Vector2;
 
+# Default player stats for a new level
+var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tres");
+
 ## Create a new level, cloning from the default folder
 ## levelName: Name of the new level, indicates where it'll go in the folder
-func make_new_level(levelName: String) -> void:
+func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	# When making an enemy we need to set the path name and clear all enemies
 	levelPathName = levelName;
 	clear_enemies_folder();
@@ -34,6 +37,35 @@ func make_new_level(levelName: String) -> void:
 	# Create the directories for the level and asset path.
 	DirAccess.make_dir_absolute(levelPath);
 	DirAccess.make_dir_absolute(levelAssetPath);
+	
+	# Generate default JSON file
+	var defaultPlayerJSON : String = '{"player": {';
+	defaultPlayerJSON += '"health": ' + str(playerDefault.health) + ", ";
+	defaultPlayerJSON += '"speed": ' + str(playerDefault.groundSpeed) + ", ";
+	defaultPlayerJSON += '"jump": ' + str(playerDefault.jumpHeight) + ", ";
+	defaultPlayerJSON += '"airControl": ' + str(playerDefault.airControl) + ", ";
+	defaultPlayerJSON += '"fallSpeed": ' + str(playerDefault.fallSpeed) + ", ";
+	defaultPlayerJSON += '"coyoteTime": ' + str(playerDefault.coyoteTime);
+	defaultPlayerJSON += '}}';
+	
+	# Convert our data to a json_string
+	var json : Variant = JSON.parse_string(defaultPlayerJSON)
+	var jsonString : String = JSON.stringify(json);
+	
+	# Write JSON to file and close it
+	var JSONFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE);
+	JSONFile.store_string(jsonString);
+	JSONFile.close();
+	
+	# Generate default CSV file with empty tiles
+	var CSVFile : FileAccess = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.WRITE);
+	for row in levelSize.y:
+		var tileRow : Array;
+		for col in levelSize.x:
+			tileRow.append("-1");
+		CSVFile.store_csv_line(tileRow);
+	CSVFile.close();
+	
 	clone_data("user://Assets/", levelAssetPath);
 
 ## Export the current level
@@ -46,48 +78,48 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 		DirAccess.make_dir_absolute(levelPath);
 		
 	# Creating Enemy Data in JSON.
-	var data_to_send : String = '{"enemies": [';
+	var dataToSend : String = '{"enemies": [';
 	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
 	for enemyPropertyIndex in range(0, enemyProperties.size()):
 		var enemyProperty : String = enemyProperties[enemyPropertyIndex];
 		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
-		data_to_send += '{"pos":{"x":' + str(propertyFile.position.x) + ',"y":' + str(propertyFile.position.y) + '},';
+		dataToSend += '{"pos":{"x":' + str(propertyFile.position.x) + ',"y":' + str(propertyFile.position.y) + '},';
 		if enemyProperty.contains("Patrol"):
-			data_to_send += '"type":"patrolling", "stats":{';
-			data_to_send += '"speed": ' + str(propertyFile.groundSpeed) + ", ";
-			data_to_send += '"direction": ' + str(propertyFile.direction) + ", ";
-			data_to_send += '"restricted": ' + str(propertyFile.restricted) + '}}';
+			dataToSend += '"type":"patrolling", "stats":{';
+			dataToSend += '"speed": ' + str(propertyFile.groundSpeed) + ", ";
+			dataToSend += '"direction": ' + str(propertyFile.direction) + ", ";
+			dataToSend += '"restricted": ' + str(propertyFile.restricted) + '}}';
 		elif enemyProperty.contains("Shooting"):
-			data_to_send += '"type":"shooting", "stats":{';
-			data_to_send += '"direction": ' + str(propertyFile.direction) + ", ";
-			data_to_send += '"shotSpeed": ' + str(propertyFile.shotSpeed) + ", ";
-			data_to_send += '"fireRate": ' + str(propertyFile.fireRate) + ', ';
-			data_to_send += '"projBounce": ' + str(propertyFile.projBounce) + ', ';
-			data_to_send += '"gravity": ' + str(propertyFile.gravity) + '}}';
+			dataToSend += '"type":"shooting", "stats":{';
+			dataToSend += '"direction": ' + str(propertyFile.direction) + ", ";
+			dataToSend += '"shotSpeed": ' + str(propertyFile.shotSpeed) + ", ";
+			dataToSend += '"fireRate": ' + str(propertyFile.fireRate) + ', ';
+			dataToSend += '"projBounce": ' + str(propertyFile.projBounce) + ', ';
+			dataToSend += '"gravity": ' + str(propertyFile.gravity) + '}}';
 		elif enemyProperty.contains("Flying"):
-			data_to_send += '"type":"flying", "stats":{';
-			data_to_send += '"speed": ' + str(propertyFile.speed) + ", ";
-			data_to_send += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}}}';
+			dataToSend += '"type":"flying", "stats":{';
+			dataToSend += '"speed": ' + str(propertyFile.speed) + ", ";
+			dataToSend += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}}}';
 		if (enemyPropertyIndex < enemyProperties.size() - 1):
-			data_to_send += ',';
+			dataToSend += ',';
 	
 	# Creating Player Data in JSON.
-	data_to_send += '], "player": {';
-	data_to_send += '"health": ' + str(playerData.playerHealth) + ", ";
-	data_to_send += '"speed": ' + str(playerData.playerSpeed) + ", ";
-	data_to_send += '"jump": ' + str(playerData.playerJumpHeight) + ", ";
-	data_to_send += '"airControl": ' + str(playerData.playerAirControl) + ", ";
-	data_to_send += '"fallSpeed": ' + str(playerData.playerFallSpeed) + ", ";
-	data_to_send += '"coyoteTime": ' + str(playerData.playerCoyoteTime);
-	data_to_send += '}}';
+	dataToSend += '], "player": {';
+	dataToSend += '"health": ' + str(playerData.playerHealth) + ", ";
+	dataToSend += '"speed": ' + str(playerData.playerSpeed) + ", ";
+	dataToSend += '"jump": ' + str(playerData.playerJumpHeight) + ", ";
+	dataToSend += '"airControl": ' + str(playerData.playerAirControl) + ", ";
+	dataToSend += '"fallSpeed": ' + str(playerData.playerFallSpeed) + ", ";
+	dataToSend += '"coyoteTime": ' + str(playerData.playerCoyoteTime);
+	dataToSend += '}}';
 	
 	# Convert our data to a json_string
-	var json : Variant = JSON.parse_string(data_to_send)
-	var json_string : String = JSON.stringify(json);
+	var json : Variant = JSON.parse_string(dataToSend)
+	var jsonString : String = JSON.stringify(json);
 	
 	# Write JSON to file and close it
 	var JSONFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE);
-	JSONFile.store_string(json_string);
+	JSONFile.store_string(jsonString);
 	JSONFile.close();
 	
 	# Write tileData in the form of a CSV file, then close it

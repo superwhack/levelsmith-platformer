@@ -160,7 +160,7 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 		currentLine = CSVFile.get_csv_line();
 	CSVFile.close();
 	
-	importedLevelSize = Vector2(row, col);
+	importedLevelSize = Vector2(col, row);
 	await get_tree().process_frame;
 	clone_data(levelAssetPath, "user://Assets/");
 	

@@ -35,14 +35,13 @@ func update_preview_object(mousePosition: Vector2, prevPosition: Vector2, previe
 	if (mousePosition != prevPosition): clear();
 	
 	## NOTE: Prop 1 is assumed to be the first prop, and everything after it is a prop/rotatable.
-	if (previewObject >= Global.EntityType.PROP1):
+	if (previewObject == Global.ERASING_TILE):
+		set_cell(mousePosition, previewObject, Vector2i.ZERO);
+	elif (previewObject >= Global.EntityType.PROP1 && previewObject <= Global.EntityType.PROP6):
 		set_cell(mousePosition, previewObject, Vector2i.ZERO, toolManager.currentObjectRotation);
 	elif (previewObject == Global.TileType.SLOPE):
-		# WARNING: Highly specific solution corresponding to currentObjectRotation
-		# IDs for red alternatives are 4 for top right, 6 for top left and 7 for lower right
-		# based on the respective rotation values of 12288, 20480 and 24576.
-		# TODO: Rework object rotation and have a much easier conversion method.
-		var alternativeId : int = int(isRed) + toolManager.currentObjectRotation / 4096 if isRed else toolManager.currentObjectRotation;
+		# Add 4 to the alternative ID to use red unplaceable slopes.
+		var alternativeId : int = toolManager.currentObjectRotation + (4 if isRed else 0);
 		set_cell(mousePosition, previewObject, Vector2i.ZERO, alternativeId);
 	elif (previewObject >= editorManager.tileCount):
 		set_cell(mousePosition, previewObject, Vector2i.ZERO, 2);

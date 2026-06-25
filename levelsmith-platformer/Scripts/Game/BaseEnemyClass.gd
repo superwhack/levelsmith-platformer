@@ -4,7 +4,15 @@ extends CharacterBody2D
 # Base variables for enemy, adjustable only in-engine.
 @export var health : int = 1;
 @export var gravity : float = 980.0;
+var bounceMovementBoost := 1.0;
 var propertyFile : Resource;
+var direction := 1;
+
+@export var leftRaycast : RayCast2D;
+@export var rightRaycast : RayCast2D;
+@export var downRaycast : RayCast2D;
+@export var upRaycast : RayCast2D;
+@export var raycastHelper : Node;
 
 # Sprite reference
 #@onready var sprites: AnimatedSprite2D = $AnimatedSprite2D
@@ -22,6 +30,37 @@ func _physics_process(delta: float) -> void:
 	
 	# Apply gravity every frame based on time passed since last frame
 	apply_gravity(delta)
+
+func detect_tiles(horizontal : bool) -> void:
+	var bounceSpeedBoost = 0;
+	# If either side raycast is colliding, switch direction.
+	if (horizontal && rightRaycast.is_colliding()):
+		direction = -1;
+		var raycastTileData : TileData = raycastHelper.get_collision_data(rightRaycast);
+		if raycastTileData && raycastTileData.get_custom_data("name") == "bounce":
+			bounceMovementBoost = 2 * raycastTileData.get_custom_data("bounce");
+			velocity.y += -500 * raycastTileData.get_custom_data("bounce");
+	if (horizontal && leftRaycast.is_colliding()):
+		direction = 1;
+		var raycastTileData : TileData = raycastHelper.get_collision_data(leftRaycast);
+		if raycastTileData && raycastTileData.get_custom_data("name") == "bounce":
+			bounceMovementBoost = 2 * raycastTileData.get_custom_data("bounce");
+			velocity.y += -500 * raycastTileData.get_custom_data("bounce");
+	if (downRaycast.is_colliding()):
+		var raycastTileData : TileData = raycastHelper.get_collision_data(downRaycast);
+		if raycastTileData:
+			if raycastTileData.get_custom_data("name") == "bounce":
+				velocity.y = -1000 * raycastTileData.get_custom_data("bounce");
+			elif raycastTileData.get_custom_data("name") == "slow":
+				velocity.x /= 2;
+	if (upRaycast.is_colliding()):
+		var raycastTileData : TileData = raycastHelper.get_collision_data(upRaycast);
+		if raycastTileData && raycastTileData.get_custom_data("name") == "bounce":
+			velocity.y = 1000 * raycastTileData.get_custom_data("bounce");
+	if bounceMovementBoost > 1.0:
+		bounceMovementBoost = pow(bounceMovementBoost, .97);
+		bounceSpeedBoost = 600 * (bounceMovementBoost - 1.0);
+	velocity.x += bounceSpeedBoost * direction;
 
 ## Adds gravity
 func apply_gravity(delta: float) -> void:

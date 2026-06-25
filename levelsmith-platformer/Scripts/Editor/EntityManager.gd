@@ -71,6 +71,7 @@ func place_entity(clickPosition: Vector2) -> void:
 				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
 			ResourceSaver.save(newEntity, file);
 			placedEnemy.assign_script(str(time), clickPosition);
+			await get_tree().process_frame;
 			editorManager.reset_enemy_positions();
 		Global.EntityType.GOAL:
 			goalCount += 1;

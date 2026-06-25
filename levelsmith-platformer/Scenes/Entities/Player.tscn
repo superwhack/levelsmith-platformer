@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
 size = Vector2(20, 19.999996)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_agccv"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_571pn"]
 
 [node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "deathCasts", "enemyBounceCollision", "enemyCollision") groups=["Player"]]
 position = Vector2(0, 10)
@@ -41,7 +41,7 @@ shape = SubResource("RectangleShape2D_agccv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]
 scale = Vector2(6, 6)
-shape = SubResource("CircleShape2D_agccv")
+shape = SubResource("RectangleShape2D_571pn")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=290798525]
 texture = ExtResource("2_gntrk")

@@ -303,9 +303,10 @@ func detect_tiles() -> void:
 
 		# Sticky Tiles
 		if (tileData && (tileData.get_custom_data("name") == "slow")):
-				# Horizontal Stick
+			currentFriction = 1;
+			# Horizontal Stick
 			if (abs(raycast.target_position.x) > abs(raycast.target_position.y)):
-				velocity.y *= .93;
+				velocity.y *= .9;
 				# Vertical Stick
 			else:
 				if (raycast.target_position.y < 0):
@@ -315,7 +316,6 @@ func detect_tiles() -> void:
 							position += Vector2(0, 1);
 							raycast.force_raycast_update();
 					velocity.x = clamp(velocity.x, -trueSpeed * .5, trueSpeed * .5);
-					currentFriction = 1;
 				currentSlowdown = .5;
 		if tileName == "hazard" && (hitGlobal - position).length() < 57:
 			var direction : Vector2 = -raycast.target_position;

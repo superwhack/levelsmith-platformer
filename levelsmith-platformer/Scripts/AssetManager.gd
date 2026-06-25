@@ -226,17 +226,15 @@ func refresh_assets() -> void:
 	
 ## Hadnles the switching of buttons between tab changes
 func on_asset_tab_changed(tabIndex: int) -> void:
+	imagePreview.hide();
+	animationPreview.hide();
+	audioPreview.hide();
+	
 	if tabIndex == 0:
 		imagePreview.show();
-		animationPreview.hide();
-		audioPreview.hide();
 	elif tabIndex == 1:
-		imagePreview.hide();
 		animationPreview.show();
-		audioPreview.hide();
 	elif tabIndex == 2:
-		imagePreview.hide();
-		animationPreview.hide();
 		audioPreview.show();
 
 ## Clears any images in the replacement directory

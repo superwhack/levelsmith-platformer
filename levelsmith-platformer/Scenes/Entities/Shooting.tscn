@@ -7,7 +7,7 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
-[node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow", "leftRaycast", "rightRaycast", "downRaycast", "upRaycast", "raycastHelper") groups=["Enemy"]]
+[node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow", "leftRaycast", "rightRaycast", "downRaycast", "upRaycast", "raycastHelper", "onScreen") groups=["Enemy"]]
 collision_layer = 6
 collision_mask = 7
 script = ExtResource("1_0p30m")
@@ -17,6 +17,7 @@ rightRaycast = NodePath("")
 downRaycast = NodePath("RayCastDown")
 upRaycast = NodePath("RayCastUp")
 raycastHelper = NodePath("RaycastHelper")
+onScreen = NodePath("OnScreen")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
 scale = Vector2(6.3, 6.3)
@@ -40,3 +41,6 @@ collision_mask = 10
 
 [node name="RaycastHelper" type="Node" parent="." unique_id=641602602]
 script = ExtResource("4_571pn")
+
+[node name="OnScreen" type="VisibleOnScreenEnabler2D" parent="." unique_id=1757035511]
+rect = Rect2(-66, -65, 132, 130)

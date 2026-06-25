@@ -14,6 +14,8 @@ var direction := 1;
 @export var upRaycast : RayCast2D;
 @export var raycastHelper : Node;
 
+@export var onScreen : VisibleOnScreenEnabler2D;
+
 # Sprite reference
 #@onready var sprites: AnimatedSprite2D = $AnimatedSprite2D
 

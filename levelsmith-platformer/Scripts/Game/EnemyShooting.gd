@@ -21,6 +21,8 @@ const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn"
 var timeLeft : float = 1;
 
 func _physics_process(delta: float) -> void:
+	if !onScreen.is_on_screen():
+		return;
 	velocity.x = 0;
 	if gravityOn:
 		super._physics_process(delta);

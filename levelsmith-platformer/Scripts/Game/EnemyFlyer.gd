@@ -20,8 +20,6 @@ const SPEED_MODIFIER : float = 100.0;
 
 @export var previewLine : Line2D;
 
-@export var onScreen : VisibleOnScreenEnabler2D;
-
 ## Adds enemy to group and sets up initial points
 func _ready() -> void:
 	super._ready();

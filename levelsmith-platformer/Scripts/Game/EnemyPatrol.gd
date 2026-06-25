@@ -18,8 +18,6 @@ var restricted : bool;
 @export var rayCastDownR : RayCast2D;
 @export var directionArrow : Sprite2D;
 
-@export var onScreen : VisibleOnScreenEnabler2D;
-
 ## Processes the physics every frame
 ## delta: Time since previous frame
 func _physics_process(delta: float) -> void:

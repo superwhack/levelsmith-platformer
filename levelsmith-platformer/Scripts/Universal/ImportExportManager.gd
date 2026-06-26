@@ -102,18 +102,17 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			dataToSend += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}}}';
 		if (enemyPropertyIndex < enemyProperties.size() - 1):
 			dataToSend += ',';
-	
 	# Creating Player Data in JSON.
-	data_to_send += '], "player": {';
-	data_to_send += '"health": ' + str(playerData.playerHealth) + ", ";
-	data_to_send += '"speed": ' + str(playerData.playerSpeed) + ", ";
-	data_to_send += '"jump": ' + str(playerData.playerJumpHeight) + ", ";
-	data_to_send += '"airControl": ' + str(playerData.playerAirControl) + ", ";
-	data_to_send += '"fallSpeed": ' + str(playerData.playerFallSpeed) + ", ";
-	data_to_send += '"coyoteTime": ' + str(playerData.playerCoyoteTime) + ", ";
-	data_to_send += '"doubleJump": ' + str(playerData.playerDoubleJump) + ", ";
-	data_to_send += '"wallJump": ' + str(playerData.playerWallJump);
-	data_to_send += '}}';
+	dataToSend += '], "player": {';
+	dataToSend += '"health": ' + str(playerData.playerHealth) + ", ";
+	dataToSend += '"speed": ' + str(playerData.playerSpeed) + ", ";
+	dataToSend += '"jump": ' + str(playerData.playerJumpHeight) + ", ";
+	dataToSend += '"airControl": ' + str(playerData.playerAirControl) + ", ";
+	dataToSend += '"fallSpeed": ' + str(playerData.playerFallSpeed) + ", ";
+	dataToSend += '"coyoteTime": ' + str(playerData.playerCoyoteTime) + ", ";
+	dataToSend += '"doubleJump": ' + str(playerData.playerDoubleJump) + ", ";
+	dataToSend += '"wallJump": ' + str(playerData.playerWallJump);
+	dataToSend += '}}';
 	
 	# Convert our data to a json_string
 	var json : Variant = JSON.parse_string(dataToSend)

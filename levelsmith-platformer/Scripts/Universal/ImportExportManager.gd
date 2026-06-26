@@ -111,7 +111,8 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	dataToSend += '"fallSpeed": ' + str(playerData.playerFallSpeed) + ", ";
 	dataToSend += '"coyoteTime": ' + str(playerData.playerCoyoteTime) + ", ";
 	dataToSend += '"doubleJump": ' + str(playerData.playerDoubleJump) + ", ";
-	dataToSend += '"wallJump": ' + str(playerData.playerWallJump);
+	dataToSend += '"wallJump": ' + str(playerData.playerWallJump) + ", ";
+	dataToSend += '"wallJumpDecay": ' + str(playerData.playerWallJumpDecay);
 	dataToSend += '}}';
 	
 	# Convert our data to a json_string
@@ -217,6 +218,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	playerData.playerCoyoteTime = player.coyoteTime;
 	playerData.playerDoubleJump = player.doubleJump;
 	playerData.playerWallJump = player.wallJump;
+	playerData.playerWallJumpDecay = player.wallJumpDecay;
 	playerData.update_custom();
 	playerData.update_sliders();
 	

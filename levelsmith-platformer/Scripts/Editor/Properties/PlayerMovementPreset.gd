@@ -13,3 +13,4 @@ class_name PlayerMovementPreset
 
 @export var doubleJump : bool;
 @export var wallJump : bool;
+@export var wallJumpDecay : bool;

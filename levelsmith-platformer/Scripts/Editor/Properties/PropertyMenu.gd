@@ -20,6 +20,7 @@ var playerFallSpeed : float;
 var playerCoyoteTime : float;
 var playerDoubleJump : bool;
 var playerWallJump : bool;
+var playerWallJumpDecay : bool;
 
 # Player value sliders
 @export var playerHealthSlider: VBoxContainer;
@@ -30,6 +31,7 @@ var playerWallJump : bool;
 @export var playerCoyoteTimeSlider: VBoxContainer;
 @export var playerDoubleJumpCheckbox: VBoxContainer;
 @export var playerWallJumpCheckbox: VBoxContainer;
+@export var playerWallJumpDecayCheckbox : VBoxContainer;
 
 # Patrolling inputs
 @export var patrollingSpeedSlider : VBoxContainer;
@@ -72,7 +74,7 @@ func _ready() -> void:
 	playerCoyoteTimeSlider.drag_ended.connect(_on_drag_ended);
 	playerDoubleJumpCheckbox.check_changed.connect(_on_drag_ended);
 	playerWallJumpCheckbox.check_changed.connect(_on_drag_ended);
-	
+	playerWallJumpDecayCheckbox.check_changed.connect(_on_drag_ended);
 	presetOptions.item_selected.connect(_on_preset_options_item_selected);
 	
 	patrollingSpeedSlider.drag_ended.connect(_on_drag_ended);
@@ -132,6 +134,7 @@ func _on_preset_options_item_selected(index: int) -> void:
 	playerCoyoteTime = selectedPlayerPreset.coyoteTime;
 	playerDoubleJump = selectedPlayerPreset.doubleJump;
 	playerWallJump = selectedPlayerPreset.wallJump;
+	playerWallJumpDecay = selectedPlayerPreset.wallJumpDecay;
 	update_sliders();
 
 ## Reset the Custom to conform with the Default on creating new levels
@@ -153,6 +156,7 @@ func update_custom() -> void:
 	customPreset.coyoteTime = playerCoyoteTime;
 	customPreset.doubleJump = playerDoubleJump;
 	customPreset.wallJump = playerWallJump;
+	customPreset.wallJumpDecay = playerWallJumpDecay;
 	ResourceSaver.save(customPreset, "res://Resources/PlayerPresets/Custom.tres");
 	
 	presetOptions.select(4);
@@ -187,6 +191,15 @@ func update_sliders() -> void:
 	playerDoubleJumpCheckbox.update_checkbox();
 	playerWallJumpCheckbox.value = playerWallJump;
 	playerWallJumpCheckbox.update_checkbox();
+	if !playerWallJump:
+		playerWallJumpDecayCheckbox.modulate = Color(1, 1, 1, 0.5);
+		playerWallJumpDecayCheckbox.check_changed.disconnect(_on_drag_ended);
+		playerWallJumpDecay = false;
+	else:
+		playerWallJumpDecayCheckbox.modulate = Color(1, 1, 1, 1);
+		playerWallJumpDecayCheckbox.check_changed.connect(_on_drag_ended);
+	playerWallJumpDecayCheckbox.value = playerWallJumpDecay;
+	playerWallJumpDecayCheckbox.update_checkbox();
 	# Enemies
 	if selectedEntity is EnemyPatrol:
 		patrollingSpeedSlider.value = selectedPreset.groundSpeed;
@@ -224,6 +237,7 @@ func update_values() -> void:
 	playerCoyoteTime = playerCoyoteTimeSlider.value;
 	playerDoubleJump = playerDoubleJumpCheckbox.value;
 	playerWallJump = playerWallJumpCheckbox.value;
+	playerWallJumpDecay = playerWallJumpDecayCheckbox.value;
 	
 	if selectedEntity is EnemyPatrol:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;

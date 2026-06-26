@@ -144,7 +144,6 @@ func drop_entity() -> void:
 	
 	# Drop the entity on its original spot if mouse is over any object.
 	if (clickedObjectId >= 0 || !editorManager.isPlaceable):
-		print(toolManager.prevPosition);
 		if toolManager.prevPosition == Vector2(-1 ,-1):
 			toolManager.prevEntity = -1;
 			toolManager.prevPosition = Vector2(0,0);

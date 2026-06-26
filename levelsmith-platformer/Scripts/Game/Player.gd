@@ -18,6 +18,7 @@ var doubleJumpAvailable : bool = doubleJump;
 var wallJumpCount : int = 0;
 var wallJumpDirection : WallDirection = WallDirection.NONE;
 var justWallJumped = false;
+var wallJumpDecay = false;
 
 # Friction in midair
 # BUG: Air Control doesn't work the frame you land on a bouncy tile, allowing you to change direction beofre bouncing back up
@@ -312,6 +313,9 @@ func detect_tiles() -> void:
 				if tileName == "slow" || tileName == "ice":
 					velocity.x /= 1.5;
 				wallJumpCount += 1;
+				# If the option for decay is turned off, don't decay
+				if !wallJumpDecay:
+					wallJumpCount = 1;
 				velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(groundSpeed, .35);;
 				justWallJumped = true;
 
@@ -353,10 +357,10 @@ func detect_tiles() -> void:
 							raycast.force_raycast_update();
 					velocity.x = clamp(velocity.x, -trueSpeed * .5, trueSpeed * .5);
 				currentSlowdown = .5;
-		if tileName == "hazard" && (hitGlobal - position).length() < 57:
+		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
 			take_damage(1, direction.normalized());
-		elif tileName == "death" && (hitGlobal - position).length() < 57:
+		elif tileName == "death":
 			take_damage(-1);
 		# Only downward rays should drive floor tile effects (except hazard)
 		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):
@@ -401,3 +405,4 @@ func apply_preset(preset: PlayerMovementPreset) -> void:
 	coyoteTime = preset.coyoteTime;
 	doubleJump = preset.doubleJump;
 	wallJump = preset.wallJump;
+	wallJumpDecay = preset.wallJumpDecay;

@@ -125,7 +125,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				
 			if (event.is_action_released("left-click") && prevEntity == -1):
 				# If the clicked cell is an entity and the click was short, edit its properties
-				if (entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL && !isMoving):
+				if (entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) >= Global.EntityType.GOAL && !isMoving):
 					entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:

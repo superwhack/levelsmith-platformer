@@ -107,7 +107,7 @@ func edit_properties(clickPosition: Vector2) -> void:
 	propertyMenu.selectedEntity = clickedEntity;
 	if clickedEntity is Enemy:
 		propertyMenu.show_menu(clickedEntity.propertyFile);
-	else:
+	elif clickedEntity is Player:
 		propertyMenu.show_menu();
 	
 ## Retrieves a reference to the scene at a specific cell in the tile set

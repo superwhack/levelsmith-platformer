@@ -64,7 +64,8 @@ func start() -> void:
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
-	player.healthChanged.connect(change_health);
+	if !player.healthChanged.is_connected(change_health):
+		player.healthChanged.connect(change_health);
 
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
@@ -74,6 +75,7 @@ func start() -> void:
 		for node in tileMap.get_children():
 			if tileMap.local_to_map(node.global_position) == propertyFile.position:
 				(node as Enemy).apply_script(propertyFile);
+				(node as Enemy).active = false;
 				break;
 
 	# Unpause player
@@ -89,6 +91,8 @@ func start() -> void:
 			totalCoins += 1;
 	update_coin_counter();
 
+## Record a change in health for the player
+## newHealth: The new health of the player
 func change_health(newHealth : int):
 	print("Health: ", newHealth);
 

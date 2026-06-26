@@ -23,7 +23,7 @@ func _physics_process(delta: float) -> void:
 		super._physics_process(delta);
 		move_and_slide();
 	
-	directionArrow.hide();
+	#directionArrow.hide();
 	
 
 func adjust_arrow(angle: float) -> void:

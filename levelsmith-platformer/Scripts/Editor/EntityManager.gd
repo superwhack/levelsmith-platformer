@@ -76,6 +76,8 @@ func place_entity(clickPosition: Vector2) -> void:
 		Global.EntityType.GOAL:
 			goalCount += 1;
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
+		Global.EntityType.COIN:
+			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1)
 		Global.EntityType.PROP1, Global.EntityType.PROP2, Global.EntityType.PROP3, Global.EntityType.PROP4, Global.EntityType.PROP5, Global.EntityType.PROP6:
 			# Include rotation for props
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b6axoaekmjyr4"]
+
+[ext_resource type="Script" uid="uid://dvbnlxepvikk0" path="res://Scripts/Game/MovingPlatform.gd" id="1_it7tw"]
+[ext_resource type="Texture2D" uid="uid://dxh785xsh6w2x" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5hvxo"]
+
+[node name="MovingPlatform" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("previewLine", "onScreen") groups=["Moving"]]
+collision_layer = 6
+collision_mask = 6
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_it7tw")
+previewLine = NodePath("Line2D")
+onScreen = NodePath("OnScreen")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
+scale = Vector2(6.3, 6.3)
+shape = SubResource("RectangleShape2D_5hvxo")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
+texture = ExtResource("2_it7tw")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
+default_color = Color(0.78039217, 0, 0.05490196, 0.8352941)
+
+[node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1562874782]
+rect = Rect2(-63, -63, 126, 126)

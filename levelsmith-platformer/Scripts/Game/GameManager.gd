@@ -76,6 +76,7 @@ func start() -> void:
 
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
+	get_tree().set_group("Moving", "process_mode", Node.PROCESS_MODE_INHERIT);
 	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
 	for enemyProperty in enemyProperties:
 		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);

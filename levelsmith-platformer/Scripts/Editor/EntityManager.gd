@@ -42,7 +42,7 @@ func place_entity(clickPosition: Vector2) -> void:
 			
 			editorManager.playerExists = true;
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
-		Global.EntityType.PATROLLING, Global.EntityType.SHOOTING, Global.EntityType.FLYING, Global.EntityType.STATIONARY:
+		Global.EntityType.PATROLLING, Global.EntityType.SHOOTING, Global.EntityType.FLYING, Global.EntityType.STATIONARY, Global.EntityType.MOVING_PLATFORM:
 			# Place the enemy and wait until it's registered before continuing
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
 			while get_scene_at_cell(clickPosition) == null:
@@ -69,6 +69,10 @@ func place_entity(clickPosition: Vector2) -> void:
 				var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
 				newEntity = defaultFlying.duplicate(true);
 				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
+			elif (brushObject == Global.EntityType.MOVING_PLATFORM):
+				var defaultMoving : Resource = load("res://Resources/PlayerPresets/MovingPlatformDefault.tres");
+				newEntity = defaultMoving.duplicate(true);
+				file = "res://Resources/Enemies/MovingPlatform" + str(time) + ".tres";
 			ResourceSaver.save(newEntity, file);
 			placedEnemy.assign_script(str(time), clickPosition);
 			await get_tree().process_frame;

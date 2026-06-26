@@ -65,7 +65,7 @@ func _process(_delta: float) -> void:
 	 
 	# Pause the player and enemies
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
-	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_DISABLED);
+	get_tree().set_group("Moving", "process_mode", Node.PROCESS_MODE_DISABLED);
 
 	playButton.modulate = Color(1, 1, 1) if playerExists && goalExists else Color(1, 1, 1, 0.5);
 	

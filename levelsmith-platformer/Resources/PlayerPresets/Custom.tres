@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="PlayerMovementPreset" format=3 uid="uid://cpuwjhlf2cn4p"]
+[gd_resource type="Resource" script_class="PlayerMovementPreset" format=3 uid="uid://dcyimxkvacivp"]
 
-[ext_resource type="Script" uid="uid://bp8erofrb01fc" path="res://Scripts/Editor/Properties/PlayerMovementPreset.gd" id="1_1qm3p"]
+[ext_resource type="Script" uid="uid://bp8erofrb01fc" path="res://Scripts/Editor/Properties/PlayerMovementPreset.gd" id="1_22dwl"]
 
 [resource]
-script = ExtResource("1_1qm3p")
+script = ExtResource("1_22dwl")
 health = 3
-groundSpeed = 4.9
-jumpHeight = 2.0
-airControl = 1.0
+groundSpeed = 1.0
+jumpHeight = 3.0
+airControl = 0.2
 fallSpeed = 1.0
 coyoteTime = 0.2
 doubleJump = true

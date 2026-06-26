@@ -2,7 +2,7 @@ class_name Player;
 extends CharacterBody2D
 
 # Wall direction for wall jumps
-enum wallDirection {
+enum WallDirection {
 	LEFT,
 	RIGHT,
 	NONE
@@ -11,12 +11,12 @@ enum wallDirection {
 # The player settings that can be changed in editor
 @export var groundSpeed : float = 1.0;
 @export var jumpHeight : float = 2.0;
-@export var doubleJump : bool = true;
+@export var doubleJump : bool = false;
 var doubleJumpAvailable : bool = doubleJump;
 
-@export var wallJump : bool = true;
+@export var wallJump : bool = false;
 var wallJumpCount : int = 0;
-var wallJumpDirection : wallDirection = wallDirection.NONE;
+var wallJumpDirection : wallDirection = WallDirection.NONE;
 var justWallJumped = false;
 
 # Friction in midair
@@ -110,7 +110,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta * fallSpeed;
 	else:
 		doubleJumpAvailable = doubleJump;
-		wallJumpDirection = wallDirection.NONE;
+		wallJumpDirection = WallDirection.NONE;
 		coyoteTimeLeft = coyoteTime;
 	
 	# Detect tiles before jumping and running so slow and ice tiles apply affects before inputs
@@ -292,14 +292,14 @@ func detect_tiles() -> void:
 			if Input.is_action_just_pressed("jump"):
 				# Depending on direction, apply a different x velocity
 				if rayDirection.x < 0:
-					if wallJumpDirection != wallDirection.LEFT:
+					if wallJumpDirection != WallDirection.LEFT:
 						wallJumpCount = 0;
-					wallJumpDirection = wallDirection.LEFT;
+					wallJumpDirection = WallDirection.LEFT;
 					velocity.x = 1500 * pow(groundSpeed, .66);
 				elif rayDirection.x > 0:
-					if wallJumpDirection != wallDirection.RIGHT:
+					if wallJumpDirection != WallDirection.RIGHT:
 						wallJumpCount = 0;
-					wallJumpDirection = wallDirection.RIGHT;
+					wallJumpDirection = WallDirection.RIGHT;
 					velocity.x = -1500 * pow(groundSpeed, .66);
 				# Remove friction if not on ice
 				if tileName != "ice":
@@ -341,7 +341,7 @@ func detect_tiles() -> void:
 				# Vertical Stick
 			else:
 				if (raycast.target_position.y < 0):
-					wallJumpDirection = wallDirection.NONE;
+					wallJumpDirection = WallDirection.NONE;
 					velocity.y = 0;
 					if (Input.is_action_just_pressed("down")):
 						while raycast.is_colliding():

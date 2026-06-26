@@ -55,6 +55,13 @@ func reset() -> void:
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
+	# Reset coin values for the new level
+	coinCount = 0;
+	totalCoins = 0;
+	# Count all coins that belong to the playable level and ignore coins that exist in the editor scene
+	totalCoins = get_tree().get_node_count_in_group("Coin");
+	update_coin_counter();
+	
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
 	for frame in range(1, 5):
 		await get_tree().process_frame;
@@ -78,18 +85,11 @@ func start() -> void:
 				(node as Enemy).active = false;
 				break;
 
+
 	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
 	
-	# Reset coin values for the new level
-	coinCount = 0;
-	totalCoins = 0;
-	# Count all coins that belong to the playable level and ignore coins that exist in the editor scene
-	for coin in get_tree().get_nodes_in_group("Coin"):
-		if tileMap.is_ancestor_of(coin):
-			totalCoins += 1;
-	update_coin_counter();
 
 ## Record a change in health for the player
 ## newHealth: The new health of the player

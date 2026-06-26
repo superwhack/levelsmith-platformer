@@ -62,6 +62,7 @@ var audioToReplace : AudioStream;
 @export var frameLeftButton : Button;
 @export var frameCountLabel : Label;
 @export var playButton : Button;
+@export var stopButton : Button;
 
 # Information about played animation
 var playingAnimation : bool;
@@ -110,6 +111,7 @@ func _ready() -> void:
 	frameRightButton.pressed.connect(frame_change.bind(true));
 	frameLeftButton.pressed.connect(frame_change.bind(false));
 	playButton.pressed.connect(play_preview_animation);
+	stopButton.pressed.connect(stop_preview_animation);
 	
 	assetTabs.tab_changed.connect(on_asset_tab_changed);
 	
@@ -522,3 +524,8 @@ func get_missing_image() -> Image:
 
 func play_preview_animation() -> void:
 	playingAnimation = !playingAnimation;
+
+func stop_preview_animation() -> void:
+	playingAnimation = false;
+	animationFrameIndex = 0;
+	update_animation_preview();

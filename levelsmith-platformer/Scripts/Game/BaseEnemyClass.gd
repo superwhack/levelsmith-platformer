@@ -16,10 +16,6 @@ func _ready() -> void:
 ## Processes for every frame based on time
 ## delta: Time since previous frame.
 func _physics_process(delta: float) -> void:
-	# If the enemy is out of bounds, suicide
-	if (check_out_of_bounds()):
-		die();
-	
 	# Apply gravity every frame based on time passed since last frame
 	apply_gravity(delta)
 
@@ -41,17 +37,17 @@ func die() -> void:
 
 ## Detects whether the enemy is out of bounds.
 ## Returns a bool based on enemy being out of bounds.
-func check_out_of_bounds() -> bool:
-	var masterManager : Node2D = get_tree().current_scene;
+#func check_out_of_bounds() -> bool:
+#	var masterManager : Node2D = get_tree().current_scene;
 	
 	# There is a 1 tile leeway given to enemies who leave bounds, before death
-	if (global_position.x < (-1) * Global.TILE_SIZE
-	|| global_position.x > (masterManager.worldSize.x + 1) * Global.TILE_SIZE
-	|| global_position.y < (-1) * Global.TILE_SIZE
-	|| global_position.y > (masterManager.worldSize.y + 1) * Global.TILE_SIZE):
-		print("Player OOB: ", global_position)
-		return true;
-	return false;
+#	if (global_position.x < (-1) * Global.TILE_SIZE
+#	|| global_position.x > (masterManager.worldSize.x + 1) * Global.TILE_SIZE
+#	|| global_position.y < (-1) * Global.TILE_SIZE
+#	|| global_position.y > (masterManager.worldSize.y + 1) * Global.TILE_SIZE):
+#		print("Player OOB: ", global_position)
+#		return true;
+#	return false;
 
 ## OVERRIDE -
 ## Assigns the script of the given ID (located in the Resources/Enemies folder) to an enemy at the given position.

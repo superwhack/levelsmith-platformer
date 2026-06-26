@@ -1,14 +1,24 @@
 class_name Player;
 extends CharacterBody2D
 
+# Wall direction for wall jumps
+enum wallDirection {
+	LEFT,
+	RIGHT,
+	NONE
+}
+
 # The player settings that can be changed in editor
 @export var groundSpeed : float = 1.0;
 @export var jumpHeight : float = 2.0;
-@export var doubleJump : bool = true;
+@export var doubleJump : bool = false;
 var doubleJumpAvailable : bool = doubleJump;
 
 @export var wallJump : bool = true;
 var wallJumpCount : int = 0;
+var wallJumpDirection : wallDirection = wallDirection.NONE;
+var justWallJumped = false;
+
 # Friction in midair
 # BUG: Air Control doesn't work the frame you land on a bouncy tile, allowing you to change direction beofre bouncing back up
 @export var airControl : float = 1.0;
@@ -75,10 +85,9 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
-	var justWallJumped = false;
 	if (check_out_of_bounds()):
 		return;
-		
+	justWallJumped = false;
 	for enemy in enemiesInside:
 		detect_enemies(enemy);
 	if invulnerabilityCurrent > 0:
@@ -101,7 +110,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta * fallSpeed;
 	else:
 		doubleJumpAvailable = doubleJump;
-		wallJumpCount = 0;
+		wallJumpDirection = wallDirection.NONE;
 		coyoteTimeLeft = coyoteTime;
 	
 	# Detect tiles before jumping and running so slow and ice tiles apply affects before inputs
@@ -275,14 +284,28 @@ func detect_tiles() -> void:
 		var tileName : String = tileData.get_custom_data("name");
 		var rayDirection : Vector2 = raycast.target_position;
 
-		if rayDirection.x < 0 && Input.is_action_just_pressed("jump"):
-			wallJumpCount += 1;
-			velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount);
-			velocity.x = 1500;
-		elif rayDirection.x > 0 && Input.is_action_just_pressed("jump"):
-			wallJumpCount += 1;
-			velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount);
-			velocity.x = -1500;
+		# Wall Jumping + Sliding
+		if wallJump && rayDirection.x != 0:
+			if tileName != "ice":
+				velocity.y *= .93;
+			if Input.is_action_just_pressed("jump"):
+				if rayDirection.x < 0:
+					if wallJumpDirection == wallDirection.RIGHT:
+						wallJumpCount = 0;
+					wallJumpDirection = wallDirection.LEFT;
+					velocity.x = 1500;
+				elif rayDirection.x > 0:
+					if wallJumpDirection == wallDirection.LEFT:
+						wallJumpCount = 0;
+					wallJumpDirection = wallDirection.RIGHT;
+					velocity.x = -1500;
+				if tileName != "ice":
+					currentFriction = 1.0;
+				if tileName == "slow" || tileName == "ice":
+					velocity.x /= 1.5;
+				wallJumpCount += 1;
+				velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount);
+				justWallJumped = true;
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):
@@ -300,6 +323,10 @@ func detect_tiles() -> void:
 					velocity.y = 1000 * tileData.get_custom_data("bounce");
 				else:
 					velocity.y = -1000 * tileData.get_custom_data("bounce");
+					if velocity.x > 0 && Input.is_action_pressed("left"):
+						velocity.x /= 2;
+					elif velocity.x < 0 && Input.is_action_pressed("right"):
+						velocity.x /= 2;
 
 		# Sticky Tiles
 		if (tileData && (tileData.get_custom_data("name") == "slow")):
@@ -310,6 +337,7 @@ func detect_tiles() -> void:
 				# Vertical Stick
 			else:
 				if (raycast.target_position.y < 0):
+					wallJumpDirection = wallDirection.NONE;
 					velocity.y = 0;
 					if (Input.is_action_just_pressed("down")):
 						while raycast.is_colliding():
@@ -335,7 +363,7 @@ func detect_tiles() -> void:
 					if Input.is_action_just_pressed("down"):
 						position += Vector2(0, 1);
 				"ice":
-					currentFriction = tileData.get_custom_data("friction");
+					currentFriction = .5;
 
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> bool:

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://6vhh2keedl4q"]
 
 [ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/Editor/PopUp/ErrorPopUp.gd" id="1_i0gwu"]
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_idm4w"]
 
 [node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "closeButton")]
 process_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_idm4w")
 script = ExtResource("1_i0gwu")
 title = NodePath("PanelContainer/MarginContainer/VBoxContainer/Title")
 bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/Body")

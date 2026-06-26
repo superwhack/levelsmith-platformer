@@ -46,7 +46,8 @@ func take_damage(amount: int = 1) -> void:
 ## Kills the enemy death sound, and deletes the enemy
 func die() -> void:
 	AudioManager.play_effect("EnemyDeath");
-	animatedSprites.play("death");
+	if (animatedSprites):
+		animatedSprites.play("death");
 	deathTimer.start();
 
 ## Detects whether the enemy is out of bounds.

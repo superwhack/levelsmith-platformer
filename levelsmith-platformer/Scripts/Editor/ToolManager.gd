@@ -161,6 +161,7 @@ func change_tool(tool: Global.Tool) -> void:
 
 	editorManager.returnClick = false;
 	reset_tool_states();
+	currentObjectRotation = 0;
 
 	if (currentTool == Global.Tool.CURSOR):
 		brushObject = Global.TileType.SOLID;

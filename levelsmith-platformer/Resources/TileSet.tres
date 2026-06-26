@@ -1,8 +1,8 @@
 [gd_resource type="TileSet" format=3 uid="uid://d1n0acfj67o7r"]
 
-[ext_resource type="Texture2D" uid="uid://dgbrgmufcdnj0" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
-[ext_resource type="Texture2D" uid="uid://d2ws3du2q1wfc" path="res://Assets/Sprites/Tiles/Hazard.png" id="2_6pq3v"]
-[ext_resource type="Texture2D" uid="uid://crwfvhcm3n1nc" path="res://Assets/Sprites/Tiles/oneway.png" id="3_alyph"]
+[ext_resource type="Texture2D" uid="uid://mqhonpbo41vu" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
+[ext_resource type="Texture2D" uid="uid://d0p32jicqqs1w" path="res://Assets/Sprites/Tiles/Hazard.png" id="2_6pq3v"]
+[ext_resource type="Texture2D" uid="uid://wjjbxovl5eji" path="res://Assets/Sprites/Tiles/oneway.png" id="3_alyph"]
 [ext_resource type="PackedScene" uid="uid://bf3q4v3br7j4o" path="res://Scenes/Entities/Shooting.tscn" id="3_k4kw2"]
 [ext_resource type="Texture2D" uid="uid://bmkcamrqk2ycb" path="res://Assets/Sprites/Entities/Props/Prop1.png" id="3_r4n42"]
 [ext_resource type="PackedScene" uid="uid://kbh8ioojr3r4" path="res://Scenes/Preview/ShootingPreview.tscn" id="4_3boqi"]
@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://b3s4y2bfc4wd" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="6_nbee4"]
 [ext_resource type="PackedScene" uid="uid://bl34k1jvcme78" path="res://Scenes/Preview/FlyingPreview.tscn" id="6_pqfav"]
 [ext_resource type="Texture2D" uid="uid://dg2131vb2y8s8" path="res://Assets/Sprites/Entities/Props/Prop5.png" id="7_eksy4"]
-[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Sprites/Tiles/slope.png" id="7_jbnof"]
+[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Sprites/Tiles/Slope.png" id="7_jbnof"]
 [ext_resource type="PackedScene" uid="uid://87eq7bxythec" path="res://Scenes/Entities/Player.tscn" id="8_alyph"]
 [ext_resource type="PackedScene" uid="uid://1wme1ton08gv" path="res://Scenes/Entities/Goal.tscn" id="8_jbnof"]
 [ext_resource type="PackedScene" uid="uid://c0lnvjeoj8xif" path="res://Scenes/Preview/GoalPreview.tscn" id="9_5jxy7"]
@@ -231,14 +231,17 @@ texture_region_size = Vector2i(128, 128)
 0:0/1 = 1
 0:0/1/flip_h = true
 0:0/1/transpose = true
+0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(63.820343, -63.805244, -63.75998, 63.82034, -63.769325, -63.881577)
 0:0/2 = 2
 0:0/2/flip_h = true
 0:0/2/flip_v = true
+0:0/2/physics_layer_0/polygon_0/points = PackedVector2Array(63.820343, -63.805244, 63.764812, 63.71003, -63.769325, -63.881577)
 0:0/4 = 4
 0:0/4/modulate = Color(1, 0, 0, 1)
 0:0/3 = 3
 0:0/3/flip_v = true
 0:0/3/transpose = true
+0:0/3/physics_layer_0/polygon_0/points = PackedVector2Array(63.820343, -63.805244, -63.75998, 63.82034, 63.769325, 63.84416)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6pq3v"]
 texture = ExtResource("23_mtirn")

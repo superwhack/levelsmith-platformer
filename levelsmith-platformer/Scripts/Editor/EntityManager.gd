@@ -155,15 +155,24 @@ func drop_entity() -> void:
 		dropPosition = editorManager.currentMousePosition;
 	place_entity(dropPosition);
 	
+	# If it's not an enemy, this code needs to be run before to prevent duplication
+	if (toolManager.brushObject < Global.EntityType.PATROLLING || toolManager.brushObject > Global.EntityType.STATIONARY):
+		if (toolManager.prevEntity != -2):
+			toolManager.brushObject = toolManager.prevEntity;
+		toolManager.prevEntity = -1;
+		toolManager.prevPosition = Vector2(0,0);
+		toolManager.currentObjectRotation = toolManager.prevRotation;
 	# Wait until a node is found at the dropped cell
 	while (!get_scene_at_cell(dropPosition)):
 		await get_tree().process_frame;
+	# if it is an enemy, it needs to be run after
+	if (toolManager.brushObject >= Global.EntityType.PATROLLING && toolManager.brushObject <= Global.EntityType.STATIONARY):
+		if (toolManager.prevEntity != -2):
+			toolManager.brushObject = toolManager.prevEntity;
+		toolManager.prevEntity = -1;
+		toolManager.prevPosition = Vector2(0,0);
+		toolManager.currentObjectRotation = toolManager.prevRotation;
 	
-	if (toolManager.prevEntity != -2):
-		toolManager.brushObject = toolManager.prevEntity;
-	toolManager.prevEntity = -1;
-	toolManager.prevPosition = Vector2(0,0);
-	toolManager.currentObjectRotation = toolManager.prevRotation;
 	
 		
 	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);

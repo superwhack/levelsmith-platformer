@@ -13,6 +13,7 @@ var animationPreviewToReplace : Image;
 var animationPreviewNameToReplace : String;
 var currentAnimationIndex : int = 0;
 var animationFrameIndex : int = 0;
+var currentSelectedItem : AssetItem;
 
 # References to audio
 var newAudio : AudioStream;
@@ -28,7 +29,7 @@ var audioToReplace : AudioStream;
 @export var animationPreviewTexture : TextureRect;
 @export var audioPreview : Panel;
 @export var assetTabs : TabContainer;
-@export var imageSelect : FileDialog;
+@export var fileSelect : FileDialog;
 
 # References to different elements of the menu
 @export var imagesTab : VBoxContainer;
@@ -88,7 +89,8 @@ func _ready() -> void:
 	loadFileButton.pressed.connect(open_image_selector);
 	resetButton.pressed.connect(reset_image);
 	resetAllButton.pressed.connect(reset_all);
-	imageSelect.file_selected.connect(replace_image);
+	fileSelect.file_selected.connect(replace_image);
+	fileSelect.dir_selected.connect(replace_animation);
 	Global.levelCreated.connect(refresh_assets);
 	animationPreviewRightButton.pressed.connect(anim_change.bind(true));
 	animationPreviewLeftButton.pressed.connect(anim_change.bind(false));
@@ -264,8 +266,8 @@ func on_asset_tab_changed(tabIndex: int) -> void:
 
 ## Clears any images in the replacement directory
 ## returns: The replacement directory
-func clear_image() -> DirAccess:
-	var targetFilePath : String = FileSearch.find_directory_by_name(imageNameToReplace);
+func clear_image(nameToClear : String) -> DirAccess:
+	var targetFilePath : String = FileSearch.find_directory_by_name(nameToClear);
 	var targetDirectory : DirAccess  = DirAccess.open(targetFilePath);
 	
 	if(!targetDirectory): return;
@@ -279,7 +281,7 @@ func clear_image() -> DirAccess:
 ## newImagePath: The file path of the new image replacing the old one.x 
 func replace_image(newImagePath: String) -> void:
 	var targetFilePath : String = FileSearch.find_directory_by_name(imageNameToReplace);
-	var targetDirectory : DirAccess = clear_image();
+	var targetDirectory : DirAccess = clear_image(imageNameToReplace);
 	# If the image is a png, create a copy
 	if (newImagePath.get_extension().to_lower() == "png"):
 		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
@@ -293,11 +295,34 @@ func replace_image(newImagePath: String) -> void:
 	else:
 		imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 
+func replace_animation(newAnimationPath : String) -> void:
+	var targetFilePath : String = FileSearch.find_directory_by_name(animationPreviewNameToReplace);
+	var targetDirectory : DirAccess = clear_image(animationPreviewNameToReplace);
+	print (targetDirectory)
+	
+	var fileCount : int = 0;
+	for file in DirAccess.get_files_at(newAnimationPath):
+		var currentFilePath = newAnimationPath + "/" + file;
+		print(currentFilePath);
+		if (file.get_extension().to_lower() == "png"):
+			print("correcto")
+			fileCount += 1;
+			targetDirectory.copy(currentFilePath, str(targetFilePath, "/", animationPreviewNameToReplace, fileCount, ".png"));
+		else:
+			if (!file.get_extension().to_lower() == "png.import"):
+				PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
+	
+	refresh_assets();
+	var replacementImage : Image = find_image_in_folder(targetFilePath);
+	if (replacementImage):
+		update_animation_preview();
+	else:
+		PopUpManager.create_error_popup("No Defaults", "No default images yet, update this when there are default animations");
 #func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 #	pass;
 
 func reset_image() -> void:
-	clear_image();
+	clear_image(imageNameToReplace);
 	refresh_assets();
 	imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
 
@@ -346,6 +371,7 @@ func item_selected(selectedItem: AssetItem = firstImageSelected) -> void:
 		selectedEntityType = selectedItem.assetName;
 		update_animation_preview();
 	currentAssetLabel.text = selectedItem.displayName;
+	currentSelectedItem = selectedItem;
 
 func anim_change(next : bool):
 	playingAnimation = false;
@@ -438,8 +464,13 @@ func create_file_tree() -> void:
 	# TODO: Add folders for audio
 
 func open_image_selector() -> void:
-	imageSelect.title = "Replace " + imageNameToReplace;
-	imageSelect.popup_file_dialog();
+	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
+		fileSelect.title = "Replace " + imageNameToReplace;
+		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_FILE;
+	elif (currentSelectedItem.type == AssetItem.AssetType.ANIMATION):
+		fileSelect.title = "Replace " + animationPreviewNameToReplace;
+		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_DIR;
+	fileSelect.popup_file_dialog();
 
 ## Creates a new missing texture for use when a texture is... missing.
 func get_missing_image() -> Image:

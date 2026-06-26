@@ -44,11 +44,6 @@ func _ready() -> void:
 	levelButton.mouse_entered.connect(_on_mouse_enter);
 	levelButton.mouse_exited.connect(_on_mouse_exit);
 	levelButton.gui_input.connect(_on_level_button_input);
-
-
-## Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass;
 	
 ## Sets all font colors to the correct one based on the button color.
 func apply_colors() -> void:
@@ -69,7 +64,7 @@ func apply_colors() -> void:
 
 ## When the main button is double clicked, emit signal
 ## event: The input event triggering this code.
-func _on_level_button_input(event):
+func _on_level_button_input(event: InputEvent):
 	# If the event is a double click, left mouse button, emit signal
 	if (event is InputEventMouseButton
 	&& event.button_index == MOUSE_BUTTON_LEFT

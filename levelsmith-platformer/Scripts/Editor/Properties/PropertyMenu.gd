@@ -134,6 +134,14 @@ func _on_preset_options_item_selected(index: int) -> void:
 	playerWallJump = selectedPlayerPreset.wallJump;
 	update_sliders();
 
+## Reset the Custom to conform with the Default on creating new levels
+func reset_custom() -> void:
+	var defaultPreset : Resource = load("res://Resources/PlayerPresets/Default.tres");
+	var resetedCustom = defaultPreset.duplicate(true);
+	ResourceSaver.save(resetedCustom, "res://Resources/PlayerPresets/Custom.tres");
+	presetOptions.select(0);
+	_on_preset_options_item_selected(0);
+
 ## Load and update the custom preset, then save its changes
 func update_custom() -> void:
 	var customPreset = load("res://Resources/PlayerPresets/Custom.tres");

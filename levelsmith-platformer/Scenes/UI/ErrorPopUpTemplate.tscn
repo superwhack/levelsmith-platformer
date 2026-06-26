@@ -3,8 +3,17 @@
 [ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/Editor/PopUp/ErrorPopUp.gd" id="1_i0gwu"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_idm4w"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idm4w"]
+bg_color = Color(0.95686275, 0.79607844, 0.43529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+
 [node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "closeButton")]
 process_mode = 3
+modulate = Color(0.4, 0.4, 0.4, 0.5882353)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -17,6 +26,7 @@ bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/Body")
 closeButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/CloseButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
+top_level = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -29,11 +39,7 @@ offset_right = 150.0
 offset_bottom = -16.5
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="PanelContainer" unique_id=559632651]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-color = Color(1, 0.5636667, 0.23000002, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_idm4w")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=266539190]
 layout_mode = 2
@@ -51,6 +57,9 @@ theme_override_font_sizes/font_size = 24
 text = "Error"
 horizontal_alignment = 1
 
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=983078058]
+layout_mode = 2
+
 [node name="Body" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=908015837]
 layout_mode = 2
 text = "An error has occurred"
@@ -58,4 +67,5 @@ fit_content = true
 
 [node name="CloseButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1027214704]
 layout_mode = 2
+size_flags_horizontal = 4
 text = "Close"

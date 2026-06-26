@@ -9,11 +9,12 @@ var imageToReplace : Image;
 var imageNameToReplace : String;
 
 var selectedEntityType : String;
-var animationPreviewToReplace : Image;
+var animationPreviewToReplace : Texture2D;
 var animationPreviewNameToReplace : String;
 var currentAnimationIndex : int = 0;
 var animationFrameIndex : int = 0;
 var currentSelectedItem : AssetItem;
+var currentLoadedAnimation : Array[Texture2D];
 
 # References to audio
 var newAudio : AudioStream;
@@ -369,6 +370,10 @@ func item_selected(selectedItem: AssetItem = firstImageSelected) -> void:
 		currentAnimationIndex = 0;
 		animationFrameIndex = 0;
 		selectedEntityType = selectedItem.assetName;
+		animationPreviewNameToReplace = DirAccess.get_directories_at(FileSearch.find_directory_by_name(selectedEntityType))[currentAnimationIndex];
+		currentLoadedAnimation.clear();
+		for image in get_animation_from_folder(animationPreviewNameToReplace):
+			currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 		update_animation_preview();
 	currentAssetLabel.text = selectedItem.displayName;
 	currentSelectedItem = selectedItem;
@@ -385,6 +390,10 @@ func anim_change(next : bool):
 	elif (currentAnimationIndex < 0):
 		currentAnimationIndex = animationsCount - 1;
 	animationFrameIndex = 0;
+	animationPreviewNameToReplace = DirAccess.get_directories_at(FileSearch.find_directory_by_name(selectedEntityType))[currentAnimationIndex];
+	currentLoadedAnimation.clear();
+	for image in get_animation_from_folder(animationPreviewNameToReplace):
+		currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 	update_animation_preview();
 
 func frame_change(next : bool = true):
@@ -392,7 +401,7 @@ func frame_change(next : bool = true):
 		animationFrameIndex += 1;
 	else:
 		animationFrameIndex -= 1;
-	var frameCount : int = FileSearch.file_count_in_folder(animationPreviewNameToReplace);
+	var frameCount : int = currentLoadedAnimation.size();
 	if (animationFrameIndex >= frameCount):
 		animationFrameIndex = 0;
 	elif (animationFrameIndex < 0):
@@ -400,18 +409,15 @@ func frame_change(next : bool = true):
 	update_animation_preview();
 
 func update_animation_preview() -> void:
-	animationPreviewNameToReplace = DirAccess.get_directories_at(FileSearch.find_directory_by_name(selectedEntityType))[currentAnimationIndex];
 	animationName.text = animationPreviewNameToReplace;
-	var frameCount = FileSearch.file_count_in_folder(animationPreviewNameToReplace);
+	var frameCount = currentLoadedAnimation.size();
 	frameCountLabel.text = str("Frame ", animationFrameIndex + 1, "/", frameCount)
 	if (frameCount > 0):
-		animationPreviewToReplace = get_animation_from_folder(animationPreviewNameToReplace)[animationFrameIndex];
+		animationPreviewToReplace = currentLoadedAnimation[animationFrameIndex];
 	else:
 		animationPreviewToReplace = null;
 	if (animationPreviewToReplace):
-		var replacementTexture : Texture2D = ImageTexture.create_from_image(animationPreviewToReplace);
-		if (replacementTexture):
-			animationPreviewTexture.texture = ImageTexture.create_from_image(animationPreviewToReplace);
+			animationPreviewTexture.texture = animationPreviewToReplace;
 
 ## Change the texture of an atlas tile to a new image texture
 ## sourceID: Source ID of the tile being changed

@@ -17,7 +17,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="LevelListItem" type="Control" unique_id=2067988774 node_paths=PackedStringArray("levelThumbnail", "thumbnailContainer", "levelTitle", "levelAuthor", "levelSize", "levelButton")]
+[node name="LevelListItem" type="Control" unique_id=2067988774 node_paths=PackedStringArray("levelThumbnail", "thumbnailContainer", "levelTitle", "levelAuthor", "levelEdited", "levelSize", "levelValid", "levelButton")]
 custom_minimum_size = Vector2(500, 100)
 custom_maximum_size = Vector2(1150, 100)
 layout_mode = 3
@@ -34,7 +34,9 @@ levelThumbnail = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBo
 thumbnailContainer = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/MarginContainer/ThumbnailContainer")
 levelTitle = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/HBoxContainer/LevelTitle")
 levelAuthor = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelAuthor")
+levelEdited = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelEdited")
 levelSize = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelSize")
+levelValid = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelValid")
 levelButton = NodePath("HBoxContainer/LevelMarginContainer/LevelCard")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=467178205]
@@ -105,6 +107,13 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Default Level"
 
+[node name="LevelEdited" type="Label" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1691708206]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 22
+text = "edited: 6/26/2026"
+horizontal_alignment = 1
+
 [node name="LevelAuthor" type="Label" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1336969358]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -116,6 +125,14 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 0.7176471)
 theme_override_font_sizes/font_size = 20
 text = "20x20"
+
+[node name="LevelValid" type="Label" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1005012881]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 0.7176471)
+theme_override_font_sizes/font_size = 20
+text = "Level: Validated"
+horizontal_alignment = 1
 
 [node name="ButtonVContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=795050609]
 layout_mode = 2

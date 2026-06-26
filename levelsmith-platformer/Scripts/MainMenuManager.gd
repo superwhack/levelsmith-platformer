@@ -30,7 +30,7 @@ extends Control
 var importedLevelPath : String;
 
 ## A reference to the Level List for loading levels.
-@export var levelList : VBoxContainer;
+@export var levelList : GridContainer;
 ## A reference to a packed scene of a clickable Level List Item.
 @export var levelListItem : PackedScene;
 
@@ -142,7 +142,7 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 	
 	# Get the csv level size, and add it to the level item
 	var levelSize : Vector2i = get_csv_size(levelPath + "/" + "Tiles.CSV");
-	item.levelSize.text = (str(levelSize.x) + "x" + str(levelSize.y));
+	item.levelSize.text = "size: [" + (str(levelSize.x) + "," + str(levelSize.y) + "]");
 	
 	# If the thumbnail file exists, replace image (or don't)
 	var levelThumbnailPath : String = levelPath + "/thumbnail.png";

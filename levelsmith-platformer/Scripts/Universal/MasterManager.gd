@@ -125,6 +125,7 @@ func main_menu() -> void:
 	propertyMenu.close();
 	mainMenuControl.show();
 	ImportExportManager.clear_enemies_folder();
+	mainMenuControl.fill_level_list();
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 

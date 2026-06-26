@@ -5,7 +5,9 @@ extends Node
 @export var thumbnailContainer : PanelContainer;
 @export var levelTitle : Label;
 @export var levelAuthor : Label;
+@export var levelEdited : Label;
 @export var levelSize : Label;
+@export var levelValid : Label;
 @export var levelButton : Button;
 
 # The level path. Used when emitting signal.
@@ -32,9 +34,11 @@ func _ready() -> void:
 	levelAuthor.add_theme_font_size_override("font_size", 22);
 
 	
-	# Level size is slightly smaller and opacitic (?).
+	# Slightly smaller and opacitic (?).
 	levelSize.add_theme_font_size_override("font_size", 20);
 	levelSize.modulate.a = 183.0/255.0;
+	levelValid.add_theme_font_size_override("font_size", 20);
+	levelValid.modulate.a = 183.0/255.0;
 		
 	# Signals
 	levelButton.mouse_entered.connect(_on_mouse_enter);
@@ -52,12 +56,16 @@ func apply_colors() -> void:
 		levelButton.theme_type_variation = "LevelItemWhite";
 		levelTitle.add_theme_color_override("font_color", blue);
 		levelAuthor.add_theme_color_override("font_color", blue);
+		levelEdited.add_theme_color_override("font_color", blue);
 		levelSize.add_theme_color_override("font_color", blue);
+		levelValid.add_theme_color_override("font_color", blue);
 	else:
 		levelButton.theme_type_variation = "LevelItemBlue";
 		levelTitle.add_theme_color_override("font_color", white);
 		levelAuthor.add_theme_color_override("font_color", white);
+		levelEdited.add_theme_color_override("font_color", blue);
 		levelSize.add_theme_color_override("font_color", white);
+		levelSize.add_theme_color_override("font_color", blue);
 
 ## When the main button is double clicked, emit signal
 ## event: The input event triggering this code.
@@ -75,11 +83,16 @@ func _on_mouse_enter() -> void:
 	if (buttonColor == ButtonColor.WHITE):
 		levelTitle.add_theme_color_override("font_color", white);
 		levelAuthor.add_theme_color_override("font_color", white);
+		levelEdited.add_theme_color_override("font_color", white);
 		levelSize.add_theme_color_override("font_color", white);
+		levelValid.add_theme_color_override("font_color", white);
+
 	else:
 		levelTitle.add_theme_color_override("font_color", blue);
 		levelAuthor.add_theme_color_override("font_color", blue);
+		levelEdited.add_theme_color_override("font_color", blue);
 		levelSize.add_theme_color_override("font_color", blue);
+		levelValid.add_theme_color_override("font_color", blue);
 
 ## Set the colors of the text inside the button to their normal colors.
 func _on_mouse_exit() -> void:

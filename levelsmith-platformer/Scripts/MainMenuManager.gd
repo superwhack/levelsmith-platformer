@@ -197,11 +197,9 @@ func get_level_valid(filePath : String) -> bool:
 	if (!FileAccess.file_exists(filePath)):
 		# Check if settings file doesn't exist
 		if (!FileAccess.file_exists(filePath + "/Settings.json")):
-			print("No settings")
 			return false;
 			
 		# Check if CSV file doesn't exist
 		if (!FileAccess.file_exists(filePath + "/Tiles.CSV")):
-			print("No Tiles")
 			return false;
 	return true;

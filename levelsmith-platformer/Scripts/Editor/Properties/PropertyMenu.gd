@@ -146,6 +146,9 @@ func update_custom() -> void:
 	customPreset.doubleJump = playerDoubleJump;
 	customPreset.wallJump = playerWallJump;
 	ResourceSaver.save(customPreset, "res://Resources/PlayerPresets/Custom.tres");
+	
+	presetOptions.select(4);
+	_on_preset_options_item_selected(4);
 
 ## Update the preview for the flying enemy
 func update_flying_preview() -> void:
@@ -237,8 +240,6 @@ func _on_drag_ended() -> void:
 	update_values();
 	if selectedEntity is Player:
 		update_custom();
-		presetOptions.select(4);
-		_on_preset_options_item_selected(4);
 
 ## Show the property menu, different sections pop up depending on the currently selected entity type
 ## resource: The resource file to load with properties

@@ -297,7 +297,7 @@ func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
 		# NOTE: TEMPORARY FIX PT 2
 		for frame in range(0, 5):
 			await get_tree().process_frame;
-		editorManager.clear_enemies();
+		#editorManager.clear_enemies();
 
 
 ## Recursively searches directories for a file of a specific name

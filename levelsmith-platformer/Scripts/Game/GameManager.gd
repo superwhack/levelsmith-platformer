@@ -3,6 +3,7 @@ extends Node2D
 # References for other screens
 @export var pauseScreen : PanelContainer;
 @export var bottomScreenGroup : Control;
+@export var coinCounterLabel : RichTextLabel;
 
 # Button references for signals
 @export var resetButton : Button;
@@ -18,6 +19,10 @@ var playState : PlayState = PlayState.PLAY;
 
 # Has the goal been reached
 var goalReached : bool = false;
+
+# Coin variables
+var coinCount : int = 0
+var totalCoins : int = 0
 
 # Player and its position
 var player : CharacterBody2D;
@@ -76,6 +81,15 @@ func start() -> void:
 	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+	
+	# Reset coin values for the new level
+	coinCount = 0;
+	totalCoins = 0;
+	# Count all coins that belong to the playable level and ignore coins that exist in the editor scene
+	for coin in get_tree().get_nodes_in_group("Coin"):
+		if tileMap.is_ancestor_of(coin):
+			totalCoins += 1;
+	update_coin_counter();
 
 ## Record a change in health for the player
 ## newHealth: The new health of the player
@@ -85,6 +99,18 @@ func change_health(newHealth : int):
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:
 	Global.death.connect(reset);
+	Global.onCoinCollected.connect(_on_coin_collected);
 	resetButton.pressed.connect(reset);
 	pauseButton.pressed.connect(pause);
 	resumeButton.pressed.connect(pause);
+
+## Increase coin count and update its UI on coin collection
+func _on_coin_collected() -> void:
+	coinCount += 1;
+	print("Coin collected: ",coinCount);
+	update_coin_counter();
+
+## Updates the coin counter shown on screen
+func update_coin_counter() -> void:
+	coinCounterLabel.clear();
+	coinCounterLabel.append_text("[right]Coins: %d / %d[/right]" % [coinCount, totalCoins]);

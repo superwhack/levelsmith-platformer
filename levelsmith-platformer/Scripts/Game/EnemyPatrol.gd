@@ -16,9 +16,17 @@ var restricted : bool;
 @export var rayCastDownR : RayCast2D;
 @export var directionArrow : Sprite2D;
 
+func _ready() -> void:
+	super._ready();
+	
+	animatedSprites.animation = "walk";
+	animatedSprites.play();
+
 ## Processes the physics every frame
 ## delta: Time since previous frame
 func _physics_process(delta: float) -> void:
+	if (health <= 0): return;
+	
 	# When we are processing physics, we are in the game scene, so the direction
 	# arrow can be hidden.
 	directionArrow.hide();
@@ -27,6 +35,8 @@ func _physics_process(delta: float) -> void:
 	
 	# Executing basic movement behavior.
 	patrol_behavior();
+	animatedSprites.flip_h = direction < 0;
+	
 	move_and_slide();
 
 ## Applies horizontal movements and directional changes triggered by raycasts

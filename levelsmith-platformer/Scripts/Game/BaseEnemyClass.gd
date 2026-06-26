@@ -6,12 +6,21 @@ extends CharacterBody2D
 @export var gravity : float = 980.0;
 var propertyFile : Resource;
 
+@export var hitbox: CollisionShape2D;
+@export var animatedSprites : AnimatedSprite2D;
+var deathTimer : Timer;
+
 # Sprite reference
 #@onready var sprites: AnimatedSprite2D = $AnimatedSprite2D
 
 ## Initializing, add to the group named enemy
 func _ready() -> void:
 	add_to_group("enemy")
+	
+	deathTimer = Timer.new();
+	deathTimer.wait_time = 0.4;
+	deathTimer.timeout.connect(queue_free);
+	add_child(deathTimer);
 
 ## Processes for every frame based on time
 ## delta: Time since previous frame.
@@ -37,7 +46,9 @@ func take_damage(amount: int = 1) -> void:
 ## Kills the enemy death sound, and deletes the enemy
 func die() -> void:
 	AudioManager.play_effect("EnemyDeath");
-	queue_free()
+	if (animatedSprites):
+		animatedSprites.play("death");
+	deathTimer.start();
 
 ## Detects whether the enemy is out of bounds.
 ## Returns a bool based on enemy being out of bounds.

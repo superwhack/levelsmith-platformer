@@ -157,9 +157,8 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 
 
 ## Load a level when appropriate button is pressed
+## path: The path of the level to be loaded.
 func _on_level_double_clicked(path: String) -> void:
-	print("Loading:", path);
-
 	masterManager.load_level(path);
 
 ## Retrieves the world size from a CSV file.

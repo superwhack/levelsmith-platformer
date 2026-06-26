@@ -170,10 +170,13 @@ func get_csv_size(filePath : String) -> Vector2i:
 	var file = FileAccess.open(filePath, FileAccess.READ);
 	
 	# If the file exists, append rows. If not, return an empty Vector2i
-	# for backwards compatibility on folders without a CSV.
-	if file != null:
+	if (file != null):
 		while not file.eof_reached():
-			rows.append(file.get_csv_line());
+			# Since CSV files have trailing empty lines, we need to check if 
+			# the line has any data in it.
+			var currentRow = file.get_csv_line();
+			if (currentRow.size() > 0 && currentRow[0] != ""):
+				rows.append(currentRow);
 	else:
 		return Vector2i.ZERO;
 

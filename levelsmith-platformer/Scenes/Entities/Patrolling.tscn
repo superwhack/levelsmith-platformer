@@ -1,12 +1,36 @@
 [gd_scene format=3 uid="uid://b3k624sctovph"]
 
-[ext_resource type="Texture2D" uid="uid://hlyall14hts0" path="res://Assets/Sprites/Entities/baddude.png" id="1_8ustp"]
 [ext_resource type="Script" uid="uid://cv0ngpnmx6kwj" path="res://Scripts/Game/EnemyPatrol.gd" id="1_ecr3g"]
 [ext_resource type="Texture2D" uid="uid://btwee51autoih" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="2_n0k27"]
+[ext_resource type="Texture2D" uid="uid://d33pgq7ibjssv" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_igrap"]
+[ext_resource type="Texture2D" uid="uid://yfpy7vgkmhuo" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="4_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://33tku5on1i8a" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="5_6nrcm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
-[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft", "rayCastRight", "rayCastDownL", "rayCastDownR", "directionArrow") groups=["Enemy"]]
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_igrap")
+}],
+"loop": 1,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_0s3yh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6nrcm")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft", "rayCastRight", "rayCastDownL", "rayCastDownR", "directionArrow", "hitbox", "animatedSprites") groups=["Enemy"]]
 collision_layer = 6
 collision_mask = 6
 floor_snap_length = 128.0
@@ -16,6 +40,8 @@ rayCastRight = NodePath("RayCastRight")
 rayCastDownL = NodePath("RayCastDownL")
 rayCastDownR = NodePath("RayCastDownR")
 directionArrow = NodePath("DirectionArrow")
+hitbox = NodePath("CollisionShape2D")
+animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=320029135]
 visible = false
@@ -28,8 +54,9 @@ texture = ExtResource("2_n0k27")
 scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
-texture = ExtResource("1_8ustp")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=907610926]
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+animation = &"walk"
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=121573990]
 rotation = 1.5707964

@@ -233,7 +233,7 @@ func detect_enemies(body: Node2D) -> void:
 func detect_enemy_bounce(body: Node2D) -> void:
 	if (body.is_in_group("enemy")):
 		bounce();
-		body.queue_free();
+		body.take_damage();
 
 ## Detect collisions with projectiles
 ## area: the area being collided with

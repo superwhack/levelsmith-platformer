@@ -115,6 +115,7 @@ layout_mode = 2
 [node name="HomeButton" type="Button" parent="ScreenUI/TopLeftAnchor/TopLeftRow" unique_id=1385633318]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+tooltip_text = "Main Menu"
 theme = ExtResource("7_ditat")
 theme_type_variation = &"ToolButton"
 icon = ExtResource("8_rdu5w")
@@ -182,6 +183,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="SaveButton" type="Button" parent="ScreenUI/TopRightAnchor/TopRightRow/SavePanel/SaveMargin" unique_id=778830983]
 layout_mode = 2
+tooltip_text = "Save"
 theme = ExtResource("7_ditat")
 theme_type_variation = &"ToolButton"
 icon = ExtResource("12_vrcqo")
@@ -204,6 +206,7 @@ layout_mode = 2
 [node name="AssetManagerButton" type="Button" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow" unique_id=446918555]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+tooltip_text = "Asset Manager"
 theme = ExtResource("7_ditat")
 theme_type_variation = &"ToolButton"
 icon = ExtResource("13_racgb")
@@ -216,6 +219,7 @@ layout_mode = 2
 [node name="CameraManagerButton" type="Button" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow" unique_id=1547112782]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+tooltip_text = "Camera Settings"
 theme = ExtResource("7_ditat")
 theme_type_variation = &"ToolButton"
 icon = ExtResource("14_hh704")
@@ -261,6 +265,7 @@ metadata/_edit_use_anchors_ = true
 [node name="PlayButton" type="Button" parent="ScreenUI/BottomRightAnchor" unique_id=1821933362]
 custom_minimum_size = Vector2(265, 0)
 layout_mode = 2
+tooltip_text = "Play Mode"
 focus_behavior_recursive = 1
 theme = ExtResource("7_ditat")
 action_mode = 0

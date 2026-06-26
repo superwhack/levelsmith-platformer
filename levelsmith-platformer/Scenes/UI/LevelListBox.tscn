@@ -70,6 +70,7 @@ custom_maximum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nh84e")
 
 [node name="LevelThumbnail" type="TextureRect" parent="VBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/MarginContainer/ThumbnailContainer" unique_id=1329783747]
@@ -77,6 +78,7 @@ custom_minimum_size = Vector2(100, 100)
 custom_maximum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 6
+mouse_filter = 2
 texture = ExtResource("4_ut1as")
 expand_mode = 1
 

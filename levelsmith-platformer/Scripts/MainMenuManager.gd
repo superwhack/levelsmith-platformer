@@ -136,6 +136,7 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 
 	# Setting the level list item data
 	item.levelTitle.text = folderName;
+	item.levelButton.tooltip_text = folderName; 
 	
 	# Connect the level button signal to the double clicked function
 	item.level_double_clicked.connect(_on_level_double_clicked);

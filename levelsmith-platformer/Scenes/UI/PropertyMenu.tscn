@@ -7,14 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
 [ext_resource type="PackedScene" uid="uid://d33iu75vytjse" path="res://Scenes/UI/PropertyDropdown.tscn" id="5_ehgsd"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "flyingMenu", "patrollingMenu", "shootingMenu", "playerHealthSlider", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "shootingDirectionSlider", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "presetOptions", "closeButton")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "flyingMenu", "patrollingMenu", "shootingMenu", "playerHealthSlider", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "shootingDirectionSlider", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "presetOptions", "closeButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 1439.0
 offset_top = 152.0
 offset_right = -81.0
-offset_bottom = -228.0
+offset_bottom = -128.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_afykx")
@@ -31,6 +31,8 @@ playerJumpSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerJump")
 playerAirControlSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerAirControl")
 playerFallSpeedSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerFallSpeed")
 playerCoyoteTimeSlider = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime")
+playerDoubleJumpCheckbox = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerDoubleJump")
+playerWallJumpCheckbox = NodePath("MainMargin/RootVBox/PlayerProperties/PlayerWallJump")
 patrollingSpeedSlider = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed")
 patrollingDirectionDropdown = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingDirection")
 patrollingRestrictedCheckbox = NodePath("MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingRestricted")
@@ -117,6 +119,16 @@ layout_mode = 2
 propertyName = "Coyote Time"
 minMax = Vector2(0, 1)
 sliderStep = 0.1
+
+[node name="PlayerDoubleJump" parent="MainMargin/RootVBox/PlayerProperties" unique_id=767046943 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Double Jump"
+
+[node name="PlayerWallJump" parent="MainMargin/RootVBox/PlayerProperties" unique_id=2101780147 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Wall Jump"
 
 [node name="PresetMargin" type="MarginContainer" parent="MainMargin/RootVBox/PlayerProperties" unique_id=413274506]
 layout_mode = 2

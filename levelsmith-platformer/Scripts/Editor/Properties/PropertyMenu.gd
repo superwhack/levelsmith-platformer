@@ -18,6 +18,8 @@ var playerJumpHeight : float;
 var playerAirControl : float;
 var playerFallSpeed : float;
 var playerCoyoteTime : float;
+var playerDoubleJump : bool;
+var playerWallJump : bool;
 
 # Player value sliders
 @export var playerHealthSlider: VBoxContainer;
@@ -26,7 +28,8 @@ var playerCoyoteTime : float;
 @export var playerAirControlSlider: VBoxContainer;
 @export var playerFallSpeedSlider: VBoxContainer;
 @export var playerCoyoteTimeSlider: VBoxContainer;
-
+@export var playerDoubleJumpCheckbox: VBoxContainer;
+@export var playerWallJumpCheckbox: VBoxContainer;
 
 # Patrolling inputs
 @export var patrollingSpeedSlider : VBoxContainer;
@@ -67,6 +70,9 @@ func _ready() -> void:
 	playerAirControlSlider.drag_ended.connect(_on_drag_ended);
 	playerFallSpeedSlider.drag_ended.connect(_on_drag_ended);
 	playerCoyoteTimeSlider.drag_ended.connect(_on_drag_ended);
+	playerDoubleJumpCheckbox.check_changed.connect(_on_drag_ended);
+	playerWallJumpCheckbox.check_changed.connect(_on_drag_ended);
+	
 	presetOptions.item_selected.connect(_on_preset_options_item_selected);
 	
 	patrollingSpeedSlider.drag_ended.connect(_on_drag_ended);
@@ -124,6 +130,8 @@ func _on_preset_options_item_selected(index: int) -> void:
 	playerAirControl = selectedPlayerPreset.airControl;
 	playerFallSpeed = selectedPlayerPreset.fallSpeed;
 	playerCoyoteTime = selectedPlayerPreset.coyoteTime;
+	playerDoubleJump = selectedPlayerPreset.doubleJump;
+	playerWallJump = selectedPlayerPreset.wallJump;
 	update_sliders();
 
 ## Load and update the custom preset, then save its changes
@@ -135,6 +143,8 @@ func update_custom() -> void:
 	customPreset.airControl = playerAirControl;
 	customPreset.fallSpeed = playerFallSpeed;
 	customPreset.coyoteTime = playerCoyoteTime;
+	customPreset.doubleJump = playerDoubleJump;
+	customPreset.wallJump = playerWallJump;
 	ResourceSaver.save(customPreset, "res://Resources/PlayerPresets/Custom.tres");
 
 ## Update the preview for the flying enemy
@@ -161,7 +171,11 @@ func update_sliders() -> void:
 	playerFallSpeedSlider.value = playerFallSpeed;
 	playerFallSpeedSlider.update_slider();
 	playerCoyoteTimeSlider.value = playerCoyoteTime;
-	playerCoyoteTimeSlider.update_slider();	
+	playerCoyoteTimeSlider.update_slider();
+	playerDoubleJumpCheckbox.value = playerDoubleJump;
+	playerDoubleJumpCheckbox.update_checkbox();
+	playerWallJumpCheckbox.value = playerWallJump;
+	playerWallJumpCheckbox.update_checkbox();
 	# Enemies
 	if selectedEntity is EnemyPatrol:
 		patrollingSpeedSlider.value = selectedPreset.groundSpeed;
@@ -197,6 +211,8 @@ func update_values() -> void:
 	playerAirControl = playerAirControlSlider.value;
 	playerFallSpeed = playerFallSpeedSlider.value;
 	playerCoyoteTime = playerCoyoteTimeSlider.value;
+	playerDoubleJump = playerDoubleJumpCheckbox.value;
+	playerWallJump = playerWallJumpCheckbox.value;
 	
 	if selectedEntity is EnemyPatrol:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;

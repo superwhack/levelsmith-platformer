@@ -11,7 +11,7 @@ enum wallDirection {
 # The player settings that can be changed in editor
 @export var groundSpeed : float = 1.0;
 @export var jumpHeight : float = 2.0;
-@export var doubleJump : bool = false;
+@export var doubleJump : bool = true;
 var doubleJumpAvailable : bool = doubleJump;
 
 @export var wallJump : bool = true;
@@ -286,21 +286,25 @@ func detect_tiles() -> void:
 
 		# Wall Jumping + Sliding
 		if wallJump && rayDirection.x != 0:
+			# Wall Slide when not on ice
 			if tileName != "ice":
-				velocity.y *= .93;
+				velocity.y *= .94;
 			if Input.is_action_just_pressed("jump"):
+				# Depending on direction, apply a different x velocity
 				if rayDirection.x < 0:
-					if wallJumpDirection == wallDirection.RIGHT:
+					if wallJumpDirection != wallDirection.LEFT:
 						wallJumpCount = 0;
 					wallJumpDirection = wallDirection.LEFT;
-					velocity.x = 1500;
+					velocity.x = 1500 * pow(groundSpeed, .66);
 				elif rayDirection.x > 0:
-					if wallJumpDirection == wallDirection.LEFT:
+					if wallJumpDirection != wallDirection.RIGHT:
 						wallJumpCount = 0;
 					wallJumpDirection = wallDirection.RIGHT;
-					velocity.x = -1500;
+					velocity.x = -1500 * pow(groundSpeed, .66);
+				# Remove friction if not on ice
 				if tileName != "ice":
 					currentFriction = 1.0;
+				# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)
 				if tileName == "slow" || tileName == "ice":
 					velocity.x /= 1.5;
 				wallJumpCount += 1;
@@ -389,3 +393,5 @@ func apply_preset(preset: PlayerMovementPreset) -> void:
 	airControl = preset.airControl;
 	fallSpeed = preset.fallSpeed;
 	coyoteTime = preset.coyoteTime;
+	doubleJump = preset.doubleJump;
+	wallJump = preset.wallJump;

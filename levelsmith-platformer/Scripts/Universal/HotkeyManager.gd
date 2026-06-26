@@ -55,10 +55,12 @@ func _unhandled_key_input(event : InputEvent) -> void:
 			elif event.is_action_pressed("second-select"):
 				toolManager.update_brush_object(Global.EntityType.PLAYER);
 			elif event.is_action_pressed("third-select"):
-				toolManager.update_brush_object(Global.EntityType.PATROLLING);
+				toolManager.update_brush_object(Global.EntityType.COIN);
 			elif event.is_action_pressed("fourth-select"):
-				toolManager.update_brush_object(Global.EntityType.SHOOTING);
+				toolManager.update_brush_object(Global.EntityType.PATROLLING);
 			elif event.is_action_pressed("fifth-select"):
+				toolManager.update_brush_object(Global.EntityType.SHOOTING);
+			elif event.is_action_pressed("sixth-select"):
 				toolManager.update_brush_object(Global.EntityType.FLYING);
 		Global.HotbarState.PROPS:
 			if event.is_action_pressed("first-select"):

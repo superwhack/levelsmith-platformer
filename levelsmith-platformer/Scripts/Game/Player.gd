@@ -41,7 +41,6 @@ var spawnpoint : Vector2 = Vector2(0, 0);
 # Raycasts
 @export var raycasts : Array[RayCast2D];
 @export var downwardsRaycasts : Array[RayCast2D];
-@export var deathCasts : Array[RayCast2D];
 
 signal healthChanged(newHealth);
 var maxHealth := 3;

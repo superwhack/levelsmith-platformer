@@ -191,13 +191,10 @@ func update_sliders() -> void:
 	playerDoubleJumpCheckbox.update_checkbox();
 	playerWallJumpCheckbox.value = playerWallJump;
 	playerWallJumpCheckbox.update_checkbox();
+	# Make the WallJumpDecay Checkbox transparent if it can't be selected.
 	if !playerWallJump:
-		playerWallJumpDecayCheckbox.modulate = Color(1, 1, 1, 0.5);
-		playerWallJumpDecayCheckbox.check_changed.disconnect(_on_drag_ended);
 		playerWallJumpDecay = false;
-	else:
-		playerWallJumpDecayCheckbox.modulate = Color(1, 1, 1, 1);
-		playerWallJumpDecayCheckbox.check_changed.connect(_on_drag_ended);
+	make_selectable_check(playerWallJumpDecayCheckbox, playerWallJump);
 	playerWallJumpDecayCheckbox.value = playerWallJumpDecay;
 	playerWallJumpDecayCheckbox.update_checkbox();
 	# Enemies
@@ -226,6 +223,19 @@ func update_sliders() -> void:
 		shootingFireRateSlider.update_slider();
 		shootingProjectileBounce.update_checkbox();
 		shootingGravity.update_checkbox();
+
+## Alternate the ability for a checkbox property to be selected
+## property: The property to change
+## selectable: If it can be selected
+func make_selectable_check(property : VBoxContainer, selectable : bool) -> void:
+	if !selectable:
+		property.modulate = Color(1, 1, 1, 0.5);
+		if property.check_changed.is_connected(_on_drag_ended):
+			property.check_changed.disconnect(_on_drag_ended);
+	else:
+		property.modulate = Color(1, 1, 1, 1);
+		if !property.check_changed.is_connected(_on_drag_ended):
+			property.check_changed.connect(_on_drag_ended);
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:

@@ -2,15 +2,13 @@
 
 [ext_resource type="Script" uid="uid://b5cfw8am4ff8f" path="res://Scripts/Game/EnemyStationary.gd" id="1_jtxg7"]
 [ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="2_3thal"]
+[ext_resource type="Texture2D" uid="uid://dnpob7e44vnhq" path="res://Assets/Sprites/Entities/evilstationarydude.png" id="3_3thal"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5jdan"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dhqy0"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jsw2f"]
-load_path = "res://.godot/imported/dude.png-4f7a5b327ca4a58df962352d1f6dc974.ctex"
-
-[node name="EnemyStationary" type="CharacterBody2D" unique_id=279826983]
+[node name="EnemyStationary" type="CharacterBody2D" unique_id=279826983 groups=["Enemy"]]
 collision_layer = 6
 collision_mask = 6
 floor_snap_length = 128.0
@@ -32,4 +30,4 @@ shape = SubResource("CircleShape2D_5jdan")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=45664359]
 modulate = Color(1, 0, 0, 1)
 material = SubResource("ShaderMaterial_dhqy0")
-texture = SubResource("CompressedTexture2D_jsw2f")
+texture = ExtResource("3_3thal")

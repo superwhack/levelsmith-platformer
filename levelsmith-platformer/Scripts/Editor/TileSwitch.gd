@@ -57,7 +57,7 @@ func _ready() -> void:
 	patrollingEntityButton.pressed.connect(_on_patrolling_entity_button_pressed);
 	shootingEntityButton.pressed.connect(_on_shooting_entity_button_pressed);
 	flyingEntityButton.pressed.connect(_on_flying_entity_button_pressed);
-	#stationaryEntityButton.pressed.connect(_on_stationary_entity_button_pressed);
+	stationaryEntityButton.pressed.connect(_on_stationary_entity_button_pressed);
 	
 	# Connect all Prop button signals
 	propOneButton.pressed.connect(_on_prop_one_button_pressed);
@@ -133,7 +133,7 @@ func _on_flying_entity_button_pressed() -> void:
 	toolManager.update_brush_object(Global.EntityType.FLYING);
 
 func _on_stationary_entity_button_pressed() -> void:
-	toolManager.update_brush_objects(Global.EntityType.STATIONARY);
+	toolManager.update_brush_object(Global.EntityType.STATIONARY);
 
 # Prop Buttons
 func _on_prop_one_button_pressed() -> void:

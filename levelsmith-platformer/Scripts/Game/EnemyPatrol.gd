@@ -3,8 +3,8 @@ extends Enemy
 
 # Movement variables
 var groundSpeed : float = 1.0;
-var direction : int = 1;
 const SPEED_MODIFIER : float = 400.0;
+var bounceBoost := 1.0;
 
 # True = enemies can't fall off ledges
 var restricted : bool;
@@ -12,6 +12,8 @@ var restricted : bool;
 # Detection variables for directional change
 @export var rayCastLeft : RayCast2D;
 @export var rayCastRight : RayCast2D;
+@export var rayCastLeftTop : RayCast2D;
+@export var rayCastRightTop : RayCast2D;
 @export var rayCastDownL : RayCast2D;
 @export var rayCastDownR : RayCast2D;
 @export var directionArrow : Sprite2D;
@@ -19,6 +21,10 @@ var restricted : bool;
 ## Processes the physics every frame
 ## delta: Time since previous frame
 func _physics_process(delta: float) -> void:
+	if !active:
+		if !onScreen.is_on_screen():
+			return;
+		active = true;
 	# When we are processing physics, we are in the game scene, so the direction
 	# arrow can be hidden.
 	directionArrow.hide();
@@ -27,22 +33,24 @@ func _physics_process(delta: float) -> void:
 	
 	# Executing basic movement behavior.
 	patrol_behavior();
+	super.detect_tiles(true);
+	
 	move_and_slide();
 
 ## Applies horizontal movements and directional changes triggered by raycasts
 func patrol_behavior() -> void:
 	# If either side raycast is colliding, switch direction.
-	if (rayCastRight.is_colliding()):
+	if (rayCastRight.is_colliding() || rayCastRightTop.is_colliding()):
 		direction = -1;
-	if (rayCastLeft.is_colliding()):
+	if (rayCastLeft.is_colliding() || rayCastLeftTop.is_colliding()):
 		direction = 1;
 	
 	# Check for running off of a tile with restricted on
-	if (restricted && !(rayCastDownL.is_colliding() && rayCastDownR.is_colliding())):
-		if (!rayCastDownL.is_colliding()):
-			direction = 1;
-		elif (!rayCastDownR.is_colliding()):
+	if (restricted && ((rayCastDownL.is_colliding() && !rayCastDownR.is_colliding()) || (!rayCastDownL.is_colliding() && rayCastDownR.is_colliding()))):
+		if (rayCastDownL.is_colliding()):
 			direction = -1;
+		elif (rayCastDownR.is_colliding()):
+			direction = 1;
 	velocity.x = direction * groundSpeed * SPEED_MODIFIER;
 	
 	# Check for collisions with other enemies and bounce

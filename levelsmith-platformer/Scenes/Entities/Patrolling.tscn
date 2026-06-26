@@ -3,19 +3,28 @@
 [ext_resource type="Texture2D" uid="uid://bggaro288ywls" path="res://Assets/Sprites/Entities/baddude.png" id="1_8ustp"]
 [ext_resource type="Script" uid="uid://cv0ngpnmx6kwj" path="res://Scripts/Game/EnemyPatrol.gd" id="1_ecr3g"]
 [ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="2_n0k27"]
+[ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_3diox"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
-[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft", "rayCastRight", "rayCastDownL", "rayCastDownR", "directionArrow") groups=["Enemy"]]
+[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft", "rayCastRight", "rayCastLeftTop", "rayCastRightTop", "rayCastDownL", "rayCastDownR", "directionArrow", "leftRaycast", "rightRaycast", "downRaycast", "upRaycast", "raycastHelper", "onScreen") groups=["Enemy"]]
 collision_layer = 6
 collision_mask = 6
 floor_snap_length = 128.0
 script = ExtResource("1_ecr3g")
-rayCastLeft = NodePath("RayCastLeft")
-rayCastRight = NodePath("RayCastRight")
+rayCastLeft = NodePath("RayCastLeftC")
+rayCastRight = NodePath("RayCastRightC")
+rayCastLeftTop = NodePath("RayCastLeft")
+rayCastRightTop = NodePath("RayCastRight")
 rayCastDownL = NodePath("RayCastDownL")
 rayCastDownR = NodePath("RayCastDownR")
 directionArrow = NodePath("DirectionArrow")
+leftRaycast = NodePath("RayCastLeftC")
+rightRaycast = NodePath("RayCastRightC")
+downRaycast = NodePath("RayCastDown")
+upRaycast = NodePath("RayCastUp")
+raycastHelper = NodePath("RaycastHelper")
+onScreen = NodePath("OnScreen")
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=320029135]
 visible = false
@@ -37,11 +46,31 @@ scale = Vector2(1.355, 1.355)
 target_position = Vector2(-30, 55)
 collision_mask = 2
 
+[node name="RayCastRightC" type="RayCast2D" parent="." unique_id=1219131414]
+rotation = -3.1415925
+scale = Vector2(1.355, 1.355)
+target_position = Vector2(-55, 0)
+collision_mask = 2
+
+[node name="RayCastLeftC" type="RayCast2D" parent="." unique_id=2139336797]
+rotation = 3.1415925
+scale = Vector2(1.355, 1.355)
+target_position = Vector2(55, 0)
+collision_mask = 2
+
 [node name="RayCastRight" type="RayCast2D" parent="." unique_id=1274388389]
 rotation = -1.5707964
 scale = Vector2(1.355, 1.355)
 target_position = Vector2(30, 55)
 collision_mask = 2
+
+[node name="RayCastUp" type="RayCast2D" parent="." unique_id=2081100977]
+target_position = Vector2(0, -66)
+collision_mask = 10
+
+[node name="RayCastDown" type="RayCast2D" parent="." unique_id=917500616]
+target_position = Vector2(0, 66)
+collision_mask = 10
 
 [node name="RayCastDownL" type="RayCast2D" parent="." unique_id=991043695]
 position = Vector2(-10, 0)
@@ -56,3 +85,8 @@ rotation = -6.2831855
 scale = Vector2(1.355, 1.355)
 target_position = Vector2(0, 125)
 collision_mask = 10
+
+[node name="RaycastHelper" type="Node" parent="." unique_id=523938406]
+script = ExtResource("4_3diox")
+
+[node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=996930723]

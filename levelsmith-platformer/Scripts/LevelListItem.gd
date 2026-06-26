@@ -1,12 +1,18 @@
 extends Node
 
-# Exported references to the level thumbnail, title, and size.
+# Exported references to the level thumbnail, title, author, size, and button.
 @export var levelThumbnail : TextureRect;
 @export var thumbnailContainer : PanelContainer;
 @export var levelTitle : Label;
 @export var levelAuthor : Label;
 @export var levelSize : Label;
 @export var levelButton : Button;
+
+# The level path. Used when emitting signal.
+var levelPath : String;
+
+# Signal for double clicking main button
+signal level_double_clicked(path: String)
 
 
 # An enum for the base color of the button.
@@ -26,21 +32,19 @@ func _ready() -> void:
 	levelAuthor.add_theme_font_size_override("font_size", 22);
 
 	
-	# Level size is slightly smaller and opacitic.
+	# Level size is slightly smaller and opacitic (?).
 	levelSize.add_theme_font_size_override("font_size", 20);
 	levelSize.modulate.a = 183.0/255.0;
-	
-	apply_colors();
-	# Connect necessary signals for swapping text colors
-	#levelButton.button_down.connect(_on_level_button_change);
-	#levelButton.button_up.connect(_on_level_button_change);
-	levelButton.mouse_entered.connect(_on_mouse_enter)
-	levelButton.mouse_exited.connect(_on_mouse_exit)
+		
+	# Signals
+	levelButton.mouse_entered.connect(_on_mouse_enter);
+	levelButton.mouse_exited.connect(_on_mouse_exit);
+	levelButton.gui_input.connect(_on_level_button_input);
 
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	pass;
 	
 ## Sets all font colors to the correct one based on the button color.
 func apply_colors() -> void:
@@ -54,11 +58,17 @@ func apply_colors() -> void:
 		levelTitle.add_theme_color_override("font_color", white);
 		levelAuthor.add_theme_color_override("font_color", white);
 		levelSize.add_theme_color_override("font_color", white);
-		thumbnailContainer.add
 
-## When the button is down/up, set the color of the text to the opposite
-func _on_level_button_change() -> void:
-	apply_colors();
+## When the main button is double clicked, emit signal
+## event: The input event triggering this code.
+func _on_level_button_input(event):
+	# If the event is a double click, left mouse button, emit signal
+	if (event is InputEventMouseButton
+	&& event.button_index == MOUSE_BUTTON_LEFT
+	&& event.double_click
+	&& event.pressed):
+		level_double_clicked.emit(levelPath);
+
 
 ## Set the color of the text inside the button to be the opposite color.
 func _on_mouse_enter() -> void:

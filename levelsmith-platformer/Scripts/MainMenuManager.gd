@@ -44,7 +44,6 @@ func _ready() -> void:
 	buttonNewLevel.pressed.connect(overlayNewLevel.show);
 	buttonNewLevelCreate.pressed.connect(create_new_level);
 	buttonNewLevelCancel.pressed.connect(overlayNewLevel.hide);
-	
 	buttonImportLevel.pressed.connect(overlayImportLevel.show);
 	buttonImportLevelOpen.pressed.connect(import_level);
 	buttonImportLevelCancel.pressed.connect(import_cancel);
@@ -133,9 +132,13 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 	# Instantiate and add to level list.
 	var item = levelListItem.instantiate();
 	levelList.add_child(item);
+	item.levelPath = levelPath + "/";
 
 	# Setting the level list item data
 	item.levelTitle.text = folderName;
+	
+	# Connect the level button signal to the double clicked function
+	item.level_double_clicked.connect(_on_level_double_clicked);
 	
 	# Get the csv level size, and add it to the level item
 	var levelSize : Vector2i = get_csv_size(levelPath + "/" + "Tiles.CSV");
@@ -145,16 +148,19 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 	var levelThumbnailPath : String = levelPath + "/thumbnail.png";
 	
 	if (FileAccess.file_exists(levelThumbnailPath)):
-		var image := Image.new();
+		var image : Image = Image.new();
 		
-		# If the image returns no error, replace the texture
+		# If the image returns ok, replace the texture
 		if (image.load(levelThumbnailPath) == OK):
 			var texture := ImageTexture.create_from_image(image)
 			item.levelThumbnail.texture = texture;
-		else:
-			print("Failed to load image: ", levelThumbnailPath);
 
-	item.apply_colors();
+
+## Load a level when appropriate button is pressed
+func _on_level_double_clicked(path: String) -> void:
+	print("Loading:", path);
+
+	masterManager.load_level(path);
 
 ## Retrieves the world size from a CSV file.
 ## filePath: the file path of the CSV file.

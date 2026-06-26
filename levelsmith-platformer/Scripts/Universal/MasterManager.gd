@@ -107,6 +107,12 @@ func import_level_and_edit() -> void:
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
 
+## Loads the given level to the player.
+## levelPath: The folder path of the level.
+func load_level(levelPath: String) -> void:
+	ImportExportManager.levelPath = levelPath;
+	import_level_and_edit();
+
 ## Swap to main menu state
 func main_menu() -> void:
 	# Hide all non-menu states, show Main Menu scene

@@ -5,6 +5,7 @@ signal death;
 signal reload;
 signal complete;
 signal levelCreated;
+signal onCoinCollected;
 
 # Tile size
 const TILE_SIZE : int = 128;
@@ -64,7 +65,8 @@ enum EntityType {
 	PROP3 = 508,
 	PROP4 = 509,
 	PROP5 = 510, 
-	PROP6 = 511
+	PROP6 = 511,
+	COIN = 512
 }
 
 const BEDROCK_TILE: int = 9998;

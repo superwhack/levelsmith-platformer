@@ -71,7 +71,7 @@ func level_complete() -> void:
 func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	cameraManager.initialize_camera();
-	ImportExportManager.make_new_level( levelName );
+	ImportExportManager.make_new_level( levelName, worldSize );
 	
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();

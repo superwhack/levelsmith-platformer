@@ -327,7 +327,7 @@ func replace_animation(newAnimationPath : String) -> void:
 		# If the file is a png, increase the file count and create a copy in the assets folder with its number
 		if (file.get_extension().to_lower() == "png"):
 			fileCount += 1;
-			targetDirectory.copy(currentFilePath, str(targetFilePath, "/", animationPreviewNameToReplace, fileCount, ".png"));
+			targetDirectory.copy(currentFilePath, str(targetFilePath, "/", animationPreviewNameToReplace, str(fileCount).pad_zeros(2), ".png"));
 		else:
 			if (!file.get_extension().to_lower() == "png.import"):
 				PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
@@ -336,6 +336,9 @@ func replace_animation(newAnimationPath : String) -> void:
 	# Replace the preview image if there is one, if not load default
 	var replacementImage : Image = find_image_in_folder(targetFilePath);
 	if (replacementImage):
+		currentLoadedAnimation.clear();
+		for image in get_animation_from_folder(animationPreviewNameToReplace):
+			currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 		update_animation_preview();
 	else:
 		PopUpManager.create_error_popup("No Defaults", "No default images yet, update this when there are default animations");

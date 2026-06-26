@@ -46,6 +46,12 @@ var trueSpeed : float;
 # TODO: Make it so that it selects the DefaultMovement preset automatically 
 @export var playerMovementPreset : PlayerMovementPreset;
 
+# Animation-related variables.
+@export var animatedSprites : AnimatedSprite2D;
+var isFacingRight : bool = true;
+var isJumping : bool = false;
+var jumpAnimTimer : Timer;
+
 # Enemy collision hitboxes for hooking signals
 @export var enemyBounceCollision: Area2D;
 @export var enemyCollision: Area2D;
@@ -59,6 +65,18 @@ func _ready() -> void:
 	enemyCollision.body_exited.connect(remove_enemy);
 	enemyBounceCollision.area_entered.connect(detect_projectile_bounce);
 	enemyCollision.area_entered.connect(detect_projectiles);
+	
+	var turn_jump_off = func() -> void:
+		isJumping = false;
+	
+	# jump animation timer
+	jumpAnimTimer = Timer.new();
+	jumpAnimTimer.wait_time = 1.0;
+	jumpAnimTimer.timeout.connect(turn_jump_off);
+	add_child(jumpAnimTimer);
+	
+	animatedSprites.play()
+	
 	# Applies the preset on ready
 	if (playerMovementPreset):
 		#print("Applying ", playerMovementPreset, " player movement preset.");
@@ -69,19 +87,13 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if (check_out_of_bounds()):
 		return;
+		
+	process_animation();
+	
 	for enemy in enemiesInside:
 		detect_enemies(enemy);
 	if invulnerabilityCurrent > 0:
 		invulnerabilityCurrent -= delta;
-		flashTimer -= delta;
-		modulate = Color(1, .5, .5);
-		if flashTimer < 0:
-			flashTimer = flashTimerCap;
-			visible = !visible;
-		if invulnerabilityCurrent <= 0:
-			modulate = Color(1, 1, 1);
-			visible = true;
-			flashTimer = 0;
 	
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair, and reset friction.
@@ -101,7 +113,7 @@ func _physics_process(delta: float) -> void:
 			# Don't allow double jumps by reducing coyoteTimeLeft to 0
 			coyoteTimeLeft = 0;
 			jump();
-	# Handle A and D inputs, as well as lack of directional input
+	# Handle A and D inputs, as well as lack of dWirectional input
 	run();
 	
 	# Look at what the player is colliding with and apply effects
@@ -110,6 +122,8 @@ func _physics_process(delta: float) -> void:
 ## Make the player jump
 func jump() -> void:
 	AudioManager.play_effect("PlayerJump");
+	isJumping = true;
+	jumpAnimTimer.start();
 	velocity.y = -jumpHeight * 360 * currentSlowdown;
 	
 ## Handle left and right movement logic, with the inclusion of if there is no input
@@ -120,6 +134,7 @@ func run() -> void:
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;
+		isFacingRight = direction > 0;
 	# Acceleration
 	else:
 		if (currentFriction != 1.0):
@@ -161,6 +176,7 @@ func run() -> void:
 ## amount: damage to deal
 ## direction: direction to deal damage in
 func take_damage(amount: int, direction: Vector2) -> void:
+	
 	if invulnerabilityCurrent > 0:
 		return;
 	invulnerabilityCurrent = invulnerabilityTimer;
@@ -172,8 +188,28 @@ func take_damage(amount: int, direction: Vector2) -> void:
 	
 ## Kill the player and send the global death signal
 func die() -> void:
+	animatedSprites.animation = "death";
 	AudioManager.play_effect("PlayerDeath");
 	Global.death.emit();
+
+## Changes the animation state 
+func process_animation() -> void:
+	if (health <= 0): return;
+	
+	animatedSprites.flip_h = !isFacingRight;
+	
+	if (invulnerabilityCurrent > 0):
+		animatedSprites.animation = "hurt";
+	elif (!is_on_floor() and isJumping): 
+		animatedSprites.animation = "jump";
+	elif (!is_on_floor()):
+		animatedSprites.animation = "fall";
+	elif (velocity.x != 0):
+		animatedSprites.animation = "walk";
+	else:
+		animatedSprites.animation = "idle";
+	
+	animatedSprites.play();
 
 ## Remove enemies or projectiles when no longer inside of them
 ## body: the body or area to remove from the array

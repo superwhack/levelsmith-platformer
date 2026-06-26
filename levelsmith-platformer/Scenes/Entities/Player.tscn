@@ -2,14 +2,93 @@
 
 [ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Game/Player.gd" id="1_kyqiw"]
 [ext_resource type="Resource" uid="uid://nd3ng1cl05pa" path="res://Resources/PlayerPresets/Default.tres" id="2_agccv"]
-[ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
+[ext_resource type="Texture2D" uid="uid://bj5yi8uuy6osq" path="res://Assets/Sprites/Entities/Player/PlayerDeath/1.png" id="3_3m754"]
+[ext_resource type="Texture2D" uid="uid://cxub5rcls16a7" path="res://Assets/Sprites/Entities/Player/PlayerFall/1.png" id="4_46t5s"]
+[ext_resource type="Texture2D" uid="uid://c33oqgkuiuacx" path="res://Assets/Sprites/Entities/Player/PlayerHurt/1.png" id="5_0pa8p"]
+[ext_resource type="Texture2D" uid="uid://b2exxw3vlw6i0" path="res://Assets/Sprites/Entities/Player/PlayerHurt/2.png" id="6_0hljs"]
+[ext_resource type="Texture2D" uid="uid://csiehpikc3hd6" path="res://Assets/Sprites/Entities/Player/PlayerHurt/3.png" id="7_crkm8"]
+[ext_resource type="Texture2D" uid="uid://dcmdhpnamm8rr" path="res://Assets/Sprites/Entities/Player/PlayerIdle/1.png" id="8_j230w"]
+[ext_resource type="Texture2D" uid="uid://c3lkhqngir1ha" path="res://Assets/Sprites/Entities/Player/PlayerJump/1.png" id="9_qkam4"]
+[ext_resource type="Texture2D" uid="uid://dmjr2cug8wt3s" path="res://Assets/Sprites/Entities/Player/PlayerJump/2.png" id="10_w67ft"]
+[ext_resource type="Texture2D" uid="uid://0ih8csqea3yr" path="res://Assets/Sprites/Entities/Player/PlayerWalk/2.png" id="11_7n4p1"]
+[ext_resource type="Texture2D" uid="uid://bcbb5xfouwdmb" path="res://Assets/Sprites/Entities/Player/PlayerWalk/3.png" id="12_pid1y"]
+[ext_resource type="Texture2D" uid="uid://dax23g014ckse" path="res://Assets/Sprites/Entities/Player/PlayerWalk/1.png" id="13_0aity"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
 size = Vector2(20, 19.999996)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_agccv"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "enemyBounceCollision", "enemyCollision") groups=["Player"]]
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_3m754")
+}],
+"loop": 1,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_46t5s")
+}],
+"loop": 1,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_0pa8p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0hljs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_crkm8")
+}],
+"loop": 1,
+"name": &"hurt",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_j230w")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_qkam4")
+}, {
+"duration": 4.0,
+"texture": ExtResource("10_w67ft")
+}],
+"loop": 0,
+"name": &"jump",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_7n4p1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_pid1y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_0aity")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_pid1y")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "animatedSprites", "enemyBounceCollision", "enemyCollision") groups=["Player"]]
 position = Vector2(0, 10)
 scale = Vector2(0.9, 0.9)
 floor_snap_length = 32.0
@@ -17,6 +96,7 @@ script = ExtResource("1_kyqiw")
 raycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastLeft2"), NodePath("RayCastRight2"), NodePath("RayCastUp2"), NodePath("RayCastDown2"), NodePath("RayCastLeft"), NodePath("RayCastLeft3"), NodePath("RayCastRight"), NodePath("RayCastRight3"), NodePath("RayCastUp"), NodePath("RayCastUp3")]
 downwardsRaycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastDown2")]
 playerMovementPreset = ExtResource("2_agccv")
+animatedSprites = NodePath("AnimatedSprite2D")
 enemyBounceCollision = NodePath("EnemyBounceCollision")
 enemyCollision = NodePath("EnemyCollision")
 
@@ -42,8 +122,9 @@ shape = SubResource("RectangleShape2D_agccv")
 scale = Vector2(6, 6)
 shape = SubResource("CircleShape2D_agccv")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=290798525]
-texture = ExtResource("2_gntrk")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1287334086]
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+animation = &"idle"
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=116409988]
 position = Vector2(-50, 0)

@@ -312,11 +312,13 @@ func reset_menu() -> void:
 		button.queue_free();
 	for button: Button in animationsTab.get_children():
 		button.queue_free();
+	firstImageSelected = null;
+	firstAnimationSelected = null;
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);
 	generate_buttons("Entities", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
-	item_selected(firstImageSelected);
+	on_asset_tab_changed(assetTabs.current_tab);
 
 
 #func reset_audio(audioName: String) -> void:

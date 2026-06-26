@@ -139,6 +139,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
 			elif (isMoving && prevEntity == -1):
 				prevEntity = -2;
+				prevPosition = Vector2(-1, -1);
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
 			elif (!isMoving && prevEntity != -1):
 				entityManager.drop_entity();

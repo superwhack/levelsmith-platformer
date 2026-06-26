@@ -124,11 +124,12 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 ## Moves the entity at the clicked position
 func move_entity(previousClickPos: Vector2) -> void:
 	propertyMenu.close();
-	# Await is needed to it has time to update selectedTile
+	
 	toolManager.prevPosition = previousClickPos;
 	toolManager.prevEntity = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;
 	
+	# Await is needed to it has time to update selectedTile
 	await get_tree().process_frame;
 	toolManager.brushObject = tileMap.get_cell_source_id(previousClickPos);
 	toolManager.currentObjectRotation = tileMap.get_cell_alternative_tile(previousClickPos);
@@ -143,6 +144,12 @@ func drop_entity() -> void:
 	
 	# Drop the entity on its original spot if mouse is over any object.
 	if (clickedObjectId >= 0 || !editorManager.isPlaceable):
+		print(toolManager.prevPosition);
+		if toolManager.prevPosition == Vector2(-1 ,-1):
+			toolManager.prevEntity = -1;
+			toolManager.prevPosition = Vector2(0,0);
+			toolManager.currentObjectRotation = toolManager.prevRotation;
+			return;
 		editorManager.isPlaceable = true;
 		dropPosition = toolManager.prevPosition;
 	else:

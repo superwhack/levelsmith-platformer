@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://caw5vfrla8ry1" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
 [ext_resource type="Texture2D" uid="uid://cn52j7r73ygot" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="7_loo7a"]
 [ext_resource type="Texture2D" uid="uid://5qon1fxclb4n" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="8_if7li"]
-[ext_resource type="StyleBox" uid="uid://c4nxvw40uptk2" path="res://Resources/UIStyles/WarningPanelStyle.tres" id="9_rrcx7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -66,7 +65,6 @@ buttonImportLevelCancel = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/Over
 buttonImportLevelOpen = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/OpenButton")
 buttonImportLevelBrowse = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/BrowseButton")
 fieldImportLevelPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/FilePathInput")
-panelInvalidPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ErrorBanner")
 fileExplorer = NodePath("FileDialog")
 levelList = NodePath("Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer/LevelList")
 levelListItem = ExtResource("3_if7li")
@@ -152,7 +150,6 @@ text = "New Level"
 [node name="ImportLevelButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1546369652]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
-disabled = true
 text = "Import Level"
 
 [node name="LoadExampleButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1890658956]
@@ -438,22 +435,6 @@ texture_normal = ExtResource("6_cmrfp")
 texture_pressed = ExtResource("7_loo7a")
 texture_hover = ExtResource("8_if7li")
 
-[node name="ErrorBanner" type="PanelContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=2119281141]
-visible = false
-layout_mode = 2
-theme_override_styles/panel = ExtResource("9_rrcx7")
-
-[node name="MarginContainer" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ErrorBanner" unique_id=1400970093]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="ErrorLabel" type="Label" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ErrorBanner/MarginContainer" unique_id=203808336]
-layout_mode = 2
-theme_override_font_sizes/font_size = 25
-text = "Invalid File Path."
-
 [node name="Control" type="Control" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=1280023487]
 layout_mode = 2
 size_flags_vertical = 3
@@ -481,7 +462,8 @@ text = "Cancel"
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1904639915]
 oversampling_override = 1.0
-title = "Open a File"
+title = "Open a Directory"
 position = Vector2i(0, 36)
 size = Vector2i(1280, 720)
-file_mode = 0
+file_mode = 2
+access = 2

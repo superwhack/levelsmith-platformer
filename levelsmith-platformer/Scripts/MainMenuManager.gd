@@ -30,9 +30,9 @@ extends Control
 @export var fileExplorer : FileDialog;
 
 ## A reference to the Level List for loading levels.
-@export var LevelList : VBoxContainer;
+@export var levelList : VBoxContainer;
 ## A reference to a packed scene of a clickable Level List Item.
-@export var LevelListItem : PackedScene;
+@export var levelListItem : PackedScene;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -86,7 +86,7 @@ func exit_program() -> void:
 ## Fills the level list with currently existing levels from the user's directory.
 func fill_level_list() -> void:
 	# First, kill everything inside of the list. Makes refreshing easy
-	for item in LevelList.get_children():
+	for item in levelList.get_children():
 		item.queue_free();
 		
 	# Get the directory that contains all the level folders
@@ -97,41 +97,47 @@ func fill_level_list() -> void:
 	
 	var folderName : String = levelListDir.get_next();
 	
-	var iteration : int = 0;
 	# So long as the folder name is not null...
 	while folderName != "":
-		if (levelListDir.current_is_dir() and not folderName.begins_with(".")):
+		if (levelListDir.current_is_dir()):
 			# Getting and creating the level list item
 			var levelPath : String = levelsPath + "/" + folderName;
-			var item = LevelListItem.instantiate();
-			LevelList.add_child(item);
+			
+			# Add the level to the level list and set it up visually.
+			if (get_level_valid(levelPath)):
+				setup_level_item(folderName, levelPath);
 
-			# Setting the level list item data
-			item.levelTitle.text = folderName;
-			
-			# Get the csv level size, and add it to the level item
-			var levelSize : Vector2i = get_csv_size(levelPath + "/" + "Tiles.CSV");
-			item.levelSize.text = (str(levelSize.x) + "x" + str(levelSize.y));
-			
-			
-			# If the thumbnail file exists, replace image (or don't)
-			var levelThumbnailPath : String = levelPath + "/thumbnail.png";
-			
-			if (FileAccess.file_exists(levelThumbnailPath)):
-				var image := Image.new();
-				
-				# If the image returns no error, replace the texture
-				if (image.load(levelThumbnailPath) == OK):
-					var texture := ImageTexture.create_from_image(image)
-					item.levelThumbnail.texture = texture;
-				else:
-					print("Failed to load image: ", levelThumbnailPath);
-
-			item.apply_colors();
-				
-			# Get the next folder
 			folderName = levelListDir.get_next();
-			iteration += 1;
+
+## Setups each level item in the list.
+## folderName: the folder of the level. Used for level title.
+## levelPath: the path of the level.
+func setup_level_item(folderName : String, levelPath : String) -> void:
+	# Instantiate and add to level list.
+	var item = levelListItem.instantiate();
+	levelList.add_child(item);
+
+	# Setting the level list item data
+	item.levelTitle.text = folderName;
+	
+	# Get the csv level size, and add it to the level item
+	var levelSize : Vector2i = get_csv_size(levelPath + "/" + "Tiles.CSV");
+	item.levelSize.text = (str(levelSize.x) + "x" + str(levelSize.y));
+	
+	# If the thumbnail file exists, replace image (or don't)
+	var levelThumbnailPath : String = levelPath + "/thumbnail.png";
+	
+	if (FileAccess.file_exists(levelThumbnailPath)):
+		var image := Image.new();
+		
+		# If the image returns no error, replace the texture
+		if (image.load(levelThumbnailPath) == OK):
+			var texture := ImageTexture.create_from_image(image)
+			item.levelThumbnail.texture = texture;
+		else:
+			print("Failed to load image: ", levelThumbnailPath);
+
+	item.apply_colors();
 
 ## Retrieves the world size from a CSV file.
 ## filePath: the file path of the CSV file.
@@ -157,3 +163,19 @@ func get_csv_size(filePath : String) -> Vector2i:
 		width = rows[0].size();
 
 	return Vector2i(width, height);
+	
+## Checks if a level folder is valid with the correct files.
+## filePath: The file path of the folder.
+## Returns a bool based on the folder being valid.
+func get_level_valid(filePath : String) -> bool:
+	if (!FileAccess.file_exists(filePath)):
+		# Check if settings file doesn't exist
+		if (!FileAccess.file_exists(filePath + "/Settings.json")):
+			print("No settings")
+			return false;
+			
+		# Check if CSV file doesn't exist
+		if (!FileAccess.file_exists(filePath + "/Tiles.CSV")):
+			print("No Tiles")
+			return false;
+	return true;

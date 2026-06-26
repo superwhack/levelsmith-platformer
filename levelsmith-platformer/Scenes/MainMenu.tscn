@@ -42,7 +42,7 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_ce3w2")
 sources/2 = SubResource("TileSetAtlasSource_n45e2")
 
-[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "spinBoxNewLevelX", "spinBoxNewLevelY", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "panelInvalidPath", "fileExplorer", "LevelList")]
+[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "spinBoxNewLevelX", "spinBoxNewLevelY", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "panelInvalidPath", "fileExplorer", "levelList")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -68,8 +68,8 @@ buttonImportLevelBrowse = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/Over
 fieldImportLevelPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/FilePathInput")
 panelInvalidPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ErrorBanner")
 fileExplorer = NodePath("FileDialog")
-LevelList = NodePath("Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer/LevelList")
-LevelListItem = ExtResource("3_if7li")
+levelList = NodePath("Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer/LevelList")
+levelListItem = ExtResource("3_if7li")
 
 [node name="Background" type="ColorRect" parent="." unique_id=2093246532]
 layout_mode = 1
@@ -210,9 +210,12 @@ custom_minimum_size = Vector2(1141, 176.13)
 layout_mode = 2
 size_flags_vertical = 3
 offset_transform_enabled = true
-theme_override_constants/separation = 77
+theme_override_constants/separation = 15
 
 [node name="LevelListItem" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer/LevelList" unique_id=2067988774 instance=ExtResource("3_if7li")]
+layout_mode = 2
+
+[node name="LevelListItem2" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer/LevelList" unique_id=347632173 instance=ExtResource("3_if7li")]
 layout_mode = 2
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=120086451]

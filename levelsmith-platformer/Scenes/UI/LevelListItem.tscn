@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://eirshpbhdpcx" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="4_yqi52"]
 [ext_resource type="Texture2D" uid="uid://7uv8k40ra2l" path="res://Assets/Sprites/UI/Brush.png" id="6_ilhfk"]
 [ext_resource type="Texture2D" uid="uid://bt7ohiths4mty" path="res://Assets/Sprites/UI/lucide--play.svg" id="7_18drn"]
+[ext_resource type="Texture2D" uid="uid://d0b63c00hebfv" path="res://Assets/Sprites/UI/ThumbnailModeMedium.PNG" id="8_1abjo"]
 [ext_resource type="Texture2D" uid="uid://vhfbfauqi788" path="res://Assets/Sprites/UI/Invalid.png" id="8_g3cx5"]
-[ext_resource type="Texture2D" uid="uid://bq2asy52diav0" path="res://Assets/Sprites/UI/ResetMedium.PNG" id="9_1abjo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nh84e"]
 bg_color = Color(1, 1, 1, 1)
@@ -18,15 +18,14 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [node name="LevelListItem" type="Control" unique_id=2067988774 node_paths=PackedStringArray("levelThumbnail", "thumbnailContainer", "levelTitle", "levelAuthor", "levelSize", "levelButton")]
-custom_minimum_size = Vector2(500, 50)
+custom_minimum_size = Vector2(500, 100)
 custom_maximum_size = Vector2(1150, 100)
 layout_mode = 3
 anchor_top = 0.008
-anchor_right = 0.59900004
-anchor_bottom = 0.093
+anchor_bottom = 0.008
 offset_top = -6.6400003
-offset_right = -0.080078125
-offset_bottom = 1.5599976
+offset_right = 1110.0
+offset_bottom = 93.36
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_v6rci")
@@ -41,9 +40,11 @@ levelButton = NodePath("HBoxContainer/LevelMarginContainer/LevelCard")
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=467178205]
 custom_minimum_size = Vector2(1100, -1)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_top = -0.02
+anchor_bottom = -0.02
+offset_right = 1108.0
+offset_bottom = 104.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
@@ -118,8 +119,9 @@ text = "20x20"
 
 [node name="ButtonVContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=795050609]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_constants/separation = 3
 
 [node name="ButtonHContainer" type="HBoxContainer" parent="HBoxContainer/ButtonVContainer" unique_id=1362936122]
 layout_mode = 2
@@ -128,8 +130,10 @@ layout_mode = 2
 custom_minimum_size = Vector2(50, 50)
 custom_maximum_size = Vector2(50, 50)
 layout_mode = 2
+offset_transform_position = Vector2(0, 53.8)
 icon = ExtResource("6_ilhfk")
 icon_alignment = 1
+expand_icon = true
 
 [node name="PlayButton" type="Button" parent="HBoxContainer/ButtonVContainer/ButtonHContainer" unique_id=1195341374]
 custom_minimum_size = Vector2(50, 50)
@@ -137,6 +141,7 @@ custom_maximum_size = Vector2(50, 50)
 layout_mode = 2
 icon = ExtResource("7_18drn")
 icon_alignment = 1
+expand_icon = true
 
 [node name="ButtonHContainer2" type="HBoxContainer" parent="HBoxContainer/ButtonVContainer" unique_id=2011860154]
 layout_mode = 2
@@ -145,12 +150,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(50, 50)
 custom_maximum_size = Vector2(50, 50)
 layout_mode = 2
-icon = ExtResource("8_g3cx5")
+icon = ExtResource("8_1abjo")
 icon_alignment = 1
+expand_icon = true
 
 [node name="EditButton2" type="Button" parent="HBoxContainer/ButtonVContainer/ButtonHContainer2" unique_id=910316209]
 custom_minimum_size = Vector2(50, 50)
 custom_maximum_size = Vector2(50, 50)
 layout_mode = 2
-icon = ExtResource("9_1abjo")
+icon = ExtResource("8_g3cx5")
 icon_alignment = 1

@@ -63,6 +63,7 @@ var audioToReplace : AudioStream;
 @export var frameCountLabel : Label;
 @export var playButton : Button;
 @export var stopButton : Button;
+@export var FPSSpinbox : SpinBox;
 
 # Information about played animation
 var playingAnimation : bool;
@@ -112,6 +113,7 @@ func _ready() -> void:
 	frameLeftButton.pressed.connect(frame_change.bind(false));
 	playButton.pressed.connect(play_preview_animation);
 	stopButton.pressed.connect(stop_preview_animation);
+	FPSSpinbox.value_changed.connect(fps_updated);
 	
 	assetTabs.tab_changed.connect(on_asset_tab_changed);
 	
@@ -529,3 +531,6 @@ func stop_preview_animation() -> void:
 	playingAnimation = false;
 	animationFrameIndex = 0;
 	update_animation_preview();
+
+func fps_updated(value: float) -> void:
+	FPS = value;

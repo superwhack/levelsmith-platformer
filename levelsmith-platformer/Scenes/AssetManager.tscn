@@ -21,7 +21,7 @@ corner_radius_bottom_left = 12
 expand_margin_top = 2.0
 expand_margin_bottom = 3.0
 
-[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imagePreviewTexture", "animationPreview", "animationPreviewTexture", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "animationPreviewRightButton", "animationPreviewLeftButton", "animationName", "frameRightButton", "frameLeftButton", "frameCountLabel", "playButton", "stopButton")]
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imagePreviewTexture", "animationPreview", "animationPreviewTexture", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "animationPreviewRightButton", "animationPreviewLeftButton", "animationName", "frameRightButton", "frameLeftButton", "frameCountLabel", "playButton", "stopButton", "FPSSpinbox")]
 process_mode = 2
 custom_minimum_size = Vector2(900, 600)
 offset_right = 900.0
@@ -49,6 +49,7 @@ frameLeftButton = NodePath("ContentContainer/MainContentContainer/LeftColumnCont
 frameCountLabel = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameCountLabel")
 playButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/PlayPauseButton")
 stopButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/StopButton")
+FPSSpinbox = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/FPSValue")
 
 [node name="ContentContainer" type="VBoxContainer" parent="." unique_id=1686367830]
 layout_mode = 1
@@ -232,6 +233,18 @@ offset_bottom = 56.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1125494010]
+layout_mode = 2
+text = "FPS:"
+
+[node name="FPSValue" type="SpinBox" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1524841534]
+layout_mode = 2
+min_value = 1.0
+max_value = 60.0
+value = 12.0
+rounded = true
 alignment = 1
 
 [node name="PlayPauseButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1544968013]

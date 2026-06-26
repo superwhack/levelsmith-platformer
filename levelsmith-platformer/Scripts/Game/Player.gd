@@ -26,10 +26,14 @@ var spawnpoint : Vector2 = Vector2(0, 0);
 # Raycasts
 @export var raycasts : Array[RayCast2D];
 @export var downwardsRaycasts : Array[RayCast2D];
+@export var deathCasts : Array[RayCast2D];
 
-# STRETCH: Make maxHealth an export so the player doesn't always die in one hit
+signal healthChanged(newHealth);
 var maxHealth := 3;
-var health := maxHealth
+var health := maxHealth:
+	set(newHealth):
+		health = newHealth;
+		healthChanged.emit(health);
 const invulnerabilityTimer := 0.5;
 var invulnerabilityCurrent := 0.0;
 const flashTimerCap := .05;
@@ -69,6 +73,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if (check_out_of_bounds()):
 		return;
+		
 	for enemy in enemiesInside:
 		detect_enemies(enemy);
 	if invulnerabilityCurrent > 0:
@@ -104,8 +109,8 @@ func _physics_process(delta: float) -> void:
 	# Handle A and D inputs, as well as lack of directional input
 	run();
 	
-	# Look at what the player is colliding with and apply effects
-	move_and_slide();
+	if health > 0:
+		move_and_slide();
 
 ## Make the player jump
 func jump() -> void:
@@ -148,7 +153,8 @@ func run() -> void:
 	# Velocity gets capped so you can't accelerate faster
 	elif (abs(velocity.x + accelerationX) > trueSpeed):
 		if (abs(velocity.x) > trueSpeed):
-			velocity.x *= .9;
+			var ratio = pow(trueSpeed / abs(velocity.x), .07);
+			velocity.x *= ratio;
 		elif (abs(velocity.x + accelerationX) > trueSpeed):
 			velocity.x += accelerationX;
 			velocity.x = clamp(velocity.x, -trueSpeed, trueSpeed);
@@ -157,9 +163,11 @@ func run() -> void:
 	velocity.x += accelerationX;
 
 ## Have the player take damage
-## amount: damage to deal
+## amount: damage to deal, -1 is instant death
 ## direction: direction to deal damage in
-func take_damage(amount: int, direction: Vector2) -> void:
+func take_damage(amount: int, direction: Vector2 = Vector2(0, 0)) -> void:
+	if amount < 0:
+		return die();
 	if invulnerabilityCurrent > 0:
 		return;
 	invulnerabilityCurrent = invulnerabilityTimer;
@@ -171,6 +179,7 @@ func take_damage(amount: int, direction: Vector2) -> void:
 	
 ## Kill the player and send the global death signal
 func die() -> void:
+	health = 0;
 	AudioManager.play_effect("PlayerDeath");
 	Global.death.emit();
 
@@ -286,9 +295,13 @@ func detect_tiles() -> void:
 							position += Vector2(0, 1);
 							raycast.force_raycast_update();
 				currentSlowdown = .5;
-					
+		if tileName == "hazard" && (hitGlobal - position).length() < 57:
+			var direction : Vector2 = -raycast.target_position;
+			take_damage(1, direction.normalized());
+		elif tileName == "death" && (hitGlobal - position).length() < 57:
+			take_damage(-1);
 		# Only downward rays should drive floor tile effects (except hazard)
-		if tileName == "hazard" or downwardsRaycasts.has(raycast):
+		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):
 			if (tileData.get_custom_data("name") != "bounce"):
 				if (tileData.get_custom_data("name") != "ice"):
 					currentFriction = 1.0;
@@ -299,9 +312,6 @@ func detect_tiles() -> void:
 				"oneway":
 					if Input.is_action_just_pressed("down"):
 						position += Vector2(0, 1);
-				"hazard":
-					var direction : Vector2 = -raycast.target_position;
-					take_damage(1, direction.normalized());
 				"ice":
 					currentFriction = tileData.get_custom_data("friction");
 

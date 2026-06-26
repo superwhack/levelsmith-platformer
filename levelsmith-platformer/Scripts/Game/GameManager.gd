@@ -59,6 +59,7 @@ func start() -> void:
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
+	player.healthChanged.connect(change_health);
 
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
@@ -73,6 +74,9 @@ func start() -> void:
 	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+
+func change_health(newHealth : int):
+	print("Health: ", newHealth);
 
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:

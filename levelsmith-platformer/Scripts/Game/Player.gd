@@ -16,7 +16,7 @@ var doubleJumpAvailable : bool = doubleJump;
 
 @export var wallJump : bool = false;
 var wallJumpCount : int = 0;
-var wallJumpDirection : wallDirection = WallDirection.NONE;
+var wallJumpDirection : WallDirection = WallDirection.NONE;
 var justWallJumped = false;
 
 # Friction in midair
@@ -288,19 +288,22 @@ func detect_tiles() -> void:
 		if wallJump && rayDirection.x != 0:
 			# Wall Slide when not on ice
 			if tileName != "ice":
-				velocity.y *= .94;
+				if rayDirection.x < 0 && Input.is_action_pressed("left"):
+					velocity.y *= .94;
+				elif rayDirection.x > 0 && Input.is_action_pressed("right"):
+					velocity.y *= .94;
 			if Input.is_action_just_pressed("jump"):
 				# Depending on direction, apply a different x velocity
 				if rayDirection.x < 0:
 					if wallJumpDirection != WallDirection.LEFT:
 						wallJumpCount = 0;
 					wallJumpDirection = WallDirection.LEFT;
-					velocity.x = 1500 * pow(groundSpeed, .66);
+					velocity.x = 1500 * pow(groundSpeed, .55);
 				elif rayDirection.x > 0:
 					if wallJumpDirection != WallDirection.RIGHT:
 						wallJumpCount = 0;
 					wallJumpDirection = WallDirection.RIGHT;
-					velocity.x = -1500 * pow(groundSpeed, .66);
+					velocity.x = -1500 * pow(groundSpeed, .55);
 				# Remove friction if not on ice
 				if tileName != "ice":
 					currentFriction = 1.0;
@@ -308,7 +311,7 @@ func detect_tiles() -> void:
 				if tileName == "slow" || tileName == "ice":
 					velocity.x /= 1.5;
 				wallJumpCount += 1;
-				velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount);
+				velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(groundSpeed, .35);;
 				justWallJumped = true;
 
 		# Bounce tile collisions

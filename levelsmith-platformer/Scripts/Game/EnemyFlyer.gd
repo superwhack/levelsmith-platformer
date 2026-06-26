@@ -23,6 +23,9 @@ const SPEED_MODIFIER : float = 100.0;
 ## Adds enemy to group and sets up initial points
 func _ready() -> void:
 	super._ready();
+	
+	animatedSprites.animation = "move";
+	animatedSprites.play();
 
 	# Set all points to its current position
 	pointA = global_position;
@@ -33,6 +36,8 @@ func _ready() -> void:
 ## Processes flying movement and collision handling.
 ## delta: Time since previous frame.
 func _physics_process(delta: float) -> void:
+	if (health <= 0): return;
+	
 	if (obstacleCooldown > 0.0):
 		obstacleCooldown -= delta;
 
@@ -46,6 +51,9 @@ func fly_behavior() -> void:
 	# Get the direction and distance of movement
 	var direction : Vector2 = targetPoint - global_position;
 	var move_distance : float = speed * SPEED_MODIFIER * get_physics_process_delta_time();
+	
+	# NOTE: Assumes the sprite is facing right
+	animatedSprites.flip_h = direction.x <= 0;
 
 	# If the enemy is close enough to the point, change direction
 	if (direction.length() <= move_distance):

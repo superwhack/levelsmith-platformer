@@ -6,6 +6,7 @@ extends Enemy;
 # Movement points, from the spawn position to the preset offset.
 var pointA : Vector2;
 var pointB : Vector2;
+var progress : float;
 
 # Current destination point.
 var targetPoint : Vector2;
@@ -95,6 +96,8 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	pointA = global_position;
 	pointB = pointA + propertyFile.pointBOffset;
 	targetPoint = pointB;
+	progress = propertyFile.progress;
+	
 	ResourceSaver.save(propertyFile);
 
 	apply_script(propertyFile);
@@ -109,5 +112,9 @@ func apply_script(file: Resource) -> void:
 
 	pointA = global_position;
 	pointB = pointA + file.pointBOffset;
+	print(file.progress);
+	progress = file.progress;
 
 	targetPoint = pointB;
+	print("ab: ", float(progress) / 100.0);
+	global_position  = lerp(pointA, pointB, float(progress) / 100.0);

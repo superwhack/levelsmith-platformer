@@ -268,7 +268,7 @@ sliderStep = 1.0
 [node name="Yoffset" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=201810100 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 size_flags_horizontal = 0
-propertyName = "vertical offset"
+propertyName = "Vertical offset"
 minMax = Vector2(-10, 10)
 sliderStep = 1.0
 
@@ -278,6 +278,7 @@ size_flags_horizontal = 0
 propertyName = "Progress"
 minMax = Vector2(0, 100)
 sliderStep = 1.0
+valueAppend = "%"
 
 [node name="FlyingProperties" type="VBoxContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1573236817]
 visible = false

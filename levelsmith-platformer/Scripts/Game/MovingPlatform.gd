@@ -1,6 +1,5 @@
 class_name MovingPlatform;
 extends Enemy;
-
 # Movement speed of the enemy.
 @export var speed : float = 1.0;
 
@@ -77,7 +76,7 @@ func handle_obstacles() -> void:
 	for k in range(get_slide_collision_count()):
 		var collision : KinematicCollision2D = get_slide_collision(k);
 
-		if collision.get_collider() is TileMapLayer or Enemy:
+		if collision.get_collider() is TileMapLayer:
 			velocity = Vector2.ZERO;
 			switch_target();
 			obstacleCooldown = OBSTACLE_COOLDOWN_DURATION;
@@ -106,10 +105,9 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 func apply_script(file: Resource) -> void:
 	propertyFile = file;
 
-	if file is FlyingPreset:
-		speed = file.speed;
+	speed = file.speed;
 
-		pointA = global_position;
-		pointB = pointA + file.pointBOffset;
+	pointA = global_position;
+	pointB = pointA + file.pointBOffset;
 
-		targetPoint = pointB;
+	targetPoint = pointB;

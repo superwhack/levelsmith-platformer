@@ -309,7 +309,8 @@ func _on_drag_ended() -> void:
 ## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
 	show();
-	previewLine.hide();
+	if previewLine:
+		previewLine.hide();
 	if shootingDirectionArrow:
 		shootingDirectionArrow.scale = Vector2(1,1);
 		shootingDirectionArrow = null;

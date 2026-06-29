@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://da0gjbpe87rk5" path="res://Assets/Sprites/Entities/Coin.png" id="2_qhy4u"]
 
 [node name="PlayerHealthUi" type="HBoxContainer" unique_id=621394887]
+scale = Vector2(0.5, 0.5)
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=70166934]
 layout_mode = 2
@@ -17,15 +18,9 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="HealthContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1536890305]
+propagate_maximum_size = false
 layout_mode = 2
-
-[node name="Heart3" type="TextureRect" parent="PanelContainer/MarginContainer/HealthContainer" unique_id=420927026]
-layout_mode = 2
-texture = ExtResource("2_qhy4u")
-
-[node name="Heart2" type="TextureRect" parent="PanelContainer/MarginContainer/HealthContainer" unique_id=967002532]
-layout_mode = 2
-texture = ExtResource("2_qhy4u")
+size_flags_horizontal = 4
 
 [node name="Heart" type="TextureRect" parent="PanelContainer/MarginContainer/HealthContainer" unique_id=1726718218]
 layout_mode = 2

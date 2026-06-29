@@ -4,10 +4,10 @@
 
 [resource]
 script = ExtResource("1_1qm3p")
-health = 3
+health = 5
 groundSpeed = 1.0
-jumpHeight = 2.1
-airControl = 0.5
+jumpHeight = 2.0
+airControl = 1.0
 fallSpeed = 1.0
 coyoteTime = 0.2
 metadata/_custom_type_script = "uid://bp8erofrb01fc"

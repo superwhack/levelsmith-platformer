@@ -49,7 +49,7 @@ layout_mode = 2
 [node name="TitleLable" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/HeaderBlock" unique_id=1004938737]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "Camera Manager"
+text = "Global Settings"
 
 [node name="HeaderLine" type="HSeparator" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/HeaderBlock" unique_id=251268854]
 layout_mode = 2
@@ -58,27 +58,32 @@ theme_override_styles/separator = ExtResource("3_oqa3u")
 [node name="ControlsVBox" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox" unique_id=2060780134]
 layout_mode = 2
 
-[node name="GameplayZoomMargin" type="MarginContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox" unique_id=1243872875]
-layout_mode = 2
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="GameplayZoomRow" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomMargin" unique_id=929377998]
+[node name="CameraHeaderContainer" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox" unique_id=246064918]
 layout_mode = 2
 
-[node name="GameplayZoomLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomMargin/GameplayZoomRow" unique_id=686693427]
+[node name="CameraLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/CameraHeaderContainer" unique_id=932387995]
+layout_mode = 2
+text = "Camera"
+
+[node name="HSeparator" type="HSeparator" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/CameraHeaderContainer" unique_id=1347950556]
+layout_mode = 2
+
+[node name="GameplayZoomRow" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox" unique_id=929377998]
+layout_mode = 2
+
+[node name="GameplayZoomLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomRow" unique_id=686693427]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Gameplay Zoom Level"
 
-[node name="GameplayZoomControl" type="HBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomMargin/GameplayZoomRow" unique_id=1245554470]
+[node name="GameplayZoomControl" type="HBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomRow" unique_id=1245554470]
 layout_mode = 2
 
-[node name="GameplayZoomMinLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomMargin/GameplayZoomRow/GameplayZoomControl" unique_id=1244550941]
+[node name="GameplayZoomMinLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomRow/GameplayZoomControl" unique_id=1244550941]
 layout_mode = 2
 text = "20%"
 
-[node name="GameplayZoomSlider" type="HSlider" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomMargin/GameplayZoomRow/GameplayZoomControl" unique_id=811835094]
+[node name="GameplayZoomSlider" type="HSlider" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomRow/GameplayZoomControl" unique_id=811835094]
 custom_minimum_size = Vector2(650, 0)
 layout_mode = 2
 size_flags_vertical = 4
@@ -86,11 +91,11 @@ min_value = 20.0
 max_value = 200.0
 value = 20.0
 
-[node name="GameplayZoomMaxLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomMargin/GameplayZoomRow/GameplayZoomControl" unique_id=706985118]
+[node name="GameplayZoomMaxLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomRow/GameplayZoomControl" unique_id=706985118]
 layout_mode = 2
 text = "200%"
 
-[node name="GameplayZoomValueBox" type="LineEdit" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomMargin/GameplayZoomRow/GameplayZoomControl" unique_id=2108078795]
+[node name="GameplayZoomValueBox" type="LineEdit" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/GameplayZoomRow/GameplayZoomControl" unique_id=2108078795]
 layout_mode = 2
 
 [node name="FollowSpeedRow" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox" unique_id=1818551823]
@@ -121,6 +126,76 @@ layout_mode = 2
 text = "5   "
 
 [node name="FollowSpeedValueBox" type="LineEdit" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/FollowSpeedRow/FollowSpeedControl" unique_id=1372726147]
+layout_mode = 2
+
+[node name="CameraDeadzoneRow" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox" unique_id=221024596]
+layout_mode = 2
+
+[node name="DeadzoneLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/CameraDeadzoneRow" unique_id=1422746878]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Camera Deadzone"
+
+[node name="DeadzoneControl" type="HBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/CameraDeadzoneRow" unique_id=1983550332]
+layout_mode = 2
+
+[node name="DeadzoneMinLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/CameraDeadzoneRow/DeadzoneControl" unique_id=1821119263]
+layout_mode = 2
+text = "0.1"
+
+[node name="DeadzoneSlider" type="HSlider" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/CameraDeadzoneRow/DeadzoneControl" unique_id=1793033739]
+custom_minimum_size = Vector2(650, 0)
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 0.1
+max_value = 5.0
+value = 0.1
+
+[node name="DeadzoneMaxLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/CameraDeadzoneRow/DeadzoneControl" unique_id=1217733617]
+layout_mode = 2
+text = "5   "
+
+[node name="DeadzoneValueBox" type="LineEdit" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/CameraDeadzoneRow/DeadzoneControl" unique_id=752561334]
+layout_mode = 2
+
+[node name="VolumeHeaderContainer" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox" unique_id=1110324375]
+layout_mode = 2
+
+[node name="VolumeLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/VolumeHeaderContainer" unique_id=530424072]
+layout_mode = 2
+text = "Volume"
+
+[node name="HSeparator" type="HSeparator" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/VolumeHeaderContainer" unique_id=78955692]
+layout_mode = 2
+
+[node name="MasterVolumeRow" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox" unique_id=1618336828]
+layout_mode = 2
+
+[node name="MasterVolumeLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/MasterVolumeRow" unique_id=858390600]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Master Volume"
+
+[node name="MasterVolumeControl" type="HBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/MasterVolumeRow" unique_id=2082245281]
+layout_mode = 2
+
+[node name="MasterVolumeMinLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/MasterVolumeRow/MasterVolumeControl" unique_id=101404137]
+layout_mode = 2
+text = "0%"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/MasterVolumeRow/MasterVolumeControl" unique_id=2128740885]
+custom_minimum_size = Vector2(650, 0)
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 20.0
+max_value = 200.0
+value = 20.0
+
+[node name="MasterVolumeMaxLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/MasterVolumeRow/MasterVolumeControl" unique_id=171556356]
+layout_mode = 2
+text = "100% "
+
+[node name="MasterVolumeValueBox" type="LineEdit" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox/MasterVolumeRow/MasterVolumeControl" unique_id=1954763477]
 layout_mode = 2
 
 [node name="FooterMargin" type="MarginContainer" parent="MainMargin/PanelContainer/BorderMargin/RootVBox/ControlsVBox" unique_id=504633844]

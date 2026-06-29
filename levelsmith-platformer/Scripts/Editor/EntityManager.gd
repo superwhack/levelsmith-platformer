@@ -124,11 +124,12 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 ## Moves the entity at the clicked position
 func move_entity(previousClickPos: Vector2) -> void:
 	propertyMenu.close();
-	# Await is needed to it has time to update selectedTile
+	
 	toolManager.prevPosition = previousClickPos;
 	toolManager.prevEntity = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;
 	
+	# Await is needed to it has time to update selectedTile
 	await get_tree().process_frame;
 	toolManager.brushObject = tileMap.get_cell_source_id(previousClickPos);
 	toolManager.currentObjectRotation = tileMap.get_cell_alternative_tile(previousClickPos);
@@ -143,21 +144,35 @@ func drop_entity() -> void:
 	
 	# Drop the entity on its original spot if mouse is over any object.
 	if (clickedObjectId >= 0 || !editorManager.isPlaceable):
+		if toolManager.prevPosition == Vector2(-1 ,-1):
+			toolManager.prevEntity = -1;
+			toolManager.prevPosition = Vector2(0,0);
+			toolManager.currentObjectRotation = toolManager.prevRotation;
+			return;
 		editorManager.isPlaceable = true;
 		dropPosition = toolManager.prevPosition;
 	else:
 		dropPosition = editorManager.currentMousePosition;
 	place_entity(dropPosition);
 	
+	# If it's not an enemy, this code needs to be run before to prevent duplication
+	if (toolManager.brushObject < Global.EntityType.PATROLLING || toolManager.brushObject > Global.EntityType.STATIONARY):
+		if (toolManager.prevEntity != -2):
+			toolManager.brushObject = toolManager.prevEntity;
+		toolManager.prevEntity = -1;
+		toolManager.prevPosition = Vector2(0,0);
+		toolManager.currentObjectRotation = toolManager.prevRotation;
 	# Wait until a node is found at the dropped cell
 	while (!get_scene_at_cell(dropPosition)):
 		await get_tree().process_frame;
+	# if it is an enemy, it needs to be run after
+	if (toolManager.brushObject >= Global.EntityType.PATROLLING && toolManager.brushObject <= Global.EntityType.STATIONARY):
+		if (toolManager.prevEntity != -2):
+			toolManager.brushObject = toolManager.prevEntity;
+		toolManager.prevEntity = -1;
+		toolManager.prevPosition = Vector2(0,0);
+		toolManager.currentObjectRotation = toolManager.prevRotation;
 	
-	if (toolManager.prevEntity != -2):
-		toolManager.brushObject = toolManager.prevEntity;
-	toolManager.prevEntity = -1;
-	toolManager.prevPosition = Vector2(0,0);
-	toolManager.currentObjectRotation = toolManager.prevRotation;
 	
 		
 	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);

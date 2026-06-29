@@ -125,7 +125,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				
 			if (event.is_action_released("left-click") && prevEntity == -1):
 				# If the clicked cell is an entity and the click was short, edit its properties
-				if (entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) >= Global.EntityType.GOAL && !isMoving):
+				if (entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL && !isMoving && entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) != Global.EntityType.COIN):
 					entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:
@@ -139,6 +139,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
 			elif (isMoving && prevEntity == -1):
 				prevEntity = -2;
+				prevPosition = Vector2(-1, -1);
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
 			elif (!isMoving && prevEntity != -1):
 				entityManager.drop_entity();

@@ -39,7 +39,7 @@ func _ready() -> void:
 	# Hides other screens
 	overlayImportLevel.hide();
 	overlayNewLevel.hide();
-	
+
 	# Connect signals
 	buttonNewLevel.pressed.connect(overlayNewLevel.show);
 	buttonNewLevelCreate.pressed.connect(create_new_level);
@@ -52,7 +52,7 @@ func _ready() -> void:
 
 	# Fill the list of levels
 	fill_level_list();
-	
+
 	var set_directory = func (directory: String) -> void:
 		importedLevelPath = directory;
 		fieldImportLevelPath.text = importedLevelPath;

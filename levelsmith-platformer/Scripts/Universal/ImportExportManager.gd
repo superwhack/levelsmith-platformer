@@ -45,7 +45,10 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	defaultPlayerJSON += '"jump": ' + str(playerDefault.jumpHeight) + ", ";
 	defaultPlayerJSON += '"airControl": ' + str(playerDefault.airControl) + ", ";
 	defaultPlayerJSON += '"fallSpeed": ' + str(playerDefault.fallSpeed) + ", ";
-	defaultPlayerJSON += '"coyoteTime": ' + str(playerDefault.coyoteTime);
+	defaultPlayerJSON += '"coyoteTime": ' + str(playerDefault.coyoteTime) + ", ";
+	defaultPlayerJSON += '"doubleJump": ' + str(playerDefault.doubleJump) + ", ";
+	defaultPlayerJSON += '"wallJump": ' + str(playerDefault.wallJump) + ", ";
+	defaultPlayerJSON += '"wallJumpDecay": ' + str(playerDefault.wallJumpDecay);
 	defaultPlayerJSON += '}}';
 	
 	# Convert our data to a json_string

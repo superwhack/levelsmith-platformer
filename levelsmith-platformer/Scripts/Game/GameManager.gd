@@ -86,7 +86,7 @@ func start() -> void:
 				(node as Enemy).active = false;
 				break;
 	for movingPlatform in get_tree().get_nodes_in_group("Moving"):
-		if movingPlatform.propertyFile:
+		if movingPlatform is MovingPlatform && movingPlatform.propertyFile:
 			movingPlatform.apply_progress();
 
 

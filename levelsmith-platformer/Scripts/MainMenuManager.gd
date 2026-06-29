@@ -57,6 +57,7 @@ func _ready() -> void:
 
 func popupFileExplorer() -> void:
 	fileExplorer.access = FileDialog.ACCESS_USERDATA;
+	fileExplorer.sort
 	fileExplorer.current_dir = "user://Levels/"
 	fileExplorer.popup_file_dialog();
 

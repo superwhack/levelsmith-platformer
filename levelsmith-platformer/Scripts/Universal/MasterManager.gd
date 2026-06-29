@@ -72,7 +72,7 @@ func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	cameraManager.initialize_camera();
 	ImportExportManager.make_new_level( levelName, worldSize );
-	
+	propertyMenu.reset_custom();
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	#print("NEW LEVEL SET UP");
@@ -124,7 +124,6 @@ func main_menu() -> void:
 
 ## Swap to edit state
 func edit() -> void:
-	toolManager.change_tool(Global.Tool.BRUSH);
 	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable

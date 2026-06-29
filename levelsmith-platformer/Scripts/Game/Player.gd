@@ -120,6 +120,7 @@ func _physics_process(delta: float) -> void:
 	if (Input.is_action_just_pressed("jump") && !justWallJumped):
 		if (is_on_floor() || coyoteTimeLeft > 0.0 || doubleJumpAvailable):
 			if !(is_on_floor() || coyoteTimeLeft > 0.0):
+				currentSlowdown = 1.0;
 				doubleJumpAvailable = false;
 			coyoteTimeLeft = 0;
 			jump();
@@ -287,6 +288,8 @@ func detect_tiles() -> void:
 
 		# Wall Jumping + Sliding
 		if wallJump && rayDirection.x != 0:
+			if tileName == "bedrock":
+				return;
 			# Wall Slide when not on ice
 			if tileName != "ice":
 				velocity.y *= .94;

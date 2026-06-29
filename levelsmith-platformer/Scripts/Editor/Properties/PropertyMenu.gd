@@ -108,7 +108,7 @@ func _ready() -> void:
 ## Close the property menu and set the selected entity to null
 func close() -> void:
 	if previewLine:
-		previewLine.hide()
+		previewLine.hide();
 	if shootingDirectionArrow:
 		shootingDirectionArrow.scale = Vector2(1,1);
 		shootingDirectionArrow = null;
@@ -309,6 +309,7 @@ func _on_drag_ended() -> void:
 ## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
 	show();
+	previewLine.hide();
 	if shootingDirectionArrow:
 		shootingDirectionArrow.scale = Vector2(1,1);
 		shootingDirectionArrow = null;

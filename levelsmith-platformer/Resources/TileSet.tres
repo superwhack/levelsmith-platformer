@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://b3k624sctovph" path="res://Scenes/Entities/Patrolling.tscn" id="10_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://bwtswvrxxful5" path="res://Scenes/Preview/PatrollingPreview.tscn" id="11_8sjof"]
 [ext_resource type="PackedScene" uid="uid://cuw2l4p7dvov2" path="res://Scenes/Entities/Stationary.tscn" id="17_38lp2"]
+[ext_resource type="PackedScene" uid="uid://8iq5mrynufah" path="res://Scenes/Preview/StationaryPreview.tscn" id="18_38lp2"]
 [ext_resource type="Texture2D" uid="uid://dx73rn5knscwa" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="21_3boqi"]
 [ext_resource type="Texture2D" uid="uid://br10hb73uokcq" path="res://Assets/UserInterface/TileBedrock.png" id="23_mtirn"]
 
@@ -118,6 +119,7 @@ scenes/2/scene = ExtResource("6_pqfav")
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_mtirn"]
 resource_name = "Stationary"
 scenes/1/scene = ExtResource("17_38lp2")
+scenes/2/scene = ExtResource("18_38lp2")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eksy4"]
 texture = ExtResource("3_r4n42")

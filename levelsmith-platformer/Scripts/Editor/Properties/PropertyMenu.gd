@@ -111,6 +111,8 @@ func _process(_delta: float) -> void:
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
 		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
+	elif selectedEntity is EnemyStationary:
+		entityName.text = "Stationary Enemy";
 	elif selectedEntity is Player:
 		entityName.text = "Player";
 

@@ -3,7 +3,6 @@ extends Node2D
 # References for other screens
 @export var pauseScreen : PanelContainer;
 @export var bottomScreenGroup : Control;
-@export var coinCounterLabel : RichTextLabel;
 
 # Button references for signals
 @export var resetButton : Button;
@@ -19,10 +18,6 @@ var playState : PlayState = PlayState.PLAY;
 
 # Has the goal been reached
 var goalReached : bool = false;
-
-# Coin variables
-var coinCount : int = 0
-var totalCoins : int = 0
 
 # Player and its position
 var player : CharacterBody2D;
@@ -55,13 +50,6 @@ func reset() -> void:
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
-	# Reset coin values for the new level
-	coinCount = 0;
-	totalCoins = 0;
-	# Count all coins that belong to the playable level and ignore coins that exist in the editor scene
-	totalCoins = get_tree().get_node_count_in_group("Coin");
-	update_coin_counter();
-	
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
 	for frame in range(1, 5):
 		await get_tree().process_frame;
@@ -71,8 +59,6 @@ func start() -> void:
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
-	if !player.healthChanged.is_connected(change_health):
-		player.healthChanged.connect(change_health);
 
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
@@ -82,35 +68,15 @@ func start() -> void:
 		for node in tileMap.get_children():
 			if tileMap.local_to_map(node.global_position) == propertyFile.position:
 				(node as Enemy).apply_script(propertyFile);
-				(node as Enemy).active = false;
 				break;
-
 
 	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
-	
-
-## Record a change in health for the player
-## newHealth: The new health of the player
-func change_health(newHealth : int):
-	print("Health: ", newHealth);
 
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:
 	Global.death.connect(reset);
-	Global.onCoinCollected.connect(_on_coin_collected);
 	resetButton.pressed.connect(reset);
 	pauseButton.pressed.connect(pause);
 	resumeButton.pressed.connect(pause);
-
-## Increase coin count and update its UI on coin collection
-func _on_coin_collected() -> void:
-	coinCount += 1;
-	print("Coin collected: ",coinCount);
-	update_coin_counter();
-
-## Updates the coin counter shown on screen
-func update_coin_counter() -> void:
-	coinCounterLabel.clear();
-	coinCounterLabel.append_text("[right]Coins: %d / %d[/right]" % [coinCount, totalCoins]);

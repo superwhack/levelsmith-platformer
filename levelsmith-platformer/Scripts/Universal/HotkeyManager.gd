@@ -38,7 +38,7 @@ func _unhandled_key_input(event : InputEvent) -> void:
 			elif event.is_action_pressed("second-select"):
 				toolManager.update_brush_object(Global.TileType.ONEWAY);
 			elif event.is_action_pressed("third-select"):
-				toolManager.update_brush_object(Global.TileType.HAZARD);
+				toolManager.update_brush_object(Global.TileType.DEATH);
 			elif event.is_action_pressed("fourth-select"):
 				toolManager.update_brush_object(Global.TileType.ICE);
 			elif event.is_action_pressed("fifth-select"):
@@ -46,8 +46,6 @@ func _unhandled_key_input(event : InputEvent) -> void:
 			elif event.is_action_pressed("sixth-select"):
 				toolManager.update_brush_object(Global.TileType.BOUNCE);
 			elif event.is_action_pressed("seventh-select"):
-				toolManager.update_brush_object(Global.TileType.DEATH);
-			elif event.is_action_pressed("eighth-select"):
 				toolManager.update_brush_object(Global.TileType.SLOPE);
 		Global.HotbarState.ENTITIES:
 			if event.is_action_pressed("first-select"):
@@ -55,12 +53,10 @@ func _unhandled_key_input(event : InputEvent) -> void:
 			elif event.is_action_pressed("second-select"):
 				toolManager.update_brush_object(Global.EntityType.PLAYER);
 			elif event.is_action_pressed("third-select"):
-				toolManager.update_brush_object(Global.EntityType.COIN);
-			elif event.is_action_pressed("fourth-select"):
 				toolManager.update_brush_object(Global.EntityType.PATROLLING);
-			elif event.is_action_pressed("fifth-select"):
+			elif event.is_action_pressed("fourth-select"):
 				toolManager.update_brush_object(Global.EntityType.SHOOTING);
-			elif event.is_action_pressed("sixth-select"):
+			elif event.is_action_pressed("fifth-select"):
 				toolManager.update_brush_object(Global.EntityType.FLYING);
 		Global.HotbarState.PROPS:
 			if event.is_action_pressed("first-select"):

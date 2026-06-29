@@ -2,7 +2,7 @@ class_name EnemyShooting;
 extends Enemy
 
 # Direction of fire, stored as float
-var fireDirection : float;
+var direction : float;
 
 # Firing properties
 var shotSpeed : float;
@@ -28,15 +28,10 @@ func _ready() -> void:
 	animatedSprites.play();
 
 func _physics_process(delta: float) -> void:
-<<<<<<< HEAD
 	if (health <= 0): return; 
-=======
-	if !onScreen.is_on_screen():
-		return;
-	velocity.x = 0;
->>>>>>> main
 	if gravityOn:
 		super._physics_process(delta);
+		move_and_slide();
 	directionArrow.hide();
 	# Decrease time left
 	timeLeft -= delta;
@@ -44,8 +39,6 @@ func _physics_process(delta: float) -> void:
 	if (timeLeft <= 0.0):
 		shooting_behavior();
 		timeLeft = 1 / fireRate;
-	super.detect_tiles(false);
-	move_and_slide();
 
 ## Adjust the direction of the indicator arrow
 ## angle: the angle that the arrow should be pointing at.
@@ -61,7 +54,7 @@ func shooting_behavior() -> void:
 	var projectileFired = PROJECTILE.instantiate();
 	projectileFired.speed = shotSpeed;
 	projectileFired.global_position = position;
-	projectileFired.global_rotation_degrees = fireDirection;
+	projectileFired.global_rotation_degrees = direction;
 	projectileFired.bounceable = projBounce;
 	add_sibling(projectileFired);
 
@@ -69,17 +62,17 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	propertyFile = ResourceLoader.load("res://Resources/Enemies/Shooting" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	name = "Shooting" + id;
 	propertyFile.position = assignPosition;
-	fireDirection = propertyFile.direction; 
+	direction = propertyFile.direction; 
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;
 	gravityOn = propertyFile.gravity;
 	ResourceSaver.save(propertyFile);
-	adjust_arrow(fireDirection + 90);
+	adjust_arrow(direction + 90);
 
 func apply_script(file: Resource) -> void:
 	propertyFile = file;
-	fireDirection = propertyFile.direction; 
+	direction = propertyFile.direction; 
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;

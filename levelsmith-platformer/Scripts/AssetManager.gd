@@ -81,7 +81,7 @@ const ASSET_BUTTON : PackedScene = preload("res://Scenes/UI/AssetItem.tscn");
 const MISSING_TEXTURE : String = "res://Assets/Defaults/Assets/Sprites/Missing.png";
 
 # All types of tiles
-var tileTypes : Array[String] = ["Solid", "Hazard","OneWay","Ice", "Sticky", "Bounce", "Death", "Slope" ];
+var tileTypes : Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
 
 # All types of entities
 var animatedEntityTypes : Array[String] = ["Player", "StationaryEnemy", "ShootingEnemy", "PatrollingEnemy", "FlyingEnemy"];
@@ -481,7 +481,7 @@ func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer) 
 		# NOTE: TEMPORARY FIX PT 2
 		for frame in range(0, 5):
 			await get_tree().process_frame;
-		#editorManager.clear_enemies();
+		editorManager.clear_enemies();
 
 
 

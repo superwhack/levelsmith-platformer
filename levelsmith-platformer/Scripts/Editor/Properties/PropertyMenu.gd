@@ -18,9 +18,6 @@ var playerJumpHeight : float;
 var playerAirControl : float;
 var playerFallSpeed : float;
 var playerCoyoteTime : float;
-var playerDoubleJump : bool;
-var playerWallJump : bool;
-var playerWallJumpDecay : bool;
 
 # Player value sliders
 @export var playerHealthSlider: VBoxContainer;
@@ -29,9 +26,7 @@ var playerWallJumpDecay : bool;
 @export var playerAirControlSlider: VBoxContainer;
 @export var playerFallSpeedSlider: VBoxContainer;
 @export var playerCoyoteTimeSlider: VBoxContainer;
-@export var playerDoubleJumpCheckbox: VBoxContainer;
-@export var playerWallJumpCheckbox: VBoxContainer;
-@export var playerWallJumpDecayCheckbox : VBoxContainer;
+
 
 # Patrolling inputs
 @export var patrollingSpeedSlider : VBoxContainer;
@@ -72,9 +67,6 @@ func _ready() -> void:
 	playerAirControlSlider.drag_ended.connect(_on_drag_ended);
 	playerFallSpeedSlider.drag_ended.connect(_on_drag_ended);
 	playerCoyoteTimeSlider.drag_ended.connect(_on_drag_ended);
-	playerDoubleJumpCheckbox.check_changed.connect(_on_drag_ended);
-	playerWallJumpCheckbox.check_changed.connect(_on_drag_ended);
-	playerWallJumpDecayCheckbox.check_changed.connect(_on_drag_ended);
 	presetOptions.item_selected.connect(_on_preset_options_item_selected);
 	
 	patrollingSpeedSlider.drag_ended.connect(_on_drag_ended);
@@ -132,18 +124,7 @@ func _on_preset_options_item_selected(index: int) -> void:
 	playerAirControl = selectedPlayerPreset.airControl;
 	playerFallSpeed = selectedPlayerPreset.fallSpeed;
 	playerCoyoteTime = selectedPlayerPreset.coyoteTime;
-	playerDoubleJump = selectedPlayerPreset.doubleJump;
-	playerWallJump = selectedPlayerPreset.wallJump;
-	playerWallJumpDecay = selectedPlayerPreset.wallJumpDecay;
 	update_sliders();
-
-## Reset the Custom to conform with the Default on creating new levels
-func reset_custom() -> void:
-	var defaultPreset : Resource = load("res://Resources/PlayerPresets/Default.tres");
-	var resetedCustom = defaultPreset.duplicate(true);
-	ResourceSaver.save(resetedCustom, "res://Resources/PlayerPresets/Custom.tres");
-	presetOptions.select(0);
-	_on_preset_options_item_selected(0);
 
 ## Load and update the custom preset, then save its changes
 func update_custom() -> void:
@@ -154,13 +135,7 @@ func update_custom() -> void:
 	customPreset.airControl = playerAirControl;
 	customPreset.fallSpeed = playerFallSpeed;
 	customPreset.coyoteTime = playerCoyoteTime;
-	customPreset.doubleJump = playerDoubleJump;
-	customPreset.wallJump = playerWallJump;
-	customPreset.wallJumpDecay = playerWallJumpDecay;
 	ResourceSaver.save(customPreset, "res://Resources/PlayerPresets/Custom.tres");
-	
-	presetOptions.select(4);
-	_on_preset_options_item_selected(4);
 
 ## Update the preview for the flying enemy
 func update_flying_preview() -> void:
@@ -186,17 +161,7 @@ func update_sliders() -> void:
 	playerFallSpeedSlider.value = playerFallSpeed;
 	playerFallSpeedSlider.update_slider();
 	playerCoyoteTimeSlider.value = playerCoyoteTime;
-	playerCoyoteTimeSlider.update_slider();
-	playerDoubleJumpCheckbox.value = playerDoubleJump;
-	playerDoubleJumpCheckbox.update_checkbox();
-	playerWallJumpCheckbox.value = playerWallJump;
-	playerWallJumpCheckbox.update_checkbox();
-	# Make the WallJumpDecay Checkbox transparent if it can't be selected.
-	if !playerWallJump:
-		playerWallJumpDecay = false;
-	make_selectable_check(playerWallJumpDecayCheckbox, playerWallJump);
-	playerWallJumpDecayCheckbox.value = playerWallJumpDecay;
-	playerWallJumpDecayCheckbox.update_checkbox();
+	playerCoyoteTimeSlider.update_slider();	
 	# Enemies
 	if selectedEntity is EnemyPatrol:
 		patrollingSpeedSlider.value = selectedPreset.groundSpeed;
@@ -224,19 +189,6 @@ func update_sliders() -> void:
 		shootingProjectileBounce.update_checkbox();
 		shootingGravity.update_checkbox();
 
-## Alternate the ability for a checkbox property to be selected
-## property: The property to change
-## selectable: If it can be selected
-func make_selectable_check(property : VBoxContainer, selectable : bool) -> void:
-	if !selectable:
-		property.modulate = Color(1, 1, 1, 0.5);
-		if property.check_changed.is_connected(_on_drag_ended):
-			property.check_changed.disconnect(_on_drag_ended);
-	else:
-		property.modulate = Color(1, 1, 1, 1);
-		if !property.check_changed.is_connected(_on_drag_ended):
-			property.check_changed.connect(_on_drag_ended);
-
 ## Update all of the player values based on the sliders
 func update_values() -> void:
 	playerHealth = playerHealthSlider.value;
@@ -245,9 +197,6 @@ func update_values() -> void:
 	playerAirControl = playerAirControlSlider.value;
 	playerFallSpeed = playerFallSpeedSlider.value;
 	playerCoyoteTime = playerCoyoteTimeSlider.value;
-	playerDoubleJump = playerDoubleJumpCheckbox.value;
-	playerWallJump = playerWallJumpCheckbox.value;
-	playerWallJumpDecay = playerWallJumpDecayCheckbox.value;
 	
 	if selectedEntity is EnemyPatrol:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
@@ -272,6 +221,8 @@ func _on_drag_ended() -> void:
 	update_values();
 	if selectedEntity is Player:
 		update_custom();
+		presetOptions.select(4);
+		_on_preset_options_item_selected(4);
 
 ## Show the property menu, different sections pop up depending on the currently selected entity type
 ## resource: The resource file to load with properties

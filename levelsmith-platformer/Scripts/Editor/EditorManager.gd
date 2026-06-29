@@ -11,7 +11,6 @@ extends Node2D
 # Relevant button elements
 @export var playButton : Button;
 @export var assetManagerButton : Button;
-@export var exportButton : Button;
 
 # Asset Manager
 @export var assetManager : Control;
@@ -43,13 +42,8 @@ func _ready() -> void:
 		playerExists = false;
 		goalExists = false;
 	
-	var export_level = func() -> void:
-		masterManager.propertyMenu.close();
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize);
-	
 	assetManagerButton.pressed.connect(open_asset_manager);
 	Global.levelCreated.connect(reset_player_and_goal);
-	exportButton.pressed.connect(export_level);
 
 ## Runs every frame during the editing state
 ## _delta: how much time has passed since the last frame
@@ -105,7 +99,7 @@ func reset_enemy_positions() -> void:
 			enemy.global_position = tileMap.map_to_local(enemy.propertyFile.position);
 			if enemy is EnemyPatrol || enemy is EnemyShooting:
 				enemy.directionArrow.show();
-
+				
 ## Opens the asset manager
 func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues

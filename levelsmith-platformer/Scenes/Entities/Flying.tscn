@@ -7,7 +7,6 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
-<<<<<<< HEAD
 [sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
 animations = [{
 "frames": [{
@@ -31,21 +30,14 @@ animations = [{
 }]
 
 [node name="FlyingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("previewLine", "hitbox", "animatedSprites") groups=["Enemy"]]
-=======
-[node name="FlyingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("previewLine", "onScreen") groups=["Enemy"]]
->>>>>>> main
 collision_layer = 6
 collision_mask = 6
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_e2l54")
 previewLine = NodePath("Line2D")
-<<<<<<< HEAD
 hitbox = NodePath("CollisionShape2D")
 animatedSprites = NodePath("AnimatedSprite2D")
-=======
-onScreen = NodePath("OnScreen")
->>>>>>> main
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
 scale = Vector2(6.3, 6.3)
@@ -54,10 +46,6 @@ shape = SubResource("CircleShape2D_lurgl")
 [node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
 default_color = Color(0.78039217, 0, 0.05490196, 0.8352941)
 
-<<<<<<< HEAD
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1318831245]
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"death"
-=======
-[node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1562874782]
->>>>>>> main

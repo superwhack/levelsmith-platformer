@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="PlayerMovementPreset" format=3 uid="uid://cy67ggporps28"]
+[gd_resource type="Resource" script_class="PlayerMovementPreset" format=3]
 
-[ext_resource type="Script" uid="uid://bp8erofrb01fc" path="res://Scripts/Editor/Properties/PlayerMovementPreset.gd" id="1_1qm3p"]
+[ext_resource type="Script" path="res://Scripts/Editor/Properties/PlayerMovementPreset.gd" id="1_22dwl"]
 
 [resource]
-script = ExtResource("1_1qm3p")
+script = ExtResource("1_22dwl")
 health = 3
 groundSpeed = 1.0
 jumpHeight = 2.0

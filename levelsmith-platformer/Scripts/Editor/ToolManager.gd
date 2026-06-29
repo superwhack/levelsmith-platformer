@@ -125,7 +125,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				
 			if (event.is_action_released("left-click") && prevEntity == -1):
 				# If the clicked cell is an entity and the click was short, edit its properties
-				if (entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL && !isMoving):
+				if (entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL && !isMoving && entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) != Global.EntityType.COIN):
 					entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:
@@ -139,6 +139,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
 			elif (isMoving && prevEntity == -1):
 				prevEntity = -2;
+				prevPosition = Vector2(-1, -1);
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
 			elif (!isMoving && prevEntity != -1):
 				entityManager.drop_entity();
@@ -161,6 +162,7 @@ func change_tool(tool: Global.Tool) -> void:
 
 	editorManager.returnClick = false;
 	reset_tool_states();
+	currentObjectRotation = 0;
 
 	if (currentTool == Global.Tool.CURSOR):
 		brushObject = Global.TileType.SOLID;
@@ -187,17 +189,11 @@ func disable_box_brush() -> void:
 	boxBrushState = Global.BoxBrushState.INACTIVE;
 	
 ## Rotate currently selected object
-## NOTE: SceneCollection rotations work most likely by selecting the scene and rotating it, you can't spawn it rotated
+## Uses Alternative tiles 
 func rotate_object() -> void:
-	match (currentObjectRotation):
-		0:
-			currentObjectRotation = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H;
-		TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_H:
-			currentObjectRotation = TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V;
-		TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V:
-			currentObjectRotation = TileSetAtlasSource.TRANSFORM_TRANSPOSE | TileSetAtlasSource.TRANSFORM_FLIP_V;
-		_:
-			currentObjectRotation = 0;
+	currentObjectRotation += 1;
+	if (currentObjectRotation > 3): 
+		currentObjectRotation = 0;
 	
 ## Reset tool states 
 func reset_tool_states() -> void:

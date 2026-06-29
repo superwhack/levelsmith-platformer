@@ -5,6 +5,7 @@ signal death;
 signal reload;
 signal complete;
 signal levelCreated;
+signal onCoinCollected;
 
 # Tile size
 const TILE_SIZE : int = 128;
@@ -42,12 +43,13 @@ enum BoxBrushState {
 # Tile Types
 enum TileType {
 	SOLID = 0,
-	DEATH = 1, 
+	HAZARD = 1, 
 	ONEWAY = 2,
 	ICE = 3,
 	STICKY = 4,
 	BOUNCE = 5, 
-	SLOPE = 6,
+	DEATH = 6,
+	SLOPE = 7,
 }
 
 # Entity Types
@@ -63,7 +65,8 @@ enum EntityType {
 	PROP3 = 508,
 	PROP4 = 509,
 	PROP5 = 510, 
-	PROP6 = 511
+	PROP6 = 511,
+	COIN = 512
 }
 
 const BEDROCK_TILE: int = 9998;

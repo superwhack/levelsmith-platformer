@@ -71,10 +71,13 @@ func place_entity(clickPosition: Vector2) -> void:
 				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
 			ResourceSaver.save(newEntity, file);
 			placedEnemy.assign_script(str(time), clickPosition);
+			await get_tree().process_frame;
 			editorManager.reset_enemy_positions();
 		Global.EntityType.GOAL:
 			goalCount += 1;
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
+		Global.EntityType.COIN:
+			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1)
 		Global.EntityType.PROP1, Global.EntityType.PROP2, Global.EntityType.PROP3, Global.EntityType.PROP4, Global.EntityType.PROP5, Global.EntityType.PROP6:
 			# Include rotation for props
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
@@ -105,7 +108,7 @@ func edit_properties(clickPosition: Vector2) -> void:
 	propertyMenu.selectedEntity = clickedEntity;
 	if clickedEntity is Enemy:
 		propertyMenu.show_menu(clickedEntity.propertyFile);
-	else:
+	elif clickedEntity is Player:
 		propertyMenu.show_menu();
 	
 ## Retrieves a reference to the scene at a specific cell in the tile set
@@ -121,11 +124,12 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 ## Moves the entity at the clicked position
 func move_entity(previousClickPos: Vector2) -> void:
 	propertyMenu.close();
-	# Await is needed to it has time to update selectedTile
+	
 	toolManager.prevPosition = previousClickPos;
 	toolManager.prevEntity = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;
 	
+	# Await is needed to it has time to update selectedTile
 	await get_tree().process_frame;
 	toolManager.brushObject = tileMap.get_cell_source_id(previousClickPos);
 	toolManager.currentObjectRotation = tileMap.get_cell_alternative_tile(previousClickPos);
@@ -140,21 +144,36 @@ func drop_entity() -> void:
 	
 	# Drop the entity on its original spot if mouse is over any object.
 	if (clickedObjectId >= 0 || !editorManager.isPlaceable):
+		if toolManager.prevPosition == Vector2(-1 ,-1):
+			toolManager.prevEntity = -1;
+			toolManager.prevPosition = Vector2(0,0);
+			toolManager.currentObjectRotation = toolManager.prevRotation;
+			return;
 		editorManager.isPlaceable = true;
 		dropPosition = toolManager.prevPosition;
 	else:
 		dropPosition = editorManager.currentMousePosition;
 	place_entity(dropPosition);
 	
-	if (toolManager.prevEntity != -2):
-		toolManager.brushObject = toolManager.prevEntity;
-	toolManager.prevEntity = -1;
-	toolManager.prevPosition = Vector2(0,0);
-	toolManager.currentObjectRotation = toolManager.prevRotation;
-	
+	# If it's not an enemy, this code needs to be run before to prevent duplication
+	if (toolManager.brushObject < Global.EntityType.PATROLLING || toolManager.brushObject > Global.EntityType.STATIONARY):
+		if (toolManager.prevEntity != -2):
+			toolManager.brushObject = toolManager.prevEntity;
+		toolManager.prevEntity = -1;
+		toolManager.prevPosition = Vector2(0,0);
+		toolManager.currentObjectRotation = toolManager.prevRotation;
 	# Wait until a node is found at the dropped cell
 	while (!get_scene_at_cell(dropPosition)):
 		await get_tree().process_frame;
+	# if it is an enemy, it needs to be run after
+	if (toolManager.brushObject >= Global.EntityType.PATROLLING && toolManager.brushObject <= Global.EntityType.STATIONARY):
+		if (toolManager.prevEntity != -2):
+			toolManager.brushObject = toolManager.prevEntity;
+		toolManager.prevEntity = -1;
+		toolManager.prevPosition = Vector2(0,0);
+		toolManager.currentObjectRotation = toolManager.prevRotation;
+	
+	
 		
 	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);
 	if droppedEntity is not Enemy || !movingResource: return;
@@ -164,7 +183,7 @@ func drop_entity() -> void:
 	
 	# Reset direciton arrows
 	if droppedEntity is EnemyShooting:
-		droppedEntity.adjust_arrow(droppedEntity.direction + 90);
+		droppedEntity.adjust_arrow(droppedEntity.fireDirection + 90);
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
 	elif droppedEntity is EnemyPatrol:
 		droppedEntity.adjust_arrow(int(movingResource.direction) * 180 + 90);

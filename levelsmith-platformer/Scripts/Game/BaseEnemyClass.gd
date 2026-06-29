@@ -4,7 +4,18 @@ extends CharacterBody2D
 # Base variables for enemy, adjustable only in-engine.
 @export var health : int = 1;
 @export var gravity : float = 980.0;
+var bounceMovementBoost := 1.0;
 var propertyFile : Resource;
+var direction := 1;
+var active = false;
+
+@export var leftRaycast : RayCast2D;
+@export var rightRaycast : RayCast2D;
+@export var downRaycast : RayCast2D;
+@export var upRaycast : RayCast2D;
+@export var raycastHelper : Node;
+
+@export var onScreen : VisibleOnScreenNotifier2D;
 
 @export var hitbox: CollisionShape2D;
 @export var animatedSprites : AnimatedSprite2D;
@@ -25,12 +36,43 @@ func _ready() -> void:
 ## Processes for every frame based on time
 ## delta: Time since previous frame.
 func _physics_process(delta: float) -> void:
-	# If the enemy is out of bounds, suicide
-	if (check_out_of_bounds()):
-		die();
-	
 	# Apply gravity every frame based on time passed since last frame
 	apply_gravity(delta)
+
+## Run tile detection with two or four raycasts on the enemy
+## horizontal: True if horizontal (left and right) raycasts should be run
+func detect_tiles(horizontal : bool) -> void:
+	var bounceSpeedBoost = 0;
+	# Horizontal Raycasts
+	if (horizontal && rightRaycast.is_colliding()):
+		direction = -1;
+		var raycastTileData : TileData = raycastHelper.get_collision_data(rightRaycast);
+		if raycastTileData && raycastTileData.get_custom_data("name") == "bounce":
+			bounceMovementBoost = 2 * raycastTileData.get_custom_data("bounce");
+			velocity.y += -500 * raycastTileData.get_custom_data("bounce");
+	if (horizontal && leftRaycast.is_colliding()):
+		direction = 1;
+		var raycastTileData : TileData = raycastHelper.get_collision_data(leftRaycast);
+		if raycastTileData && raycastTileData.get_custom_data("name") == "bounce":
+			bounceMovementBoost = 2 * raycastTileData.get_custom_data("bounce");
+			velocity.y += -500 * raycastTileData.get_custom_data("bounce");
+	# Vertical raycasts
+	if (downRaycast.is_colliding()):
+		var raycastTileData : TileData = raycastHelper.get_collision_data(downRaycast);
+		if raycastTileData:
+			if raycastTileData.get_custom_data("name") == "bounce":
+				velocity.y = -1000 * raycastTileData.get_custom_data("bounce");
+			elif raycastTileData.get_custom_data("name") == "slow":
+				velocity.x /= 2;
+	if (upRaycast.is_colliding()):
+		var raycastTileData : TileData = raycastHelper.get_collision_data(upRaycast);
+		if raycastTileData && raycastTileData.get_custom_data("name") == "bounce":
+			velocity.y = 1000 * raycastTileData.get_custom_data("bounce");
+	# Decay the movement speed boost from bouncing
+	if bounceMovementBoost > 1.0:
+		bounceMovementBoost = pow(bounceMovementBoost, .97);
+		bounceSpeedBoost = 600 * (bounceMovementBoost - 1.0);
+	velocity.x += bounceSpeedBoost * direction;
 
 ## Adds gravity
 func apply_gravity(delta: float) -> void:
@@ -52,17 +94,17 @@ func die() -> void:
 
 ## Detects whether the enemy is out of bounds.
 ## Returns a bool based on enemy being out of bounds.
-func check_out_of_bounds() -> bool:
-	var masterManager : Node2D = get_tree().current_scene;
+#func check_out_of_bounds() -> bool:
+#	var masterManager : Node2D = get_tree().current_scene;
 	
 	# There is a 1 tile leeway given to enemies who leave bounds, before death
-	if (global_position.x < (-1) * Global.TILE_SIZE
-	|| global_position.x > (masterManager.worldSize.x + 1) * Global.TILE_SIZE
-	|| global_position.y < (-1) * Global.TILE_SIZE
-	|| global_position.y > (masterManager.worldSize.y + 1) * Global.TILE_SIZE):
-		print("Player OOB: ", global_position)
-		return true;
-	return false;
+#	if (global_position.x < (-1) * Global.TILE_SIZE
+#	|| global_position.x > (masterManager.worldSize.x + 1) * Global.TILE_SIZE
+#	|| global_position.y < (-1) * Global.TILE_SIZE
+#	|| global_position.y > (masterManager.worldSize.y + 1) * Global.TILE_SIZE):
+#		print("Player OOB: ", global_position)
+#		return true;
+#	return false;
 
 ## OVERRIDE -
 ## Assigns the script of the given ID (located in the Resources/Enemies folder) to an enemy at the given position.

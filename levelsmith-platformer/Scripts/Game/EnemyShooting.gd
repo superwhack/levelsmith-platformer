@@ -20,7 +20,15 @@ const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn"
 
 var timeLeft : float = 1;
 
+## Adds enemy to group and sets up initial points
+func _ready() -> void:
+	super._ready();
+	
+	animatedSprites.animation = "idle";
+	animatedSprites.play();
+
 func _physics_process(delta: float) -> void:
+	if (health <= 0): return; 
 	if gravityOn:
 		super._physics_process(delta);
 		move_and_slide();

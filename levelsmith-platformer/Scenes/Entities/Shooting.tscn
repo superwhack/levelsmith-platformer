@@ -1,25 +1,48 @@
 [gd_scene format=3 uid="uid://bf3q4v3br7j4o"]
 
 [ext_resource type="Script" uid="uid://cxud880na6ixc" path="res://Scripts/Game/EnemyShooting.gd" id="1_0p30m"]
-[ext_resource type="Texture2D" uid="uid://b8ss2paod0h8x" path="res://Assets/Defaults/Assets/Sprites/Entities/ShootingStill.png" id="2_0p30m"]
 [ext_resource type="Texture2D" uid="uid://btwee51autoih" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="3_3c58l"]
+[ext_resource type="Texture2D" uid="uid://bfbrsvv44qln1" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootDeath/1.png" id="3_571pn"]
+[ext_resource type="Texture2D" uid="uid://datm41r7rqi8x" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/1.png" id="4_waxnm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
-[node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow") groups=["Enemy"]]
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_571pn")
+}],
+"loop": 1,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_waxnm")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow", "hitbox", "animatedSprites") groups=["Enemy"]]
 collision_layer = 6
 collision_mask = 7
 script = ExtResource("1_0p30m")
 directionArrow = NodePath("DirectionArrow")
+hitbox = NodePath("CollisionShape2D")
+animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
 scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
-texture = ExtResource("2_0p30m")
-
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=1346299203]
 visible = false
 z_index = 4
 texture = ExtResource("3_3c58l")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1401588365]
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+animation = &"death"

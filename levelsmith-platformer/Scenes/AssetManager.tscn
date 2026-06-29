@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
 [ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
 [ext_resource type="Texture2D" uid="uid://cq6ndlm5t7xwj" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
+[ext_resource type="Script" uid="uid://cuhf3fl48s4q3" path="res://Scripts/Universal/ImageSwapping.gd" id="10_clgtw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbbei"]
 content_margin_left = 12.0
@@ -394,3 +395,9 @@ size_flags_horizontal = 3
 [node name="CloseButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=334412884]
 layout_mode = 2
 text = "Close"
+
+[node name="ImageSwapping" type="Control" parent="." unique_id=1565850134]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("10_clgtw")

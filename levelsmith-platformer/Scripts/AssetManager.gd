@@ -4,10 +4,6 @@ class_name AssetManager
 # Path to the root folder of all assets
 var filePath : String = "user://Assets";
 
-# References to images
-var imageToReplace : Image;
-var imageNameToReplace : String;
-
 # The currently selected entity types
 var selectedEntityType : String;
 
@@ -21,20 +17,16 @@ var currentAnimationIndex : int = 0;
 # The current frame the animation is on
 var animationFrameIndex : int = 0;
 
-# The currently selected item and its corresponding animation
-var currentSelectedItem : AssetItem;
 var currentLoadedAnimation : Array[Texture2D];
 
 # References to audio
 var newAudio : AudioStream;
 var audioToReplace : AudioStream;
 
-# References to both tile maps
-@export var mainTileMap : TileMapLayer;
+@export var imageSwapping : Control;
+
 
 # References to preview and file dialog
-@export var imagePreview : Panel;
-@export var imagePreviewTexture : TextureRect;
 @export var animationPreview : Panel;
 @export var animationPreviewTexture : TextureRect;
 @export var audioPreview : Panel;
@@ -71,7 +63,6 @@ var FPS : float = 12;
 var animTimer : float = 0;
 
 # Keep track of the first selected item
-var firstImageSelected : AssetItem = null;
 var firstAnimationSelected : AssetItem = null;
 
 # Reference to the asset button scene for instantiating
@@ -80,14 +71,9 @@ const ASSET_BUTTON : PackedScene = preload("res://Scenes/UI/AssetItem.tscn");
 # Reference to the Missing texture in case the default textures are removed
 const MISSING_TEXTURE : String = "res://Assets/Defaults/Assets/Sprites/Missing.png";
 
-# All types of tiles
-var tileTypes : Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
-
+var currentSelectedItem : AssetItem;
 # All types of entities
 var animatedEntityTypes : Array[String] = ["Player", "StationaryEnemy", "ShootingEnemy", "PatrollingEnemy", "FlyingEnemy"];
-
-# All types of props
-var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
 
 # Player Animations
 var playerAnimations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "PlayerFall", "PlayerHurt", "PlayerDeath"];
@@ -102,11 +88,10 @@ var shootingEnemyAnimations : Array[String] = ["EnemyShoot", "ShootIdle", "Shoot
 func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_image_selector);
-	resetButton.pressed.connect(reset_image);
+	resetButton.pressed.connect(imageSwapping.reset_image);
 	resetAllButton.pressed.connect(reset_all);
-	fileSelect.file_selected.connect(replace_image);
+	fileSelect.file_selected.connect(imageSwapping.replace_image);
 	fileSelect.dir_selected.connect(replace_animation);
-	Global.levelCreated.connect(refresh_assets);
 	animationPreviewRightButton.pressed.connect(anim_change.bind(true));
 	animationPreviewLeftButton.pressed.connect(anim_change.bind(false));
 	frameRightButton.pressed.connect(frame_change.bind(true));
@@ -126,11 +111,8 @@ func _ready() -> void:
 	generate_buttons("Props", imagesTab);
 	generate_buttons("Entities", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
-	item_selected(firstImageSelected);
+	item_selected(imageSwapping.firstImageSelected);
 	on_asset_tab_changed(assetTabs.current_tab);
-	# Refresh all assets
-	refresh_assets();
-	ImportExportManager.levelImported.connect(refresh_assets);
 	ImportExportManager.levelImported.connect(item_selected);
 
 func _process(delta: float) -> void:
@@ -164,8 +146,8 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 			newButton.pressed.connect(item_selected.bind(newButton));
 			newButton.type = type;
 			# Set the default image and animation to be selected
-			if (type == AssetItem.AssetType.IMAGE && !firstImageSelected):
-				firstImageSelected = newButton;
+			if (type == AssetItem.AssetType.IMAGE && !imageSwapping.firstImageSelected):
+				imageSwapping.firstImageSelected = newButton;
 			if (type == AssetItem.AssetType.ANIMATION && !firstAnimationSelected):
 				firstAnimationSelected = newButton;
 
@@ -255,28 +237,15 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 	return [];
 
 
-## Refresh all assets in game
-func refresh_assets() -> void:
-	# Change all tiles to their textures
-	for i in range(tileTypes.size()):
-		var tileImage : Image = find_image_in_folder(FileSearch.find_directory_by_name(tileTypes[i]));
-		var defaultTileImage : Image = find_image(tileTypes[i] + ".png", "res://Assets/Defaults");
-		change_tile_texture(i, tileImage if tileImage else defaultTileImage, mainTileMap);
-	# Change all props to their textures
-	for i in range(propTypes.size()):
-		var propImage : Image = find_image_in_folder(FileSearch.find_directory_by_name(propTypes[i]));
-		var defaultPropImage : Image = find_image(propTypes[i] + ".png", "res://Assets/Defaults");
-		change_tile_texture(Global.EntityType.PROP1 + i, propImage if propImage else defaultPropImage, mainTileMap);
-	
 ## Hadnles the switching of buttons between tab changes
 func on_asset_tab_changed(tabIndex: int) -> void:
-	imagePreview.hide();
+	imageSwapping.imagePreview.hide();
 	animationPreview.hide();
 	audioPreview.hide();
 	
 	if tabIndex == 0:
-		imagePreview.show();
-		item_selected(firstImageSelected);
+		imageSwapping.imagePreview.show();
+		item_selected(imageSwapping.firstImageSelected);
 	elif tabIndex == 1:
 		animationPreview.show();
 		item_selected(firstAnimationSelected);
@@ -296,23 +265,7 @@ func clear_image(nameToClear : String) -> DirAccess:
 		targetDirectory.remove(file); 
 	return targetDirectory;
 
-## Replaces the currently previewed image with one chosen via file dialog.
-## newImagePath: The file path of the new image replacing the old one.x 
-func replace_image(newImagePath: String) -> void:
-	var targetFilePath : String = FileSearch.find_directory_by_name(imageNameToReplace);
-	var targetDirectory : DirAccess = clear_image(imageNameToReplace);
-	# If the image is a png, create a copy
-	if (newImagePath.get_extension().to_lower() == "png"):
-		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
-	else:
-		PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
-	
-	refresh_assets();
-	var replacementImage : Image = find_image_in_folder(targetFilePath);
-	if (replacementImage):
-		imagePreviewTexture.texture = ImageTexture.create_from_image(replacementImage);
-	else:
-		imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
+
 
 ## Replaces the currently previewed animation with one chosen via file dialog.
 ## newAnimationPath: The path to the folder selected
@@ -331,8 +284,7 @@ func replace_animation(newAnimationPath : String) -> void:
 		else:
 			if (!file.get_extension().to_lower() == "png.import"):
 				PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
-	
-	refresh_assets();
+
 	# Replace the preview image if there is one, if not load default
 	var replacementImage : Image = find_image_in_folder(targetFilePath);
 	if (replacementImage):
@@ -345,18 +297,12 @@ func replace_animation(newAnimationPath : String) -> void:
 #func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 #	pass;
 
-## Clears the image in a given folder and replaces it with a default
-func reset_image() -> void:
-	clear_image(imageNameToReplace);
-	refresh_assets();
-	imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
-
 ## Resets everything within the assets manager
 func reset_all() -> void:
 	FileSearch.delete_folder(filePath);
 	create_file_tree();
 	reset_menu();
-	refresh_assets();
+	imageSwapping.refresh_images();
 
 ## Deletes and regenerates all buttons
 func reset_menu() -> void:
@@ -364,7 +310,7 @@ func reset_menu() -> void:
 		button.queue_free();
 	for button: Button in animationsTab.get_children():
 		button.queue_free();
-	firstImageSelected = null;
+	imageSwapping.firstImageSelected = null;
 	firstAnimationSelected = null;
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);
@@ -381,19 +327,19 @@ func reset_menu() -> void:
 
 ## Signal that is emitted when an asset in the menu is selected
 ## selectedItem: The item that is selected, defaults to the firstImageSelected
-func item_selected(selectedItem: AssetItem = firstImageSelected) -> void:
+func item_selected(selectedItem: AssetItem) -> void:
 	# Pause the animation
 	playingAnimation = false;
 	# If the selected item is an image, replace its preview
 	if (selectedItem.type == AssetItem.AssetType.IMAGE):
-		imageNameToReplace = selectedItem.assetName;
-		imageToReplace = find_image_in_folder(FileSearch.find_directory_by_name(imageNameToReplace));
-		if (imageToReplace):
-			var replacementTexture : Texture2D = ImageTexture.create_from_image(imageToReplace);
+		imageSwapping.imageNameToReplace = selectedItem.assetName;
+		imageSwapping.imageToReplace = find_image_in_folder(FileSearch.find_directory_by_name(imageSwapping.imageNameToReplace));
+		if (imageSwapping.imageToReplace):
+			var replacementTexture : Texture2D = ImageTexture.create_from_image(imageSwapping.imageToReplace);
 			if (replacementTexture): 
-				imagePreviewTexture.texture = ImageTexture.create_from_image(imageToReplace);
+				imageSwapping.imagePreviewTexture.texture = ImageTexture.create_from_image(imageSwapping.imageToReplace);
 		else:
-			imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
+			imageSwapping.imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageSwapping.imageNameToReplace + ".png", "res://Assets/Defaults"));
 	# If the selected image is an animation, reset the frame and load the animation into currentlyLoadedAnimation
 	elif (selectedItem.type == AssetItem.AssetType.ANIMATION):
 		currentAnimationIndex = 0;
@@ -461,39 +407,15 @@ func update_animation_preview() -> void:
 	if (animationPreviewToReplace):
 			animationPreviewTexture.texture = animationPreviewToReplace;
 
-## Change the texture of an atlas tile to a new image texture
-## sourceID: Source ID of the tile being changed
-## newImage: Image being switched to
-## tileMap: The tileMap being changed
-## NOTE: Only works with images >= 128px x 128px
-func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer) -> void:
-	if (newImage == null):
-		return;
-	# Create a Texture2D from the image
-	var newTexture : Texture2D = ImageTexture.create_from_image(newImage);
-	# Set a reference to the tile map's tile set
-	var tileSet : TileSet = tileMap.tile_set;
-	# Set a reference to the source in the tile set
-	var source : TileSetAtlasSource = tileSet.get_source(sourceID) as TileSetAtlasSource;
-	# If the source is found, set the texture to the image
-	if (source):
-		source.texture = newTexture;
-		# NOTE: TEMPORARY FIX PT 2
-		for frame in range(0, 5):
-			await get_tree().process_frame;
-		editorManager.clear_enemies();
-
-
-
 ## Creates all folders in tree for the user
 func create_file_tree() -> void:
 	# Open the user root directory
 	var dir : DirAccess = DirAccess.open("user://");
 	# Create all folders for tile types
-	for type: String in tileTypes:
+	for type: String in imageSwapping.tileTypes:
 		dir.make_dir_recursive(filePath + "/Images/Tiles/" + type);
 	# Create all folders for prop types
-	for type: String in propTypes:
+	for type: String in imageSwapping.propTypes:
 		dir.make_dir_recursive(filePath + "/Images/Props/" + type);
 	# Create folder for goal
 	dir.make_dir_recursive(filePath + "/Images/Entities/Goal");
@@ -513,7 +435,7 @@ func create_file_tree() -> void:
 
 func open_image_selector() -> void:
 	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
-		fileSelect.title = "Replace " + imageNameToReplace;
+		fileSelect.title = "Replace " + imageSwapping.imageNameToReplace;
 		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_FILE;
 	elif (currentSelectedItem.type == AssetItem.AssetType.ANIMATION):
 		fileSelect.title = "Replace " + animationPreviewNameToReplace;

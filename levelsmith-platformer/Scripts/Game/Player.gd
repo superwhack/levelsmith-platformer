@@ -324,6 +324,7 @@ func detect_tiles() -> void:
 		# Bounce tile collisions
 		if (tileName == "bounce"):
 			doubleJumpAvailable = doubleJump;
+			currentSlowdown = 1.0;
 			# Horizontal bounces
 			if (abs(rayDirection.x) > abs(rayDirection.y)):
 				if rayDirection.x < 0:
@@ -367,7 +368,7 @@ func detect_tiles() -> void:
 			take_damage(-1);
 		# Only downward rays should drive floor tile effects (except hazard)
 		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):
-			if (tileData.get_custom_data("name") != "bounce"):
+			if (tileData.get_custom_data("name") != "bounce" && tileData.get_custom_data("name") != "oneway"):
 				if (tileData.get_custom_data("name") != "ice"):
 					currentFriction = 1.0;
 				if (tileData.get_custom_data("name") != "slow"):

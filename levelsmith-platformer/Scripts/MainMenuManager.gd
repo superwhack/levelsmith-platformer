@@ -123,7 +123,7 @@ func fill_level_list() -> void:
 			if (get_level_valid(levelPath)):
 				setup_level_item(folderName, levelPath);
 
-			folderName = levelListDir.get_next();
+		folderName = levelListDir.get_next();
 
 ## Setups each level item in the list.
 ## folderName: the folder of the level. Used for level title.

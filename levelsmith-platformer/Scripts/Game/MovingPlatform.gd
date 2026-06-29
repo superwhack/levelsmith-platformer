@@ -100,6 +100,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	progress = propertyFile.progress;
 	
 	adjust_preview();
+	update_line_preview();
 	
 	ResourceSaver.save(propertyFile);
 
@@ -111,6 +112,17 @@ func adjust_preview(pointTo : Vector2 = pointB, selectedProgress : float = progr
 	#else:
 	previewPlatform.show();
 	previewPlatform.global_position = lerp(global_position, global_position + pointTo, float(selectedProgress) / 100);
+
+## Update the preview for the moving platform
+## x: The x to update with
+## y: The y to update with
+func update_line_preview(x : int = (pointB.x - pointA.x) / Global.TILE_SIZE , y : int = (pointB.y - pointA.y) / Global.TILE_SIZE) -> void:
+	var offset : Vector2 = Vector2(x * Global.TILE_SIZE, y * Global.TILE_SIZE);
+	previewLine.modulate = Color(1, 1, 1, 0.5);
+	previewLine.global_position = global_position;
+	previewLine.clear_points();
+	previewLine.add_point(Vector2.ZERO);
+	previewLine.add_point(offset);
 
 ## Apply the progress variable into starting global position
 func apply_progress() -> void:
@@ -130,3 +142,4 @@ func apply_script(file: Resource) -> void:
 	progress = file.progress;
 	adjust_preview(file.pointBOffset, progress);
 	targetPoint = pointB;
+	update_line_preview();

@@ -108,7 +108,7 @@ func _ready() -> void:
 ## Close the property menu and set the selected entity to null
 func close() -> void:
 	if previewLine:
-		previewLine.hide();
+		previewLine.modulate = Color(1, 1, 1, .5);
 	if shootingDirectionArrow:
 		shootingDirectionArrow.scale = Vector2(1,1);
 		shootingDirectionArrow = null;
@@ -126,13 +126,15 @@ func _process(_delta: float) -> void:
 	if selectedEntity is EnemyPatrol:
 		entityName.text = "Patrolling Enemy";
 		selectedEntity.adjust_arrow(int(patrollingDirectionDropdown.value) * 180 + 90);
-	elif  selectedEntity is EnemyFlyer:
+	elif selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
-		update_flying_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
-	elif  selectedEntity is MovingPlatform:
+		selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+		selectedEntity.previewLine.modulate = Color(1, 1, 1, 1);
+	elif selectedEntity is MovingPlatform:
 		entityName.text = "Moving Platform";
-		update_flying_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
 		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
+		selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
+		selectedEntity.previewLine.modulate = Color(1, 1, 1, 1);
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
 		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
@@ -178,18 +180,6 @@ func update_custom() -> void:
 	
 	presetOptions.select(4);
 	_on_preset_options_item_selected(4);
-
-## Update the preview for the flying enemy and moving platform
-## x: The x to update with
-## y: The y to update with
-func update_flying_preview(x : int, y : int) -> void:
-	if selectedEntity == null:
-		return;
-	var offset : Vector2 = Vector2(x * Global.TILE_SIZE, y * Global.TILE_SIZE);
-	previewLine.global_position = selectedEntity.global_position;
-	previewLine.clear_points()
-	previewLine.add_point(Vector2.ZERO)
-	previewLine.add_point(offset)
 
 ## Update all sliders according to the values
 func update_sliders() -> void:
@@ -310,7 +300,7 @@ func _on_drag_ended() -> void:
 func show_menu(resource: Resource = null) -> void:
 	show();
 	if previewLine:
-		previewLine.hide();
+		previewLine.modulate = Color(1, 1, 1, .5);
 	if shootingDirectionArrow:
 		shootingDirectionArrow.scale = Vector2(1,1);
 		shootingDirectionArrow = null;
@@ -329,14 +319,14 @@ func show_menu(resource: Resource = null) -> void:
 			flyingMenu.show()
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.show();
-				update_flying_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+				previewLine.modulate = Color(1, 1, 1, 1);
+				selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
 		elif selectedEntity is MovingPlatform:
 			movingPlatformMenu.show();
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.show()
-				update_flying_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value)
+				previewLine.modulate = Color(1, 1, 1, 1);
+				selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value)
 		elif selectedEntity is EnemyShooting:
 			shootingDirectionArrow = selectedEntity.directionArrow;
 			shootingDirectionArrow.scale = Vector2(2,2);

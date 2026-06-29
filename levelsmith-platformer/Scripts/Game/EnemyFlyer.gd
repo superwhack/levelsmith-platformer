@@ -85,6 +85,16 @@ func handle_obstacles() -> void:
 			obstacleCooldown = OBSTACLE_COOLDOWN_DURATION;
 			break;
 
+## Update the preview for the flying enemy
+## x: The x to update with
+## y: The y to update with
+func update_line_preview(x : int = (pointB.x - pointA.x) / Global.TILE_SIZE , y : int = (pointB.y - pointA.y) / Global.TILE_SIZE) -> void:
+	var offset : Vector2 = Vector2(x * Global.TILE_SIZE, y * Global.TILE_SIZE);
+	previewLine.modulate = Color(1, 1, 1, 0.5);
+	previewLine.global_position = global_position;
+	previewLine.clear_points();
+	previewLine.add_point(Vector2.ZERO);
+	previewLine.add_point(offset);
 
 ## Assigns a resource file to the enemy.
 ## id is the unique identifier of the preset.
@@ -98,6 +108,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	pointA = global_position;
 	pointB = pointA + propertyFile.pointBOffset;
 	targetPoint = pointB;
+	update_line_preview();
 	ResourceSaver.save(propertyFile);
 
 	apply_script(propertyFile);
@@ -115,3 +126,4 @@ func apply_script(file: Resource) -> void:
 		pointB = pointA + file.pointBOffset;
 
 		targetPoint = pointB;
+		update_line_preview();

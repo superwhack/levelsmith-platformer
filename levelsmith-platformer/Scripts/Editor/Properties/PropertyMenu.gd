@@ -45,7 +45,7 @@ var playerWallJumpDecay : bool;
 @export var flyingOffsetYSlider : VBoxContainer;
 var previewLine: Line2D;
 
-# Flying inputs
+# Moving platform inputs
 @export var movingPlatformSpeedSlider : VBoxContainer;
 @export var movingPlatformOffsetXSlider : VBoxContainer;
 @export var movingPlatformOffsetYSlider : VBoxContainer;
@@ -128,8 +128,11 @@ func _process(_delta: float) -> void:
 		selectedEntity.adjust_arrow(int(patrollingDirectionDropdown.value) * 180 + 90);
 	elif  selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
+		update_flying_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
 	elif  selectedEntity is MovingPlatform:
 		entityName.text = "Moving Platform";
+		update_flying_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
+		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
 		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
@@ -282,13 +285,11 @@ func update_values() -> void:
 	elif selectedEntity is EnemyFlyer:
 		selectedPreset.speed = flyingSpeedSlider.value;
 		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.TILE_SIZE, flyingOffsetYSlider.value * Global.TILE_SIZE);
-		update_flying_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is MovingPlatform:
 		selectedPreset.speed = movingPlatformSpeedSlider.value;
 		selectedPreset.pointBOffset = Vector2(movingPlatformOffsetXSlider.value * Global.TILE_SIZE, movingPlatformOffsetYSlider.value * Global.TILE_SIZE);
 		selectedPreset.progress = movingPlatformProgressSlider.value;
-		update_flying_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyShooting:
 		selectedPreset.direction = -shootingDirectionSlider.value;
@@ -324,13 +325,13 @@ func show_menu(resource: Resource = null) -> void:
 			patrollingMenu.show();
 		elif selectedEntity is EnemyFlyer:
 			flyingMenu.show()
-			previewLine = selectedEntity.previewLine
+			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.show()
-				update_flying_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value)
+				previewLine.show();
+				update_flying_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
 		elif selectedEntity is MovingPlatform:
-			movingPlatformMenu.show()
-			previewLine = selectedEntity.previewLine
+			movingPlatformMenu.show();
+			previewLine = selectedEntity.previewLine;
 			if previewLine:
 				previewLine.show()
 				update_flying_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value)

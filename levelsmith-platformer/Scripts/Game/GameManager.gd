@@ -85,6 +85,9 @@ func start() -> void:
 				(node as Enemy).apply_script(propertyFile);
 				(node as Enemy).active = false;
 				break;
+	for movingPlatform in get_tree().get_nodes_in_group("Moving"):
+		if movingPlatform.propertyFile:
+			movingPlatform.apply_progress();
 
 
 	# Unpause player

@@ -105,6 +105,10 @@ func reset_enemy_positions() -> void:
 			enemy.global_position = tileMap.map_to_local(enemy.propertyFile.position);
 			if enemy is EnemyPatrol || enemy is EnemyShooting:
 				enemy.directionArrow.show();
+	for moving in get_tree().get_nodes_in_group("Moving"):
+		if moving is MovingPlatform && moving.propertyFile:
+			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
+			moving.previewPlatform.show();
 
 ## Opens the asset manager
 func open_asset_manager() -> void:

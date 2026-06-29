@@ -19,6 +19,7 @@ const OBSTACLE_COOLDOWN_DURATION : float = 0.25;
 const SPEED_MODIFIER : float = 100.0;
 
 @export var previewLine : Line2D;
+@export var previewPlatform : Sprite2D;
 
 ## Adds enemy to group and sets up initial points
 func _ready() -> void:
@@ -40,23 +41,23 @@ func _physics_process(delta: float) -> void:
 
 	move_behavior();
 	move_and_slide();
-	handle_obstacles();
+	#handle_obstacles();
 
 
 ## Moves the enemy toward current destination.
 func move_behavior() -> void:
 	# Get the direction and distance of movement
-	var direction : Vector2 = targetPoint - global_position;
+	var directionVector : Vector2 = targetPoint - global_position;
 	var move_distance : float = speed * SPEED_MODIFIER * get_physics_process_delta_time();
 
 	# If the enemy is close enough to the point, change direction
-	if (direction.length() <= move_distance):
+	if (directionVector.length() <= move_distance):
 		global_position = targetPoint;
 		velocity = Vector2.ZERO;
 		switch_target();
 		return;
 
-	velocity = direction.normalized() * speed * SPEED_MODIFIER;
+	velocity = directionVector.normalized() * speed * SPEED_MODIFIER;
 
 
 ## Switches the active destination.
@@ -98,10 +99,24 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	targetPoint = pointB;
 	progress = propertyFile.progress;
 	
+	adjust_preview();
+	
 	ResourceSaver.save(propertyFile);
 
 	apply_script(propertyFile);
 
+func adjust_preview(pointTo : Vector2 = pointB, selectedProgress : float = progress) -> void:
+	#if selectedProgress == 0:
+	#	previewPlatform.hide();
+	#else:
+	previewPlatform.show();
+	previewPlatform.global_position = lerp(global_position, global_position + pointTo, float(selectedProgress) / 100);
+
+## Apply the progress variable into starting global position
+func apply_progress() -> void:
+	previewPlatform.hide();
+	global_position = lerp(pointA, pointB, float(progress) / 100.0);
+	
 
 ## Applies the values stored in a FlyingPreset.
 ## file: Resource containing enemy properties.
@@ -112,9 +127,6 @@ func apply_script(file: Resource) -> void:
 
 	pointA = global_position;
 	pointB = pointA + file.pointBOffset;
-	print(file.progress);
 	progress = file.progress;
-
+	adjust_preview(file.pointBOffset, progress);
 	targetPoint = pointB;
-	print("ab: ", float(progress) / 100.0);
-	global_position  = lerp(pointA, pointB, float(progress) / 100.0);

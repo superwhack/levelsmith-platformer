@@ -124,7 +124,6 @@ func main_menu() -> void:
 
 ## Swap to edit state
 func edit() -> void:
-	toolManager.change_tool(Global.Tool.BRUSH);
 	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable

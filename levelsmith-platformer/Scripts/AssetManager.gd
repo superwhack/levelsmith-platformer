@@ -466,7 +466,7 @@ func update_animation_preview() -> void:
 ## newImage: Image being switched to
 ## tileMap: The tileMap being changed
 ## NOTE: Only works with images >= 128px x 128px
-func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
+func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer) -> void:
 	if (newImage == null):
 		return;
 	# Create a Texture2D from the image

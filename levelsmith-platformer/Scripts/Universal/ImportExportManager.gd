@@ -115,7 +115,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	dataToSend += '"coyoteTime": ' + str(playerData.playerCoyoteTime) + ", ";
 	dataToSend += '"doubleJump": ' + str(playerData.playerDoubleJump) + ", ";
 	dataToSend += '"wallJump": ' + str(playerData.playerWallJump) + ", ";
-	dataToSend += '"wallJumpDecay": ' + str(playerData.playerWallJumpDecay);
+	#dataToSend += '"wallJumpDecay": ' + str(playerData.playerWallJumpDecay);
 	dataToSend += '}}';
 	
 	# Convert our data to a json_string
@@ -212,16 +212,16 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	var json_as_dict : Variant = JSON.parse_string(JSONFile.get_as_text());
 	
 	# Player information read
-	var player = json_as_dict.player;
-	playerData.playerHealth = player.health;
-	playerData.playerSpeed = player.speed;
-	playerData.playerJumpHeight = player.jump;
-	playerData.playerAirControl = player.airControl;
-	playerData.playerFallSpeed = player.fallSpeed;
-	playerData.playerCoyoteTime = player.coyoteTime;
-	playerData.playerDoubleJump = player.doubleJump;
-	playerData.playerWallJump = player.wallJump;
-	playerData.playerWallJumpDecay = player.wallJumpDecay;
+	var player = json_as_dict.get("player", {});
+	playerData.playerHealth = player.get("health", playerData.playerHealth);
+	playerData.playerSpeed = player.get("speed", playerData.playerSpeed);
+	playerData.playerJumpHeight = player.get("jumpheight", playerData.playerJumpHeight);
+	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
+	playerData.playerFallSpeed = player.get("fallSpeed", playerData.playerFallSpeed);
+	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
+	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
+	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);
+	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);
 	playerData.update_custom();
 	playerData.update_sliders();
 	

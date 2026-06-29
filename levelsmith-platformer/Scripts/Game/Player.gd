@@ -368,7 +368,7 @@ func detect_tiles() -> void:
 			take_damage(-1);
 		# Only downward rays should drive floor tile effects (except hazard)
 		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):
-			if (tileData.get_custom_data("name") != "bounce" && tileData.get_custom_data("name") != "oneway"):
+			if (tileData.get_custom_data("name") != "bounce" && is_on_floor()):
 				if (tileData.get_custom_data("name") != "ice"):
 					currentFriction = 1.0;
 				if (tileData.get_custom_data("name") != "slow"):

@@ -102,7 +102,6 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			dataToSend += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}}}';
 		if (enemyPropertyIndex < enemyProperties.size() - 1):
 			dataToSend += ',';
-	
 	# Creating Player Data in JSON.
 	dataToSend += '], "player": {';
 	dataToSend += '"health": ' + str(playerData.playerHealth) + ", ";
@@ -110,7 +109,10 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	dataToSend += '"jump": ' + str(playerData.playerJumpHeight) + ", ";
 	dataToSend += '"airControl": ' + str(playerData.playerAirControl) + ", ";
 	dataToSend += '"fallSpeed": ' + str(playerData.playerFallSpeed) + ", ";
-	dataToSend += '"coyoteTime": ' + str(playerData.playerCoyoteTime);
+	dataToSend += '"coyoteTime": ' + str(playerData.playerCoyoteTime) + ", ";
+	dataToSend += '"doubleJump": ' + str(playerData.playerDoubleJump) + ", ";
+	dataToSend += '"wallJump": ' + str(playerData.playerWallJump) + ", ";
+	dataToSend += '"wallJumpDecay": ' + str(playerData.playerWallJumpDecay);
 	dataToSend += '}}';
 	
 	# Convert our data to a json_string
@@ -214,6 +216,9 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	playerData.playerAirControl = player.airControl;
 	playerData.playerFallSpeed = player.fallSpeed;
 	playerData.playerCoyoteTime = player.coyoteTime;
+	playerData.playerDoubleJump = player.doubleJump;
+	playerData.playerWallJump = player.wallJump;
+	playerData.playerWallJumpDecay = player.wallJumpDecay;
 	playerData.update_custom();
 	playerData.update_sliders();
 	

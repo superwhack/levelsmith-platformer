@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://p2gafyxbmxfn"]
 
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="1_8mdbe"]
-[ext_resource type="Texture2D" uid="uid://da0gjbpe87rk5" path="res://Assets/Sprites/Entities/Coin.png" id="2_qhy4u"]
+[ext_resource type="Script" uid="uid://bpmwwvhsaherl" path="res://Scripts/Game/PlayerHealthUI.gd" id="1_qhy4u"]
 
 [node name="PlayerHealthUi" type="HBoxContainer" unique_id=621394887]
-scale = Vector2(0.5, 0.5)
+script = ExtResource("1_qhy4u")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=70166934]
 layout_mode = 2
@@ -21,7 +21,3 @@ theme_override_constants/margin_bottom = 10
 propagate_maximum_size = false
 layout_mode = 2
 size_flags_horizontal = 4
-
-[node name="Heart" type="TextureRect" parent="PanelContainer/MarginContainer/HealthContainer" unique_id=1726718218]
-layout_mode = 2
-texture = ExtResource("2_qhy4u")

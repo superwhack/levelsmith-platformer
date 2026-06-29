@@ -13,22 +13,25 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
 
-[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "bottomScreenGroup", "coinCounterLabel", "resetButton", "pauseButton", "resumeButton")]
+[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "bottomScreenGroup", "coinCounterLabel", "playerHealthUI", "resetButton", "pauseButton", "resumeButton")]
 script = ExtResource("1_habuo")
 pauseScreen = NodePath("CanvasLayer/PausedScreenContainer")
 bottomScreenGroup = NodePath("CanvasLayer/BottomScreenGroup")
-coinCounterLabel = NodePath("CanvasLayer/BottomScreenGroup/TopRightMargin/PlayUIHBox/PanelContainer/CoinCounter")
+coinCounterLabel = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinCounter")
+playerHealthUI = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PlayerHealthUi")
 resetButton = NodePath("CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ResetButton")
-pauseButton = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/PauseButton")
+pauseButton = NodePath("CanvasLayer/TopLeftMargin/PauseButton")
 resumeButton = NodePath("CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer/ResumeButton")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1567020351]
 
 [node name="BottomScreenGroup" type="Control" parent="CanvasLayer" unique_id=165234259]
 layout_mode = 3
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
 
 [node name="BottomRightMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=762088827]
 layout_mode = 1
@@ -37,10 +40,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1479.0
-offset_top = 892.0
-offset_right = 1880.0
-offset_bottom = 1040.0
+offset_left = -401.0
+offset_top = -148.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_right = 20
@@ -72,28 +73,13 @@ action_mode = 0
 icon = ExtResource("4_habuo")
 icon_alignment = 1
 
-[node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=1930773515]
-layout_mode = 0
-offset_right = 292.0
-offset_bottom = 92.0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-
-[node name="PauseButton" type="Button" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin" unique_id=2000062892]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme = ExtResource("2_ym18m")
-icon = ExtResource("5_jygy8")
-
 [node name="BottomLeftMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=420297532]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = 985.0
+offset_top = -55.0
 offset_right = 531.0
-offset_bottom = 1040.0
 grow_vertical = 0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_bottom = 20
@@ -103,45 +89,58 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Move [WASD / Arrow Keys]	     Jump [Space]"
 
-[node name="TopRightMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=1873861667]
-layout_mode = 1
+[node name="TopRightMargin" type="MarginContainer" parent="CanvasLayer" unique_id=1873861667]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 40.0
+offset_left = -382.0
+offset_bottom = 104.0
 grow_horizontal = 0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="PlayUIHBox" type="HBoxContainer" parent="CanvasLayer/BottomScreenGroup/TopRightMargin" unique_id=1040017800]
+[node name="PlayUIHBox" type="HBoxContainer" parent="CanvasLayer/TopRightMargin" unique_id=1040017800]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="PlayerHealthUi" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/PlayUIHBox" unique_id=621394887 instance=ExtResource("6_x53pn")]
+[node name="PlayerHealthUi" parent="CanvasLayer/TopRightMargin/PlayUIHBox" unique_id=621394887 instance=ExtResource("6_x53pn")]
 layout_mode = 2
 
-[node name="PlayUISpacer" type="Control" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/PlayUIHBox" unique_id=79976120]
+[node name="PlayUISpacer" type="Control" parent="CanvasLayer/TopRightMargin/PlayUIHBox" unique_id=79976120]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/PlayUIHBox" unique_id=562975845]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/TopRightMargin/PlayUIHBox" unique_id=562975845]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("7_o46cv")
 
-[node name="CoinCounter" type="RichTextLabel" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/PlayUIHBox/PanelContainer" unique_id=2034599662]
+[node name="CoinCounter" type="RichTextLabel" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer" unique_id=2034599662]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 theme_override_colors/default_color = Color(1, 0.85882354, 0, 1)
 theme_override_font_sizes/normal_font_size = 45
+
+[node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer" unique_id=1930773515]
+offset_right = 292.0
+offset_bottom = 92.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="PauseButton" type="Button" parent="CanvasLayer/TopLeftMargin" unique_id=2000062892]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("2_ym18m")
+icon = ExtResource("5_jygy8")
 
 [node name="PausedScreenContainer" type="PanelContainer" parent="CanvasLayer" unique_id=610850262 node_paths=PackedStringArray("gameManager")]
 process_mode = 3
 visible = false
 anchors_preset = 10
 anchor_right = 1.0
+offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ym18m")
 script = ExtResource("6_ym18m")

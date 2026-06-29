@@ -4,6 +4,7 @@ extends Node2D
 @export var pauseScreen : PanelContainer;
 @export var bottomScreenGroup : Control;
 @export var coinCounterLabel : RichTextLabel;
+@export var playerHealthUI : HBoxContainer;
 
 # Button references for signals
 @export var resetButton : Button;
@@ -64,6 +65,10 @@ func start() -> void:
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
+	
+	if playerHealthUI:
+		playerHealthUI.bind_player(player);
+	
 	if !player.healthChanged.is_connected(change_health):
 		player.healthChanged.connect(change_health);
 

@@ -17,6 +17,10 @@ enum PlayState {
 }
 var playState : PlayState = PlayState.PLAY; 
 
+# Time tracker
+var testingTime : float = 0.0;
+var timerRunning : bool = false;
+
 # Has the goal been reached
 var goalReached : bool = false;
 
@@ -81,7 +85,7 @@ func start() -> void:
 	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
-	
+
 	# Reset coin values for the new level
 	coinCount = 0;
 	totalCoins = 0;
@@ -91,6 +95,10 @@ func start() -> void:
 			totalCoins += 1;
 	update_coin_counter();
 
+	# Start level timer
+	testingTime = 0.0;
+	timerRunning = true;
+
 ## Record a change in health for the player
 ## newHealth: The new health of the player
 func change_health(newHealth : int):
@@ -99,10 +107,15 @@ func change_health(newHealth : int):
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:
 	Global.death.connect(reset);
+	Global.complete.connect(print_level_completion_time);
 	Global.onCoinCollected.connect(_on_coin_collected);
 	resetButton.pressed.connect(reset);
 	pauseButton.pressed.connect(pause);
 	resumeButton.pressed.connect(pause);
+
+func _process(delta: float) -> void:
+	if timerRunning:
+		testingTime += delta;
 
 ## Increase coin count and update its UI on coin collection
 func _on_coin_collected() -> void:
@@ -114,3 +127,9 @@ func _on_coin_collected() -> void:
 func update_coin_counter() -> void:
 	coinCounterLabel.clear();
 	coinCounterLabel.append_text("[right]Coins: %d / %d[/right]" % [coinCount, totalCoins]);
+
+func print_level_completion_time() -> void:
+	timerRunning = false;
+	var minutes := int(testingTime) / 60;
+	var seconds := int(testingTime) % 60;
+	print("Completion Time: %02d:%02d" % [minutes, seconds]);

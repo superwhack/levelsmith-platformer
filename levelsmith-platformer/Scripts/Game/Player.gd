@@ -120,6 +120,7 @@ func _physics_process(delta: float) -> void:
 	if (Input.is_action_just_pressed("jump") && !justWallJumped):
 		if (is_on_floor() || coyoteTimeLeft > 0.0 || doubleJumpAvailable):
 			if !(is_on_floor() || coyoteTimeLeft > 0.0):
+				currentSlowdown = 1.0;
 				doubleJumpAvailable = false;
 			coyoteTimeLeft = 0;
 			jump();
@@ -257,6 +258,7 @@ func bounce() -> void:
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
 	
+	
 	# Check all collisions with raycasts
 	var slideCollisions : Array[RayCast2D] = [];
 	var slideCollisionsHit : Array[TileData] = [];
@@ -264,7 +266,7 @@ func detect_tiles() -> void:
 	for raycast in raycasts:
 		if (raycast.is_colliding()):
 			slideCollisions.push_back(raycast);
-
+		
 	for raycast in slideCollisions:
 		var collider : Object = raycast.get_collider();
 		if (collider is not TileMapLayer): continue;
@@ -286,6 +288,8 @@ func detect_tiles() -> void:
 
 		# Wall Jumping + Sliding
 		if wallJump && rayDirection.x != 0:
+			if tileName == "bedrock":
+				return;
 			# Wall Slide when not on ice
 			if tileName != "ice":
 				velocity.y *= .94;
@@ -293,6 +297,8 @@ func detect_tiles() -> void:
 				#	velocity.y *= .94;
 				#elif rayDirection.x > 0 && Input.is_action_pressed("right"):
 				#	velocity.y *= .94;
+			if tileName != "slow":
+				currentSlowdown = 1.0;
 			if Input.is_action_just_pressed("jump"):
 				# Depending on direction, apply a different x velocity
 				if rayDirection.x < 0:
@@ -320,6 +326,8 @@ func detect_tiles() -> void:
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):
+			doubleJumpAvailable = doubleJump;
+			currentSlowdown = 1.0;
 			# Horizontal bounces
 			if (abs(rayDirection.x) > abs(rayDirection.y)):
 				if rayDirection.x < 0:
@@ -363,7 +371,7 @@ func detect_tiles() -> void:
 			take_damage(-1);
 		# Only downward rays should drive floor tile effects (except hazard)
 		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):
-			if (tileData.get_custom_data("name") != "bounce"):
+			if (tileData.get_custom_data("name") != "bounce" && is_on_floor()):
 				if (tileData.get_custom_data("name") != "ice"):
 					currentFriction = 1.0;
 				if (tileData.get_custom_data("name") != "slow"):

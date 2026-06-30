@@ -23,10 +23,10 @@ func _physics_process(delta: float) -> void:
 	
 	
 
-func assign_script(id: String, assignPosition: Vector2i) -> void:
-	propertyFile = ResourceLoader.load("res://Resources/Enemies/Stationary" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
-	name = "Stationary" + id;
-	propertyFile.position = assignPosition;
-	directionFacing = propertyFile.directionFacing;
-	gravityEnabled = propertyFile.gravityEnabled;
-	ResourceSaver.save(propertyFile);
+#func assign_script(id: String, assignPosition: Vector2i) -> void:
+	#propertyFile = ResourceLoader.load("res://Resources/Enemies/Stationary" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
+	#name = "Stationary" + id;
+	#propertyFile.position = assignPosition;
+	#directionFacing = propertyFile.directionFacing;
+	#gravityEnabled = propertyFile.gravityEnabled;
+	#ResourceSaver.save(propertyFile);

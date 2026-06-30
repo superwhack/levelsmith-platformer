@@ -1,21 +1,17 @@
 extends Node
 
+# Reference to the asset manager
 @export var assetManager : AssetManager;
-
-var filePath : String;
-
 # References to images
 var imageToReplace : Image;
 var imageNameToReplace : String;
-
+# References to nodes for previewing the image within the asset manager
 @export var imagePreview : Panel;
 @export var imagePreviewTexture : TextureRect;
-
+# Reference to the main tile map
 var mainTileMap : TileMapLayer;
-
 # All types of tiles
 var tileTypes : Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
-
 # All types of props
 var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
 

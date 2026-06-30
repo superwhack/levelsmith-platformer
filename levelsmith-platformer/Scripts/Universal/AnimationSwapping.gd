@@ -1,26 +1,21 @@
 extends Node
 
+# Reference to the asset manager
 @export var assetManager : AssetManager;
-
-var filePath : String;
-
+# The current entity type selected
 var selectedEntityType : String;
-
 # The Texture that will be replacing the texture with the preview name
 var animationPreviewToReplace : Texture2D;
 var animationPreviewNameToReplace : String;
-
 # The current animation index being viewed
 var currentAnimationIndex : int = 0;
-
 # The current frame the animation is on
 var animationFrameIndex : int = 0;
-
+# The animation currently loaded into an array for quick switching
 var currentLoadedAnimation : Array[Texture2D];
-
+# References to nodes for displaying the animation preview
 @export var animationPreview : Panel;
 @export var animationPreviewTexture : TextureRect;
-
 # References to animation preview controls and visuals
 @export var animationPreviewRightButton : Button;
 @export var animationPreviewLeftButton : Button;
@@ -31,25 +26,21 @@ var currentLoadedAnimation : Array[Texture2D];
 @export var playButton : Button;
 @export var stopButton : Button;
 @export var FPSSpinbox : SpinBox;
-
 # Information about played animation
 var playingAnimation : bool;
 var FPS : float = 12;
 var animTimer : float = 0;
-
 # All types of entities
 var animatedEntityTypes : Array[String] = ["Player", "StationaryEnemy", "ShootingEnemy", "PatrollingEnemy", "FlyingEnemy"];
-
 # Player Animations
 var playerAnimations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "PlayerFall", "PlayerHurt", "PlayerDeath"];
-
 # All Enemy Animations
 var stationaryEnemyAnimations : Array[String] = ["StationaryIdle", "StationaryDeath"];
 var patrollingEnemyAnimations : Array[String] = ["PatrolWalk", "PatrolDeath"];
 var flyingEnemyAnimations : Array[String] = ["FlyMove", "FlyDeath"];
 var shootingEnemyAnimations : Array[String] = ["EnemyShoot", "ShootIdle", "ShootDeath"];
 
-# Called when the node enters the scene tree for the first time.
+## Connect all relevant signals
 func _ready() -> void:
 	animationPreviewRightButton.pressed.connect(anim_change.bind(true));
 	animationPreviewLeftButton.pressed.connect(anim_change.bind(false));
@@ -59,10 +50,9 @@ func _ready() -> void:
 	stopButton.pressed.connect(stop_preview_animation);
 	FPSSpinbox.value_changed.connect(fps_updated);
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+## Play the animation
 func _process(delta: float) -> void:
-		# Play the animation
+	# Play the animation
 	if (playingAnimation):
 		animTimer += delta;
 		if (animTimer >= 1/FPS):
@@ -104,7 +94,6 @@ func replace_animation(newAnimationPath : String) -> void:
 		else:
 			if (!file.get_extension().to_lower() == "png.import"):
 				PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
-	
 	# Replace the preview image if there is one, if not load default
 	var replacementImage : Image = assetManager.find_image_in_folder(targetFilePath);
 	if (replacementImage):
@@ -169,13 +158,16 @@ func update_animation_preview() -> void:
 	if (animationPreviewToReplace):
 			animationPreviewTexture.texture = animationPreviewToReplace;
 
+## Play the animation in the preview
 func play_preview_animation() -> void:
 	playingAnimation = !playingAnimation;
 
+## Stop the animation and set it to its first frame
 func stop_preview_animation() -> void:
 	playingAnimation = false;
 	animationFrameIndex = 0;
 	update_animation_preview();
 
+## Update the FPS
 func fps_updated(value: float) -> void:
 	FPS = value;

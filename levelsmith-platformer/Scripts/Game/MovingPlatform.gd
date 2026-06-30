@@ -1,5 +1,11 @@
 class_name MovingPlatform;
-extends Enemy;
+extends AnimatableBody2D;
+
+# Everything it used from the BaseEnemyClass
+var propertyFile : Resource;
+var active = false;
+@export var onScreen : VisibleOnScreenNotifier2D;
+
 # Movement speed of the enemy.
 @export var speed : float = 1.0;
 
@@ -7,6 +13,7 @@ extends Enemy;
 var pointA : Vector2;
 var pointB : Vector2;
 var progress : float;
+var velocity : Vector2;
 
 # Current destination point.
 var targetPoint : Vector2;
@@ -40,8 +47,7 @@ func _physics_process(delta: float) -> void:
 		obstacleCooldown -= delta;
 
 	move_behavior();
-	move_and_slide();
-	#handle_obstacles();
+	position += velocity * delta;
 
 
 ## Moves the enemy toward current destination.
@@ -66,24 +72,6 @@ func switch_target() -> void:
 		targetPoint = pointB;
 	else:
 		targetPoint = pointA;
-
-
-## Reverses direction if the enemy collides with terrain.
-func handle_obstacles() -> void:
-	# Early return if the cooldown is not done
-	if obstacleCooldown > 0.0:
-		return;
-	
-	# Otherwise, reverse the direction based on the colliding object
-	for k in range(get_slide_collision_count()):
-		var collision : KinematicCollision2D = get_slide_collision(k);
-
-		if collision.get_collider() is TileMapLayer:
-			velocity = Vector2.ZERO;
-			switch_target();
-			obstacleCooldown = OBSTACLE_COOLDOWN_DURATION;
-			break;
-
 
 ## Assigns a resource file to the enemy.
 ## id is the unique identifier of the preset.

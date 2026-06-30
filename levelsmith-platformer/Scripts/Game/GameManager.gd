@@ -87,8 +87,8 @@ func start() -> void:
 		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
 		for node in tileMap.get_children():
 			if tileMap.local_to_map(node.global_position) == propertyFile.position:
-				(node as Enemy).apply_script(propertyFile);
-				(node as Enemy).active = false;
+				node.apply_script(propertyFile);
+				node.active = false;
 				break;
 	for moving in get_tree().get_nodes_in_group("Moving"):
 		if moving is MovingPlatform && moving.propertyFile:

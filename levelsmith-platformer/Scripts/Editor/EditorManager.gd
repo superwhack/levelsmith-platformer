@@ -77,7 +77,7 @@ func _process(_delta: float) -> void:
 ## Clear all enemies without a property file
 func clear_enemies(alwaysClear: bool = false) -> void:
 	for child in tileMap.get_children():
-		if child is Enemy:
+		if child is Enemy || child is MovingPlatform:
 			if alwaysClear || child.propertyFile == null:
 				child.queue_free();
 
@@ -101,7 +101,7 @@ func check_out_of_bounds(mousePosition: Vector2i) -> bool:
 ## Reset all the enemy positions to the center of their tiles.
 func reset_enemy_positions() -> void:
 	for moving in get_tree().get_nodes_in_group("Moving"):
-		if (moving is Enemy && moving.propertyFile):
+		if ((moving is Enemy || moving is MovingPlatform) && moving.propertyFile):
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
 			if moving is EnemyPatrol || moving is EnemyShooting:
 				moving.directionArrow.show();

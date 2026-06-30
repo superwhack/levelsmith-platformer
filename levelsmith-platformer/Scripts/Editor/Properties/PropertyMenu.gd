@@ -309,7 +309,7 @@ func show_menu(resource: Resource = null) -> void:
 	flyingMenu.hide();
 	shootingMenu.hide();
 	movingPlatformMenu.hide();
-	if selectedEntity is Enemy:
+	if selectedEntity is Enemy || selectedEntity is MovingPlatform:
 		selectedPreset = resource;
 		update_sliders();
 		if selectedEntity is EnemyPatrol:

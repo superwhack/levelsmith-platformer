@@ -99,7 +99,7 @@ func delete_entity (clickPosition: Vector2) -> void:
 	if (clickedObjectId < editorManager.tileCount): return;
 	elif (clickedObjectId == Global.EntityType.PLAYER): editorManager.playerExists = false;
 	elif (clickedObjectId == Global.EntityType.GOAL): goalCount -= 1;
-	elif (clickedEntity is Enemy):
+	elif (clickedEntity is Enemy || clickedEntity is MovingPlatform):
 		DirAccess.remove_absolute("res://Resources/Enemies/" + clickedEntity.name + ".tres");
 		clickedEntity.queue_free();
 	
@@ -110,7 +110,9 @@ func delete_entity (clickPosition: Vector2) -> void:
 func edit_properties(clickPosition: Vector2) -> void:
 	var clickedEntity : Node2D = get_scene_at_cell(clickPosition);
 	propertyMenu.selectedEntity = clickedEntity;
-	if clickedEntity is Enemy:
+	if clickedEntity is Enemy || clickedEntity is MovingPlatform:
+		propertyMenu.show_menu(clickedEntity.propertyFile);
+	elif clickedEntity is MovingPlatform:
 		propertyMenu.show_menu(clickedEntity.propertyFile);
 	elif clickedEntity is Player:
 		propertyMenu.show_menu();
@@ -137,7 +139,7 @@ func move_entity(previousClickPos: Vector2) -> void:
 	await get_tree().process_frame;
 	toolManager.brushObject = tileMap.get_cell_source_id(previousClickPos);
 	toolManager.currentObjectRotation = tileMap.get_cell_alternative_tile(previousClickPos);
-	if get_scene_at_cell(previousClickPos) is Enemy:
+	if get_scene_at_cell(previousClickPos) is Enemy || get_scene_at_cell(previousClickPos) is MovingPlatform:
 		movingResource = get_scene_at_cell(previousClickPos).propertyFile;
 	delete_entity(previousClickPos);
 

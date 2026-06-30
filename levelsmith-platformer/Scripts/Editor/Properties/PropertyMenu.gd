@@ -108,7 +108,7 @@ func _ready() -> void:
 ## Close the property menu and set the selected entity to null
 func close() -> void:
 	if previewLine:
-		previewLine.modulate = Color(1, 1, 1, .5);
+		previewLine.modulate = Color(0, 0, 0, .5);
 	if shootingDirectionArrow:
 		shootingDirectionArrow.scale = Vector2(1,1);
 		shootingDirectionArrow = null;
@@ -129,12 +129,12 @@ func _process(_delta: float) -> void:
 	elif selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
 		selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
-		selectedEntity.previewLine.modulate = Color(1, 1, 1, 1);
+		selectedEntity.previewLine.modulate = Color(0, 0, 0, 1);
 	elif selectedEntity is MovingPlatform:
 		entityName.text = "Moving Platform";
 		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
 		selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
-		selectedEntity.previewLine.modulate = Color(1, 1, 1, 1);
+		selectedEntity.previewLine.modulate = Color(0, 0, 0, 1);
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
 		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
@@ -300,7 +300,7 @@ func _on_drag_ended() -> void:
 func show_menu(resource: Resource = null) -> void:
 	show();
 	if previewLine:
-		previewLine.modulate = Color(1, 1, 1, .5);
+		previewLine.modulate = Color(0, 0, 0, .5);
 	if shootingDirectionArrow:
 		shootingDirectionArrow.scale = Vector2(1,1);
 		shootingDirectionArrow = null;
@@ -319,13 +319,13 @@ func show_menu(resource: Resource = null) -> void:
 			flyingMenu.show()
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate = Color(1, 1, 1, 1);
+				previewLine.modulate = Color(0, 0, 0, 1);
 				selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
 		elif selectedEntity is MovingPlatform:
 			movingPlatformMenu.show();
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate = Color(1, 1, 1, 1);
+				previewLine.modulate = Color(0, 0, 0, 1);
 				selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value)
 		elif selectedEntity is EnemyShooting:
 			shootingDirectionArrow = selectedEntity.directionArrow;

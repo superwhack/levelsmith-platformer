@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
 [ext_resource type="PackedScene" uid="uid://d33iu75vytjse" path="res://Scenes/UI/PropertyDropdown.tscn" id="5_ehgsd"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "flyingMenu", "patrollingMenu", "shootingMenu", "playerHealthSlider", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "presetOptions", "closeButton")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "flyingMenu", "movingPlatformMenu", "patrollingMenu", "shootingMenu", "playerHealthSlider", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "shootingDirectionSlider", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "presetOptions", "closeButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -23,6 +23,7 @@ script = ExtResource("1_tnep3")
 entityName = NodePath("ScrollContainer/MainMargin/RootVBox/EntityNameVBox/EntityName")
 playerMenu = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties")
 flyingMenu = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties")
+movingPlatformMenu = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin")
 patrollingMenu = NodePath("ScrollContainer/MainMargin/RootVBox/PatrollingMargin")
 shootingMenu = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin")
 playerHealthSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerHealth")
@@ -40,6 +41,10 @@ patrollingRestrictedCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/Pat
 flyingSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/FlightSpeed")
 flyingOffsetXSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/Xoffset")
 flyingOffsetYSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/Yoffset")
+movingPlatformSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/MoveSpeed")
+movingPlatformOffsetXSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Xoffset")
+movingPlatformOffsetYSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Yoffset")
+movingPlatformProgressSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Progress")
 shootingDirectionSlider = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingDirection")
 shootingRandomDirection = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingRandomDirection")
 shootingShotSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingShotSpeed")
@@ -242,6 +247,44 @@ propertyName = "Projecile Bounce"
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Gravity"
+
+[node name="MovingPlatformMargin" type="MarginContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=2055794531]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+
+[node name="MovingPlatformProperties" type="VBoxContainer" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin" unique_id=1499956252]
+layout_mode = 2
+
+[node name="MoveSpeed" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=1186511251 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Moving Speed"
+minMax = Vector2(0, 10)
+sliderStep = 1.0
+
+[node name="Xoffset" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=279559902 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+size_flags_horizontal = 0
+layout_direction = 2
+propertyName = "Horizontal offset"
+minMax = Vector2(-10, 10)
+sliderStep = 1.0
+
+[node name="Yoffset" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=201810100 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Vertical offset"
+minMax = Vector2(-10, 10)
+sliderStep = 1.0
+
+[node name="Progress" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=1498320633 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Progress"
+minMax = Vector2(0, 100)
+sliderStep = 1.0
+valueAppend = "%"
 
 [node name="FlyingProperties" type="VBoxContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1573236817]
 visible = false

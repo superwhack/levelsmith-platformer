@@ -154,17 +154,10 @@ func edit() -> void:
 
 ## Swap to play state
 func play() -> void:
-	#var errors : Array[String];
 	# Check that the game can be run
-	#if (!editorManager.playerExists):
-		#errors.append("There is no player placed down.")
-	#if (!editorManager.goalExists):
-		#errors.append("There is no goal placed down.")
-	#if (errors.size() != 0):
-		#PopUpManager.create_multi_error_popup("Cannot Start Level", errors);
-		#return;
+	if (!get_play_errors().is_empty()):
+		return;
 		
-	
 	propertyMenu.close();
 	AudioManager.play_music("LevelMusic");
 	# Update state variable
@@ -218,12 +211,10 @@ func load_tilemap() -> void:
 	
 ## Shows the play pop up to the user.
 func mouse_entered_play_button() -> void:
-	print("huhhhh")
-	var errors : Array[String] = validate_play();
+	var errors : Array[String] = get_play_errors();
 	
 	# So long as there are errors, modify the pop-up to be accurate.
 	if (errors.size() > 0):
-		print(errors)
 		playPopUp.set_title("REQUIRED TO RUN");
 		var bodyText : String = "";
 		for messageNum in range(0, errors.size()):
@@ -236,13 +227,12 @@ func mouse_entered_play_button() -> void:
 
 ## Hides the play pop up from the user.
 func mouse_exited_play_button() -> void:
-	print("mouse exited")
 	playPopUp.hide();
 
 	
 ## Validates if a level is playable, and returns a string of any found errors
 ## Returns an array of error points, but not a full error description.
-func validate_play() -> Array[String]:
+func get_play_errors() -> Array[String]:
 	var errors : Array[String] = [];
 	
 	if (!editorManager.playerExists):

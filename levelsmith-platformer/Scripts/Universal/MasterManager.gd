@@ -113,8 +113,9 @@ func import_level_and_edit() -> void:
 ## Loads the given level to the player.
 ## levelPath: The folder path of the level.
 func load_level(levelPath: String) -> void:
-	ImportExportManager.levelPath = levelPath;
-	import_level_and_edit();
+	if (ImportExportManager.validate_import(levelPath)):
+		ImportExportManager.levelPath = levelPath;
+		import_level_and_edit();
 
 ## Swap to main menu state
 func main_menu() -> void:

@@ -3,6 +3,7 @@ class_name AssetManager
 
 # Path to the root folder of all assets
 var filePath : String = "user://Assets";
+var defaultsFilePath : String = "res://Assets/Defaults/Assets/Sprites/";
 
 # References to audio
 var newAudio : AudioStream;
@@ -42,6 +43,8 @@ const MISSING_TEXTURE : String = "res://Assets/Defaults/Assets/Sprites/Missing.p
 var currentSelectedItem : AssetItem;
 
 @export var mainTileMap : TileMapLayer;
+
+@export var defaults : Resource;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -99,11 +102,18 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 ## imageName: Name of the image
 ## returns: Loaded image
 func find_image(imageName: String, currentDirectory: String = filePath) -> Image:
+	var image : Image = Image.new();
+	if (currentDirectory.begins_with("res://")):
+		var simpleName = imageName.to_lower().get_basename();
+		if (defaults.get(simpleName)):
+			print(defaults.get(simpleName));
+			var texture = load(defaults.get(simpleName));
+			image = texture.get_image();
+		return image;
 	# Get the path to the image
 	var imagePath : String = FileSearch.find_file_by_name(imageName, currentDirectory);
 	# If the path exists
 	if (imagePath):
-		var image : Image = Image.new();
 		if (imagePath.begins_with("res://")):
 			var texture : Texture2D = load(imagePath);
 			image = texture.get_image();
@@ -120,7 +130,7 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 		
 	# If the path does not exist, print error
 	else:
-		PopUpManager.create_error_popup("Cannot Load Asset","No file found in '" + filePath + "'.");
+		PopUpManager.create_error_popup("Cannot Load Asset","No file found in '" + currentDirectory + "'.");
 		return get_missing_image();
 
 ## Finds and loads the first image found in given folder
@@ -225,7 +235,7 @@ func item_selected(selectedItem: AssetItem) -> void:
 			if (replacementTexture): 
 				imageSwapping.imagePreviewTexture.texture = ImageTexture.create_from_image(imageSwapping.imageToReplace);
 		else:
-			imageSwapping.imagePreviewTexture.texture = ImageTexture.create_from_image(find_image(imageSwapping.imageNameToReplace + ".png", "res://Assets/Defaults"));
+			imageSwapping.imagePreviewTexture.texture = ImageTexture.create_from_image(imageSwapping.get_default_image(imageSwapping.imageNameToReplace))
 	# If the selected image is an animation, reset the frame and load the animation into currentlyLoadedAnimation
 	elif (selectedItem.type == AssetItem.AssetType.ANIMATION):
 		animationSwapping.currentAnimationIndex = 0;

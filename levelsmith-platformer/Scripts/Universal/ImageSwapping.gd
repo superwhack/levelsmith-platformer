@@ -28,12 +28,12 @@ func refresh_images() -> void:
 	# Change all tiles to their textures
 	for i in range(tileTypes.size()):
 		var tileImage : Image = assetManager.find_image_in_folder(FileSearch.find_directory_by_name(tileTypes[i]));
-		var defaultTileImage : Image = assetManager.find_image(tileTypes[i] + ".png", "res://Assets/Defaults");
+		var defaultTileImage : Image = load(assetManager.defaultsFilePath + "Tiles/" + tileTypes[i] + ".png").get_image();
 		change_tile_texture(i, tileImage if tileImage else defaultTileImage, mainTileMap);
 	# Change all props to their textures
 	for i in range(propTypes.size()):
 		var propImage : Image = assetManager.find_image_in_folder(FileSearch.find_directory_by_name(propTypes[i]));
-		var defaultPropImage : Image = assetManager.find_image(propTypes[i] + ".png", "res://Assets/Defaults");
+		var defaultPropImage : Image = load(assetManager.defaultsFilePath + "Props/" + propTypes[i] + ".png").get_image();
 		change_tile_texture(Global.EntityType.PROP1 + i, propImage if propImage else defaultPropImage, mainTileMap);
 
 ## Change the texture of an atlas tile to a new image texture
@@ -80,4 +80,14 @@ func replace_image(newImagePath: String) -> void:
 func reset_image() -> void:
 	assetManager.clear_image(imageNameToReplace);
 	refresh_images();
-	imagePreviewTexture.texture = ImageTexture.create_from_image(assetManager.find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
+	imagePreviewTexture.texture = ImageTexture.create_from_image(get_default_image(imageNameToReplace));
+
+func get_default_image(imageName : String) -> Image:
+	var defaultImage : Image = Image.new();
+	if ("Prop" in imageName):
+		defaultImage = load("res://Assets/Defaults/Assets/Sprites/Props/" + imageName + ".png").get_image();
+	elif ("Goal" in imageName):
+		defaultImage = load("res://Assets/Defaults/Assets/Sprites/Entities/" + imageName + ".png").get_image();
+	else:
+		defaultImage = load("res://Assets/Defaults/Assets/Sprites/Tiles/" + imageName + ".png").get_image();
+	return defaultImage;

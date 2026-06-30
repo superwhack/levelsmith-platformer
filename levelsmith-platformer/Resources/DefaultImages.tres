@@ -1,0 +1,8 @@
+[gd_resource type="Resource" format=3 uid="uid://bx3ijro3fd51m"]
+
+[ext_resource type="Script" uid="uid://dqvli0ht7xvvy" path="res://Scripts/DefaultImages.gd" id="1_3a1sv"]
+[ext_resource type="Texture2D" uid="uid://b5i25baa3gfkx" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="1_ysw7k"]
+
+[resource]
+script = ExtResource("1_3a1sv")
+bounce = ExtResource("1_ysw7k")

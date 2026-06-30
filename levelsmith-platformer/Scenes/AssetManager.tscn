@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_rshqi"]
 [ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
 [ext_resource type="Texture2D" uid="uid://d21j834524jcc" path="res://icon.svg" id="3_rshqi"]
+[ext_resource type="Resource" uid="uid://bx3ijro3fd51m" path="res://Resources/DefaultImages.tres" id="3_ssly3"]
 [ext_resource type="Texture2D" uid="uid://b265lhxnenhhc" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
 [ext_resource type="FontFile" uid="uid://ibgv3ey3taus" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="6_rrs8o"]
 [ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
@@ -41,6 +42,7 @@ currentAssetLabel = NodePath("ContentContainer/MainContentContainer/LeftColumnCo
 loadFileButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton")
 resetButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/ResetButton")
 resetAllButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer/ResetAllButton")
+defaults = ExtResource("3_ssly3")
 
 [node name="ContentContainer" type="VBoxContainer" parent="." unique_id=1686367830]
 layout_mode = 1

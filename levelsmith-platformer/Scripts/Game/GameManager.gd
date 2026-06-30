@@ -118,4 +118,4 @@ func _on_coin_collected() -> void:
 ## Updates the coin counter shown on screen
 func update_coin_counter() -> void:
 	coinCounterLabel.clear();
-	coinCounterLabel.append_text("[right]Coins: %d / %d[/right]" % [coinCount, totalCoins]);
+	coinCounterLabel.append_text("[right]%d / %d[/right]" % [coinCount, totalCoins]);

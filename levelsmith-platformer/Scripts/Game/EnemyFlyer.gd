@@ -19,6 +19,7 @@ const OBSTACLE_COOLDOWN_DURATION : float = 0.25;
 const SPEED_MODIFIER : float = 100.0;
 
 @export var previewLine : Line2D;
+@export var previewLineEndpoint : Sprite2D;
 
 ## Adds enemy to group and sets up initial points
 func _ready() -> void:
@@ -95,6 +96,13 @@ func update_line_preview(x : int = int((pointB.x - pointA.x) / Global.TILE_SIZE)
 	previewLine.clear_points();
 	previewLine.add_point(Vector2.ZERO);
 	previewLine.add_point(offset);
+	if previewLine.get_point_count() > 0:
+		var last_point_index: int = previewLine.get_point_count() - 1;
+		if previewLine.get_point_position(last_point_index) == previewLine.get_point_position(0):
+			previewLineEndpoint.hide();
+		else:
+			previewLineEndpoint.show();
+			previewLineEndpoint.position = previewLine.get_point_position(last_point_index);
 
 ## Assigns a resource file to the enemy.
 ## id is the unique identifier of the preset.

@@ -2,16 +2,18 @@
 
 [ext_resource type="Script" uid="uid://dvbnlxepvikk0" path="res://Scripts/Game/MovingPlatform.gd" id="1_it7tw"]
 [ext_resource type="Texture2D" uid="uid://br37mj4cad57p" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
+[ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="2_na4dm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hvxo"]
 
-[node name="MovingPlatform" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("previewLine", "previewPlatform", "onScreen") groups=["Moving"]]
+[node name="MovingPlatform" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("previewLine", "previewLineEndpoint", "previewPlatform", "onScreen") groups=["Moving"]]
 collision_layer = 3
 collision_mask = 0
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_it7tw")
 previewLine = NodePath("Line2D")
+previewLineEndpoint = NodePath("Line2D/LineEndpoint")
 previewPlatform = NodePath("PreviewPlatform")
 onScreen = NodePath("OnScreen")
 
@@ -22,6 +24,9 @@ one_way_collision = true
 
 [node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
 default_color = Color(0, 0, 0.05490196, 0.8352941)
+
+[node name="LineEndpoint" type="Sprite2D" parent="Line2D" unique_id=1023530108]
+texture = ExtResource("2_na4dm")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
 texture = ExtResource("2_it7tw")

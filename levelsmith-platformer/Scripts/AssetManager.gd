@@ -224,7 +224,7 @@ func item_selected(selectedItem: AssetItem) -> void:
 	# If the selected image is an animation, reset the frame and load the animation into currentlyLoadedAnimation
 	elif (selectedItem.type == AssetItem.AssetType.ANIMATION):
 		animationSwapping.currentAnimationIndex = 0;
-		animationSwapping.nimationFrameIndex = 0;
+		animationSwapping.animationFrameIndex = 0;
 		animationSwapping.selectedEntityType = selectedItem.assetName;
 		animationSwapping.animationPreviewNameToReplace = DirAccess.get_directories_at(
 			FileSearch.find_directory_by_name(
@@ -249,12 +249,12 @@ func create_file_tree() -> void:
 	# Create folder for goal
 	dir.make_dir_recursive(filePath + "/Images/Entities/Goal");
 	# Create all folders for animations
-	for animation: String in animationSwapping.layerAnimations:
+	for animation: String in animationSwapping.playerAnimations:
 		dir.make_dir_recursive(filePath + "/Animations/Player/" + animation);
 	# Create all folders for enemy animations
 	for animation: String in animationSwapping.stationaryEnemyAnimations:
 		dir.make_dir_recursive(filePath + "/Animations/StationaryEnemy/" + animation);
-	for animation: String in animationSwapping.atrollingEnemyAnimations:
+	for animation: String in animationSwapping.patrollingEnemyAnimations:
 		dir.make_dir_recursive(filePath + "/Animations/PatrollingEnemy/" + animation);
 	for animation: String in animationSwapping.shootingEnemyAnimations:
 		dir.make_dir_recursive(filePath + "/Animations/ShootingEnemy/" + animation);

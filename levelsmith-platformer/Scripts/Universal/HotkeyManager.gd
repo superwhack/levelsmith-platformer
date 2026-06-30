@@ -73,3 +73,5 @@ func _unhandled_key_input(event : InputEvent) -> void:
 				toolManager.update_brush_object(Global.EntityType.PROP4);
 			elif event.is_action_pressed("fifth-select"):
 				toolManager.update_brush_object(Global.EntityType.PROP5);
+			elif event.is_action_pressed("sixth-select"):
+				toolManager.update_brush_object(Global.EntityType.PROP6);

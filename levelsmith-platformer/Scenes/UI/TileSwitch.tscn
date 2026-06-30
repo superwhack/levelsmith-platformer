@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dgmuwffx12gix" path="res://Assets/Defaults/Assets/Sprites/Tiles/Sticky.png" id="7_0gefc"]
 [ext_resource type="Texture2D" uid="uid://djug6sv47earm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="8_g7c4e"]
 [ext_resource type="Texture2D" uid="uid://bfihlk8cogb0q" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="9_g7c4e"]
-[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Sprites/Tiles/slope.png" id="9_vup42"]
+[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Sprites/Tiles/Slope.png" id="9_vup42"]
 [ext_resource type="PackedScene" uid="uid://dqlxqwdmgred1" path="res://Scenes/UI/TilebarButton.tscn" id="10_goodf"]
 [ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Defaults/Assets/Sprites/Entities/Goal.png" id="11_goodf"]
 [ext_resource type="Texture2D" uid="uid://da0gjbpe87rk5" path="res://Assets/Sprites/Entities/Coin.png" id="12_0gefc"]
@@ -22,8 +22,9 @@
 [ext_resource type="Texture2D" uid="uid://bq4ixludyuv4l" path="res://Assets/Defaults/Assets/Sprites/Props/Prop3.png" id="16_h6q5o"]
 [ext_resource type="Texture2D" uid="uid://biqnms6vul5oa" path="res://Assets/Defaults/Assets/Sprites/Props/Prop4.png" id="17_0gefc"]
 [ext_resource type="Texture2D" uid="uid://dm3c7xg21m00w" path="res://Assets/Defaults/Assets/Sprites/Props/Prop5.png" id="18_g7c4e"]
+[ext_resource type="Texture2D" uid="uid://dbeduke42ht32" path="res://Assets/Defaults/Assets/Sprites/Props/Prop6.png" id="23_vup42"]
 
-[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "solidTileButton", "oneWayTileButton", "hazardTileButton", "iceTileButton", "stickyTileButton", "bounceTileButton", "slopeTileButton", "deathTileButton", "goalEntityButton", "coinEntityButton", "playerEntityButton", "patrollingEntityButton", "shootingEntityButton", "flyingEntityButton", "propOneButton", "propTwoButton", "propThreeButton", "propFourButton", "propFiveButton", "entityPropDropdown")]
+[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "entityPropDropdown")]
 offset_right = 669.0
 offset_bottom = 100.0
 theme_override_constants/separation = 4
@@ -32,25 +33,6 @@ tiles = NodePath("TilePickerUI")
 entities = NodePath("EntityPickerUI")
 entityTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities")
 propTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Props")
-solidTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SolidButton")
-oneWayTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/OneWayButton")
-hazardTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/HazardButton")
-iceTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/IceButton")
-stickyTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/StickyButton")
-bounceTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/BounceButton")
-slopeTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SlopeButton")
-deathTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/DeathButton")
-goalEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/GoalEntityButton")
-coinEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/CoinEntityButton")
-playerEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/PlayerEntityButton")
-patrollingEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingEntityButton")
-shootingEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/ShootingEntityButton")
-flyingEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/FlyingEntityButton")
-propOneButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropOneButton")
-propTwoButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropTwoButton")
-propThreeButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropThreeButton")
-propFourButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFourButton")
-propFiveButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFiveButton")
 entityPropDropdown = NodePath("EntityPickerUI/MarginContainer/Tabs/EntityPropDropdown")
 
 [node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
@@ -74,48 +56,56 @@ alignment = 1
 [node name="SolidButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1067245290 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tilebar = NodePath("../../../..")
+isTextureUpdating = true
 
 [node name="OneWayButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=45805104 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("4_goodf")
 thisItemID = 2
 tilebar = NodePath("../../../..")
+isTextureUpdating = true
 
 [node name="HazardButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=810406606 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("5_0gefc")
 thisItemID = 1
 tilebar = NodePath("../../../..")
+isTextureUpdating = true
 
 [node name="IceButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1696596209 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("6_h6q5o")
 thisItemID = 3
 tilebar = NodePath("../../../..")
+isTextureUpdating = true
 
 [node name="StickyButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1990788713 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("7_0gefc")
 thisItemID = 4
 tilebar = NodePath("../../../..")
+isTextureUpdating = true
 
 [node name="BounceButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=850045818 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("8_g7c4e")
 thisItemID = 5
 tilebar = NodePath("../../../..")
+isTextureUpdating = true
 
 [node name="DeathButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1220324445 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("9_g7c4e")
 thisItemID = 6
 tilebar = NodePath("../../../..")
+isTextureUpdating = true
 
 [node name="SlopeButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=456412869 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("9_vup42")
 thisItemID = 7
 tilebar = NodePath("../../../..")
+isTextureUpdating = true
 
 [node name="EntityPickerUI" type="PanelContainer" parent="." unique_id=324821247]
 visible = false
@@ -154,41 +144,41 @@ size_flags_horizontal = 3
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="GoalEntityButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1294945927]
+[node name="GoalEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1329828214 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
 icon = ExtResource("11_goodf")
+thisItemID = 500
+tilebar = NodePath("../../../../..")
 
-[node name="PlayerEntityButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1020316722]
+[node name="PlayerEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=568547811 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
 icon = ExtResource("12_goodf")
+thisItemID = 501
+tilebar = NodePath("../../../../..")
 
-[node name="CoinEntityButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1676394384]
+[node name="CoinEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1741178858 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
 icon = ExtResource("12_0gefc")
+thisItemID = 512
+tilebar = NodePath("../../../../..")
 
-[node name="PatrollingEntityButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=547161943]
+[node name="PatrollingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1549482696 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
 icon = ExtResource("13_segfj")
+thisItemID = 502
+tilebar = NodePath("../../../../..")
 
-[node name="ShootingEntityButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1196881829]
+[node name="ShootingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=97347578 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
 icon = ExtResource("14_pggt4")
+thisItemID = 503
+tilebar = NodePath("../../../../..")
 
-[node name="FlyingEntityButton" type="Button" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=709802387]
+[node name="FlyingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1159687364 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-theme = ExtResource("3_pggt4")
-theme_type_variation = &"TileButton"
 icon = ExtResource("15_h6q5o")
+thisItemID = 504
+tilebar = NodePath("../../../../..")
 
 [node name="Props" type="HBoxContainer" parent="EntityPickerUI/MarginContainer/Tabs" unique_id=1986159458]
 visible = false
@@ -200,27 +190,39 @@ layout_mode = 2
 icon = ExtResource("14_goodf")
 thisItemID = 506
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
 
 [node name="PropTwoButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=425089871 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("15_pggt4")
 thisItemID = 507
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
 
 [node name="PropThreeButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=766602216 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("16_h6q5o")
 thisItemID = 508
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
 
 [node name="PropFourButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=448831461 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("17_0gefc")
 thisItemID = 509
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
 
 [node name="PropFiveButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1555120042 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 icon = ExtResource("18_g7c4e")
 thisItemID = 510
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+
+[node name="PropSixButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=923450028 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
+layout_mode = 2
+icon = ExtResource("23_vup42")
+thisItemID = 511
+tilebar = NodePath("../../../../..")
+isTextureUpdating = true

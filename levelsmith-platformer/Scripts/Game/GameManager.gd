@@ -4,6 +4,7 @@ extends Node2D
 @export var pauseScreen : PanelContainer;
 @export var bottomScreenGroup : Control;
 @export var coinCounterLabel : RichTextLabel;
+@export var timerLabel : RichTextLabel;
 
 # Button references for signals
 @export var resetButton : Button;
@@ -16,6 +17,10 @@ enum PlayState {
 	PLAY
 }
 var playState : PlayState = PlayState.PLAY; 
+
+# Time tracker
+var testingTime : float = 0.0;
+var timerRunning : bool = false;
 
 # Has the goal been reached
 var goalReached : bool = false;
@@ -85,11 +90,14 @@ func start() -> void:
 				(node as Enemy).active = false;
 				break;
 
-
 	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
-	
+
+	# Start level timer
+	testingTime = 0.0;
+	timerRunning = true;
+	update_timer();
 
 ## Record a change in health for the player
 ## newHealth: The new health of the player
@@ -99,10 +107,16 @@ func change_health(newHealth : int):
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:
 	Global.death.connect(reset);
+	Global.complete.connect(print_level_completion_time);
 	Global.onCoinCollected.connect(_on_coin_collected);
 	resetButton.pressed.connect(reset);
 	pauseButton.pressed.connect(pause);
 	resumeButton.pressed.connect(pause);
+
+func _process(delta: float) -> void:
+	if timerRunning:
+		testingTime += delta;
+		update_timer();
 
 ## Increase coin count and update its UI on coin collection
 func _on_coin_collected() -> void:
@@ -114,3 +128,15 @@ func _on_coin_collected() -> void:
 func update_coin_counter() -> void:
 	coinCounterLabel.clear();
 	coinCounterLabel.append_text("[right]Coins: %d / %d[/right]" % [coinCount, totalCoins]);
+
+func print_level_completion_time() -> void:
+	timerRunning = false;
+	var minutes := int(testingTime) / 60;
+	var seconds := int(testingTime) % 60;
+	print("Completion Time: %02d:%02d" % [minutes, seconds]);
+
+func update_timer() -> void:
+	var minutes := int(testingTime) / 60;
+	var seconds := int(testingTime) % 60;
+	timerLabel.clear();
+	timerLabel.append_text("[left]Time: %02d:%02d[/left]" % [minutes, seconds]);

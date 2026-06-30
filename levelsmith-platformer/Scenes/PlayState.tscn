@@ -11,11 +11,12 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
 
-[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "bottomScreenGroup", "coinCounterLabel", "resetButton", "pauseButton", "resumeButton")]
+[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "bottomScreenGroup", "coinCounterLabel", "timerLabel", "resetButton", "pauseButton", "resumeButton")]
 script = ExtResource("1_habuo")
 pauseScreen = NodePath("CanvasLayer/PausedScreenContainer")
 bottomScreenGroup = NodePath("CanvasLayer/BottomScreenGroup")
 coinCounterLabel = NodePath("CanvasLayer/CoinCounter")
+timerLabel = NodePath("CanvasLayer/Timer")
 resetButton = NodePath("CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ResetButton")
 pauseButton = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/PauseButton")
 resumeButton = NodePath("CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer/ResumeButton")
@@ -150,4 +151,18 @@ offset_bottom = 112.0
 grow_horizontal = 0
 offset_transform_enabled = true
 theme_override_colors/default_color = Color(1, 0.85882354, 0, 1)
+theme_override_font_sizes/normal_font_size = 45
+
+[node name="Timer" type="RichTextLabel" parent="CanvasLayer" unique_id=1225691579]
+custom_minimum_size = Vector2(250, 0)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -290.0
+offset_top = 115.0
+offset_right = -40.0
+offset_bottom = 187.00009
+grow_horizontal = 0
+offset_transform_enabled = true
+theme_override_colors/default_color = Color(0.7057152, 1, 0.6794825, 1)
 theme_override_font_sizes/normal_font_size = 45

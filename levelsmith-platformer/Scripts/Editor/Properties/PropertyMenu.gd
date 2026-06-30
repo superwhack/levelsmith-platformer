@@ -10,6 +10,7 @@ var selectedEntity : Node2D;
 @export var flyingMenu : VBoxContainer;
 @export var patrollingMenu : MarginContainer;
 @export var shootingMenu : MarginContainer;
+@export var stationaryMenu : VBoxContainer;
 
 # Player values
 var playerHealth: int;
@@ -46,13 +47,17 @@ var previewLine: Line2D;
 @export var shootingProjectileBounce : VBoxContainer;
 @export var shootingGravity : VBoxContainer;
 
+#Stationary Inputs
+@export var directionFacing: VBoxContainer;
+@export var gravityEnabled: VBoxContainer;
+
 # Preset Options
 @export var presetOptions : OptionButton;
 var selectedPreset : Resource;
 
 var selectedPlayerPreset : Resource;
 
-# Direction arrow for shooting and patrolling enemies
+# Direction arrow for shooting, patrolling, and stationary enemies
 var shootingDirectionArrow : Sprite2D;
 
 @export var closeButton : Button;
@@ -82,6 +87,9 @@ func _ready() -> void:
 	flyingSpeedSlider.drag_ended.connect(_on_drag_ended);
 	flyingOffsetXSlider.drag_ended.connect(_on_drag_ended);
 	flyingOffsetYSlider.drag_ended.connect(_on_drag_ended);
+	
+	#directionFacing.dropdown_changed.connect(update_values);
+	gravityEnabled.check_changed.connect(update_values);
 	
 	closeButton.pressed.connect(close);
 
@@ -190,6 +198,11 @@ func update_sliders() -> void:
 		shootingFireRateSlider.update_slider();
 		shootingProjectileBounce.update_checkbox();
 		shootingGravity.update_checkbox();
+	#elif selectedEntity is EnemyStationary:
+		#directionFacing.value = selectedPreset.directionFacing;
+		#directionFacing.update_dropdown();
+		#gravityEnabled.value = selectedPreset.gravityEnabled;
+		#gravityEnabled.update_checkbox();
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:
@@ -253,5 +266,8 @@ func show_menu(resource: Resource = null) -> void:
 			shootingDirectionArrow = selectedEntity.directionArrow;
 			shootingDirectionArrow.scale = Vector2(2,2);
 			shootingMenu.show();
+		elif selectedEntity is EnemyStationary:
+			shootingDirectionArrow = selectedEntity.directionArrow;
+			stationaryMenu.show();
 	else:
 		playerMenu.show();

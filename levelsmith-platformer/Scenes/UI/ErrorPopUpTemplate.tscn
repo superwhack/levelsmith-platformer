@@ -11,9 +11,9 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 corner_detail = 10
 
-[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "closeButton")]
+[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "closeButton", "rightPin")]
 process_mode = 3
-modulate = Color(0.4, 0.4, 0.4, 0.5882353)
+self_modulate = Color(0.3764706, 0.3764706, 0.3764706, 0.4862745)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -21,51 +21,70 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_idm4w")
 script = ExtResource("1_i0gwu")
-title = NodePath("PanelContainer/MarginContainer/VBoxContainer/Title")
-bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/Body")
-closeButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/CloseButton")
+title = NodePath("HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Title")
+bodyText = NodePath("HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Body")
+closeButton = NodePath("HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/CloseButton")
+rightPin = NodePath("HBoxContainer/RightPin")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
-top_level = true
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1808818748]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -98.5
-offset_right = 150.0
-offset_bottom = -16.5
+offset_left = -152.0
+offset_top = -137.5
+offset_right = 339.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=240708855]
+custom_minimum_size = Vector2(300, 176)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_idm4w")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=266539190]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer" unique_id=266539190]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1465809994]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/MarginContainer" unique_id=1465809994]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1675355400]
+[node name="Title" type="Label" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1675355400]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Error"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=983078058]
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=983078058]
 layout_mode = 2
 
-[node name="Body" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=908015837]
+[node name="Body" type="RichTextLabel" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=908015837]
 layout_mode = 2
-text = "An error has occurred"
+text = "An error has occurred."
 fit_content = true
 
-[node name="CloseButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1027214704]
+[node name="CloseButton" type="Button" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1027214704]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Close"
+
+[node name="RightPin" type="Control" parent="HBoxContainer" unique_id=1562774785]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Polygon2D" type="Polygon2D" parent="HBoxContainer/RightPin" unique_id=615061354]
+position = Vector2(205.00006, -2.5000076)
+scale = Vector2(2.9999993, 2.5625002)
+color = Color(0.95686275, 0.79607844, 0.43529412, 1)
+polygon = PackedVector2Array(-104, -31.999996, -104, 0, -71.99999, -16)
+uv = PackedVector2Array(-91.33304, -26, -83.999695, 15.333336, -68.66638, -29.333328)

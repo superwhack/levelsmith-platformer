@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://c8xxq1ii6wmcc"]
+
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_eaumf"]
+[ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/Editor/PopUp/ErrorPopUp.gd" id="2_yapt7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idm4w"]
+bg_color = Color(0.95686275, 0.79607844, 0.43529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+
+[node name="HoverPopUpContainer" type="HBoxContainer" unique_id=1808818748 node_paths=PackedStringArray("title", "bodyText", "closeButton", "rightPin")]
+anchors_preset = -1
+offset_right = 491.0
+offset_bottom = 176.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme = ExtResource("1_eaumf")
+script = ExtResource("2_yapt7")
+title = NodePath("PanelContainer/MarginContainer/VBoxContainer/Title")
+bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/Body")
+closeButton = NodePath("")
+rightPin = NodePath("RightPin")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
+custom_minimum_size = Vector2(300, 176)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_idm4w")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=266539190]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1465809994]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1675355400]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Error"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=983078058]
+layout_mode = 2
+
+[node name="Body" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=908015837]
+layout_mode = 2
+text = "An error has occurred."
+fit_content = true
+
+[node name="RightPin" type="Control" parent="." unique_id=1562774785]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+offset_transform_enabled = true
+offset_transform_position = Vector2(85, 89)
+
+[node name="Polygon2D" type="Polygon2D" parent="RightPin" unique_id=615061354]
+position = Vector2(205, -2.5)
+scale = Vector2(2.9999993, 2.5625002)
+color = Color(0.95686275, 0.79607844, 0.43529412, 1)
+polygon = PackedVector2Array(-104, -31.999996, -104, 0, -71.99999, -16)
+uv = PackedVector2Array(-91.33304, -26, -83.999695, 15.333336, -68.66638, -29.333328)

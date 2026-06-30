@@ -23,6 +23,7 @@
 [ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="15_ditat"]
 [ext_resource type="Texture2D" uid="uid://dmqrt6ulj2tqw" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
+[ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -249,13 +250,13 @@ theme_override_font_sizes/font_size = 25
 text = "Zoom In/Out [+ - / Scroll]"
 
 [node name="BottomRightAnchor" type="MarginContainer" parent="ScreenUI" unique_id=873233202]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+anchors_preset = -1
+anchor_left = 0.6527709
+anchor_top = 0.81900007
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -40.0
+offset_left = 0.6799927
+offset_top = -0.52008057
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_right = 20
@@ -265,12 +266,22 @@ metadata/_edit_use_anchors_ = true
 [node name="PlayButton" type="Button" parent="ScreenUI/BottomRightAnchor" unique_id=1821933362]
 custom_minimum_size = Vector2(265, 0)
 layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
 tooltip_text = "Play Mode"
 focus_behavior_recursive = 1
 theme = ExtResource("7_ditat")
 action_mode = 0
 icon = ExtResource("15_k6ut3")
 icon_alignment = 1
+
+[node name="HoverPopUpContainer" parent="ScreenUI" unique_id=1808818748 instance=ExtResource("16_rdu5w")]
+visible = false
+offset_left = 1254.0
+offset_top = 884.0
+offset_right = 1558.0
+offset_bottom = 1060.0
+size_flags_horizontal = 0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 

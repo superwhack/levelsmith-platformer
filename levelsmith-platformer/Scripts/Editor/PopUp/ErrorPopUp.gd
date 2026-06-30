@@ -1,13 +1,17 @@
-extends Panel
+extends Control
 
 @export var title : Label;
 @export var bodyText : RichTextLabel;
 
 @export var closeButton: Button;
 
+# A reference to the control holding the right pin for custom hovers.
+@export var rightPin : Control;
+
 ## Runs when the node is first created
 func _ready() -> void:
-	closeButton.pressed.connect(close_popup);
+	if (closeButton):
+		closeButton.pressed.connect(close_popup);
 
 ## Replaces the title of the popup
 ## text: The replacement text

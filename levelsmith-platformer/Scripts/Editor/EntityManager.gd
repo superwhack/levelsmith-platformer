@@ -183,7 +183,7 @@ func drop_entity() -> void:
 		toolManager.currentObjectRotation = toolManager.prevRotation;
 		
 	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);
-	if droppedEntity is not Enemy || !movingResource: return;
+	if !(droppedEntity is Enemy || droppedEntity is MovingPlatform) || !movingResource: return;
 	
 	movingResource.position = dropPosition;
 	droppedEntity.apply_script(movingResource);

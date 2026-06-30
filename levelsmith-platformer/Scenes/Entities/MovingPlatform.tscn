@@ -6,16 +6,16 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hvxo"]
 
-[node name="MovingPlatform" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("previewLine", "previewLineEndpoint", "previewPlatform", "onScreen") groups=["Moving"]]
+[node name="MovingPlatform" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("onScreen", "previewLine", "previewLineEndpoint", "previewPlatform") groups=["Moving"]]
 collision_layer = 3
 collision_mask = 0
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_it7tw")
+onScreen = NodePath("OnScreen")
 previewLine = NodePath("Line2D")
 previewLineEndpoint = NodePath("Line2D/LineEndpoint")
 previewPlatform = NodePath("PreviewPlatform")
-onScreen = NodePath("OnScreen")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
 scale = Vector2(6.3, 6.3)

@@ -103,15 +103,20 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 	var imagePath : String = FileSearch.find_file_by_name(imageName, currentDirectory);
 	# If the path exists
 	if (imagePath):
-		# Create and load an image from the path
 		var image : Image = Image.new();
-		image.load(imagePath);
-		if (imagePath.get_extension().to_lower() == "png"):
-			if (validate_image(image)):
-				# Return the loaded image
-				return image;
-		PopUpManager.create_error_popup("Cannot Load Asset","Image not valid. '.png' file required.");
-		return null;
+		if (imagePath.begins_with("res://")):
+			var texture : Texture2D = load(imagePath);
+			image = texture.get_image();
+			return image;
+		else:
+			# Create and load an image from the path
+			image.load(imagePath);
+			if (imagePath.get_extension().to_lower() == "png"):
+				if (validate_image(image)):
+					# Return the loaded image
+					return image;
+			PopUpManager.create_error_popup("Cannot Load Asset","Image not valid. '.png' file required.");
+			return null;
 		
 	# If the path does not exist, print error
 	else:

@@ -21,18 +21,21 @@ const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn"
 var timeLeft : float = 1;
 
 func _physics_process(delta: float) -> void:
-	if !onScreen.is_on_screen():
-		return;
+	if !active:
+		if !onScreen.is_on_screen():
+			return;
+		active = true;
 	velocity.x = 0;
 	if gravityOn:
 		super._physics_process(delta);
 	directionArrow.hide();
-	# Decrease time left
-	timeLeft -= delta;
-	# If cooldown is finished, shoot
-	if (timeLeft <= 0.0):
-		shooting_behavior();
-		timeLeft = 1 / fireRate;
+	if onScreen:
+		# Decrease time left
+		timeLeft -= delta;
+		# If cooldown is finished, shoot
+		if (timeLeft <= 0.0):
+			shooting_behavior();
+			timeLeft = 1 / fireRate;
 	super.detect_tiles(false);
 	move_and_slide();
 

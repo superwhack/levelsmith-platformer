@@ -60,6 +60,7 @@ func reset() -> void:
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
+	goalReached = false;
 	# Reset coin values for the new level
 	coinCount = 0;
 	totalCoins = 0;
@@ -130,6 +131,7 @@ func update_coin_counter() -> void:
 	coinCounterLabel.append_text("[right]Coins: %d / %d[/right]" % [coinCount, totalCoins]);
 
 func print_level_completion_time() -> void:
+	goalReached = true;
 	timerRunning = false;
 	var minutes := int(testingTime) / 60;
 	var seconds := int(testingTime) % 60;

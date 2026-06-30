@@ -3,6 +3,7 @@ extends Enemy
 
 # Direction of fire, stored as float
 var fireDirection : float;
+var randomDirection : bool;
 
 # Firing properties
 var shotSpeed : float;
@@ -50,7 +51,10 @@ func shooting_behavior() -> void:
 	var projectileFired = PROJECTILE.instantiate();
 	projectileFired.speed = shotSpeed;
 	projectileFired.global_position = position;
-	projectileFired.global_rotation_degrees = fireDirection;
+	if randomDirection:
+		projectileFired.global_rotation_degrees = randi() % 360;
+	else:
+		projectileFired.global_rotation_degrees = fireDirection;
 	projectileFired.bounceable = projBounce;
 	add_sibling(projectileFired);
 
@@ -59,6 +63,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	name = "Shooting" + id;
 	propertyFile.position = assignPosition;
 	fireDirection = propertyFile.direction; 
+	randomDirection = propertyFile.randomDirection;
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;
@@ -69,6 +74,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 func apply_script(file: Resource) -> void:
 	propertyFile = file;
 	fireDirection = propertyFile.direction; 
+	randomDirection = propertyFile.randomDirection;
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;

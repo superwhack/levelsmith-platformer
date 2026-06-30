@@ -26,6 +26,10 @@ extends Control
 @export var buttonImportLevelBrowse : TextureButton;
 @export var fieldImportLevelPath : LineEdit;
 
+#Error Banners
+@export var nameErrorBanner : PanelContainer;
+@export var importPathErrorBanner : PanelContainer;
+
 @export var fileExplorer : FileDialog;
 var importedLevelPath : String;
 
@@ -34,6 +38,8 @@ func _ready() -> void:
 	# Hides other screens
 	overlayImportLevel.hide();
 	overlayNewLevel.hide();
+	if (nameErrorBanner != null): nameErrorBanner.hide();
+	if (importPathErrorBanner != null): importPathErrorBanner.hide();
 	
 	# Connect signals
 	buttonNewLevel.pressed.connect(overlayNewLevel.show);
@@ -44,6 +50,8 @@ func _ready() -> void:
 	buttonImportLevelOpen.pressed.connect(import_level);
 	buttonImportLevelCancel.pressed.connect(import_cancel);
 	buttonImportLevelBrowse.pressed.connect(fileExplorer.popup_file_dialog);
+	fieldNewLevelName.text_changed.connect(on_new_level_name_text_changed);
+	fieldImportLevelPath.text_changed.connect(on_import_level_path_text_changed);
 	
 	buttonQuit.pressed.connect(exit_program);
 	
@@ -55,7 +63,13 @@ func _ready() -> void:
 	
 ## Called when import level button is pressed
 func import_level() -> void:
-	if (!ImportExportManager.validate_import(importedLevelPath)): return;
+	#if (!ImportExportManager.validate_import(importedLevelPath)): return;
+	importedLevelPath = fieldImportLevelPath.text.strip_edges();
+	var errors : Array[String] = ImportExportManager.get_import_errors(importedLevelPath);
+	if (errors.size() > 0):
+		if (importPathErrorBanner != null): importPathErrorBanner.show();
+		return;
+	if (importPathErrorBanner != null): importPathErrorBanner.hide();
 	
 	# Extract the name of the folder from the file path
 	var importedLevelArray : Array = importedLevelPath.split("/");
@@ -75,12 +89,15 @@ func import_level() -> void:
 ## Called when import level is closed
 func import_cancel() -> void:
 	overlayImportLevel.hide();
+	if (importPathErrorBanner != null): importPathErrorBanner.hide();
 
 ## Opens the menu for setting a name and size for the level
 func create_new_level() -> void:
 	if ( fieldNewLevelName.text.strip_edges().is_empty() ):
-		PopUpManager.create_error_popup("Creation Failed!", "Level has no name!");
+		#PopUpManager.create_error_popup("Creation Failed!", "Level has no name!");
+		if (nameErrorBanner != null): nameErrorBanner.show();
 		return;
+	if (nameErrorBanner != null): nameErrorBanner.hide();
 	overlayNewLevel.hide();
 	masterManager.level_setup( 
 		fieldNewLevelName.text, 
@@ -89,6 +106,19 @@ func create_new_level() -> void:
 			int(spinBoxNewLevelY.value) 
 			) 
 		);
+
+func on_new_level_name_text_changed(newText: String) -> void:
+	if (nameErrorBanner == null): return;
+	if (!newText.strip_edges().is_empty()):
+		nameErrorBanner.hide();
+
+func on_import_level_path_text_changed(newText: String) -> void:
+	if (importPathErrorBanner == null): return;
+	var path : String = newText.strip_edges();
+	if (path.is_empty()): return;
+	var errors : Array[String] = ImportExportManager.get_import_errors(path);
+	if (errors.size() == 0):
+		importPathErrorBanner.hide();
 
 ## Exits the program
 func exit_program() -> void:

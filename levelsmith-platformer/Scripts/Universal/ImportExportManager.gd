@@ -143,25 +143,49 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 ## sourceName: Source level name
 ## returns: false if it fails, true otherwise
 func validate_import(sourceName: String) -> bool:
-	levelPath = sourceName + "/";
+	var errors : Array[String] = get_import_errors(sourceName);
+	return errors.size() == 0;
+	#levelPath = sourceName + "/";
+	#levelAssetPath = levelPath + "Assets/"
+	#var errors : Array[String];
+	#
+	#if (!DirAccess.dir_exists_absolute(levelPath)):
+		#errors.append("Directory " + levelPath + " does not exist!");
+		#
+	#if (!FileAccess.file_exists(levelPath + "Settings.JSON")):
+		#errors.append(levelPath + "Settings.JSON does not exist!");
+		#
+	#if (!FileAccess.file_exists(levelPath + "Tiles.CSV")):
+		#errors.append(levelPath + "Tiles.CSV does not exist!");
+		#
+	#if (errors.size() == 0):
+		#return true;
+		#
+	## If import fails, send a pop-up to the user.
+	#PopUpManager.create_multi_error_popup("Level Import Failed from directory " + levelPath + "!", errors);
+	#return false;
+
+func get_import_errors(sourceName: String) -> Array[String]:
+	levelPath = sourceName.strip_edges();
+	if (!levelPath.ends_with("/")):
+		levelPath += "/";
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
-	
+
+	if (levelPath.strip_edges() == "/"):
+		errors.append("Directory path is empty!");
+		return errors;
+
 	if (!DirAccess.dir_exists_absolute(levelPath)):
 		errors.append("Directory " + levelPath + " does not exist!");
-		
+
 	if (!FileAccess.file_exists(levelPath + "Settings.JSON")):
 		errors.append(levelPath + "Settings.JSON does not exist!");
-		
+	
 	if (!FileAccess.file_exists(levelPath + "Tiles.CSV")):
 		errors.append(levelPath + "Tiles.CSV does not exist!");
-		
-	if (errors.size() == 0):
-		return true;
-		
-	# If import fails, send a pop-up to the user.
-	PopUpManager.create_multi_error_popup("Level Import Failed from directory " + levelPath + "!", errors);
-	return false;
+	
+	return errors;
 
 ## Imports a level at the specified directory.
 ## tileMap: The Tile map layer to map the level terrain to

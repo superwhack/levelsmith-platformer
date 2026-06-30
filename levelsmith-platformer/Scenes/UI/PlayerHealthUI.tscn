@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://b0w7aup5kbtj6"]
+
+[ext_resource type="Script" path="res://Scripts/Game/PlayerHealthUI.gd" id="1_qhy4u"]
+[ext_resource type="PackedScene" uid="uid://dqvel2ybh6jxu" path="res://Scenes/UI/Heart.tscn" id="2_qhy4u"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/PlayStateUIPanel.tres" id="3_qhy4u"]
+
+[node name="PlayerHealthUi" type="HBoxContainer" unique_id=621394887]
+script = ExtResource("1_qhy4u")
+heart_scene = ExtResource("2_qhy4u")
+empty_heart_modulate = Color(0.24840015, 0.24840018, 0.24840015, 1)
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=70166934]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_qhy4u")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1932336826]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HealthContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1536890305]
+propagate_maximum_size = false
+layout_mode = 2
+size_flags_horizontal = 4

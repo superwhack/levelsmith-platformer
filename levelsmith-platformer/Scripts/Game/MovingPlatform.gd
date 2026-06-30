@@ -18,18 +18,14 @@ var velocity : Vector2;
 # Current destination point.
 var targetPoint : Vector2;
 
-# Time remaining before another collision reversal is allowed.
-var obstacleCooldown : float = 0.0;
-
-# Delay between obstacle-triggered reversals.
-const OBSTACLE_COOLDOWN_DURATION : float = 0.25;
 const SPEED_MODIFIER : float = 100.0;
 
 @export var previewLine : Line2D;
 @export var previewLineEndpoint : Sprite2D;
 @export var previewPlatform : Sprite2D;
 
-## Adds enemy to group and sets up initial points
+var temporaryFixTimer = 3;
+## Sets up initial points
 func _ready() -> void:
 	# Set all points to its current position
 	pointA = global_position;
@@ -43,18 +39,17 @@ func _physics_process(delta: float) -> void:
 		if !onScreen.is_on_screen():
 			return;
 		active = true;
-	if (obstacleCooldown > 0.0):
-		obstacleCooldown -= delta;
-
-	move_behavior();
-	position += velocity * delta;
-
-
-## Moves the enemy toward current destination.
-func move_behavior() -> void:
+	if temporaryFixTimer > 0:
+		temporaryFixTimer -= 1;
+		apply_progress();
+	else:
+		move_behavior(delta);
+	
+## Moves the platform toward current destination.
+func move_behavior(delta: float) -> void:
 	# Get the direction and distance of movement
 	var directionVector : Vector2 = targetPoint - global_position;
-	var move_distance : float = speed * SPEED_MODIFIER * get_physics_process_delta_time();
+	var move_distance : float = speed * SPEED_MODIFIER * delta;
 
 	# If the enemy is close enough to the point, change direction
 	if (directionVector.length() <= move_distance):
@@ -64,6 +59,7 @@ func move_behavior() -> void:
 		return;
 
 	velocity = directionVector.normalized() * speed * SPEED_MODIFIER;
+	position += velocity * delta;
 
 
 ## Switches the active destination.
@@ -120,7 +116,7 @@ func update_line_preview(x : int = int((pointB.x - pointA.x) / Global.TILE_SIZE)
 ## Apply the progress variable into starting global position
 func apply_progress() -> void:
 	previewPlatform.hide();
-	global_position = lerp(pointA, pointB, float(progress) / 100.0);
+	position = lerp(pointA, pointB, float(progress) / 100.0);
 	
 
 ## Applies the values stored in a FlyingPreset.

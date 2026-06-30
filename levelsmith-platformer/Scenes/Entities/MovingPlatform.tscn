@@ -20,15 +20,15 @@ scale = Vector2(6.3, 6.3)
 shape = SubResource("RectangleShape2D_5hvxo")
 one_way_collision = true
 
+[node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
+default_color = Color(0, 0, 0.05490196, 0.8352941)
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
 texture = ExtResource("2_it7tw")
 
 [node name="PreviewPlatform" type="Sprite2D" parent="." unique_id=535577122]
 modulate = Color(1, 1, 1, 0.5019608)
 texture = ExtResource("2_it7tw")
-
-[node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
-default_color = Color(0, 0, 0.05490196, 0.8352941)
 
 [node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1562874782]
 rect = Rect2(-63, -63, 126, 126)

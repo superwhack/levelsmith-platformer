@@ -18,10 +18,10 @@ onScreen = NodePath("OnScreen")
 scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
-texture = ExtResource("2_e2l54")
-
 [node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
 default_color = Color(0.78039217, 0, 0.05490196, 0.8352941)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
+texture = ExtResource("2_e2l54")
 
 [node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1562874782]

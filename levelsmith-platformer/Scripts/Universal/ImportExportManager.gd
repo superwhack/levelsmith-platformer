@@ -124,9 +124,11 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	var json : Variant = JSON.parse_string(dataToSend)
 	var jsonString : String = JSON.stringify(json);
 	
-	var tmpFile : FileAccess = FileAccess.open(levelPath + "Temp.txt", FileAccess.WRITE);
-	tmpFile.store_string(dataToSend);
-	tmpFile.close();
+	## NOTE: THIS IS TEMPORARY CODE TO TURN ON WHEN JSON FILE NEEDS TO BE VALIDATED
+	#var tmpFile : FileAccess = FileAccess.open(levelPath + "Temp.txt", FileAccess.WRITE);
+	#tmpFile.store_string(dataToSend);
+	#tmpFile.close();
+	
 	# Write JSON to file and close it
 	var JSONFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE);
 	JSONFile.store_string(jsonString);

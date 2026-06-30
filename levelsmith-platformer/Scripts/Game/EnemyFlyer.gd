@@ -48,17 +48,17 @@ func _physics_process(delta: float) -> void:
 ## Moves the enemy toward current destination.
 func fly_behavior() -> void:
 	# Get the direction and distance of movement
-	var direction : Vector2 = targetPoint - global_position;
+	var flyDirection : Vector2 = targetPoint - global_position;
 	var move_distance : float = speed * SPEED_MODIFIER * get_physics_process_delta_time();
 
 	# If the enemy is close enough to the point, change direction
-	if (direction.length() <= move_distance):
+	if (flyDirection.length() <= move_distance):
 		global_position = targetPoint;
 		velocity = Vector2.ZERO;
 		switch_target();
 		return;
 
-	velocity = direction.normalized() * speed * SPEED_MODIFIER;
+	velocity = flyDirection.normalized() * speed * SPEED_MODIFIER;
 
 
 ## Switches the active destination.
@@ -88,7 +88,7 @@ func handle_obstacles() -> void:
 ## Update the preview for the flying enemy
 ## x: The x to update with
 ## y: The y to update with
-func update_line_preview(x : int = (pointB.x - pointA.x) / Global.TILE_SIZE , y : int = (pointB.y - pointA.y) / Global.TILE_SIZE) -> void:
+func update_line_preview(x : int = int((pointB.x - pointA.x) / Global.TILE_SIZE) , y : int = int((pointB.y - pointA.y) / Global.TILE_SIZE)) -> void:
 	var offset : Vector2 = Vector2(x * Global.TILE_SIZE, y * Global.TILE_SIZE);
 	previewLine.modulate = Color(1, 1, 1, 0.5);
 	previewLine.global_position = global_position;

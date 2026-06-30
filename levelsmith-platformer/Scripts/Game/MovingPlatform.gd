@@ -106,17 +106,15 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 
 	apply_script(propertyFile);
 
+## Adjust the current state of the preview platform
 func adjust_preview(pointTo : Vector2 = pointB, selectedProgress : float = progress) -> void:
-	#if selectedProgress == 0:
-	#	previewPlatform.hide();
-	#else:
 	previewPlatform.show();
 	previewPlatform.global_position = lerp(global_position, global_position + pointTo, float(selectedProgress) / 100);
 
 ## Update the preview for the moving platform
 ## x: The x to update with
 ## y: The y to update with
-func update_line_preview(x : int = (pointB.x - pointA.x) / Global.TILE_SIZE , y : int = (pointB.y - pointA.y) / Global.TILE_SIZE) -> void:
+func update_line_preview(x : int = int((pointB.x - pointA.x) / Global.TILE_SIZE) , y : int = int((pointB.y - pointA.y) / Global.TILE_SIZE)) -> void:
 	var offset : Vector2 = Vector2(x * Global.TILE_SIZE, y * Global.TILE_SIZE);
 	previewLine.modulate = Color(1, 1, 1, 0.5);
 	previewLine.global_position = global_position;

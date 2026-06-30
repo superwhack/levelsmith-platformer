@@ -116,7 +116,7 @@ func adjust_preview(pointTo : Vector2 = pointB, selectedProgress : float = progr
 ## y: The y to update with
 func update_line_preview(x : int = int((pointB.x - pointA.x) / Global.TILE_SIZE) , y : int = int((pointB.y - pointA.y) / Global.TILE_SIZE)) -> void:
 	var offset : Vector2 = Vector2(x * Global.TILE_SIZE, y * Global.TILE_SIZE);
-	previewLine.modulate = Color(0, 0, 0, 0.5);
+	previewLine.modulate.a = .5;
 	previewLine.global_position = global_position;
 	previewLine.clear_points();
 	previewLine.add_point(Vector2.ZERO);

@@ -8,12 +8,10 @@ var filePath : String;
 var imageToReplace : Image;
 var imageNameToReplace : String;
 
-# References to both tile maps
-@export var mainTileMap : TileMapLayer;
 @export var imagePreview : Panel;
 @export var imagePreviewTexture : TextureRect;
 
-var firstImageSelected : AssetItem = null;
+var mainTileMap : TileMapLayer;
 
 # All types of tiles
 var tileTypes : Array[String] = ["Solid", "Death","OneWay","Ice", "Sticky", "Bounce", "Slope" ];
@@ -23,15 +21,11 @@ var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	mainTileMap = assetManager.mainTileMap;
 	Global.levelCreated.connect(refresh_images);
 	# Refresh all assets
 	refresh_images();
 	ImportExportManager.levelImported.connect(refresh_images);
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 ## Refresh all images in game
 func refresh_images() -> void:

@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
 [ext_resource type="Texture2D" uid="uid://cq6ndlm5t7xwj" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
 [ext_resource type="Script" uid="uid://cuhf3fl48s4q3" path="res://Scripts/Universal/ImageSwapping.gd" id="10_clgtw"]
+[ext_resource type="Script" uid="uid://ch8gruht1v0am" path="res://Scripts/Universal/AnimationSwapping.gd" id="11_ukhnw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbbei"]
 content_margin_left = 12.0
@@ -22,17 +23,15 @@ corner_radius_bottom_left = 12
 expand_margin_top = 2.0
 expand_margin_bottom = 3.0
 
-[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imagePreview", "imagePreviewTexture", "animationPreview", "animationPreviewTexture", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "animationPreviewRightButton", "animationPreviewLeftButton", "animationName", "frameRightButton", "frameLeftButton", "frameCountLabel", "playButton", "stopButton", "FPSSpinbox")]
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imageSwapping", "animationSwapping", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton")]
 process_mode = 2
 custom_minimum_size = Vector2(900, 600)
 offset_right = 900.0
 offset_bottom = 600.0
 theme = ExtResource("1_rshqi")
 script = ExtResource("1_2va5h")
-imagePreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview")
-imagePreviewTexture = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview/ImageAsset")
-animationPreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview")
-animationPreviewTexture = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/ImageAsset")
+imageSwapping = NodePath("ImageSwapping")
+animationSwapping = NodePath("AnimationSwapping")
 audioPreview = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview")
 assetTabs = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs")
 fileSelect = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton/FileDialog")
@@ -42,15 +41,6 @@ currentAssetLabel = NodePath("ContentContainer/MainContentContainer/LeftColumnCo
 loadFileButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton")
 resetButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/ResetButton")
 resetAllButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer/ResetAllButton")
-animationPreviewRightButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer/NextAnimButton")
-animationPreviewLeftButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer/PrevAnimButton")
-animationName = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer/AnimNameLabel")
-frameRightButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer/NextFrameButton")
-frameLeftButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer/PrevFrameButton")
-frameCountLabel = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameCountLabel")
-playButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/PlayPauseButton")
-stopButton = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/StopButton")
-FPSSpinbox = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/FPSValue")
 
 [node name="ContentContainer" type="VBoxContainer" parent="." unique_id=1686367830]
 layout_mode = 1
@@ -396,8 +386,29 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Close"
 
-[node name="ImageSwapping" type="Control" parent="." unique_id=1565850134]
+[node name="ImageSwapping" type="Control" parent="." unique_id=1565850134 node_paths=PackedStringArray("assetManager", "imagePreview", "imagePreviewTexture")]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("10_clgtw")
+assetManager = NodePath("..")
+imagePreview = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview")
+imagePreviewTexture = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview/ImageAsset")
+
+[node name="AnimationSwapping" type="Control" parent="." unique_id=1958050613 node_paths=PackedStringArray("assetManager", "animationPreview", "animationPreviewTexture", "animationPreviewRightButton", "animationPreviewLeftButton", "animationName", "frameRightButton", "frameLeftButton", "frameCountLabel", "playButton", "stopButton", "FPSSpinbox")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("11_ukhnw")
+assetManager = NodePath("..")
+animationPreview = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview")
+animationPreviewTexture = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/ImageAsset")
+animationPreviewRightButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer/NextAnimButton")
+animationPreviewLeftButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer/PrevAnimButton")
+animationName = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer/AnimNameLabel")
+frameRightButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer/NextFrameButton")
+frameLeftButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer/PrevFrameButton")
+frameCountLabel = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameCountLabel")
+playButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/PlayPauseButton")
+stopButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/StopButton")
+FPSSpinbox = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/FPSValue")

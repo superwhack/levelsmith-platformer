@@ -24,7 +24,9 @@ const SPEED_MODIFIER : float = 100.0;
 @export var previewLineEndpoint : Sprite2D;
 @export var previewPlatform : Sprite2D;
 
-var temporaryFixTimer = 3;
+# Mutes movement after spawning so it can teleport to it's initial position
+var muteMove = true;
+
 ## Sets up initial points
 func _ready() -> void:
 	# Set all points to its current position
@@ -39,11 +41,10 @@ func _physics_process(delta: float) -> void:
 		if !onScreen.is_on_screen():
 			return;
 		active = true;
-	if temporaryFixTimer > 0:
-		temporaryFixTimer -= 1;
-		apply_progress();
-	else:
+	if muteMove:
 		move_behavior(delta);
+	else:
+		muteMove = true;
 	
 ## Moves the platform toward current destination.
 func move_behavior(delta: float) -> void:
@@ -115,8 +116,8 @@ func update_line_preview(x : int = int((pointB.x - pointA.x) / Global.TILE_SIZE)
 
 ## Apply the progress variable into starting global position
 func apply_progress() -> void:
-	previewPlatform.hide();
 	position = lerp(pointA, pointB, float(progress) / 100.0);
+	muteMove = false;
 	
 
 ## Applies the values stored in a FlyingPreset.

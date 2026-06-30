@@ -92,8 +92,9 @@ func start() -> void:
 				break;
 	for moving in get_tree().get_nodes_in_group("Moving"):
 		if moving is MovingPlatform && moving.propertyFile:
-			moving.apply_progress();
 			moving.previewLine.hide();
+			moving.previewPlatform.hide();
+			moving.apply_progress();
 		if moving is EnemyFlyer && moving.propertyFile:
 			moving.previewLine.hide();
 

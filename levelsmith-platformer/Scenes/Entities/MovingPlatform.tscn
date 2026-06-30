@@ -23,6 +23,8 @@ one_way_collision = true
 [node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
 visible = false
 default_color = Color(0, 0, 0.05490196, 0.8352941)
+joint_mode = 2
+begin_cap_mode = 2
 
 [node name="LineEndpoint" type="Sprite2D" parent="Line2D" unique_id=1023530108]
 texture = ExtResource("2_na4dm")

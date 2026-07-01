@@ -31,7 +31,7 @@ closeButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/ButtonConta
 resetButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/ButtonContainer/ResetButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
-custom_maximum_size = Vector2(514.115, 255)
+custom_maximum_size = Vector2(514.115, -1)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -66,6 +66,7 @@ theme_override_fonts/font = ExtResource("3_fj8s5")
 theme_override_font_sizes/font_size = 24
 text = "Error"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=983078058]
 layout_mode = 2

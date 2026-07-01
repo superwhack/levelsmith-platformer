@@ -2,12 +2,13 @@ extends Control
 
 @export var title : Label;
 @export var bodyText : RichTextLabel;
+@export var separator : HSeparator;
 
 @export var closeButton: Button;
 @export var resetButton: Button
 
-var confirmCallback : Callable = Callable();
-
+# Callback function, used for assigning a function to the reset button.
+var resetCallback : Callable = Callable();
 
 
 ## Runs when the node is first created
@@ -16,7 +17,7 @@ func _ready() -> void:
 		closeButton.pressed.connect(close_popup);
 		
 	if (resetButton):
-		resetButton.pressed.connect(_on_confirm_pressed)
+		resetButton.pressed.connect(_on_confirm_pressed);
 
 ## Replaces the title of the popup
 ## text: The replacement text
@@ -35,10 +36,10 @@ func close_popup() -> void:
 	
 func _on_confirm_pressed() -> void:
 	print("confirmed")
-	if (confirmCallback.is_valid()):
-		confirmCallback.call();
+	if (resetCallback.is_valid()):
+		resetCallback.call();
 
 	close_popup();
 
 func set_confirm_callback(callback: Callable) -> void:
-	confirmCallback = callback;
+	resetCallback = callback;

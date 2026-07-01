@@ -77,6 +77,8 @@ func create_reset_image_popup(callback : Callable, asset : String = "asset") -> 
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
 	
+
+	
 ## Removes specific popup from popup stack
 ## item: Panel being removed from stack
 #func removePopUpFromStack(item: Panel) -> void:

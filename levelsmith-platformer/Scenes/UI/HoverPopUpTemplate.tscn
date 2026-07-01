@@ -61,7 +61,8 @@ theme_override_fonts/normal_font = ExtResource("3_yapt7")
 text = "An error has occurred."
 fit_content = true
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1999861361]
+[node name="RightPin" type="TextureRect" parent="." unique_id=1999861361]
+visible = false
 modulate = Color(0.95686275, 0.79607844, 0.43529412, 1)
 custom_maximum_size = Vector2(85, 85)
 layout_mode = 2

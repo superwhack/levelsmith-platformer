@@ -268,6 +268,9 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 
+[node name="RightPin" parent="ScreenUI/BottomRightAnchor/HoverPopUpContainer" index="1" unique_id=1999861361]
+visible = true
+
 [node name="PlayButton" type="Button" parent="ScreenUI/BottomRightAnchor" unique_id=1821933362]
 custom_minimum_size = Vector2(265, 0)
 layout_mode = 2
@@ -346,4 +349,5 @@ toolManager = NodePath("..")
 tileMap = NodePath("../../Tiles")
 propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
 
+[editable path="ScreenUI/BottomRightAnchor/HoverPopUpContainer"]
 [editable path="CanvasLayer/AssetManager"]

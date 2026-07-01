@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/Universal/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://bjx53xjckex6r" path="res://Scenes/MainMenu.tscn" id="2_gojh1"]
+[ext_resource type="Script" uid="uid://c1k7ayftnbant" path="res://Scripts/Universal/AnimationManager.gd" id="3_0vixy"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
@@ -41,7 +42,7 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_8vbpr")
 sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "audioManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "playPopUp", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "audioManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
@@ -55,7 +56,6 @@ mainMenuControl = NodePath("MainMenuCanvasLayer/MainMenu")
 editorHomeButton = NodePath("EditorManager/ScreenUI/TopLeftAnchor/TopLeftRow/HomeButton")
 editorPlayButton = NodePath("EditorManager/ScreenUI/BottomRightAnchor/PlayButton")
 returnToEditorButton = NodePath("GameManager/CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ReturnEditorButton")
-playPopUp = NodePath("EditorManager/ScreenUI/HoverPopUpContainer")
 tileMap = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
 gridLines = NodePath("EditorManager/GridLines")
@@ -63,6 +63,11 @@ propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
 
 [node name="AudioManager" type="Node" parent="." unique_id=62565252]
 script = ExtResource("2_8vbpr")
+
+[node name="AnimationManager" type="Node" parent="." unique_id=1010267410 node_paths=PackedStringArray("mainTileMap", "assetManager")]
+script = ExtResource("3_0vixy")
+mainTileMap = NodePath("../EditorManager/Tiles")
+assetManager = NodePath("../EditorManager/CanvasLayer/AssetManager")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=101918903 node_paths=PackedStringArray("masterManager", "gridLines")]
 script = ExtResource("4_mg0h4")

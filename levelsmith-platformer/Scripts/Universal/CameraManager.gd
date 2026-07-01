@@ -125,6 +125,11 @@ func process_build_camera(delta: float) -> void:
 	var inputVector : Vector2;
 	var speedModifier : int = 1;
 	
+	# Prevents camera moving down when saving
+	if Input.is_key_pressed(KEY_CTRL):
+		return;
+	
+	
 	inputVector.x = Input.get_action_strength("right") - Input.get_action_strength("left");
 	
 	inputVector.y = Input.get_action_strength("down") - Input.get_action_strength("up");

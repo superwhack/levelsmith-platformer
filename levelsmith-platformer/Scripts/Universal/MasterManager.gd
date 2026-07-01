@@ -225,7 +225,7 @@ func mouse_entered_play_button() -> void:
 		playPopUp.set_title("REQUIRED TO RUN");
 		var bodyText : String = "";
 		for messageNum in range(0, errors.size()):
-			bodyText += " - " + errors[messageNum];
+			bodyText += " + " + errors[messageNum];
 			if (messageNum != errors.size() - 1):
 				bodyText += "\n";
 		playPopUp.set_body_text(bodyText);

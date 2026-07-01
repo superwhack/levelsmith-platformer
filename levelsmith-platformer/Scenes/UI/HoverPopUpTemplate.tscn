@@ -13,7 +13,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 corner_detail = 10
 
-[node name="HoverPopUpContainer" type="HBoxContainer" unique_id=1808818748 node_paths=PackedStringArray("title", "bodyText", "rightPin")]
+[node name="HoverPopUpContainer" type="HBoxContainer" unique_id=1808818748 node_paths=PackedStringArray("title", "bodyText")]
 anchors_preset = -1
 offset_right = 398.0
 offset_bottom = 176.0
@@ -27,7 +27,6 @@ theme_override_constants/separation = -13
 script = ExtResource("2_yapt7")
 title = NodePath("PanelContainer/MarginContainer/VBoxContainer/Title")
 bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/Body")
-rightPin = NodePath("")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
 custom_minimum_size = Vector2(300, 176)
@@ -58,6 +57,7 @@ layout_mode = 2
 
 [node name="Body" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=908015837]
 layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_yapt7")
 text = "An error has occurred."
 fit_content = true
 

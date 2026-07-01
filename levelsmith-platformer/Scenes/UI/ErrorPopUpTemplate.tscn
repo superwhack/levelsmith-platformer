@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/Editor/PopUp/ErrorPopUp.gd" id="1_i0gwu"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_idm4w"]
+[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_fj8s5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idm4w"]
 bg_color = Color(0.95686275, 0.79607844, 0.43529412, 1)
@@ -11,7 +12,7 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 corner_detail = 10
 
-[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "closeButton", "rightPin")]
+[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "closeButton", "resetButton")]
 process_mode = 3
 self_modulate = Color(0.3764706, 0.3764706, 0.3764706, 0.4862745)
 anchors_preset = 15
@@ -23,8 +24,8 @@ theme = ExtResource("1_idm4w")
 script = ExtResource("1_i0gwu")
 title = NodePath("HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Title")
 bodyText = NodePath("HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Body")
-closeButton = NodePath("HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/CloseButton")
-rightPin = NodePath("HBoxContainer/RightPin")
+closeButton = NodePath("HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonContainer/CloseButton")
+resetButton = NodePath("HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonContainer/ResetButton")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1808818748]
 layout_mode = 1
@@ -59,6 +60,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1675355400]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_fj8s5")
 theme_override_font_sizes/font_size = 24
 text = "Error"
 horizontal_alignment = 1
@@ -68,10 +70,22 @@ layout_mode = 2
 
 [node name="Body" type="RichTextLabel" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=908015837]
 layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_fj8s5")
+bbcode_enabled = true
 text = "An error has occurred."
 fit_content = true
 
-[node name="CloseButton" type="Button" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1027214704]
+[node name="ButtonContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=775138771]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ResetButton" type="Button" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonContainer" unique_id=192765027]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9137255, 0.4, 0.36078432, 1)
+text = "Reset"
+
+[node name="CloseButton" type="Button" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonContainer" unique_id=1027214704]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Close"

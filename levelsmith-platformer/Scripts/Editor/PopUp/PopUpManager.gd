@@ -55,6 +55,28 @@ func create_multi_error_popup(title : String = "Error", body : Array[String] = [
 	currentPopUp = newPopUp;
 	
 
+## Creates a popup for resetting the specific given asset. 
+func create_reset_asset_popup(callback : Callable, asset : String = "asset") -> void:
+	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
+	
+	newPopUp.set_title("RESET ALL ASSETS");
+	newPopUp.set_body_text("This will RESET ALL ASSETS to default. All custom assets will be lost.");
+	newPopUp.set_confirm_callback(callback);
+	newPopUp.closeButton.text = "Cancel";
+	add_child(newPopUp);
+	currentPopUp = newPopUp;
+	
+## Creates a popup for resetting the specific given asset. 
+func create_reset_image_popup(callback : Callable, asset : String = "asset") -> void:
+	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
+	
+	newPopUp.set_title("RESET SELECTED ASSET");
+	newPopUp.set_body_text("This will [color=#e74937]RESET[/color] your custom " + asset + " asset to its default. The current asset will be lost.");
+	newPopUp.set_confirm_callback(callback);
+	newPopUp.closeButton.text = "Cancel";
+	add_child(newPopUp);
+	currentPopUp = newPopUp;
+	
 ## Removes specific popup from popup stack
 ## item: Panel being removed from stack
 #func removePopUpFromStack(item: Panel) -> void:

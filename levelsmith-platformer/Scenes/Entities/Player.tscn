@@ -46,7 +46,7 @@ shape = SubResource("RectangleShape2D_571pn")
 texture = ExtResource("2_gntrk")
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=116409988]
-position = Vector2(-55, 0)
+position = Vector2(-57, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 60)
 
@@ -55,7 +55,7 @@ scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 60)
 
 [node name="RayCastDown3" type="RayCast2D" parent="." unique_id=1487377010]
-position = Vector2(55, 0)
+position = Vector2(57, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 60)
 

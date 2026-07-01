@@ -54,39 +54,6 @@ func create_multi_error_popup(title : String = "Error", body : Array[String] = [
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
 	
-func create_hover_popup(title: String = "Error", body : String = "An error has occurred.") -> void:
-	if (currentPopUp != null):
-		currentPopUp.set_bodyzz_text("\n + " + body) ;
-		return;
-		
-	var newPopUp: Panel = HOVER_TEMPLATE.instantiate();
-	
-	newPopUp.set_title(title);
-	newPopUp.set_body_text(" + " + body);
-	
-	#POP_UP_STACK.append(newPopUp);
-	add_child(newPopUp);
-	currentPopUp = newPopUp;
-	
-func create_hover_multi_popup(title: String = "Error", body : Array[String] = []) -> void:
-	if (body.size() == 1):
-		return create_hover_popup(title, body[0]);
-	
-	var newPopUp : Panel = HOVER_TEMPLATE.instantiate();
-	
-	newPopUp.set_title(title);
-	
-	# Assemble the body text...
-	var bodyText : String = "";
-	for messageNum in range(0, body.size()):
-		bodyText += " - " + body[messageNum];
-		if (messageNum != body.size()-1):
-			bodyText += "\n";
-	newPopUp.set_body_text(bodyText);
-	
-	add_child(newPopUp);
-	currentPopUp = newPopUp;
-	
 
 ## Removes specific popup from popup stack
 ## item: Panel being removed from stack

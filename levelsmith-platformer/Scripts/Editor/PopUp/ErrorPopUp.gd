@@ -5,9 +5,6 @@ extends Control
 
 @export var closeButton: Button;
 
-# A reference to the control holding the right pin for custom hovers.
-@export var rightPin : Control;
-
 ## Runs when the node is first created
 func _ready() -> void:
 	if (closeButton):

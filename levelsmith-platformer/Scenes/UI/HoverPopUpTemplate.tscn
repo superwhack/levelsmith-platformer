@@ -2,18 +2,20 @@
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_eaumf"]
 [ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/Editor/PopUp/ErrorPopUp.gd" id="2_yapt7"]
+[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_yapt7"]
+[ext_resource type="Texture2D" uid="uid://deh8gunioyvao" path="res://Assets/UserInterface/Buttons/triangle.svg" id="4_rps3c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idm4w"]
 bg_color = Color(0.95686275, 0.79607844, 0.43529412, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 corner_detail = 10
 
-[node name="HoverPopUpContainer" type="HBoxContainer" unique_id=1808818748 node_paths=PackedStringArray("title", "bodyText", "closeButton", "rightPin")]
+[node name="HoverPopUpContainer" type="HBoxContainer" unique_id=1808818748 node_paths=PackedStringArray("title", "bodyText", "rightPin")]
 anchors_preset = -1
-offset_right = 491.0
+offset_right = 398.0
 offset_bottom = 176.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -21,16 +23,16 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 theme = ExtResource("1_eaumf")
+theme_override_constants/separation = -13
 script = ExtResource("2_yapt7")
 title = NodePath("PanelContainer/MarginContainer/VBoxContainer/Title")
 bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/Body")
-closeButton = NodePath("")
-rightPin = NodePath("RightPin")
+rightPin = NodePath("")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
 custom_minimum_size = Vector2(300, 176)
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 2
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_idm4w")
 
@@ -46,6 +48,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1675355400]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_yapt7")
 theme_override_font_sizes/font_size = 24
 text = "Error"
 horizontal_alignment = 1
@@ -58,16 +61,12 @@ layout_mode = 2
 text = "An error has occurred."
 fit_content = true
 
-[node name="RightPin" type="Control" parent="." unique_id=1562774785]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1999861361]
+modulate = Color(0.95686275, 0.79607844, 0.43529412, 1)
+custom_maximum_size = Vector2(85, 85)
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
+size_flags_horizontal = 0
+size_flags_vertical = 8
 offset_transform_enabled = true
-offset_transform_position = Vector2(85, 89)
-
-[node name="Polygon2D" type="Polygon2D" parent="RightPin" unique_id=615061354]
-position = Vector2(205, -2.5)
-scale = Vector2(2.9999993, 2.5625002)
-color = Color(0.95686275, 0.79607844, 0.43529412, 1)
-polygon = PackedVector2Array(-104, -31.999996, -104, 0, -71.99999, -16)
-uv = PackedVector2Array(-91.33304, -26, -83.999695, 15.333336, -68.66638, -29.333328)
+offset_transform_position = Vector2(-1.5, 6.7)
+texture = ExtResource("4_rps3c")

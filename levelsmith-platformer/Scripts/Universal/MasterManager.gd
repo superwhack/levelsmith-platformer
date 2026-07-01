@@ -133,7 +133,13 @@ func edit() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
-	editorManager.returnClick = true;
+	if !gameManager.goalReached:
+		editorManager.returnClick = true;
+	# Just so there aren't any issues when holding down a button before swapping to play
+	toolManager.isErasing = false;
+	toolManager.isPainting = false;
+	# You can right click after completing a level
+	toolManager.clickOnUI = false;
 	editorManagerCanvas.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;

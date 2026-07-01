@@ -92,6 +92,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 		elif enemyProperty.contains("Shooting"):
 			dataToSend += '"type":"shooting", "stats":{';
 			dataToSend += '"direction": ' + str(propertyFile.direction) + ", ";
+			dataToSend += '"randomDirection": ' + str(propertyFile.randomDirection) + ', ';
 			dataToSend += '"shotSpeed": ' + str(propertyFile.shotSpeed) + ", ";
 			dataToSend += '"fireRate": ' + str(propertyFile.fireRate) + ', ';
 			dataToSend += '"projBounce": ' + str(propertyFile.projBounce) + ', ';
@@ -296,6 +297,7 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.restricted = enemy.stats.restricted;
 		"shooting":
 			newResource.direction = enemy.stats.direction;
+			newResource.randomDirection = enemy.stats.randomDirection;
 			newResource.shotSpeed = enemy.stats.shotSpeed;
 			newResource.fireRate = enemy.stats.fireRate;
 			newResource.projBounce = enemy.stats.projBounce;

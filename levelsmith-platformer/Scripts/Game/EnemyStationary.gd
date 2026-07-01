@@ -7,7 +7,7 @@ enum DirectionFacing{ LEFT, RIGHT }
 enum CurrentState{ IDLE, DEATH }
 
 #true = stationary enemy is affected by gravity
-var gravityEnabled : bool;
+var gravityEnabled : bool = true;
 
 #enum variables for the two editable properties
 var directionFacing : DirectionFacing = DirectionFacing.LEFT;

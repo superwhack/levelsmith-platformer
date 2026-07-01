@@ -48,8 +48,8 @@ var previewLine: Line2D;
 @export var shootingGravity : VBoxContainer;
 
 #Stationary Inputs
-@export var directionFacing: VBoxContainer;
-@export var gravityEnabled: VBoxContainer;
+@export var stationaryDirectionDropdown: VBoxContainer;
+@export var stationaryGravity: VBoxContainer;
 
 # Preset Options
 @export var presetOptions : OptionButton;
@@ -58,7 +58,7 @@ var selectedPreset : Resource;
 var selectedPlayerPreset : Resource;
 
 # Direction arrow for shooting, patrolling, and stationary enemies
-var shootingDirectionArrow : Sprite2D;
+var directionArrow : Sprite2D;
 
 @export var closeButton : Button;
 
@@ -88,8 +88,8 @@ func _ready() -> void:
 	flyingOffsetXSlider.drag_ended.connect(_on_drag_ended);
 	flyingOffsetYSlider.drag_ended.connect(_on_drag_ended);
 	
-	#directionFacing.dropdown_changed.connect(update_values);
-	gravityEnabled.check_changed.connect(update_values);
+	stationaryDirectionDropdown.dropdown_changed.connect(update_values);
+	stationaryGravity.check_changed.connect(update_values);
 	
 	closeButton.pressed.connect(close);
 
@@ -97,9 +97,9 @@ func _ready() -> void:
 func close() -> void:
 	if previewLine:
 		previewLine.hide()
-	if shootingDirectionArrow:
-		shootingDirectionArrow.scale = Vector2(1,1);
-		shootingDirectionArrow = null;
+	if directionArrow:
+		directionArrow.scale = Vector2(1,1);
+		directionArrow = null;
 	hide();
 	selectedEntity = null;
 
@@ -120,6 +120,7 @@ func _process(_delta: float) -> void:
 		entityName.text = "Shooting Enemy";
 		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
 	elif selectedEntity is EnemyStationary:
+		selectedEntity.update_flipped(!stationaryDirectionDropdown.value);
 		entityName.text = "Stationary Enemy";
 	elif selectedEntity is Player:
 		entityName.text = "Player";
@@ -198,11 +199,11 @@ func update_sliders() -> void:
 		shootingFireRateSlider.update_slider();
 		shootingProjectileBounce.update_checkbox();
 		shootingGravity.update_checkbox();
-	#elif selectedEntity is EnemyStationary:
-		#directionFacing.value = selectedPreset.directionFacing;
-		#directionFacing.update_dropdown();
-		#gravityEnabled.value = selectedPreset.gravityEnabled;
-		#gravityEnabled.update_checkbox();
+	elif selectedEntity is EnemyStationary:
+		stationaryDirectionDropdown.value = int(!selectedPreset.isFacingRight);
+		stationaryGravity.value = selectedPreset.gravity;
+		stationaryDirectionDropdown.update_dropdown();
+		stationaryGravity.update_checkbox();
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:
@@ -230,6 +231,10 @@ func update_values() -> void:
 		selectedPreset.projBounce = shootingProjectileBounce.value;
 		selectedPreset.gravity = shootingGravity.value
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+	elif selectedEntity is EnemyStationary:
+		selectedPreset.isFacingRight = !stationaryDirectionDropdown.value;
+		selectedPreset.gravity = stationaryGravity.value;
+		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
@@ -243,9 +248,9 @@ func _on_drag_ended() -> void:
 ## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
 	show();
-	if shootingDirectionArrow:
-		shootingDirectionArrow.scale = Vector2(1,1);
-		shootingDirectionArrow = null;
+	if directionArrow:
+		directionArrow.scale = Vector2(1,1);
+		directionArrow = null;
 	playerMenu.hide();
 	patrollingMenu.hide();
 	flyingMenu.hide();
@@ -254,7 +259,7 @@ func show_menu(resource: Resource = null) -> void:
 		selectedPreset = resource;
 		update_sliders();
 		if selectedEntity is EnemyPatrol:
-			shootingDirectionArrow = selectedEntity.directionArrow;
+			directionArrow = selectedEntity.directionArrow;
 			patrollingMenu.show();
 		elif selectedEntity is EnemyFlyer:
 			flyingMenu.show()
@@ -263,11 +268,10 @@ func show_menu(resource: Resource = null) -> void:
 				previewLine.show()
 				update_flying_preview()
 		elif selectedEntity is EnemyShooting:
-			shootingDirectionArrow = selectedEntity.directionArrow;
-			shootingDirectionArrow.scale = Vector2(2,2);
+			directionArrow = selectedEntity.directionArrow;
+			directionArrow.scale = Vector2(2,2);
 			shootingMenu.show();
 		elif selectedEntity is EnemyStationary:
-			shootingDirectionArrow = selectedEntity.directionArrow;
 			stationaryMenu.show();
 	else:
 		playerMenu.show();

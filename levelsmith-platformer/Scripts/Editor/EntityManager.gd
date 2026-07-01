@@ -69,6 +69,10 @@ func place_entity(clickPosition: Vector2) -> void:
 				var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
 				newEntity = defaultFlying.duplicate(true);
 				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
+			elif (brushObject == Global.EntityType.STATIONARY):
+				var defaultStationary : Resource = load("res://Resources/PlayerPresets/StationaryDefault.tres");
+				newEntity = defaultStationary.duplicate(true);
+				file = "res://Resources/Enemies/Stationary" + str(time) + ".tres";
 			ResourceSaver.save(newEntity, file);
 			placedEnemy.assign_script(str(time), clickPosition);
 			editorManager.reset_enemy_positions();
@@ -169,6 +173,8 @@ func drop_entity() -> void:
 	elif droppedEntity is EnemyPatrol:
 		droppedEntity.adjust_arrow(int(movingResource.direction) * 180 + 90);
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
+	elif droppedEntity is EnemyStationary:
+		droppedEntity.update_flipped();
 	ResourceSaver.save(movingResource, "res://Resources/Enemies/" + droppedEntity.name + ".tres");
 	movingResource = null;
 	editorManager.reset_enemy_positions();

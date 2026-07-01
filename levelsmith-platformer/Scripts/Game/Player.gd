@@ -175,14 +175,13 @@ func run() -> void:
 ## Have the player take damage
 ## amount: damage to deal
 ## direction: direction to deal damage in
-func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce : int = 0) -> void:
-	if amount < 0:
-		return die();
+func take_damage(amount: int, direction: Vector2) -> void:
+	
 	if invulnerabilityCurrent > 0:
 		return;
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
-	velocity = direction * (1000 + higherBounce * 500);
+	velocity = direction * 1000;
 	health -= amount;
 	if (health <= 0):
 		die();
@@ -293,45 +292,6 @@ func detect_tiles() -> void:
 		var tileName : String = tileData.get_custom_data("name");
 		var rayDirection : Vector2 = raycast.target_position;
 
-		# Wall Jumping + Sliding
-		if wallJump && rayDirection.x != 0:
-			# Wall jumps not allowed on bedrock or one way tiles
-			if tileName == "bedrock" || tileName == "oneway":
-				return;
-			# Wall Slide when not on ice
-			if tileName != "ice":
-				velocity.y *= .94;
-				#if rayDirection.x < 0 && Input.is_action_pressed("left"):
-				#	velocity.y *= .94;
-				#elif rayDirection.x > 0 && Input.is_action_pressed("right"):
-				#	velocity.y *= .94;
-			if tileName != "slow":
-				currentSlowdown = 1.0;
-			if Input.is_action_just_pressed("jump"):
-				# Depending on direction, apply a different x velocity
-				if rayDirection.x < 0:
-					if wallJumpDirection != WallDirection.LEFT:
-						wallJumpCount = 0;
-					wallJumpDirection = WallDirection.LEFT;
-					velocity.x = 1500 * pow(groundSpeed, .55);
-				elif rayDirection.x > 0:
-					if wallJumpDirection != WallDirection.RIGHT:
-						wallJumpCount = 0;
-					wallJumpDirection = WallDirection.RIGHT;
-					velocity.x = -1500 * pow(groundSpeed, .55);
-				# Remove friction if not on ice
-				if tileName != "ice":
-					currentFriction = 1.0;
-				# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)
-				if tileName == "slow" || tileName == "ice":
-					velocity.x /= 1.5;
-				wallJumpCount += 1;
-				# If the option for decay is turned off, don't decay
-				if !wallJumpDecay:
-					wallJumpCount = 1;
-				velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(groundSpeed, .35);;
-				justWallJumped = true;
-
 		# Bounce tile collisions
 		if (tileName == "bounce"):
 			# Horizontal bounces
@@ -363,11 +323,7 @@ func detect_tiles() -> void:
 							position += Vector2(0, 1);
 							raycast.force_raycast_update();
 				currentSlowdown = .5;
-		if tileName == "hazard":
-			var direction : Vector2 = -raycast.target_position;
-			take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"));
-		elif tileName == "death":
-			take_damage(-1);
+					
 		# Only downward rays should drive floor tile effects (except hazard)
 		if tileName == "hazard" or downwardsRaycasts.has(raycast):
 			if (tileData.get_custom_data("name") != "bounce"):

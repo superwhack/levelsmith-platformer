@@ -29,24 +29,16 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if (health <= 0): return; 
-	if !active:
-		if !onScreen.is_on_screen():
-			return;
-		active = true;
-	velocity.x = 0;
 	if gravityOn:
 		super._physics_process(delta);
 		move_and_slide();
 	directionArrow.hide();
-	if onScreen:
-		# Decrease time left
-		timeLeft -= delta;
-		# If cooldown is finished, shoot
-		if (timeLeft <= 0.0):
-			shooting_behavior();
-			timeLeft = 1 / fireRate;
-	super.detect_tiles(false);
-	move_and_slide();
+	# Decrease time left
+	timeLeft -= delta;
+	# If cooldown is finished, shoot
+	if (timeLeft <= 0.0):
+		shooting_behavior();
+		timeLeft = 1 / fireRate;
 
 ## Adjust the direction of the indicator arrow
 ## angle: the angle that the arrow should be pointing at.

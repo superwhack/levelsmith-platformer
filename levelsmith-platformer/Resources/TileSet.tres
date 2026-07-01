@@ -22,10 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://bj66b8ccvl345" path="res://Scenes/Preview/PlayerPreview.tscn" id="9_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://b3k624sctovph" path="res://Scenes/Entities/Patrolling.tscn" id="10_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://bwtswvrxxful5" path="res://Scenes/Preview/PatrollingPreview.tscn" id="11_8sjof"]
-[ext_resource type="PackedScene" uid="uid://b6axoaekmjyr4" path="res://Scenes/Entities/MovingPlatform.tscn" id="19_yoa8o"]
-[ext_resource type="PackedScene" uid="uid://bpnflie3xuof8" path="res://Scenes/Preview/MovingPlatformPreview.tscn" id="20_4pytx"]
-[ext_resource type="PackedScene" uid="uid://b1he4q1q33j0e" path="res://Scenes/Entities/Coin.tscn" id="22_38lp2"]
-[ext_resource type="PackedScene" uid="uid://nquey6f2ob44" path="res://Scenes/Preview/CoinPreview.tscn" id="23_hkman"]
+[ext_resource type="Texture2D" uid="uid://dx73rn5knscwa" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="21_3boqi"]
 [ext_resource type="Texture2D" uid="uid://br10hb73uokcq" path="res://Assets/UserInterface/TileBedrock.png" id="23_mtirn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rjqkl"]
@@ -117,27 +114,6 @@ resource_name = "Flying"
 scenes/1/scene = ExtResource("5_3boqi")
 scenes/2/scene = ExtResource("6_pqfav")
 
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_yoa8o"]
-resource_name = "Coin"
-scenes/1/scene = ExtResource("22_38lp2")
-scenes/2/scene = ExtResource("23_hkman")
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_6ti6x"]
-resource_name = "Moving Platform"
-scenes/1/scene = ExtResource("19_yoa8o")
-scenes/2/scene = ExtResource("20_4pytx")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_38lp2"]
-texture = ExtResource("24_hkman")
-texture_region_size = Vector2i(128, 128)
-0:0/next_alternative_id = 2
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-59.42857, -59.42857, 59.428574, -59.42857, 59.428574, 59.428574, -59.42857, 59.428574)
-0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-64, -64, -64, 64, 64, 64, 64, -64)
-0:0/0/custom_data_3 = "death"
-0:0/1 = 1
-0:0/1/modulate = Color(1, 0, 0, 1)
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eksy4"]
 texture = ExtResource("3_r4n42")
 texture_region_size = Vector2i(128, 128)
@@ -163,15 +139,6 @@ texture_region_size = Vector2i(128, 128)
 texture = ExtResource("7_eksy4")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
-0:0/1 = 1
-0:0/1/flip_h = true
-0:0/1/transpose = true
-0:0/2 = 2
-0:0/2/flip_h = true
-0:0/2/flip_v = true
-0:0/3 = 3
-0:0/3/flip_v = true
-0:0/3/transpose = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x0ka3"]
 texture = ExtResource("7_jbnof")
@@ -191,24 +158,6 @@ texture_region_size = Vector2i(128, 128)
 0:0/6 = 6
 0:0/6/flip_v = true
 0:0/6/modulate = Color(1, 0, 0, 1)
-0:0/5 = 5
-0:0/5/flip_h = true
-0:0/5/transpose = true
-0:0/5/modulate = Color(1, 0, 0, 1)
-0:0/1 = 1
-0:0/1/flip_h = true
-0:0/1/transpose = true
-0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(63.820343, -63.805244, -63.75998, 63.82034, -63.769325, -63.881577)
-0:0/2 = 2
-0:0/2/flip_h = true
-0:0/2/flip_v = true
-0:0/2/physics_layer_0/polygon_0/points = PackedVector2Array(63.820343, -63.805244, 63.764812, 63.71003, -63.769325, -63.881577)
-0:0/4 = 4
-0:0/4/modulate = Color(1, 0, 0, 1)
-0:0/3 = 3
-0:0/3/flip_v = true
-0:0/3/transpose = true
-0:0/3/physics_layer_0/polygon_0/points = PackedVector2Array(63.820343, -63.805244, -63.910156, 64, 63.769325, 63.84416)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6pq3v"]
 texture = ExtResource("23_mtirn")
@@ -244,14 +193,10 @@ sources/501 = SubResource("TileSetScenesCollectionSource_6ba2f")
 sources/502 = SubResource("TileSetScenesCollectionSource_8sjof")
 sources/503 = SubResource("TileSetScenesCollectionSource_pqfav")
 sources/504 = SubResource("TileSetScenesCollectionSource_eqdrb")
+sources/506 = SubResource("TileSetAtlasSource_eksy4")
+sources/507 = SubResource("TileSetAtlasSource_k4kw2")
+sources/508 = SubResource("TileSetAtlasSource_3boqi")
+sources/509 = SubResource("TileSetAtlasSource_pqfav")
+sources/510 = SubResource("TileSetAtlasSource_eqdrb")
 sources/9998 = SubResource("TileSetAtlasSource_6pq3v")
 sources/9999 = SubResource("TileSetAtlasSource_mtirn")
-sources/7 = SubResource("TileSetAtlasSource_x0ka3")
-sources/6 = SubResource("TileSetAtlasSource_38lp2")
-sources/600 = SubResource("TileSetAtlasSource_eksy4")
-sources/601 = SubResource("TileSetAtlasSource_k4kw2")
-sources/602 = SubResource("TileSetAtlasSource_3boqi")
-sources/603 = SubResource("TileSetAtlasSource_pqfav")
-sources/506 = SubResource("TileSetScenesCollectionSource_yoa8o")
-sources/604 = SubResource("TileSetAtlasSource_eqdrb")
-sources/507 = SubResource("TileSetScenesCollectionSource_6ti6x")

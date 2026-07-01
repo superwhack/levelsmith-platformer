@@ -41,20 +41,13 @@ func _ready() -> void:
 	buttonNewLevelCreate.pressed.connect( create_new_level );
 	buttonNewLevelCancel.pressed.connect( overlayNewLevel.hide );
 	
-	buttonImportLevel.pressed.connect(overlayImportLevel.show);
-	buttonImportLevelOpen.pressed.connect(import_level);
-	buttonImportLevelCancel.pressed.connect(import_cancel);
-	buttonImportLevelBrowse.pressed.connect(popupFileExplorer);
+	buttonImportLevel.pressed.connect( overlayImportLevel.show );
+	buttonImportLevelOpen.pressed.connect( import_level );
+	buttonImportLevelCancel.pressed.connect( import_cancel );
+	buttonImportLevelBrowse.pressed.connect( fileExplorer.popup_file_dialog );
 	
 	buttonQuit.pressed.connect( exit_program )
 	
-	
-
-func popupFileExplorer() -> void:
-	fileExplorer.access = FileDialog.ACCESS_USERDATA;
-	fileExplorer.current_dir = "user://Levels/"
-	fileExplorer.popup_file_dialog();
-
 ## Called when import level button is pressed
 func import_level() -> void:
 	panelInvalidPath.show();

@@ -60,6 +60,7 @@ func reset() -> void:
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
+	goalReached = false;
 	# Reset coin values for the new level
 	coinCount = 0;
 	totalCoins = 0;
@@ -81,14 +82,22 @@ func start() -> void:
 
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
+	get_tree().set_group("Moving", "process_mode", Node.PROCESS_MODE_INHERIT);
 	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
 	for enemyProperty in enemyProperties:
 		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
 		for node in tileMap.get_children():
 			if tileMap.local_to_map(node.global_position) == propertyFile.position:
-				(node as Enemy).apply_script(propertyFile);
-				(node as Enemy).active = false;
+				node.apply_script(propertyFile);
+				node.active = false;
 				break;
+	for moving in get_tree().get_nodes_in_group("Moving"):
+		if moving is MovingPlatform && moving.propertyFile:
+			moving.previewLine.hide();
+			moving.previewPlatform.hide();
+			moving.apply_progress();
+		if moving is EnemyFlyer && moving.propertyFile:
+			moving.previewLine.hide();
 
 	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
@@ -130,6 +139,7 @@ func update_coin_counter() -> void:
 	coinCounterLabel.append_text("[right]Coins: %d / %d[/right]" % [coinCount, totalCoins]);
 
 func print_level_completion_time() -> void:
+	goalReached = true;
 	timerRunning = false;
 	var minutes := int(testingTime) / 60;
 	var seconds := int(testingTime) % 60;

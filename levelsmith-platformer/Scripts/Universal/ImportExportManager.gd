@@ -92,6 +92,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 		elif enemyProperty.contains("Shooting"):
 			dataToSend += '"type":"shooting", "stats":{';
 			dataToSend += '"direction": ' + str(propertyFile.direction) + ", ";
+			dataToSend += '"randomDirection": ' + str(propertyFile.randomDirection) + ', ';
 			dataToSend += '"shotSpeed": ' + str(propertyFile.shotSpeed) + ", ";
 			dataToSend += '"fireRate": ' + str(propertyFile.fireRate) + ', ';
 			dataToSend += '"projBounce": ' + str(propertyFile.projBounce) + ', ';
@@ -100,6 +101,11 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			dataToSend += '"type":"flying", "stats":{';
 			dataToSend += '"speed": ' + str(propertyFile.speed) + ", ";
 			dataToSend += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}}}';
+		elif enemyProperty.contains("MovingPlatform"):
+			dataToSend += '"type":"movingPlatform", "stats":{';
+			dataToSend += '"speed": ' + str(propertyFile.speed) + ", ";
+			dataToSend += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}, ';
+			dataToSend += '"progress": ' + str(propertyFile.progress) + "}}";
 		if (enemyPropertyIndex < enemyProperties.size() - 1):
 			dataToSend += ',';
 	# Creating Player Data in JSON.
@@ -118,6 +124,11 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	# Convert our data to a json_string
 	var json : Variant = JSON.parse_string(dataToSend)
 	var jsonString : String = JSON.stringify(json);
+	
+	## NOTE: THIS IS TEMPORARY CODE TO TURN ON WHEN JSON FILE NEEDS TO BE VALIDATED
+	#var tmpFile : FileAccess = FileAccess.open(levelPath + "Temp.txt", FileAccess.WRITE);
+	#tmpFile.store_string(dataToSend);
+	#tmpFile.close();
 	
 	# Write JSON to file and close it
 	var JSONFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE);
@@ -286,6 +297,7 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.restricted = enemy.stats.restricted;
 		"shooting":
 			newResource.direction = enemy.stats.direction;
+			newResource.randomDirection = enemy.stats.randomDirection;
 			newResource.shotSpeed = enemy.stats.shotSpeed;
 			newResource.fireRate = enemy.stats.fireRate;
 			newResource.projBounce = enemy.stats.projBounce;
@@ -294,6 +306,12 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.speed = enemy.stats.speed;
 			newResource.pointBOffset.x = enemy.stats.endpoint.x;
 			newResource.pointBOffset.y = enemy.stats.endpoint.y;
+		"movingPlatform":
+			newResource.speed = enemy.stats.speed;
+			newResource.pointBOffset.x = enemy.stats.endpoint.x;
+			newResource.pointBOffset.y = enemy.stats.endpoint.y;
+			print(enemy.stats.progress);
+			newResource.progress = enemy.stats.progress;
 	ResourceSaver.save(newResource, "res://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 			

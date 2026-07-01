@@ -43,7 +43,7 @@ func _ready() -> void:
 	buttonImportLevel.pressed.connect(overlayImportLevel.show);
 	buttonImportLevelOpen.pressed.connect(import_level);
 	buttonImportLevelCancel.pressed.connect(import_cancel);
-	buttonImportLevelBrowse.pressed.connect(fileExplorer.popup_file_dialog);
+	buttonImportLevelBrowse.pressed.connect(popupFileExplorer);
 	
 	buttonQuit.pressed.connect(exit_program);
 	
@@ -53,6 +53,13 @@ func _ready() -> void:
 	
 	fileExplorer.dir_selected.connect(set_directory);
 	
+	
+
+func popupFileExplorer() -> void:
+	fileExplorer.access = FileDialog.ACCESS_USERDATA;
+	fileExplorer.current_dir = "user://Levels/"
+	fileExplorer.popup_file_dialog();
+
 ## Called when import level button is pressed
 func import_level() -> void:
 	if (!ImportExportManager.validate_import(importedLevelPath)): return;

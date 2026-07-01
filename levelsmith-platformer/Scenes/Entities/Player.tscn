@@ -35,11 +35,11 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyCollision" unique_id=255986313]
 position = Vector2(0, -5)
-scale = Vector2(5.8, 5.524)
+scale = Vector2(5.5, 5.524)
 shape = SubResource("RectangleShape2D_agccv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]
-scale = Vector2(6, 6)
+scale = Vector2(5.7, 6)
 shape = SubResource("RectangleShape2D_571pn")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=290798525]

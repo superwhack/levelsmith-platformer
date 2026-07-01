@@ -291,6 +291,10 @@ func detect_tiles() -> void:
 			# Wall jumps not allowed on bedrock or one way tiles
 			if tileName == "bedrock" || tileName == "oneway":
 				return;
+			if rayDirection.x < 0 && !Input.is_action_pressed("left"):
+				return;
+			elif rayDirection.x > 0 && !Input.is_action_pressed("right"):
+				return;
 			# Wall Slide when not on ice
 			if tileName != "ice":
 				velocity.y *= .94;

@@ -130,11 +130,14 @@ func _unhandled_input(event: InputEvent) -> void:
 				# If the cursor moves a certain distance away from the last click, start moving
 				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > POSITION_DIFFERENCE;
 			if (event.is_action_released("left-click") && prevBrushObject == -1):
+				if (entityManager.duplicatingResource != null && Input.is_action_pressed("copy")):
+					entityManager.duplicatingResource = null;
 				# If the clicked cell is an entity and the click was short, edit its properties
-				if (currentCell > Global.EntityType.GOAL && currentCell < Global.EntityType.PROP1 && !isMoving && currentCell != Global.EntityType.COIN):
+				elif (currentCell > Global.EntityType.GOAL && currentCell < Global.EntityType.PROP1 && !isMoving && currentCell != Global.EntityType.COIN):
 					if Input.is_action_pressed("copy") && previousCell != -1 && currentCell != Global.EntityType.PLAYER:
 						entityManager.duplicate_entity(editorManager.currentMousePosition);
 					else:
+						entityManager.duplicatingResource = null;
 						entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:

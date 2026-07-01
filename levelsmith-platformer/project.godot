@@ -47,6 +47,7 @@ project/assembly_name="levelsmith-platformer"
 Player="Objects that have _physics_process"
 Enemy="Enemies"
 Projectile=""
+Moving="Moving entities that need to have process turned off"
 
 [input]
 

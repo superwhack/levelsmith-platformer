@@ -82,4 +82,13 @@ func apply_script(file: Resource) -> void:
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;
 	gravityOn = propertyFile.gravity;
+	if !gravityOn:
+		motion_mode = CharacterBody2D.MOTION_MODE_FLOATING;
+		set_collision_layer_value(2, false);
+		## NOTE: Uncomment these lines for the moving platform to not collide with the shooting enemy
+		#set_collision_mask_value(2, false);
+	else:
+		motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED;
+		set_collision_layer_value(2, true);
+		#set_collision_mask_value(2, true);
 	timeLeft = 1;

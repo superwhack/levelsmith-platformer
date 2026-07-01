@@ -205,7 +205,7 @@ func update_sliders() -> void:
 	# Make the WallJumpDecay Checkbox transparent if it can't be selected.
 	if !playerWallJump:
 		playerWallJumpDecay = false;
-	make_selectable_check(playerWallJumpDecayCheckbox, playerWallJump);
+	make_selectable(playerWallJumpDecayCheckbox, playerWallJump);
 	playerWallJumpDecayCheckbox.value = playerWallJumpDecay;
 	playerWallJumpDecayCheckbox.update_checkbox();
 	# Enemies
@@ -246,31 +246,15 @@ func update_sliders() -> void:
 		shootingProjectileBounce.update_checkbox();
 		shootingGravity.update_checkbox();
 
-## Alternate the ability for a checkbox property to be selected
+## Alternate the ability for a property to be selected
 ## property: The property to change
 ## selectable: If it can be selected
-func make_selectable_check(property : VBoxContainer, selectable : bool) -> void:
+func make_selectable(property : VBoxContainer, selectable : bool) -> void:
+	property.enabled = selectable;
 	if !selectable:
 		property.modulate = Color(1, 1, 1, 0.5);
-		if property.check_changed.is_connected(_on_drag_ended):
-			property.check_changed.disconnect(_on_drag_ended);
 	else:
 		property.modulate = Color(1, 1, 1, 1);
-		if !property.check_changed.is_connected(_on_drag_ended):
-			property.check_changed.connect(_on_drag_ended);
-			
-## Alternate the ability for a slider property to be selected
-## property: The property to change
-## selectable: If it can be selected
-func make_selectable_slider(property : VBoxContainer, selectable : bool) -> void:
-	if !selectable:
-		property.modulate = Color(1, 1, 1, 0.5);
-		if property.drag_ended.is_connected(_on_drag_ended):
-			property.drag_ended.disconnect(_on_drag_ended);
-	else:
-		property.modulate = Color(1, 1, 1, 1);
-		if !property.drag_ended.is_connected(_on_drag_ended):
-			property.drag_ended.connect(_on_drag_ended);
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:
@@ -300,7 +284,7 @@ func update_values() -> void:
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyShooting:
 		selectedPreset.randomDirection = shootingRandomDirection.value;
-		make_selectable_slider(shootingDirectionSlider, !selectedPreset.randomDirection);
+		make_selectable(shootingDirectionSlider, !selectedPreset.randomDirection);
 		selectedPreset.direction = -shootingDirectionSlider.value;
 		selectedPreset.shotSpeed = shootingShotSpeedSlider.value;
 		selectedPreset.fireRate = shootingFireRateSlider.value;
@@ -349,7 +333,7 @@ func show_menu(resource: Resource = null) -> void:
 		elif selectedEntity is EnemyShooting:
 			shootingDirectionArrow = selectedEntity.directionArrow;
 			shootingDirectionArrow.scale = Vector2(2,2);
-			make_selectable_slider(shootingDirectionSlider, !selectedPreset.randomDirection);
+			make_selectable(shootingDirectionSlider, !selectedPreset.randomDirection);
 			shootingMenu.show();
 	else:
 		playerMenu.show();

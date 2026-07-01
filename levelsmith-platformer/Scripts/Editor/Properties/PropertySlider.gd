@@ -15,6 +15,7 @@ signal drag_ended;
 
 # Value of the slider
 var value : float;
+var enabled : bool = true;
 
 ## When started, set the text of the name label to the name of the property
 func _ready() -> void:
@@ -26,6 +27,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if !enabled:
+		slider.value = value;
+		return;
 	var newLabel = "";
 	if int(sliderStep) == sliderStep:
 		newLabel += str(int(slider.value));

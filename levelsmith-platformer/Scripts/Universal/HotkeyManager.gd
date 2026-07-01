@@ -14,12 +14,12 @@ func _unhandled_key_input(event : InputEvent) -> void:
 	
 	# Switching Tools
 	if event.is_action_pressed("brush-tool"):
-		if (toolManager.prevEntity != -1):
+		if (toolManager.prevBrushObject != -1):
 			entityManager.drop_entity();
 		toolManager.change_tool(Global.Tool.BRUSH);
 		editorManager.change_current_hotbar(Global.HotbarState.TILES);
 	elif event.is_action_pressed("box-brush-tool"):
-		if (toolManager.prevEntity != -1):
+		if (toolManager.prevBrushObject != -1):
 			entityManager.drop_entity();
 		toolManager.change_tool(Global.Tool.BOX_BRUSH);
 		editorManager.change_current_hotbar(Global.HotbarState.TILES);

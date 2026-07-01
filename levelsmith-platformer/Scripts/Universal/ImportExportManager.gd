@@ -55,12 +55,13 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			data_to_send += '"direction": ' + str(propertyFile.direction) + ", ";
 			data_to_send += '"restricted": ' + str(propertyFile.restricted) + '}}';
 		elif enemyProperty.contains("Shooting"):
-			data_to_send += '"type":"shooting", "stats":{';
-			data_to_send += '"direction": ' + str(propertyFile.direction) + ", ";
-			data_to_send += '"shotSpeed": ' + str(propertyFile.shotSpeed) + ", ";
-			data_to_send += '"fireRate": ' + str(propertyFile.fireRate) + ', ';
-			data_to_send += '"projBounce": ' + str(propertyFile.projBounce) + ', ';
-			data_to_send += '"gravity": ' + str(propertyFile.gravity) + '}}';
+			dataToSend += '"type":"shooting", "stats":{';
+			dataToSend += '"direction": ' + str(propertyFile.direction) + ", ";
+			dataToSend += '"randomDirection": ' + str(propertyFile.randomDirection) + ', ';
+			dataToSend += '"shotSpeed": ' + str(propertyFile.shotSpeed) + ", ";
+			dataToSend += '"fireRate": ' + str(propertyFile.fireRate) + ', ';
+			dataToSend += '"projBounce": ' + str(propertyFile.projBounce) + ', ';
+			dataToSend += '"gravity": ' + str(propertyFile.gravity) + '}}';
 		elif enemyProperty.contains("Flying"):
 			dataToSend += '"type":"flying", "stats":{';
 			dataToSend += '"speed": ' + str(propertyFile.speed) + ", ";
@@ -257,6 +258,7 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.restricted = enemy.stats.restricted;
 		"shooting":
 			newResource.direction = enemy.stats.direction;
+			newResource.randomDirection = enemy.stats.randomDirection;
 			newResource.shotSpeed = enemy.stats.shotSpeed;
 			newResource.fireRate = enemy.stats.fireRate;
 			newResource.projBounce = enemy.stats.projBounce;

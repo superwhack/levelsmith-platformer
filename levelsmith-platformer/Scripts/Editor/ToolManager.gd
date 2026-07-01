@@ -18,10 +18,11 @@ var currentTool :  Global.Tool = Global.Tool.BRUSH;
 var boxBrushState : Global.BoxBrushState = Global.BoxBrushState.INACTIVE
 
 # The previously selected tile before dragging
-var prevEntity : int = -1;
+var prevBrushObject : int = -1;
 var prevRotation : int = 0;
 var prevPosition : Vector2;
 var brushObject : int = 0;
+
 
 # A timer to differentiate between click and holding click
 const POSITION_DIFFERENCE = .75;
@@ -35,6 +36,9 @@ var secondBoxCorner : Vector2;
 var isPainting : bool;
 var isErasing : bool;
 var isMoving : bool;
+var isCopying : bool = false;
+# This is needed so there is no chance of drop_entity running twice (which can happen due to the awai process_frame inside of it)
+var justMoved : bool = false;
 
 ## A frame-by-frame process
 ## delta: time since previous frame
@@ -119,12 +123,15 @@ func _unhandled_input(event: InputEvent) -> void:
 						boxBrushState = Global.BoxBrushState.DELETE_CONFIRM;
 				
 		Global.Tool.CURSOR:
-			if (previousClickPos != Vector2(0,0) && !isMoving):
-				# If the cursor moves a certain distance away from the last click, start moving
-				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > POSITION_DIFFERENCE;
 			var currentCell = entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition);
 			var previousCell = entityManager.tileMap.get_cell_source_id(previousClickPos);
-			if (event.is_action_released("left-click") && prevEntity == -1):
+			if (previousClickPos != Vector2(0,0) && !isMoving):
+				justMoved = false;
+				# If the cursor moves a certain distance away from the last click, start moving
+				if Input.is_action_pressed("copy") && previousCell != -1:
+					isCopying = true;
+				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > POSITION_DIFFERENCE;
+			if (event.is_action_released("left-click") && prevBrushObject == -1):
 				# If the clicked cell is an entity and the click was short, edit its properties
 				if (currentCell > Global.EntityType.GOAL && !isMoving && currentCell != Global.EntityType.COIN):
 					entityManager.edit_properties(editorManager.currentMousePosition);
@@ -135,14 +142,17 @@ func _unhandled_input(event: InputEvent) -> void:
 				entityManager.delete_entity(editorManager.currentMousePosition);
 			
 			# If left click is being held, pick up the current tile unless it's empty air.
-			if (isMoving && prevEntity == -1 && previousCell != -1) && previousCell >= editorManager.tileCount && previousCell < Global.BEDROCK_TILE:
+			if (isMoving && prevBrushObject == -1 && previousCell != -1) && previousCell >= editorManager.tileCount && previousCell < Global.BEDROCK_TILE:
 				entityManager.move_entity(previousClickPos);
 			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
-			elif (isMoving && prevEntity == -1):
-				prevEntity = -2;
+			elif (isMoving && prevBrushObject == -1):
+				prevBrushObject = -2;
+				prevPosition = Vector2(-1, -1);
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
-			elif (!isMoving && prevEntity != -1):
+			elif (!isMoving && prevBrushObject != -1 && !justMoved):
 				entityManager.drop_entity();
+				isCopying = false;
+				justMoved = true;
 
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to

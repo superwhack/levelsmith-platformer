@@ -46,7 +46,7 @@ var tileTypes : Array[String] = ["Solid", "Hazard","OneWay","Ice", "Sticky", "Bo
 var entityTypes : Array[String] = ["Player", "EnemyStationary", "EnemyShooting", "EnemyPatrol", "EnemyFlying", "Goal"];
 
 # All types of props
-var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
+var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5", "Prop6"];
 
 # All animations
 var animations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];

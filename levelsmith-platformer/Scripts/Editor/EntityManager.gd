@@ -148,6 +148,7 @@ func duplicate_entity(clickPos: Vector2) -> void:
 
 ## Moves the entity at the clicked position
 func move_entity(previousClickPos: Vector2) -> void:
+	duplicatingResource = null;
 	propertyMenu.close();
 	
 	toolManager.prevPosition = previousClickPos;

@@ -326,7 +326,7 @@ func detect_tiles() -> void:
 				# If the option for decay is turned off, don't decay
 				if !wallJumpDecay:
 					wallJumpCount = 1;
-				velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(groundSpeed, .35);;
+				velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(min(groundSpeed, 1), .35);;
 				justWallJumped = true;
 
 		# Bounce tile collisions

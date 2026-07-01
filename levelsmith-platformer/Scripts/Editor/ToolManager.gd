@@ -128,13 +128,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			if (previousClickPos != Vector2(0,0) && !isMoving):
 				justMoved = false;
 				# If the cursor moves a certain distance away from the last click, start moving
-				if Input.is_action_pressed("copy") && previousCell != -1:
-					isCopying = true;
 				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > POSITION_DIFFERENCE;
 			if (event.is_action_released("left-click") && prevBrushObject == -1):
 				# If the clicked cell is an entity and the click was short, edit its properties
 				if (currentCell > Global.EntityType.GOAL && !isMoving && currentCell != Global.EntityType.COIN):
-					entityManager.edit_properties(editorManager.currentMousePosition);
+					if Input.is_action_pressed("copy") && previousCell != -1:
+						entityManager.duplicate_entity(editorManager.currentMousePosition);
+					else:
+						entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:
 					entityManager.place_entity(editorManager.currentMousePosition);
@@ -157,6 +158,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Change the currently selected tile/entity if possible
 ## tile: the tile/entity to try and change to
 func update_brush_object(objectId: int) -> void:
+	entityManager.duplicatingResource = null;
 	if (isMoving): return;
 	
 	if (currentTool == Global.Tool.CURSOR && objectId >= editorManager.tileCount):

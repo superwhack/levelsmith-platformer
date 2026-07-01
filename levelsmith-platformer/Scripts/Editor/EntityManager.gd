@@ -14,6 +14,7 @@ var goalCount : int = 0;
 @onready var brushObject : int = toolManager.brushObject;
 
 var movingResource : Resource;
+var duplicatingResource : Resource;
 
 ## Runs every frame during the editor state
 func _ready() -> void:
@@ -55,23 +56,35 @@ func place_entity(clickPosition: Vector2) -> void:
 			var time : int = Time.get_ticks_msec();
 			if (brushObject == Global.EntityType.PATROLLING):
 				var defaultPatrolling : Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
-				newEntity = defaultPatrolling.duplicate(true);
+				if duplicatingResource:
+					newEntity = duplicatingResource.duplicate(true);
+				else:
+					newEntity = defaultPatrolling.duplicate(true);
 				placedEnemy.adjust_arrow(90);
 				placedEnemy.directionArrow.scale = Vector2(1, 1);
 				file = "res://Resources/Enemies/Patrolling" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.SHOOTING):
 				var defaultShooting : Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
-				newEntity = defaultShooting.duplicate(true);
+				if duplicatingResource:
+					newEntity = duplicatingResource.duplicate(true);
+				else:
+					newEntity = defaultShooting.duplicate(true);
 				placedEnemy.adjust_arrow(90);
 				placedEnemy.directionArrow.scale = Vector2(1, 1);
 				file = "res://Resources/Enemies/Shooting" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.FLYING):
 				var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
-				newEntity = defaultFlying.duplicate(true);
+				if duplicatingResource:
+					newEntity = duplicatingResource.duplicate(true);
+				else:
+					newEntity = defaultFlying.duplicate(true);
 				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.MOVING_PLATFORM):
 				var defaultMoving : Resource = load("res://Resources/PlayerPresets/MovingPlatformDefault.tres");
-				newEntity = defaultMoving.duplicate(true);
+				if duplicatingResource:
+					newEntity = duplicatingResource.duplicate(true);
+				else:
+					newEntity = defaultMoving.duplicate(true);
 				file = "res://Resources/Enemies/MovingPlatform" + str(time) + ".tres";
 			ResourceSaver.save(newEntity, file);
 			placedEnemy.assign_script(str(time), clickPosition);
@@ -126,6 +139,10 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 		if tileMap.local_to_map(node.global_position) == gridPosition:
 			return node;
 	return null;
+
+func duplicate_entity(clickPos: Vector2) -> void:
+	var entity = get_scene_at_cell(clickPos);
+	duplicatingResource = entity.propertyFile.duplicate(true);
 
 ## Moves the entity at the clicked position
 func move_entity(previousClickPos: Vector2) -> void:

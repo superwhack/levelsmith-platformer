@@ -241,7 +241,7 @@ sliderStep = 0.1
 [node name="ShootingBounce" parent="ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=1978534166 instance=ExtResource("3_1mv14")]
 layout_mode = 2
 size_flags_horizontal = 0
-propertyName = "Projecile Bounce"
+propertyName = "Projectile Bounce"
 
 [node name="ShootingGravity" parent="ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=708611749 instance=ExtResource("3_1mv14")]
 layout_mode = 2

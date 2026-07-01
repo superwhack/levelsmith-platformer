@@ -43,6 +43,8 @@ const MISSING_TEXTURE : String = "res://Assets/Defaults/Assets/Sprites/Missing.p
 var currentSelectedItem : AssetItem;
 
 @export var mainTileMap : TileMapLayer;
+# All types of entities
+var entityTypes : Array[String] = ["Player", "EnemyStationary", "EnemyShooting", "EnemyPatrol", "EnemyFlying", "Goal", "MovingPlatform"];
 
 @export var defaults : Resource;
 

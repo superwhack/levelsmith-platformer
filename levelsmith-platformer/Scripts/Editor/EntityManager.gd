@@ -193,7 +193,7 @@ func drop_entity() -> void:
 	
 	# Reset direciton arrows
 	if droppedEntity is EnemyShooting:
-		droppedEntity.adjust_arrow(droppedEntity.fireDirection + 90);
+		droppedEntity.adjust_arrow(droppedEntity.fireDirection + 90, droppedEntity.randomDirection);
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
 	elif droppedEntity is EnemyPatrol:
 		droppedEntity.adjust_arrow(int(newResource.direction) * 180 + 90);

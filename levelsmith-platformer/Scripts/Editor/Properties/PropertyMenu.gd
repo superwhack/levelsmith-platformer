@@ -139,7 +139,7 @@ func _process(_delta: float) -> void:
 		selectedEntity.previewLine.modulate.a = 1;
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
-		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
+		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90, shootingRandomDirection.value);
 	elif selectedEntity is Player:
 		entityName.text = "Player";
 

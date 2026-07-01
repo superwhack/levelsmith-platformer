@@ -15,6 +15,7 @@ var gravityOn : bool;
 
 # Direction arrow sprite
 @export var directionArrow : Sprite2D;
+@export var questionMark : Sprite2D;
 
 # Projectile scene for instantiating
 const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn");
@@ -42,7 +43,12 @@ func _physics_process(delta: float) -> void:
 
 ## Adjust the direction of the indicator arrow
 ## angle: the angle that the arrow should be pointing at.
-func adjust_arrow(angle: float) -> void:
+func adjust_arrow(angle: float, random: bool = false) -> void:
+	if random:
+		questionMark.show();
+		directionArrow.hide();
+		return;
+	questionMark.hide();
 	directionArrow.show();
 	directionArrow.rotation_degrees = angle;
 	directionArrow.position.x = sin(deg_to_rad(directionArrow.rotation_degrees)) * 90;
@@ -72,7 +78,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	projBounce = propertyFile.projBounce;
 	gravityOn = propertyFile.gravity;
 	ResourceSaver.save(propertyFile);
-	adjust_arrow(fireDirection + 90);
+	adjust_arrow(fireDirection + 90, randomDirection);
 
 func apply_script(file: Resource) -> void:
 	propertyFile = file;

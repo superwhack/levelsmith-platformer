@@ -46,7 +46,7 @@ var tileTypes : Array[String] = ["Solid", "Hazard","OneWay","Ice", "Sticky", "Bo
 var entityTypes : Array[String] = ["Player", "EnemyStationary", "EnemyShooting", "EnemyPatrol", "EnemyFlying", "Goal", "MovingPlatform"];
 
 # All types of props
-var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
+var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5", "Prop6"];
 
 # All animations
 var animations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];
@@ -55,7 +55,7 @@ var animations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "Enem
 func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_image_selector);
-	resetButton.pressed.connect(reset_image);
+	resetButton.pressed.connect(reset_image_popup);
 	imageSelect.file_selected.connect(replace_image);
 	Global.levelCreated.connect(refresh_assets);
 	
@@ -204,6 +204,11 @@ func file_count_in_folder(folderName: String) -> int:
 		PopUpManager.create_error_popup("Folder not found", "Could not find folder with name " + folderName + ".")
 	return -1;
 
+
+## Creates the refresh asset popup.
+func reset_asset_popup() -> void:
+	PopUpManager.create_reset_asset_popup(Callable(self, "refresh_assets"));
+
 ## Refresh all assets in game
 func refresh_assets() -> void:
 	# Change all tiles to their textures
@@ -251,6 +256,11 @@ func replace_image(newImagePath: String) -> void:
 
 #func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 #	pass;
+
+
+## Creates the refresh asset popup.
+func reset_image_popup() -> void:
+	PopUpManager.create_reset_image_popup(Callable(self, "reset_image"), firstSelected.displayName);
 
 func reset_image() -> void:
 	clear_image();

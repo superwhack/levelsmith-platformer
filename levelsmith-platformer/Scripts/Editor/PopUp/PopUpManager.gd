@@ -56,7 +56,7 @@ func create_multi_error_popup(title : String = "Error", body : Array[String] = [
 	
 
 ## Creates a popup for resetting the specific given asset. 
-func create_reset_asset_popup(callback : Callable, asset : String = "asset") -> void:
+func create_reset_asset_popup(callback : Callable) -> void:
 	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
 	
 	newPopUp.set_title("RESET ALL ASSETS");

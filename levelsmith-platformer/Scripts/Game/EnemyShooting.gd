@@ -43,7 +43,7 @@ func _physics_process(delta: float) -> void:
 
 ## Adjust the direction of the indicator arrow
 ## angle: the angle that the arrow should be pointing at.
-func adjust_arrow(angle: float, random: bool = false) -> void:
+func adjust_arrow(angle: float = fireDirection + 90, random: bool = randomDirection) -> void:
 	if random:
 		questionMark.show();
 		directionArrow.hide();

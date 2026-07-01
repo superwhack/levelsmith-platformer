@@ -101,18 +101,13 @@ func check_out_of_bounds(mousePosition: Vector2i) -> bool:
 ## Reset all the enemy positions to the center of their tiles.
 func reset_enemy_positions() -> void:
 	for moving in get_tree().get_nodes_in_group("Moving"):
-		if ((moving is Enemy || moving is MovingPlatform) && moving.propertyFile):
+		if (moving is Enemy || moving is MovingPlatform) && moving.propertyFile:
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
-			if moving is EnemyPatrol:
-				moving.directionArrow.show();
-			if moving is EnemyShooting:
-				if moving.randomDirection:
-					moving.questionMark.show();
-					moving.directionArrow.hide();
-				else:
-					moving.questionMark.hide();
-					moving.directionArrow.show();
-			elif moving is EnemyFlyer:
+#			if moving is EnemyPatrol:
+#				moving.directionArrow.show();
+#			elif moving is EnemyShooting:
+#				moving.directionArrow.show();
+			if moving is EnemyFlyer:
 				moving.previewLine.show();
 		if moving is MovingPlatform && moving.propertyFile:
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);

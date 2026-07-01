@@ -48,7 +48,6 @@ var previewLine: Line2D;
 
 # Shooting inputs
 @export var shootingDirectionSlider : VBoxContainer;
-@export var shootingRandomDirection : VBoxContainer;
 @export var shootingShotSpeedSlider : VBoxContainer;
 @export var shootingFireRateSlider : VBoxContainer;
 @export var shootingProjectileBounce : VBoxContainer;
@@ -82,7 +81,6 @@ func _ready() -> void:
 	patrollingRestrictedCheckbox.check_changed.connect(update_values);
 	
 	shootingDirectionSlider.drag_ended.connect(_on_drag_ended);
-	shootingRandomDirection.check_changed.connect(update_values);
 	shootingShotSpeedSlider.drag_ended.connect(_on_drag_ended);
 	shootingFireRateSlider.drag_ended.connect(_on_drag_ended);
 	shootingProjectileBounce.check_changed.connect(update_values);
@@ -131,7 +129,7 @@ func _process(_delta: float) -> void:
 		selectedEntity.previewLine.modulate.a = 1;
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
-		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90, shootingRandomDirection.value);
+		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
 	elif selectedEntity is Player:
 		entityName.text = "Player";
 
@@ -172,17 +170,7 @@ func update_sliders() -> void:
 	playerFallSpeedSlider.value = playerFallSpeed;
 	playerFallSpeedSlider.update_slider();
 	playerCoyoteTimeSlider.value = playerCoyoteTime;
-	playerCoyoteTimeSlider.update_slider();
-	playerDoubleJumpCheckbox.value = playerDoubleJump;
-	playerDoubleJumpCheckbox.update_checkbox();
-	playerWallJumpCheckbox.value = playerWallJump;
-	playerWallJumpCheckbox.update_checkbox();
-	# Make the WallJumpDecay Checkbox transparent if it can't be selected.
-	if !playerWallJump:
-		playerWallJumpDecay = false;
-	make_selectable(playerWallJumpDecayCheckbox, playerWallJump);
-	playerWallJumpDecayCheckbox.value = playerWallJumpDecay;
-	playerWallJumpDecayCheckbox.update_checkbox();
+	playerCoyoteTimeSlider.update_slider();	
 	# Enemies
 	if selectedEntity is EnemyPatrol:
 		patrollingSpeedSlider.value = selectedPreset.groundSpeed;
@@ -209,27 +197,15 @@ func update_sliders() -> void:
 		movingPlatformProgressSlider.update_slider();
 	elif selectedEntity is EnemyShooting:
 		shootingDirectionSlider.value = -selectedPreset.direction;
-		shootingRandomDirection.value = selectedPreset.randomDirection;
 		shootingShotSpeedSlider.value = selectedPreset.shotSpeed;
 		shootingFireRateSlider.value = selectedPreset.fireRate;
 		shootingProjectileBounce.value = selectedPreset.projBounce;
 		shootingGravity.value = selectedPreset.gravity;
 		shootingDirectionSlider.update_slider();
-		shootingRandomDirection.update_checkbox();
 		shootingShotSpeedSlider.update_slider();
 		shootingFireRateSlider.update_slider();
 		shootingProjectileBounce.update_checkbox();
 		shootingGravity.update_checkbox();
-
-## Alternate the ability for a property to be selected
-## property: The property to change
-## selectable: If it can be selected
-func make_selectable(property : VBoxContainer, selectable : bool) -> void:
-	property.enabled = selectable;
-	if !selectable:
-		property.modulate = Color(1, 1, 1, 0.5);
-	else:
-		property.modulate = Color(1, 1, 1, 1);
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:
@@ -255,8 +231,6 @@ func update_values() -> void:
 		selectedPreset.progress = movingPlatformProgressSlider.value;
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyShooting:
-		selectedPreset.randomDirection = shootingRandomDirection.value;
-		make_selectable(shootingDirectionSlider, !selectedPreset.randomDirection);
 		selectedPreset.direction = -shootingDirectionSlider.value;
 		selectedPreset.shotSpeed = shootingShotSpeedSlider.value;
 		selectedPreset.fireRate = shootingFireRateSlider.value;
@@ -307,7 +281,6 @@ func show_menu(resource: Resource = null) -> void:
 		elif selectedEntity is EnemyShooting:
 			shootingDirectionArrow = selectedEntity.directionArrow;
 			shootingDirectionArrow.scale = Vector2(2,2);
-			make_selectable(shootingDirectionSlider, !selectedPreset.randomDirection);
 			shootingMenu.show();
 	else:
 		playerMenu.show();

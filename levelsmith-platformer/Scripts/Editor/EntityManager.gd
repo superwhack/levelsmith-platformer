@@ -129,7 +129,7 @@ func move_entity(previousClickPos: Vector2) -> void:
 	propertyMenu.close();
 	# Await is needed to it has time to update selectedTile
 	toolManager.prevPosition = previousClickPos;
-	toolManager.prevBrushObject = toolManager.brushObject;
+	toolManager.prevEntity = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;
 	
 	await get_tree().process_frame;
@@ -137,8 +137,7 @@ func move_entity(previousClickPos: Vector2) -> void:
 	toolManager.currentObjectRotation = tileMap.get_cell_alternative_tile(previousClickPos);
 	if get_scene_at_cell(previousClickPos) is Enemy || get_scene_at_cell(previousClickPos) is MovingPlatform:
 		movingResource = get_scene_at_cell(previousClickPos).propertyFile;
-	if (!toolManager.isCopying):
-		delete_entity(previousClickPos);
+	delete_entity(previousClickPos);
 
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
@@ -147,13 +146,7 @@ func drop_entity() -> void:
 	
 	# Drop the entity on its original spot if mouse is over any object.
 	if (clickedObjectId >= 0 || !editorManager.isPlaceable):
-		if toolManager.prevPosition == Vector2(-1 ,-1):
-			toolManager.prevBrushObject = -1;
-			toolManager.prevPosition = Vector2(0,0);
-			toolManager.currentObjectRotation = toolManager.prevRotation;
-			return;
-		# Only allow it to be placed if you aren't copying
-		editorManager.isPlaceable = !toolManager.isCopying;
+		editorManager.isPlaceable = true;
 		dropPosition = toolManager.prevPosition;
 	else:
 		dropPosition = editorManager.currentMousePosition;
@@ -161,9 +154,9 @@ func drop_entity() -> void:
 	
 	# If it's not an enemy, this code needs to be run before await to prevent duplication
 	if ((toolManager.brushObject < Global.EntityType.PATROLLING || toolManager.brushObject > Global.EntityType.STATIONARY) && toolManager.brushObject != Global.EntityType.MOVING_PLATFORM):
-		if (toolManager.prevBrushObject != -2):
-			toolManager.brushObject = toolManager.prevBrushObject;
-		toolManager.prevBrushObject = -1;
+		if (toolManager.prevEntity != -2):
+			toolManager.brushObject = toolManager.prevEntity;
+		toolManager.prevEntity = -1;
 		toolManager.prevPosition = Vector2(0,0);
 		toolManager.currentObjectRotation = toolManager.prevRotation;
 		# Wait until a node is found at the dropped cell
@@ -174,28 +167,27 @@ func drop_entity() -> void:
 		# Wait until a node is found at the dropped cell
 		while (!get_scene_at_cell(dropPosition)):
 			await get_tree().process_frame;
-		if (toolManager.prevBrushObject != -2):
-			toolManager.brushObject = toolManager.prevBrushObject;
-		toolManager.prevBrushObject = -1;
+		if (toolManager.prevEntity != -2):
+			toolManager.brushObject = toolManager.prevEntity;
+		toolManager.prevEntity = -1;
 		toolManager.prevPosition = Vector2(0,0);
 		toolManager.currentObjectRotation = toolManager.prevRotation;
-	
+		
 	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);
 	if !(droppedEntity is Enemy || droppedEntity is MovingPlatform) || !movingResource: return;
 	
-	var newResource = movingResource.duplicate(true);
-	newResource.position = dropPosition;
-	droppedEntity.apply_script(newResource);
+	movingResource.position = dropPosition;
+	droppedEntity.apply_script(movingResource);
 	
 	# Reset direciton arrows
 	if droppedEntity is EnemyShooting:
-		droppedEntity.adjust_arrow(droppedEntity.fireDirection + 90, droppedEntity.randomDirection);
+		droppedEntity.adjust_arrow(droppedEntity.direction + 90);
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
 	elif droppedEntity is EnemyPatrol:
-		droppedEntity.adjust_arrow(int(newResource.direction) * 180 + 90);
+		droppedEntity.adjust_arrow(int(movingResource.direction) * 180 + 90);
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
-	ResourceSaver.save(newResource, "res://Resources/Enemies/" + droppedEntity.name + ".tres");
-	newResource = null;
+	ResourceSaver.save(movingResource, "res://Resources/Enemies/" + droppedEntity.name + ".tres");
+	movingResource = null;
 	editorManager.reset_enemy_positions();
 
 ## Scan through the grid to see how many goals have been placed.

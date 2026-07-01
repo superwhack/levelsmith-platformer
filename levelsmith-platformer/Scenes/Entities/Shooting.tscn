@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://bf3q4v3br7j4o"]
 
 [ext_resource type="Script" uid="uid://cxud880na6ixc" path="res://Scripts/Game/EnemyShooting.gd" id="1_0p30m"]
+[ext_resource type="Texture2D" uid="uid://btwee51autoih" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="3_3c58l"]
 [ext_resource type="Texture2D" uid="uid://bfbrsvv44qln1" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootDeath/1.png" id="3_571pn"]
 [ext_resource type="Texture2D" uid="uid://datm41r7rqi8x" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/1.png" id="4_waxnm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
 animations = [{
@@ -23,13 +26,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="3_3c58l"]
-[ext_resource type="Texture2D" uid="uid://cv2lf8pc8doyc" path="res://Assets/Sprites/UI/question.png" id="3_waxnm"]
-[ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_571pn"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
-
-[node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow", "questionMark", "downRaycast", "upRaycast", "raycastHelper", "onScreen") groups=["Enemy", "Moving"]]
 collision_layer = 6
 collision_mask = 7
 script = ExtResource("1_0p30m")
@@ -38,7 +34,6 @@ hitbox = NodePath("CollisionShape2D")
 animatedSprites = NodePath("AnimatedSprite2D")
 [node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow", "downRaycast", "upRaycast", "raycastHelper", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
 platform_floor_layers = 4294967294
-questionMark = NodePath("QuestionMark")
 downRaycast = NodePath("RayCastDown")
 upRaycast = NodePath("RayCastUp")
 raycastHelper = NodePath("RaycastHelper")
@@ -47,16 +42,6 @@ onScreen = NodePath("OnScreen")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
 scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
-texture = ExtResource("2_0p30m")
-
-[node name="QuestionMark" type="Sprite2D" parent="." unique_id=1219830817]
-visible = false
-z_index = 4
-position = Vector2(0, -100)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("3_waxnm")
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=1346299203]
 visible = false

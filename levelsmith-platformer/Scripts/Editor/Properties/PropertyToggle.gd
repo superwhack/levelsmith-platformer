@@ -9,7 +9,6 @@ signal check_changed;
 
 # Value of the CheckBox
 var value : bool;
-var enabled : bool = true;
 
 ## When started, set the text of the name label to the name of the property
 func _ready() -> void:
@@ -22,8 +21,5 @@ func update_checkbox() -> void:
 
 ## Runs when the checkbox gets pressed
 func _box_clicked() -> void:
-	if !enabled:
-		checkBox.button_pressed = value;
-		return;
 	value = checkBox.button_pressed;
 	check_changed.emit();

@@ -142,6 +142,7 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 
 func duplicate_entity(clickPos: Vector2) -> void:
 	var entity = get_scene_at_cell(clickPos);
+	toolManager.update_brush_object(tileMap.get_cell_source_id(clickPos));
 	duplicatingResource = entity.propertyFile.duplicate(true);
 
 ## Moves the entity at the clicked position

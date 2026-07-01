@@ -306,6 +306,23 @@ propertyName = "vertical offset"
 minMax = Vector2(-10, 10)
 sliderStep = 1.0
 
+[node name="StationaryMargin" type="MarginContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1004279838]
+visible = false
+layout_mode = 2
+
+[node name="StationaryProperties" type="VBoxContainer" parent="ScrollContainer/MainMargin/RootVBox/StationaryMargin" unique_id=84342258]
+layout_mode = 2
+
+[node name="StationaryDirection" parent="ScrollContainer/MainMargin/RootVBox/StationaryMargin/StationaryProperties" unique_id=1130481249 instance=ExtResource("5_ehgsd")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Direction"
+
+[node name="StationaryGravity" parent="ScrollContainer/MainMargin/RootVBox/StationaryMargin/StationaryProperties" unique_id=239804786 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Gravity"
+
 [node name="BottomSpacer" type="Control" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1741289699]
 layout_mode = 2
 size_flags_vertical = 3

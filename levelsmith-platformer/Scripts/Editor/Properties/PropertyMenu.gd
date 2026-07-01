@@ -65,7 +65,7 @@ var selectedPreset : Resource;
 var selectedPlayerPreset : Resource;
 
 # Direction arrow for shooting and patrolling enemies
-var shootingDirectionArrow : Sprite2D;
+var directionArrow : Sprite2D;
 
 @export var closeButton : Button;
 
@@ -109,9 +109,9 @@ func _ready() -> void:
 func close() -> void:
 	if previewLine:
 		previewLine.modulate.a = .5;
-	if shootingDirectionArrow:
-		shootingDirectionArrow.scale = Vector2(1,1);
-		shootingDirectionArrow = null;
+	if directionArrow:
+		directionArrow.scale = Vector2(1,1);
+		directionArrow = null;
 	hide();
 	selectedEntity = null;
 
@@ -301,9 +301,9 @@ func show_menu(resource: Resource = null) -> void:
 	show();
 	if previewLine:
 		previewLine.modulate.a = .5;
-	if shootingDirectionArrow:
-		shootingDirectionArrow.scale = Vector2(1,1);
-		shootingDirectionArrow = null;
+	if directionArrow:
+		directionArrow.scale = Vector2(1,1);
+		directionArrow = null;
 	playerMenu.hide();
 	patrollingMenu.hide();
 	flyingMenu.hide();
@@ -313,7 +313,7 @@ func show_menu(resource: Resource = null) -> void:
 		selectedPreset = resource;
 		update_sliders();
 		if selectedEntity is EnemyPatrol:
-			shootingDirectionArrow = selectedEntity.directionArrow;
+			directionArrow = selectedEntity.directionArrow;
 			patrollingMenu.show();
 		elif selectedEntity is EnemyFlyer:
 			flyingMenu.show()
@@ -328,8 +328,8 @@ func show_menu(resource: Resource = null) -> void:
 				previewLine.modulate.a = 1;
 				selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value)
 		elif selectedEntity is EnemyShooting:
-			shootingDirectionArrow = selectedEntity.directionArrow;
-			shootingDirectionArrow.scale = Vector2(2,2);
+			directionArrow = selectedEntity.directionArrow;
+			directionArrow.scale = Vector2(2,2);
 			shootingMenu.show();
 	else:
 		playerMenu.show();

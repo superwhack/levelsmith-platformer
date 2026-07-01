@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://m70cp4yn5bd1"]
 
-[ext_resource type="Texture2D" path="res://Assets/Sprites/Entities/evilstationarydude.png" id="1_dg4ca"]
+[ext_resource type="Texture2D" uid="uid://0dwb016xnmn4" path="res://Assets/Sprites/Entities/eviljumo.png" id="1_dg4ca"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dhqy0"]
 

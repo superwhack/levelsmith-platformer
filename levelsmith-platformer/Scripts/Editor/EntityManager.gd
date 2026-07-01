@@ -69,6 +69,10 @@ func place_entity(clickPosition: Vector2) -> void:
 				var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
 				newEntity = defaultFlying.duplicate(true);
 				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
+			elif (brushObject == Global.EntityType.STATIONARY):
+				var defaultStationary : Resource = load("res://Resources/PlayerPresets/StationaryDefault.tres");
+				newEntity = defaultStationary.duplicate(true);
+				file = "res://Resources/Enemies/Stationary" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.MOVING_PLATFORM):
 				var defaultMoving : Resource = load("res://Resources/PlayerPresets/MovingPlatformDefault.tres");
 				newEntity = defaultMoving.duplicate(true);
@@ -132,7 +136,7 @@ func move_entity(previousClickPos: Vector2) -> void:
 	propertyMenu.close();
 	
 	toolManager.prevPosition = previousClickPos;
-	toolManager.prevEntity = toolManager.brushObject;
+	toolManager.prevBrushObject = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;
 	
 	# Await is needed to it has time to update selectedTile
@@ -141,7 +145,8 @@ func move_entity(previousClickPos: Vector2) -> void:
 	toolManager.currentObjectRotation = tileMap.get_cell_alternative_tile(previousClickPos);
 	if get_scene_at_cell(previousClickPos) is Enemy || get_scene_at_cell(previousClickPos) is MovingPlatform:
 		movingResource = get_scene_at_cell(previousClickPos).propertyFile;
-	delete_entity(previousClickPos);
+	if (!toolManager.isCopying):
+		delete_entity(previousClickPos);
 
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
 func drop_entity() -> void:
@@ -151,11 +156,12 @@ func drop_entity() -> void:
 	# Drop the entity on its original spot if mouse is over any object.
 	if (clickedObjectId >= 0 || !editorManager.isPlaceable):
 		if toolManager.prevPosition == Vector2(-1 ,-1):
-			toolManager.prevEntity = -1;
+			toolManager.prevBrushObject = -1;
 			toolManager.prevPosition = Vector2(0,0);
 			toolManager.currentObjectRotation = toolManager.prevRotation;
 			return;
-		editorManager.isPlaceable = true;
+		# Only allow it to be placed if you aren't copying
+		editorManager.isPlaceable = !toolManager.isCopying;
 		dropPosition = toolManager.prevPosition;
 	else:
 		dropPosition = editorManager.currentMousePosition;
@@ -163,9 +169,9 @@ func drop_entity() -> void:
 	
 	# If it's not an enemy, this code needs to be run before await to prevent duplication
 	if ((toolManager.brushObject < Global.EntityType.PATROLLING || toolManager.brushObject > Global.EntityType.STATIONARY) && toolManager.brushObject != Global.EntityType.MOVING_PLATFORM):
-		if (toolManager.prevEntity != -2):
-			toolManager.brushObject = toolManager.prevEntity;
-		toolManager.prevEntity = -1;
+		if (toolManager.prevBrushObject != -2):
+			toolManager.brushObject = toolManager.prevBrushObject;
+		toolManager.prevBrushObject = -1;
 		toolManager.prevPosition = Vector2(0,0);
 		toolManager.currentObjectRotation = toolManager.prevRotation;
 		# Wait until a node is found at the dropped cell
@@ -176,27 +182,30 @@ func drop_entity() -> void:
 		# Wait until a node is found at the dropped cell
 		while (!get_scene_at_cell(dropPosition)):
 			await get_tree().process_frame;
-		if (toolManager.prevEntity != -2):
-			toolManager.brushObject = toolManager.prevEntity;
-		toolManager.prevEntity = -1;
+		if (toolManager.prevBrushObject != -2):
+			toolManager.brushObject = toolManager.prevBrushObject;
+		toolManager.prevBrushObject = -1;
 		toolManager.prevPosition = Vector2(0,0);
 		toolManager.currentObjectRotation = toolManager.prevRotation;
-		
+	
 	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);
 	if !(droppedEntity is Enemy || droppedEntity is MovingPlatform) || !movingResource: return;
 	
-	movingResource.position = dropPosition;
-	droppedEntity.apply_script(movingResource);
+	var newResource = movingResource.duplicate(true);
+	newResource.position = dropPosition;
+	droppedEntity.apply_script(newResource);
 	
 	# Reset direciton arrows
 	if droppedEntity is EnemyShooting:
-		droppedEntity.adjust_arrow(droppedEntity.fireDirection + 90);
+		droppedEntity.adjust_arrow(droppedEntity.fireDirection + 90, droppedEntity.randomDirection);
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
 	elif droppedEntity is EnemyPatrol:
-		droppedEntity.adjust_arrow(int(movingResource.direction) * 180 + 90);
+		droppedEntity.adjust_arrow(int(newResource.direction) * 180 + 90);
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
-	ResourceSaver.save(movingResource, "res://Resources/Enemies/" + droppedEntity.name + ".tres");
-	movingResource = null;
+	elif droppedEntity is EnemyStationary:
+		droppedEntity.update_flipped();
+	ResourceSaver.save(newResource, "res://Resources/Enemies/" + droppedEntity.name + ".tres");
+	newResource = null;
 	editorManager.reset_enemy_positions();
 
 ## Scan through the grid to see how many goals have been placed.

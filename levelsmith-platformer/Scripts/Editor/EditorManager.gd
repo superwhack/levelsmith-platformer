@@ -110,8 +110,8 @@ func reset_enemy_positions() -> void:
 					moving.questionMark.show();
 					moving.directionArrow.hide();
 				else:
-					moving.questionMark.show();
-					moving.directionArrow.hide();
+					moving.questionMark.hide();
+					moving.directionArrow.show();
 			elif moving is EnemyFlyer:
 				moving.previewLine.show();
 		if moving is MovingPlatform && moving.propertyFile:

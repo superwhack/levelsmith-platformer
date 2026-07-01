@@ -8,6 +8,6 @@ func _ready() -> void:
 ## If the player enters the area, emit the completion signal
 ## body: the body entering to check if it's the player
 func complete_level(body: Node2D) -> void:
-	if body is CharacterBody2D:
+	if body is Player:
 		AudioManager.play_effect("Victory");
 		Global.complete.emit();

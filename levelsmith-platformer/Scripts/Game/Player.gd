@@ -355,16 +355,17 @@ func detect_tiles() -> void:
 			if (abs(raycast.target_position.x) > abs(raycast.target_position.y)):
 				velocity.y *= .9;
 				# Vertical Stick
-			else:
-				if (raycast.target_position.y < 0):
-					wallJumpDirection = WallDirection.NONE;
-					velocity.y = 0;
-					if (Input.is_action_just_pressed("down")):
-						while raycast.is_colliding():
-							position += Vector2(0, 1);
-							raycast.force_raycast_update();
-					velocity.x = clamp(velocity.x, -trueSpeed * .5, trueSpeed * .5);
-				currentSlowdown = .5;
+			## NOTE: Uncomment this to turn on the ability for the player to 'climb' on the bottom of sticky tiles
+			#else:
+			#	if (raycast.target_position.y < 0):
+			#		wallJumpDirection = WallDirection.NONE;
+			#		velocity.y = 0;
+			#		if (Input.is_action_just_pressed("down")):
+			#			while raycast.is_colliding():
+			#				position += Vector2(0, 1);
+			#				raycast.force_raycast_update();
+			#		velocity.x = clamp(velocity.x, -trueSpeed * .5, trueSpeed * .5);
+			#	currentSlowdown = .5;
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
 			take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"));

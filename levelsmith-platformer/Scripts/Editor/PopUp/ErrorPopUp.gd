@@ -35,7 +35,6 @@ func close_popup() -> void:
 	# Additional functionality can be added below
 	
 func _on_confirm_pressed() -> void:
-	print("confirmed")
 	if (resetCallback.is_valid()):
 		resetCallback.call();
 

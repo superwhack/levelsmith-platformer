@@ -31,7 +31,7 @@ bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/Body")
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
 custom_minimum_size = Vector2(300, 176)
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_idm4w")
 

@@ -76,7 +76,12 @@ func create_reset_image_popup(callback : Callable, asset : String = "asset") -> 
 	newPopUp.closeButton.text = "Cancel";
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
-	
+
+
+## Simply kills all its children
+func clear_all_popups() -> void:
+	for child in get_children():
+		child.queue_free();
 
 	
 ## Removes specific popup from popup stack

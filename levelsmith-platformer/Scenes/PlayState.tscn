@@ -8,19 +8,25 @@
 [ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="6_4i4ea"]
 [ext_resource type="Texture2D" uid="uid://b1hadfl28cryv" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeResumeWhite.png" id="6_habuo"]
 [ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
+[ext_resource type="PackedScene" uid="uid://cmpj0a4yqf4gu" path="res://Scenes/UI/WinScreen.tscn" id="8_4i4ea"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
 
-[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "bottomScreenGroup", "coinCounterLabel", "timerLabel", "resetButton", "pauseButton", "resumeButton")]
+[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "winScreen", "bottomScreenGroup", "coinCounterLabel", "timerLabel", "winCoinLabel", "winTimeLabel", "resetButton", "pauseButton", "resumeButton", "replayButton", "editorButton")]
 script = ExtResource("1_habuo")
 pauseScreen = NodePath("CanvasLayer/PausedScreenContainer")
+winScreen = NodePath("CanvasLayer/WinScreen")
 bottomScreenGroup = NodePath("CanvasLayer/BottomScreenGroup")
 coinCounterLabel = NodePath("CanvasLayer/CoinCounter")
 timerLabel = NodePath("CanvasLayer/Timer")
+winCoinLabel = NodePath("CanvasLayer/WinScreen/VBoxContainer2/WinCoinCounter")
+winTimeLabel = NodePath("CanvasLayer/WinScreen/VBoxContainer2/WinTimer")
 resetButton = NodePath("CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ResetButton")
 pauseButton = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/PauseButton")
 resumeButton = NodePath("CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer/ResumeButton")
+replayButton = NodePath("CanvasLayer/WinScreen/VBoxContainer2/Container/WinResetButton")
+editorButton = NodePath("CanvasLayer/WinScreen/VBoxContainer2/Container/WinReturnEditorButton")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1567020351]
 
@@ -174,3 +180,51 @@ grow_horizontal = 0
 offset_transform_enabled = true
 theme_override_colors/default_color = Color(0.7057152, 1, 0.6794825, 1)
 theme_override_font_sizes/normal_font_size = 45
+
+[node name="WinScreen" parent="CanvasLayer" unique_id=622496012 instance=ExtResource("8_4i4ea")]
+process_mode = 2
+offset_right = 534.0
+offset_bottom = 290.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/WinScreen" unique_id=191404209]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/WinScreen/VBoxContainer2" unique_id=1023899742]
+custom_minimum_size = Vector2(500, 150)
+layout_mode = 2
+text = "Level Cleared"
+
+[node name="WinCoinCounter" type="RichTextLabel" parent="CanvasLayer/WinScreen/VBoxContainer2" unique_id=626096084]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_colors/default_color = Color(1, 0.85882354, 0, 1)
+theme_override_font_sizes/normal_font_size = 45
+
+[node name="WinTimer" type="RichTextLabel" parent="CanvasLayer/WinScreen/VBoxContainer2" unique_id=321215053]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_colors/default_color = Color(0.7057152, 1, 0.6794825, 1)
+theme_override_font_sizes/normal_font_size = 45
+
+[node name="Container" type="HBoxContainer" parent="CanvasLayer/WinScreen/VBoxContainer2" unique_id=204582484]
+layout_mode = 2
+
+[node name="WinResetButton" type="Button" parent="CanvasLayer/WinScreen/VBoxContainer2/Container" unique_id=1302967754]
+custom_minimum_size = Vector2(265, 0)
+layout_mode = 2
+focus_behavior_recursive = 1
+theme = ExtResource("2_ym18m")
+action_mode = 0
+icon = ExtResource("3_jygy8")
+icon_alignment = 1
+
+[node name="WinReturnEditorButton" type="Button" parent="CanvasLayer/WinScreen/VBoxContainer2/Container" unique_id=1468608200]
+custom_minimum_size = Vector2(265, 0)
+layout_mode = 2
+focus_behavior_recursive = 1
+theme = ExtResource("2_ym18m")
+action_mode = 0
+icon = ExtResource("4_habuo")
+icon_alignment = 1

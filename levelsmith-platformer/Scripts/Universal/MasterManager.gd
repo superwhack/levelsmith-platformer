@@ -39,7 +39,7 @@ func _ready() -> void:
 	AudioManager.update_volume();
 	
 	Global.reload.connect(load_tilemap);
-	Global.complete.connect(level_complete);
+	#Global.complete.connect(level_complete);
 	Global.levelCreated.connect(tileMap.clear);
 	Global.levelCreated.connect(create_bedrock_border);
 	Global.levelCreated.connect(edit);
@@ -69,10 +69,10 @@ func _input(event: InputEvent) -> void:
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
-func level_complete() -> void:
-	edit();
-	editorManager.isValidated = true;
-	#print("LEVEL COMPLETE");
+#func level_complete() -> void:
+	#edit();
+	#editorManager.isValidated = true;
+	##print("LEVEL COMPLETE");
 
 ## Set up a new level
 ## levelName: Name of the level
@@ -150,7 +150,13 @@ func edit() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
-	editorManager.returnClick = true;
+	if !gameManager.goalReached:
+		editorManager.returnClick = true;
+	# Just so there aren't any issues when holding down a button before swapping to play
+	toolManager.isErasing = false;
+	toolManager.isPainting = false;
+	# You can right click after completing a level
+	toolManager.clickOnUI = false;
 	editorManagerCanvas.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;

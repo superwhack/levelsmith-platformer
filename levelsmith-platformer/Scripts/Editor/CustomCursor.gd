@@ -73,7 +73,8 @@ func _process(_delta: float) -> void:
 		SelectorState.EDITING:
 			selectorFrame.modulate = Color(1, 1, 0);
 		SelectorState.MOVING:
-			selectorFrame.modulate = Color(0, 1, 1);
+			if toolManager.prevBrushObject > -1:
+				selectorFrame.modulate = Color(0, 1, 1);
 		SelectorState.INVALID:
 			selectorFrame.modulate = Color(1, 1, 1, 0);
 	

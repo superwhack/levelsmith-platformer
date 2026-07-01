@@ -183,14 +183,14 @@ func run() -> void:
 ## Have the player take damage
 ## amount: damage to deal, -1 is instant death
 ## direction: direction to deal damage in
-func take_damage(amount: int, direction: Vector2 = Vector2(0, 0)) -> void:
+func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce : int = 0) -> void:
 	if amount < 0:
 		return die();
 	if invulnerabilityCurrent > 0:
 		return;
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
-	velocity = direction * 1000;
+	velocity = direction * (1000 + higherBounce * 500);
 	health -= amount;
 	if (health <= 0):
 		die();
@@ -288,7 +288,8 @@ func detect_tiles() -> void:
 
 		# Wall Jumping + Sliding
 		if wallJump && rayDirection.x != 0:
-			if tileName == "bedrock":
+			# Wall jumps not allowed on bedrock or one way tiles
+			if tileName == "bedrock" || tileName == "oneway":
 				return;
 			# Wall Slide when not on ice
 			if tileName != "ice":
@@ -366,7 +367,7 @@ func detect_tiles() -> void:
 				currentSlowdown = .5;
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
-			take_damage(1, direction.normalized());
+			take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"));
 		elif tileName == "death":
 			take_damage(-1);
 		# Only downward rays should drive floor tile effects (except hazard)

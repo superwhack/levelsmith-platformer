@@ -185,7 +185,7 @@ func validate_import(sourceName: String) -> bool:
 		return true;
 		
 	# If import fails, send a pop-up to the user.
-	PopUpManager.create_multi_error_popup("Level Import Failed from directory " + levelPath + "!", errors);
+	#PopUpManager.create_multi_error_popup("Level Import Failed from directory " + levelPath + "!", errors);
 	return false;
 
 ## Imports a level at the specified directory.

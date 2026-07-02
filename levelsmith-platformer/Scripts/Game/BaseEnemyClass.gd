@@ -30,6 +30,7 @@ func _ready() -> void:
 	deathTimer.wait_time = 1;
 	deathTimer.timeout.connect(queue_free);
 	add_child(deathTimer);
+
 ## Processes for every frame based on time
 ## delta: Time since previous frame.
 func _physics_process(delta: float) -> void:
@@ -87,7 +88,7 @@ func die() -> void:
 	AudioManager.play_effect("EnemyDeath");
 	if (animatedSprites):
 		animatedSprites.play("death");
-	hitbox.disabled = true;
+	remove_from_group("enemy");
 	deathTimer.start();
 
 ## Detects whether the enemy is out of bounds.

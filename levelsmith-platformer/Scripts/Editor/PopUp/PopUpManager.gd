@@ -76,6 +76,36 @@ func create_reset_image_popup(callback : Callable, asset : String = "asset") -> 
 	newPopUp.closeButton.text = "Cancel";
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
+	
+	
+## When saving a level, create the initial popup
+func create_save_popup() -> void:
+	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
+	
+	newPopUp.set_title("Saving...");
+	newPopUp.separator.hide();
+	newPopUp.bodyText.hide();
+	newPopUp.resetButton.hide();
+	newPopUp.closeButton.hide();
+	newPopUp.self_modulate = Color(1, 1, 1, 0);
+	
+	add_child(newPopUp);
+	currentPopUp = newPopUp;
+	
+
+## When a save has been completed, create a save complete popup
+func create_save_complete_popup() -> void:
+	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
+	
+	newPopUp.set_title("Save Complete!");
+	newPopUp.separator.hide();
+	newPopUp.bodyText.hide();
+	newPopUp.resetButton.hide();
+	newPopUp.closeButton.hide();
+	newPopUp.self_modulate = Color(1, 1, 1, 0);
+	
+	add_child(newPopUp);
+	currentPopUp = newPopUp;
 
 
 ## Simply kills all its children

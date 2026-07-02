@@ -10,7 +10,6 @@ extends Control
 # Callback function, used for assigning a function to the reset button.
 var resetCallback : Callable = Callable();
 
-
 ## Runs when the node is first created
 func _ready() -> void:
 	if (closeButton):

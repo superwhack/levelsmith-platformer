@@ -76,7 +76,7 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
 func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) -> void:
-	#PopUpManager.
+	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
 		DirAccess.make_dir_absolute(levelPath);
@@ -153,6 +153,12 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	CSVFile.close();
 	
 	clone_data("user://Assets/", levelAssetPath);
+	
+	await get_tree().create_timer(0.2).timeout;
+	PopUpManager.clear_all_popups();
+	PopUpManager.create_save_complete_popup();
+	await get_tree().create_timer(0.65).timeout;
+	PopUpManager.clear_all_popups();
 
 ## Validates a level import at a given directory
 ## sourceName: Source level name

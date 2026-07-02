@@ -291,6 +291,10 @@ func detect_tiles() -> void:
 			# Wall jumps not allowed on bedrock or one way tiles
 			if tileName == "bedrock" || tileName == "oneway":
 				return;
+			if rayDirection.x < 0 && !Input.is_action_pressed("left"):
+				return;
+			elif rayDirection.x > 0 && !Input.is_action_pressed("right"):
+				return;
 			# Wall Slide when not on ice
 			if tileName != "ice":
 				velocity.y *= .94;
@@ -322,7 +326,7 @@ func detect_tiles() -> void:
 				# If the option for decay is turned off, don't decay
 				if !wallJumpDecay:
 					wallJumpCount = 1;
-				velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(groundSpeed, .35);;
+				velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(min(groundSpeed, 1), .35);;
 				justWallJumped = true;
 
 		# Bounce tile collisions
@@ -355,15 +359,16 @@ func detect_tiles() -> void:
 			if (abs(raycast.target_position.x) > abs(raycast.target_position.y)):
 				velocity.y *= .9;
 				# Vertical Stick
+			## NOTE: Uncomment this to turn on the ability for the player to 'climb' on the bottom of sticky tiles
 			else:
-				if (raycast.target_position.y < 0):
-					wallJumpDirection = WallDirection.NONE;
-					velocity.y = 0;
-					if (Input.is_action_just_pressed("down")):
-						while raycast.is_colliding():
-							position += Vector2(0, 1);
-							raycast.force_raycast_update();
-					velocity.x = clamp(velocity.x, -trueSpeed * .5, trueSpeed * .5);
+			#	if (raycast.target_position.y < 0):
+			#		wallJumpDirection = WallDirection.NONE;
+			#		velocity.y = 0;
+			#		if (Input.is_action_just_pressed("down")):
+			#			while raycast.is_colliding():
+			#				position += Vector2(0, 1);
+			#				raycast.force_raycast_update();
+			#		velocity.x = clamp(velocity.x, -trueSpeed * .5, trueSpeed * .5);
 				currentSlowdown = .5;
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;

@@ -45,7 +45,10 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	defaultPlayerJSON += '"jump": ' + str(playerDefault.jumpHeight) + ", ";
 	defaultPlayerJSON += '"airControl": ' + str(playerDefault.airControl) + ", ";
 	defaultPlayerJSON += '"fallSpeed": ' + str(playerDefault.fallSpeed) + ", ";
-	defaultPlayerJSON += '"coyoteTime": ' + str(playerDefault.coyoteTime);
+	defaultPlayerJSON += '"coyoteTime": ' + str(playerDefault.coyoteTime) + ", ";
+	defaultPlayerJSON += '"doubleJump": ' + str(playerDefault.doubleJump) + ", ";
+	defaultPlayerJSON += '"wallJump": ' + str(playerDefault.wallJump) + ", ";
+	defaultPlayerJSON += '"wallJumpDecay": ' + str(playerDefault.wallJumpDecay);
 	defaultPlayerJSON += '}}';
 	
 	# Convert our data to a json_string
@@ -73,6 +76,7 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
 func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) -> void:
+	#PopUpManager.
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
 		DirAccess.make_dir_absolute(levelPath);
@@ -122,7 +126,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	dataToSend += '"coyoteTime": ' + str(playerData.playerCoyoteTime) + ", ";
 	dataToSend += '"doubleJump": ' + str(playerData.playerDoubleJump) + ", ";
 	dataToSend += '"wallJump": ' + str(playerData.playerWallJump) + ", ";
-	dataToSend += '"wallJumpDecay": ' + str(playerData.playerWallJumpDecay);
+	#dataToSend += '"wallJumpDecay": ' + str(playerData.playerWallJumpDecay);
 	dataToSend += '}}';
 	
 	# Convert our data to a json_string
@@ -224,16 +228,16 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	var json_as_dict : Variant = JSON.parse_string(JSONFile.get_as_text());
 	
 	# Player information read
-	var player = json_as_dict.player;
-	playerData.playerHealth = player.health;
-	playerData.playerSpeed = player.speed;
-	playerData.playerJumpHeight = player.jump;
-	playerData.playerAirControl = player.airControl;
-	playerData.playerFallSpeed = player.fallSpeed;
-	playerData.playerCoyoteTime = player.coyoteTime;
-	playerData.playerDoubleJump = player.doubleJump;
-	playerData.playerWallJump = player.wallJump;
-	playerData.playerWallJumpDecay = player.wallJumpDecay;
+	var player = json_as_dict.get("player", {});
+	playerData.playerHealth = player.get("health", playerData.playerHealth);
+	playerData.playerSpeed = player.get("speed", playerData.playerSpeed);
+	playerData.playerJumpHeight = player.get("jumpHeight", playerData.playerJumpHeight);
+	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
+	playerData.playerFallSpeed = player.get("fallSpeed", playerData.playerFallSpeed);
+	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
+	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
+	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);
+	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);
 	playerData.update_custom();
 	playerData.update_sliders();
 	
@@ -317,7 +321,6 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.speed = enemy.stats.speed;
 			newResource.pointBOffset.x = enemy.stats.endpoint.x;
 			newResource.pointBOffset.y = enemy.stats.endpoint.y;
-			print(enemy.stats.progress);
 			newResource.progress = enemy.stats.progress;
 	ResourceSaver.save(newResource, "res://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));

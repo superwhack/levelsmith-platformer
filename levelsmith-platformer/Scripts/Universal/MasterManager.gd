@@ -183,7 +183,7 @@ func play() -> void:
 	gameManager.show();
 	gameManager.playerPreset = propertyMenu.selectedPlayerPreset;
 	gameManager.start();
-	gameManagerCanvas.show()
+	gameManagerCanvas.show();
 	editorManager.hide();
 	editorManagerCanvas.hide();
 	previewTileMap.clear();

@@ -2,27 +2,35 @@
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_ym18m"]
-[ext_resource type="Texture2D" uid="uid://bw2mins88t48f" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonRestartWhite.png" id="3_jygy8"]
-[ext_resource type="Texture2D" uid="uid://dnd75m1akapxn" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeBuildWhite.png" id="4_habuo"]
-[ext_resource type="Texture2D" uid="uid://d4ei24q10ni7o" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonPauseWhite.png" id="5_jygy8"]
-[ext_resource type="Texture2D" uid="uid://yl0iqt6b7aip" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeResumeWhite.png" id="6_habuo"]
+[ext_resource type="Texture2D" uid="uid://cac4ja4s12xun" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonRestartWhite.png" id="3_jygy8"]
+[ext_resource type="Texture2D" uid="uid://4m28733rlp7e" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeBuildWhite.png" id="4_habuo"]
+[ext_resource type="Texture2D" uid="uid://dv4prgld7ti1y" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonPauseWhite.png" id="5_jygy8"]
+[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="6_4i4ea"]
+[ext_resource type="Texture2D" uid="uid://b1hadfl28cryv" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeResumeWhite.png" id="6_habuo"]
 [ext_resource type="StyleBox" uid="uid://dwhikovr4qh18" path="res://Assets/UserInterface/PlayStateUIPanel.tres" id="6_o46cv"]
 [ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="6_x53pn"]
 [ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
 [ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
+[ext_resource type="PackedScene" uid="uid://cmpj0a4yqf4gu" path="res://Scenes/UI/WinScreen.tscn" id="8_4i4ea"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
 
-[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "bottomScreenGroup", "coinCounterLabel", "playerHealthUI", "resetButton", "pauseButton", "resumeButton")]
+[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "winScreen", "bottomScreenGroup", "coinCounterLabel", "playerHealthUI", "timerLabel", "winCoinLabel", "winTimeLabel", "resetButton", "pauseButton", "resumeButton", "replayButton", "editorButton")]
 script = ExtResource("1_habuo")
 pauseScreen = NodePath("CanvasLayer/PausedScreenContainer")
+winScreen = NodePath("CanvasLayer/WinScreen")
 bottomScreenGroup = NodePath("CanvasLayer/BottomScreenGroup")
 coinCounterLabel = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/MarginContainer/HBoxContainer/CoinCounter")
 playerHealthUI = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PlayerHealthUi")
+timerLabel = NodePath("CanvasLayer/Timer")
+winCoinLabel = NodePath("CanvasLayer/WinScreen/VBoxContainer2/WinCoinCounter")
+winTimeLabel = NodePath("CanvasLayer/WinScreen/VBoxContainer2/WinTimer")
 resetButton = NodePath("CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ResetButton")
 pauseButton = NodePath("CanvasLayer/TopLeftMargin/PauseButton")
 resumeButton = NodePath("CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer/ResumeButton")
+replayButton = NodePath("CanvasLayer/WinScreen/VBoxContainer2/Container/WinResetButton")
+editorButton = NodePath("CanvasLayer/WinScreen/VBoxContainer2/Container/WinReturnEditorButton")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1567020351]
 
@@ -54,6 +62,7 @@ layout_mode = 2
 [node name="ResetButton" type="Button" parent="CanvasLayer/BottomScreenGroup/BottomRightMargin/Container" unique_id=1815887631]
 layout_mode = 2
 size_flags_vertical = 8
+tooltip_text = "Reset"
 focus_behavior_recursive = 1
 theme = ExtResource("2_ym18m")
 action_mode = 0
@@ -68,11 +77,27 @@ size_flags_horizontal = 3
 [node name="ReturnEditorButton" type="Button" parent="CanvasLayer/BottomScreenGroup/BottomRightMargin/Container" unique_id=1339685622]
 custom_minimum_size = Vector2(265, 0)
 layout_mode = 2
+tooltip_text = "Edit Mode"
 focus_behavior_recursive = 1
 theme = ExtResource("2_ym18m")
 action_mode = 0
 icon = ExtResource("4_habuo")
 icon_alignment = 1
+
+[node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=1930773515]
+layout_mode = 0
+offset_right = 292.0
+offset_bottom = 92.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="PauseButton" type="Button" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin" unique_id=2000062892]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+tooltip_text = "Pause"
+theme = ExtResource("2_ym18m")
+icon = ExtResource("5_jygy8")
 
 [node name="BottomLeftMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=420297532]
 layout_mode = 1
@@ -87,6 +112,9 @@ theme_override_constants/margin_bottom = 20
 
 [node name="ControlsLabel" type="Label" parent="CanvasLayer/BottomScreenGroup/BottomLeftMargin" unique_id=1113873687]
 layout_mode = 2
+theme = ExtResource("2_ym18m")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_4i4ea")
 theme_override_font_sizes/font_size = 25
 text = "Move [WASD / Arrow Keys]	     Jump [Space]"
 
@@ -146,13 +174,13 @@ scroll_active = false
 autowrap_mode = 0
 vertical_alignment = 1
 
-[node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer" unique_id=1930773515]
+[node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer" unique_id=1549534289]
 offset_right = 292.0
 offset_bottom = 92.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 
-[node name="PauseButton" type="Button" parent="CanvasLayer/TopLeftMargin" unique_id=2000062892]
+[node name="PauseButton" type="Button" parent="CanvasLayer/TopLeftMargin" unique_id=65536290]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -183,6 +211,7 @@ layout_mode = 2
 
 [node name="ResumeButton" type="Button" parent="CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer" unique_id=486615708]
 layout_mode = 2
+tooltip_text = "Resume"
 theme = ExtResource("2_ym18m")
 icon = ExtResource("6_habuo")
 
@@ -196,3 +225,79 @@ layout_mode = 2
 theme_override_font_sizes/italics_font_size = 35
 bbcode_enabled = true
 text = "[u][i]Game Paused[/i][/u]"
+
+[node name="CoinCounter" type="RichTextLabel" parent="CanvasLayer" unique_id=143256191]
+custom_minimum_size = Vector2(250, 0)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -290.0
+offset_top = 40.0
+offset_right = -40.0
+offset_bottom = 112.0
+grow_horizontal = 0
+offset_transform_enabled = true
+theme_override_colors/default_color = Color(1, 0.85882354, 0, 1)
+theme_override_font_sizes/normal_font_size = 45
+
+[node name="Timer" type="RichTextLabel" parent="CanvasLayer" unique_id=1225691579]
+custom_minimum_size = Vector2(250, 0)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -290.0
+offset_top = 115.0
+offset_right = -40.0
+offset_bottom = 187.00009
+grow_horizontal = 0
+offset_transform_enabled = true
+theme_override_colors/default_color = Color(0.7057152, 1, 0.6794825, 1)
+theme_override_font_sizes/normal_font_size = 45
+
+[node name="WinScreen" parent="CanvasLayer" unique_id=622496012 instance=ExtResource("8_4i4ea")]
+process_mode = 2
+offset_right = 534.0
+offset_bottom = 290.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/WinScreen" unique_id=191404209]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/WinScreen/VBoxContainer2" unique_id=1023899742]
+custom_minimum_size = Vector2(500, 150)
+layout_mode = 2
+text = "Level Cleared"
+
+[node name="WinCoinCounter" type="RichTextLabel" parent="CanvasLayer/WinScreen/VBoxContainer2" unique_id=626096084]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_colors/default_color = Color(1, 0.85882354, 0, 1)
+theme_override_font_sizes/normal_font_size = 45
+
+[node name="WinTimer" type="RichTextLabel" parent="CanvasLayer/WinScreen/VBoxContainer2" unique_id=321215053]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_colors/default_color = Color(0.7057152, 1, 0.6794825, 1)
+theme_override_font_sizes/normal_font_size = 45
+
+[node name="Container" type="HBoxContainer" parent="CanvasLayer/WinScreen/VBoxContainer2" unique_id=204582484]
+layout_mode = 2
+
+[node name="WinResetButton" type="Button" parent="CanvasLayer/WinScreen/VBoxContainer2/Container" unique_id=1302967754]
+custom_minimum_size = Vector2(265, 0)
+layout_mode = 2
+focus_behavior_recursive = 1
+theme = ExtResource("2_ym18m")
+action_mode = 0
+icon = ExtResource("3_jygy8")
+icon_alignment = 1
+
+[node name="WinReturnEditorButton" type="Button" parent="CanvasLayer/WinScreen/VBoxContainer2/Container" unique_id=1468608200]
+custom_minimum_size = Vector2(265, 0)
+layout_mode = 2
+focus_behavior_recursive = 1
+theme = ExtResource("2_ym18m")
+action_mode = 0
+icon = ExtResource("4_habuo")
+icon_alignment = 1

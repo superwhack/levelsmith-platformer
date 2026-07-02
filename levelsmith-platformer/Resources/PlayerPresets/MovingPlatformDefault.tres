@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="MovingPlatformPreset" format=3 uid="uid://dq8bb7bbk7gn3"]
+
+[ext_resource type="Script" uid="uid://bkqr6ik6fnfxj" path="res://Scripts/Editor/Properties/MovingPlatformPreset.gd" id="1_54a5h"]
+
+[resource]
+script = ExtResource("1_54a5h")
+speed = 2.0

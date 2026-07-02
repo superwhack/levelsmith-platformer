@@ -45,7 +45,10 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	defaultPlayerJSON += '"jump": ' + str(playerDefault.jumpHeight) + ", ";
 	defaultPlayerJSON += '"airControl": ' + str(playerDefault.airControl) + ", ";
 	defaultPlayerJSON += '"fallSpeed": ' + str(playerDefault.fallSpeed) + ", ";
-	defaultPlayerJSON += '"coyoteTime": ' + str(playerDefault.coyoteTime);
+	defaultPlayerJSON += '"coyoteTime": ' + str(playerDefault.coyoteTime) + ", ";
+	defaultPlayerJSON += '"doubleJump": ' + str(playerDefault.doubleJump) + ", ";
+	defaultPlayerJSON += '"wallJump": ' + str(playerDefault.wallJump) + ", ";
+	defaultPlayerJSON += '"wallJumpDecay": ' + str(playerDefault.wallJumpDecay);
 	defaultPlayerJSON += '}}';
 	
 	# Convert our data to a json_string
@@ -73,6 +76,7 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
 func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) -> void:
+	#PopUpManager.
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
 		DirAccess.make_dir_absolute(levelPath);
@@ -92,6 +96,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 		elif enemyProperty.contains("Shooting"):
 			dataToSend += '"type":"shooting", "stats":{';
 			dataToSend += '"direction": ' + str(propertyFile.direction) + ", ";
+			dataToSend += '"randomDirection": ' + str(propertyFile.randomDirection) + ', ';
 			dataToSend += '"shotSpeed": ' + str(propertyFile.shotSpeed) + ", ";
 			dataToSend += '"fireRate": ' + str(propertyFile.fireRate) + ', ';
 			dataToSend += '"projBounce": ' + str(propertyFile.projBounce) + ', ';
@@ -100,9 +105,17 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			dataToSend += '"type":"flying", "stats":{';
 			dataToSend += '"speed": ' + str(propertyFile.speed) + ", ";
 			dataToSend += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}}}';
+		elif enemyProperty.contains("Stationary"):
+			dataToSend += '"type":"stationary", "stats":{';
+			dataToSend += '"isFacingRight": ' + str(propertyFile.isFacingRight) + ", ";
+			dataToSend += '"gravity": ' + str(propertyFile.gravity) + '}}';
+		elif enemyProperty.contains("MovingPlatform"):
+			dataToSend += '"type":"movingPlatform", "stats":{';
+			dataToSend += '"speed": ' + str(propertyFile.speed) + ", ";
+			dataToSend += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}, ';
+			dataToSend += '"progress": ' + str(propertyFile.progress) + "}}";
 		if (enemyPropertyIndex < enemyProperties.size() - 1):
 			dataToSend += ',';
-	
 	# Creating Player Data in JSON.
 	dataToSend += '], "player": {';
 	dataToSend += '"health": ' + str(playerData.playerHealth) + ", ";
@@ -110,12 +123,20 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	dataToSend += '"jump": ' + str(playerData.playerJumpHeight) + ", ";
 	dataToSend += '"airControl": ' + str(playerData.playerAirControl) + ", ";
 	dataToSend += '"fallSpeed": ' + str(playerData.playerFallSpeed) + ", ";
-	dataToSend += '"coyoteTime": ' + str(playerData.playerCoyoteTime);
+	dataToSend += '"coyoteTime": ' + str(playerData.playerCoyoteTime) + ", ";
+	dataToSend += '"doubleJump": ' + str(playerData.playerDoubleJump) + ", ";
+	dataToSend += '"wallJump": ' + str(playerData.playerWallJump) + ", ";
+	#dataToSend += '"wallJumpDecay": ' + str(playerData.playerWallJumpDecay);
 	dataToSend += '}}';
 	
 	# Convert our data to a json_string
 	var json : Variant = JSON.parse_string(dataToSend)
 	var jsonString : String = JSON.stringify(json);
+	
+	## NOTE: THIS IS TEMPORARY CODE TO TURN ON WHEN JSON FILE NEEDS TO BE VALIDATED
+	#var tmpFile : FileAccess = FileAccess.open(levelPath + "Temp.txt", FileAccess.WRITE);
+	#tmpFile.store_string(dataToSend);
+	#tmpFile.close();
 	
 	# Write JSON to file and close it
 	var JSONFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE);
@@ -207,13 +228,16 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	var json_as_dict : Variant = JSON.parse_string(JSONFile.get_as_text());
 	
 	# Player information read
-	var player = json_as_dict.player;
-	playerData.playerHealth = player.health;
-	playerData.playerSpeed = player.speed;
-	playerData.playerJumpHeight = player.jump;
-	playerData.playerAirControl = player.airControl;
-	playerData.playerFallSpeed = player.fallSpeed;
-	playerData.playerCoyoteTime = player.coyoteTime;
+	var player = json_as_dict.get("player", {});
+	playerData.playerHealth = player.get("health", playerData.playerHealth);
+	playerData.playerSpeed = player.get("speed", playerData.playerSpeed);
+	playerData.playerJumpHeight = player.get("jumpHeight", playerData.playerJumpHeight);
+	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
+	playerData.playerFallSpeed = player.get("fallSpeed", playerData.playerFallSpeed);
+	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
+	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
+	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);
+	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);
 	playerData.update_custom();
 	playerData.update_sliders();
 	
@@ -281,6 +305,7 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.restricted = enemy.stats.restricted;
 		"shooting":
 			newResource.direction = enemy.stats.direction;
+			newResource.randomDirection = enemy.stats.randomDirection;
 			newResource.shotSpeed = enemy.stats.shotSpeed;
 			newResource.fireRate = enemy.stats.fireRate;
 			newResource.projBounce = enemy.stats.projBounce;
@@ -289,8 +314,17 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.speed = enemy.stats.speed;
 			newResource.pointBOffset.x = enemy.stats.endpoint.x;
 			newResource.pointBOffset.y = enemy.stats.endpoint.y;
+		"stationary":
+			newResource.isFacingRight = enemy.stats.isFacingRight;
+			newResource.gravity = enemy.stats.gravity;
+		"movingPlatform":
+			newResource.speed = enemy.stats.speed;
+			newResource.pointBOffset.x = enemy.stats.endpoint.x;
+			newResource.pointBOffset.y = enemy.stats.endpoint.y;
+			newResource.progress = enemy.stats.progress;
 	ResourceSaver.save(newResource, "res://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
+	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();
 			
 ## If any enemy data is corrupted, we can repair it by giving it default values.
 func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
@@ -312,4 +346,10 @@ func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
 			var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
 			var newFlying : Resource = defaultFlying.duplicate(true);
 			ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying-" + nodePos + ".tres");
+			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
+		elif node is EnemyStationary && node.propertyFile == null:
+			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
+			var defaultStationary : Resource = load("res://Resources/PlayerPresets/StationaryDefault.tres");
+			var newStationary : Resource = defaultStationary.duplicate(true);
+			ResourceSaver.save(newStationary, "res://Resources/Enemies/Stationary-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));

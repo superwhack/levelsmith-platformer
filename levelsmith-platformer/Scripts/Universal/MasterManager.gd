@@ -18,6 +18,7 @@ var state : Global.State = Global.State.EDIT;
 @export var editorHomeButton : Button;
 @export var editorPlayButton : Button;
 @export var returnToEditorButton : Button;
+@export var playPopUp : HBoxContainer;
 
 # Reference to tile maps
 @export var tileMap : TileMapLayer;
@@ -38,7 +39,7 @@ func _ready() -> void:
 	AudioManager.update_volume();
 	
 	Global.reload.connect(load_tilemap);
-	Global.complete.connect(level_complete);
+	#Global.complete.connect(level_complete);
 	Global.levelCreated.connect(tileMap.clear);
 	Global.levelCreated.connect(create_bedrock_border);
 	Global.levelCreated.connect(edit);
@@ -48,6 +49,8 @@ func _ready() -> void:
 	# Connect all button signals
 	editorHomeButton.pressed.connect(main_menu);
 	editorPlayButton.pressed.connect(play);
+	editorPlayButton.mouse_entered.connect(mouse_entered_play_button);
+	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
 	
 	# NOTE: This probably shouldn't be here for the final build
@@ -57,13 +60,19 @@ func _ready() -> void:
 		
 	#edit();
 	main_menu();
+	
+## When the user does a save level input, save the level.
+## event: The user input
+func _input(event: InputEvent) -> void:
+	if (event.is_action_pressed("level_save")):
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
-func level_complete() -> void:
-	edit();
-	editorManager.isValidated = true;
-	#print("LEVEL COMPLETE");
+#func level_complete() -> void:
+	#edit();
+	#editorManager.isValidated = true;
+	##print("LEVEL COMPLETE");
 
 ## Set up a new level
 ## levelName: Name of the level
@@ -72,11 +81,12 @@ func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	cameraManager.initialize_camera();
 	ImportExportManager.make_new_level( levelName, worldSize );
-	
+	propertyMenu.reset_custom();
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	#print("NEW LEVEL SET UP");
 	Global.levelCreated.emit();
+	editorManager.returnClick = false;
 
 func create_bedrock_border() -> void:
 	for x in range(-1, worldSize.x + 1):
@@ -100,12 +110,20 @@ func import_level_and_edit() -> void:
 		childNode.free();
 	editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileMap);
 	worldSize = ImportExportManager.importedLevelSize;
+	editorManager.returnClick = false;
 	entityManager.scan_goals(worldSize.x, worldSize.y);
 	editorManager.reset_enemy_positions();
 	await get_tree().process_frame;
 	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu);
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
+
+## Loads the given level to the player.
+## levelPath: The folder path of the level.
+func load_level(levelPath: String) -> void:
+	if (ImportExportManager.validate_import(levelPath)):
+		ImportExportManager.levelPath = levelPath;
+		import_level_and_edit();
 
 ## Swap to main menu state
 func main_menu() -> void:
@@ -119,12 +137,12 @@ func main_menu() -> void:
 	propertyMenu.close();
 	mainMenuControl.show();
 	ImportExportManager.clear_enemies_folder();
+	mainMenuControl.fill_level_list();
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 
 ## Swap to edit state
 func edit() -> void:
-	toolManager.change_tool(Global.Tool.BRUSH);
 	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
@@ -134,7 +152,14 @@ func edit() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
-	editorManager.returnClick = true;
+	if !gameManager.goalReached:
+		editorManager.returnClick = true;
+	# Just so there aren't any issues when holding down a button before swapping to play
+	toolManager.isErasing = false;
+	toolManager.isPainting = false;
+	# You can right click after completing a level
+	toolManager.clickOnUI = false;
+	entityManager.duplicatingResource = null;
 	editorManagerCanvas.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
@@ -145,15 +170,10 @@ func edit() -> void:
 
 ## Swap to play state
 func play() -> void:
-	var errors : Array[String];
 	# Check that the game can be run
-	if (!editorManager.playerExists):
-		errors.append("There is no player placed down.")
-	if (!editorManager.goalExists):
-		errors.append("There is no goal placed down.")
-	if (errors.size() != 0):
-		PopUpManager.create_multi_error_popup("Cannot Start Level", errors);
+	if (!get_play_errors().is_empty()):
 		return;
+		
 	propertyMenu.close();
 	AudioManager.play_music("LevelMusic");
 	# Update state variable
@@ -164,7 +184,7 @@ func play() -> void:
 	gameManager.show();
 	gameManager.playerPreset = propertyMenu.selectedPlayerPreset;
 	gameManager.start();
-	gameManagerCanvas.show()
+	gameManagerCanvas.show();
 	editorManager.hide();
 	editorManagerCanvas.hide();
 	previewTileMap.clear();
@@ -203,3 +223,37 @@ func load_tilemap() -> void:
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
 	gameManager.tileMap = loadedMap;
+	
+	
+## Shows the play pop up to the user.
+func mouse_entered_play_button() -> void:
+	var errors : Array[String] = get_play_errors();
+	
+	# So long as there are errors, modify the pop-up to be accurate.
+	if (errors.size() > 0):
+		playPopUp.set_title("REQUIRED TO RUN");
+		var bodyText : String = "";
+		for messageNum in range(0, errors.size()):
+			bodyText += " + " + errors[messageNum];
+			if (messageNum != errors.size() - 1):
+				bodyText += "\n";
+		playPopUp.set_body_text(bodyText);
+		playPopUp.show();
+
+
+## Hides the play pop up from the user.
+func mouse_exited_play_button() -> void:
+	playPopUp.hide();
+
+	
+## Validates if a level is playable, and returns a string of any found errors
+## Returns an array of error points, but not a full error description.
+func get_play_errors() -> Array[String]:
+	var errors : Array[String] = [];
+	
+	if (!editorManager.playerExists):
+		errors.append("Player");
+	if (!editorManager.goalExists):
+		errors.append("End Goal");
+		
+	return errors;

@@ -12,6 +12,7 @@ enum SelectorState {
 	ERASING,
 	EDITING,
 	MOVING,
+	COPYING,
 	INVALID
 }
 var selectorState : SelectorState = SelectorState.DEFAULT;
@@ -74,6 +75,8 @@ func _process(_delta: float) -> void:
 			selectorFrame.modulate = Color(1, 1, 0);
 		SelectorState.MOVING:
 			selectorFrame.modulate = Color(0, 1, 1);
+		SelectorState.COPYING:
+			selectorFrame.modulate = Color(1, 0, 1);
 		SelectorState.INVALID:
 			selectorFrame.modulate = Color(1, 1, 1, 0);
 	
@@ -94,6 +97,7 @@ func _process(_delta: float) -> void:
 func update_selector_state() -> void:
 	if (!editorManager.isPlaceable): selectorState = SelectorState.INVALID;
 	elif (toolManager.isErasing): selectorState = SelectorState.ERASING;
+	elif (entityManager.duplicatingResource): selectorState = SelectorState.COPYING;
 	elif (isEditing): selectorState = SelectorState.EDITING; 
-	elif (toolManager.isMoving): selectorState = SelectorState.MOVING;
+	elif (toolManager.isMoving && toolManager.prevBrushObject >= 0): selectorState = SelectorState.MOVING;
 	else: selectorState = SelectorState.DEFAULT;

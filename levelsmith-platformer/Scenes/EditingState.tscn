@@ -20,8 +20,10 @@
 [ext_resource type="Texture2D" uid="uid://cyv36kpfksb3b" path="res://Assets/UserInterface/IconButtonAssetManagerWhite.png" id="13_racgb"]
 [ext_resource type="Texture2D" uid="uid://cpnh5eiw0m5fv" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
+[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="15_ditat"]
 [ext_resource type="Texture2D" uid="uid://pc63ho3uson2" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
+[ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -114,6 +116,7 @@ layout_mode = 2
 [node name="HomeButton" type="Button" parent="ScreenUI/TopLeftAnchor/TopLeftRow" unique_id=1385633318]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+tooltip_text = "Main Menu"
 theme = ExtResource("7_ditat")
 theme_type_variation = &"ToolButton"
 icon = ExtResource("8_rdu5w")
@@ -181,6 +184,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="SaveButton" type="Button" parent="ScreenUI/TopRightAnchor/TopRightRow/SavePanel/SaveMargin" unique_id=778830983]
 layout_mode = 2
+tooltip_text = "Save"
 theme = ExtResource("7_ditat")
 theme_type_variation = &"ToolButton"
 icon = ExtResource("12_vrcqo")
@@ -203,6 +207,7 @@ layout_mode = 2
 [node name="AssetManagerButton" type="Button" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow" unique_id=446918555]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+tooltip_text = "Asset Manager"
 theme = ExtResource("7_ditat")
 theme_type_variation = &"ToolButton"
 icon = ExtResource("13_racgb")
@@ -215,6 +220,7 @@ layout_mode = 2
 [node name="CameraManagerButton" type="Button" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow" unique_id=1547112782]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+tooltip_text = "Camera Settings"
 theme = ExtResource("7_ditat")
 theme_type_variation = &"ToolButton"
 icon = ExtResource("14_hh704")
@@ -234,26 +240,49 @@ theme_override_constants/margin_right = 20
 [node name="PanHintLabel" type="Label" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow/HintMargin" unique_id=1701832382]
 layout_mode = 2
 size_flags_vertical = 8
+theme = ExtResource("7_ditat")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("15_ditat")
 theme_override_font_sizes/font_size = 25
 text = "Pan [WASD / MMB]"
 
+[node name="ZoomHintLabel" type="Label" parent="ScreenUI/BottomLeftAnchor/BottomLeftRow" unique_id=1218916426]
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("7_ditat")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("15_ditat")
+theme_override_font_sizes/font_size = 25
+text = "Zoom In/Out [+ - / Scroll]"
+
 [node name="BottomRightAnchor" type="MarginContainer" parent="ScreenUI" unique_id=873233202]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+anchors_preset = -1
+anchor_left = 0.66006255
+anchor_top = 0.81900007
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -40.0
+offset_left = 0.6799927
+offset_top = -0.52008057
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 metadata/_edit_use_anchors_ = true
 
+[node name="HoverPopUpContainer" parent="ScreenUI/BottomRightAnchor" unique_id=1808818748 instance=ExtResource("16_rdu5w")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="RightPin" parent="ScreenUI/BottomRightAnchor/HoverPopUpContainer" index="1" unique_id=1999861361]
+visible = true
+
 [node name="PlayButton" type="Button" parent="ScreenUI/BottomRightAnchor" unique_id=1821933362]
 custom_minimum_size = Vector2(265, 0)
 layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+tooltip_text = "Play Mode"
 focus_behavior_recursive = 1
 theme = ExtResource("7_ditat")
 action_mode = 0
@@ -262,7 +291,7 @@ icon_alignment = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 
-[node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("mainTileMap", "editorManager") instance=ExtResource("11_bpoex")]
+[node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("editorManager", "mainTileMap") instance=ExtResource("11_bpoex")]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -275,8 +304,8 @@ offset_right = 450.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
-mainTileMap = NodePath("../../Tiles")
 editorManager = NodePath("../..")
+mainTileMap = NodePath("../../Tiles")
 
 [node name="PropertyMenu" parent="CanvasLayer" unique_id=1686733993 instance=ExtResource("7_gc37a")]
 visible = false
@@ -326,4 +355,5 @@ toolManager = NodePath("..")
 tileMap = NodePath("../../Tiles")
 propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
 
+[editable path="ScreenUI/BottomRightAnchor/HoverPopUpContainer"]
 [editable path="CanvasLayer/AssetManager"]

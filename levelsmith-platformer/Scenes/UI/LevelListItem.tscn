@@ -1,0 +1,179 @@
+[gd_scene format=3 uid="uid://cv3y1gdfsbknd"]
+
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_v6rci"]
+[ext_resource type="Script" uid="uid://bwa6vqp2x282t" path="res://Scripts/LevelListItem.gd" id="2_3yt47"]
+[ext_resource type="Theme" uid="uid://dsbkv6718ooq1" path="res://Resources/LevelListItem.tres" id="3_3yt47"]
+[ext_resource type="Texture2D" uid="uid://bd2218b002s17" path="res://Assets/Sprites/Entities/dude.png" id="3_a8u2b"]
+[ext_resource type="Texture2D" uid="uid://eirshpbhdpcx" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="4_yqi52"]
+[ext_resource type="Texture2D" uid="uid://7uv8k40ra2l" path="res://Assets/Sprites/UI/Brush.png" id="6_ilhfk"]
+[ext_resource type="Texture2D" uid="uid://bt7ohiths4mty" path="res://Assets/Sprites/UI/lucide--play.svg" id="7_18drn"]
+[ext_resource type="Texture2D" uid="uid://d0b63c00hebfv" path="res://Assets/Sprites/UI/ThumbnailModeMedium.PNG" id="8_1abjo"]
+[ext_resource type="Texture2D" uid="uid://vhfbfauqi788" path="res://Assets/Sprites/UI/Invalid.png" id="8_g3cx5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nh84e"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="LevelListItem" type="Control" unique_id=2067988774 node_paths=PackedStringArray("levelThumbnail", "thumbnailContainer", "levelTitle", "levelAuthor", "levelEdited", "levelSize", "levelValid", "levelButton")]
+custom_minimum_size = Vector2(500, 100)
+custom_maximum_size = Vector2(1150, 100)
+layout_mode = 3
+anchor_top = 0.008
+anchor_bottom = 0.008
+offset_top = -6.6400003
+offset_right = 1110.0
+offset_bottom = 93.36
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_v6rci")
+script = ExtResource("2_3yt47")
+levelThumbnail = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/MarginContainer/ThumbnailContainer/LevelThumbnail")
+thumbnailContainer = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/MarginContainer/ThumbnailContainer")
+levelTitle = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/HBoxContainer/LevelTitle")
+levelAuthor = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelAuthor")
+levelEdited = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelEdited")
+levelSize = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelSize")
+levelValid = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelValid")
+levelButton = NodePath("HBoxContainer/LevelMarginContainer/LevelCard")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=467178205]
+custom_minimum_size = Vector2(1100, -1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.02
+anchor_bottom = -0.02
+offset_right = 1108.0
+offset_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="LevelMarginContainer" type="MarginContainer" parent="HBoxContainer" unique_id=727232242]
+custom_minimum_size = Vector2(1000, 0)
+custom_maximum_size = Vector2(1000, 100)
+layout_mode = 2
+
+[node name="LevelCard" type="Button" parent="HBoxContainer/LevelMarginContainer" unique_id=1645077814]
+layout_mode = 2
+theme = ExtResource("3_3yt47")
+theme_type_variation = &"LevelItemWhite"
+
+[node name="LevelHBoxContainer" type="HBoxContainer" parent="HBoxContainer/LevelMarginContainer/LevelCard" unique_id=1106093210]
+layout_mode = 0
+offset_right = 1000.0
+offset_bottom = 101.0
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer" unique_id=16165546]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="ThumbnailContainer" type="PanelContainer" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/MarginContainer" unique_id=700087687]
+clip_children = 2
+custom_maximum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_nh84e")
+
+[node name="LevelThumbnail" type="TextureRect" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/MarginContainer/ThumbnailContainer" unique_id=1329783747]
+custom_minimum_size = Vector2(100, 100)
+custom_maximum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 6
+texture = ExtResource("3_a8u2b")
+expand_mode = 1
+
+[node name="LevelVBoxContainer" type="VBoxContainer" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer" unique_id=727670992]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1097758974]
+layout_mode = 2
+
+[node name="LevelError" type="TextureRect" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/HBoxContainer" unique_id=1951360806]
+visible = false
+custom_maximum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("4_yqi52")
+
+[node name="LevelTitle" type="Label" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/HBoxContainer" unique_id=1908587017]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Default Level"
+
+[node name="LevelEdited" type="Label" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1691708206]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 22
+text = "edited: 6/26/2026"
+horizontal_alignment = 1
+
+[node name="LevelAuthor" type="Label" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1336969358]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 22
+text = "ABBCDEJSTZZ"
+
+[node name="LevelSize" type="Label" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1253071652]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 0.7176471)
+theme_override_font_sizes/font_size = 20
+text = "20x20"
+
+[node name="LevelValid" type="Label" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1005012881]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 0.7176471)
+theme_override_font_sizes/font_size = 20
+text = "Level: Validated"
+horizontal_alignment = 1
+
+[node name="ButtonVContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=795050609]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 3
+
+[node name="ButtonHContainer" type="HBoxContainer" parent="HBoxContainer/ButtonVContainer" unique_id=1362936122]
+layout_mode = 2
+
+[node name="EditButton" type="Button" parent="HBoxContainer/ButtonVContainer/ButtonHContainer" unique_id=1985108819]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+offset_transform_position = Vector2(0, 53.8)
+icon = ExtResource("6_ilhfk")
+icon_alignment = 1
+expand_icon = true
+
+[node name="PlayButton" type="Button" parent="HBoxContainer/ButtonVContainer/ButtonHContainer" unique_id=1195341374]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+icon = ExtResource("7_18drn")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ButtonHContainer2" type="HBoxContainer" parent="HBoxContainer/ButtonVContainer" unique_id=2011860154]
+layout_mode = 2
+
+[node name="DeleteButton" type="Button" parent="HBoxContainer/ButtonVContainer/ButtonHContainer2" unique_id=109472688]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+icon = ExtResource("8_1abjo")
+icon_alignment = 1
+expand_icon = true
+
+[node name="EditButton2" type="Button" parent="HBoxContainer/ButtonVContainer/ButtonHContainer2" unique_id=910316209]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+icon = ExtResource("8_g3cx5")
+icon_alignment = 1

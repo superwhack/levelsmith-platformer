@@ -48,11 +48,14 @@ func _process(_delta: float) -> void:
 ## When drag is finished, emit drag ended signal
 func _drag_ended(_value_changed: bool) -> void:
 	drag_ended.emit();
-	
+
+## When the text change beings, clear the text and make the placeholder text what was the text
+## this makes it easy to edit
 func _text_change_begins() -> void:
 	textField.placeholder_text = textField.text;
 	textField.text = "";
 
+## When the change is over, verify it then change the value and adjust labels
 func _text_change_ended() -> void:
 	# Replace is needed since enter also puts a newline into the text field
 	textField.text = textField.text.replace("\n", "");
@@ -63,6 +66,7 @@ func _text_change_ended() -> void:
 	adjust_label();
 	drag_ended.emit();
 
+## Validate the length of the current string
 func _validate_length() -> void:
 	if textField.has_focus() && textField.text.length() > 4:
 		textField.text = textField.text.substr(0, 4);
@@ -73,6 +77,7 @@ func update_slider() -> void:
 	slider.value = value;
 	adjust_label();
 
+## Change the label, adding in appended values or changing the type to int or float
 func adjust_label() -> void:
 	var newLabel = "";
 	if int(sliderStep) == sliderStep:

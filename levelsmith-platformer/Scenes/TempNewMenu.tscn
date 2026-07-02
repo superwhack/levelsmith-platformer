@@ -1,0 +1,217 @@
+[gd_scene format=4 uid="uid://bvc7r3t18vixa"]
+
+[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_h7yt3"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_0pgit"]
+[ext_resource type="Texture2D" uid="uid://bki8155kg473e" path="res://Assets/UserInterface/Logo.png" id="3_0pgit"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rj586"]
+friction = 0.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ir8iy"]
+bounce = 1.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kyld4"]
+texture = ExtResource("1_h7yt3")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0j3d3"]
+texture = ExtResource("2_0pgit")
+texture_region_size = Vector2i(128, 128)
+
+[sub_resource type="TileSet" id="TileSet_c2uou"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_hqns4")
+physics_layer_1/collision_layer = 2
+physics_layer_1/collision_mask = 2
+physics_layer_1/physics_material = SubResource("PhysicsMaterial_rj586")
+physics_layer_2/collision_layer = 4
+physics_layer_2/collision_mask = 4
+physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
+sources/1 = SubResource("TileSetAtlasSource_kyld4")
+sources/2 = SubResource("TileSetAtlasSource_0j3d3")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
+bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf5fn"]
+
+[node name="TempNewMainMenu😊" type="Control" unique_id=1798083708]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="." unique_id=1764313566]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+
+[node name="Grid" type="TileMapLayer" parent="Background" unique_id=1171296160]
+clip_children = 1
+z_as_relative = false
+tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAQAAAAAAAAAAAAcAAQAAAAAAAAABAAAAAQAAAAAAAAABAAEAAQAAAAAAAAABAAIAAQAAAAAAAAABAAMAAQAAAAAAAAABAAQAAQAAAAAAAAABAAUAAQAAAAAAAAABAAYAAQAAAAAAAAABAAcAAQAAAAAAAAACAAAAAQAAAAAAAAACAAEAAQAAAAAAAAACAAIAAQAAAAAAAAACAAMAAQAAAAAAAAACAAQAAQAAAAAAAAACAAUAAQAAAAAAAAACAAYAAQAAAAAAAAACAAcAAQAAAAAAAAADAAAAAQAAAAAAAAADAAEAAQAAAAAAAAADAAIAAQAAAAAAAAADAAMAAQAAAAAAAAADAAQAAQAAAAAAAAADAAUAAQAAAAAAAAADAAYAAQAAAAAAAAADAAcAAQAAAAAAAAAEAAAAAQAAAAAAAAAEAAEAAQAAAAAAAAAEAAIAAQAAAAAAAAAEAAMAAQAAAAAAAAAEAAQAAQAAAAAAAAAEAAUAAQAAAAAAAAAEAAYAAQAAAAAAAAAEAAcAAQAAAAAAAAAFAAAAAQAAAAAAAAAFAAEAAQAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAFAAQAAQAAAAAAAAAFAAUAAQAAAAAAAAAFAAYAAQAAAAAAAAAFAAcAAQAAAAAAAAAGAAAAAQAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAQAAAAAAAAAGAAMAAQAAAAAAAAAGAAQAAQAAAAAAAAAGAAUAAQAAAAAAAAAGAAYAAQAAAAAAAAAGAAcAAQAAAAAAAAAHAAAAAQAAAAAAAAAHAAEAAQAAAAAAAAAHAAIAAQAAAAAAAAAHAAMAAQAAAAAAAAAHAAQAAQAAAAAAAAAHAAUAAQAAAAAAAAAHAAYAAQAAAAAAAAAHAAcAAQAAAAAAAAAIAAAAAQAAAAAAAAAIAAEAAQAAAAAAAAAIAAIAAQAAAAAAAAAIAAMAAQAAAAAAAAAIAAQAAQAAAAAAAAAIAAUAAQAAAAAAAAAIAAYAAQAAAAAAAAAIAAcAAQAAAAAAAAAJAAAAAQAAAAAAAAAJAAEAAQAAAAAAAAAJAAIAAQAAAAAAAAAJAAMAAQAAAAAAAAAJAAQAAQAAAAAAAAAJAAUAAQAAAAAAAAAJAAYAAQAAAAAAAAAJAAcAAQAAAAAAAAAKAAAAAQAAAAAAAAAKAAEAAQAAAAAAAAAKAAIAAQAAAAAAAAAKAAMAAQAAAAAAAAAKAAQAAQAAAAAAAAAKAAUAAQAAAAAAAAAKAAYAAQAAAAAAAAAKAAcAAQAAAAAAAAALAAAAAQAAAAAAAAALAAEAAQAAAAAAAAALAAIAAQAAAAAAAAALAAMAAQAAAAAAAAALAAQAAQAAAAAAAAALAAUAAQAAAAAAAAALAAYAAQAAAAAAAAALAAcAAQAAAAAAAAAMAAAAAQAAAAAAAAAMAAEAAQAAAAAAAAAMAAIAAQAAAAAAAAAMAAMAAQAAAAAAAAAMAAQAAQAAAAAAAAAMAAUAAQAAAAAAAAAMAAYAAQAAAAAAAAAMAAcAAQAAAAAAAAANAAAAAQAAAAAAAAANAAEAAQAAAAAAAAANAAIAAQAAAAAAAAANAAMAAQAAAAAAAAANAAQAAQAAAAAAAAANAAUAAQAAAAAAAAANAAYAAQAAAAAAAAANAAcAAQAAAAAAAAAOAAAAAQAAAAAAAAAOAAEAAQAAAAAAAAAOAAIAAQAAAAAAAAAOAAMAAQAAAAAAAAAOAAQAAQAAAAAAAAAOAAUAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAcAAQAAAAAAAAAAAAgAAQAAAAAAAAABAAgAAQAAAAAAAAACAAgAAQAAAAAAAAADAAgAAQAAAAAAAAAEAAgAAQAAAAAAAAAFAAgAAQAAAAAAAAAGAAgAAQAAAAAAAAAHAAgAAQAAAAAAAAAIAAgAAQAAAAAAAAAJAAgAAQAAAAAAAAAKAAgAAQAAAAAAAAALAAgAAQAAAAAAAAAMAAgAAQAAAAAAAAANAAgAAQAAAAAAAAAOAAgAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_c2uou")
+occlusion_enabled = false
+
+[node name="SafeArea" type="MarginContainer" parent="." unique_id=171380048]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 64
+
+[node name="PanelContainer" type="PanelContainer" parent="SafeArea" unique_id=2124591170]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="RootVBox" type="VBoxContainer" parent="SafeArea/PanelContainer" unique_id=216121502]
+layout_mode = 2
+
+[node name="TopBar" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox" unique_id=2112671475]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_yf5fn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/TopBar" unique_id=427075880]
+layout_mode = 2
+
+[node name="TopBarMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer" unique_id=96010752]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="TopBarHBox" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin" unique_id=1102274078]
+layout_mode = 2
+
+[node name="LogoTexture" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=207494777]
+custom_maximum_size = Vector2(215, 81)
+layout_mode = 2
+texture = ExtResource("3_0pgit")
+
+[node name="TopBarSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=801058569]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VersionLabel" type="Label" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=1529773254]
+layout_mode = 2
+text = "v0.1.0"
+
+[node name="DividerMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer" unique_id=533107761]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="HSeparator" type="HSeparator" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/DividerMargin" unique_id=1294168192]
+layout_mode = 2
+
+[node name="MainContent" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox" unique_id=439275274]
+layout_mode = 2
+
+[node name="LeftPane" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent" unique_id=2009927958]
+layout_mode = 2
+
+[node name="LeftPaneMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane" unique_id=2032940564]
+layout_mode = 2
+
+[node name="LeftPaneVBox" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin" unique_id=340669176]
+layout_mode = 2
+
+[node name="TopActionsRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox" unique_id=331751129]
+layout_mode = 2
+
+[node name="NewLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=361130273]
+layout_mode = 2
+
+[node name="ImportLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=1849129557]
+layout_mode = 2
+
+[node name="OpenFolderButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=1916229944]
+layout_mode = 2
+
+[node name="LevelListPanel" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox" unique_id=9943232]
+layout_mode = 2
+
+[node name="LevelListScroll" type="ScrollContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel" unique_id=1583564096]
+layout_mode = 2
+
+[node name="LevelList" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll" unique_id=1376289096]
+layout_mode = 2
+
+[node name="ExitRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox" unique_id=1665265409]
+layout_mode = 2
+
+[node name="ExitButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow" unique_id=1356679422]
+layout_mode = 2
+
+[node name="CenterPane" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent" unique_id=558008634]
+layout_mode = 2
+
+[node name="PreviewPanel" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane" unique_id=1636936152]
+layout_mode = 2
+
+[node name="PreviewTexture" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/PreviewPanel" unique_id=1664404116]
+layout_mode = 2
+
+[node name="DetailsCard" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane" unique_id=1782890286]
+layout_mode = 2
+
+[node name="DetailsVBox" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/DetailsCard" unique_id=1751434853]
+layout_mode = 2
+
+[node name="TitleRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/DetailsCard/DetailsVBox" unique_id=1155394002]
+layout_mode = 2
+
+[node name="SelectedLevelName" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/DetailsCard/DetailsVBox/TitleRow" unique_id=2133258789]
+layout_mode = 2
+
+[node name="RenameButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/DetailsCard/DetailsVBox/TitleRow" unique_id=439180979]
+layout_mode = 2
+
+[node name="FavoriteButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/DetailsCard/DetailsVBox/TitleRow" unique_id=657863021]
+layout_mode = 2
+
+[node name="DetailsRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/DetailsCard/DetailsVBox" unique_id=897913567]
+layout_mode = 2
+
+[node name="MetaColumn" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/DetailsCard/DetailsVBox/DetailsRow" unique_id=775001803]
+layout_mode = 2
+
+[node name="ActionsColumn" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/DetailsCard/DetailsVBox/DetailsRow" unique_id=1259268399]
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/DetailsCard/DetailsVBox/DetailsRow/ActionsColumn" unique_id=1108696886]
+layout_mode = 2
+
+[node name="EditButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/DetailsCard/DetailsVBox/DetailsRow/ActionsColumn" unique_id=1777678716]
+layout_mode = 2
+
+[node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=2033598074]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ImportLevelOverlay" type="ColorRect" parent="." unique_id=1459983268]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1758093936]
+oversampling_override = 1.0

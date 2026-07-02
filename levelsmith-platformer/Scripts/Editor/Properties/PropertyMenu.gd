@@ -192,7 +192,8 @@ func update_custom() -> void:
 	ResourceSaver.save(customPreset, "res://Resources/PlayerPresets/Custom.tres");
 	
 	presetOptions.select(4);
-	_on_preset_options_item_selected(4);
+	selectedPlayerPreset = load("res://Resources/PlayerPresets/custom.tres");
+
 
 ## Update all sliders according to the values
 func update_sliders() -> void:

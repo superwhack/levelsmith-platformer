@@ -59,11 +59,6 @@ func _text_change_ended() -> void:
 	# If it's invalid, return to previous value
 	if !textField.text.is_valid_float():
 		textField.text = textField.placeholder_text;
-	#else:
-	#	if float(textField.text) > slider.max_value:
-	#		textField.text = str(slider.max_value);
-	#	elif float(textField.text) < slider.min_value:
-	#		textField.text = str(slider.min_value);
 	slider.value = float(textField.text);
 	adjust_label();
 	drag_ended.emit();

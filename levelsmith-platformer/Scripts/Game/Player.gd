@@ -145,6 +145,7 @@ func animate() -> void:
 	animatedSprites.flip_h = velocity.x < 0;
 	if (health <= 0): 
 		animatedSprites.animation = "death";
+		animatedSprites.flip_h = false;
 	elif (invulnerabilityCurrent > 0):
 		animatedSprites.animation = "hurt";
 	elif (isJumping):

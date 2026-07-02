@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -55,7 +55,7 @@ mainMenuControl = NodePath("MainMenuCanvasLayer/MainMenu")
 editorHomeButton = NodePath("EditorManager/ScreenUI/TopLeftAnchor/TopLeftRow/HomeButton")
 editorPlayButton = NodePath("EditorManager/ScreenUI/BottomRightAnchor/PlayButton")
 returnToEditorButton = NodePath("GameManager/CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ReturnEditorButton")
-playPopUp = NodePath("EditorManager/ScreenUI/HoverPopUpContainer")
+playPopUp = NodePath("EditorManager/ScreenUI/BottomRightAnchor/HoverPopUpContainer")
 tileMap = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
 gridLines = NodePath("EditorManager/GridLines")
@@ -104,5 +104,6 @@ script = ExtResource("7_8vbpr")
 [connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
 
 [editable path="EditorManager"]
+[editable path="EditorManager/ScreenUI/BottomRightAnchor/HoverPopUpContainer"]
 [editable path="EditorManager/CanvasLayer/AssetManager"]
 [editable path="GameManager"]

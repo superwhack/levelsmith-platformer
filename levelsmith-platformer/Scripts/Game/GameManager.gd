@@ -69,6 +69,7 @@ func reset() -> void:
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
+	bottomScreenGroup.show();
 	goalReached = false;
 	# Reset coin values for the new level
 	coinCount = 0;

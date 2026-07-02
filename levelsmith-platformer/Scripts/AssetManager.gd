@@ -43,10 +43,10 @@ const MISSING_TEXTURE : String = "res://Assets/Defaults/Assets/Sprites/Missing.p
 var tileTypes : Array[String] = ["Solid", "Hazard","OneWay","Ice", "Sticky", "Bounce", "Death", "Slope" ];
 
 # All types of entities
-var entityTypes : Array[String] = ["Player", "EnemyStationary", "EnemyShooting", "EnemyPatrol", "EnemyFlying", "Goal"];
+var entityTypes : Array[String] = ["Player", "EnemyStationary", "EnemyShooting", "EnemyPatrol", "EnemyFlying", "Goal", "MovingPlatform"];
 
 # All types of props
-var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5"];
+var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5", "Prop6"];
 
 # All animations
 var animations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];

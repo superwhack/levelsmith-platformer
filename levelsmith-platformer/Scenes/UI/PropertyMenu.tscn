@@ -241,7 +241,7 @@ sliderStep = 0.1
 [node name="ShootingBounce" parent="ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=1978534166 instance=ExtResource("3_1mv14")]
 layout_mode = 2
 size_flags_horizontal = 0
-propertyName = "Projecile Bounce"
+propertyName = "Projectile Bounce"
 
 [node name="ShootingGravity" parent="ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=708611749 instance=ExtResource("3_1mv14")]
 layout_mode = 2
@@ -268,14 +268,14 @@ layout_mode = 2
 size_flags_horizontal = 0
 layout_direction = 2
 propertyName = "Horizontal offset"
-minMax = Vector2(-10, 10)
+minMax = Vector2(-25, 25)
 sliderStep = 1.0
 
 [node name="Yoffset" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=201810100 instance=ExtResource("2_w5eld")]
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Vertical offset"
-minMax = Vector2(-10, 10)
+minMax = Vector2(-25, 25)
 sliderStep = 1.0
 
 [node name="Progress" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=1498320633 instance=ExtResource("2_w5eld")]

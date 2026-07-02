@@ -132,6 +132,7 @@ layout_mode = 2
 size_flags_vertical = 4
 min_value = 0.1
 max_value = 5.0
+step = 0.1
 value = 0.1
 scrollable = false
 
@@ -167,6 +168,7 @@ layout_mode = 2
 size_flags_vertical = 4
 min_value = 0.1
 max_value = 5.0
+step = 0.1
 value = 0.1
 scrollable = false
 
@@ -219,8 +221,6 @@ text = "0"
 custom_minimum_size = Vector2(650, 0)
 layout_mode = 2
 size_flags_vertical = 4
-min_value = 20.0
-max_value = 200.0
 value = 20.0
 scrollable = false
 
@@ -265,8 +265,6 @@ text = "  0"
 custom_minimum_size = Vector2(650, 0)
 layout_mode = 2
 size_flags_vertical = 4
-min_value = 20.0
-max_value = 200.0
 value = 20.0
 scrollable = false
 
@@ -296,8 +294,6 @@ text = "  0"
 custom_minimum_size = Vector2(650, 0)
 layout_mode = 2
 size_flags_vertical = 4
-min_value = 20.0
-max_value = 200.0
 value = 20.0
 scrollable = false
 
@@ -327,8 +323,6 @@ text = "  0"
 custom_minimum_size = Vector2(650, 0)
 layout_mode = 2
 size_flags_vertical = 4
-min_value = 20.0
-max_value = 200.0
 value = 20.0
 scrollable = false
 
@@ -358,9 +352,9 @@ text = "  1"
 custom_minimum_size = Vector2(650, 0)
 layout_mode = 2
 size_flags_vertical = 4
-min_value = 20.0
-max_value = 200.0
-value = 20.0
+min_value = 1.0
+max_value = 5.0
+value = 5.0
 scrollable = false
 
 [node name="DamageMaxLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/DamagePropertiesRow2/DamagePropertiesContainter" unique_id=154635976]
@@ -410,6 +404,7 @@ mouse_filter = 2
 [node name="OnScreenCheckBox" type="CheckBox" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/ActivationContainer/ActivationContainer" unique_id=2008719884]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_gqhqu")
+button_pressed = true
 button_group = SubResource("ButtonGroup_wdd1s")
 text = "On Screen"
 
@@ -446,7 +441,7 @@ custom_minimum_size = Vector2(225, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="OnScreenCheckBox" type="CheckBox" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/TileInteractionContainer/TileInteractionContainer" unique_id=1156920337]
+[node name="OnCheckBox" type="CheckBox" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/TileInteractionContainer/TileInteractionContainer" unique_id=1156920337]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_gqhqu")
 button_group = SubResource("ButtonGroup_1i6c8")
@@ -457,9 +452,10 @@ custom_minimum_size = Vector2(155, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="OnStartCheckBox" type="CheckBox" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/TileInteractionContainer/TileInteractionContainer" unique_id=500349193]
+[node name="OffCheckBox" type="CheckBox" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/TileInteractionContainer/TileInteractionContainer" unique_id=500349193]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_gqhqu")
+button_pressed = true
 button_group = SubResource("ButtonGroup_1i6c8")
 text = "Off"
 
@@ -472,18 +468,18 @@ theme_override_constants/margin_bottom = 0
 layout_mode = 2
 layout_direction = 3
 
-[node name="ResetButton" type="Button" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/FooterMargin/FooterRow" unique_id=2534971]
+[node name="CloseButton" type="Button" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/FooterMargin/FooterRow" unique_id=2123512347]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
-text = "Reset"
+text = "Close"
 
 [node name="CloseButtonMargin" type="MarginContainer" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/FooterMargin/FooterRow" unique_id=1642465915]
 layout_mode = 2
 theme_override_constants/margin_right = 10
 
-[node name="CloseButton" type="Button" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/FooterMargin/FooterRow/CloseButtonMargin" unique_id=2123512347]
+[node name="ResetButton" type="Button" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/FooterMargin/FooterRow/CloseButtonMargin" unique_id=2534971]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
-text = "Close"
+text = "Reset"

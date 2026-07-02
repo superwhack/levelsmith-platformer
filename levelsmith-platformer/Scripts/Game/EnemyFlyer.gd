@@ -29,11 +29,15 @@ func _ready() -> void:
 	pointA = global_position;
 	pointB = pointA;
 	targetPoint = pointA;
-
+	
+	animatedSprites.animation = "move";
+	animatedSprites.play();
 
 ## Processes flying movement and collision handling.
 ## delta: Time since previous frame.
 func _physics_process(delta: float) -> void:
+	if (health <= 0): return;
+	
 	if !active:
 		if !onScreen.is_on_screen():
 			return;
@@ -51,7 +55,9 @@ func fly_behavior() -> void:
 	# Get the direction and distance of movement
 	var flyDirection : Vector2 = targetPoint - global_position;
 	var move_distance : float = speed * SPEED_MODIFIER * get_physics_process_delta_time();
-
+	
+	animatedSprites.flip_h = flyDirection.x < 0;
+	
 	# If the enemy is close enough to the point, change direction
 	if (flyDirection.length() <= move_distance):
 		global_position = targetPoint;

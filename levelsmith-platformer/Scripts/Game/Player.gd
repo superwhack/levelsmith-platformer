@@ -253,7 +253,7 @@ func detect_enemy_bounce(body: Node2D) -> void:
 	if (body.is_in_group("enemy")):
 		if (velocity.y > 0 || body.velocity.y - velocity.y <= 0):
 			bounce();
-			body.die();
+			body.take_damage();
 
 ## Detect collisions with projectiles
 ## area: the area being collided with

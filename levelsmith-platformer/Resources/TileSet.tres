@@ -22,6 +22,8 @@
 [ext_resource type="PackedScene" uid="uid://bj66b8ccvl345" path="res://Scenes/Preview/PlayerPreview.tscn" id="9_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://b3k624sctovph" path="res://Scenes/Entities/Patrolling.tscn" id="10_6ba2f"]
 [ext_resource type="PackedScene" uid="uid://bwtswvrxxful5" path="res://Scenes/Preview/PatrollingPreview.tscn" id="11_8sjof"]
+[ext_resource type="PackedScene" uid="uid://c8bs7d04fl2yn" path="res://Scenes/Entities/Stationary.tscn" id="17_38lp2"]
+[ext_resource type="PackedScene" uid="uid://m70cp4yn5bd1" path="res://Scenes/Preview/StationaryPreview.tscn" id="18_38lp2"]
 [ext_resource type="PackedScene" uid="uid://b6axoaekmjyr4" path="res://Scenes/Entities/MovingPlatform.tscn" id="19_yoa8o"]
 [ext_resource type="PackedScene" uid="uid://bpnflie3xuof8" path="res://Scenes/Preview/MovingPlatformPreview.tscn" id="20_4pytx"]
 [ext_resource type="PackedScene" uid="uid://b1he4q1q33j0e" path="res://Scenes/Entities/Coin.tscn" id="22_38lp2"]
@@ -119,6 +121,11 @@ scenes/2/scene = ExtResource("4_3boqi")
 resource_name = "Flying"
 scenes/1/scene = ExtResource("5_3boqi")
 scenes/2/scene = ExtResource("6_pqfav")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_flggt"]
+resource_name = "Stationary"
+scenes/1/scene = ExtResource("17_38lp2")
+scenes/2/scene = ExtResource("18_38lp2")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_yoa8o"]
 resource_name = "Coin"
@@ -312,4 +319,5 @@ sources/603 = SubResource("TileSetAtlasSource_pqfav")
 sources/506 = SubResource("TileSetScenesCollectionSource_yoa8o")
 sources/604 = SubResource("TileSetAtlasSource_eqdrb")
 sources/507 = SubResource("TileSetScenesCollectionSource_6ti6x")
+sources/505 = SubResource("TileSetScenesCollectionSource_flggt")
 sources/605 = SubResource("TileSetAtlasSource_yoa8o")

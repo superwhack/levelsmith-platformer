@@ -1,22 +1,21 @@
 extends Panel
+class_name AssetManager
 
 # Path to the root folder of all assets
 var filePath : String = "user://Assets";
-
-# References to images
-var imageToReplace : Image;
-var imageNameToReplace : String;
+var defaultsFilePath : String = "res://Assets/Defaults/Assets/Sprites/";
 
 # References to audio
 var newAudio : AudioStream;
 var audioToReplace : AudioStream;
 
-# References to both tile maps
-@export var mainTileMap : TileMapLayer;
+@export var imageSwapping : Control;
+@export var animationSwapping : Control;
 
 # References to preview and file dialog
-@export var imagePreview : TextureRect;
-@export var imageSelect : FileDialog;
+@export var audioPreview : Panel;
+@export var assetTabs : TabContainer;
+@export var fileSelect : FileDialog;
 
 # References to different elements of the menu
 @export var imagesTab : VBoxContainer;
@@ -26,12 +25,14 @@ var audioToReplace : AudioStream;
 # Button references for connecting signals
 @export var loadFileButton : Button;
 @export var resetButton : Button;
+@export var resetAllButton: Button;
 
 # Reference to the editor manager
 @export var editorManager : Node2D;
 
 # Keep track of the first selected item
-var firstSelected : AssetItem = null;
+var firstAnimationSelected : AssetItem = null;
+var firstImageSelected : AssetItem = null;
 
 # Reference to the asset button scene for instantiating
 const ASSET_BUTTON : PackedScene = preload("res://Scenes/UI/AssetItem.tscn");
@@ -39,25 +40,22 @@ const ASSET_BUTTON : PackedScene = preload("res://Scenes/UI/AssetItem.tscn");
 # Reference to the Missing texture in case the default textures are removed
 const MISSING_TEXTURE : String = "res://Assets/Defaults/Assets/Sprites/Missing.png";
 
-# All types of tiles
-var tileTypes : Array[String] = ["Solid", "Hazard","OneWay","Ice", "Sticky", "Bounce", "Death", "Slope" ];
+var currentSelectedItem : AssetItem;
 
-# All types of entities
-var entityTypes : Array[String] = ["Player", "EnemyStationary", "EnemyShooting", "EnemyPatrol", "EnemyFlying", "Goal", "MovingPlatform"];
+@export var mainTileMap : TileMapLayer;
 
-# All types of props
-var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5", "Prop6"];
-
-# All animations
-var animations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "EnemyWalk", "EnemyIdle", "EnemyFly"];
+@export var defaults : Resource;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_image_selector);
-	resetButton.pressed.connect(reset_image_popup);
-	imageSelect.file_selected.connect(replace_image);
-	Global.levelCreated.connect(refresh_assets);
+	resetButton.pressed.connect(imageSwapping.reset_image);
+	resetAllButton.pressed.connect(reset_all);
+	fileSelect.file_selected.connect(imageSwapping.replace_image);
+	fileSelect.dir_selected.connect(animationSwapping.replace_animation);
+	
+	assetTabs.tab_changed.connect(on_asset_tab_changed);
 	
 	# Checks if the user has an assets root folder, creates one if not
 	var dir : DirAccess = DirAccess.open(filePath);
@@ -68,10 +66,8 @@ func _ready() -> void:
 	generate_buttons("Props", imagesTab);
 	generate_buttons("Entities", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
-	item_selected(firstSelected);
-	# Refresh all assets
-	refresh_assets();
-	ImportExportManager.levelImported.connect(refresh_assets);
+	item_selected(firstImageSelected);
+	on_asset_tab_changed(assetTabs.current_tab);
 	ImportExportManager.levelImported.connect(item_selected);
 
 # WARNING Only refreshes all files once, might be worth it later to do individually
@@ -81,7 +77,7 @@ func _ready() -> void:
 ## type: What type the asset is - Image, Animation, or Audio 
 func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.AssetType = AssetItem.AssetType.IMAGE):
 	# Set the file path to the folder
-	var categoryFilePath : String = find_directory_by_name(folder);
+	var categoryFilePath : String = FileSearch.find_directory_by_name(folder);
 	# Open the folder at the path
 	var dir : DirAccess = DirAccess.open(categoryFilePath);
 	# If the folder is successfully opened
@@ -96,36 +92,50 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 			container.add_child(newButton);
 			newButton.pressed.connect(item_selected.bind(newButton));
 			newButton.type = type;
-			if (!firstSelected):
-				firstSelected = newButton;
+			# Set the default image and animation to be selected
+			if (type == AssetItem.AssetType.IMAGE && !firstImageSelected):
+				firstImageSelected = newButton;
+			if (type == AssetItem.AssetType.ANIMATION && !firstAnimationSelected):
+				firstAnimationSelected = newButton;
 
 ## Finds an image by its name
 ## imageName: Name of the image
 ## returns: Loaded image
 func find_image(imageName: String, currentDirectory: String = filePath) -> Image:
+	var image : Image = Image.new();
+	if (currentDirectory.begins_with("res://")):
+		var simpleName = imageName.to_lower().get_basename();
+		if (defaults.get(simpleName)):
+			print(defaults.get(simpleName));
+			var texture = load(defaults.get(simpleName));
+			image = texture.get_image();
+		return image;
 	# Get the path to the image
-	var imagePath : String = find_file_by_name(imageName, currentDirectory);
+	var imagePath : String = FileSearch.find_file_by_name(imageName, currentDirectory);
 	# If the path exists
 	if (imagePath):
-		# Create and load an image from the path
-		var image : Image = Image.new();
-		image.load(imagePath);
-		if (imagePath.get_extension().to_lower() == "png"):
-			if (validate_image(image)):
-				# Return the loaded image
-				return image;
-		PopUpManager.create_error_popup("Cannot Load Asset","Image not valid. '.png' file required.");
-		return null;
+		if (imagePath.begins_with("res://")):
+			var texture : Texture2D = load(imagePath);
+			image = texture.get_image();
+			return image;
+		else:
+			# Create and load an image from the path
+			image.load(imagePath);
+			if (imagePath.get_extension().to_lower() == "png"):
+				if (validate_image(image)):
+					# Return the loaded image
+					return image;
+			PopUpManager.create_error_popup("Cannot Load Asset","Image not valid. '.png' file required.");
+			return null;
 		
 	# If the path does not exist, print error
 	else:
-		PopUpManager.create_error_popup("Cannot Load Asset","No file found in '" + filePath + "'.");
+		PopUpManager.create_error_popup("Cannot Load Asset","No file found in '" + currentDirectory + "'.");
 		return get_missing_image();
-
 
 ## Finds and loads the first image found in given folder
 ## folderPath: Path to the folder
-## returns: Image loaded if it is found
+## returns: Image loaded if it is foundf
 func find_image_in_folder(folderPath: String) -> Image:
 	# Opens the folder at the given folderName path
 	var dir : DirAccess = DirAccess.open(folderPath);
@@ -166,106 +176,44 @@ func validate_image(image: Image) -> bool:
 		image.resize(128, 128, Image.INTERPOLATE_LANCZOS);
 	return true;
 
-## Retrieve the frames for an animation from a given folder path
-## folderName: Name of the folder to check
-## Returns: Array of all frames for animation
-func get_animation_from_folder(folderName: String) -> Array[Image]:
-	# Get the path to the folder
-	var pathToFolder : String = find_directory_by_name(folderName);
-	# If the path is found, retrieve all files and add to array
-	if (pathToFolder):
-		var dir : DirAccess = DirAccess.open(pathToFolder);
-		var allImageNames : PackedStringArray = dir.get_files();
-		var allImages : Array[Image] = [];
-		for imageName in allImageNames:
-			allImages.append(find_image(imageName));
-		return allImages;
-	else:
-		PopUpManager.create_error_popup("Could not find folder","Could not find folder with name " + folderName + ".");
-	return [];
-
-## Gets the amount of files within a folder
-## folderName: Name of the folder to check
-## returns: The amount of files in the folder
-func file_count_in_folder(folderName: String) -> int:
-	# Get the path to the folder
-	var pathToFolder : String = find_directory_by_name(folderName);
-	# If there is a path to the folder
-	if (pathToFolder):
-		# Open the directory at the path
-		var dir : DirAccess = DirAccess.open(pathToFolder);
-		# Store all files in that path in an array
-		var allFiles : PackedStringArray = dir.get_files();
-		# Return the size of that array
-		return allFiles.size();
-	# If there is no path to the folder
-	else:
-		# Print error
-		PopUpManager.create_error_popup("Folder not found", "Could not find folder with name " + folderName + ".")
-	return -1;
-
-
-## Creates the refresh asset popup.
-func reset_asset_popup() -> void:
-	PopUpManager.create_reset_asset_popup(Callable(self, "refresh_assets"));
-
-## Refresh all assets in game
-func refresh_assets() -> void:
-	# Change all tiles to their textures
-	for i in range(tileTypes.size()):
-		var tileImage : Image = find_image_in_folder(find_directory_by_name(tileTypes[i]));
-		var defaultTileImage : Image = find_image(tileTypes[i] + ".png", "res://Assets/Defaults");
-		change_tile_texture(i, tileImage if tileImage else defaultTileImage, mainTileMap);
-	# Change all props to their textures
-	for i in range(propTypes.size()):
-		var propImage : Image = find_image_in_folder(find_directory_by_name(propTypes[i]));
-		var defaultPropImage : Image = find_image(propTypes[i] + ".png", "res://Assets/Defaults");
-		change_tile_texture(Global.EntityType.PROP1 + i, propImage if propImage else defaultPropImage, mainTileMap);
-	pass;
-
-## Clears any images in the replacement directory
-## returns: The replacement directory
-func clear_image() -> DirAccess:
-	var targetFilePath : String = find_directory_by_name(imageNameToReplace);
-	var targetDirectory : DirAccess  = DirAccess.open(targetFilePath);
+## Hadnles the switching of buttons between tab changes
+func on_asset_tab_changed(tabIndex: int) -> void:
+	imageSwapping.imagePreview.hide();
+	animationSwapping.animationPreview.hide();
+	audioPreview.hide();
 	
-	if(!targetDirectory): return;
-	var existingFiles : PackedStringArray = targetDirectory.get_files();
-	# Remove any files in the directory
-	for file in existingFiles:
-		targetDirectory.remove(file); 
-	return targetDirectory;
-
-## Replaces the currently previewed image with one chosen via file dialog.
-## newImagePath: The file path of the new image replacing the old one.x 
-func replace_image(newImagePath: String) -> void:
-	var targetFilePath : String = find_directory_by_name(imageNameToReplace);
-	var targetDirectory : DirAccess = clear_image();
-	# If the image is a png, create a copy
-	if (newImagePath.get_extension().to_lower() == "png"):
-		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
-	else:
-		PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
-	
-	refresh_assets();
-	var replacementImage : Image = find_image_in_folder(targetFilePath);
-	if (replacementImage):
-		imagePreview.texture = ImageTexture.create_from_image(replacementImage);
-	else:
-		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
+	if tabIndex == 0:
+		imageSwapping.imagePreview.show();
+		item_selected(firstImageSelected);
+	elif tabIndex == 1:
+		animationSwapping.animationPreview.show();
+		item_selected(firstAnimationSelected);
+	elif tabIndex == 2:
+		audioPreview.show();
 
 #func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 #	pass;
 
+## Resets everything within the assets manager
+func reset_all() -> void:
+	FileSearch.delete_folder(filePath);
+	create_file_tree();
+	reset_menu();
+	imageSwapping.refresh_images();
 
-## Creates the refresh asset popup.
-func reset_image_popup() -> void:
-	PopUpManager.create_reset_image_popup(Callable(self, "reset_image"), firstSelected.displayName);
-
-func reset_image() -> void:
-	clear_image();
-	refresh_assets();
-	imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
+## Deletes and regenerates all buttons
+func reset_menu() -> void:
+	for button: Button in imagesTab.get_children():
+		button.queue_free();
+	for button: Button in animationsTab.get_children():
+		button.queue_free();
+	firstImageSelected = null;
+	firstAnimationSelected = null;
+	generate_buttons("Tiles", imagesTab);
+	generate_buttons("Props", imagesTab);
+	generate_buttons("Entities", imagesTab);
+	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
+	on_asset_tab_changed(assetTabs.current_tab);
 
 #func reset_audio(audioName: String) -> void:
 #	pass;
@@ -274,128 +222,69 @@ func reset_image() -> void:
 #	pass;
 
 ## Signal that is emitted when an asset in the menu is selected
-## selectedItem: The item that is selected, defaults to the firstSelected
-func item_selected(selectedItem: AssetItem = firstSelected) -> void:
-	imageNameToReplace = selectedItem.assetName;
-	imageToReplace = find_image_in_folder(find_directory_by_name(imageNameToReplace));
-	if (imageToReplace):
-		var replacementTexture : Texture2D = ImageTexture.create_from_image(imageToReplace);
-		if (replacementTexture): 
-			imagePreview.texture = ImageTexture.create_from_image(imageToReplace);
-	else:
-		imagePreview.texture = ImageTexture.create_from_image(find_image(imageNameToReplace + ".png", "res://Assets/Defaults"));
-	
+## selectedItem: The item that is selected, defaults to the firstImageSelected
+func item_selected(selectedItem: AssetItem) -> void:
+	# Pause the animation
+	animationSwapping.playingAnimation = false;
+	# If the selected item is an image, replace its preview
+	if (selectedItem.type == AssetItem.AssetType.IMAGE):
+		imageSwapping.imageNameToReplace = selectedItem.assetName;
+		imageSwapping.imageToReplace = find_image_in_folder(FileSearch.find_directory_by_name(imageSwapping.imageNameToReplace));
+		if (imageSwapping.imageToReplace):
+			var replacementTexture : Texture2D = ImageTexture.create_from_image(imageSwapping.imageToReplace);
+			if (replacementTexture): 
+				imageSwapping.imagePreviewTexture.texture = ImageTexture.create_from_image(imageSwapping.imageToReplace);
+		else:
+			imageSwapping.imagePreviewTexture.texture = ImageTexture.create_from_image(imageSwapping.get_default_image(imageSwapping.imageNameToReplace))
+	# If the selected image is an animation, reset the frame and load the animation into currentlyLoadedAnimation
+	elif (selectedItem.type == AssetItem.AssetType.ANIMATION):
+		animationSwapping.currentAnimationIndex = 0;
+		animationSwapping.animationFrameIndex = 0;
+		animationSwapping.selectedEntityType = selectedItem.assetName;
+		animationSwapping.animationPreviewNameToReplace = DirAccess.get_directories_at(
+			FileSearch.find_directory_by_name(
+				animationSwapping.selectedEntityType))[animationSwapping.currentAnimationIndex];
+		animationSwapping.currentLoadedAnimation.clear();
+		for image in animationSwapping.get_animation_from_folder(animationSwapping.animationPreviewNameToReplace):
+			animationSwapping.currentLoadedAnimation.append(ImageTexture.create_from_image(image));
+		animationSwapping.update_animation_preview();
 	currentAssetLabel.text = selectedItem.displayName;
-
-## Change the texture of an atlas tile to a new image texture
-## sourceID: Source ID of the tile being changed
-## newImage: Image being switched to
-## tileMap: The tileMap being changed
-## NOTE: Only works with images >= 128px x 128px
-func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer):
-	if (newImage == null):
-		return;
-	# Create a Texture2D from the image
-	var newTexture : Texture2D = ImageTexture.create_from_image(newImage);
-	# Set a reference to the tile map's tile set
-	var tileSet : TileSet = tileMap.tile_set;
-	# Set a reference to the source in the tile set
-	var source : TileSetAtlasSource = tileSet.get_source(sourceID) as TileSetAtlasSource;
-	# If the source is found, set the texture to the image
-	if (source):
-		source.texture = newTexture;
-		# NOTE: TEMPORARY FIX PT 2
-		for frame in range(0, 5):
-			await get_tree().process_frame;
-		#editorManager.clear_enemies();
-
-
-## Recursively searches directories for a file of a specific name
-## targetFileName: The name of the target file
-## currentDirectory: The file path currently being checked
-## returns: File path to the file with that name
-func find_file_by_name(targetFileName: String, currentDirectory: String = filePath) -> String:
-	# Opens the folder at the given currentDirectory path
-	var dir : DirAccess = DirAccess.open(currentDirectory);
-	# If the directory opened successfully
-	if (dir):
-		# Initialize the file stream
-		dir.list_dir_begin();
-		# Set the current file name to the next file in the directory
-		var currentFileName : String = dir.get_next();
-		# Loop if the current name exists
-		while (currentFileName != ""):
-			# Instantiate a variable to represent the full path currently being accessed
-			var fullPath : String = currentDirectory + "/" + currentFileName;
-			# If the current item is a directory
-			if (dir.current_is_dir()):
-				# Call this function on the directory currently being accessed
-				var result : String = find_file_by_name(targetFileName, fullPath);
-				# If the result is something, return it
-				if (result != ""):
-					return result;
-			# If the current item is not a directory
-			else:
-				# If the current file being accessed is the correct name, return the full path to it
-				if (currentFileName == targetFileName):
-					return fullPath;
-			# set the current file name to the next file
-			currentFileName = dir.get_next();
-	return "";
-
-## Recursively finds the path to a specific directory based on its name
-## targetDirectoryName: Name of the target directory
-## currentDirectory: Path to the directory currently being checked
-## returns: Path to the directory
-func find_directory_by_name(targetDirectoryName: String, currentDirectory: String = filePath) -> String:
-	# Opens the directory at the currentDirectory path
-	var dir : DirAccess = DirAccess.open(currentDirectory);
-	# If there is a directory at that path
-	if (dir):
-		# Initialize the file stream
-		dir.list_dir_begin();
-		# Set the currentFileName to the next item being checked
-		var currentFileName : String = dir.get_next();
-		# Loop as long as the currentFileName is not empty
-		while (currentFileName != ""):
-			# Track the full path to the file being checked
-			var fullPath : String = currentDirectory + "/" + currentFileName;
-			# If the current item being checked is a folder
-			if (dir.current_is_dir()):
-				# If the folder name is equal to the target name, return the path
-				if (currentFileName == targetDirectoryName):
-					return fullPath;
-				# If the folder name is not the target
-				else:
-					# Call this function with the new path
-					var result : String = find_directory_by_name(targetDirectoryName, fullPath);
-					if (result != ""):
-						return result;
-			# Update the currentFileName to be the next file
-			currentFileName = dir.get_next();
-	return "";
+	currentSelectedItem = selectedItem;
 
 ## Creates all folders in tree for the user
 func create_file_tree() -> void:
 	# Open the user root directory
 	var dir : DirAccess = DirAccess.open("user://");
 	# Create all folders for tile types
-	for type: String in tileTypes:
+	for type: String in imageSwapping.tileTypes:
 		dir.make_dir_recursive(filePath + "/Images/Tiles/" + type);
 	# Create all folders for prop types
-	for type: String in propTypes:
-		dir.make_dir_recursive(filePath + "/Images/Props/" + type);	
-	# Create all folders for enitity types
-	for type: String in entityTypes:
-		dir.make_dir_recursive(filePath + "/Images/Entities/" + type);
+	for type: String in imageSwapping.propTypes:
+		dir.make_dir_recursive(filePath + "/Images/Props/" + type);
+	# Create folder for goal
+	dir.make_dir_recursive(filePath + "/Images/Entities/Goal");
 	# Create all folders for animations
-	for animation: String in animations:
-		dir.make_dir_recursive(filePath + "/Animations/" + animation);
+	for animation: String in animationSwapping.playerAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/Player/" + animation);
+	# Create all folders for enemy animations
+	for animation: String in animationSwapping.stationaryEnemyAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/StationaryEnemy/" + animation);
+	for animation: String in animationSwapping.patrollingEnemyAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/PatrollingEnemy/" + animation);
+	for animation: String in animationSwapping.shootingEnemyAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/ShootingEnemy/" + animation);
+	for animation: String in animationSwapping.flyingEnemyAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/FlyingEnemy/" + animation);
 	# TODO: Add folders for audio
 
 func open_image_selector() -> void:
-	imageSelect.title = "Replace " + imageNameToReplace;
-	imageSelect.popup_file_dialog();
+	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
+		fileSelect.title = "Replace " + imageSwapping.imageNameToReplace;
+		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_FILE;
+	elif (currentSelectedItem.type == AssetItem.AssetType.ANIMATION):
+		fileSelect.title = "Replace " + animationSwapping.animationPreviewNameToReplace;
+		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_DIR;
+	fileSelect.popup_file_dialog();
 
 ## Creates a new missing texture for use when a texture is... missing.
 func get_missing_image() -> Image:
@@ -403,3 +292,16 @@ func get_missing_image() -> Image:
 	image.load(MISSING_TEXTURE);
 	validate_image(image);
 	return image;
+	
+## Clears any images in the replacement directory
+## returns: The replacement directory
+func clear_image(nameToClear : String) -> DirAccess:
+	var targetFilePath : String = FileSearch.find_directory_by_name(nameToClear);
+	var targetDirectory : DirAccess  = DirAccess.open(targetFilePath);
+	
+	if(!targetDirectory): return;
+	var existingFiles : PackedStringArray = targetDirectory.get_files();
+	# Remove any files in the directory
+	for file in existingFiles:
+		targetDirectory.remove(file); 
+	return targetDirectory;

@@ -227,7 +227,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	var player = json_as_dict.get("player", {});
 	playerData.playerHealth = player.get("health", playerData.playerHealth);
 	playerData.playerSpeed = player.get("speed", playerData.playerSpeed);
-	playerData.playerJumpHeight = player.get("jumpheight", playerData.playerJumpHeight);
+	playerData.playerJumpHeight = player.get("jumpHeight", playerData.playerJumpHeight);
 	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
 	playerData.playerFallSpeed = player.get("fallSpeed", playerData.playerFallSpeed);
 	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
@@ -314,7 +314,6 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.speed = enemy.stats.speed;
 			newResource.pointBOffset.x = enemy.stats.endpoint.x;
 			newResource.pointBOffset.y = enemy.stats.endpoint.y;
-			print(enemy.stats.progress);
 			newResource.progress = enemy.stats.progress;
 	ResourceSaver.save(newResource, "res://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));

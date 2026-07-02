@@ -5,8 +5,11 @@ extends Enemy
 var gravityEnabled : bool = true;
 var isFacingRight : bool = true;
 
-@export var sprite : Sprite2D;
-
+func _ready() -> void:
+	super._ready();
+	
+	animatedSprites.animation = "idle";
+	animatedSprites.play();
 ## Processes the physics every frame
 ## delta: Time since previous frame
 func _physics_process(delta: float) -> void:
@@ -19,7 +22,7 @@ func _physics_process(delta: float) -> void:
 
 # Updates the orientation of the enemy
 func update_flipped(facingRight: bool = isFacingRight) -> void:
-	sprite.flip_h = !facingRight;
+	animatedSprites.flip_h = !facingRight;
 
 func assign_script(id: String, assignPosition: Vector2i) -> void:
 	propertyFile = ResourceLoader.load("res://Resources/Enemies/Stationary" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)

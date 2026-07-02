@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dgmuwffx12gix" path="res://Assets/Defaults/Assets/Sprites/Tiles/Sticky.png" id="7_0gefc"]
 [ext_resource type="Texture2D" uid="uid://djug6sv47earm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="8_g7c4e"]
 [ext_resource type="Texture2D" uid="uid://bfihlk8cogb0q" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="9_g7c4e"]
-[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Sprites/Tiles/slope.png" id="9_vup42"]
+[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Sprites/Tiles/Slope.png" id="9_vup42"]
 [ext_resource type="PackedScene" uid="uid://dqlxqwdmgred1" path="res://Scenes/UI/TilebarButton.tscn" id="10_goodf"]
 [ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Defaults/Assets/Sprites/Entities/Goal.png" id="11_goodf"]
 [ext_resource type="Texture2D" uid="uid://da0gjbpe87rk5" path="res://Assets/Sprites/Entities/Coin.png" id="12_0gefc"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dt2a383mg845m" path="res://Assets/Defaults/Assets/Sprites/Props/Prop2.png" id="15_pggt4"]
 [ext_resource type="Texture2D" uid="uid://bq4ixludyuv4l" path="res://Assets/Defaults/Assets/Sprites/Props/Prop3.png" id="16_h6q5o"]
 [ext_resource type="Texture2D" uid="uid://biqnms6vul5oa" path="res://Assets/Defaults/Assets/Sprites/Props/Prop4.png" id="17_0gefc"]
+[ext_resource type="Texture2D" uid="uid://0dwb016xnmn4" path="res://Assets/Sprites/Entities/eviljumo.png" id="18_3tme8"]
 [ext_resource type="Texture2D" uid="uid://dm3c7xg21m00w" path="res://Assets/Defaults/Assets/Sprites/Props/Prop5.png" id="18_g7c4e"]
 [ext_resource type="Texture2D" uid="uid://wjjbxovl5eji" path="res://Assets/Sprites/Tiles/oneway.png" id="18_mfvlm"]
 [ext_resource type="Texture2D" uid="uid://dbeduke42ht32" path="res://Assets/Defaults/Assets/Sprites/Props/Prop6.png" id="23_vup42"]
@@ -179,6 +180,12 @@ tilebar = NodePath("../../../../..")
 layout_mode = 2
 icon = ExtResource("15_h6q5o")
 thisItemID = 504
+tilebar = NodePath("../../../../..")
+
+[node name="StationaryEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1637250833 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
+layout_mode = 2
+icon = ExtResource("18_3tme8")
+thisItemID = 505
 tilebar = NodePath("../../../../..")
 
 [node name="MovingPlatformButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=622725076 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]

@@ -22,6 +22,13 @@ const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn"
 
 var timeLeft : float = 1;
 
+func _ready() -> void:
+	super._ready();
+	
+	animatedSprites.animation = "idle";
+	animatedSprites.play();
+	animatedSprites.animation_finished.connect(_on_animation_finished);
+
 func _physics_process(delta: float) -> void:
 	if !active:
 		if !onScreen.is_on_screen():
@@ -66,6 +73,11 @@ func shooting_behavior() -> void:
 		projectileFired.global_rotation_degrees = fireDirection;
 	projectileFired.bounceable = projBounce;
 	add_sibling(projectileFired);
+	animatedSprites.play("shoot");
+
+func _on_animation_finished():
+	if (animatedSprites.animation == "shoot"):
+		animatedSprites.play("idle");
 
 func assign_script(id: String, assignPosition: Vector2i) -> void:
 	propertyFile = ResourceLoader.load("res://Resources/Enemies/Shooting" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)

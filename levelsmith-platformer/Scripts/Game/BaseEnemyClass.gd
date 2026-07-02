@@ -27,7 +27,7 @@ func _ready() -> void:
 	add_to_group("enemy")
 	
 	deathTimer = Timer.new();
-	deathTimer.wait_time = 1;
+	deathTimer.wait_time = 0.4;
 	deathTimer.timeout.connect(queue_free);
 	add_child(deathTimer);
 

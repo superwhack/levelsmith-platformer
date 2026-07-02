@@ -7,16 +7,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
 size = Vector2(20, 19.999996)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_agccv"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_571pn"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "deathCasts", "enemyBounceCollision", "enemyCollision") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "enemyBounceCollision", "enemyCollision") groups=["Player"]]
 position = Vector2(0, 10)
 scale = Vector2(0.9, 0.9)
 floor_snap_length = 32.0
 script = ExtResource("1_kyqiw")
 raycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastLeft2"), NodePath("RayCastRight2"), NodePath("RayCastUp2"), NodePath("RayCastDown2"), NodePath("RayCastLeft"), NodePath("RayCastLeft3"), NodePath("RayCastRight"), NodePath("RayCastRight3"), NodePath("RayCastUp"), NodePath("RayCastUp3")]
 downwardsRaycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastDown2")]
-deathCasts = [NodePath("RayCastDown2"), NodePath("RayCastLeft2"), NodePath("RayCastRight2"), NodePath("RayCastUp2")]
 playerMovementPreset = ExtResource("2_agccv")
 enemyBounceCollision = NodePath("EnemyBounceCollision")
 enemyCollision = NodePath("EnemyCollision")
@@ -36,68 +35,68 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyCollision" unique_id=255986313]
 position = Vector2(0, -5)
-scale = Vector2(5.8, 5.524)
+scale = Vector2(5.5, 5.524)
 shape = SubResource("RectangleShape2D_agccv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]
-scale = Vector2(6, 6)
-shape = SubResource("CircleShape2D_agccv")
+scale = Vector2(5.7, 6)
+shape = SubResource("RectangleShape2D_571pn")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=290798525]
 texture = ExtResource("2_gntrk")
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=116409988]
-position = Vector2(-50, 0)
+position = Vector2(-57, 0)
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(0, 64)
+target_position = Vector2(0, 60)
 
 [node name="RayCastDown2" type="RayCast2D" parent="." unique_id=2122338036]
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(0, 64)
+target_position = Vector2(0, 60)
 
 [node name="RayCastDown3" type="RayCast2D" parent="." unique_id=1487377010]
-position = Vector2(50, 0)
+position = Vector2(57, 0)
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(0, 64)
+target_position = Vector2(0, 60)
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1414877206]
-position = Vector2(0, -60)
+position = Vector2(0, -57)
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(-64, 0)
+target_position = Vector2(-56, 0)
 
 [node name="RayCastLeft2" type="RayCast2D" parent="." unique_id=225528529]
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(-64, 0)
+target_position = Vector2(-56, 0)
 
 [node name="RayCastLeft3" type="RayCast2D" parent="." unique_id=1158609575]
-position = Vector2(0, 60)
+position = Vector2(0, 57)
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(-64, 0)
+target_position = Vector2(-56, 0)
 
 [node name="RayCastRight" type="RayCast2D" parent="." unique_id=464775608]
-position = Vector2(0, -60)
+position = Vector2(0, -57)
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(64, 0)
+target_position = Vector2(56, 0)
 
 [node name="RayCastRight2" type="RayCast2D" parent="." unique_id=1096570450]
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(64, 0)
+target_position = Vector2(56, 0)
 
 [node name="RayCastRight3" type="RayCast2D" parent="." unique_id=1866021346]
-position = Vector2(0, 60)
+position = Vector2(0, 57)
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(64, 0)
+target_position = Vector2(56, 0)
 
 [node name="RayCastUp" type="RayCast2D" parent="." unique_id=365446800]
 position = Vector2(-50, 0)
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(0, -58)
+target_position = Vector2(0, -56)
 
 [node name="RayCastUp2" type="RayCast2D" parent="." unique_id=1451835448]
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(0, -58)
+target_position = Vector2(0, -56)
 
 [node name="RayCastUp3" type="RayCast2D" parent="." unique_id=596214337]
 position = Vector2(50, 0)
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(0, -58)
+target_position = Vector2(0, -56)

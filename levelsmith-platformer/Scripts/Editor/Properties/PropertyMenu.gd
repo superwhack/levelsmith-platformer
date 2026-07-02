@@ -7,9 +7,11 @@ var selectedEntity : Node2D;
 @export var entityName : Label;
 
 @export var playerMenu : VBoxContainer;
-@export var flyingMenu : VBoxContainer;
 @export var patrollingMenu : MarginContainer;
 @export var shootingMenu : MarginContainer;
+@export var flyingMenu : VBoxContainer;
+@export var stationaryMenu : MarginContainer;
+@export var movingPlatformMenu : MarginContainer;
 
 # Player values
 var playerHealth: int;
@@ -18,6 +20,9 @@ var playerJumpHeight : float;
 var playerAirControl : float;
 var playerFallSpeed : float;
 var playerCoyoteTime : float;
+var playerDoubleJump : bool;
+var playerWallJump : bool;
+var playerWallJumpDecay : bool;
 
 # Player value sliders
 @export var playerHealthSlider: VBoxContainer;
@@ -26,11 +31,22 @@ var playerCoyoteTime : float;
 @export var playerAirControlSlider: VBoxContainer;
 @export var playerFallSpeedSlider: VBoxContainer;
 @export var playerCoyoteTimeSlider: VBoxContainer;
+@export var playerDoubleJumpCheckbox: VBoxContainer;
+@export var playerWallJumpCheckbox: VBoxContainer;
+@export var playerWallJumpDecayCheckbox : VBoxContainer;
 
 # Patrolling inputs
 @export var patrollingSpeedSlider : VBoxContainer;
 @export var patrollingDirectionDropdown : VBoxContainer;
 @export var patrollingRestrictedCheckbox : VBoxContainer;
+
+# Shooting inputs
+@export var shootingDirectionSlider : VBoxContainer;
+@export var shootingRandomDirection : VBoxContainer;
+@export var shootingShotSpeedSlider : VBoxContainer;
+@export var shootingFireRateSlider : VBoxContainer;
+@export var shootingProjectileBounce : VBoxContainer;
+@export var shootingGravity : VBoxContainer;
 
 # Flying inputs
 @export var flyingSpeedSlider : VBoxContainer;
@@ -38,12 +54,15 @@ var playerCoyoteTime : float;
 @export var flyingOffsetYSlider : VBoxContainer;
 var previewLine: Line2D;
 
-# Shooting inputs
-@export var shootingDirectionSlider : VBoxContainer;
-@export var shootingShotSpeedSlider : VBoxContainer;
-@export var shootingFireRateSlider : VBoxContainer;
-@export var shootingProjectileBounce : VBoxContainer;
-@export var shootingGravity : VBoxContainer;
+# Stationary inputs
+@export var stationaryDirectionDropdown : VBoxContainer;
+@export var stationaryGravity : VBoxContainer;
+
+# Moving platform inputs
+@export var movingPlatformSpeedSlider : VBoxContainer;
+@export var movingPlatformOffsetXSlider : VBoxContainer;
+@export var movingPlatformOffsetYSlider : VBoxContainer;
+@export var movingPlatformProgressSlider : VBoxContainer;
 
 # Preset Options
 @export var presetOptions : OptionButton;
@@ -52,7 +71,7 @@ var selectedPreset : Resource;
 var selectedPlayerPreset : Resource;
 
 # Direction arrow for shooting and patrolling enemies
-var shootingDirectionArrow : Sprite2D;
+var directionArrow : Sprite2D;
 
 @export var closeButton : Button;
 
@@ -66,6 +85,9 @@ func _ready() -> void:
 	playerAirControlSlider.drag_ended.connect(_on_drag_ended);
 	playerFallSpeedSlider.drag_ended.connect(_on_drag_ended);
 	playerCoyoteTimeSlider.drag_ended.connect(_on_drag_ended);
+	playerDoubleJumpCheckbox.check_changed.connect(_on_drag_ended);
+	playerWallJumpCheckbox.check_changed.connect(_on_drag_ended);
+	playerWallJumpDecayCheckbox.check_changed.connect(_on_drag_ended);
 	presetOptions.item_selected.connect(_on_preset_options_item_selected);
 	
 	patrollingSpeedSlider.drag_ended.connect(_on_drag_ended);
@@ -73,6 +95,7 @@ func _ready() -> void:
 	patrollingRestrictedCheckbox.check_changed.connect(update_values);
 	
 	shootingDirectionSlider.drag_ended.connect(_on_drag_ended);
+	shootingRandomDirection.check_changed.connect(update_values);
 	shootingShotSpeedSlider.drag_ended.connect(_on_drag_ended);
 	shootingFireRateSlider.drag_ended.connect(_on_drag_ended);
 	shootingProjectileBounce.check_changed.connect(update_values);
@@ -82,15 +105,23 @@ func _ready() -> void:
 	flyingOffsetXSlider.drag_ended.connect(_on_drag_ended);
 	flyingOffsetYSlider.drag_ended.connect(_on_drag_ended);
 	
+	stationaryDirectionDropdown.dropdown_changed.connect(update_values);
+	stationaryGravity.check_changed.connect(update_values);
+	
+	movingPlatformSpeedSlider.drag_ended.connect(_on_drag_ended);
+	movingPlatformOffsetXSlider.drag_ended.connect(_on_drag_ended);
+	movingPlatformOffsetYSlider.drag_ended.connect(_on_drag_ended);
+	movingPlatformProgressSlider.drag_ended.connect(_on_drag_ended);
+	
 	closeButton.pressed.connect(close);
 
 ## Close the property menu and set the selected entity to null
 func close() -> void:
 	if previewLine:
-		previewLine.hide()
-	if shootingDirectionArrow:
-		shootingDirectionArrow.scale = Vector2(1,1);
-		shootingDirectionArrow = null;
+		previewLine.modulate.a = .5;
+	if directionArrow:
+		directionArrow.scale = Vector2(1,1);
+		directionArrow = null;
 	hide();
 	selectedEntity = null;
 
@@ -105,11 +136,21 @@ func _process(_delta: float) -> void:
 	if selectedEntity is EnemyPatrol:
 		entityName.text = "Patrolling Enemy";
 		selectedEntity.adjust_arrow(int(patrollingDirectionDropdown.value) * 180 + 90);
-	elif  selectedEntity is EnemyFlyer:
-		entityName.text = "Flying Enemy";
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
-		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90);
+		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90, shootingRandomDirection.value);
+	elif selectedEntity is EnemyFlyer:
+		entityName.text = "Flying Enemy";
+		selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+		selectedEntity.previewLine.modulate.a = 1;
+	elif selectedEntity is EnemyStationary:
+		entityName.text = "Stationary Enemy";
+		selectedEntity.update_flipped(!stationaryDirectionDropdown.value);
+	elif selectedEntity is MovingPlatform:
+		entityName.text = "Moving Platform";
+		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
+		selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
+		selectedEntity.previewLine.modulate.a = 1;
 	elif selectedEntity is Player:
 		entityName.text = "Player";
 
@@ -123,7 +164,18 @@ func _on_preset_options_item_selected(index: int) -> void:
 	playerAirControl = selectedPlayerPreset.airControl;
 	playerFallSpeed = selectedPlayerPreset.fallSpeed;
 	playerCoyoteTime = selectedPlayerPreset.coyoteTime;
+	playerDoubleJump = selectedPlayerPreset.doubleJump;
+	playerWallJump = selectedPlayerPreset.wallJump;
+	playerWallJumpDecay = selectedPlayerPreset.wallJumpDecay;
 	update_sliders();
+
+## Reset the Custom to conform with the Default on creating new levels
+func reset_custom() -> void:
+	var defaultPreset : Resource = load("res://Resources/PlayerPresets/Default.tres");
+	var resetedCustom = defaultPreset.duplicate(true);
+	ResourceSaver.save(resetedCustom, "res://Resources/PlayerPresets/Custom.tres");
+	presetOptions.select(0);
+	_on_preset_options_item_selected(0);
 
 ## Load and update the custom preset, then save its changes
 func update_custom() -> void:
@@ -134,21 +186,13 @@ func update_custom() -> void:
 	customPreset.airControl = playerAirControl;
 	customPreset.fallSpeed = playerFallSpeed;
 	customPreset.coyoteTime = playerCoyoteTime;
-	
+	customPreset.doubleJump = playerDoubleJump;
+	customPreset.wallJump = playerWallJump;
+	customPreset.wallJumpDecay = playerWallJumpDecay;
 	ResourceSaver.save(customPreset, "res://Resources/PlayerPresets/Custom.tres");
 	
 	presetOptions.select(4);
 	_on_preset_options_item_selected(4);
-
-## Update the preview for the flying enemy
-func update_flying_preview() -> void:
-	if selectedEntity == null:
-		return;
-	var offset : Vector2 = Vector2(flyingOffsetXSlider.value * Global.TILE_SIZE, flyingOffsetYSlider.value * Global.TILE_SIZE);
-	previewLine.global_position = selectedEntity.global_position;
-	previewLine.clear_points()
-	previewLine.add_point(Vector2.ZERO)
-	previewLine.add_point(offset)
 
 ## Update all sliders according to the values
 func update_sliders() -> void:
@@ -164,7 +208,17 @@ func update_sliders() -> void:
 	playerFallSpeedSlider.value = playerFallSpeed;
 	playerFallSpeedSlider.update_slider();
 	playerCoyoteTimeSlider.value = playerCoyoteTime;
-	playerCoyoteTimeSlider.update_slider();	
+	playerCoyoteTimeSlider.update_slider();
+	playerDoubleJumpCheckbox.value = playerDoubleJump;
+	playerDoubleJumpCheckbox.update_checkbox();
+	playerWallJumpCheckbox.value = playerWallJump;
+	playerWallJumpCheckbox.update_checkbox();
+	# Make the WallJumpDecay Checkbox transparent if it can't be selected.
+	if !playerWallJump:
+		playerWallJumpDecay = false;
+	make_selectable(playerWallJumpDecayCheckbox, playerWallJump);
+	playerWallJumpDecayCheckbox.value = playerWallJumpDecay;
+	playerWallJumpDecayCheckbox.update_checkbox();
 	# Enemies
 	if selectedEntity is EnemyPatrol:
 		patrollingSpeedSlider.value = selectedPreset.groundSpeed;
@@ -173,6 +227,19 @@ func update_sliders() -> void:
 		patrollingSpeedSlider.update_slider();
 		patrollingDirectionDropdown.update_dropdown();
 		patrollingRestrictedCheckbox.update_checkbox();
+	elif selectedEntity is EnemyShooting:
+		shootingDirectionSlider.value = -selectedPreset.direction;
+		shootingRandomDirection.value = selectedPreset.randomDirection;
+		shootingShotSpeedSlider.value = selectedPreset.shotSpeed;
+		shootingFireRateSlider.value = selectedPreset.fireRate;
+		shootingProjectileBounce.value = selectedPreset.projBounce;
+		shootingGravity.value = selectedPreset.gravity;
+		shootingDirectionSlider.update_slider();
+		shootingRandomDirection.update_checkbox();
+		shootingShotSpeedSlider.update_slider();
+		shootingFireRateSlider.update_slider();
+		shootingProjectileBounce.update_checkbox();
+		shootingGravity.update_checkbox();
 	elif selectedEntity is EnemyFlyer:
 		flyingSpeedSlider.value = selectedPreset.speed;
 		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.TILE_SIZE;
@@ -180,17 +247,31 @@ func update_sliders() -> void:
 		flyingSpeedSlider.update_slider();
 		flyingOffsetXSlider.update_slider();
 		flyingOffsetYSlider.update_slider();
-	elif selectedEntity is EnemyShooting:
-		shootingDirectionSlider.value = -selectedPreset.direction;
-		shootingShotSpeedSlider.value = selectedPreset.shotSpeed;
-		shootingFireRateSlider.value = selectedPreset.fireRate;
-		shootingProjectileBounce.value = selectedPreset.projBounce;
-		shootingGravity.value = selectedPreset.gravity;
-		shootingDirectionSlider.update_slider();
-		shootingShotSpeedSlider.update_slider();
-		shootingFireRateSlider.update_slider();
-		shootingProjectileBounce.update_checkbox();
-		shootingGravity.update_checkbox();
+	elif selectedEntity is EnemyStationary:
+		stationaryDirectionDropdown.value = int(!selectedPreset.isFacingRight);
+		stationaryGravity.value = selectedPreset.gravity;
+		stationaryDirectionDropdown.update_dropdown();
+		stationaryGravity.update_checkbox();
+	elif selectedEntity is MovingPlatform:
+		movingPlatformSpeedSlider.value = selectedPreset.speed;
+		movingPlatformOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.TILE_SIZE;
+		movingPlatformOffsetYSlider.value = selectedPreset.pointBOffset.y / Global.TILE_SIZE;
+		movingPlatformProgressSlider.value = selectedPreset.progress;
+		movingPlatformSpeedSlider.update_slider();
+		movingPlatformOffsetXSlider.update_slider();
+		movingPlatformOffsetYSlider.update_slider();
+		movingPlatformProgressSlider.update_slider();
+	
+
+## Alternate the ability for a property to be selected
+## property: The property to change
+## selectable: If it can be selected
+func make_selectable(property : VBoxContainer, selectable : bool) -> void:
+	property.enabled = selectable;
+	if !selectable:
+		property.modulate = Color(1, 1, 1, 0.5);
+	else:
+		property.modulate = Color(1, 1, 1, 1);
 
 ## Update all of the player values based on the sliders
 func update_values() -> void:
@@ -200,24 +281,38 @@ func update_values() -> void:
 	playerAirControl = playerAirControlSlider.value;
 	playerFallSpeed = playerFallSpeedSlider.value;
 	playerCoyoteTime = playerCoyoteTimeSlider.value;
+	playerDoubleJump = playerDoubleJumpCheckbox.value;
+	playerWallJump = playerWallJumpCheckbox.value;
+	playerWallJumpDecay = playerWallJumpDecayCheckbox.value;
 	
 	if selectedEntity is EnemyPatrol:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
 		selectedPreset.direction = patrollingDirectionDropdown.value;
 		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
-	elif selectedEntity is EnemyFlyer:
-		selectedPreset.speed = flyingSpeedSlider.value;
-		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.TILE_SIZE, flyingOffsetYSlider.value * Global.TILE_SIZE);
-		update_flying_preview();
-		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyShooting:
+		selectedPreset.randomDirection = shootingRandomDirection.value;
+		make_selectable(shootingDirectionSlider, !selectedPreset.randomDirection);
 		selectedPreset.direction = -shootingDirectionSlider.value;
 		selectedPreset.shotSpeed = shootingShotSpeedSlider.value;
 		selectedPreset.fireRate = shootingFireRateSlider.value;
 		selectedPreset.projBounce = shootingProjectileBounce.value;
 		selectedPreset.gravity = shootingGravity.value
 		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+	elif selectedEntity is EnemyFlyer:
+		selectedPreset.speed = flyingSpeedSlider.value;
+		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.TILE_SIZE, flyingOffsetYSlider.value * Global.TILE_SIZE);
+		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+	elif selectedEntity is EnemyStationary:
+		selectedPreset.isFacingRight = !stationaryDirectionDropdown.value;
+		selectedPreset.gravity = stationaryGravity.value;
+		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+	elif selectedEntity is MovingPlatform:
+		selectedPreset.speed = movingPlatformSpeedSlider.value;
+		selectedPreset.pointBOffset = Vector2(movingPlatformOffsetXSlider.value * Global.TILE_SIZE, movingPlatformOffsetYSlider.value * Global.TILE_SIZE);
+		selectedPreset.progress = movingPlatformProgressSlider.value;
+		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+	
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
@@ -229,28 +324,43 @@ func _on_drag_ended() -> void:
 ## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
 	show();
-	if shootingDirectionArrow:
-		shootingDirectionArrow.scale = Vector2(1,1);
-		shootingDirectionArrow = null;
+	if previewLine:
+		previewLine.modulate.a = .5;
+	if directionArrow:
+		directionArrow.scale = Vector2(1,1);
+		directionArrow = null;
 	playerMenu.hide();
 	patrollingMenu.hide();
-	flyingMenu.hide();
 	shootingMenu.hide();
-	if selectedEntity is Enemy:
+	flyingMenu.hide();
+	stationaryMenu.hide();
+	movingPlatformMenu.hide();
+	if selectedEntity is Enemy || selectedEntity is MovingPlatform:
 		selectedPreset = resource;
 		update_sliders();
 		if selectedEntity is EnemyPatrol:
-			shootingDirectionArrow = selectedEntity.directionArrow;
+			directionArrow = selectedEntity.directionArrow;
 			patrollingMenu.show();
+		elif selectedEntity is EnemyShooting:
+			directionArrow = selectedEntity.directionArrow;
+			directionArrow.scale = Vector2(2,2);
+			make_selectable(shootingDirectionSlider, !selectedPreset.randomDirection);
+			shootingMenu.show();
 		elif selectedEntity is EnemyFlyer:
 			flyingMenu.show()
-			previewLine = selectedEntity.previewLine
+			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.show()
-				update_flying_preview()
-		elif selectedEntity is EnemyShooting:
-			shootingDirectionArrow = selectedEntity.directionArrow;
-			shootingDirectionArrow.scale = Vector2(2,2);
-			shootingMenu.show();
+				previewLine.modulate.a = 1;
+				selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+		elif selectedEntity is EnemyStationary:
+			stationaryMenu.show();
+		elif selectedEntity is MovingPlatform:
+			movingPlatformMenu.show();
+			previewLine = selectedEntity.previewLine;
+			if previewLine:
+				previewLine.modulate.a = 1;
+				selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
+		
+		
 	else:
 		playerMenu.show();

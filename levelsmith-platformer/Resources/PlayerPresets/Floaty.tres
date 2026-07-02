@@ -10,4 +10,5 @@ jumpHeight = 3.0
 airControl = 0.4
 fallSpeed = 0.6
 coyoteTime = 0.25
+doubleJump = true
 metadata/_custom_type_script = "uid://bp8erofrb01fc"

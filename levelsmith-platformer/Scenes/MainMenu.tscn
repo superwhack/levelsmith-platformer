@@ -2,13 +2,14 @@
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_df05h"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
-[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_df05h"]
+[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_df05h"]
 [ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_loo7a"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_8um5k"]
+[ext_resource type="PackedScene" uid="uid://ooleujet3lhf" path="res://Scenes/UI/LevelListBox.tscn" id="3_rrcx7"]
 [ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="4_xim88"]
-[ext_resource type="Texture2D" uid="uid://caw5vfrla8ry1" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
-[ext_resource type="Texture2D" uid="uid://cn52j7r73ygot" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="7_loo7a"]
-[ext_resource type="Texture2D" uid="uid://5qon1fxclb4n" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="8_if7li"]
+[ext_resource type="Texture2D" uid="uid://cfmy5pk58n8fx" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="6_cmrfp"]
+[ext_resource type="Texture2D" uid="uid://dxoqpsw52s2ii" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="7_loo7a"]
+[ext_resource type="Texture2D" uid="uid://21my6qjib5ao" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="8_if7li"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -40,7 +41,7 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_ce3w2")
 sources/2 = SubResource("TileSetAtlasSource_n45e2")
 
-[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "spinBoxNewLevelX", "spinBoxNewLevelY", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "fileExplorer")]
+[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "spinBoxNewLevelX", "spinBoxNewLevelY", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "fileExplorer", "levelList")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,6 +66,8 @@ buttonImportLevelOpen = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/Overla
 buttonImportLevelBrowse = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/BrowseButton")
 fieldImportLevelPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/FilePathInput")
 fileExplorer = NodePath("FileDialog")
+levelList = NodePath("Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer/LevelList")
+levelListItem = ExtResource("3_rrcx7")
 
 [node name="Background" type="ColorRect" parent="." unique_id=2093246532]
 layout_mode = 1
@@ -141,11 +144,13 @@ layout_mode = 2
 
 [node name="NewLevelButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1452622841]
 layout_mode = 2
+tooltip_text = "Create a New Level"
 theme_override_font_sizes/font_size = 35
 text = "New Level"
 
 [node name="ImportLevelButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1546369652]
 layout_mode = 2
+tooltip_text = "Import an Existing Level"
 theme_override_font_sizes/font_size = 35
 text = "Import Level"
 
@@ -160,6 +165,7 @@ size_flags_vertical = 3
 
 [node name="QuitButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=879759410]
 layout_mode = 2
+tooltip_text = "Quit to Desktop"
 theme_override_font_sizes/font_size = 35
 text = "Quit"
 
@@ -193,16 +199,24 @@ text = "Load Level:"
 layout_mode = 2
 theme_override_styles/separator = ExtResource("4_xim88")
 
-[node name="LevelList" type="ItemList" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox" unique_id=632439816]
+[node name="ScrollContainer" type="ScrollContainer" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox" unique_id=1529046712]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
-theme_override_colors/font_hovered_color = Color(0.08078892, 0.21693686, 0.45689148, 1)
-theme_override_colors/font_hovered_selected_color = Color(0.19205198, 0.4054752, 0.781936, 1)
-theme_override_styles/panel = ExtResource("3_8um5k")
-item_count = 1
+theme_override_constants/scrollbar_h_separation = 6
+horizontal_scroll_mode = 0
+
+[node name="LevelList" type="GridContainer" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer" unique_id=1343666333]
+custom_minimum_size = Vector2(1141, 176.13)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+offset_transform_enabled = true
+theme_override_constants/h_separation = 120
+theme_override_constants/v_separation = 12
+columns = 3
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=120086451]
+visible = false
 custom_minimum_size = Vector2(630, 425)
 layout_mode = 1
 anchors_preset = 15

@@ -159,6 +159,7 @@ func edit() -> void:
 	toolManager.isPainting = false;
 	# You can right click after completing a level
 	toolManager.clickOnUI = false;
+	entityManager.duplicatingResource = null;
 	editorManagerCanvas.show();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bj3ux7rusonfj"]
 
-[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_keug2"]
-[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_lqvvn"]
-[ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="3_oqa3u"]
-[ext_resource type="FontFile" uid="uid://dbkfb2swhokjo" path="res://Assets/Fonts/JetBrainsMono-Regular.ttf" id="4_gqhqu"]
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_xnyog"]
+[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_5m156"]
+[ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="3_q4os2"]
+[ext_resource type="FontFile" uid="uid://dbkfb2swhokjo" path="res://Assets/Fonts/JetBrainsMono-Regular.ttf" id="4_er5ul"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_wdd1s"]
 
@@ -16,7 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_keug2")
+theme = ExtResource("1_xnyog")
 
 [node name="MainMargin" type="MarginContainer" parent="." unique_id=136846140]
 self_modulate = Color(1, 1, 1, 0.7882353)
@@ -35,7 +35,7 @@ grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="MainMargin" unique_id=1872042643]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("2_lqvvn")
+theme_override_styles/panel = ExtResource("2_5m156")
 
 [node name="BorderMargin" type="MarginContainer" parent="MainMargin/PanelContainer" unique_id=1869638650]
 layout_mode = 2
@@ -60,7 +60,7 @@ text = "Global Settings"
 
 [node name="HeaderLine" type="HSeparator" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/HeaderBlock" unique_id=251268854]
 layout_mode = 2
-theme_override_styles/separator = ExtResource("3_oqa3u")
+theme_override_styles/separator = ExtResource("3_q4os2")
 
 [node name="ControlsVBox" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox" unique_id=2060780134]
 layout_mode = 2
@@ -403,7 +403,7 @@ mouse_filter = 2
 
 [node name="OnScreenCheckBox" type="CheckBox" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/ActivationContainer/ActivationContainer" unique_id=2008719884]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_gqhqu")
+theme_override_fonts/font = ExtResource("4_er5ul")
 button_pressed = true
 button_group = SubResource("ButtonGroup_wdd1s")
 text = "On Screen"
@@ -416,7 +416,7 @@ mouse_filter = 2
 
 [node name="OnStartCheckBox" type="CheckBox" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/ActivationContainer/ActivationContainer" unique_id=249970826]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_gqhqu")
+theme_override_fonts/font = ExtResource("4_er5ul")
 button_group = SubResource("ButtonGroup_wdd1s")
 text = "On Level Start"
 
@@ -443,7 +443,7 @@ mouse_filter = 2
 
 [node name="OnCheckBox" type="CheckBox" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/TileInteractionContainer/TileInteractionContainer" unique_id=1156920337]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_gqhqu")
+theme_override_fonts/font = ExtResource("4_er5ul")
 button_group = SubResource("ButtonGroup_1i6c8")
 text = "On"
 
@@ -454,7 +454,7 @@ mouse_filter = 2
 
 [node name="OffCheckBox" type="CheckBox" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/TileInteractionContainer/TileInteractionContainer" unique_id=500349193]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_gqhqu")
+theme_override_fonts/font = ExtResource("4_er5ul")
 button_pressed = true
 button_group = SubResource("ButtonGroup_1i6c8")
 text = "Off"

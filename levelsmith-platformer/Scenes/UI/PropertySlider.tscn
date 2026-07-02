@@ -2,18 +2,35 @@
 
 [ext_resource type="Script" uid="uid://u63l1aalo6tr" path="res://Scripts/Editor/Properties/PropertySlider.gd" id="1_w5nda"]
 
-[node name="PropertySlider" type="VBoxContainer" unique_id=305056832 node_paths=PackedStringArray("nameLabel", "slider", "textField", "minLabel", "maxLabel")]
+[node name="PropertySlider" type="VBoxContainer" unique_id=305056832 node_paths=PackedStringArray("nameLabel", "unit", "slider", "textField", "minLabel", "maxLabel")]
 size_flags_horizontal = 4
 script = ExtResource("1_w5nda")
 propertyName = "Name"
-nameLabel = NodePath("Name")
+nameLabel = NodePath("NameContainer/Name")
+unit = NodePath("NameContainer/Unit")
 slider = NodePath("HBoxContainer/VBoxContainer/Slider")
 textField = NodePath("HBoxContainer/Value")
 minLabel = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/Minimum")
 maxLabel = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/Maximum")
 
-[node name="Name" type="Label" parent="." unique_id=671881686]
+[node name="NameContainer" type="HBoxContainer" parent="." unique_id=440181073]
 layout_mode = 2
+
+[node name="Name" type="Label" parent="NameContainer" unique_id=671881686]
+layout_mode = 2
+text = "Name"
+
+[node name="Gap" type="Label" parent="NameContainer" unique_id=1085544647]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.52975416, 0.51892054, 0.5297661, 1)
+theme_override_font_sizes/font_size = 16
+
+[node name="Unit" type="Label" parent="NameContainer" unique_id=943108958]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.52975416, 0.51892054, 0.5297661, 1)
 text = "Name"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1927265922]

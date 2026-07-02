@@ -2,7 +2,9 @@ extends VBoxContainer
 
 # Variables for different parts of the slider
 @export var propertyName : String;
-@export var nameLabel : Label; 
+@export var nameLabel : Label;
+@export var propertyUnit : String;
+@export var unit : Label; 
 @export var slider : HSlider;
 @export var textField : TextEdit;
 @export var minLabel : Label;
@@ -22,6 +24,7 @@ var enabled : bool = true;
 ## When started, set the text of the name label to the name of the property
 func _ready() -> void:
 	nameLabel.text = propertyName;
+	unit.text = "(" + propertyUnit + ")";
 	slider.min_value = snapped(minMax.x, 0.01);
 	slider.max_value = snapped(minMax.y, 0.01);
 	slider.step = sliderStep;

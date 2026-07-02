@@ -26,12 +26,12 @@ func _ready() -> void:
 	slider.max_value = snapped(minMax.y, 0.01);
 	slider.step = sliderStep;
 	slider.drag_ended.connect(_drag_ended);
+	textField.text_changed.connect(_validate_length);
 	textField.focus_entered.connect(_text_change_begins);
 	textField.focus_exited.connect(_text_change_ended);
 	minLabel.text = str(snapped(minMax.x, .01));
 	maxLabel.text = str(snapped(minMax.y, .01));
-	# Just so _process runs once
-	value = slider.value + 1;
+	adjust_label();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -42,14 +42,7 @@ func _process(_delta: float) -> void:
 		return;
 	if value == slider.value:
 		return;
-	var newLabel = "";
-	if int(sliderStep) == sliderStep:
-		newLabel += str(int(slider.value));
-	else:
-		newLabel += str(slider.value);
-	if valueAppend:
-		newLabel += valueAppend;
-	textField.text = newLabel;
+	adjust_label();
 	value = slider.value;
 
 ## When drag is finished, emit drag ended signal
@@ -61,10 +54,36 @@ func _text_change_begins() -> void:
 	textField.text = "";
 
 func _text_change_ended() -> void:
+	# Replace is needed since enter also puts a newline into the text field
+	textField.text = textField.text.replace("\n", "");
+	# If it's invalid, return to previous value
+	if !textField.text.is_valid_float():
+		textField.text = textField.placeholder_text;
+	#else:
+	#	if float(textField.text) > slider.max_value:
+	#		textField.text = str(slider.max_value);
+	#	elif float(textField.text) < slider.min_value:
+	#		textField.text = str(slider.min_value);
 	slider.value = float(textField.text);
-	textField.text = "";
+	adjust_label();
 	drag_ended.emit();
+
+func _validate_length() -> void:
+	if textField.has_focus() && textField.text.length() > 4:
+		textField.text = textField.text.substr(0, 4);
+		textField.set_caret_column(4);
 
 ## Update the slider value
 func update_slider() -> void:
 	slider.value = value;
+	adjust_label();
+
+func adjust_label() -> void:
+	var newLabel = "";
+	if int(sliderStep) == sliderStep:
+		newLabel += str(int(slider.value));
+	else:
+		newLabel += str(slider.value);
+	if valueAppend:
+		newLabel += valueAppend;
+	textField.text = newLabel;

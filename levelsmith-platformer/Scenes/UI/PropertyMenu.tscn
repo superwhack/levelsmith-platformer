@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
 [ext_resource type="PackedScene" uid="uid://d33iu75vytjse" path="res://Scenes/UI/PropertyDropdown.tscn" id="5_ehgsd"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "flyingMenu", "movingPlatformMenu", "patrollingMenu", "shootingMenu", "playerHealthSlider", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "presetOptions", "closeButton")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "presetOptions", "closeButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,10 +22,11 @@ theme_override_styles/panel = ExtResource("2_x85wq")
 script = ExtResource("1_tnep3")
 entityName = NodePath("ScrollContainer/MainMargin/RootVBox/EntityNameVBox/EntityName")
 playerMenu = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties")
-flyingMenu = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties")
-movingPlatformMenu = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin")
 patrollingMenu = NodePath("ScrollContainer/MainMargin/RootVBox/PatrollingMargin")
 shootingMenu = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin")
+flyingMenu = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties")
+stationaryMenu = NodePath("ScrollContainer/MainMargin/RootVBox/StationaryMargin")
+movingPlatformMenu = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin")
 playerHealthSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerHealth")
 playerSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerSpeed")
 playerJumpSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerJump")
@@ -38,19 +39,21 @@ playerWallJumpDecayCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/Play
 patrollingSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed")
 patrollingDirectionDropdown = NodePath("ScrollContainer/MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingDirection")
 patrollingRestrictedCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingRestricted")
-flyingSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/FlightSpeed")
-flyingOffsetXSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/Xoffset")
-flyingOffsetYSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/Yoffset")
-movingPlatformSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/MoveSpeed")
-movingPlatformOffsetXSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Xoffset")
-movingPlatformOffsetYSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Yoffset")
-movingPlatformProgressSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Progress")
 shootingDirectionSlider = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingDirection")
 shootingRandomDirection = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingRandomDirection")
 shootingShotSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingShotSpeed")
 shootingFireRateSlider = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingFireRate")
 shootingProjectileBounce = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingBounce")
 shootingGravity = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingGravity")
+flyingSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/FlightSpeed")
+flyingOffsetXSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/Xoffset")
+flyingOffsetYSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/Yoffset")
+stationaryDirectionDropdown = NodePath("ScrollContainer/MainMargin/RootVBox/StationaryMargin/StationaryProperties/StationaryDirection")
+stationaryGravity = NodePath("ScrollContainer/MainMargin/RootVBox/StationaryMargin/StationaryProperties/StationaryGravity")
+movingPlatformSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/MoveSpeed")
+movingPlatformOffsetXSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Xoffset")
+movingPlatformOffsetYSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Yoffset")
+movingPlatformProgressSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Progress")
 presetOptions = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions")
 closeButton = NodePath("ScrollContainer/MainMargin/RootVBox/HBoxContainer/CloseButton")
 
@@ -61,6 +64,7 @@ offset_bottom = 700.0
 
 [node name="MainMargin" type="MarginContainer" parent="ScrollContainer" unique_id=1879514987]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
@@ -89,6 +93,7 @@ theme_override_font_sizes/font_size = 24
 text = "Name"
 
 [node name="PlayerProperties" type="VBoxContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1398037876]
+visible = false
 layout_mode = 2
 
 [node name="PlayerHealth" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=305056832 instance=ExtResource("2_w5eld")]
@@ -317,6 +322,22 @@ size_flags_horizontal = 0
 propertyName = "vertical offset"
 minMax = Vector2(-10, 10)
 sliderStep = 1.0
+
+[node name="StationaryMargin" type="MarginContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1004279838]
+layout_mode = 2
+
+[node name="StationaryProperties" type="VBoxContainer" parent="ScrollContainer/MainMargin/RootVBox/StationaryMargin" unique_id=84342258]
+layout_mode = 2
+
+[node name="StationaryDirection" parent="ScrollContainer/MainMargin/RootVBox/StationaryMargin/StationaryProperties" unique_id=1130481249 instance=ExtResource("5_ehgsd")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Direction"
+
+[node name="StationaryGravity" parent="ScrollContainer/MainMargin/RootVBox/StationaryMargin/StationaryProperties" unique_id=239804786 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Gravity"
 
 [node name="BottomSpacer" type="Control" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1741289699]
 layout_mode = 2

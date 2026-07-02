@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://m70cp4yn5bd1"]
+
+[ext_resource type="Texture2D" uid="uid://0dwb016xnmn4" path="res://Assets/Sprites/Entities/eviljumo.png" id="1_dg4ca"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dhqy0"]
+
+[node name="Sprite2D" type="Sprite2D" unique_id=1592121155]
+modulate = Color(1, 0, 0, 1)
+material = SubResource("ShaderMaterial_dhqy0")
+texture = ExtResource("1_dg4ca")

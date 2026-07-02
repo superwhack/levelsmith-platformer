@@ -105,6 +105,10 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			dataToSend += '"type":"flying", "stats":{';
 			dataToSend += '"speed": ' + str(propertyFile.speed) + ", ";
 			dataToSend += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}}}';
+		elif enemyProperty.contains("Stationary"):
+			dataToSend += '"type":"stationary", "stats":{';
+			dataToSend += '"isFacingRight": ' + str(propertyFile.isFacingRight) + ", ";
+			dataToSend += '"gravity": ' + str(propertyFile.gravity) + '}}';
 		elif enemyProperty.contains("MovingPlatform"):
 			dataToSend += '"type":"movingPlatform", "stats":{';
 			dataToSend += '"speed": ' + str(propertyFile.speed) + ", ";
@@ -310,6 +314,9 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.speed = enemy.stats.speed;
 			newResource.pointBOffset.x = enemy.stats.endpoint.x;
 			newResource.pointBOffset.y = enemy.stats.endpoint.y;
+		"stationary":
+			newResource.isFacingRight = enemy.stats.isFacingRight;
+			newResource.gravity = enemy.stats.gravity;
 		"movingPlatform":
 			newResource.speed = enemy.stats.speed;
 			newResource.pointBOffset.x = enemy.stats.endpoint.x;
@@ -317,6 +324,7 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.progress = enemy.stats.progress;
 	ResourceSaver.save(newResource, "res://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
+	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();
 			
 ## If any enemy data is corrupted, we can repair it by giving it default values.
 func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
@@ -338,4 +346,10 @@ func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
 			var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
 			var newFlying : Resource = defaultFlying.duplicate(true);
 			ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying-" + nodePos + ".tres");
+			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
+		elif node is EnemyStationary && node.propertyFile == null:
+			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
+			var defaultStationary : Resource = load("res://Resources/PlayerPresets/StationaryDefault.tres");
+			var newStationary : Resource = defaultStationary.duplicate(true);
+			ResourceSaver.save(newStationary, "res://Resources/Enemies/Stationary-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));

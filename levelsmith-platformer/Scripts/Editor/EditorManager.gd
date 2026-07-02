@@ -14,7 +14,7 @@ extends Node2D
 @export var exportButton : Button;
 
 # Asset Manager
-@export var assetManager : Control;
+@export var assetManager : AssetManager;
 
 # Cursor Manager
 @export var customCursorManager : Node2D;
@@ -128,3 +128,4 @@ func close_asset_manager() -> void:
 	get_tree().paused = false;
 	previewTileMap.show();
 	assetManager.hide();
+	assetManager.animationSwapping.playingAnimation = false;

@@ -213,8 +213,6 @@ func walk() -> void:
 ## amount: damage to deal, -1 is instant death
 ## direction: direction to deal damage in
 func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce : int = 0) -> void:
-	if amount < 0:
-		return die();
 	if invulnerabilityCurrent > 0:
 		return;
 	invulnerabilityCurrent = invulnerabilityTimer;
@@ -403,7 +401,7 @@ func detect_tiles() -> void:
 			var direction : Vector2 = -raycast.target_position;
 			take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"));
 		elif tileName == "death":
-			take_damage(-1);
+			take_damage(maxHealth);
 		# Only downward rays should drive floor tile effects (except hazard)
 		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):
 			if (tileData.get_custom_data("name") != "bounce" && is_on_floor()):

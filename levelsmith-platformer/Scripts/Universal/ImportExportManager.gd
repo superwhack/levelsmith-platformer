@@ -227,7 +227,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	var player = json_as_dict.get("player", {});
 	playerData.playerHealth = player.get("health", playerData.playerHealth);
 	playerData.playerSpeed = player.get("speed", playerData.playerSpeed);
-	playerData.playerJumpHeight = player.get("jumpheight", playerData.playerJumpHeight);
+	playerData.playerJumpHeight = player.get("jumpHeight", playerData.playerJumpHeight);
 	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
 	playerData.playerFallSpeed = player.get("fallSpeed", playerData.playerFallSpeed);
 	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);

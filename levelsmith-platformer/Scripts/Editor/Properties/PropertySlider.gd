@@ -55,6 +55,8 @@ func _drag_ended(_value_changed: bool) -> void:
 ## When the text change beings, clear the text and make the placeholder text what was the text
 ## this makes it easy to edit
 func _text_change_begins() -> void:
+	# Await so that text cannot get selected and stay in the field after focus is entered
+	await get_tree().process_frame;
 	textField.placeholder_text = textField.text;
 	textField.text = "";
 

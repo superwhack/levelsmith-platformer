@@ -184,6 +184,7 @@ func update_timer(label: RichTextLabel) -> void:
 ## Pauses gameplay, displays the win screen, and updates the completion statistics
 func level_complete() -> void:
 	goalReached = true;
+	pauseButton.hide();
 	get_tree().paused = true;
 	update_coin_counter(winCoinLabel);
 	update_timer(winTimeLabel);

@@ -109,7 +109,7 @@ func create_new_level() -> void:
 		return;
 		
 	# If the given level name is invalid, return early.
-	if (!fieldNewLevelName.text.strip_edges().is_valid_filename()  || fieldNewLevelName.text.length() > 255):
+	if (!fieldNewLevelName.text.strip_edges().is_valid_filename() || fieldNewLevelName.text.contains(".")  || fieldNewLevelName.text.length() > 255):
 		emptyWarning.hide();
 		invalidWarning.show();
 		return;

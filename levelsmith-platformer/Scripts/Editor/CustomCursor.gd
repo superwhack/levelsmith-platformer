@@ -62,7 +62,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# If global state is not in edit, set to cursor icon and bail out
 	if (masterManager.state != Global.State.EDIT):
-		Input.set_custom_mouse_cursor(cursorIcon);
+		Input.set_custom_mouse_cursor(uiCursor);
 		return;
 	# Set the current mouse position and place the selector frame and invalid sprite to the correct locations
 	currentMousePosition = editorManager.currentMousePosition;
@@ -86,7 +86,7 @@ func _process(_delta: float) -> void:
 		SelectorState.INVALID:
 			selectorFrame.modulate = Color(1, 1, 1, 0);
 	
-	if (get_viewport().gui_get_hovered_control() || masterManager.state != Global.State.EDIT):
+	if (get_viewport().gui_get_hovered_control()):
 		Input.set_custom_mouse_cursor(uiCursor);
 	else:
 		match (toolManager.currentTool):

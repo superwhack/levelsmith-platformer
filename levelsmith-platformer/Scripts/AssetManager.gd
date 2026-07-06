@@ -68,7 +68,11 @@ func _ready() -> void:
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
 	item_selected(firstImageSelected);
 	on_asset_tab_changed(assetTabs.current_tab);
-	ImportExportManager.levelImported.connect(item_selected);
+	# If there is a currently selected item, connect based on the current item
+	ImportExportManager.levelImported.connect(func():
+		if currentSelectedItem:
+			item_selected(currentSelectedItem);
+		);
 
 # WARNING Only refreshes all files once, might be worth it later to do individually
 ## Generate buttons for each asset

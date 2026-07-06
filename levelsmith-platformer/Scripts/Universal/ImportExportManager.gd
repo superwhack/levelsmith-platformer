@@ -30,7 +30,6 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	DirAccess.make_dir_absolute("user://Levels/");
 	levelPath = "user://Levels/" + levelName + "/";
 	levelAssetPath = levelPath + "Assets/";
-	
 	# NOTE: In the future we might want to assign this elsewhere 
 	AudioManager.audioLibraryPath = levelPath + "Assets/Audio/";
 	
@@ -168,7 +167,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 ## sourceName: Source level name
 ## returns: false if it fails, true otherwise
 func validate_import(sourceName: String) -> bool:
-	levelPath = sourceName + "/";
+	levelPath = sourceName;
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
 	

@@ -273,7 +273,7 @@ func clone_data(from: String, to: String, directory: String = ""):
 		var newPath : String = directory + currentDirectory + "/";
 		DirAccess.make_dir_absolute(to + newPath);
 		clone_data(from, to, directory + currentDirectory + "/");
-	
+		
 	# Copy all file data.
 	# Erase all files in the destination folder if the source has nothing.
 	var files : PackedStringArray = DirAccess.get_files_at(from + directory);

@@ -20,7 +20,7 @@ func _ready() -> void:
 	mainTileMap = assetManager.mainTileMap;
 	Global.levelCreated.connect(refresh_images);
 	# Refresh all assets
-	refresh_images();
+	#refresh_images();
 	ImportExportManager.levelImported.connect(refresh_images);
 
 ## Refresh all images in game

@@ -162,7 +162,8 @@ func _on_coin_collected() -> void:
 ## Updates the coin counter shown on screen
 func update_coin_counter(label: RichTextLabel) -> void:
 	label.clear()
-	label.append_text("Coins: %d / %d" % [coinCount, totalCoins])
+	if totalCoins > 0:
+		label.append_text("Coins: %d / %d" % [coinCount, totalCoins])
 
 ## Prints the final completion time and stops the level timer
 func print_level_completion_time() -> void:

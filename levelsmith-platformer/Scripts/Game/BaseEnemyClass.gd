@@ -21,10 +21,11 @@ var active = false;
 @export var animatedSprites : AnimatedSprite2D;
 var deathTimer : Timer;
 
+var deathAnim : String = "death";
 
 ## Initializing, add to the group named enemy
 func _ready() -> void:
-	add_to_group("enemy")
+	add_to_group("enemy");
 	
 	deathTimer = Timer.new();
 	deathTimer.wait_time = 0.4;
@@ -87,7 +88,7 @@ func take_damage(amount: int = 1) -> void:
 func die() -> void:
 	AudioManager.play_effect("EnemyDeath");
 	if (animatedSprites):
-		animatedSprites.play("death");
+		animatedSprites.play(deathAnim);
 	remove_from_group("enemy");
 	deathTimer.start();
 

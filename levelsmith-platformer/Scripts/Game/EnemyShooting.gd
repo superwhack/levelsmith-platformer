@@ -23,9 +23,10 @@ const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn"
 var timeLeft : float = 1;
 
 func _ready() -> void:
+	deathAnim = "ShootDeath";
 	super._ready();
 	
-	animatedSprites.animation = "idle";
+	animatedSprites.animation = "ShootIdle";
 	animatedSprites.play();
 	animatedSprites.animation_finished.connect(_on_animation_finished);
 
@@ -77,11 +78,11 @@ func shooting_behavior() -> void:
 		projectileFired.global_rotation_degrees = fireDirection;
 	projectileFired.bounceable = projBounce;
 	add_sibling(projectileFired);
-	animatedSprites.play("shoot");
+	animatedSprites.play("EnemyShoot");
 
 func _on_animation_finished():
-	if (animatedSprites.animation == "shoot"):
-		animatedSprites.play("idle");
+	if (animatedSprites.animation == "EnemyShoot"):
+		animatedSprites.play("ShootIdle");
 
 # Updates the orientation of the enemy
 func update_flipped(facingRight: bool) -> void:

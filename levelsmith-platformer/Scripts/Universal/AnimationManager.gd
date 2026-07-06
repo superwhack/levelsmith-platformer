@@ -25,6 +25,14 @@ func replace_animation(animatedSprite : AnimatedSprite2D, animationName : String
 	for frame in frames:
 		spriteFrames.add_frame(animationName, ImageTexture.create_from_image(frame));
 
+func replace_animation_by_name(animatedSprite : AnimatedSprite2D, animationName : String):
+	var spriteFrames : SpriteFrames = animatedSprite.sprite_frames;
+	if (!get_animation_frames(animationName)):
+		return;
+	spriteFrames.clear(animationName);
+	for frame in get_animation_frames(animationName):
+		spriteFrames.add_frame(animationName, ImageTexture.create_from_image(frame));
+
 func refresh_animations() -> void:
 	for spriteGroup in allAnimatedSprites:
 		for sprite in spriteGroup:

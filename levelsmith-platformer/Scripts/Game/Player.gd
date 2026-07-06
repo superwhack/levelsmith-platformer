@@ -85,12 +85,8 @@ func _ready() -> void:
 		#print("Applying ", playerMovementPreset, " player movement preset.");
 		apply_preset(playerMovementPreset);
 	
-	AnimationManager.replace_animation(animatedSprites, "PlayerRun", AnimationManager.get_animation_frames("PlayerRun"));
-	AnimationManager.replace_animation(animatedSprites, "PlayerDeath", AnimationManager.get_animation_frames("PlayerDeath"));
-	AnimationManager.replace_animation(animatedSprites, "PlayerFall", AnimationManager.get_animation_frames("PlayerFall"));
-	AnimationManager.replace_animation(animatedSprites, "PlayerHurt", AnimationManager.get_animation_frames("PlayerHurt"));
-	AnimationManager.replace_animation(animatedSprites, "PlayerIdle", AnimationManager.get_animation_frames("PlayerIdle"));
-	AnimationManager.replace_animation(animatedSprites, "PlayerJump", AnimationManager.get_animation_frames("PlayerJump"));
+	for animationName in animatedSprites.sprite_frames.get_animation_names():
+		AnimationManager.replace_animation_by_name(animatedSprites, animationName);
 	
 	var swap_to_fall = func () -> void:
 		isJumping = false;
@@ -151,18 +147,18 @@ func _physics_process(delta: float) -> void:
 func animate() -> void:
 	animatedSprites.flip_h = velocity.x < 0;
 	if (health <= 0): 
-		animatedSprites.animation = "death";
+		animatedSprites.animation = "PlayerDeath";
 		animatedSprites.flip_h = false;
 	elif (invulnerabilityCurrent > 0):
-		animatedSprites.animation = "hurt";
+		animatedSprites.animation = "PlayerHurt";
 	elif (isJumping):
-		animatedSprites.animation = "jump";
+		animatedSprites.animation = "PlayerJump";
 	elif (!is_on_floor()):
-		animatedSprites.animation = "fall";
+		animatedSprites.animation = "PlayerFall";
 	elif (velocity.x != 0):
-		animatedSprites.animation = "walk";
+		animatedSprites.animation = "PlayerRun";
 	else:
-		animatedSprites.animation = "idle";
+		animatedSprites.animation = "PlayerIdle";
 	animatedSprites.play();
 
 ## Make the player jump

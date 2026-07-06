@@ -8,7 +8,6 @@ var state : Global.State = Global.State.EDIT;
 @export var toolManager : Node2D;
 @export var gameManager : Node2D;
 @export var entityManager : Node2D;
-@export var audioManager : Node;
 @export var cameraManager : Camera2D;
 @export var editorManagerCanvas : CanvasLayer;
 @export var gameManagerCanvas : CanvasLayer;
@@ -34,10 +33,6 @@ var loadedMap : TileMapLayer;
 @export var propertyMenu : Panel;
 
 func _ready() -> void:
-	#ImportExportManager.make_new_level("Level01");
-	AudioManager.masterVolume = 0;
-	AudioManager.update_volume();
-	
 	Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
 	Global.levelCreated.connect(tileMap.clear);
@@ -137,12 +132,14 @@ func main_menu() -> void:
 	propertyMenu.close();
 	mainMenuControl.show();
 	ImportExportManager.clear_enemies_folder();
+	AudioManager.reset_audio();
 	mainMenuControl.fill_level_list();
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 
 ## Swap to edit state
 func edit() -> void:
+	AudioManager.reset_audio();
 	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable

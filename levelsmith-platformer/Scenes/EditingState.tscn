@@ -323,8 +323,10 @@ offset_right = 0.0
 offset_bottom = 350.0
 grow_horizontal = 0
 
-[node name="SettingsMenu" parent="CanvasLayer" unique_id=79213823 instance=ExtResource("20_fnjh2")]
+[node name="SettingsMenu" parent="CanvasLayer" unique_id=79213823 node_paths=PackedStringArray("editorManager") instance=ExtResource("20_fnjh2")]
+process_mode = 2
 visible = false
+editorManager = NodePath("../..")
 
 [node name="HotkeyManager" type="Node2D" parent="." unique_id=1848065233 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager", "tileSwitch")]
 script = ExtResource("10_bpoex")

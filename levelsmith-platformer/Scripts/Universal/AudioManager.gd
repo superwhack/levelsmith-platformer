@@ -1,9 +1,9 @@
 extends Node
 
 # 0% - 100% volume measured in floats 
-var masterVolume : float = 1.0;
-var musicVolume : float = 1.0;
-var SFXVolume : float = 1.0;
+var masterVolume : float = 0.7;
+var musicVolume : float = 0.7;
+var SFXVolume : float = 0.7;
 
 # Lowest DB, should be inaudible (it's negative)
 const LOWEST_DB : int = 70;
@@ -29,6 +29,7 @@ var assetManagerPlayer : AudioStreamPlayer
 func _ready() -> void:
 	musicPlayer = AudioStreamPlayer.new();
 	assetManagerPlayer = AudioStreamPlayer.new();
+	process_mode = Node.PROCESS_MODE_ALWAYS;
 	add_child(musicPlayer);
 	add_child(assetManagerPlayer);
 	musicPlayer.finished.connect(music_loop.bind(musicPlayer));
@@ -42,6 +43,8 @@ func _ready() -> void:
 		availablePlayers.append(audioPlayer);
 		audioPlayer.finished.connect(audio_finished.bind(audioPlayer));
 		audioPlayer.bus = "master";
+	
+	update_volume();
 
 ## Only done with music, loop instead of ending it
 ## player: the audio stream player running the music
@@ -140,12 +143,6 @@ func play_asset(assetName: String) -> void:
 ## If there are any current sounds in the queue and any avaliable players, start playing the sound.
 ## delta: unused
 func _process(_delta: float) -> void:
-	if (Input.is_action_just_pressed("muteTemporary")):
-		if (masterVolume == 0):
-			masterVolume = .7;
-		else:
-			masterVolume = 0;
-		update_volume();
 	if (!queue.is_empty() && !availablePlayers.is_empty()):
 		var path : String = queue.pop_front(); 
 		if (path.ends_with(".mp3")):

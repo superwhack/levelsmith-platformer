@@ -134,6 +134,7 @@ theme_override_constants/margin_bottom = 10
 [node name="PlayUIHBox" type="HBoxContainer" parent="CanvasLayer/TopRightMargin" unique_id=1040017800]
 layout_mode = 2
 size_flags_vertical = 4
+alignment = 2
 
 [node name="PlayerHealthUi" parent="CanvasLayer/TopRightMargin/PlayUIHBox" unique_id=621394887 instance=ExtResource("6_x53pn")]
 layout_mode = 2

@@ -85,12 +85,12 @@ func _ready() -> void:
 		#print("Applying ", playerMovementPreset, " player movement preset.");
 		apply_preset(playerMovementPreset);
 	
-	AnimationManager.replace_animation(animatedSprites, "walk", AnimationManager.get_animation_frames("PlayerRun"));
-	AnimationManager.replace_animation(animatedSprites, "death", AnimationManager.get_animation_frames("PlayerDeath"));
-	AnimationManager.replace_animation(animatedSprites, "fall", AnimationManager.get_animation_frames("PlayerFall"));
-	AnimationManager.replace_animation(animatedSprites, "hurt", AnimationManager.get_animation_frames("PlayerHurt"));
-	AnimationManager.replace_animation(animatedSprites, "idle", AnimationManager.get_animation_frames("PlayerIdle"));
-	AnimationManager.replace_animation(animatedSprites, "jump", AnimationManager.get_animation_frames("PlayerJump"));
+	AnimationManager.replace_animation(animatedSprites, "PlayerRun", AnimationManager.get_animation_frames("PlayerRun"));
+	AnimationManager.replace_animation(animatedSprites, "PlayerDeath", AnimationManager.get_animation_frames("PlayerDeath"));
+	AnimationManager.replace_animation(animatedSprites, "PlayerFall", AnimationManager.get_animation_frames("PlayerFall"));
+	AnimationManager.replace_animation(animatedSprites, "PlayerHurt", AnimationManager.get_animation_frames("PlayerHurt"));
+	AnimationManager.replace_animation(animatedSprites, "PlayerIdle", AnimationManager.get_animation_frames("PlayerIdle"));
+	AnimationManager.replace_animation(animatedSprites, "PlayerJump", AnimationManager.get_animation_frames("PlayerJump"));
 	
 	var swap_to_fall = func () -> void:
 		isJumping = false;
@@ -103,7 +103,7 @@ func _ready() -> void:
 	deathTimer.timeout.connect(Global.death.emit);
 	add_child(deathTimer);
 	
-	animatedSprites.animation = "idle";
+	animatedSprites.animation = "PlayerIdle";
 	animatedSprites.play();
 
 ## Runs every frame during the play state

@@ -41,13 +41,13 @@ func _ready() -> void:
 	overlayNewLevel.hide();
 
 	# Connect signals
-	buttonNewLevel.pressed.connect(overlayNewLevel.show);
+	buttonNewLevel.pressed.connect(overlay_new_level_show);
 	buttonNewLevelCreate.pressed.connect(create_new_level);
-	buttonNewLevelCancel.pressed.connect(overlayNewLevel.hide);
-	buttonImportLevel.pressed.connect(overlayImportLevel.show);
+	buttonNewLevelCancel.pressed.connect(overlay_new_level_hide);
+	buttonImportLevel.pressed.connect(overlay_import_level_show);
 	buttonImportLevelOpen.pressed.connect(import_level);
 	buttonImportLevelCancel.pressed.connect(import_cancel);
-	buttonImportLevelBrowse.pressed.connect(fileExplorer.popup_file_dialog);
+	buttonImportLevelBrowse.pressed.connect(popup_file_dialog);
 	
 	buttonQuit.pressed.connect(exit_program);
 
@@ -60,12 +60,24 @@ func _ready() -> void:
 	
 	fileExplorer.dir_selected.connect(set_directory);
 	
-	
+## Functions that just make a menu appear/dissapear, used to attach the sound effects
+func overlay_new_level_show() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
+	overlayNewLevel.show();
+func overlay_new_level_hide() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
+	overlayNewLevel.hide();
+func overlay_import_level_show() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
+	overlayImportLevel.show();
+func popup_file_dialog() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
+	fileExplorer.popup_file_dialog();
 
 ## Called when import level button is pressed
 func import_level() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
 	if (!ImportExportManager.validate_import(importedLevelPath)): return;
-	
 	# Extract the name of the folder from the file path
 	var importedLevelArray : Array = importedLevelPath.split("/");
 	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
@@ -83,10 +95,12 @@ func import_level() -> void:
 
 ## Called when import level is closed
 func import_cancel() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
 	overlayImportLevel.hide();
 
 ## Opens the menu for setting a name and size for the level
 func create_new_level() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
 	if (fieldNewLevelName.text.strip_edges().is_empty()):
 		PopUpManager.create_error_popup("Creation Failed!", "Level has no name!");
 		return;

@@ -48,6 +48,7 @@ func _ready() -> void:
 		goalExists = false;
 	
 	var export_level = func() -> void:
+		AudioManager.play_UI_effect("UI_Selection")
 		masterManager.propertyMenu.close();
 		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize);
 	
@@ -123,6 +124,7 @@ func reset_enemy_positions() -> void:
 func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
+	AudioManager.play_UI_effect("UI_Selection")
 	AudioManager.pause_music(true);
 	previewTileMap.hide();
 	customCursorManager.invalidSprite.hide();
@@ -132,6 +134,7 @@ func open_asset_manager() -> void:
 func open_settings_menu() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
+	AudioManager.play_UI_effect("UI_Selection")
 	previewTileMap.hide();
 	customCursorManager.invalidSprite.hide();
 	settingsMenu.show();

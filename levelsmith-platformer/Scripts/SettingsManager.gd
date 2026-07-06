@@ -24,8 +24,13 @@ func _ready() -> void:
 	masterVolume.dragging.connect(_on_drag);
 	SFXVolume.dragging.connect(_on_drag);
 	musicVolume.dragging.connect(_on_drag);
+	masterVolume.drag_ended.connect(_on_drag);
+	SFXVolume.drag_ended.connect(_on_drag);
+	musicVolume.drag_ended.connect(_on_drag);
 
 func _on_drag() -> void:
+	# Await needed for values to update from drag_ended
+	await get_tree().process_frame;
 	AudioManager.masterVolume = masterVolume.value / 100;
 	AudioManager.SFXVolume = SFXVolume.value / 100;
 	AudioManager.musicVolume = musicVolume.value / 100;

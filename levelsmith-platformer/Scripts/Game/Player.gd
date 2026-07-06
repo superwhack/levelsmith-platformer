@@ -173,8 +173,15 @@ func walk() -> void:
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;
+		if is_on_floor() && currentFriction != 1.0:
+			AudioManager.play_effect_walking(Global.WalkingEffect.ICE);
+		elif is_on_floor() && currentSlowdown != 1.0:
+			AudioManager.play_effect_walking(Global.WalkingEffect.SLIME);
+		elif is_on_floor():
+			AudioManager.play_effect_walking(Global.WalkingEffect.GENERAL);
 	# Acceleration
 	else:
+		AudioManager.play_effect_walking(Global.WalkingEffect.NONE);
 		if (currentFriction != 1.0):
 			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 		else:
@@ -359,6 +366,7 @@ func detect_tiles() -> void:
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):
+			AudioManager.play_effect("BounceBlock");
 			doubleJumpAvailable = doubleJump;
 			currentSlowdown = 1.0;
 			# Horizontal bounces
@@ -382,6 +390,7 @@ func detect_tiles() -> void:
 
 		# Sticky Tiles
 		if (tileData && (tileData.get_custom_data("name") == "slow")):
+			AudioManager.play_effect_walking(Global.WalkingEffect.SLIME);
 			currentFriction = 1;
 			# Horizontal Stick
 			if (abs(raycast.target_position.x) > abs(raycast.target_position.y)):
@@ -400,6 +409,7 @@ func detect_tiles() -> void:
 				currentSlowdown = .5;
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
+			AudioManager.play_effect("BounceBlock");
 			take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"));
 		elif tileName == "death":
 			take_damage(maxHealth);

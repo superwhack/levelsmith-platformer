@@ -40,6 +40,14 @@ enum BoxBrushState {
 	DELETE_CONFIRM
 }
 
+# Walking effect for the player's ground audio
+enum WalkingEffect {
+	NONE,
+	GENERAL,
+	SLIME,
+	ICE
+}
+
 # Tile Types
 enum TileType {
 	SOLID = 0,

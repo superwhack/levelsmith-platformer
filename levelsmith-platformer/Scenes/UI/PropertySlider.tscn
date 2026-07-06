@@ -61,8 +61,8 @@ text = "Name"
 horizontal_alignment = 2
 
 [node name="Value" type="TextEdit" parent="HBoxContainer" unique_id=281473897]
-custom_minimum_size = Vector2(56, 20)
-custom_maximum_size = Vector2(56, 35)
+custom_minimum_size = Vector2(64, 20)
+custom_maximum_size = Vector2(64, 35)
 layout_mode = 2
 text = "0.00"
 emoji_menu_enabled = false

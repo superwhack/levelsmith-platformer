@@ -59,7 +59,7 @@ func _process(_delta: float) -> void:
 	# Check if the tile is placeable in this spot
 	isPlaceable = !check_out_of_bounds(currentMousePosition);
 	
-	if (toolManager.currentTool == Global.Tool.BRUSH && tileMap.get_cell_source_id(currentMousePosition) >= tileCount): isPlaceable = false; 
+	if (toolManager.currentTool != Global.Tool.CURSOR && tileMap.get_cell_source_id(currentMousePosition) >= tileCount): isPlaceable = false; 
 	
 	if (toolManager.currentTool == Global.Tool.CURSOR && tileMap.get_cell_source_id(currentMousePosition) < tileCount && tileMap.get_cell_source_id(currentMousePosition) >= 0): isPlaceable = false;
 	 
@@ -119,7 +119,6 @@ func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
 	previewTileMap.hide();
-	customCursorManager.invalidSprite.hide();
 	assetManager.show();
 
 ## Closes the asset manager

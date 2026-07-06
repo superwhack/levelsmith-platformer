@@ -85,6 +85,13 @@ func _ready() -> void:
 		#print("Applying ", playerMovementPreset, " player movement preset.");
 		apply_preset(playerMovementPreset);
 	
+	AnimationManager.replace_animation(animatedSprites, "walk", AnimationManager.get_animation_frames("PlayerRun"));
+	AnimationManager.replace_animation(animatedSprites, "death", AnimationManager.get_animation_frames("PlayerDeath"));
+	AnimationManager.replace_animation(animatedSprites, "fall", AnimationManager.get_animation_frames("PlayerFall"));
+	AnimationManager.replace_animation(animatedSprites, "hurt", AnimationManager.get_animation_frames("PlayerHurt"));
+	AnimationManager.replace_animation(animatedSprites, "idle", AnimationManager.get_animation_frames("PlayerIdle"));
+	AnimationManager.replace_animation(animatedSprites, "jump", AnimationManager.get_animation_frames("PlayerJump"));
+	
 	var swap_to_fall = func () -> void:
 		isJumping = false;
 	

@@ -57,6 +57,8 @@ func _ready() -> void:
 	
 	assetTabs.tab_changed.connect(on_asset_tab_changed);
 	
+	AnimationManager.assetManager = self;
+	
 	# Checks if the user has an assets root folder, creates one if not
 	var dir : DirAccess = DirAccess.open(filePath);
 	if (!dir):

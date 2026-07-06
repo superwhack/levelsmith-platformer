@@ -126,7 +126,10 @@ func anim_change(next : bool):
 	animationPreviewNameToReplace = DirAccess.get_directories_at(FileSearch.find_directory_by_name(selectedEntityType))[currentAnimationIndex];
 	# Load the current animation
 	currentLoadedAnimation.clear();
-	for image in get_animation_from_folder(animationPreviewNameToReplace):
+	
+	var animation : Array[Image] = get_animation_from_folder(animationPreviewNameToReplace);
+	if (animation.is_empty()): animation = AnimationManager.get_default_animation_by_name(animationPreviewNameToReplace);
+	for image in animation:
 		currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 	update_animation_preview();
 	

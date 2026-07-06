@@ -238,7 +238,11 @@ func item_selected(selectedItem: AssetItem) -> void:
 			FileSearch.find_directory_by_name(
 				animationSwapping.selectedEntityType))[animationSwapping.currentAnimationIndex];
 		animationSwapping.currentLoadedAnimation.clear();
-		for image in animationSwapping.get_animation_from_folder(animationSwapping.animationPreviewNameToReplace):
+		
+		var animation : Array[Image]= animationSwapping.get_animation_from_folder(animationSwapping.animationPreviewNameToReplace);
+		if (animation.is_empty()):
+			animation = AnimationManager.get_default_animation_by_name(animationSwapping.animationPreviewNameToReplace);
+		for image in animation:
 			animationSwapping.currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 		animationSwapping.update_animation_preview();
 	currentAssetLabel.text = selectedItem.displayName;

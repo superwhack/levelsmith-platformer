@@ -44,8 +44,6 @@ var currentSelectedItem : AssetItem;
 
 @export var mainTileMap : TileMapLayer;
 
-@export var defaults : Resource;
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Connect signals
@@ -105,13 +103,6 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 ## returns: Loaded image
 func find_image(imageName: String, currentDirectory: String = filePath) -> Image:
 	var image : Image = Image.new();
-	if (currentDirectory.begins_with("res://")):
-		var simpleName = imageName.to_lower().get_basename();
-		if (defaults.get(simpleName)):
-			print(defaults.get(simpleName));
-			var texture = load(defaults.get(simpleName));
-			image = texture.get_image();
-		return image;
 	# Get the path to the image
 	var imagePath : String = FileSearch.find_file_by_name(imageName, currentDirectory);
 	# If the path exists

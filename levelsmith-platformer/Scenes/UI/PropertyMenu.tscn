@@ -97,38 +97,51 @@ visible = false
 layout_mode = 2
 
 [node name="PlayerHealth" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=305056832 instance=ExtResource("2_w5eld")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Health"
+propertyUnit = "HP"
 minMax = Vector2(1, 5)
 sliderStep = 1.0
 
 [node name="PlayerSpeed" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=2049970631 instance=ExtResource("2_w5eld")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Speed"
+propertyUnit = "m/s"
 minMax = Vector2(0, 5)
 sliderStep = 0.1
 
 [node name="PlayerJump" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=1835714671 instance=ExtResource("2_w5eld")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Jump Height"
+propertyUnit = "Tiles"
 minMax = Vector2(0, 3)
 sliderStep = 0.1
 
 [node name="PlayerAirControl" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=985825086 instance=ExtResource("2_w5eld")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Air Control"
-minMax = Vector2(0, 1)
-sliderStep = 0.1
+propertyUnit = "%"
+minMax = Vector2(0, 100)
+sliderStep = 1.0
+valueAppend = "%"
 
 [node name="PlayerFallSpeed" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Fall Speed"
+propertyUnit = "m/s"
 minMax = Vector2(0, 3)
 sliderStep = 0.1
 
 [node name="PlayerCoyoteTime" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=2022302843 instance=ExtResource("2_w5eld")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Coyote Time"
+propertyUnit = "Seconds"
 minMax = Vector2(0, 1)
 sliderStep = 0.1
 
@@ -194,6 +207,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Speed"
+propertyUnit = "m/s"
 minMax = Vector2(0, 3)
 sliderStep = 0.1
 
@@ -224,6 +238,7 @@ propertyName = "Random Direction"
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Direction"
+propertyUnit = "Degrees"
 minMax = Vector2(0, 360)
 sliderStep = 1.0
 valueAppend = "°"
@@ -233,6 +248,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 layout_direction = 2
 propertyName = "Projectile Speed"
+propertyUnit = "m/s"
 minMax = Vector2(0.2, 8)
 sliderStep = 0.1
 
@@ -240,6 +256,7 @@ sliderStep = 0.1
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Fire Rate"
+propertyUnit = "RPM"
 minMax = Vector2(0.2, 5)
 sliderStep = 0.1
 
@@ -265,6 +282,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Moving Speed"
+propertyUnit = "m/s"
 minMax = Vector2(0, 10)
 sliderStep = 1.0
 
@@ -273,6 +291,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 layout_direction = 2
 propertyName = "Horizontal offset"
+propertyUnit = "Tiles"
 minMax = Vector2(-25, 25)
 sliderStep = 1.0
 
@@ -280,6 +299,7 @@ sliderStep = 1.0
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Vertical offset"
+propertyUnit = "Tiles"
 minMax = Vector2(-25, 25)
 sliderStep = 1.0
 
@@ -287,6 +307,7 @@ sliderStep = 1.0
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Progress"
+propertyUnit = "%"
 minMax = Vector2(0, 100)
 sliderStep = 1.0
 valueAppend = "%"
@@ -299,6 +320,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Flight Speed"
+propertyUnit = "m/s"
 minMax = Vector2(0, 10)
 sliderStep = 1.0
 
@@ -307,6 +329,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 layout_direction = 2
 propertyName = "Horizontal offset"
+propertyUnit = "Tiles"
 minMax = Vector2(-10, 10)
 sliderStep = 1.0
 
@@ -314,6 +337,7 @@ sliderStep = 1.0
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "vertical offset"
+propertyUnit = "Tiles"
 minMax = Vector2(-10, 10)
 sliderStep = 1.0
 

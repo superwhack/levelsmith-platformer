@@ -18,9 +18,18 @@ var restricted : bool;
 @export var rayCastDownR : RayCast2D;
 @export var directionArrow : Sprite2D;
 
+## Called when the enemy first spawns
+func _ready() -> void:
+	super._ready();
+	
+	animatedSprites.animation = "walk";
+	animatedSprites.play();
+
 ## Processes the physics every frame
 ## delta: Time since previous frame
 func _physics_process(delta: float) -> void:
+	if (health <= 0): return;
+	
 	if !active:
 		if !onScreen.is_on_screen():
 			return;

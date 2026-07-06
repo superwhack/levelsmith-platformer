@@ -22,6 +22,13 @@ const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn"
 
 var timeLeft : float = 1;
 
+func _ready() -> void:
+	super._ready();
+	
+	animatedSprites.animation = "idle";
+	animatedSprites.play();
+	animatedSprites.animation_finished.connect(_on_animation_finished);
+
 func _physics_process(delta: float) -> void:
 	if !active:
 		if !onScreen.is_on_screen():
@@ -32,6 +39,8 @@ func _physics_process(delta: float) -> void:
 		super._physics_process(delta);
 	directionArrow.hide();
 	if onScreen:
+		if (!randomDirection):
+			update_flipped(!(fireDirection <= -90 && fireDirection > -270));
 		# Decrease time left
 		timeLeft -= delta;
 		# If cooldown is finished, shoot
@@ -61,11 +70,22 @@ func shooting_behavior() -> void:
 	projectileFired.speed = shotSpeed;
 	projectileFired.global_position = position;
 	if randomDirection:
-		projectileFired.global_rotation_degrees = randi() % 360;
+		var randFireDirection = randi() % 360;
+		projectileFired.global_rotation_degrees = randFireDirection
+		update_flipped(!(randFireDirection >= 90 && randFireDirection < 270));
 	else:
 		projectileFired.global_rotation_degrees = fireDirection;
 	projectileFired.bounceable = projBounce;
 	add_sibling(projectileFired);
+	animatedSprites.play("shoot");
+
+func _on_animation_finished():
+	if (animatedSprites.animation == "shoot"):
+		animatedSprites.play("idle");
+
+# Updates the orientation of the enemy
+func update_flipped(facingRight: bool) -> void:
+	animatedSprites.flip_h = !facingRight;
 
 func assign_script(id: String, assignPosition: Vector2i) -> void:
 	propertyFile = ResourceLoader.load("res://Resources/Enemies/Shooting" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)

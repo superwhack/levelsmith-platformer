@@ -59,6 +59,9 @@ func initialize_camera() -> void:
 ## Retrieve the level bounds and the camera roaming bounds.
 func refresh_bounds() -> void:
 	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.TILE_SIZE);
+	# This is so the top and bottom bedrock border are visible when clamped.
+	levelBounds.position.y -= Global.TILE_SIZE;
+	levelBounds.size.y += Global.TILE_SIZE * 2;
 	roamBounds = get_camera_bounds();
 
 ## Remove the player reference and restart the search for the player.

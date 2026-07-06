@@ -156,6 +156,7 @@ func _process(_delta: float) -> void:
 
 ## When a preset option is selected, load that preset and set all values to that preset
 ## index: the index of the preset selected
+## update: If the sliders should be updated right after running
 func _on_preset_options_item_selected(index: int) -> void:
 	selectedPlayerPreset = load("res://Resources/PlayerPresets/" + presetOptions.get_item_text(index) + ".tres")
 	playerHealth = selectedPlayerPreset.health;
@@ -193,7 +194,6 @@ func update_custom() -> void:
 	
 	presetOptions.select(4);
 	_on_preset_options_item_selected(4);
-	#selectedPlayerPreset = load("res://Resources/PlayerPresets/custom.tres");
 
 
 ## Update all sliders according to the values
@@ -318,6 +318,8 @@ func update_values() -> void:
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
+	# Processframe is needed here so that when using the text input on the player, it actually correctly updates, add more if this becomes a problem again.
+	await get_tree().process_frame
 	update_values();
 	if selectedEntity is Player:
 		update_custom();

@@ -1,24 +1,46 @@
 [gd_scene format=3 uid="uid://c8bs7d04fl2yn"]
 
 [ext_resource type="Script" uid="uid://c28y2d2t7ueqp" path="res://Scripts/Game/EnemyStationary.gd" id="1_jtxg7"]
-[ext_resource type="Texture2D" uid="uid://0dwb016xnmn4" path="res://Assets/Sprites/Entities/eviljumo.png" id="3_3thal"]
+[ext_resource type="Texture2D" uid="uid://c8pue5ii0pg5m" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryDeath/1.png" id="2_a2kej"]
+[ext_resource type="Texture2D" uid="uid://dsdwsi084txg" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/1.png" id="3_7j8u7"]
+[ext_resource type="Texture2D" uid="uid://buwpfa5ri2262" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/2.png" id="4_im557"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5jdan"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dhqy0"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ogq8d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_a2kej")
+}],
+"loop": 1,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_7j8u7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_im557")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
 
-[node name="EnemyStationary" type="CharacterBody2D" unique_id=279826983 node_paths=PackedStringArray("sprite") groups=["Enemy", "Moving"]]
+[node name="EnemyStationary" type="CharacterBody2D" unique_id=279826983 node_paths=PackedStringArray("hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
 collision_layer = 6
 collision_mask = 6
 floor_snap_length = 128.0
 script = ExtResource("1_jtxg7")
-sprite = NodePath("Sprite2D")
+hitbox = NodePath("CollisionShape2D")
+animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1568457659]
 scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_5jdan")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1592121155]
-modulate = Color(1, 0, 0, 1)
-material = SubResource("ShaderMaterial_dhqy0")
-texture = ExtResource("3_3thal")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2014910646]
+sprite_frames = SubResource("SpriteFrames_ogq8d")
+animation = &"death"

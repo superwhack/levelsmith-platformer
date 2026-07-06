@@ -1,14 +1,47 @@
 [gd_scene format=3 uid="uid://bf3q4v3br7j4o"]
 
 [ext_resource type="Script" uid="uid://cxud880na6ixc" path="res://Scripts/Game/EnemyShooting.gd" id="1_0p30m"]
-[ext_resource type="Texture2D" uid="uid://bdirtvl06c67h" path="res://Assets/Defaults/Assets/Sprites/Entities/ShootingStill.png" id="2_0p30m"]
 [ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="3_3c58l"]
-[ext_resource type="Texture2D" uid="uid://cv2lf8pc8doyc" path="res://Assets/Sprites/UI/question.png" id="3_waxnm"]
+[ext_resource type="Texture2D" uid="uid://3gy2b3ctcxe5" path="res://Assets/Sprites/UI/question.png" id="3_waxnm"]
 [ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_571pn"]
+[ext_resource type="Texture2D" uid="uid://0tjelo7d1g6q" path="res://Assets/Sprites/Entities/ShootingEnemy/EnemyShoot/1.png" id="5_dvo3g"]
+[ext_resource type="Texture2D" uid="uid://bfbrsvv44qln1" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootDeath/1.png" id="5_qlrn8"]
+[ext_resource type="Texture2D" uid="uid://bm4klfnp3qj85" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/1.png" id="6_dvo3g"]
+[ext_resource type="Texture2D" uid="uid://dckpbo7pdkpt" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/2.png" id="7_roj87"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
-[node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow", "questionMark", "downRaycast", "upRaycast", "raycastHelper", "onScreen") groups=["Enemy", "Moving"]]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ogq8d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_qlrn8")
+}],
+"loop": 1,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_dvo3g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_roj87")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_dvo3g")
+}],
+"loop": 0,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow", "questionMark", "downRaycast", "upRaycast", "raycastHelper", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
 collision_layer = 6
 collision_mask = 6
 platform_floor_layers = 4294967294
@@ -19,13 +52,16 @@ downRaycast = NodePath("RayCastDown")
 upRaycast = NodePath("RayCastUp")
 raycastHelper = NodePath("RaycastHelper")
 onScreen = NodePath("OnScreen")
+hitbox = NodePath("CollisionShape2D")
+animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
 scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
-texture = ExtResource("2_0p30m")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=33200389]
+sprite_frames = SubResource("SpriteFrames_ogq8d")
+animation = &"shoot"
 
 [node name="QuestionMark" type="Sprite2D" parent="." unique_id=1219830817]
 visible = false

@@ -87,7 +87,6 @@ text = "This will RESET your custom [asset name] asset to its default. The curre
 fit_content = true
 
 [node name="ButtonContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=775138771]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 70

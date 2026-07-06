@@ -61,7 +61,8 @@ func create_reset_asset_popup(callback : Callable) -> void:
 	
 	newPopUp.set_title("RESET ALL ASSETS");
 	newPopUp.set_body_text("This will RESET ALL ASSETS to default. All custom assets will be lost.");
-	newPopUp.set_confirm_callback(callback);
+	newPopUp.set_reset_callback(callback);
+	newPopUp.resetButton.show();
 	newPopUp.closeButton.text = "Cancel";
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
@@ -72,7 +73,8 @@ func create_reset_image_popup(callback : Callable, asset : String = "asset") -> 
 	
 	newPopUp.set_title("RESET SELECTED ASSET");
 	newPopUp.set_body_text("This will [color=#e74937]RESET[/color] your custom " + asset + " asset to its default. The current asset will be lost.");
-	newPopUp.set_confirm_callback(callback);
+	newPopUp.set_reset_callback(callback);
+	newPopUp.resetButton.show();
 	newPopUp.closeButton.text = "Cancel";
 	add_child(newPopUp);
 	currentPopUp = newPopUp;

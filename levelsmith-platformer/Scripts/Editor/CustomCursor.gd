@@ -56,7 +56,7 @@ func _ready() -> void:
 	add_child(selectorFrame);
 	
 	# Set the custom mouse cursor
-	Input.set_custom_mouse_cursor(cursorIcon);
+	Input.set_custom_mouse_cursor(uiCursor);
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

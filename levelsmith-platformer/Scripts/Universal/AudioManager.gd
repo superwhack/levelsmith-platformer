@@ -46,6 +46,11 @@ func _ready() -> void:
 	
 	update_volume();
 
+## Pause the current music player
+## pause: true if the music should be paused
+func pause_music(pause : bool) -> void:
+	musicPlayer.stream_paused = pause;
+
 ## Only done with music, loop instead of ending it
 ## player: the audio stream player running the music
 func music_loop(player: AudioStreamPlayer) -> void:

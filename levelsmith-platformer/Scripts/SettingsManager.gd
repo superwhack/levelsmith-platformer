@@ -26,7 +26,6 @@ func _ready() -> void:
 	musicVolume.dragging.connect(_on_drag);
 
 func _on_drag() -> void:
-	
 	AudioManager.masterVolume = masterVolume.value / 100;
 	AudioManager.SFXVolume = SFXVolume.value / 100;
 	AudioManager.musicVolume = musicVolume.value / 100;

@@ -123,7 +123,7 @@ func reset_enemy_positions() -> void:
 func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
-	AudioManager.reset_audio();
+	AudioManager.pause_music(true);
 	previewTileMap.hide();
 	customCursorManager.invalidSprite.hide();
 	assetManager.show();
@@ -140,6 +140,7 @@ func open_settings_menu() -> void:
 func close_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
+	AudioManager.pause_music(false)
 	previewTileMap.show();
 	assetManager.hide();
 	assetManager.animationSwapping.playingAnimation = false;

@@ -441,7 +441,7 @@ func apply_preset(preset: PlayerMovementPreset) -> void:
 	health = maxHealth
 	groundSpeed = preset.groundSpeed;
 	jumpHeight = preset.jumpHeight;
-	airControl = preset.airControl;
+	airControl = preset.airControl / 100.0;
 	fallSpeed = preset.fallSpeed;
 	coyoteTime = preset.coyoteTime;
 	doubleJump = preset.doubleJump;

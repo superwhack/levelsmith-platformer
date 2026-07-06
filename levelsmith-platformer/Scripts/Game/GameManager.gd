@@ -8,6 +8,7 @@ extends Node2D
 @export var playerHealthUI : HBoxContainer;
 @export var timerLabel : RichTextLabel;
 @export var winCoinLabel : RichTextLabel;
+@export var coinMargin : MarginContainer;
 @export var winTimeLabel : RichTextLabel;
 
 # Button references for signals
@@ -77,8 +78,13 @@ func start() -> void:
 	totalCoins = 0;
 	# Count all coins that belong to the playable level and ignore coins that exist in the editor scene
 	totalCoins = get_tree().get_node_count_in_group("Coin");
-	coinCounterLabel.show();
-	update_coin_counter(coinCounterLabel);
+	if totalCoins > 0:
+		coinCounterLabel.show();
+		coinMargin.show();
+		update_coin_counter(coinCounterLabel);
+	else:
+		coinCounterLabel.hide();
+		coinMargin.hide();
 	
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
 	for frame in range(1, 5):
@@ -180,7 +186,6 @@ func level_complete() -> void:
 	get_tree().paused = true;
 	update_coin_counter(winCoinLabel);
 	update_timer(winTimeLabel);
-	coinCounterLabel.hide();
 	timerLabel.hide();
 	winScreen.show();
 	bottomScreenGroup.hide();

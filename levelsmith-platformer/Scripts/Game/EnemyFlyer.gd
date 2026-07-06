@@ -31,6 +31,8 @@ func _ready() -> void:
 	pointB = pointA;
 	targetPoint = pointA;
 	
+	AnimationManager.replace_animation_by_name(animatedSprites, "FlyMove");
+	
 	animatedSprites.animation = "FlyMove";
 	animatedSprites.play();
 

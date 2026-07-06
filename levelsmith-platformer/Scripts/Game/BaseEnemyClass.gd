@@ -31,6 +31,8 @@ func _ready() -> void:
 	deathTimer.wait_time = 0.4;
 	deathTimer.timeout.connect(queue_free);
 	add_child(deathTimer);
+	
+	AnimationManager.replace_animation_by_name(animatedSprites, deathAnim);
 
 ## Processes for every frame based on time
 ## delta: Time since previous frame.

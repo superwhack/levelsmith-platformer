@@ -26,6 +26,9 @@ func _ready() -> void:
 	deathAnim = "ShootDeath";
 	super._ready();
 	
+	AnimationManager.replace_animation_by_name(animatedSprites, "ShootIdle");
+	AnimationManager.replace_animation_by_name(animatedSprites, "EnemyShoot");
+	
 	animatedSprites.animation = "ShootIdle";
 	animatedSprites.play();
 	animatedSprites.animation_finished.connect(_on_animation_finished);

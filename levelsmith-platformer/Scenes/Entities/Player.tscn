@@ -142,7 +142,7 @@ shape = SubResource("RectangleShape2D_2o5fe")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1554690714]
 sprite_frames = SubResource("SpriteFrames_g4v7s")
-animation = &"PlayerRun"
+animation = &"PlayerIdle"
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=116409988]
 position = Vector2(-57, 0)

@@ -22,6 +22,20 @@ func file_count_in_folder(folderName: String) -> int:
 		PopUpManager.create_error_popup("Folder not found", "Could not find folder with name " + folderName + ".")
 	return -1;
 
+func get_clean_file_count(folderPath: String) -> int:
+	if not DirAccess.dir_exists_absolute(folderPath):
+		return 0
+	var files = DirAccess.get_files_at(folderPath)
+	var uniqueFiles: Array[String] = []
+	for file in files:
+		# Strip export artifacts (.remap / .import) to get the true file name
+		var cleanName = file
+		cleanName = cleanName.replace(".import", "").replace(".remap", "");
+		if not uniqueFiles.has(cleanName):
+			uniqueFiles.append(cleanName)          
+		
+	return uniqueFiles.size()
+
 ## Recursively finds the path to a specific directory based on its name
 ## targetDirectoryName: Name of the target directory
 ## currentDirectory: Path to the directory currently being checked

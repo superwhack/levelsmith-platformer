@@ -52,7 +52,7 @@ func initialize_camera() -> void:
 	refresh_bounds();
 	zoom = Vector2.ONE * maxZoomOut;
 	global_position = levelBounds.get_center();
-	clamp_camera_to_level();
+	clamp_camera(roamBounds);
 	#print("center:", levelBounds.get_center());
 	#print("camera:", global_position);
 
@@ -74,7 +74,7 @@ func _process(delta: float) -> void:
 		Global.State.EDIT:
 			process_build_camera(delta);
 			process_zoom_input();
-			clamp_camera_to_level();
+			clamp_camera(roamBounds);
 		Global.State.PLAY:
 			if playerReference == null:
 				try_find_player();
@@ -111,7 +111,7 @@ func _input(event: InputEvent) -> void:
 	# Pan while dragging
 	if event is InputEventMouseMotion and isPanning:
 		global_position -= event.relative / zoom * (1.8);
-		clamp_camera_to_level();
+		clamp_camera(roamBounds);
 		
 	if Input.is_action_just_pressed("shift"):
 		panSpeed = 3.0;
@@ -179,6 +179,7 @@ func process_player_camera(_delta: float) -> void:
 		return;
 
 	global_position = playerReference.global_position;
+	clamp_camera(levelBounds);
 
 ## Adjusts camera zoom
 ## zoomAmount: Zoom change amount
@@ -237,29 +238,32 @@ func get_camera_bounds() -> Rect2:
 	
 	return Rect2(-roamLimit, size);
 
-## Prevents the camera from leaving the level
-func clamp_camera_to_level() -> void:
+## Prevents the camera from leaving the given rect2.
+## bounds: The bounds within which the camera must remain.
+func clamp_camera(bounds: Rect2) -> void:
 	var viewportSize : Vector2 = get_viewport_rect().size;
 	
 	# visible world size
 	var visibleSize : Vector2 = viewportSize * 0.5 / zoom;
 	
-	var minX : float = roamBounds.position.x + visibleSize.x;
-	var maxX : float = roamBounds.end.x - visibleSize.x;
+	var minX : float = bounds.position.x + visibleSize.x;
+	var maxX : float = bounds.end.x - visibleSize.x;
 	
-	var minY : float = roamBounds.position.y + visibleSize.y;
-	var maxY : float = roamBounds.end.y - visibleSize.y;
+	var minY : float = bounds.position.y + visibleSize.y;
+	var maxY : float = bounds.end.y - visibleSize.y;
 	
 	# If zoom too far out, just center
 	if minX > maxX:
-		global_position.x = levelBounds.get_center().x;
+		global_position.x = bounds.get_center().x;
 	else:
 		global_position.x = clamp(global_position.x, minX, maxX);
 	
 	if minY > maxY:
-		global_position.y = levelBounds.get_center().y;
+		global_position.y = bounds.get_center().y;
 	else:
 		global_position.y = clamp(global_position.y, minY, maxY);
+		
+	
 		
 ## Determine if self contains a given rect2.
 ## roamingBounds: A rect2 of the camera panning limits

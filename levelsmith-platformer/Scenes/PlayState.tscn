@@ -5,25 +5,29 @@
 [ext_resource type="Texture2D" uid="uid://cac4ja4s12xun" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonRestartWhite.png" id="3_jygy8"]
 [ext_resource type="Texture2D" uid="uid://4m28733rlp7e" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeBuildWhite.png" id="4_habuo"]
 [ext_resource type="Texture2D" uid="uid://dv4prgld7ti1y" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonPauseWhite.png" id="5_jygy8"]
-[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="6_4i4ea"]
+[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="6_4i4ea"]
 [ext_resource type="Texture2D" uid="uid://b1hadfl28cryv" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeResumeWhite.png" id="6_habuo"]
+[ext_resource type="StyleBox" uid="uid://dwhikovr4qh18" path="res://Assets/UserInterface/PlayStateUIPanel.tres" id="6_o46cv"]
+[ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="6_x53pn"]
 [ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
+[ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
 [ext_resource type="PackedScene" uid="uid://cmpj0a4yqf4gu" path="res://Scenes/UI/WinScreen.tscn" id="8_4i4ea"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
 
-[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "winScreen", "bottomScreenGroup", "coinCounterLabel", "timerLabel", "winCoinLabel", "winTimeLabel", "resetButton", "pauseButton", "resumeButton", "replayButton", "editorButton")]
+[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "winScreen", "bottomScreenGroup", "coinCounterLabel", "playerHealthUI", "timerLabel", "winCoinLabel", "winTimeLabel", "resetButton", "pauseButton", "resumeButton", "replayButton", "editorButton")]
 script = ExtResource("1_habuo")
 pauseScreen = NodePath("CanvasLayer/PausedScreenContainer")
 winScreen = NodePath("CanvasLayer/WinScreen")
 bottomScreenGroup = NodePath("CanvasLayer/BottomScreenGroup")
-coinCounterLabel = NodePath("CanvasLayer/CoinCounter")
+coinCounterLabel = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/MarginContainer/HBoxContainer/CoinCounter")
+playerHealthUI = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PlayerHealthUi")
 timerLabel = NodePath("CanvasLayer/Timer")
 winCoinLabel = NodePath("CanvasLayer/WinScreen/VBoxContainer2/WinCoinCounter")
 winTimeLabel = NodePath("CanvasLayer/WinScreen/VBoxContainer2/WinTimer")
 resetButton = NodePath("CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ResetButton")
-pauseButton = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/PauseButton")
+pauseButton = NodePath("CanvasLayer/TopLeftMargin/PauseButton")
 resumeButton = NodePath("CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer/ResumeButton")
 replayButton = NodePath("CanvasLayer/WinScreen/VBoxContainer2/Container/WinResetButton")
 editorButton = NodePath("CanvasLayer/WinScreen/VBoxContainer2/Container/WinReturnEditorButton")
@@ -32,9 +36,11 @@ editorButton = NodePath("CanvasLayer/WinScreen/VBoxContainer2/Container/WinRetur
 
 [node name="BottomScreenGroup" type="Control" parent="CanvasLayer" unique_id=165234259]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="BottomRightMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=762088827]
 layout_mode = 1
@@ -43,10 +49,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1479.0
-offset_top = 892.0
-offset_right = 1880.0
-offset_bottom = 1040.0
+offset_left = -401.0
+offset_top = -148.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_right = 20
@@ -100,9 +104,8 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = 985.0
+offset_top = -55.0
 offset_right = 531.0
-offset_bottom = 1040.0
 grow_vertical = 0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_bottom = 20
@@ -115,11 +118,81 @@ theme_override_fonts/font = ExtResource("6_4i4ea")
 theme_override_font_sizes/font_size = 25
 text = "Move [WASD / Arrow Keys]	     Jump [Space]"
 
+[node name="TopRightMargin" type="MarginContainer" parent="CanvasLayer" unique_id=1873861667]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -382.0
+offset_bottom = 104.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PlayUIHBox" type="HBoxContainer" parent="CanvasLayer/TopRightMargin" unique_id=1040017800]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="PlayerHealthUi" parent="CanvasLayer/TopRightMargin/PlayUIHBox" unique_id=621394887 instance=ExtResource("6_x53pn")]
+layout_mode = 2
+
+[node name="PlayUISpacer" type="Control" parent="CanvasLayer/TopRightMargin/PlayUIHBox" unique_id=79976120]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/TopRightMargin/PlayUIHBox" unique_id=562975845]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("6_o46cv")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer" unique_id=1014826280]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/MarginContainer" unique_id=2030686756]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/MarginContainer/HBoxContainer" unique_id=1957267496]
+layout_mode = 2
+texture = ExtResource("7_4pdbi")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/MarginContainer/HBoxContainer" unique_id=164032238]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = ":"
+vertical_alignment = 1
+
+[node name="CoinCounter" type="RichTextLabel" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/MarginContainer/HBoxContainer" unique_id=2034599662]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 30
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer" unique_id=1549534289]
+offset_right = 292.0
+offset_bottom = 92.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="PauseButton" type="Button" parent="CanvasLayer/TopLeftMargin" unique_id=65536290]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("2_ym18m")
+icon = ExtResource("5_jygy8")
+
 [node name="PausedScreenContainer" type="PanelContainer" parent="CanvasLayer" unique_id=610850262 node_paths=PackedStringArray("gameManager")]
 process_mode = 3
 visible = false
 anchors_preset = 10
 anchor_right = 1.0
+offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ym18m")
 script = ExtResource("6_ym18m")
@@ -153,7 +226,7 @@ theme_override_font_sizes/italics_font_size = 35
 bbcode_enabled = true
 text = "[u][i]Game Paused[/i][/u]"
 
-[node name="CoinCounter" type="RichTextLabel" parent="CanvasLayer" unique_id=2034599662]
+[node name="CoinCounter" type="RichTextLabel" parent="CanvasLayer" unique_id=143256191]
 custom_minimum_size = Vector2(250, 0)
 anchors_preset = 1
 anchor_left = 1.0

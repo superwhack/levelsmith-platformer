@@ -122,6 +122,11 @@ func create_new_level() -> void:
 			int(spinBoxNewLevelY.value) 
 			) 
 		);
+		
+	# Reset leftover data
+	fieldNewLevelName.text = "";
+	spinBoxNewLevelX.value = 20;
+	spinBoxNewLevelY.value = 20;
 
 ## Exits the program
 func exit_program() -> void:

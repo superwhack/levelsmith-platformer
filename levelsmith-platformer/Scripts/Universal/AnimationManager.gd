@@ -82,7 +82,7 @@ func get_all_sprites() -> void:
 			flyingEnemySprites.append(enemy.find_child("AnimatedSprite2D"));
 		if (enemy is EnemyPatrol):
 			patrolEnemySprites.append(enemy.find_child("AnimatedSprite2D"));
-		#if (enemy is EnemyStationary):
-			#stationaryEnemySprites.append(enemy.find_child("AnimatedSprite2D"));
+		if (enemy is EnemyStationary):
+			stationaryEnemySprites.append(enemy.find_child("AnimatedSprite2D"));
 		if (enemy is EnemyShooting):
 			shootingEnemySprites.append(enemy.find_child("AnimatedSprite2D"));

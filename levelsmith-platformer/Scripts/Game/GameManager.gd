@@ -63,6 +63,7 @@ func pause() -> void:
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
+	pauseButton.show();
 	get_tree().paused = false;
 	winScreen.hide();
 	goalReached = false;
@@ -71,6 +72,7 @@ func reset() -> void:
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
+	pauseButton.show();
 	bottomScreenGroup.show();
 	goalReached = false;
 	# Reset coin values for the new level

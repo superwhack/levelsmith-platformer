@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://dmqrt6ulj2tqw" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
+[ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -59,15 +60,17 @@ sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63w0a"]
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileMap", "previewTileMap", "playButton", "assetManagerButton", "exportButton", "assetManager", "customCursorManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "settingsMenu", "settingsButton", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
 tileMap = NodePath("Tiles")
 previewTileMap = NodePath("PreviewTile")
 playButton = NodePath("ScreenUI/BottomRightAnchor/PlayButton")
-assetManagerButton = NodePath("ScreenUI/BottomLeftAnchor/BottomLeftRow/AssetManagerButton")
 exportButton = NodePath("ScreenUI/TopRightAnchor/TopRightRow/SavePanel/SaveMargin/SaveButton")
 assetManager = NodePath("CanvasLayer/AssetManager")
+assetManagerButton = NodePath("ScreenUI/BottomLeftAnchor/BottomLeftRow/AssetManagerButton")
+settingsMenu = NodePath("CanvasLayer/SettingsMenu")
+settingsButton = NodePath("ScreenUI/BottomLeftAnchor/BottomLeftRow/CameraManagerButton")
 customCursorManager = NodePath("CustomCursorManager")
 
 [node name="Tiles" type="TileMapLayer" parent="." unique_id=1452837543]
@@ -319,6 +322,9 @@ offset_top = -350.0
 offset_right = 0.0
 offset_bottom = 350.0
 grow_horizontal = 0
+
+[node name="SettingsMenu" parent="CanvasLayer" unique_id=79213823 instance=ExtResource("20_fnjh2")]
+visible = false
 
 [node name="HotkeyManager" type="Node2D" parent="." unique_id=1848065233 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager", "tileSwitch")]
 script = ExtResource("10_bpoex")

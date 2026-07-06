@@ -10,11 +10,15 @@ extends Node2D
 
 # Relevant button elements
 @export var playButton : Button;
-@export var assetManagerButton : Button;
 @export var exportButton : Button;
 
-# Asset Manager
+# Asset Manager and Button
 @export var assetManager : AssetManager;
+@export var assetManagerButton : Button;
+
+# Settings Menu and button
+@export var settingsMenu : Node;
+@export var settingsButton : Button;
 
 # Cursor Manager
 @export var customCursorManager : Node2D;
@@ -48,6 +52,7 @@ func _ready() -> void:
 		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize);
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
+	settingsButton.pressed.connect(open_settings_menu);
 	Global.levelCreated.connect(reset_player_and_goal);
 	exportButton.pressed.connect(export_level);
 
@@ -121,6 +126,13 @@ func open_asset_manager() -> void:
 	previewTileMap.hide();
 	customCursorManager.invalidSprite.hide();
 	assetManager.show();
+
+func open_settings_menu() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	#get_tree().paused = true;
+	previewTileMap.hide();
+	customCursorManager.invalidSprite.hide();
+	settingsMenu.show();
 
 ## Closes the asset manager
 func close_asset_manager() -> void:

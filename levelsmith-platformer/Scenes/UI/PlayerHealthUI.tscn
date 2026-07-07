@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bpmwwvhsaherl" path="res://Scripts/Game/PlayerHealthUI.gd" id="1_qhy4u"]
 [ext_resource type="PackedScene" uid="uid://bfmexmkn6uy3f" path="res://Scenes/UI/Heart.tscn" id="2_qhy4u"]
-[ext_resource type="StyleBox" uid="uid://dwhikovr4qh18" path="res://Assets/UserInterface/PlayStateUIPanel.tres" id="3_qhy4u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j23bb"]
 
 [node name="PlayerHealthUi" type="HBoxContainer" unique_id=621394887]
 script = ExtResource("1_qhy4u")
@@ -11,7 +12,7 @@ empty_heart_modulate = Color(0.24840015, 0.24840018, 0.24840015, 1)
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=70166934]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("3_qhy4u")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_j23bb")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1932336826]
 layout_mode = 2

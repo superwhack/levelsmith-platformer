@@ -7,11 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://dv4prgld7ti1y" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeButtonPauseWhite.png" id="5_jygy8"]
 [ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="6_4i4ea"]
 [ext_resource type="Texture2D" uid="uid://b1hadfl28cryv" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconPlayModeResumeWhite.png" id="6_habuo"]
-[ext_resource type="StyleBox" uid="uid://dwhikovr4qh18" path="res://Assets/UserInterface/PlayStateUIPanel.tres" id="6_o46cv"]
 [ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="6_x53pn"]
 [ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
 [ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
 [ext_resource type="PackedScene" uid="uid://cmpj0a4yqf4gu" path="res://Scenes/UI/WinScreen.tscn" id="8_4i4ea"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2riqt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
@@ -21,14 +22,14 @@ script = ExtResource("1_habuo")
 pauseScreen = NodePath("CanvasLayer/PausedScreenContainer")
 winScreen = NodePath("CanvasLayer/WinScreen")
 bottomScreenGroup = NodePath("CanvasLayer/BottomScreenGroup")
-coinCounterLabel = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin/HBoxContainer/CoinCounter")
-playerHealthUI = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PlayerHealthUi")
-timerLabel = NodePath("CanvasLayer/Timer")
+coinCounterLabel = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin/HBoxContainer/CoinCounter")
+playerHealthUI = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PlayerHealthUi")
+timerLabel = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/Timer")
 winCoinLabel = NodePath("CanvasLayer/WinScreen/VBoxContainer2/WinCoinCounter")
-coinMargin = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin")
+coinMargin = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin")
 winTimeLabel = NodePath("CanvasLayer/WinScreen/VBoxContainer2/WinTimer")
-resetButton = NodePath("CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ResetButton")
-pauseButton = NodePath("CanvasLayer/TopLeftMargin/PauseButton")
+resetButton = NodePath("CanvasLayer/TopRightMargin/Container/ResetButton")
+pauseButton = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PauseButton")
 resumeButton = NodePath("CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer/ResumeButton")
 replayButton = NodePath("CanvasLayer/WinScreen/VBoxContainer2/Container/WinResetButton")
 editorButton = NodePath("CanvasLayer/WinScreen/VBoxContainer2/Container/WinReturnEditorButton")
@@ -43,48 +44,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BottomRightMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=762088827]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -401.0
-offset_top = -148.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="Container" type="HBoxContainer" parent="CanvasLayer/BottomScreenGroup/BottomRightMargin" unique_id=1808122079]
-layout_mode = 2
-
-[node name="ResetButton" type="Button" parent="CanvasLayer/BottomScreenGroup/BottomRightMargin/Container" unique_id=1815887631]
-layout_mode = 2
-size_flags_vertical = 8
-tooltip_text = "Reset"
-focus_behavior_recursive = 1
-theme = ExtResource("2_ym18m")
-action_mode = 0
-icon = ExtResource("3_jygy8")
-icon_alignment = 1
-
-[node name="Spacer" type="Control" parent="CanvasLayer/BottomScreenGroup/BottomRightMargin/Container" unique_id=964069108]
-custom_minimum_size = Vector2(20, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ReturnEditorButton" type="Button" parent="CanvasLayer/BottomScreenGroup/BottomRightMargin/Container" unique_id=1339685622]
-custom_minimum_size = Vector2(265, 0)
-layout_mode = 2
-tooltip_text = "Edit Mode"
-focus_behavior_recursive = 1
-theme = ExtResource("2_ym18m")
-action_mode = 0
-icon = ExtResource("4_habuo")
-icon_alignment = 1
-
 [node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=1930773515]
 layout_mode = 0
 offset_right = 292.0
@@ -92,13 +51,74 @@ offset_bottom = 92.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 
-[node name="PauseButton" type="Button" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin" unique_id=2000062892]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin" unique_id=902468547]
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+
+[node name="PauseButton" type="Button" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=65536290]
+custom_maximum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-tooltip_text = "Pause"
 theme = ExtResource("2_ym18m")
 icon = ExtResource("5_jygy8")
+icon_alignment = 1
+
+[node name="PlayerHealthUi" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=621394887 instance=ExtResource("6_x53pn")]
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+
+[node name="PlayUISpacer" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=79976120]
+custom_minimum_size = Vector2(20, 0)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+
+[node name="Timer" type="RichTextLabel" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=1225691579]
+custom_minimum_size = Vector2(100, 0)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_colors/default_color = Color(0.7057152, 1, 0.6794825, 1)
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayUISpacer2" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=708364954]
+custom_minimum_size = Vector2(20, 0)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=562975845]
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2riqt")
+
+[node name="CoinMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2" unique_id=1014826280]
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin" unique_id=2030686756]
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin/HBoxContainer" unique_id=1957267496]
+custom_maximum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("7_4pdbi")
+
+[node name="Label" type="Label" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin/HBoxContainer" unique_id=164032238]
+layout_mode = 2
+text = ":"
+vertical_alignment = 1
+
+[node name="CoinCounter" type="RichTextLabel" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin/HBoxContainer" unique_id=2034599662]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 20
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
 
 [node name="BottomLeftMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup" unique_id=420297532]
 layout_mode = 1
@@ -109,14 +129,13 @@ offset_top = -55.0
 offset_right = 531.0
 grow_vertical = 0
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_bottom = 20
 
 [node name="ControlsLabel" type="Label" parent="CanvasLayer/BottomScreenGroup/BottomLeftMargin" unique_id=1113873687]
 layout_mode = 2
 theme = ExtResource("2_ym18m")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("6_4i4ea")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 16
 text = "Move [WASD / Arrow Keys]	     Jump [Space]"
 
 [node name="TopRightMargin" type="MarginContainer" parent="CanvasLayer" unique_id=1873861667]
@@ -126,68 +145,36 @@ anchor_right = 1.0
 offset_left = -382.0
 offset_bottom = 104.0
 grow_horizontal = 0
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
 
-[node name="PlayUIHBox" type="HBoxContainer" parent="CanvasLayer/TopRightMargin" unique_id=1040017800]
+[node name="Container" type="HBoxContainer" parent="CanvasLayer/TopRightMargin" unique_id=1808122079]
 layout_mode = 2
-size_flags_vertical = 4
-alignment = 2
+size_flags_horizontal = 8
 
-[node name="PlayerHealthUi" parent="CanvasLayer/TopRightMargin/PlayUIHBox" unique_id=621394887 instance=ExtResource("6_x53pn")]
+[node name="ResetButton" type="Button" parent="CanvasLayer/TopRightMargin/Container" unique_id=1815887631]
 layout_mode = 2
+size_flags_vertical = 0
+tooltip_text = "Reset"
+focus_behavior_recursive = 1
+theme = ExtResource("2_ym18m")
+action_mode = 0
+icon = ExtResource("3_jygy8")
+icon_alignment = 1
 
-[node name="PlayUISpacer" type="Control" parent="CanvasLayer/TopRightMargin/PlayUIHBox" unique_id=79976120]
+[node name="Spacer" type="Control" parent="CanvasLayer/TopRightMargin/Container" unique_id=964069108]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/TopRightMargin/PlayUIHBox" unique_id=562975845]
+[node name="ReturnEditorButton" type="Button" parent="CanvasLayer/TopRightMargin/Container" unique_id=1339685622]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("6_o46cv")
-
-[node name="CoinMargin" type="MarginContainer" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer" unique_id=1014826280]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin" unique_id=2030686756]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin/HBoxContainer" unique_id=1957267496]
-layout_mode = 2
-texture = ExtResource("7_4pdbi")
-stretch_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin/HBoxContainer" unique_id=164032238]
-layout_mode = 2
-theme_override_font_sizes/font_size = 54
-text = ":"
-vertical_alignment = 1
-
-[node name="CoinCounter" type="RichTextLabel" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin/HBoxContainer" unique_id=2034599662]
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 30
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-vertical_alignment = 1
-
-[node name="TopLeftMargin" type="MarginContainer" parent="CanvasLayer" unique_id=1549534289]
-offset_right = 292.0
-offset_bottom = 92.0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-
-[node name="PauseButton" type="Button" parent="CanvasLayer/TopLeftMargin" unique_id=65536290]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+tooltip_text = "Edit Mode"
+focus_behavior_recursive = 1
 theme = ExtResource("2_ym18m")
-icon = ExtResource("5_jygy8")
+action_mode = 0
+icon = ExtResource("4_habuo")
+icon_alignment = 1
 
 [node name="PausedScreenContainer" type="PanelContainer" parent="CanvasLayer" unique_id=610850262 node_paths=PackedStringArray("gameManager")]
 process_mode = 3
@@ -228,36 +215,9 @@ theme_override_font_sizes/italics_font_size = 35
 bbcode_enabled = true
 text = "[u][i]Game Paused[/i][/u]"
 
-[node name="CoinCounter" type="RichTextLabel" parent="CanvasLayer" unique_id=143256191]
-custom_minimum_size = Vector2(250, 0)
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -290.0
-offset_top = 40.0
-offset_right = -40.0
-offset_bottom = 112.0
-grow_horizontal = 0
-offset_transform_enabled = true
-theme_override_colors/default_color = Color(1, 0.85882354, 0, 1)
-theme_override_font_sizes/normal_font_size = 45
-
-[node name="Timer" type="RichTextLabel" parent="CanvasLayer" unique_id=1225691579]
-custom_minimum_size = Vector2(250, 0)
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -290.0
-offset_top = 115.0
-offset_right = -40.0
-offset_bottom = 187.00009
-grow_horizontal = 0
-offset_transform_enabled = true
-theme_override_colors/default_color = Color(0.7057152, 1, 0.6794825, 1)
-theme_override_font_sizes/normal_font_size = 45
-
 [node name="WinScreen" parent="CanvasLayer" unique_id=622496012 instance=ExtResource("8_4i4ea")]
 process_mode = 2
+visible = false
 offset_right = 534.0
 offset_bottom = 290.0
 

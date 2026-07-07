@@ -75,7 +75,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="TempNewMainMenu😊" type="Control" unique_id=1798083708]
+[node name="TempNewMainMenu" type="Control" unique_id=1798083708]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -839,9 +839,9 @@ theme_override_constants/margin_top = 15
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="CreateLevelButton" type="Button" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonsMargin/ButtonsRow" unique_id=1402666715]
+[node name="ImportLevelButton" type="Button" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonsMargin/ButtonsRow" unique_id=1402666715]
 layout_mode = 2
-text = "Create Level"
+text = "Import Level"
 
 [node name="ButtonSpacer" type="Control" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonsMargin/ButtonsRow" unique_id=182530781]
 custom_minimum_size = Vector2(20, 0)

@@ -30,7 +30,7 @@ extends Control
 var importedLevelPath : String;
 
 ## A reference to the Level List for loading levels.
-@export var levelList : GridContainer;
+@export var levelList : VBoxContainer;
 ## A reference to a packed scene of a clickable Level List Item.
 @export var levelListItem : PackedScene;
 

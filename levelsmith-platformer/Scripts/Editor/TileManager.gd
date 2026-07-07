@@ -15,15 +15,20 @@ func _process(_delta: float) -> void:
 ## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
-	if (editorManager.check_out_of_bounds(clickPosition)): return;
+	if (editorManager.check_out_of_bounds(clickPosition)): 
+		#AudioManager.play_UI_effect("Tile_Place_Error");
+		return;
 	
 	var clickedTileId : int = tileMap.get_cell_source_id(clickPosition);
 	
 	# If the cell is already of the same type (excluding slopes), or if the cell is occupied by an entity, don't overwrite
-	if ((clickedTileId != Global.TileType.SLOPE && clickedTileId == brushObject) 
-	|| clickedTileId >= editorManager.tileCount || clickedTileId == Global.BEDROCK_TILE): 
+	if (clickedTileId >= editorManager.tileCount): 
+		#AudioManager.play_UI_effect("Tile_Place_Error");
 		return;
-	
+	if (clickedTileId == Global.BEDROCK_TILE || (clickedTileId != Global.TileType.SLOPE && clickedTileId == brushObject)): 
+		return;
+	if toolManager.currentTool != Global.Tool.BOX_BRUSH:
+		AudioManager.play_UI_effect("Tile_Place");
 	if (brushObject == Global.TileType.SLOPE):
 		tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, toolManager.currentObjectRotation);
 	else:
@@ -47,6 +52,8 @@ func box_place(firstCorner: Vector2, secondCorner: Vector2) -> void:
 	var topLeft : Vector2 = Vector2(
 		min(firstCorner.x, secondCorner.x), 
 		min(firstCorner.y, secondCorner.y));
+	
+	AudioManager.play_UI_effect("Tile_Place");
 	
 	# The creation. 1 is added to max to be inclusive.
 	for i in abs(secondCorner.y - firstCorner.y) + 1:

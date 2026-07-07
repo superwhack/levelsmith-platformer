@@ -11,7 +11,7 @@ const defaultPath : String = "res://Assets/Defaults/";
 signal levelImported;
 
 ## NOTE: TEMPORARY VARIABLE FOR STORING LEVEL'S NAME
-var levelPathName : String;
+var levelName : String;
 
 # Stores size of an imported level
 var importedLevelSize : Vector2;
@@ -23,7 +23,7 @@ var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tr
 ## levelName: Name of the new level, indicates where it'll go in the folder
 func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	# When making an enemy we need to set the path name and clear all enemies
-	levelPathName = levelName;
+	levelName = levelName;
 	clear_enemies_folder();
 	
 	# Create a directory under User and set the level and asset path.
@@ -151,7 +151,10 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			if (tileMap.get_cell_alternative_tile(Vector2(currentCol, currentRow)) > 0):
 				tileRow.append(str(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)),"|",tileMap.get_cell_alternative_tile(Vector2(currentCol, currentRow))));
 			else:
-				tileRow.append(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)));
+				if tileMap.get_cell_source_id(Vector2(currentCol, currentRow)) == -1:
+					tileRow.append("");
+				else:
+					tileRow.append(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)));
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 	
@@ -181,6 +184,8 @@ func validate_import(sourceName: String) -> bool:
 		errors.append(levelPath + "Tiles.CSV does not exist!");
 		
 	if (errors.size() == 0):
+		sourceName = sourceName.left(-1);
+		levelName = sourceName.substr(sourceName.rfind("/") + 1);
 		return true;
 		
 	# If import fails, send a pop-up to the user.
@@ -212,6 +217,8 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 					playerExists = true;
 				tileMap.set_cell(Vector2(col, row), int(entityTileData[0]), Vector2i.ZERO, int(entityTileData[1]));
 			else:
+				if tileData == "":
+					tileData = "-1";
 				tileMap.set_cell(Vector2(col, row), int(tileData), Vector2i.ZERO);
 			col += 1;
 		row += 1;

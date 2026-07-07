@@ -8,7 +8,6 @@ var state : Global.State = Global.State.EDIT;
 @export var toolManager : Node2D;
 @export var gameManager : Node2D;
 @export var entityManager : Node2D;
-@export var audioManager : Node;
 @export var cameraManager : Camera2D;
 @export var editorManagerCanvas : CanvasLayer;
 @export var gameManagerCanvas : CanvasLayer;
@@ -34,10 +33,6 @@ var loadedMap : TileMapLayer;
 @export var propertyMenu : Panel;
 
 func _ready() -> void:
-	#ImportExportManager.make_new_level("Level01");
-	AudioManager.masterVolume = 0;
-	AudioManager.update_volume();
-	
 	Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
 	Global.levelCreated.connect(tileMap.clear);
@@ -58,8 +53,7 @@ func _ready() -> void:
 	if (!DirAccess.dir_exists_absolute("res://Resources/Enemies/")):
 		DirAccess.make_dir_absolute("res://Resources/Enemies/");
 		
-	#edit();
-	main_menu();
+	main_menu(false);
 	
 ## When the user does a save level input, save the level.
 ## event: The user input
@@ -128,7 +122,9 @@ func load_level(levelPath: String) -> void:
 		cameraManager.initialize_camera();
 
 ## Swap to main menu state
-func main_menu() -> void:
+func main_menu(menuClickSound : bool = true) -> void:
+	if menuClickSound:
+		AudioManager.play_UI_effect("UI_Selection");
 	# Hide all non-menu states, show Main Menu scene
 	gameManager.hide();
 	gameManagerCanvas.hide();
@@ -139,12 +135,15 @@ func main_menu() -> void:
 	propertyMenu.close();
 	mainMenuControl.show();
 	ImportExportManager.clear_enemies_folder();
+	AudioManager.reset_audio();
 	mainMenuControl.fill_level_list();
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 
 ## Swap to edit state
 func edit() -> void:
+	AudioManager.reset_audio();
+	AudioManager.play_UI_effect("UI_Selection");
 	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
@@ -175,8 +174,8 @@ func play() -> void:
 	# Check that the game can be run
 	if (!get_play_errors().is_empty()):
 		return;
-		
 	propertyMenu.close();
+	AudioManager.play_UI_effect("UI_Selection");
 	AudioManager.play_music("LevelMusic");
 	# Update state variable
 	state = Global.State.PLAY;

@@ -234,14 +234,15 @@ func process_zoom_input() -> void:
 ## Determine the bounds of camera panning.
 ## Returns a rect of the limits of where the camera is able to go.
 func get_camera_bounds() -> Rect2:
-	# Convert roam cell count to pixels
+	# Roam marg
 	var roamMargin = roamCellCount * Global.TILE_SIZE;
-	var roamLimit : Vector2 = Vector2(roamMargin, roamMargin);
-	
-	# Expanded roam space adds the limit to the top and bottoms of the level boundary.
-	var size : Vector2 = levelBounds.size + (roamLimit * 2);
-	
-	return Rect2(-roamLimit, size);
+	var margin = Vector2.ONE * roamMargin;
+
+	# Returns roam bounds based on level bounds accurately
+	return Rect2(
+		levelBounds.position - margin,
+		levelBounds.size + margin * 2
+	);
 
 ## Prevents the camera from leaving the given rect2.
 ## bounds: The bounds within which the camera must remain.

@@ -71,18 +71,18 @@ func audio_finished(player: AudioStreamPlayer) -> void:
 
 ## Update the current volume by adjusting every player. If the volume is set to 0 for anything, mute completely
 func update_volume() -> void:
-	musicPlayer.volume_db = (LOWEST_DB * (masterVolume + musicVolume) / 2) - LOWEST_DB;
+	musicPlayer.volume_db = (LOWEST_DB * masterVolume * musicVolume) - LOWEST_DB;
 	if (musicPlayer.volume_db == -LOWEST_DB):
 			musicPlayer.volume_db = -1000;
-	walkingPlayer.volume_db = (LOWEST_DB * (masterVolume + SFXVolume) / 2) - LOWEST_DB;
+	walkingPlayer.volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
 	if (walkingPlayer.volume_db == -LOWEST_DB):
 			walkingPlayer.volume_db = -1000;
 	for i in inusePlayers.size():
-		inusePlayers[i].volume_db = (LOWEST_DB * (masterVolume + SFXVolume) / 2) - LOWEST_DB;
+		inusePlayers[i].volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
 		if (inusePlayers[i].volume_db == -LOWEST_DB):
 			inusePlayers[i].volume_db = -1000;
 	for i in availablePlayers.size():
-		availablePlayers[i].volume_db = (LOWEST_DB * (masterVolume + SFXVolume) / 2) - LOWEST_DB;
+		availablePlayers[i].volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
 		if (availablePlayers[i].volume_db == -LOWEST_DB):
 			availablePlayers[i].volume_db = -1000;
 

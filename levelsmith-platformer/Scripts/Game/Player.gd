@@ -109,6 +109,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if (check_out_of_bounds()):
 		return;
+	if deathTimer.time_left > 0:
+		return;
 	justWallJumped = false;
 	for enemy in enemiesInside:
 		detect_enemies(enemy);

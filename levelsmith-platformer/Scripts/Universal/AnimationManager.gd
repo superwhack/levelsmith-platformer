@@ -161,3 +161,18 @@ func get_all_sprites() -> void:
 			stationaryEnemySprites.append(enemy.find_child("AnimatedSprite2D"));
 		if (enemy is EnemyShooting):
 			shootingEnemySprites.append(enemy.find_child("AnimatedSprite2D"));
+
+func update_animation_fps(animationName : String, newFPS : float):
+	if "Player" in animationName:
+		playerTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
+	elif "Patrol" in animationName:
+		patrollingEnemyTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
+	elif "Stationary" in animationName:
+		stationaryEnemyTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
+	elif "Fly" in animationName:
+		flyingEnemyTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
+	elif "Shoot" in animationName:
+		shootingEnemyTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
+	
+func get_template_sprite(spriteName : String) -> AnimatedSprite2D:
+	return get(spriteName[0].to_lower() + spriteName.substr(1) + "TemplateSprite");

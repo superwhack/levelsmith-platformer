@@ -233,6 +233,11 @@ func item_selected(selectedItem: AssetItem) -> void:
 			FileSearch.find_directory_by_name(
 				animationSwapping.selectedEntityType))[animationSwapping.currentAnimationIndex];
 		animationSwapping.currentLoadedAnimation.clear();
+		animationSwapping.FPSSpinbox.value_changed.disconnect(animationSwapping.fps_updated.bind(true));
+		animationSwapping.FPSSpinbox.value_changed.connect(animationSwapping.fps_updated);
+		animationSwapping.FPSSpinbox.value = AnimationManager.get_template_sprite(animationSwapping.selectedEntityType).sprite_frames.get_animation_speed(animationSwapping.animationPreviewNameToReplace);
+		animationSwapping.FPSSpinbox.value_changed.disconnect(animationSwapping.fps_updated);
+		animationSwapping.FPSSpinbox.value_changed.connect(animationSwapping.fps_updated.bind(true));
 		
 		var animation : Array[Image]= animationSwapping.get_animation_from_folder(animationSwapping.animationPreviewNameToReplace);
 		if (animation.is_empty()):

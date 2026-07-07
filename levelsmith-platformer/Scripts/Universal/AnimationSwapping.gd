@@ -48,7 +48,6 @@ func _ready() -> void:
 	frameLeftButton.pressed.connect(frame_change.bind(false));
 	playButton.pressed.connect(play_preview_animation);
 	stopButton.pressed.connect(stop_preview_animation);
-	FPSSpinbox.value_changed.connect(fps_updated);
 
 ## Play the animation
 func _process(delta: float) -> void:
@@ -132,6 +131,11 @@ func anim_change(next : bool):
 	if (animation.is_empty()): animation = AnimationManager.get_default_animation_by_name(animationPreviewNameToReplace);
 	for image in animation:
 		currentLoadedAnimation.append(ImageTexture.create_from_image(image));
+	FPSSpinbox.value_changed.disconnect(fps_updated.bind(true));
+	FPSSpinbox.value_changed.connect(fps_updated)
+	FPSSpinbox.value = AnimationManager.get_template_sprite(selectedEntityType).sprite_frames.get_animation_speed(animationPreviewNameToReplace);
+	FPSSpinbox.value_changed.disconnect(fps_updated)
+	FPSSpinbox.value_changed.connect(fps_updated.bind(true));
 	update_animation_preview();
 	
 ## Change the animation frame currently shown
@@ -173,5 +177,7 @@ func stop_preview_animation() -> void:
 	update_animation_preview();
 
 ## Update the FPS
-func fps_updated(value: float) -> void:
+func fps_updated(value: float, changeTemplate : bool = false) -> void:
 	FPS = value;
+	if (changeTemplate):
+		AnimationManager.update_animation_fps(animationPreviewNameToReplace, value);

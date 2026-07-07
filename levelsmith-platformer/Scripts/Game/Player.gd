@@ -304,6 +304,10 @@ func detect_tiles() -> void:
 		
 	for raycast in slideCollisions:
 		var collider : Object = raycast.get_collider();
+		# Moving platform
+		if collider is MovingPlatform && downwardsRaycasts.has(raycast):
+			currentFriction = 1.0;
+			currentSlowdown = 1.0;
 		if (collider is not TileMapLayer): continue;
 		
 		var tileLayer : TileMapLayer = collider;

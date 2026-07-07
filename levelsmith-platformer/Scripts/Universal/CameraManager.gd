@@ -60,6 +60,8 @@ func initialize_camera() -> void:
 func refresh_bounds() -> void:
 	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.TILE_SIZE);
 	# This is so the top and bottom bedrock border are visible when clamped.
+	levelBounds.position.x -= Global.TILE_SIZE;
+	levelBounds.size.x += Global.TILE_SIZE * 2;
 	levelBounds.position.y -= Global.TILE_SIZE;
 	levelBounds.size.y += Global.TILE_SIZE * 2;
 	roamBounds = get_camera_bounds();

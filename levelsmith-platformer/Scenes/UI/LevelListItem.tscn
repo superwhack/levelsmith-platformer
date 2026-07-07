@@ -26,19 +26,12 @@ levelButton = NodePath("HBoxContainer/LevelMarginContainer/LevelCard")
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=467178205]
 custom_minimum_size = Vector2(900, -1)
 layout_mode = 1
-anchors_preset = -1
-anchor_top = -0.02
-anchor_right = -0.097297296
-anchor_bottom = -0.02
-offset_right = 1108.0
-offset_bottom = 104.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+offset_right = 985.0
+offset_bottom = 102.0
 
 [node name="LevelMarginContainer" type="MarginContainer" parent="HBoxContainer" unique_id=727232242]
 custom_minimum_size = Vector2(985, 0)
-custom_maximum_size = Vector2(1000, 100)
+custom_maximum_size = Vector2(690, 548)
 layout_mode = 2
 
 [node name="LevelCard" type="Button" parent="HBoxContainer/LevelMarginContainer" unique_id=1645077814]

@@ -44,13 +44,13 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	# Generate default JSON file as a dictionary.
 	var defaultJSON : Dictionary = {
 		"metadata": {
-		"dateCreated": "%04d-%02d-%02d" % [now.year, now.month, now.day],
-		"timeCreated": "%02d:%02d:%02d" % [now.hour, now.minute, now.second],
-		"dateModified": "%04d-%02d-%02d" % [now.year, now.month, now.day],
-		"timeModified": "%02d:%02d:%02d" % [now.hour, now.minute, now.second],
-		"version": 1,
-		"author": "",
-		"favorited": false
+			"dateCreated": "%04d-%02d-%02d" % [now.year, now.month, now.day],
+			"timeCreated": "%02d:%02d:%02d" % [now.hour, now.minute, now.second],
+			"dateModified": "%04d-%02d-%02d" % [now.year, now.month, now.day],
+			"timeModified": "%02d:%02d:%02d" % [now.hour, now.minute, now.second],
+			"version": 1,
+			"author": "",
+			"favorited": false
 		},
 		"enemies": [],
 		"player": {
@@ -64,11 +64,10 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 			"wallJump": playerDefault.wallJump,
 			"wallJumpDecay": playerDefault.wallJumpDecay
 		}
-	}
+	};
 	
 	# Convert our data to a json_string
-	var json : Variant = JSON.parse_string(defaultJSON)
-	var jsonString : String = JSON.stringify(json);
+	var jsonString : String = JSON.stringify(defaultJSON, "\t")
 	
 	# Write JSON to file and close it
 	var JSONFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE);

@@ -39,6 +39,12 @@ var importedLevelPath : String;
 @export var levelListItem : PackedScene;
 
 ## References to meta data values.
+@export var author : Label;
+@export var dateCreated : Label;
+@export var dateModified : Label;
+@export var dimensions : Label;
+@export var version : Label;
+@export var preview : TextureRect;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -182,10 +188,10 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 	
 	# Get the csv level size, and add it to the level item
 	var levelSize : Vector2i = get_csv_size(levelPath + "/" + "Tiles.CSV");
-	item.levelSize.text = "size: [" + (str(levelSize.x) + "," + str(levelSize.y) + "]");
+	dimensions.text = (str(levelSize.x) + " x " + str(levelSize.y) + " Tiles");
 	
 	# If the thumbnail file exists, replace image (or don't)
-	var levelThumbnailPath : String = levelPath + "/thumbnail.png";
+	var levelThumbnailPath : String = levelPath + "/preview.PNG";
 	
 	if (FileAccess.file_exists(levelThumbnailPath)):
 		var image : Image = Image.new();
@@ -193,7 +199,7 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 		# If the image returns ok, replace the texture
 		if (image.load(levelThumbnailPath) == OK):
 			var texture := ImageTexture.create_from_image(image)
-			item.levelThumbnail.texture = texture;
+			preview.texture = texture;
 
 
 ## Load a level when appropriate button is pressed

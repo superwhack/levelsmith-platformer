@@ -11,7 +11,7 @@
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_1i6c8"]
 
-[node name="CameraMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "masterVolume", "SFXVolume", "musicVolume")]
+[node name="SettingsMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "masterVolume", "SFXVolume", "musicVolume", "gameplayZoom", "followSpeed", "cameraDeadzone")]
 self_modulate = Color(1, 1, 1, 0.60784316)
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,6 +24,9 @@ closeButton = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/R
 masterVolume = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/VolumeHeaderContainer/MasterVolume")
 SFXVolume = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/VolumeHeaderContainer/SFXVolume")
 musicVolume = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/VolumeHeaderContainer/MusicVolume")
+gameplayZoom = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/GameplayZoom")
+followSpeed = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/FollowSpeed")
+cameraDeadzone = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/CameraDeadzone")
 
 [node name="MainMargin" type="MarginContainer" parent="." unique_id=136846140]
 self_modulate = Color(1, 1, 1, 0.7882353)
@@ -77,7 +80,6 @@ custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
 [node name="CameraHeaderContainer" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox" unique_id=246064918]
-visible = false
 layout_mode = 2
 
 [node name="CameraLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer" unique_id=932387995]
@@ -88,108 +90,28 @@ text = "Camera"
 [node name="HSeparator" type="HSeparator" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer" unique_id=1347950556]
 layout_mode = 2
 
-[node name="GameplayZoomRow" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer" unique_id=929377998]
+[node name="GameplayZoom" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer" unique_id=305056832 instance=ExtResource("5_aixuf")]
 layout_mode = 2
+propertyName = "Gameplay Zoom Level"
+propertyUnit = "%"
+minMax = Vector2(20, 200)
+sliderStep = 1.0
+valueAppend = "%"
 
-[node name="GameplayZoomLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/GameplayZoomRow" unique_id=686693427]
+[node name="FollowSpeed" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer" unique_id=609962401 instance=ExtResource("5_aixuf")]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Gameplay Zoom Level (%)"
+propertyName = "Camera Follow Speed"
+propertyUnit = "%"
+minMax = Vector2(25, 100)
+sliderStep = 1.0
+valueAppend = "%"
 
-[node name="GameplayZoomControl" type="HBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/GameplayZoomRow" unique_id=1245554470]
+[node name="CameraDeadzone" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer" unique_id=1372853753 instance=ExtResource("5_aixuf")]
 layout_mode = 2
-
-[node name="GameplayZoomMinLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/GameplayZoomRow/GameplayZoomControl" unique_id=1244550941]
-layout_mode = 2
-text = " 20"
-
-[node name="GameplayZoomSlider" type="HSlider" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/GameplayZoomRow/GameplayZoomControl" unique_id=811835094]
-custom_minimum_size = Vector2(650, 0)
-layout_mode = 2
-size_flags_vertical = 4
-min_value = 20.0
-max_value = 200.0
-value = 20.0
-scrollable = false
-
-[node name="GameplayZoomMaxLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/GameplayZoomRow/GameplayZoomControl" unique_id=706985118]
-layout_mode = 2
-text = "200 "
-
-[node name="GameplayZoomValueBox" type="LineEdit" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/GameplayZoomRow/GameplayZoomControl" unique_id=2108078795]
-layout_mode = 2
-
-[node name="FollowSpeedRow" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer" unique_id=1818551823]
-layout_mode = 2
-
-[node name="FollowSpeedLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/FollowSpeedRow" unique_id=686750470]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Camera Follow Speed"
-
-[node name="FollowSpeedControl" type="HBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/FollowSpeedRow" unique_id=899873803]
-layout_mode = 2
-
-[node name="FollowSpeedMinLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/FollowSpeedRow/FollowSpeedControl" unique_id=1140390764]
-layout_mode = 2
-text = "0.1"
-
-[node name="FollowSpeedSlider" type="HSlider" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/FollowSpeedRow/FollowSpeedControl" unique_id=1723363018]
-custom_minimum_size = Vector2(650, 0)
-layout_mode = 2
-size_flags_vertical = 4
-min_value = 0.1
-max_value = 5.0
-step = 0.1
-value = 0.1
-scrollable = false
-
-[node name="FollowSpeedMaxLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/FollowSpeedRow/FollowSpeedControl" unique_id=1691484621]
-layout_mode = 2
-text = "5"
-
-[node name="Control" type="Control" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/FollowSpeedRow/FollowSpeedControl" unique_id=1021255064]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="FollowSpeedValueBox" type="LineEdit" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/FollowSpeedRow/FollowSpeedControl" unique_id=1372726147]
-layout_mode = 2
-
-[node name="CameraDeadzoneRow" type="VBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer" unique_id=221024596]
-layout_mode = 2
-
-[node name="DeadzoneLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/CameraDeadzoneRow" unique_id=1422746878]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Camera Deadzone"
-
-[node name="DeadzoneControl" type="HBoxContainer" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/CameraDeadzoneRow" unique_id=1983550332]
-layout_mode = 2
-
-[node name="DeadzoneMinLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/CameraDeadzoneRow/DeadzoneControl" unique_id=1821119263]
-layout_mode = 2
-text = "0.1"
-
-[node name="DeadzoneSlider" type="HSlider" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/CameraDeadzoneRow/DeadzoneControl" unique_id=1793033739]
-custom_minimum_size = Vector2(650, 0)
-layout_mode = 2
-size_flags_vertical = 4
-min_value = 0.1
-max_value = 5.0
-step = 0.1
-value = 0.1
-scrollable = false
-
-[node name="DeadzoneMaxLabel" type="Label" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/CameraDeadzoneRow/DeadzoneControl" unique_id=1217733617]
-layout_mode = 2
-text = "5"
-
-[node name="Control" type="Control" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/CameraDeadzoneRow/DeadzoneControl" unique_id=5776753]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="DeadzoneValueBox" type="LineEdit" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/CameraDeadzoneRow/DeadzoneControl" unique_id=752561334]
-layout_mode = 2
+propertyName = "Camera Deadzone"
+propertyUnit = "m"
+minMax = Vector2(0, 2)
+sliderStep = 0.1
 
 [node name="Spacer2" type="Control" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox" unique_id=569175149]
 custom_minimum_size = Vector2(0, 15)
@@ -206,7 +128,7 @@ text = "Volume"
 [node name="HSeparator" type="HSeparator" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/VolumeHeaderContainer" unique_id=78955692]
 layout_mode = 2
 
-[node name="MasterVolume" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/VolumeHeaderContainer" unique_id=305056832 instance=ExtResource("5_aixuf")]
+[node name="MasterVolume" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/VolumeHeaderContainer" unique_id=391164847 instance=ExtResource("5_aixuf")]
 layout_mode = 2
 propertyName = "Master Volume"
 propertyUnit = "%"

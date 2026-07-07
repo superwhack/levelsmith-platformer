@@ -15,7 +15,6 @@ var panSpeed : float = 1.0;
 @export var zoomSpeed : float = 0.1;
 @export var maxZoomOut : float = 0.5;
 @export var maxZoomIn : float = 2.0;
-@export var playZoom : float = 0.7;
 
 # Tilemap bound
 @export var gridLines : TileMapLayer;
@@ -26,7 +25,12 @@ var roamBounds : Rect2;
 var playerReference : CharacterBody2D = null;
 var playerSearchAttempts : int = 0;
 const maxPlayerSearchAttempts : int = 60;
-var searchForPlayer : bool = true;
+var searchForPlayer : bool = true;#
+
+# Settings for camera during play
+var playZoom : float = 1.0;
+var followSpeed : float = 1.0;
+var deadzone : float = 0.0;
 
 ## Initializes the camera
 func _ready() -> void:
@@ -36,6 +40,7 @@ func _ready() -> void:
 	
 	zoom = Vector2.ONE * maxZoomOut;
 	global_position = levelBounds.get_center();
+	
 	
 	# Start zoomed out
 	Global.reload.connect(reset_camera);
@@ -72,14 +77,16 @@ func reset_camera() -> void:
 func _process(delta: float) -> void:
 	match masterManager.state:
 		Global.State.EDIT:
+			position_smoothing_enabled = false;
 			process_build_camera(delta);
 			process_zoom_input();
 			clamp_camera_to_level();
 		Global.State.PLAY:
+			position_smoothing_speed = followSpeed;
 			if playerReference == null:
 				try_find_player();
 			else:
-				process_player_camera(delta);
+				process_player_camera();
 				zoom = Vector2.ONE * playZoom;
 
 ## find the 1st node in the group called "player"
@@ -173,12 +180,18 @@ func process_edge_scrolling(delta: float) -> void:
 
 
 ## Processes player follow camera
-## delta: time since previous frame
-func process_player_camera(_delta: float) -> void:
+## snap: if true, the camera will snap to the player without deadzone logic
+func process_player_camera(snap : bool = false) -> void:
 	if playerReference == null:
 		return;
-
-	global_position = playerReference.global_position;
+	if deadzone == 0 || snap:
+		global_position = playerReference.global_position;
+	else:
+		var differenceVector = (playerReference.global_position - global_position);
+		if abs(differenceVector.x) > deadzone * 300:
+			global_position.x += differenceVector.x - sign(differenceVector.normalized().x) * deadzone * 300;
+		if abs(differenceVector.y) > deadzone * 200:
+			global_position.y += differenceVector.y - sign(differenceVector.normalized().y) * deadzone * 200;
 
 ## Adjusts camera zoom
 ## zoomAmount: Zoom change amount
@@ -208,6 +221,11 @@ func process_zoom(zoomAmount: float) -> void:
 	global_position += mouseWorldBefore - mouseWorldAfter;
 	# If zoomed out enough, hide the grid layer.
 
+## Change the smoothing value, used by GameManager when followSpeed is less than 1
+## toEnable: if it's enabled, by default it's determined by the followSpeed
+func adjust_smoothing(toEnable : bool = followSpeed < 1.0) -> void:
+	position_smoothing_enabled = toEnable;
+	
 
 func process_zoom_input() -> void:
 	if masterManager.state != Global.State.EDIT:

@@ -11,6 +11,7 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var cameraManager : Camera2D;
 @export var editorManagerCanvas : CanvasLayer;
 @export var gameManagerCanvas : CanvasLayer;
+@export var loadingScreen : CanvasLayer
 @export var mainMenuControl : Control;
 
 # References to relevant buttons
@@ -68,6 +69,13 @@ func _input(event: InputEvent) -> void:
 	#editorManager.isValidated = true;
 	##print("LEVEL COMPLETE");
 
+func show_loading_screen() -> void:
+	loadingScreen.show();
+	await get_tree().create_timer(0.7).timeout;
+
+func hide_loading_screen() -> void:
+	loadingScreen.hide();
+
 ## Set up a new level
 ## levelName: Name of the level
 ## newSize: The width and height of the level
@@ -99,6 +107,7 @@ func create_bedrock_border() -> void:
 
 ## Imports a level 
 func import_level_and_edit() -> void:
+	await show_loading_screen();
 	ImportExportManager.clear_enemies_folder();
 	for childNode in editorManager.tileMap.get_children():
 		childNode.free();
@@ -111,6 +120,8 @@ func import_level_and_edit() -> void:
 	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu);
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
+	await get_tree().process_frame
+	hide_loading_screen();
 
 ## Loads the given level to the player.
 ## levelPath: The folder path of the level.
@@ -123,6 +134,7 @@ func load_level(levelPath: String) -> void:
 
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true) -> void:
+	await show_loading_screen();
 	if menuClickSound:
 		AudioManager.play_UI_effect("UI_Selection");
 	# Hide all non-menu states, show Main Menu scene
@@ -139,9 +151,12 @@ func main_menu(menuClickSound : bool = true) -> void:
 	mainMenuControl.fill_level_list();
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
+	await get_tree().process_frame
+	hide_loading_screen();
 
 ## Swap to edit state
 func edit() -> void:
+	await show_loading_screen();
 	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UI_Selection");
 	AudioManager.play_UI_music("EditorMusic");
@@ -168,9 +183,12 @@ func edit() -> void:
 		await get_tree().process_frame;
 	editorManager.reset_enemy_positions();
 	editorManager.clear_enemies();
+	await get_tree().process_frame
+	hide_loading_screen();
 
 ## Swap to play state
 func play() -> void:
+	await show_loading_screen();
 	# Check that the game can be run
 	if (!get_play_errors().is_empty()):
 		return;
@@ -194,7 +212,8 @@ func play() -> void:
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
 	gameManager.reset();
-	
+	await get_tree().process_frame
+	hide_loading_screen();
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:

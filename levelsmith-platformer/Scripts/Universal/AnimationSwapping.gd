@@ -40,6 +40,8 @@ var patrollingEnemyAnimations : Array[String] = ["PatrolWalk", "PatrolDeath"];
 var flyingEnemyAnimations : Array[String] = ["FlyMove", "FlyDeath"];
 var shootingEnemyAnimations : Array[String] = ["EnemyShoot", "ShootIdle", "ShootDeath"];
 
+const ANIMATION_LENGTH_LIMIT : int = 60;
+
 ## Connect all relevant signals
 func _ready() -> void:
 	animationPreviewRightButton.pressed.connect(anim_change.bind(true));
@@ -69,6 +71,8 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 	if (pathToFolder):
 		var dir : DirAccess = DirAccess.open(pathToFolder);
 		var allImageNames : PackedStringArray = dir.get_files();
+		if (allImageNames.size() > ANIMATION_LENGTH_LIMIT):
+			allImageNames.resize(ANIMATION_LENGTH_LIMIT);
 		var allImages : Array[Image] = [];
 		for imageName in allImageNames:
 			allImages.append(assetManager.find_image(imageName));

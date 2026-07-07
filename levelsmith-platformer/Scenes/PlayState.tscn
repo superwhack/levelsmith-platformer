@@ -16,15 +16,16 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym18m"]
 bg_color = Color(0.1951416, 0.1951416, 0.1951416, 0.8)
 
-[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "winScreen", "bottomScreenGroup", "coinCounterLabel", "playerHealthUI", "timerLabel", "winCoinLabel", "winTimeLabel", "resetButton", "pauseButton", "resumeButton", "replayButton", "editorButton")]
+[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "winScreen", "bottomScreenGroup", "coinCounterLabel", "playerHealthUI", "timerLabel", "winCoinLabel", "coinMargin", "winTimeLabel", "resetButton", "pauseButton", "resumeButton", "replayButton", "editorButton")]
 script = ExtResource("1_habuo")
 pauseScreen = NodePath("CanvasLayer/PausedScreenContainer")
 winScreen = NodePath("CanvasLayer/WinScreen")
 bottomScreenGroup = NodePath("CanvasLayer/BottomScreenGroup")
-coinCounterLabel = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/MarginContainer/HBoxContainer/CoinCounter")
+coinCounterLabel = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin/HBoxContainer/CoinCounter")
 playerHealthUI = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PlayerHealthUi")
 timerLabel = NodePath("CanvasLayer/Timer")
 winCoinLabel = NodePath("CanvasLayer/WinScreen/VBoxContainer2/WinCoinCounter")
+coinMargin = NodePath("CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin")
 winTimeLabel = NodePath("CanvasLayer/WinScreen/VBoxContainer2/WinTimer")
 resetButton = NodePath("CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ResetButton")
 pauseButton = NodePath("CanvasLayer/TopLeftMargin/PauseButton")
@@ -133,6 +134,7 @@ theme_override_constants/margin_bottom = 10
 [node name="PlayUIHBox" type="HBoxContainer" parent="CanvasLayer/TopRightMargin" unique_id=1040017800]
 layout_mode = 2
 size_flags_vertical = 4
+alignment = 2
 
 [node name="PlayerHealthUi" parent="CanvasLayer/TopRightMargin/PlayUIHBox" unique_id=621394887 instance=ExtResource("6_x53pn")]
 layout_mode = 2
@@ -145,28 +147,28 @@ layout_mode = 2
 layout_mode = 2
 theme_override_styles/panel = ExtResource("6_o46cv")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer" unique_id=1014826280]
+[node name="CoinMargin" type="MarginContainer" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer" unique_id=1014826280]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/MarginContainer" unique_id=2030686756]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin" unique_id=2030686756]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/MarginContainer/HBoxContainer" unique_id=1957267496]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin/HBoxContainer" unique_id=1957267496]
 layout_mode = 2
 texture = ExtResource("7_4pdbi")
 stretch_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/MarginContainer/HBoxContainer" unique_id=164032238]
+[node name="Label" type="Label" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin/HBoxContainer" unique_id=164032238]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
 text = ":"
 vertical_alignment = 1
 
-[node name="CoinCounter" type="RichTextLabel" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/MarginContainer/HBoxContainer" unique_id=2034599662]
+[node name="CoinCounter" type="RichTextLabel" parent="CanvasLayer/TopRightMargin/PlayUIHBox/PanelContainer/CoinMargin/HBoxContainer" unique_id=2034599662]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 30
 fit_content = true

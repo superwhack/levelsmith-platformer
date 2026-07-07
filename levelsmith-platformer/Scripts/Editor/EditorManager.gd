@@ -77,6 +77,8 @@ func _process(_delta: float) -> void:
 	
 	# Save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
+	
+
 
 
 ## NOTE: TEMPORARY FIX FUNCTION PT 1

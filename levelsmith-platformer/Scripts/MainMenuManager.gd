@@ -19,12 +19,16 @@ extends Control
 @export var fieldNewLevelName : LineEdit;
 @export var spinBoxNewLevelX : SpinBox;
 @export var spinBoxNewLevelY : SpinBox;
+@export var invalidWarning : MarginContainer;
+@export var emptyWarning : MarginContainer;
 
 # Import level overlay children
 @export var buttonImportLevelCancel : Button;
 @export var buttonImportLevelOpen : Button;
 @export var buttonImportLevelBrowse : TextureButton;
 @export var fieldImportLevelPath : LineEdit;
+@export var badImportWarning : MarginContainer;
+@export var badImportBody : RichTextLabel;
 
 @export var fileExplorer : FileDialog;
 var importedLevelPath : String;
@@ -43,11 +47,17 @@ func _ready() -> void:
 	# Connect signals
 	buttonNewLevel.pressed.connect(overlay_new_level_show);
 	buttonNewLevelCreate.pressed.connect(create_new_level);
+	
+	# Hiding appropriate UI when cancelling level creation
 	buttonNewLevelCancel.pressed.connect(overlay_new_level_hide);
+	buttonNewLevelCancel.pressed.connect(emptyWarning.hide);
+	buttonNewLevelCancel.pressed.connect(invalidWarning.hide);
+	
 	buttonImportLevel.pressed.connect(overlay_import_level_show);
 	buttonImportLevelOpen.pressed.connect(import_level);
 	buttonImportLevelCancel.pressed.connect(import_cancel);
-	buttonImportLevelBrowse.pressed.connect(popup_file_dialog);
+	buttonImportLevelCancel.pressed.connect(badImportWarning.hide);
+	buttonImportLevelBrowse.pressed.connect(fileExplorer.popup_file_dialog);
 	
 	buttonQuit.pressed.connect(exit_program);
 
@@ -77,7 +87,11 @@ func popup_file_dialog() -> void:
 ## Called when import level button is pressed
 func import_level() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
-	if (!ImportExportManager.validate_import(importedLevelPath)): return;
+	if (!ImportExportManager.validate_import(importedLevelPath)): 
+		badImportWarning.show();
+		badImportBody.text = "Level Import Failed from directory \"" + importedLevelPath + "\"!";
+		return;
+	
 	# Extract the name of the folder from the file path
 	var importedLevelArray : Array = importedLevelPath.split("/");
 	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
@@ -101,9 +115,20 @@ func import_cancel() -> void:
 ## Opens the menu for setting a name and size for the level
 func create_new_level() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
+	invalidWarning.hide();
+	emptyWarning.hide();
+	
+	# If the given level name is empty, return early.
 	if (fieldNewLevelName.text.strip_edges().is_empty()):
-		PopUpManager.create_error_popup("Creation Failed!", "Level has no name!");
+		emptyWarning.show();
 		return;
+		
+	# If the given level name is invalid, return early.
+	if (!fieldNewLevelName.text.strip_edges().is_valid_filename() || fieldNewLevelName.text[-1] == "."  || fieldNewLevelName.text.length() > 255):
+		emptyWarning.hide();
+		invalidWarning.show();
+		return;
+		
 	overlayNewLevel.hide();
 	masterManager.level_setup( 
 		fieldNewLevelName.text, 
@@ -112,6 +137,11 @@ func create_new_level() -> void:
 			int(spinBoxNewLevelY.value) 
 			) 
 		);
+		
+	# Reset leftover data
+	fieldNewLevelName.text = "";
+	spinBoxNewLevelX.value = 20;
+	spinBoxNewLevelY.value = 20;
 
 ## Exits the program
 func exit_program() -> void:

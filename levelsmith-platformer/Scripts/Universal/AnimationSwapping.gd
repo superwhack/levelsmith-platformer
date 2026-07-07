@@ -48,6 +48,7 @@ func _ready() -> void:
 	frameLeftButton.pressed.connect(frame_change.bind(false));
 	playButton.pressed.connect(play_preview_animation);
 	stopButton.pressed.connect(stop_preview_animation);
+	FPSSpinbox.value_changed.connect(fps_updated);
 
 ## Play the animation
 func _process(delta: float) -> void:

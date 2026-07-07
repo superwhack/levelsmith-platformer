@@ -152,7 +152,10 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			if (tileMap.get_cell_alternative_tile(Vector2(currentCol, currentRow)) > 0):
 				tileRow.append(str(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)),"|",tileMap.get_cell_alternative_tile(Vector2(currentCol, currentRow))));
 			else:
-				tileRow.append(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)));
+				if tileMap.get_cell_source_id(Vector2(currentCol, currentRow)) == -1:
+					tileRow.append("");
+				else:
+					tileRow.append(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)));
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 	
@@ -207,6 +210,8 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 					playerExists = true;
 				tileMap.set_cell(Vector2(col, row), int(entityTileData[0]), Vector2i.ZERO, int(entityTileData[1]));
 			else:
+				if tileData == "":
+					tileData = "-1";
 				tileMap.set_cell(Vector2(col, row), int(tileData), Vector2i.ZERO);
 			col += 1;
 		row += 1;

@@ -42,7 +42,7 @@
 [ext_resource type="StyleBox" uid="uid://c1uhsadputufm" path="res://Assets/UserInterface/PanelStyleBox.tres" id="22_nvaf8"]
 [ext_resource type="StyleBox" uid="uid://bi2avgb580ef6" path="res://Assets/UserInterface/DropDownStyleBox.tres" id="23_2d6mn"]
 [ext_resource type="Texture2D" uid="uid://b0uys4jwjmw03" path="res://Assets/Sprites/UI/ToggleHiddenMedium.PNG" id="23_k74kl"]
-[ext_resource type="Texture2D" uid="uid://bmkretbtyqi01" path="res://Assets/Sprites/UI/MediumGrab.png" id="24_4tmrm"]
+[ext_resource type="Texture2D" uid="uid://bx10a4ef74i0s" path="res://Assets/Sprites/UI/MediumGrab.png" id="24_4tmrm"]
 [ext_resource type="Texture2D" uid="uid://bb2ke4gfjgp5r" path="res://Assets/Sprites/UI/MediumGrabInvert.png" id="25_5devf"]
 [ext_resource type="Texture2D" uid="uid://b1bjqoi4qrp8k" path="res://Assets/Sprites/UI/BlankArrowDownSmall.png" id="26_8ylos"]
 [ext_resource type="Texture2D" uid="uid://b8wetv4xd30wg" path="res://Assets/Sprites/UI/BlankArrowUpSmall.png" id="27_n23f4"]

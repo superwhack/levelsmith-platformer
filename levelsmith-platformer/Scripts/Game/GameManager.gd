@@ -8,6 +8,7 @@ extends Node2D
 @export var playerHealthUI : HBoxContainer;
 @export var timerLabel : RichTextLabel;
 @export var winCoinLabel : RichTextLabel;
+@export var coinMargin : MarginContainer;
 @export var winTimeLabel : RichTextLabel;
 
 # Button references for signals
@@ -62,6 +63,7 @@ func pause() -> void:
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
+	pauseButton.show();
 	get_tree().paused = false;
 	winScreen.hide();
 	goalReached = false;
@@ -70,6 +72,7 @@ func reset() -> void:
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
+	pauseButton.show();
 	bottomScreenGroup.show();
 	goalReached = false;
 	# Reset coin values for the new level
@@ -77,8 +80,13 @@ func start() -> void:
 	totalCoins = 0;
 	# Count all coins that belong to the playable level and ignore coins that exist in the editor scene
 	totalCoins = get_tree().get_node_count_in_group("Coin");
-	coinCounterLabel.show();
-	update_coin_counter(coinCounterLabel);
+	if totalCoins > 0:
+		coinCounterLabel.show();
+		coinMargin.show();
+		update_coin_counter(coinCounterLabel);
+	else:
+		coinCounterLabel.hide();
+		coinMargin.hide();
 	
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
 	for frame in range(1, 5):
@@ -156,7 +164,8 @@ func _on_coin_collected() -> void:
 ## Updates the coin counter shown on screen
 func update_coin_counter(label: RichTextLabel) -> void:
 	label.clear()
-	label.append_text("Coins: %d / %d" % [coinCount, totalCoins])
+	if totalCoins > 0:
+		label.append_text("Coins: %d / %d" % [coinCount, totalCoins])
 
 ## Prints the final completion time and stops the level timer
 func print_level_completion_time() -> void:
@@ -177,10 +186,10 @@ func update_timer(label: RichTextLabel) -> void:
 ## Pauses gameplay, displays the win screen, and updates the completion statistics
 func level_complete() -> void:
 	goalReached = true;
+	pauseButton.hide();
 	get_tree().paused = true;
 	update_coin_counter(winCoinLabel);
 	update_timer(winTimeLabel);
-	coinCounterLabel.hide();
 	timerLabel.hide();
 	winScreen.show();
 	bottomScreenGroup.hide();

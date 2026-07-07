@@ -1,14 +1,14 @@
 [gd_resource type="StyleBoxFlat" format=3 uid="uid://bjfoydscacqbd"]
 
 [resource]
-bg_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 expand_margin_left = 8.0
-expand_margin_top = 36.0
+expand_margin_top = 42.0
 expand_margin_right = 8.0
 expand_margin_bottom = 8.0
-shadow_color = Color(0, 0, 0, 0.27058825)
-shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.49803922)
+shadow_size = 5

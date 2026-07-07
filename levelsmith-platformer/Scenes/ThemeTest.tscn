@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://2ds4uof5vhcm"]
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_byp4v"]
-[ext_resource type="Texture2D" uid="uid://d21j834524jcc" path="res://icon.svg" id="2_75eu0"]
-[ext_resource type="Texture2D" uid="uid://b1vr5pon2fe53" path="res://Assets/Sprites/UI/BlankDoubleChevronDownMedium.png" id="3_blppq"]
-[ext_resource type="Texture2D" uid="uid://dw0b5jf3s277l" path="res://Assets/Sprites/UI/BoxChecked.png" id="4_n6we1"]
-[ext_resource type="Texture2D" uid="uid://cdt6pnj0wa52b" path="res://Assets/Sprites/UI/Play.png" id="5_blppq"]
-[ext_resource type="Texture2D" uid="uid://b4uvmd0mtjmou" path="res://Assets/Sprites/UI/TestIconMedium.png" id="5_hd2lr"]
-[ext_resource type="Texture2D" uid="uid://dmi32a0c74puf" path="res://Assets/Sprites/UI/TestIconMediumCropped.png" id="6_vrvwj"]
+[ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="2_75eu0"]
+[ext_resource type="Texture2D" uid="uid://buk5nj35b0fuf" path="res://Assets/Sprites/UI/BlankDoubleChevronDownMedium.png" id="3_blppq"]
+[ext_resource type="Texture2D" uid="uid://b88f0rfl1f7l6" path="res://Assets/Sprites/UI/BoxChecked.png" id="4_n6we1"]
+[ext_resource type="Texture2D" uid="uid://b2doutbpyoq2i" path="res://Assets/Sprites/UI/Play.png" id="5_blppq"]
+[ext_resource type="Texture2D" uid="uid://bqbjp1y1sm06b" path="res://Assets/Sprites/UI/TestIconMedium.png" id="5_hd2lr"]
+[ext_resource type="Texture2D" uid="uid://okpcgspicwro" path="res://Assets/Sprites/UI/TestIconMediumCropped.png" id="6_vrvwj"]
 
 [node name="Control" type="Control" unique_id=1993821239]
 layout_mode = 3
@@ -63,17 +63,17 @@ icon = ExtResource("3_blppq")
 layout_mode = 0
 offset_left = 490.0
 offset_top = 111.0
-offset_right = 570.0
-offset_bottom = 191.0
+offset_right = 550.0
+offset_bottom = 171.0
 theme_type_variation = &"TileButton"
 icon = ExtResource("2_75eu0")
 
 [node name="Tool Button3" type="Button" parent="." unique_id=797699856]
 layout_mode = 0
-offset_left = 592.0
-offset_top = 113.0
-offset_right = 672.0
-offset_bottom = 193.0
+offset_left = 555.0
+offset_top = 111.0
+offset_right = 615.0
+offset_bottom = 171.0
 theme_type_variation = &"ToolButton"
 icon = ExtResource("5_hd2lr")
 

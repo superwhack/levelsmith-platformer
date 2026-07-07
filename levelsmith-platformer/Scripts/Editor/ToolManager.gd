@@ -14,6 +14,7 @@ extends Node2D
 
 # Variables that tools will utilize
 var currentObjectRotation : int;
+var isBackground : bool = false;
 var currentTool :  Global.Tool = Global.Tool.BRUSH;
 var boxBrushState : Global.BoxBrushState = Global.BoxBrushState.INACTIVE
 

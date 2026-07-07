@@ -38,7 +38,7 @@ func update_preview_object(mousePosition: Vector2, prevPosition: Vector2, previe
 	if (previewObject == Global.ERASING_TILE):
 		set_cell(mousePosition, previewObject, Vector2i.ZERO);
 	elif (previewObject >= Global.EntityType.PROP1 && previewObject <= Global.EntityType.PROP6):
-		set_cell(mousePosition, previewObject, Vector2i.ZERO, toolManager.currentObjectRotation);
+		set_cell(mousePosition, previewObject, Vector2i.ZERO, toolManager.currentObjectRotation + 4 if toolManager.isBackground else 0);
 	elif (previewObject == Global.TileType.SLOPE):
 		# Add 4 to the alternative ID to use red unplaceable slopes.
 		var alternativeId : int = toolManager.currentObjectRotation + (4 if isRed else 0);

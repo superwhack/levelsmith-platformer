@@ -264,7 +264,7 @@ text = "Zoom In/Out [+ - / Scroll]"
 
 [node name="BottomRightAnchor" type="MarginContainer" parent="ScreenUI" unique_id=873233202]
 anchors_preset = -1
-anchor_left = 0.66006255
+anchor_left = 0.8454792
 anchor_top = 0.81900007
 anchor_right = 1.0
 anchor_bottom = 1.0

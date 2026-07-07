@@ -18,16 +18,29 @@ enum SelectorState {
 var selectorState : SelectorState = SelectorState.DEFAULT;
 
 # instantiated sprites
-var invalidSprite : Sprite2D;
 var selectorFrame : Sprite2D;
 
-# Image variables
-var brushIcon : Texture2D = preload("res://Assets/Sprites/UI/Brush.png");
-var boxBrushIcon : Texture2D = preload("res://Assets/Sprites/UI/BoxBrush.png");
-var cursorIcon : Texture2D = preload("res://Assets/Sprites/UI/Cursor.png");
+# Default cursor
+var uiCursor : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorDefault.PNG");
+
+# Brush icons
+var brushIcon : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorBrush.PNG");
+var brushInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorBrushBlocked.PNG");
+
+# Box Brush icons
+var boxBrushIcon : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorBox.PNG");
+var boxBrushInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorBoxBlocked.PNG");
+
+# Cursor Tool icons
+var cursorIcon : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorPoint.PNG");
+var cursorInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorPointBlocked.PNG");
+var cursorMove : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorGrab.PNG");
+var cursorMoveInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorGrabBlocked.PNG");
+var cursorEdit : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorHand.PNG");
+var cursorEditInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorHandBlocked.PNG");
+
+# Selector Frame
 var selectorFrameSprite : Texture2D = preload("res://Assets/Sprites/UI/SelectorFrame.png");
-var invalidIcon : Texture2D = preload("res://Assets/Sprites/UI/Invalid.png"); 
-var uiCursor : Texture2D = cursorIcon;
 
 # mouse position reference  (always updated)
 var currentMousePosition : Vector2;
@@ -37,30 +50,23 @@ var isEditing : bool;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Instantiate and hide the invalid sprite
-	invalidSprite = Sprite2D.new();
-	invalidSprite.texture = invalidIcon;
-	add_child(invalidSprite);
-	invalidSprite.hide();
-	
 	# Instantiates the selector frame
 	selectorFrame = Sprite2D.new();
 	selectorFrame.texture = selectorFrameSprite;
 	add_child(selectorFrame);
 	
 	# Set the custom mouse cursor
-	Input.set_custom_mouse_cursor(cursorIcon);
+	Input.set_custom_mouse_cursor(uiCursor);
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	# If global state is not in edit, set to cursor icon and bail out
 	if (masterManager.state != Global.State.EDIT):
-		Input.set_custom_mouse_cursor(cursorIcon);
+		Input.set_custom_mouse_cursor(uiCursor);
 		return;
 	# Set the current mouse position and place the selector frame and invalid sprite to the correct locations
 	currentMousePosition = editorManager.currentMousePosition;
 	selectorFrame.global_position = currentMousePosition * Global.TILE_SIZE + Vector2(Global.TILE_SIZE / 2.0, Global.TILE_SIZE / 2.0);
-	invalidSprite.global_position = get_global_mouse_position();
 	
 	isEditing = toolManager.currentTool == Global.Tool.CURSOR && editorManager.tileMap.get_cell_source_id(editorManager.currentMousePosition) >= editorManager.tileCount;
 	
@@ -85,12 +91,16 @@ func _process(_delta: float) -> void:
 	else:
 		match (toolManager.currentTool):
 			Global.Tool.BRUSH:
-				Input.set_custom_mouse_cursor(brushIcon);
+				Input.set_custom_mouse_cursor(brushIcon if editorManager.isPlaceable else brushInvalid);
 			Global.Tool.BOX_BRUSH:
-				Input.set_custom_mouse_cursor(boxBrushIcon);
+				Input.set_custom_mouse_cursor(boxBrushIcon if editorManager.isPlaceable else boxBrushInvalid);
 			Global.Tool.CURSOR:
-				Input.set_custom_mouse_cursor(cursorIcon);
-	invalidSprite.visible = !editorManager.isPlaceable;
+				if (toolManager.isMoving):
+					Input.set_custom_mouse_cursor(cursorMove if editorManager.isPlaceable else cursorMoveInvalid);
+				elif (isEditing):
+					Input.set_custom_mouse_cursor(cursorEdit if editorManager.isPlaceable else cursorEditInvalid);
+				else:
+					Input.set_custom_mouse_cursor(cursorIcon if editorManager.isPlaceable else cursorInvalid);
 	pass
 
 ## Updates the state of the selector frame in accordance with other actions.

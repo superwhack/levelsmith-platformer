@@ -147,10 +147,6 @@ func play_effect(effectName: String) -> void:
 		# Under the assumption all backups will be .wav for effects
 		queue.append(BACKUP_AUDIO_LIBRARY_PATH + effectName + ".wav")
 
-## Cancel the current walking effect
-func cancel_effect_walking() -> void:
-	walkingPlayer.stop();
-
 ## Add and play a new walking effect, only one at a time
 ## effectName: name of the walking effect
 func play_effect_walking(walkingEffect: Global.WalkingEffect) -> void:

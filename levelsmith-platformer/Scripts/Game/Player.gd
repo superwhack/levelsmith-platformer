@@ -116,6 +116,7 @@ func _physics_process(delta: float) -> void:
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair, and reset friction.
 	if (not is_on_floor()):
+		AudioManager.play_effect_walking(Global.WalkingEffect.NONE);
 		if (coyoteTimeLeft > 0):
 			coyoteTimeLeft -= delta;
 		velocity += get_gravity() * delta * fallSpeed;
@@ -176,12 +177,6 @@ func walk() -> void:
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;
-		if is_on_floor() && currentFriction != 1.0:
-			AudioManager.play_effect_walking(Global.WalkingEffect.ICE);
-		elif is_on_floor() && currentSlowdown != 1.0:
-			AudioManager.play_effect_walking(Global.WalkingEffect.SLIME);
-		elif is_on_floor():
-			AudioManager.play_effect_walking(Global.WalkingEffect.GENERAL);
 	# Acceleration
 	else:
 		AudioManager.play_effect_walking(Global.WalkingEffect.NONE);
@@ -311,6 +306,7 @@ func detect_tiles() -> void:
 		if collider is MovingPlatform && downwardsRaycasts.has(raycast):
 			currentFriction = 1.0;
 			currentSlowdown = 1.0;
+			AudioManager.play_effect_walking(Global.WalkingEffect.GENERAL);
 		if (collider is not TileMapLayer): continue;
 		
 		var tileLayer : TileMapLayer = collider;
@@ -422,6 +418,8 @@ func detect_tiles() -> void:
 			take_damage(maxHealth);
 		# Only downward rays should drive floor tile effects (except hazard)
 		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):
+			if tileName != "ice" && tileName != "slow":
+				AudioManager.play_effect_walking(Global.WalkingEffect.GENERAL);
 			if (tileData.get_custom_data("name") != "bounce" && is_on_floor()):
 				if (tileData.get_custom_data("name") != "ice"):
 					currentFriction = 1.0;
@@ -433,6 +431,7 @@ func detect_tiles() -> void:
 					if Input.is_action_just_pressed("down"):
 						position += Vector2(0, 1);
 				"ice":
+					AudioManager.play_effect_walking(Global.WalkingEffect.ICE);
 					currentFriction = .5;
 
 ## When the player walks/falls out of bounds, force kill them

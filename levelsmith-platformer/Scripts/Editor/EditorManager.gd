@@ -65,7 +65,7 @@ func _process(_delta: float) -> void:
 	# Check if the tile is placeable in this spot
 	isPlaceable = !check_out_of_bounds(currentMousePosition);
 	
-	if (toolManager.currentTool == Global.Tool.BRUSH && tileMap.get_cell_source_id(currentMousePosition) >= tileCount): isPlaceable = false; 
+	if (toolManager.currentTool != Global.Tool.CURSOR && tileMap.get_cell_source_id(currentMousePosition) >= tileCount): isPlaceable = false; 
 	
 	if (toolManager.currentTool == Global.Tool.CURSOR && tileMap.get_cell_source_id(currentMousePosition) < tileCount && tileMap.get_cell_source_id(currentMousePosition) >= 0): isPlaceable = false;
 	 
@@ -129,7 +129,6 @@ func open_asset_manager() -> void:
 	AudioManager.play_UI_effect("UI_Selection")
 	AudioManager.pause_music(true);
 	previewTileMap.hide();
-	customCursorManager.invalidSprite.hide();
 	assetManager.show();
 
 ## Opens the settings menu

@@ -128,7 +128,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if (previousClickPos != Vector2(0,0) && !isMoving):
 				justMoved = false;
 				# If the cursor moves a certain distance away from the last click, start moving
-				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > POSITION_DIFFERENCE;
+				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > POSITION_DIFFERENCE && previousCell != -1;
 			if (event.is_action_released("left-click") && prevBrushObject == -1):
 				if (entityManager.duplicatingResource != null && Input.is_action_pressed("copy")):
 					entityManager.duplicatingResource = null;

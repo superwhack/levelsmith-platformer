@@ -51,7 +51,7 @@ var currentSelectedItem : AssetItem;
 func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_image_selector);
-	resetButton.pressed.connect(imageSwapping.reset_image);
+	resetButton.pressed.connect(reset);
 	resetAllButton.pressed.connect(reset_all);
 	refreshAllButton.pressed.connect(refresh_all);
 	fileSelect.file_selected.connect(imageSwapping.replace_image);
@@ -181,6 +181,12 @@ func on_asset_tab_changed(tabIndex: int) -> void:
 
 #func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 #	pass;
+
+func reset() -> void:
+	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
+		imageSwapping.reset_image();
+	elif (currentSelectedItem.type == AssetItem.AssetType.ANIMATION):
+		animationSwapping.reset_animation();
 
 ## Resets everything within the assets manager
 func reset_all() -> void:

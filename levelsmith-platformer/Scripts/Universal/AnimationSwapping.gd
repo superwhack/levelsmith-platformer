@@ -104,6 +104,15 @@ func replace_animation(newAnimationPath : String) -> void:
 	else:
 		PopUpManager.create_error_popup("No Defaults", "No default images yet, update this when there are default animations");
 
+func reset_animation() -> void:
+	assetManager.clear_image(animationPreviewNameToReplace);
+	animationFrameIndex = 0;
+	currentLoadedAnimation.clear()
+	for frame in AnimationManager.get_default_animation_by_name(animationPreviewNameToReplace):
+		currentLoadedAnimation.append(ImageTexture.create_from_image(frame));
+	AnimationManager.update_template_sprites();
+	update_animation_preview();
+
 ## Switch between animations within the entity
 ## next: Whether the user is switching to the next or previous animation
 func anim_change(next : bool):

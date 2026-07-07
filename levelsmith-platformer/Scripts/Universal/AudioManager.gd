@@ -9,7 +9,7 @@ var SFXVolume : float = 0.7;
 const LOWEST_DB : int = 70;
 
 # Max number of audio players to be running at once (excluding one for music and one for walking)
-const AUDIO_PLAYER_COUNT : int = 18;
+const AUDIO_PLAYER_COUNT : int = 12;
 
 # All folders for audio
 ## BUG: UNTUL AUDIO LIBRARY PATH IS READY, IT IS TO BE ASSIGNED TO THE DEFAULT

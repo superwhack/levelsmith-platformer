@@ -11,7 +11,7 @@ const defaultPath : String = "res://Assets/Defaults/";
 signal levelImported;
 
 ## NOTE: TEMPORARY VARIABLE FOR STORING LEVEL'S NAME
-var levelPathName : String;
+var levelName : String;
 
 # Stores size of an imported level
 var importedLevelSize : Vector2;
@@ -23,7 +23,7 @@ var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tr
 ## levelName: Name of the new level, indicates where it'll go in the folder
 func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	# When making an enemy we need to set the path name and clear all enemies
-	levelPathName = levelName;
+	levelName = levelName;
 	clear_enemies_folder();
 	
 	# Create a directory under User and set the level and asset path.
@@ -179,6 +179,8 @@ func validate_import(sourceName: String) -> bool:
 		errors.append(levelPath + "Tiles.CSV does not exist!");
 		
 	if (errors.size() == 0):
+		sourceName = sourceName.left(-1);
+		levelName = sourceName.substr(sourceName.rfind("/") + 1);
 		return true;
 		
 	# If import fails, send a pop-up to the user.

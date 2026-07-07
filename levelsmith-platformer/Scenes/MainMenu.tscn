@@ -229,7 +229,6 @@ theme_override_constants/v_separation = 12
 columns = 3
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=120086451]
-visible = false
 custom_minimum_size = Vector2(630, 425)
 layout_mode = 1
 anchors_preset = 15

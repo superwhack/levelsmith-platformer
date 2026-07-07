@@ -50,7 +50,7 @@ func _ready() -> void:
 ## Almost the same as _ready(), but called not just on ready.
 func initialize_camera() -> void:
 	refresh_bounds();
-	zoom = Vector2.ONE * maxZoomOut;
+	zoom = Vector2.ONE * get_min_zoom_to_fit_roam();
 	global_position = levelBounds.get_center();
 	clamp_camera_to_level();
 	#print("center:", levelBounds.get_center());

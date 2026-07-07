@@ -50,8 +50,8 @@ var currentSelectedItem : AssetItem;
 func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_image_selector);
-	resetButton.pressed.connect(imageSwapping.reset_image);
-	resetAllButton.pressed.connect(reset_all);
+	resetButton.pressed.connect(reset_image_popup);
+	resetAllButton.pressed.connect(reset_all_popup);
 	fileSelect.file_selected.connect(imageSwapping.replace_image);
 	fileSelect.dir_selected.connect(animationSwapping.replace_animation);
 	
@@ -68,7 +68,11 @@ func _ready() -> void:
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
 	item_selected(firstImageSelected);
 	on_asset_tab_changed(assetTabs.current_tab);
-	ImportExportManager.levelImported.connect(item_selected);
+	# If there is a currently selected item, connect based on the current item
+	ImportExportManager.levelImported.connect(func():
+		if currentSelectedItem:
+			item_selected(currentSelectedItem);
+		);
 
 # WARNING Only refreshes all files once, might be worth it later to do individually
 ## Generate buttons for each asset
@@ -137,6 +141,7 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 ## folderPath: Path to the folder
 ## returns: Image loaded if it is foundf
 func find_image_in_folder(folderPath: String) -> Image:
+	print("Folder Path: ", folderPath);
 	# Opens the folder at the given folderName path
 	var dir : DirAccess = DirAccess.open(folderPath);
 	# If a folder was sucessfully opened
@@ -145,6 +150,7 @@ func find_image_in_folder(folderPath: String) -> Image:
 		dir.list_dir_begin();
 		# Get the image name in the folder
 		var imageName : String = dir.get_next();
+		print("image name: ", imageName)
 		# If there is no image in the folder, return null
 		if (imageName == ""):
 			return null;
@@ -193,6 +199,15 @@ func on_asset_tab_changed(tabIndex: int) -> void:
 
 #func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 #	pass;
+
+## Creates the refresh asset popup.
+func reset_image_popup() -> void:
+	PopUpManager.create_reset_image_popup(Callable(imageSwapping, "reset_image"), currentSelectedItem.displayName);
+
+
+## Creates the reset all assets popup.
+func reset_all_popup() -> void:
+	PopUpManager.create_reset_asset_popup(Callable(self, "reset_all"));
 
 ## Resets everything within the assets manager
 func reset_all() -> void:

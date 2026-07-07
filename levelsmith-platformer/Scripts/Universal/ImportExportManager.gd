@@ -30,7 +30,6 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	DirAccess.make_dir_absolute("user://Levels/");
 	levelPath = "user://Levels/" + levelName + "/";
 	levelAssetPath = levelPath + "Assets/";
-	
 	# NOTE: In the future we might want to assign this elsewhere 
 	AudioManager.audioLibraryPath = levelPath + "Assets/Audio/";
 	
@@ -76,7 +75,7 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
 func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) -> void:
-	#PopUpManager.
+	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
 		DirAccess.make_dir_absolute(levelPath);
@@ -157,12 +156,18 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	CSVFile.close();
 	
 	clone_data("user://Assets/", levelAssetPath);
+	
+	await get_tree().create_timer(0.2).timeout;
+	PopUpManager.clear_all_popups();
+	PopUpManager.create_save_complete_popup();
+	await get_tree().create_timer(0.65).timeout;
+	PopUpManager.clear_all_popups();
 
 ## Validates a level import at a given directory
 ## sourceName: Source level name
 ## returns: false if it fails, true otherwise
 func validate_import(sourceName: String) -> bool:
-	levelPath = sourceName + "/";
+	levelPath = sourceName;
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
 	
@@ -179,7 +184,7 @@ func validate_import(sourceName: String) -> bool:
 		return true;
 		
 	# If import fails, send a pop-up to the user.
-	PopUpManager.create_multi_error_popup("Level Import Failed from directory " + levelPath + "!", errors);
+	#PopUpManager.create_multi_error_popup("Level Import Failed from directory " + levelPath + "!", errors);
 	return false;
 
 ## Imports a level at the specified directory.
@@ -268,7 +273,7 @@ func clone_data(from: String, to: String, directory: String = ""):
 		var newPath : String = directory + currentDirectory + "/";
 		DirAccess.make_dir_absolute(to + newPath);
 		clone_data(from, to, directory + currentDirectory + "/");
-	
+		
 	# Copy all file data.
 	# Erase all files in the destination folder if the source has nothing.
 	var files : PackedStringArray = DirAccess.get_files_at(from + directory);

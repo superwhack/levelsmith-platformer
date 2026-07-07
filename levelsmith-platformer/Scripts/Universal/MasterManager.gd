@@ -123,7 +123,9 @@ func import_level_and_edit() -> void:
 func load_level(levelPath: String) -> void:
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
-		import_level_and_edit();
+		# Await so that the camera gets properly placed
+		await import_level_and_edit();
+		cameraManager.initialize_camera();
 
 ## Swap to main menu state
 func main_menu() -> void:

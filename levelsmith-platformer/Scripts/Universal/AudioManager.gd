@@ -10,7 +10,7 @@ const LOWEST_DB : int = 70;
 
 # Max number of audio players to be running at once (excluding one for music and one for walking)
 const AUDIO_PLAYER_COUNT : int = 12;
-
+const AUDIO_QUEUE_LIMIT : int = AUDIO_PLAYER_COUNT;
 # All folders for audio
 ## BUG: UNTUL AUDIO LIBRARY PATH IS READY, IT IS TO BE ASSIGNED TO THE DEFAULT
 var audioLibraryPath : String = "res://Assets/Defaults/Assets/Audio/";
@@ -101,6 +101,8 @@ func play_UI_music(musicName: String) -> void:
 ## Add specified SFX to the queue from builder sounds
 ## effectName: name of the effect to play
 func play_UI_effect(effectName: String) -> void:
+	if queue.size() >= AUDIO_QUEUE_LIMIT:
+		return;
 	var fullPath : String = UI_AUDIO_LIBRARY_PATH + effectName;
 	if (FileAccess.file_exists(fullPath + ".mp3")):
 		queue.append(fullPath + ".mp3");
@@ -125,6 +127,8 @@ func play_music(musicName: String) -> void:
 ## Add specified SFX to the queue
 ## effectName: name of the sound effect
 func play_effect(effectName: String) -> void:
+	if queue.size() >= AUDIO_QUEUE_LIMIT:
+		return;
 	var fullPath : String = audioLibraryPath + effectName;
 	# If the path points to a folder, then one random file from the folder needs to be selected instead.
 	if DirAccess.dir_exists_absolute(fullPath + "/"):
@@ -192,6 +196,7 @@ func reset_audio() -> void:
 	for i in inusePlayers.size():
 		inusePlayers[i].stop();
 		availablePlayers.append(inusePlayers[i]);
+	queue.clear();
 	inusePlayers.clear();
 	musicPlayer.stop();
 

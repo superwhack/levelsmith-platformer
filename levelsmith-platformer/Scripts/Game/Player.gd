@@ -153,7 +153,7 @@ func animate() -> void:
 		animatedSprites.flip_h = false;
 	elif (invulnerabilityCurrent > 0):
 		animatedSprites.animation = "hurt";
-	elif (isJumping):
+	elif (isJumping && !is_on_floor()):
 		animatedSprites.animation = "jump";
 	elif (!is_on_floor()):
 		animatedSprites.animation = "fall";

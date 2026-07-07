@@ -63,6 +63,7 @@ func pause() -> void:
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
 	pauseButton.show();
 	get_tree().paused = false;
 	winScreen.hide();
@@ -100,9 +101,6 @@ func start() -> void:
 	
 	if playerHealthUI:
 		playerHealthUI.bind_player(player);
-	
-	if !player.healthChanged.is_connected(change_health):
-		player.healthChanged.connect(change_health);
 
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
@@ -132,11 +130,6 @@ func start() -> void:
 	timerRunning = true;
 	timerLabel.show();
 	update_timer(timerLabel);
-
-## Record a change in health for the player
-## newHealth: The new health of the player
-func change_health(newHealth : int):
-	print("Health: ", newHealth);
 
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:

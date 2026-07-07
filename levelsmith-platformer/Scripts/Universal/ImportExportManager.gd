@@ -11,7 +11,7 @@ const defaultPath : String = "res://Assets/Defaults/";
 signal levelImported;
 
 ## NOTE: TEMPORARY VARIABLE FOR STORING LEVEL'S NAME
-var levelPathName : String;
+var levelName : String;
 
 # Stores size of an imported level
 var importedLevelSize : Vector2;
@@ -23,14 +23,13 @@ var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tr
 ## levelName: Name of the new level, indicates where it'll go in the folder
 func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	# When making an enemy we need to set the path name and clear all enemies
-	levelPathName = levelName;
+	levelName = levelName;
 	clear_enemies_folder();
 	
 	# Create a directory under User and set the level and asset path.
 	DirAccess.make_dir_absolute("user://Levels/");
 	levelPath = "user://Levels/" + levelName + "/";
 	levelAssetPath = levelPath + "Assets/";
-	
 	# NOTE: In the future we might want to assign this elsewhere 
 	AudioManager.audioLibraryPath = levelPath + "Assets/Audio/";
 	
@@ -76,7 +75,7 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
 func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) -> void:
-	#PopUpManager.
+	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
 		DirAccess.make_dir_absolute(levelPath);
@@ -152,11 +151,20 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			if (tileMap.get_cell_alternative_tile(Vector2(currentCol, currentRow)) > 0):
 				tileRow.append(str(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)),"|",tileMap.get_cell_alternative_tile(Vector2(currentCol, currentRow))));
 			else:
-				tileRow.append(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)));
+				if tileMap.get_cell_source_id(Vector2(currentCol, currentRow)) == -1:
+					tileRow.append("");
+				else:
+					tileRow.append(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)));
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 	
 	clone_data("user://Assets/", levelAssetPath);
+	
+	await get_tree().create_timer(0.2).timeout;
+	PopUpManager.clear_all_popups();
+	PopUpManager.create_save_complete_popup();
+	await get_tree().create_timer(0.65).timeout;
+	PopUpManager.clear_all_popups();
 
 ## Saves the level screenshot to an image file
 ## screenshotImage: The image to save.
@@ -167,7 +175,7 @@ func save_level_screenshot(screenshotImage: Image) -> void:
 ## sourceName: Source level name
 ## returns: false if it fails, true otherwise
 func validate_import(sourceName: String) -> bool:
-	levelPath = sourceName + "/";
+	levelPath = sourceName;
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
 	
@@ -181,10 +189,12 @@ func validate_import(sourceName: String) -> bool:
 		errors.append(levelPath + "Tiles.CSV does not exist!");
 		
 	if (errors.size() == 0):
+		sourceName = sourceName.left(-1);
+		levelName = sourceName.substr(sourceName.rfind("/") + 1);
 		return true;
 		
 	# If import fails, send a pop-up to the user.
-	PopUpManager.create_multi_error_popup("Level Import Failed from directory " + levelPath + "!", errors);
+	#PopUpManager.create_multi_error_popup("Level Import Failed from directory " + levelPath + "!", errors);
 	return false;
 
 ## Imports a level at the specified directory.
@@ -212,6 +222,8 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 					playerExists = true;
 				tileMap.set_cell(Vector2(col, row), int(entityTileData[0]), Vector2i.ZERO, int(entityTileData[1]));
 			else:
+				if tileData == "":
+					tileData = "-1";
 				tileMap.set_cell(Vector2(col, row), int(tileData), Vector2i.ZERO);
 			col += 1;
 		row += 1;
@@ -273,7 +285,7 @@ func clone_data(from: String, to: String, directory: String = ""):
 		var newPath : String = directory + currentDirectory + "/";
 		DirAccess.make_dir_absolute(to + newPath);
 		clone_data(from, to, directory + currentDirectory + "/");
-	
+		
 	# Copy all file data.
 	# Erase all files in the destination folder if the source has nothing.
 	var files : PackedStringArray = DirAccess.get_files_at(from + directory);

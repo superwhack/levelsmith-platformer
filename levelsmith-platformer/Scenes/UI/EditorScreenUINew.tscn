@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://dq165egjwmhd7"]
+
+[ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="1_mu4pu"]
+[ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="2_xwalg"]
+
+[node name="EditorUI" type="CanvasLayer" unique_id=1605187864]
+
+[node name="MainColumn" type="VBoxContainer" parent="." unique_id=2016620649]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="PanelContainer" parent="MainColumn" unique_id=1171515270]
+layout_mode = 2
+
+[node name="TopBarRow" type="HBoxContainer" parent="MainColumn/TopBar" unique_id=518007996]
+layout_mode = 2
+
+[node name="LeftTopGroup" type="HBoxContainer" parent="MainColumn/TopBar/TopBarRow" unique_id=583184912]
+layout_mode = 2
+
+[node name="HomeButton" type="Button" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup" unique_id=1435724843]
+layout_mode = 2
+
+[node name="HomeTileSeparator" type="VSeparator" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup" unique_id=563223372]
+layout_mode = 2
+
+[node name="TileSwitch" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup" unique_id=959816093 instance=ExtResource("1_mu4pu")]
+layout_mode = 2
+
+[node name="TopSpacer" type="Control" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup" unique_id=385764750]
+layout_mode = 2
+
+[node name="TopRightGroup" type="HBoxContainer" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup" unique_id=473496041]
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=992230482]
+layout_mode = 2
+
+[node name="SavePlaySeparator" type="VSeparator" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=1511096429]
+layout_mode = 2
+
+[node name="PlayLevelButton" type="Button" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=22798758]
+layout_mode = 2
+
+[node name="ContentRow" type="HBoxContainer" parent="MainColumn" unique_id=733223127]
+layout_mode = 2
+
+[node name="LeftToolRail" type="PanelContainer" parent="MainColumn/ContentRow" unique_id=934075751]
+layout_mode = 2
+
+[node name="LeftToolColumn" type="VBoxContainer" parent="MainColumn/ContentRow/LeftToolRail" unique_id=1886355995]
+layout_mode = 2
+
+[node name="ToolSwitch" parent="MainColumn/ContentRow/LeftToolRail/LeftToolColumn" unique_id=537968072 instance=ExtResource("2_xwalg")]
+layout_mode = 2
+
+[node name="RailSpacer" type="Control" parent="MainColumn/ContentRow/LeftToolRail/LeftToolColumn" unique_id=160655899]
+layout_mode = 2
+
+[node name="SettingsGroupBottom" type="VBoxContainer" parent="MainColumn/ContentRow/LeftToolRail/LeftToolColumn" unique_id=1772874984]
+layout_mode = 2
+
+[node name="AssetManagerButton" type="Button" parent="MainColumn/ContentRow/LeftToolRail/LeftToolColumn/SettingsGroupBottom" unique_id=120196681]
+layout_mode = 2
+
+[node name="SettingsButton" type="Button" parent="MainColumn/ContentRow/LeftToolRail/LeftToolColumn/SettingsGroupBottom" unique_id=1020442051]
+layout_mode = 2
+
+[node name="EditorViewport" type="PanelContainer" parent="MainColumn/ContentRow" unique_id=1635390383]
+layout_mode = 2
+
+[node name="PropertiesPanel" type="PanelContainer" parent="MainColumn/ContentRow" unique_id=1686299894]
+layout_mode = 2
+
+[node name="PropertiesColumn" type="VBoxContainer" parent="MainColumn/ContentRow/PropertiesPanel" unique_id=1838813952]
+layout_mode = 2

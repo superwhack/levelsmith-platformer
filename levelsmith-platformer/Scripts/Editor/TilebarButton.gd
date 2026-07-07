@@ -15,6 +15,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# Change the texture to the texture currently set in the tile set
 	if (isTextureUpdating): icon = tileSet.get_source(thisItemID).texture;
+	
 
 func change_brush_object() -> void:
 	tilebar.toolManager.update_brush_object(thisItemID);

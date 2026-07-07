@@ -73,6 +73,7 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 		var allImageNames : PackedStringArray = dir.get_files();
 		if (allImageNames.size() > ANIMATION_LENGTH_LIMIT):
 			allImageNames.resize(ANIMATION_LENGTH_LIMIT);
+			PopUpManager.create_error_popup("Animation Length Limit", "Animations can only be a maximum of 60 frames. The first 60 frames will be loaded.");
 		var allImages : Array[Image] = [];
 		for imageName in allImageNames:
 			allImages.append(assetManager.find_image(imageName));

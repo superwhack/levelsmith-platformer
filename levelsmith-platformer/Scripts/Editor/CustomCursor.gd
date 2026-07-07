@@ -32,12 +32,12 @@ var boxBrushIcon : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorBo
 var boxBrushInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorBoxBlocked.PNG");
 
 # Cursor Tool icons
-var cursorIcon : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorHand.PNG");
-var cursorInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorHandBlocked.PNG");
+var cursorIcon : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorPoint.PNG");
+var cursorInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorPointBlocked.PNG");
 var cursorMove : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorGrab.PNG");
 var cursorMoveInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorGrabBlocked.PNG");
-var cursorEdit : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorPoint.PNG");
-var cursorEditInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorPointBlocked.PNG");
+var cursorEdit : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorHand.PNG");
+var cursorEditInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorHandBlocked.PNG");
 
 # Selector Frame
 var selectorFrameSprite : Texture2D = preload("res://Assets/Sprites/UI/SelectorFrame.png");

@@ -33,6 +33,8 @@ func _ready() -> void:
 	
 	#AnimationManager.replace_animation_by_name(animatedSprites, "FlyMove");
 	
+	animatedSprites.sprite_frames = AnimationManager.flyingEnemyTemplateSprite.sprite_frames;
+	
 	animatedSprites.animation = "FlyMove";
 	animatedSprites.play();
 

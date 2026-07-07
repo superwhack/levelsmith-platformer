@@ -90,6 +90,9 @@ modulate = Color(1, 1, 1, 1)
 position = Vector2(0, -1)
 collision_enabled = true
 
+[node name="AssetManager" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="0" unique_id=468653693 node_paths=PackedStringArray("masterManager")]
+masterManager = NodePath("../../..")
+
 [node name="CustomCursorManager" parent="EditorManager" index="6" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
 masterManager = NodePath("../..")
 

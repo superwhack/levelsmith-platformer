@@ -69,7 +69,7 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 	
-	clone_data("user://Assets/", levelAssetPath);
+	#clone_data("user://Assets/", levelAssetPath);
 
 ## Export the current level
 ## tileMap: The tileMap
@@ -156,7 +156,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 	
-	clone_data("user://Assets/", levelAssetPath);
+	#clone_data("user://Assets/", levelAssetPath);
 
 ## Validates a level import at a given directory
 ## sourceName: Source level name
@@ -215,7 +215,7 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 	
 	importedLevelSize = Vector2(col, row);
 	await get_tree().process_frame;
-	clone_data(levelAssetPath, "user://Assets/");
+	#clone_data(levelAssetPath, "user://Assets/");
 	
 	return playerExists;
 

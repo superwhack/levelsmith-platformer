@@ -1,6 +1,6 @@
 extends Node
 
-var filePath : String = "user://Assets";
+var filePath : String = "";
 
 ## Gets the amount of files within a folder
 ## folderName: Name of the folder to check

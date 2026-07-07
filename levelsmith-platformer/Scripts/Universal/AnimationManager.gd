@@ -29,8 +29,6 @@ var assetManager : AssetManager;
 
 func _ready() -> void:
 	create_template_sprites();
-	
-	Global.levelCreated.connect(update_template_sprites);
 
 func replace_animation(animatedSprite : AnimatedSprite2D, animationName : String, frames : Array[Image]) -> void:
 	var spriteFrames : SpriteFrames = animatedSprite.sprite_frames;

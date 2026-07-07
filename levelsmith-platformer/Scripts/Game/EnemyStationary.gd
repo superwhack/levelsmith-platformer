@@ -9,6 +9,8 @@ func _ready() -> void:
 	deathAnim = "StationaryDeath";
 	super._ready();
 	
+	animatedSprites.sprite_frames = AnimationManager.stationaryEnemyTemplateSprite.sprite_frames;
+	
 	animatedSprites.animation = "StationaryIdle";
 	animatedSprites.play();
 ## Processes the physics every frame

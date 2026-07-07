@@ -2,7 +2,7 @@ extends Panel
 class_name AssetManager
 
 # Path to the root folder of all assets
-var filePath : String = "user://Assets";
+var filePath : String = "";
 var defaultsFilePath : String = "res://Assets/Defaults/Assets/Sprites/";
 
 # References to audio
@@ -26,6 +26,7 @@ var audioToReplace : AudioStream;
 @export var loadFileButton : Button;
 @export var resetButton : Button;
 @export var resetAllButton: Button;
+@export var refreshAllButton : Button;
 
 # Reference to the editor manager
 @export var editorManager : Node2D;
@@ -44,12 +45,15 @@ var currentSelectedItem : AssetItem;
 
 @export var mainTileMap : TileMapLayer;
 
+@export var masterManager : Node2D;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_image_selector);
 	resetButton.pressed.connect(imageSwapping.reset_image);
 	resetAllButton.pressed.connect(reset_all);
+	refreshAllButton.pressed.connect(refresh_all);
 	fileSelect.file_selected.connect(imageSwapping.replace_image);
 	fileSelect.dir_selected.connect(animationSwapping.replace_animation);
 	
@@ -57,18 +61,9 @@ func _ready() -> void:
 	
 	AnimationManager.assetManager = self;
 	
-	# Checks if the user has an assets root folder, creates one if not
-	var dir : DirAccess = DirAccess.open(filePath);
-	if (!dir):
-		create_file_tree();
-	# Generate all buttons under their tabs
-	generate_buttons("Tiles", imagesTab);
-	generate_buttons("Props", imagesTab);
-	generate_buttons("Entities", imagesTab);
-	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
-	item_selected(firstImageSelected);
-	on_asset_tab_changed(assetTabs.current_tab);
-	ImportExportManager.levelImported.connect(item_selected);
+	ImportExportManager.levelImported.connect(setup);
+	Global.levelCreated.connect(setup);
+	
 
 # WARNING Only refreshes all files once, might be worth it later to do individually
 ## Generate buttons for each asset
@@ -302,3 +297,24 @@ func clear_image(nameToClear : String) -> DirAccess:
 	for file in existingFiles:
 		targetDirectory.remove(file); 
 	return targetDirectory;
+
+func refresh_all() -> void:
+	AnimationManager.update_template_sprites();
+	AnimationManager.refresh_animations();
+	imageSwapping.refresh_images();
+	animationSwapping.update_animation_preview();
+
+func setup() -> void:
+	filePath = masterManager.loadedLevelPath + "Assets";
+	FileSearch.filePath = filePath;
+	# Checks if the user has an assets root folder, creates one if not
+	var dir : DirAccess = DirAccess.open(filePath);
+	if (!dir || dir.get_directories().is_empty()):
+		create_file_tree();
+	# Generate all buttons under their tabs
+	generate_buttons("Tiles", imagesTab);
+	generate_buttons("Props", imagesTab);
+	generate_buttons("Entities", imagesTab);
+	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
+	on_asset_tab_changed(assetTabs.current_tab);
+	refresh_all();

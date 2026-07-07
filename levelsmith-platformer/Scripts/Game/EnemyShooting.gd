@@ -29,6 +29,8 @@ func _ready() -> void:
 	#AnimationManager.replace_animation_by_name(animatedSprites, "ShootIdle");
 	#AnimationManager.replace_animation_by_name(animatedSprites, "EnemyShoot");
 	
+	animatedSprites.sprite_frames = AnimationManager.shootingEnemyTemplateSprite.sprite_frames;
+	
 	animatedSprites.animation = "ShootIdle";
 	animatedSprites.play();
 	animatedSprites.animation_finished.connect(_on_animation_finished);

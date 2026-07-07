@@ -18,10 +18,6 @@ var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5", "P
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	mainTileMap = assetManager.mainTileMap;
-	Global.levelCreated.connect(refresh_images);
-	# Refresh all assets
-	refresh_images();
-	ImportExportManager.levelImported.connect(refresh_images);
 
 ## Refresh all images in game
 func refresh_images() -> void:

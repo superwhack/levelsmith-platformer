@@ -33,6 +33,8 @@ var loadedMap : TileMapLayer;
 @export var worldSize : Vector2i;
 @export var propertyMenu : Panel;
 
+var loadedLevelPath: String = "";
+
 func _ready() -> void:
 	#ImportExportManager.make_new_level("Level01");
 	AudioManager.masterVolume = 0;
@@ -82,6 +84,7 @@ func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	cameraManager.initialize_camera();
 	ImportExportManager.make_new_level( levelName, worldSize );
 	propertyMenu.reset_custom();
+	loadedLevelPath = "user://Levels/" + levelName + "/";
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	#print("NEW LEVEL SET UP");
@@ -123,6 +126,7 @@ func import_level_and_edit() -> void:
 func load_level(levelPath: String) -> void:
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
+		loadedLevelPath = levelPath;
 		import_level_and_edit();
 
 ## Swap to main menu state
@@ -140,6 +144,7 @@ func main_menu() -> void:
 	mainMenuControl.fill_level_list();
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
+	loadedLevelPath = "";
 
 ## Swap to edit state
 func edit() -> void:

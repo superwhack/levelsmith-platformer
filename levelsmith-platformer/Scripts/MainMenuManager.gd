@@ -113,6 +113,10 @@ func fill_level_list() -> void:
 	var levelsPath : String = "user://Levels"
 	var levelListDir : DirAccess = DirAccess.open(levelsPath);
 	
+	# Return early if there is no directory.
+	if (!levelListDir):
+		return;
+		
 	levelListDir.list_dir_begin();
 	
 	var folderName : String = levelListDir.get_next();

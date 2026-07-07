@@ -2,7 +2,22 @@
 
 [ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Game/Player.gd" id="1_kyqiw"]
 [ext_resource type="Resource" uid="uid://nd3ng1cl05pa" path="res://Resources/PlayerPresets/Default.tres" id="2_agccv"]
-[ext_resource type="Texture2D" uid="uid://cnosv0durnybp" path="res://Assets/Sprites/Entities/dude.png" id="2_gntrk"]
+[ext_resource type="Texture2D" uid="uid://bj5yi8uuy6osq" path="res://Assets/Sprites/Entities/Player/PlayerDeath/1.png" id="3_3m754"]
+[ext_resource type="Texture2D" uid="uid://cxub5rcls16a7" path="res://Assets/Sprites/Entities/Player/PlayerFall/1.png" id="4_46t5s"]
+[ext_resource type="Texture2D" uid="uid://c33oqgkuiuacx" path="res://Assets/Sprites/Entities/Player/PlayerHurt/1.png" id="5_0pa8p"]
+[ext_resource type="Texture2D" uid="uid://b2exxw3vlw6i0" path="res://Assets/Sprites/Entities/Player/PlayerHurt/2.png" id="6_0hljs"]
+[ext_resource type="Texture2D" uid="uid://csiehpikc3hd6" path="res://Assets/Sprites/Entities/Player/PlayerHurt/3.png" id="7_crkm8"]
+[ext_resource type="Texture2D" uid="uid://dcmdhpnamm8rr" path="res://Assets/Sprites/Entities/Player/PlayerIdle/1.png" id="8_j230w"]
+[ext_resource type="Texture2D" uid="uid://c3lkhqngir1ha" path="res://Assets/Sprites/Entities/Player/PlayerJump/1.png" id="9_qkam4"]
+[ext_resource type="Texture2D" uid="uid://dmjr2cug8wt3s" path="res://Assets/Sprites/Entities/Player/PlayerJump/2.png" id="10_w67ft"]
+[ext_resource type="Texture2D" uid="uid://3e70dpbjhtue" path="res://Assets/Sprites/Entities/Player/PlayerWalk/2.png" id="11_7n4p1"]
+[ext_resource type="Texture2D" uid="uid://dyhywu2asl4hy" path="res://Assets/Sprites/Entities/Player/PlayerWalk/3.png" id="12_pid1y"]
+[ext_resource type="Texture2D" uid="uid://copu187ct7q0o" path="res://Assets/Sprites/Entities/Player/PlayerWalk/1.png" id="13_0aity"]
+[ext_resource type="Texture2D" uid="uid://cm5vmnovslnms" path="res://Assets/Sprites/Entities/Player/PlayerWalk/4.png" id="14_j230w"]
+[ext_resource type="Texture2D" uid="uid://dn4bjph5gxlbg" path="res://Assets/Sprites/Entities/Player/PlayerWalk/5.png" id="15_qkam4"]
+[ext_resource type="Texture2D" uid="uid://c3aa5lidm121e" path="res://Assets/Sprites/Entities/Player/PlayerWalk/6.png" id="16_w67ft"]
+[ext_resource type="Texture2D" uid="uid://dxju0887xijhq" path="res://Assets/Sprites/Entities/Player/PlayerWalk/7.png" id="17_7n4p1"]
+[ext_resource type="Texture2D" uid="uid://bi2h2cy3qx30e" path="res://Assets/Sprites/Entities/Player/PlayerWalk/8.png" id="18_pid1y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
 size = Vector2(20, 19.999996)
@@ -10,7 +25,88 @@ size = Vector2(20, 19.999996)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2o5fe"]
 size = Vector2(15, 20)
 
-[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "enemyBounceCollision", "enemyCollision") groups=["Player"]]
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_3m754")
+}],
+"loop": 1,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_46t5s")
+}],
+"loop": 1,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_0pa8p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0hljs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_crkm8")
+}],
+"loop": 1,
+"name": &"hurt",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_j230w")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_qkam4")
+}, {
+"duration": 4.0,
+"texture": ExtResource("10_w67ft")
+}],
+"loop": 1,
+"name": &"jump",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_0aity")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_7n4p1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_pid1y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_j230w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_qkam4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_w67ft")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_7n4p1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_pid1y")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "enemyBounceCollision", "enemyCollision", "animatedSprites") groups=["Player"]]
 position = Vector2(0, 10)
 scale = Vector2(0.9, 0.9)
 floor_snap_length = 32.0
@@ -20,6 +116,7 @@ downwardsRaycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath
 playerMovementPreset = ExtResource("2_agccv")
 enemyBounceCollision = NodePath("EnemyBounceCollision")
 enemyCollision = NodePath("EnemyCollision")
+animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="EnemyBounceCollision" type="Area2D" parent="." unique_id=164049749]
 collision_layer = 4
@@ -43,8 +140,10 @@ shape = SubResource("RectangleShape2D_agccv")
 scale = Vector2(6, 6)
 shape = SubResource("RectangleShape2D_2o5fe")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=290798525]
-texture = ExtResource("2_gntrk")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1554690714]
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+animation = &"walk"
+frame_progress = 0.31023467
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=116409988]
 position = Vector2(-57, 0)

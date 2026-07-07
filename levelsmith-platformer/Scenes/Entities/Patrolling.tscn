@@ -1,13 +1,37 @@
 [gd_scene format=3 uid="uid://b3k624sctovph"]
 
-[ext_resource type="Texture2D" uid="uid://bggaro288ywls" path="res://Assets/Sprites/Entities/baddude.png" id="1_8ustp"]
 [ext_resource type="Script" uid="uid://cv0ngpnmx6kwj" path="res://Scripts/Game/EnemyPatrol.gd" id="1_ecr3g"]
 [ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="2_n0k27"]
+[ext_resource type="Texture2D" uid="uid://d33pgq7ibjssv" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://yfpy7vgkmhuo" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="3_igrap"]
+[ext_resource type="Texture2D" uid="uid://33tku5on1i8a" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="4_0s3yh"]
 [ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_3diox"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
-[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft", "rayCastRight", "rayCastLeftTop", "rayCastRightTop", "rayCastDownL", "rayCastDownR", "directionArrow", "leftRaycast", "rightRaycast", "downRaycast", "upRaycast", "raycastHelper", "onScreen") groups=["Enemy", "Moving"]]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ogq8d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_0s3yh")
+}],
+"loop": 1,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_igrap")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_0s3yh")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft", "rayCastRight", "rayCastLeftTop", "rayCastRightTop", "rayCastDownL", "rayCastDownR", "directionArrow", "leftRaycast", "rightRaycast", "downRaycast", "upRaycast", "raycastHelper", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
 collision_layer = 6
 collision_mask = 6
 floor_snap_length = 128.0
@@ -26,6 +50,8 @@ downRaycast = NodePath("RayCastDown")
 upRaycast = NodePath("RayCastUp")
 raycastHelper = NodePath("RaycastHelper")
 onScreen = NodePath("OnScreen")
+hitbox = NodePath("CollisionShape2D")
+animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=320029135]
 visible = false
@@ -38,8 +64,9 @@ texture = ExtResource("2_n0k27")
 scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
-texture = ExtResource("1_8ustp")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=384867185]
+sprite_frames = SubResource("SpriteFrames_ogq8d")
+animation = &"walk"
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=121573990]
 rotation = 1.5707964

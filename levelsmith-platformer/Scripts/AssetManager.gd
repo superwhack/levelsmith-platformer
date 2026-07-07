@@ -187,7 +187,7 @@ func reset_all() -> void:
 	FileSearch.delete_folder(filePath);
 	create_file_tree();
 	reset_menu();
-	imageSwapping.refresh_images();
+	refresh_all();
 
 ## Deletes and regenerates all buttons
 func reset_menu() -> void:

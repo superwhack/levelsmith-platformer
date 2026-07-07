@@ -15,6 +15,7 @@ extends Panel
 @export var gameplayZoom : VBoxContainer;
 @export var followSpeed : VBoxContainer;
 @export var cameraDeadzone : VBoxContainer;
+@export var cameraClamp : VBoxContainer;
 
 func _ready() -> void:
 	closeButton.pressed.connect(editorManager.close_settings_menu);
@@ -41,13 +42,16 @@ func _ready() -> void:
 	gameplayZoom.value = cameraManager.playZoom * 100;
 	followSpeed.value = cameraManager.followSpeed * 100;
 	cameraDeadzone.value = cameraManager.deadzone;
+	cameraClamp.value = cameraManager.cameraPlayClamp;
 	gameplayZoom.update_slider();
 	followSpeed.update_slider();
 	cameraDeadzone.update_slider();
+	cameraClamp.update_checkbox();
 	# Sliders connection
 	gameplayZoom.drag_ended.connect(_on_drag);
 	followSpeed.drag_ended.connect(_on_drag);
 	cameraDeadzone.drag_ended.connect(_on_drag);
+	cameraClamp.check_changed.connect(_on_drag);
 func _on_drag() -> void:
 	# Await needed for values to update from drag_ended
 	await get_tree().process_frame;
@@ -60,3 +64,4 @@ func _on_drag() -> void:
 	cameraManager.playZoom = gameplayZoom.value / 100;
 	cameraManager.followSpeed = followSpeed.value / 100;
 	cameraManager.deadzone = cameraDeadzone.value;
+	cameraManager.cameraPlayClamp = cameraClamp.value;

@@ -5,13 +5,14 @@
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_w0xpy"]
 [ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="4_bpp5a"]
 [ext_resource type="PackedScene" uid="uid://d4nqq7rlhq0q8" path="res://Scenes/UI/SettingsMenuSlider.tscn" id="5_aixuf"]
+[ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="6_5bsrg"]
 [ext_resource type="FontFile" uid="uid://dbkfb2swhokjo" path="res://Assets/Fonts/JetBrainsMono-Regular.ttf" id="6_xkvg5"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_wdd1s"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_1i6c8"]
 
-[node name="SettingsMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "masterVolume", "SFXVolume", "musicVolume", "gameplayZoom", "followSpeed", "cameraDeadzone")]
+[node name="SettingsMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "masterVolume", "SFXVolume", "musicVolume", "gameplayZoom", "followSpeed", "cameraDeadzone", "cameraClamp")]
 self_modulate = Color(1, 1, 1, 0.60784316)
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,6 +28,7 @@ musicVolume = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/R
 gameplayZoom = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/GameplayZoom")
 followSpeed = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/FollowSpeed")
 cameraDeadzone = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/CameraDeadzone")
+cameraClamp = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer/CameraClamp")
 
 [node name="MainMargin" type="MarginContainer" parent="." unique_id=136846140]
 self_modulate = Color(1, 1, 1, 0.7882353)
@@ -112,6 +114,10 @@ propertyName = "Camera Deadzone"
 propertyUnit = "m"
 minMax = Vector2(0, 2)
 sliderStep = 0.1
+
+[node name="CameraClamp" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/CameraHeaderContainer" unique_id=798063561 instance=ExtResource("6_5bsrg")]
+layout_mode = 2
+propertyName = "Camera Clamping"
 
 [node name="Spacer2" type="Control" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox" unique_id=569175149]
 custom_minimum_size = Vector2(0, 15)

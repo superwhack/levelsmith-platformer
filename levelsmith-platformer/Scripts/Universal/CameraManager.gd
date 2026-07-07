@@ -31,6 +31,7 @@ var searchForPlayer : bool = true;#
 var playZoom : float = 1.0;
 var followSpeed : float = 1.0;
 var deadzone : float = 0.0;
+var cameraPlayClamp : bool = false;
 
 ## Initializes the camera
 func _ready() -> void:
@@ -197,8 +198,8 @@ func process_player_camera(snap : bool = false) -> void:
 			global_position.x += differenceVector.x - sign(differenceVector.normalized().x) * deadzone * 300;
 		if abs(differenceVector.y) > deadzone * 200:
 			global_position.y += differenceVector.y - sign(differenceVector.normalized().y) * deadzone * 200;
-
-	clamp_camera(levelBounds);
+	if cameraPlayClamp:
+		clamp_camera(levelBounds);
 
 ## Adjusts camera zoom
 ## zoomAmount: Zoom change amount

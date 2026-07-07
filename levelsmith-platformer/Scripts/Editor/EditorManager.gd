@@ -55,11 +55,11 @@ func _ready() -> void:
 	var export_level = func() -> void:
 		AudioManager.play_UI_effect("UI_Selection")
 		masterManager.propertyMenu.close();
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize);
-		
 		var levelScreenshot : Image = await screenshot_level();
 		
 		ImportExportManager.save_level_screenshot(levelScreenshot);
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize);
+		
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
 	settingsButton.pressed.connect(open_settings_menu);
@@ -95,11 +95,13 @@ func screenshot_level() -> Image:
 	mainCamera.enabled = false;
 	levelScreenshotCamera.enabled = true;
 	screenUI.hide();
+	previewTileMap.hide();
 	await RenderingServer.frame_post_draw;
 	
 	var screenshotImage = levelScreenshotCamera.get_level_screenshot();
 	
 	screenUI.show();
+	previewTileMap.show();
 	mainCamera.enabled = true;
 	levelScreenshotCamera.enabled = false;
 	await RenderingServer.frame_post_draw; 

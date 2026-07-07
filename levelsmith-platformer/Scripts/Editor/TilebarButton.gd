@@ -17,4 +17,5 @@ func _process(_delta: float) -> void:
 	if (isTextureUpdating): icon = tileSet.get_source(thisItemID).texture;
 
 func change_brush_object() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
 	tilebar.toolManager.update_brush_object(thisItemID);

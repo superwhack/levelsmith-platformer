@@ -10,11 +10,15 @@ extends Node2D
 
 # Relevant button elements
 @export var playButton : Button;
-@export var assetManagerButton : Button;
 @export var exportButton : Button;
 
-# Asset Manager
+# Asset Manager and Button
 @export var assetManager : AssetManager;
+@export var assetManagerButton : Button;
+
+# Settings Menu and button
+@export var settingsMenu : Node;
+@export var settingsButton : Button;
 
 # Cursor Manager
 @export var customCursorManager : Node2D;
@@ -44,10 +48,12 @@ func _ready() -> void:
 		goalExists = false;
 	
 	var export_level = func() -> void:
+		AudioManager.play_UI_effect("UI_Selection")
 		masterManager.propertyMenu.close();
 		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize);
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
+	settingsButton.pressed.connect(open_settings_menu);
 	Global.levelCreated.connect(reset_player_and_goal);
 	exportButton.pressed.connect(export_level);
 
@@ -71,6 +77,8 @@ func _process(_delta: float) -> void:
 	
 	# Save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
+	
+
 
 
 ## NOTE: TEMPORARY FIX FUNCTION PT 1
@@ -118,14 +126,35 @@ func reset_enemy_positions() -> void:
 func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
+	AudioManager.play_UI_effect("UI_Selection")
+	AudioManager.pause_music(true);
 	previewTileMap.hide();
 	customCursorManager.invalidSprite.hide();
 	assetManager.show();
+
+## Opens the settings menu
+func open_settings_menu() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = true;
+	AudioManager.play_UI_effect("UI_Selection")
+	previewTileMap.hide();
+	customCursorManager.invalidSprite.hide();
+	settingsMenu.show();
 
 ## Closes the asset manager
 func close_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
+	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.pause_music(false);
 	previewTileMap.show();
 	assetManager.hide();
 	assetManager.animationSwapping.playingAnimation = false;
+
+## Closes the settings menu
+func close_settings_menu() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = false;
+	AudioManager.play_UI_effect("UI_Selection");
+	previewTileMap.show();
+	settingsMenu.hide();

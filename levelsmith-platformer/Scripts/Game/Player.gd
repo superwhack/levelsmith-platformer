@@ -55,6 +55,9 @@ var invulnerabilityCurrent := 0.0;
 var currentFriction : float = 1.0;
 var currentSlowdown : float = 1.0;
 
+# Direction, moved here so the animations can use it as well
+var direction : float;
+
 # Speed with constant multiplier and slowdown appended in
 var trueSpeed : float;
 
@@ -152,7 +155,7 @@ func animate() -> void:
 		animatedSprites.animation = "jump";
 	elif (!is_on_floor()):
 		animatedSprites.animation = "fall";
-	elif (velocity.x != 0):
+	elif (abs(velocity.x) > 10 && direction):
 		animatedSprites.animation = "walk";
 	else:
 		animatedSprites.animation = "idle";
@@ -169,7 +172,7 @@ func jump() -> void:
 func walk() -> void:
 	# Acceration in the X direction for the player
 	var accelerationX : float;
-	var direction : float = Input.get_axis("left", "right");
+	direction = Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;

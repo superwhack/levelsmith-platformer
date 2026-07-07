@@ -143,7 +143,8 @@ func open_settings_menu() -> void:
 func close_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
-	AudioManager.pause_music(false)
+	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.pause_music(false);
 	previewTileMap.show();
 	assetManager.hide();
 	assetManager.animationSwapping.playingAnimation = false;
@@ -152,5 +153,6 @@ func close_asset_manager() -> void:
 func close_settings_menu() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
+	AudioManager.play_UI_effect("UI_Selection");
 	previewTileMap.show();
 	settingsMenu.hide();

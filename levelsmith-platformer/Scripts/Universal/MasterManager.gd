@@ -53,8 +53,7 @@ func _ready() -> void:
 	if (!DirAccess.dir_exists_absolute("res://Resources/Enemies/")):
 		DirAccess.make_dir_absolute("res://Resources/Enemies/");
 		
-	#edit();
-	main_menu();
+	main_menu(false);
 	
 ## When the user does a save level input, save the level.
 ## event: The user input
@@ -121,7 +120,9 @@ func load_level(levelPath: String) -> void:
 		import_level_and_edit();
 
 ## Swap to main menu state
-func main_menu() -> void:
+func main_menu(menuClickSound : bool = true) -> void:
+	if menuClickSound:
+		AudioManager.play_UI_effect("UI_Selection");
 	# Hide all non-menu states, show Main Menu scene
 	gameManager.hide();
 	gameManagerCanvas.hide();
@@ -140,6 +141,7 @@ func main_menu() -> void:
 ## Swap to edit state
 func edit() -> void:
 	AudioManager.reset_audio();
+	AudioManager.play_UI_effect("UI_Selection");
 	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Update state variable
@@ -170,8 +172,8 @@ func play() -> void:
 	# Check that the game can be run
 	if (!get_play_errors().is_empty()):
 		return;
-		
 	propertyMenu.close();
+	AudioManager.play_UI_effect("UI_Selection");
 	AudioManager.play_music("LevelMusic");
 	# Update state variable
 	state = Global.State.PLAY;

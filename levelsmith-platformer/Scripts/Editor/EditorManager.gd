@@ -5,7 +5,9 @@ extends Node2D
 @export var masterManager : Node2D;
 
 # Camera reference
-@export var camera : Camera2D;
+@export var mainCamera : Camera2D;
+@export var levelScreenshotCamera : Camera2D;
+@export var screenUI : CanvasLayer;
 
 # References to grid TileMapLayer child nodes
 @export var tileMap : TileMapLayer;
@@ -49,7 +51,10 @@ func _ready() -> void:
 	var export_level = func() -> void:
 		masterManager.propertyMenu.close();
 		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize);
-		ImportExportManager.save_level_screenshot(camera.get_level_screenshot());
+		
+		var levelScreenshot : Image = await screenshot_level();
+		
+		ImportExportManager.save_level_screenshot(levelScreenshot);
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
 	Global.levelCreated.connect(reset_player_and_goal);
@@ -76,6 +81,21 @@ func _process(_delta: float) -> void:
 	# Save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
 
+## Takes a screenshot of the level by hiding the UI and disabling the main camera
+func screenshot_level() -> Image:
+	mainCamera.enabled = false;
+	levelScreenshotCamera.enabled = true;
+	screenUI.hide();
+	await RenderingServer.frame_post_draw;
+	
+	var screenshotImage = levelScreenshotCamera.get_level_screenshot();
+	
+	screenUI.show();
+	mainCamera.enabled = true;
+	levelScreenshotCamera.enabled = false;
+	await RenderingServer.frame_post_draw; 
+	
+	return screenshotImage;
 
 ## NOTE: TEMPORARY FIX FUNCTION PT 1
 ## Clear all enemies without a property file

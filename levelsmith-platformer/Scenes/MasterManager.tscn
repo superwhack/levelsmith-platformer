@@ -69,9 +69,9 @@ script = ExtResource("4_mg0h4")
 masterManager = NodePath("..")
 gridLines = NodePath("../EditorManager/GridLines")
 
-[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "camera") instance=ExtResource("2_430ed")]
+[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera") instance=ExtResource("2_430ed")]
 masterManager = NodePath("..")
-camera = NodePath("../Camera2D")
+mainCamera = NodePath("../Camera2D")
 
 [node name="Tiles" parent="EditorManager" index="0" unique_id=1452837543]
 position = Vector2(1, 0)
@@ -89,6 +89,11 @@ collision_enabled = true
 
 [node name="CustomCursorManager" parent="EditorManager" index="6" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
 masterManager = NodePath("../..")
+
+[node name="LevelScreenshot" parent="EditorManager" index="8" unique_id=1423987778 node_paths=PackedStringArray("masterManager", "baseCamera")]
+enabled = false
+masterManager = NodePath("../..")
+baseCamera = NodePath("../../Camera2D")
 
 [node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
 

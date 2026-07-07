@@ -37,21 +37,37 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	DirAccess.make_dir_absolute(levelPath);
 	DirAccess.make_dir_absolute(levelAssetPath);
 	
-	# Generate default JSON file
-	var defaultPlayerJSON : String = '{"enemies": [], "player": {';
-	defaultPlayerJSON += '"health": ' + str(playerDefault.health) + ", ";
-	defaultPlayerJSON += '"speed": ' + str(playerDefault.groundSpeed) + ", ";
-	defaultPlayerJSON += '"jump": ' + str(playerDefault.jumpHeight) + ", ";
-	defaultPlayerJSON += '"airControl": ' + str(playerDefault.airControl) + ", ";
-	defaultPlayerJSON += '"fallSpeed": ' + str(playerDefault.fallSpeed) + ", ";
-	defaultPlayerJSON += '"coyoteTime": ' + str(playerDefault.coyoteTime) + ", ";
-	defaultPlayerJSON += '"doubleJump": ' + str(playerDefault.doubleJump) + ", ";
-	defaultPlayerJSON += '"wallJump": ' + str(playerDefault.wallJump) + ", ";
-	defaultPlayerJSON += '"wallJumpDecay": ' + str(playerDefault.wallJumpDecay);
-	defaultPlayerJSON += '}}';
+	# The current date and time from system.
+	var now : Dictionary = Time.get_datetime_dict_from_system()
+
+	
+	# Generate default JSON file as a dictionary.
+	var defaultJSON : Dictionary = {
+		"metadata": {
+		"dateCreated": "%04d-%02d-%02d" % [now.year, now.month, now.day],
+		"timeCreated": "%02d:%02d:%02d" % [now.hour, now.minute, now.second],
+		"dateModified": "%04d-%02d-%02d" % [now.year, now.month, now.day],
+		"timeModified": "%02d:%02d:%02d" % [now.hour, now.minute, now.second],
+		"version": 1,
+		"author": "",
+		"favorited": false
+		},
+		"enemies": [],
+		"player": {
+			"health": playerDefault.health,
+			"speed": playerDefault.groundSpeed,
+			"jump": playerDefault.jumpHeight,
+			"airControl": playerDefault.airControl,
+			"fallSpeed": playerDefault.fallSpeed,
+			"coyoteTime": playerDefault.coyoteTime,
+			"doubleJump": playerDefault.doubleJump,
+			"wallJump": playerDefault.wallJump,
+			"wallJumpDecay": playerDefault.wallJumpDecay
+		}
+	}
 	
 	# Convert our data to a json_string
-	var json : Variant = JSON.parse_string(defaultPlayerJSON)
+	var json : Variant = JSON.parse_string(defaultJSON)
 	var jsonString : String = JSON.stringify(json);
 	
 	# Write JSON to file and close it

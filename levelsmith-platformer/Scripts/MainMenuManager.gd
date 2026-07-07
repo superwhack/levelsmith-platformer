@@ -38,6 +38,8 @@ var importedLevelPath : String;
 ## A reference to a packed scene of a clickable Level List Item.
 @export var levelListItem : PackedScene;
 
+## References to meta data values.
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Hides other screens

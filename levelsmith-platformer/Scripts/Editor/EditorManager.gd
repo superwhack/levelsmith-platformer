@@ -137,7 +137,6 @@ func open_settings_menu() -> void:
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UI_Selection")
 	previewTileMap.hide();
-	customCursorManager.invalidSprite.hide();
 	settingsMenu.show();
 
 ## Closes the asset manager

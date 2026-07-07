@@ -85,8 +85,8 @@ func _ready() -> void:
 		#print("Applying ", playerMovementPreset, " player movement preset.");
 		apply_preset(playerMovementPreset);
 	
-	for animationName in animatedSprites.sprite_frames.get_animation_names():
-		AnimationManager.replace_animation_by_name(animatedSprites, animationName);
+	#for animationName in animatedSprites.sprite_frames.get_animation_names():
+		#AnimationManager.replace_animation_by_name(animatedSprites, animationName);
 	
 	var swap_to_fall = func () -> void:
 		isJumping = false;
@@ -98,6 +98,8 @@ func _ready() -> void:
 	deathTimer.wait_time = 0.5;
 	deathTimer.timeout.connect(Global.death.emit);
 	add_child(deathTimer);
+	
+	animatedSprites.sprite_frames = AnimationManager.playerTemplateSprite.sprite_frames;
 	
 	animatedSprites.animation = "PlayerIdle";
 	animatedSprites.play();

@@ -22,7 +22,7 @@ var restricted : bool;
 func _ready() -> void:
 	deathAnim = "PatrolDeath";
 	super._ready();
-	AnimationManager.replace_animation_by_name(animatedSprites, "PatrolWalk");
+	animatedSprites.sprite_frames = AnimationManager.patrollingEnemyTemplateSprite.sprite_frames;
 	
 	animatedSprites.animation = "PatrolWalk";
 	animatedSprites.play();

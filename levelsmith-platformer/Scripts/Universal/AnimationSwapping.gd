@@ -101,6 +101,7 @@ func replace_animation(newAnimationPath : String) -> void:
 		for image in get_animation_from_folder(animationPreviewNameToReplace):
 			currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 		update_animation_preview();
+		AnimationManager.update_template_sprite_by_name(selectedEntityType);
 	else:
 		PopUpManager.create_error_popup("No Defaults", "No default images yet, update this when there are default animations");
 

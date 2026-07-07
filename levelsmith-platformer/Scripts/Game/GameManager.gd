@@ -132,6 +132,8 @@ func start() -> void:
 	timerRunning = true;
 	timerLabel.show();
 	update_timer(timerLabel);
+	
+	#AnimationManager.refresh_animations();
 
 ## Record a change in health for the player
 ## newHealth: The new health of the player

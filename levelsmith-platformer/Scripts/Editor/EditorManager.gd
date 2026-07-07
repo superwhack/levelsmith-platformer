@@ -129,4 +129,5 @@ func close_asset_manager() -> void:
 	previewTileMap.show();
 	assetManager.hide();
 	assetManager.animationSwapping.playingAnimation = false;
-	AnimationManager.refresh_animations();
+	#AnimationManager.update_template_sprites();
+	#AnimationManager.refresh_animations();

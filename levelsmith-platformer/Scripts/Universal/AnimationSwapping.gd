@@ -95,7 +95,14 @@ func replace_animation(newAnimationPath : String) -> void:
 		# If the file is a png, increase the file count and create a copy in the assets folder with its number
 		if (file.get_extension().to_lower() == "png"):
 			fileCount += 1;
-			targetDirectory.copy(currentFilePath, str(targetFilePath, "/", animationPreviewNameToReplace, str(fileCount).pad_zeros(2), ".png"));
+			if (fileCount > 60):
+				PopUpManager.create_error_popup("Animation Length Limit", "Animations can only be a maximum of 60 frames. The first 60 frames will be loaded.");
+				break;
+			var image = Image.new();
+			image.load(currentFilePath);
+			assetManager.validate_image(image);
+			image.save_png(str(targetFilePath, "/", animationPreviewNameToReplace, str(fileCount).pad_zeros(2), ".png"));
+			#targetDirectory.copy(currentFilePath, str(targetFilePath, "/", animationPreviewNameToReplace, str(fileCount).pad_zeros(2), ".png"));
 		else:
 			if (!file.get_extension().to_lower() == "png.import"):
 				PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");

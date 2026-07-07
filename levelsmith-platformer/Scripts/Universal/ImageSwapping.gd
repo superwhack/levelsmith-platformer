@@ -61,7 +61,12 @@ func replace_image(newImagePath: String) -> void:
 	var targetDirectory : DirAccess = assetManager.clear_image(imageNameToReplace);
 	# If the image is a png, create a copy
 	if (newImagePath.get_extension().to_lower() == "png"):
-		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
+		assetManager.clear_image(imageNameToReplace);
+		var image = Image.new();
+		image.load(newImagePath);
+		assetManager.validate_image(image);
+		image.save_png(targetFilePath + "/replacement.png");
+		#targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
 	else:
 		PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
 	

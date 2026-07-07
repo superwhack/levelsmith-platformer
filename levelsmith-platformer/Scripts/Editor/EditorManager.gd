@@ -82,6 +82,7 @@ func _process(_delta: float) -> void:
 	prevMousePosition = currentMousePosition;
 
 ## Takes a screenshot of the level by hiding the UI and disabling the main camera
+## returns; The image of the level
 func screenshot_level() -> Image:
 	mainCamera.enabled = false;
 	levelScreenshotCamera.enabled = true;

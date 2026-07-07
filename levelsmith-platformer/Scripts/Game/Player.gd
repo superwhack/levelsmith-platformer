@@ -55,6 +55,7 @@ var invulnerabilityCurrent := 0.0;
 # Stored friction and slowdown, saved so they are maintained while in midair
 var currentFriction : float = 1.0;
 var currentSlowdown : float = 1.0;
+var slidingSide : bool = false;
 
 # Direction, moved here so the animations can use it as well
 var direction : float;
@@ -180,7 +181,8 @@ func walk() -> void:
 		accelerationX = direction * trueSpeed;
 	# Acceleration
 	else:
-		currentWalkingEffect = Global.WalkingEffect.NONE;
+		if !slidingSide:
+			currentWalkingEffect = Global.WalkingEffect.NONE;
 		if (currentFriction != 1.0):
 			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 		else:
@@ -291,6 +293,7 @@ func bounce() -> void:
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
+	slidingSide = false;
 	
 	
 	# Check all collisions with raycasts
@@ -304,7 +307,7 @@ func detect_tiles() -> void:
 	for raycast in slideCollisions:
 		var collider : Object = raycast.get_collider();
 		# Moving platform
-		if collider is MovingPlatform && downwardsRaycasts.has(raycast):
+		if collider is MovingPlatform && is_on_floor():
 			currentFriction = 1.0;
 			currentSlowdown = 1.0;
 			currentWalkingEffect = Global.WalkingEffect.GENERAL;
@@ -399,6 +402,7 @@ func detect_tiles() -> void:
 			# Horizontal Stick
 			if (abs(raycast.target_position.x) > abs(raycast.target_position.y)):
 				velocity.y *= .9;
+				slidingSide = true;
 				# Vertical Stick
 			## NOTE: Uncomment this to turn on the ability for the player to 'climb' on the bottom of sticky tiles
 			else:

@@ -291,3 +291,16 @@ func get_min_zoom_to_fit_roam() -> float:
 
 	# Get the minimum between both options
 	return min(zoomX, zoomY);
+
+## Zooms out the camera and takes a screenshot of the level.
+## returns: An image file containing the level screenshot.
+func get_level_screenshot() -> Image:
+	var currentZoom : Vector2 = zoom;
+	
+	zoom = Vector2.ONE * get_min_zoom_to_fit_roam();
+	
+	var screenshot : Image = get_viewport().get_texture().get_image();
+	
+	zoom = currentZoom;
+	
+	return screenshot;

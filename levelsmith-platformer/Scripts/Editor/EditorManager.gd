@@ -4,6 +4,9 @@ extends Node2D
 @export var toolManager : Node2D;
 @export var masterManager : Node2D;
 
+# Camera reference
+@export var camera : Camera2D;
+
 # References to grid TileMapLayer child nodes
 @export var tileMap : TileMapLayer;
 @export var previewTileMap : TileMapLayer;
@@ -46,6 +49,7 @@ func _ready() -> void:
 	var export_level = func() -> void:
 		masterManager.propertyMenu.close();
 		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize);
+		ImportExportManager.save_level_screenshot(camera.get_level_screenshot());
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
 	Global.levelCreated.connect(reset_player_and_goal);

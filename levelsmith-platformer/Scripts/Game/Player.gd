@@ -383,6 +383,7 @@ func detect_tiles() -> void:
 		if (tileName == "bounce"):
 			AudioManager.play_effect("BounceBlock");
 			doubleJumpAvailable = doubleJump;
+			coyoteTimeLeft = 0;
 			currentSlowdown = 1.0;
 			# Horizontal bounces
 			if (abs(rayDirection.x) > abs(rayDirection.y)):
@@ -402,7 +403,7 @@ func detect_tiles() -> void:
 						velocity.x /= 2;
 					elif velocity.x < 0 && Input.is_action_pressed("right"):
 						velocity.x /= 2;
-
+		
 		# Sticky Tiles
 		if (tileData && (tileData.get_custom_data("name") == "slow")):
 			currentWalkingEffect = Global.WalkingEffect.SLIME;

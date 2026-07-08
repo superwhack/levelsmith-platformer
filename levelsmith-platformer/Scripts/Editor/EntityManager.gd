@@ -168,11 +168,16 @@ func move_entity(previousClickPos: Vector2) -> void:
 	toolManager.prevPosition = previousClickPos;
 	toolManager.prevBrushObject = toolManager.brushObject;
 	toolManager.prevRotation = toolManager.currentObjectRotation;
+	toolManager.prevIsBackground = toolManager.isBackground;
 	
 	# Await is needed to it has time to update selectedTile
 	await get_tree().process_frame;
+	var alternativeTile : int = tileMap.get_cell_alternative_tile(previousClickPos);
 	toolManager.brushObject = tileMap.get_cell_source_id(previousClickPos);
-	toolManager.currentObjectRotation = tileMap.get_cell_alternative_tile(previousClickPos);
+	toolManager.isBackground = alternativeTile >= 4;
+	toolManager.currentObjectRotation = alternativeTile - (4 if toolManager.isBackground else 0);
+	
+	
 	if get_scene_at_cell(previousClickPos) is Enemy || get_scene_at_cell(previousClickPos) is MovingPlatform:
 		movingResource = get_scene_at_cell(previousClickPos).propertyFile;
 	if (!toolManager.isCopying):
@@ -189,6 +194,7 @@ func drop_entity() -> void:
 			toolManager.prevBrushObject = -1;
 			toolManager.prevPosition = Vector2(0,0);
 			toolManager.currentObjectRotation = toolManager.prevRotation;
+			toolManager.isBackground = toolManager.prevIsBackground;
 			AudioManager.play_UI_effect("Tile_Place_Error");
 			return;
 		# Only allow it to be placed if you aren't copying
@@ -205,6 +211,7 @@ func drop_entity() -> void:
 		toolManager.prevBrushObject = -1;
 		toolManager.prevPosition = Vector2(0,0);
 		toolManager.currentObjectRotation = toolManager.prevRotation;
+		toolManager.isBackground = toolManager.prevIsBackground;
 		# Wait until a node is found at the dropped cell
 		while (!get_scene_at_cell(dropPosition)):
 			await get_tree().process_frame;
@@ -218,6 +225,7 @@ func drop_entity() -> void:
 		toolManager.prevBrushObject = -1;
 		toolManager.prevPosition = Vector2(0,0);
 		toolManager.currentObjectRotation = toolManager.prevRotation;
+		toolManager.isBackground = toolManager.prevIsBackground;
 	
 	var droppedEntity : Node2D = get_scene_at_cell(dropPosition);
 	if !(droppedEntity is Enemy || droppedEntity is MovingPlatform) || !movingResource: return;

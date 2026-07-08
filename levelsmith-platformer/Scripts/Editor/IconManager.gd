@@ -24,6 +24,7 @@ var previewIcon : Sprite2D;
 func _ready() -> void:
 	# Safe to add as a child because it's not in the dictionary
 	previewIcon = Sprite2D.new();
+	previewIcon.z_index = 4;
 	add_child(previewIcon);
 	
 	Global.levelCreated.connect(clear_icons);

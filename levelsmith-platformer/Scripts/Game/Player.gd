@@ -131,6 +131,7 @@ func _physics_process(delta: float) -> void:
 			coyoteTimeLeft -= delta;
 		velocity += get_gravity() * delta * fallSpeed;
 	else:
+		isJumping = false;
 		doubleJumpAvailable = doubleJump;
 		wallJumpDirection = WallDirection.NONE;
 		coyoteTimeLeft = coyoteTime;

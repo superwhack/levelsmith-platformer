@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 	if gravityOn:
 		super._physics_process(delta);
 	directionArrow.hide();
-	if onScreen:
+	if onScreen && !deathTimer.time_left > 0:
 		if (!randomDirection):
 			update_flipped(!(fireDirection <= -90 && fireDirection > -270));
 		# Decrease time left

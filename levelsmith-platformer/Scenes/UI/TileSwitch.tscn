@@ -64,7 +64,6 @@ isTextureUpdating = true
 [node name="OneWayButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=45805104 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "One-Way Tile [2]"
-icon = ExtResource("4_goodf")
 thisItemID = 2
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
@@ -72,7 +71,6 @@ isTextureUpdating = true
 [node name="HazardButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=810406606 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Hazard Tile [3]"
-icon = ExtResource("5_0gefc")
 thisItemID = 1
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
@@ -80,7 +78,6 @@ isTextureUpdating = true
 [node name="IceButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1696596209 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Ice Tile [4]"
-icon = ExtResource("6_h6q5o")
 thisItemID = 3
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
@@ -88,7 +85,6 @@ isTextureUpdating = true
 [node name="StickyButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1990788713 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Slime Tile [5]"
-icon = ExtResource("7_0gefc")
 thisItemID = 4
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
@@ -96,7 +92,6 @@ isTextureUpdating = true
 [node name="BounceButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=850045818 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Bounce Tile [6]"
-icon = ExtResource("8_g7c4e")
 thisItemID = 5
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
@@ -104,7 +99,6 @@ isTextureUpdating = true
 [node name="DeathButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1220324445 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Death Tile [7]"
-icon = ExtResource("9_g7c4e")
 thisItemID = 6
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
@@ -112,7 +106,6 @@ isTextureUpdating = true
 [node name="SlopeButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=456412869 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Slope [8]"
-icon = ExtResource("9_vup42")
 thisItemID = 7
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
@@ -158,58 +151,74 @@ theme_override_constants/separation = 8
 [node name="GoalEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1329828214 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Goal [1]"
-icon = ExtResource("11_goodf")
 thisItemID = 500
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "goal"
 
 [node name="PlayerEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=568547811 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Player [2]"
-icon = ExtResource("12_goodf")
 thisItemID = 501
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "player"
 
 [node name="CoinEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1741178858 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Coin [3]"
-icon = ExtResource("12_0gefc")
 thisItemID = 506
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "coin"
 
 [node name="PatrollingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1549482696 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Patrolling Enemy [4]"
-icon = ExtResource("13_segfj")
 thisItemID = 502
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "patrollingEnemy"
 
 [node name="ShootingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=97347578 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Shooting Enemy [5]"
-icon = ExtResource("14_pggt4")
 thisItemID = 503
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "shootingEnemy"
 
 [node name="FlyingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1159687364 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Flying Enemy [6]"
-icon = ExtResource("15_h6q5o")
 thisItemID = 504
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "flyingEnemy"
 
 [node name="StationaryEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1637250833 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Stationary Enemy [7]"
-icon = ExtResource("18_3tme8")
 thisItemID = 505
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "stationaryEnemy"
 
 [node name="MovingPlatformButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=622725076 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Moving Platform [8]"
-icon = ExtResource("18_mfvlm")
 thisItemID = 507
 tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "movingPlatform"
 
 [node name="Props" type="HBoxContainer" parent="EntityPickerUI/MarginContainer/Tabs" unique_id=1986159458]
 visible = false
@@ -219,7 +228,6 @@ theme_override_constants/separation = 8
 [node name="PropOneButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1349934672 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Prop [1]"
-icon = ExtResource("14_goodf")
 thisItemID = 600
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
@@ -227,7 +235,6 @@ isTextureUpdating = true
 [node name="PropTwoButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=425089871 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Prop [2]"
-icon = ExtResource("15_pggt4")
 thisItemID = 601
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
@@ -235,7 +242,6 @@ isTextureUpdating = true
 [node name="PropThreeButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=766602216 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Prop [3]"
-icon = ExtResource("16_h6q5o")
 thisItemID = 602
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
@@ -243,7 +249,6 @@ isTextureUpdating = true
 [node name="PropFourButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=448831461 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Prop [4]"
-icon = ExtResource("17_0gefc")
 thisItemID = 603
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
@@ -251,7 +256,6 @@ isTextureUpdating = true
 [node name="PropFiveButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1555120042 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Prop [5]"
-icon = ExtResource("18_g7c4e")
 thisItemID = 604
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
@@ -259,7 +263,6 @@ isTextureUpdating = true
 [node name="PropSixButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=923450028 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Prop [6]"
-icon = ExtResource("23_vup42")
 thisItemID = 605
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true

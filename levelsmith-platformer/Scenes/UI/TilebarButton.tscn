@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_tgw4b"]
 [ext_resource type="Script" uid="uid://cay1awblww6u8" path="res://Scripts/Editor/TilebarButton.gd" id="2_4u4rl"]
 
-[node name="TilebarButton" type="Button" unique_id=1067245290]
+[node name="TilebarButton" type="Button" unique_id=1067245290 node_paths=PackedStringArray("image")]
 process_mode = 3
 custom_minimum_size = Vector2(80, 80)
 offset_right = 80.0
@@ -14,18 +14,20 @@ focus_mode = 0
 theme = ExtResource("1_tgw4b")
 theme_type_variation = &"TileButton"
 script = ExtResource("2_4u4rl")
+image = NodePath("MarginContainer/TextureRect")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1050710244]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=592500213]
 custom_maximum_size = Vector2(80, 80)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer" unique_id=284765516]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer" unique_id=251267803]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4

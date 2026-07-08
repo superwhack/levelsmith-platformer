@@ -6,15 +6,18 @@ var gravityEnabled : bool = true;
 var isFacingRight : bool = true;
 
 func _ready() -> void:
+	deathAnim = "StationaryDeath";
 	super._ready();
 	
-	animatedSprites.animation = "idle";
+	animatedSprites.sprite_frames = AnimationManager.stationaryEnemyTemplateSprite.sprite_frames;
+	
+	animatedSprites.animation = "StationaryIdle";
 	animatedSprites.play();
 ## Processes the physics every frame
 ## delta: Time since previous frame
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	if gravityEnabled:
+	if gravityEnabled || health <= 0:
 		super._physics_process(delta);
 		move_and_slide();
 	

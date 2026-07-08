@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
+[ext_resource type="Texture2D" uid="uid://dnutrybtymj0o" path="res://Assets/Sprites/UI/LoadingScreenBgImg.png" id="9_gojh1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -109,14 +110,20 @@ color = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 960.0
 offset_top = 540.0
-offset_right = 1000.0
-offset_bottom = 580.0
+offset_right = 1460.0
+offset_bottom = 1040.0
+scale = Vector2(2.139467, 2.139467)
+use_top_left = true
 
-[node name="Label" type="RichTextLabel" parent="LoadingScreen/ColorRect/CenterContainer" unique_id=2074082816]
+[node name="Label" type="Label" parent="LoadingScreen/ColorRect/CenterContainer" unique_id=241191285]
+visible = false
 layout_mode = 2
-theme_override_colors/default_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/normal_font_size = 500
+theme_override_font_sizes/font_size = 100
 text = "Loading..."
+
+[node name="TextureRect" type="TextureRect" parent="LoadingScreen/ColorRect/CenterContainer" unique_id=1476842559]
+layout_mode = 2
+texture = ExtResource("9_gojh1")
 
 [connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
 

@@ -71,7 +71,7 @@ func _input(event: InputEvent) -> void:
 
 func show_loading_screen() -> void:
 	loadingScreen.show();
-	await get_tree().create_timer(0.7).timeout;
+	await get_tree().create_timer(1.7).timeout;
 
 func hide_loading_screen() -> void:
 	loadingScreen.hide();

@@ -12,7 +12,7 @@
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_1i6c8"]
 
-[node name="SettingsMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "masterVolume", "SFXVolume", "musicVolume", "gameplayZoom", "followSpeed", "cameraDeadzone", "cameraClamp")]
+[node name="SettingsMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "resetButton", "masterVolume", "SFXVolume", "musicVolume", "gameplayZoom", "followSpeed", "cameraDeadzone", "cameraClamp")]
 self_modulate = Color(1, 1, 1, 0.60784316)
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,6 +22,7 @@ grow_vertical = 2
 theme = ExtResource("1_02c1u")
 script = ExtResource("2_5bsrg")
 closeButton = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/FooterMargin/FooterRow/CloseButton")
+resetButton = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/FooterMargin/FooterRow/CloseButtonMargin/ResetButton")
 masterVolume = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/VolumeHeaderContainer/MasterVolume")
 SFXVolume = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/VolumeHeaderContainer/SFXVolume")
 musicVolume = NodePath("MainMargin/PanelContainer/BorderMargin/ScrollContainer/RootVBox/ControlsVBox/VolumeHeaderContainer/MusicVolume")

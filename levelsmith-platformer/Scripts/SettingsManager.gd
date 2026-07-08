@@ -4,6 +4,7 @@ class_name SettingsMenu;
 # General
 @export var editorManager : Node2D;
 @export var closeButton : Button;
+@export var resetButton : Button;
 
 @export var cameraManager : Node2D;
 
@@ -20,6 +21,7 @@ class_name SettingsMenu;
 
 func _ready() -> void:
 	closeButton.pressed.connect(editorManager.close_settings_menu);
+	resetButton.pressed.connect(reset_settings);
 	
 	# AUDIO ---
 	# Set current default values
@@ -77,3 +79,14 @@ func update_sliders() -> void:
 	cameraDeadzone.update_slider();
 	cameraClamp.update_checkbox();
 	_on_drag();
+
+func reset_settings() -> void:
+	gameplayZoom.value = 100.0;
+	followSpeed.value = 100.0;
+	cameraDeadzone.value = 0.0;
+	cameraClamp.value = false;
+	
+	masterVolume.value = 70.0;
+	SFXVolume.value = 70.0;
+	musicVolume.value = 70.0;
+	update_sliders();

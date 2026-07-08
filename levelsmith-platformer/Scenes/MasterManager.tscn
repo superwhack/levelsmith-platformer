@@ -42,7 +42,7 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_8vbpr")
 sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "playPopUp", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
@@ -55,6 +55,7 @@ mainMenuControl = NodePath("MainMenuCanvasLayer/MainMenu")
 editorHomeButton = NodePath("EditorManager/ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/HomeButton")
 editorPlayButton = NodePath("EditorManager/ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton")
 returnToEditorButton = NodePath("GameManager/CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ReturnEditorButton")
+playPopUp = NodePath("EditorManager/ScreenUI/ThemeNode/MainColumn/ContentRow/HoverPopUpContainer")
 tileMap = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
 gridLines = NodePath("EditorManager/GridLines")
@@ -91,19 +92,24 @@ modulate = Color(1, 1, 1, 1)
 position = Vector2(0, -1)
 collision_enabled = true
 
+[node name="ToolSwitch" parent="EditorManager/ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn" parent_id_path=PackedInt32Array(2045534837, 1907924645) index="0" unique_id=537968072 node_paths=PackedStringArray("editorManager", "toolManager")]
+editorManager = NodePath("../../../../../../..")
+toolManager = NodePath("../../../../../../../ToolManager")
+
 [node name="AssetManager" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="0" unique_id=468653693 node_paths=PackedStringArray("masterManager")]
 masterManager = NodePath("../../..")
 
 [node name="SettingsMenu" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="2" unique_id=79213823 node_paths=PackedStringArray("cameraManager")]
 cameraManager = NodePath("../../../Camera2D")
 
+[node name="HotkeyManager" parent="EditorManager" index="5" unique_id=1848065233 node_paths=PackedStringArray("tileSwitch")]
+tileSwitch = NodePath("../ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TileSwitch")
+
 [node name="CustomCursorManager" parent="EditorManager" index="6" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
 masterManager = NodePath("../..")
 
-[node name="LevelScreenshot" parent="EditorManager" index="8" unique_id=1423987778 node_paths=PackedStringArray("masterManager", "baseCamera")]
-enabled = false
-masterManager = NodePath("../..")
-baseCamera = NodePath("../../Camera2D")
+[node name="ToolManager" parent="EditorManager" index="7" unique_id=2103609005 node_paths=PackedStringArray("tileSwitch")]
+tileSwitch = NodePath("../ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TileSwitch")
 
 [node name="GameManager" parent="." unique_id=344859815 node_paths=PackedStringArray("cameraManager") instance=ExtResource("4_ggjfv")]
 cameraManager = NodePath("../Camera2D")

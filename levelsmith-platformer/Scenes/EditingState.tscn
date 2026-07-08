@@ -5,24 +5,23 @@
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
-[ext_resource type="Texture2D" uid="uid://cicj1jmudfxxy" path="res://Assets/UserInterface/Buttons/ButtonIcons/Home.png" id="7_20xd7"]
+[ext_resource type="Texture2D" uid="uid://dicj6blbbf2dt" path="res://Assets/UserInterface/Buttons/ButtonIcons/Home.png" id="7_20xd7"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="9_7flhh"]
-[ext_resource type="Texture2D" uid="uid://c03ijfg5hio0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Save.png" id="10_2406q"]
+[ext_resource type="Texture2D" uid="uid://cpch5upyug7n1" path="res://Assets/UserInterface/Buttons/ButtonIcons/Save.png" id="10_2406q"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Texture2D" uid="uid://e2cnr04fpgrl" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
+[ext_resource type="Texture2D" uid="uid://dt54gtcqj4y6n" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="Texture2D" uid="uid://8pwuej3wvl0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
+[ext_resource type="Texture2D" uid="uid://dymygj183wflb" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
-[ext_resource type="Script" uid="uid://dennrhd1fmssd" path="res://Scripts/Universal/LevelScreenshot.gd" id="25_fnjh2"]
 [ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -61,12 +60,9 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yf5fn"]
 bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pkt5f"]
-
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "settingsMenu", "settingsButton", "customCursorManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "settingsMenu", "settingsButton", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
-levelScreenshotCamera = NodePath("LevelScreenshot")
 screenUI = NodePath("ScreenUI")
 tileMap = NodePath("Tiles")
 previewTileMap = NodePath("PreviewTile")
@@ -166,9 +162,11 @@ theme_override_constants/margin_right = 10
 [node name="HomeTileSeparator" type="VSeparator" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopbarSepMargin" unique_id=1938918365]
 layout_mode = 2
 
-[node name="TileSwitch" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=959816093 instance=ExtResource("7_qupls")]
-visible = false
+[node name="TileSwitch" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=959816093 node_paths=PackedStringArray("toolManager", "editorManager", "tileMap") instance=ExtResource("7_qupls")]
 layout_mode = 2
+toolManager = NodePath("../../../../../../../../ToolManager")
+editorManager = NodePath("../../../../../../../..")
+tileMap = NodePath("../../../../../../../../Tiles")
 
 [node name="TopSpacer" type="Control" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=2107671150]
 layout_mode = 2
@@ -316,35 +314,34 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 texture = ExtResource("14_rdu5w")
 
-[node name="EditorViewport" type="PanelContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow" unique_id=527771533]
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow" unique_id=2146154728]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxEmpty_pkt5f")
-
-[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/EditorViewport" unique_id=2146154728]
-layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="FooterHintsRow" type="HBoxContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/EditorViewport/MarginContainer" unique_id=714007109]
+[node name="FooterHintsRow" type="HBoxContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/MarginContainer" unique_id=714007109]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 
-[node name="ZoomHintLabel" type="Label" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/EditorViewport/MarginContainer/FooterHintsRow" unique_id=890252040]
+[node name="ZoomHintLabel" type="Label" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/MarginContainer/FooterHintsRow" unique_id=890252040]
 layout_mode = 2
 text = "Zoom In/Out [+ -/Scroll]"
 
-[node name="FooterSpacr" type="Control" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/EditorViewport/MarginContainer/FooterHintsRow" unique_id=1801487145]
+[node name="FooterSpacr" type="Control" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/MarginContainer/FooterHintsRow" unique_id=1801487145]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PanHintLabel" type="Label" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/EditorViewport/MarginContainer/FooterHintsRow" unique_id=1867169108]
+[node name="PanHintLabel" type="Label" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/MarginContainer/FooterHintsRow" unique_id=1867169108]
 layout_mode = 2
 text = "Pan [WASD / MMB]"
+
+[node name="HoverPopUpContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow" unique_id=1808818748 instance=ExtResource("16_rdu5w")]
+visible = false
+layout_mode = 2
 
 [node name="PropertiesPanel" type="PanelContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow" unique_id=949999272]
 custom_minimum_size = Vector2(360, 0)

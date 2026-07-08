@@ -185,6 +185,11 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 	await get_tree().create_timer(0.65).timeout;
 	PopUpManager.clear_all_popups();
 
+## Saves the level screenshot to an image file
+## screenshotImage: The image to save.
+func save_level_screenshot(screenshotImage: Image) -> void:
+	screenshotImage.save_png(levelPath + "Preview.PNG");
+
 ## Validates a level import at a given directory
 ## sourceName: Source level name
 ## returns: false if it fails, true otherwise

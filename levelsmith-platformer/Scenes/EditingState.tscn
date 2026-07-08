@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://dmqrt6ulj2tqw" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
+[ext_resource type="Script" uid="uid://dennrhd1fmssd" path="res://Scripts/Universal/LevelScreenshot.gd" id="25_fnjh2"]
 [ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -60,9 +61,11 @@ sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63w0a"]
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "settingsMenu", "settingsButton", "customCursorManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "settingsMenu", "settingsButton", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
+levelScreenshotCamera = NodePath("LevelScreenshot")
+screenUI = NodePath("ScreenUI")
 tileMap = NodePath("Tiles")
 previewTileMap = NodePath("PreviewTile")
 playButton = NodePath("ScreenUI/BottomRightAnchor/PlayButton")
@@ -364,6 +367,9 @@ editorManager = NodePath("../..")
 toolManager = NodePath("..")
 tileMap = NodePath("../../Tiles")
 propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
+
+[node name="LevelScreenshot" type="Camera2D" parent="." unique_id=1423987778]
+script = ExtResource("25_fnjh2")
 
 [editable path="ScreenUI/BottomRightAnchor/HoverPopUpContainer"]
 [editable path="CanvasLayer/AssetManager"]

@@ -21,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://cpnh5eiw0m5fv" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
 [ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="15_ditat"]
-[ext_resource type="Texture2D" uid="uid://pc63ho3uson2" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
+[ext_resource type="Texture2D" uid="uid://dmqrt6ulj2tqw" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
@@ -187,7 +187,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="SaveButton" type="Button" parent="ScreenUI/TopRightAnchor/TopRightRow/SavePanel/SaveMargin" unique_id=778830983]
 layout_mode = 2
-tooltip_text = "Save"
+tooltip_text = "Save [CTRL+S/F5]"
 theme = ExtResource("7_ditat")
 theme_type_variation = &"ToolButton"
 icon = ExtResource("12_vrcqo")
@@ -280,6 +280,7 @@ size_flags_horizontal = 0
 
 [node name="RightPin" parent="ScreenUI/BottomRightAnchor/HoverPopUpContainer" index="1" unique_id=1999861361]
 visible = true
+texture = null
 
 [node name="PlayButton" type="Button" parent="ScreenUI/BottomRightAnchor" unique_id=1821933362]
 custom_minimum_size = Vector2(265, 0)

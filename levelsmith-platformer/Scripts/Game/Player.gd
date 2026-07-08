@@ -75,8 +75,9 @@ var enemiesInside : Array[Node2D];
 
 @export var animatedSprites : AnimatedSprite2D;
 @onready var jumpTimer : Timer = Timer.new();
-@onready var deathTimer : Timer = Timer.new();
 var isJumping : bool = false;
+
+var isDead : bool = false;
 
 ## Runs once on instantiation
 func _ready() -> void:
@@ -100,10 +101,6 @@ func _ready() -> void:
 	jumpTimer.timeout.connect(swap_to_fall);
 	add_child(jumpTimer);
 	
-	deathTimer.wait_time = 0.5;
-	deathTimer.timeout.connect(Global.death.emit);
-	add_child(deathTimer);
-	
 	animatedSprites.sprite_frames = AnimationManager.playerTemplateSprite.sprite_frames;
 	
 	animatedSprites.animation = "PlayerIdle";
@@ -114,7 +111,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if (check_out_of_bounds()):
 		return;
-	if deathTimer.time_left > 0:
+	if isDead:
 		animate();
 		return;
 	justWallJumped = false;
@@ -172,6 +169,11 @@ func animate() -> void:
 	else:
 		animatedSprites.animation = "PlayerIdle";
 	animatedSprites.play();
+
+func on_animation_finished() -> void:
+	print("anim finished");
+	if (animatedSprites.animation == "PlayerDeath"):
+		Global.death.emit();
 
 ## Make the player jump
 func jump() -> void:
@@ -247,7 +249,7 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 func die() -> void:
 	health = 0;
 	AudioManager.play_effect("PlayerDeath");
-	deathTimer.start();
+	isDead = true;
 
 ## Remove enemies or projectiles when no longer inside of them
 ## body: the body or area to remove from the array

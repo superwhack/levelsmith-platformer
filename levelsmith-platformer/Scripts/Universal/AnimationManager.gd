@@ -146,10 +146,12 @@ func create_template_sprites() -> void:
 	playerTemplateSprite.sprite_frames = SpriteFrames.new();
 	
 	playerTemplateSprite.sprite_frames.add_animation("PlayerDeath");
+	playerTemplateSprite.sprite_frames.set_animation_loop_mode("PlayerDeath", SpriteFrames.LoopMode.LOOP_NONE);
 	playerTemplateSprite.sprite_frames.add_animation("PlayerRun");
 	playerTemplateSprite.sprite_frames.add_animation("PlayerHurt");
 	playerTemplateSprite.sprite_frames.add_animation("PlayerFall");
 	playerTemplateSprite.sprite_frames.add_animation("PlayerJump");
+	playerTemplateSprite.sprite_frames.set_animation_loop_mode("PlayerJump", SpriteFrames.LoopMode.LOOP_NONE);
 	playerTemplateSprite.sprite_frames.add_animation("PlayerIdle");
 	playerTemplateSprite.animation = "PlayerIdle";
 	playerTemplateSprite.sprite_frames.remove_animation("default");
@@ -158,6 +160,7 @@ func create_template_sprites() -> void:
 	patrollingEnemyTemplateSprite.sprite_frames = SpriteFrames.new();
 	
 	patrollingEnemyTemplateSprite.sprite_frames.add_animation("PatrolDeath");
+	patrollingEnemyTemplateSprite.sprite_frames.set_animation_loop_mode("PatrolDeath", SpriteFrames.LoopMode.LOOP_NONE);
 	patrollingEnemyTemplateSprite.sprite_frames.add_animation("PatrolWalk");
 	patrollingEnemyTemplateSprite.animation = "PatrolWalk"
 	patrollingEnemyTemplateSprite.sprite_frames.remove_animation("default");
@@ -166,6 +169,7 @@ func create_template_sprites() -> void:
 	flyingEnemyTemplateSprite.sprite_frames = SpriteFrames.new();
 	
 	flyingEnemyTemplateSprite.sprite_frames.add_animation("FlyDeath");
+	flyingEnemyTemplateSprite.sprite_frames.set_animation_loop_mode("FlyDeath", SpriteFrames.LoopMode.LOOP_NONE);
 	flyingEnemyTemplateSprite.sprite_frames.add_animation("FlyMove");
 	flyingEnemyTemplateSprite.animation = "FlyMove";
 	flyingEnemyTemplateSprite.sprite_frames.remove_animation("default");
@@ -174,8 +178,10 @@ func create_template_sprites() -> void:
 	shootingEnemyTemplateSprite.sprite_frames = SpriteFrames.new();
 	
 	shootingEnemyTemplateSprite.sprite_frames.add_animation("ShootDeath");
+	shootingEnemyTemplateSprite.sprite_frames.set_animation_loop_mode("ShootDeath", SpriteFrames.LoopMode.LOOP_NONE);
 	shootingEnemyTemplateSprite.sprite_frames.add_animation("ShootIdle");
 	shootingEnemyTemplateSprite.sprite_frames.add_animation("EnemyShoot");
+	shootingEnemyTemplateSprite.sprite_frames.set_animation_loop_mode("EnemyShoot", SpriteFrames.LoopMode.LOOP_NONE);
 	shootingEnemyTemplateSprite.animation = "ShootIdle";
 	shootingEnemyTemplateSprite.sprite_frames.remove_animation("default");
 	
@@ -183,6 +189,7 @@ func create_template_sprites() -> void:
 	stationaryEnemyTemplateSprite.sprite_frames = SpriteFrames.new();
 	
 	stationaryEnemyTemplateSprite.sprite_frames.add_animation("StationaryDeath");
+	stationaryEnemyTemplateSprite.sprite_frames.set_animation_loop_mode("StationaryDeath", SpriteFrames.LoopMode.LOOP_NONE);
 	stationaryEnemyTemplateSprite.sprite_frames.add_animation("StationaryIdle");
 	stationaryEnemyTemplateSprite.animation = "StationaryIdle";
 	stationaryEnemyTemplateSprite.sprite_frames.remove_animation("default");

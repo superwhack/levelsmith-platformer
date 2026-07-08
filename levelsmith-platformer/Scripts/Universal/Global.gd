@@ -10,6 +10,9 @@ signal onCoinCollected;
 # Tile size
 const TILE_SIZE : int = 128;
 
+# Current version of Foundry 2D
+const VERSION = 0.0067;
+
 # Application State
 enum State {
 	MAIN_MENU,

@@ -163,7 +163,6 @@ func fill_level_list() -> void:
 		if (levelListDir.current_is_dir()):
 			# Getting and creating the level list item
 			var levelPath : String = levelsPath + "/" + folderName;
-			
 			# Add the level to the level list and set it up visually.
 			if (get_level_valid(levelPath)):
 				setup_level_item(folderName, levelPath);
@@ -186,20 +185,18 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 	# Connect the level button signal to the double clicked function
 	item.level_double_clicked.connect(_on_level_double_clicked);
 	
-	# Get the csv level size, and add it to the level item
-	var levelSize : Vector2i = get_csv_size(levelPath + "/" + "Tiles.CSV");
-	dimensions.text = (str(levelSize.x) + " x " + str(levelSize.y) + " Tiles");
+	# Fetch the level's metadata.
+	var metadata : Dictionary = ImportExportManager.get_metadata(levelPath);
 	
-	# If the thumbnail file exists, replace image (or don't)
-	var levelThumbnailPath : String = levelPath + "/preview.PNG";
-	
-	if (FileAccess.file_exists(levelThumbnailPath)):
-		var image : Image = Image.new();
+	# If empty...
+	if metadata.is_empty():
+		item.levelDate.text = "01.01.1967";
+		item.levelTime.text = "00:00";
+		return;
 		
-		# If the image returns ok, replace the texture
-		if (image.load(levelThumbnailPath) == OK):
-			var texture := ImageTexture.create_from_image(image)
-			preview.texture = texture;
+	print(metadata)
+	item.levelDate.text = metadata.get("dateCreated", "01.01.1967");
+	item.levelTime.text = metadata.get("timeCreated", "00:00");
 
 
 ## Load a level when appropriate button is pressed

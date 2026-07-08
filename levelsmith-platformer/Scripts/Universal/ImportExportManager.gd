@@ -44,10 +44,10 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	# Generate default JSON file as a dictionary.
 	var defaultJSON : Dictionary = {
 		"metadata": {
-			"dateCreated": "%04d-%02d-%02d" % [now.year, now.month, now.day],
-			"timeCreated": "%02d:%02d:%02d" % [now.hour, now.minute, now.second],
-			"dateModified": "%04d-%02d-%02d" % [now.year, now.month, now.day],
-			"timeModified": "%02d:%02d:%02d" % [now.hour, now.minute, now.second],
+			"dateCreated": "%02d.%02d.%04d" % [now.month, now.day, now.year],
+			"timeCreated": "%02d:%02d" % [now.hour, now.minute],
+			"dateModified": "%02d.%02d.%04d" % [now.month, now.day, now.year],
+			"timeModified": "%02d:%02d" % [now.hour, now.minute],
 			"version": 1,
 			"author": "",
 			"favorited": false
@@ -65,6 +65,8 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 			"wallJumpDecay": playerDefault.wallJumpDecay
 		}
 	};
+	
+	print("HEY CHECK ME OUT", defaultJSON)
 	
 	# Convert our data to a json_string
 	var jsonString : String = JSON.stringify(defaultJSON, "\t")
@@ -95,57 +97,114 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	if (!DirAccess.dir_exists_absolute(levelPath)):
 		DirAccess.make_dir_absolute(levelPath);
 		
-	# Creating Enemy Data in JSON.
-	var dataToSend : String = '{"enemies": [';
-	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
-	for enemyPropertyIndex in range(0, enemyProperties.size()):
-		var enemyProperty : String = enemyProperties[enemyPropertyIndex];
-		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
-		dataToSend += '{"pos":{"x":' + str(propertyFile.position.x) + ',"y":' + str(propertyFile.position.y) + '},';
-		if enemyProperty.contains("Patrol"):
-			dataToSend += '"type":"patrolling", "stats":{';
-			dataToSend += '"speed": ' + str(propertyFile.groundSpeed) + ", ";
-			dataToSend += '"direction": ' + str(propertyFile.direction) + ", ";
-			dataToSend += '"restricted": ' + str(propertyFile.restricted) + '}}';
-		elif enemyProperty.contains("Shooting"):
-			dataToSend += '"type":"shooting", "stats":{';
-			dataToSend += '"direction": ' + str(propertyFile.direction) + ", ";
-			dataToSend += '"randomDirection": ' + str(propertyFile.randomDirection) + ', ';
-			dataToSend += '"shotSpeed": ' + str(propertyFile.shotSpeed) + ", ";
-			dataToSend += '"fireRate": ' + str(propertyFile.fireRate) + ', ';
-			dataToSend += '"projBounce": ' + str(propertyFile.projBounce) + ', ';
-			dataToSend += '"gravity": ' + str(propertyFile.gravity) + '}}';
-		elif enemyProperty.contains("Flying"):
-			dataToSend += '"type":"flying", "stats":{';
-			dataToSend += '"speed": ' + str(propertyFile.speed) + ", ";
-			dataToSend += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}}}';
-		elif enemyProperty.contains("Stationary"):
-			dataToSend += '"type":"stationary", "stats":{';
-			dataToSend += '"isFacingRight": ' + str(propertyFile.isFacingRight) + ", ";
-			dataToSend += '"gravity": ' + str(propertyFile.gravity) + '}}';
-		elif enemyProperty.contains("MovingPlatform"):
-			dataToSend += '"type":"movingPlatform", "stats":{';
-			dataToSend += '"speed": ' + str(propertyFile.speed) + ", ";
-			dataToSend += '"endpoint":{"x":' + str(propertyFile.pointBOffset.x) + ',"y":' + str(propertyFile.pointBOffset.y) + '}, ';
-			dataToSend += '"progress": ' + str(propertyFile.progress) + "}}";
-		if (enemyPropertyIndex < enemyProperties.size() - 1):
-			dataToSend += ',';
-	# Creating Player Data in JSON.
-	dataToSend += '], "player": {';
-	dataToSend += '"health": ' + str(playerData.playerHealth) + ", ";
-	dataToSend += '"speed": ' + str(playerData.playerSpeed) + ", ";
-	dataToSend += '"jump": ' + str(playerData.playerJumpHeight) + ", ";
-	dataToSend += '"airControl": ' + str(playerData.playerAirControl) + ", ";
-	dataToSend += '"fallSpeed": ' + str(playerData.playerFallSpeed) + ", ";
-	dataToSend += '"coyoteTime": ' + str(playerData.playerCoyoteTime) + ", ";
-	dataToSend += '"doubleJump": ' + str(playerData.playerDoubleJump) + ", ";
-	dataToSend += '"wallJump": ' + str(playerData.playerWallJump) + ", ";
-	#dataToSend += '"wallJumpDecay": ' + str(playerData.playerWallJumpDecay);
-	dataToSend += '}}';
+	# First, get the meta data so we don't delete permanent data.
+	var json : Dictionary = { };
+
+	# If the Settings file exists, get entire file as text
+	if (FileAccess.file_exists(levelPath + "Settings.JSON")):
+		var jsonFile := FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
+		json = JSON.parse_string(jsonFile.get_as_text());
+		jsonFile.close();
 	
-	# Convert our data to a json_string
-	var json : Variant = JSON.parse_string(dataToSend)
-	var jsonString : String = JSON.stringify(json);
+	##                        ##
+	## Metadata JSON Creation ##
+	##                        ##
+	# If no meta data, add the meta data section. For backwards compat
+	if !json.has("metadata"):
+		json["metadata"] = {};
+
+	var metadata : Dictionary = json["metadata"];
+
+	var now : Dictionary = Time.get_datetime_dict_from_system();
+
+	# Update metadata without completely overwriting it.
+	metadata["dateModified"] = "%02d.%02d.%04d" % [now.month, now.day, now.year];
+	metadata["timeModified"] = "%02d:%02d" % [now.hour, now.minute];
+	metadata["version"] = Global.VERSION;
+
+	json["metadata"] = metadata;
+	
+	##                      ##
+	## Player JSON Creation ##
+	##                      ##
+	json["player"] = {
+		"health": playerData.playerHealth,
+		"speed": playerData.playerSpeed,
+		"jump": playerData.playerJumpHeight,
+		"airControl": playerData.playerAirControl,
+		"fallSpeed": playerData.playerFallSpeed,
+		"coyoteTime": playerData.playerCoyoteTime,
+		"doubleJump": playerData.playerDoubleJump,
+		"wallJump": playerData.playerWallJump,
+		"wallJumpDecay": playerData.playerWallJumpDecay
+	};
+	
+	##                     ##
+	## Enemy JSON Creation ##
+	##                     ##
+	var enemies : Array = [];
+	var enemyProperties := DirAccess.get_files_at("res://Resources/Enemies/");
+
+	for enemyProperty in enemyProperties:
+		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
+		
+		# Shared enemy properties, like the position.
+		var enemy : Dictionary = {
+			"pos": {
+				"x": propertyFile.position.x,
+				"y": propertyFile.position.y
+			}
+		};
+		
+		if (enemyProperty.contains("Patrol")):
+			enemy["type"] = "patrolling"
+			enemy["stats"] = {
+				"speed": propertyFile.groundSpeed,
+				"direction": propertyFile.direction,
+				"restricted": propertyFile.restricted
+			};
+		elif (enemyProperty.contains("Shooting")):
+			enemy["type"] = "shooting"
+			enemy["stats"] = {
+				"direction": propertyFile.direction,
+				"randomDirection": propertyFile.randomDirection,
+				"shotSpeed": propertyFile.shotSpeed,
+				"fireRate": propertyFile.fireRate,
+				"projBounce": propertyFile.projBounce,
+				"gravity": propertyFile.gravity
+			};
+		elif (enemyProperty.contains("Flying")):
+			enemy["type"] = "flying"
+			enemy["stats"] = {
+				"speed": propertyFile.speed,
+				"endpoint": {
+					"x": propertyFile.pointBOffset.x,
+					"y": propertyFile.pointBOffset.y
+				}
+			};
+		elif (enemyProperty.contains("Stationary")):
+			enemy["type"] = "stationary"
+			enemy["stats"] = {
+				"isFacingRight": propertyFile.isFacingRight,
+				"gravity": propertyFile.gravity
+			};
+		elif (enemyProperty.contains("MovingPlatform")):
+			enemy["type"] = "movingPlatform"
+			enemy["stats"] = {
+				"speed": propertyFile.speed,
+				"endpoint": {
+					"x": propertyFile.pointBOffset.x,
+					"y": propertyFile.pointBOffset.y
+				},
+				"progress": propertyFile.progress
+			};
+		
+		# If enemy has a type, append it. Otherwise, we have no compatibility for the enemy.
+		if (enemy.has("type")):
+			enemies.append(enemy);
+
+	json["enemies"] = enemies;
+	
 	
 	## NOTE: THIS IS TEMPORARY CODE TO TURN ON WHEN JSON FILE NEEDS TO BE VALIDATED
 	#var tmpFile : FileAccess = FileAccess.open(levelPath + "Temp.txt", FileAccess.WRITE);
@@ -153,9 +212,9 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	#tmpFile.close();
 	
 	# Write JSON to file and close it
-	var JSONFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE);
-	JSONFile.store_string(jsonString);
-	JSONFile.close();
+	var jsonFile := FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE)
+	jsonFile.store_string(JSON.stringify(json, "\t"))
+	jsonFile.close()
 	
 	# Write tileData in the form of a CSV file, then close it
 	var CSVFile : FileAccess = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.WRITE);
@@ -261,8 +320,8 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	playerData.update_custom();
 	playerData.update_sliders();
 	
-	# Enemy information read
-	var enemies : Array = json_as_dict.enemies;
+	# Enemy information read, no enemies if from older version
+	var enemies : Array = json_as_dict.get("enemies", []);
 	for enemy in enemies:
 		# Locate the enemy at the indicated position
 		var locatedEnemy : Node2D;
@@ -276,6 +335,19 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	repair_corrupted_enemies(tileMap);
 	
 	JSONFile.close();
+	
+## Reads the metadata section from the Settings JSON
+## Returns either a full or empty dictionary.
+func get_metadata(levelPath : String) -> Dictionary:
+	# If no settings JSON, return empty
+	if (!FileAccess.file_exists(levelPath + "/Settings.JSON")):
+		return { };
+	
+	var jsonFile : FileAccess = FileAccess.open(levelPath + "/Settings.JSON", FileAccess.READ);
+	var jsonDict : Dictionary = JSON.parse_string(jsonFile.get_as_text());
+	jsonFile.close();
+	# Return metadata
+	return jsonDict.get("metadata", {});
 
 ## Clone all of the data from the user asset folder 
 ## from: the source directory

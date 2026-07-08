@@ -1,0 +1,855 @@
+[gd_scene format=4 uid="uid://bvc7r3t18vixa"]
+
+[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_h7yt3"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_0pgit"]
+[ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="3_0j3d3"]
+[ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="3_c2uou"]
+[ext_resource type="Texture2D" uid="uid://cuqx70ij8cotk" path="res://Assets/UserInterface/Buttons/ButtonIcons/PlaceholderButtonAsset.png" id="4_0j3d3"]
+[ext_resource type="Texture2D" uid="uid://ylg2mfdy5c41" path="res://Assets/UserInterface/PreviewPlaceholder.png" id="5_c2uou"]
+[ext_resource type="Texture2D" uid="uid://uffs400qxw2q" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Import.png" id="6_rvxvj"]
+[ext_resource type="Texture2D" uid="uid://dusre0h2m2g6t" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Folder.png" id="7_52hie"]
+[ext_resource type="Texture2D" uid="uid://cb35440stu18e" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Exit.png" id="8_vyxk2"]
+[ext_resource type="Texture2D" uid="uid://dr1smfcdfn46v" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Favorite.png" id="10_8hj4f"]
+[ext_resource type="Texture2D" uid="uid://stx0om0pqx4u" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Duplicate.png" id="11_0nur4"]
+[ext_resource type="Texture2D" uid="uid://c0phqqwjx130p" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Delete.png" id="12_0ldeu"]
+[ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="13_wnfeb"]
+[ext_resource type="Texture2D" uid="uid://dd3080y6r8vxe" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Edit.png" id="14_4133s"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rj586"]
+friction = 0.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ir8iy"]
+bounce = 1.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kyld4"]
+texture = ExtResource("1_h7yt3")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0j3d3"]
+texture = ExtResource("2_0pgit")
+texture_region_size = Vector2i(128, 128)
+
+[sub_resource type="TileSet" id="TileSet_c2uou"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_hqns4")
+physics_layer_1/collision_layer = 2
+physics_layer_1/collision_mask = 2
+physics_layer_1/physics_material = SubResource("PhysicsMaterial_rj586")
+physics_layer_2/collision_layer = 4
+physics_layer_2/collision_mask = 4
+physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
+sources/1 = SubResource("TileSetAtlasSource_kyld4")
+sources/2 = SubResource("TileSetAtlasSource_0j3d3")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf5fn"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_3gngh"]
+color = Color(0.42745098, 0.42745098, 0.42745098, 1)
+thickness = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3gngh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_57qmd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d0u6y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
+content_margin_left = 2.0
+content_margin_top = 5.0
+content_margin_right = 2.0
+content_margin_bottom = 5.0
+bg_color = Color(0.44313726, 0.37254903, 0.18039216, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8745098, 0.72156864, 0.3882353, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="TempNewMainMenu" type="Control" unique_id=1798083708]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="." unique_id=1764313566]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+
+[node name="Grid" type="TileMapLayer" parent="Background" unique_id=1171296160]
+clip_children = 1
+z_as_relative = false
+tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAQAAAAAAAAAAAAcAAQAAAAAAAAABAAAAAQAAAAAAAAABAAEAAQAAAAAAAAABAAIAAQAAAAAAAAABAAMAAQAAAAAAAAABAAQAAQAAAAAAAAABAAUAAQAAAAAAAAABAAYAAQAAAAAAAAABAAcAAQAAAAAAAAACAAAAAQAAAAAAAAACAAEAAQAAAAAAAAACAAIAAQAAAAAAAAACAAMAAQAAAAAAAAACAAQAAQAAAAAAAAACAAUAAQAAAAAAAAACAAYAAQAAAAAAAAACAAcAAQAAAAAAAAADAAAAAQAAAAAAAAADAAEAAQAAAAAAAAADAAIAAQAAAAAAAAADAAMAAQAAAAAAAAADAAQAAQAAAAAAAAADAAUAAQAAAAAAAAADAAYAAQAAAAAAAAADAAcAAQAAAAAAAAAEAAAAAQAAAAAAAAAEAAEAAQAAAAAAAAAEAAIAAQAAAAAAAAAEAAMAAQAAAAAAAAAEAAQAAQAAAAAAAAAEAAUAAQAAAAAAAAAEAAYAAQAAAAAAAAAEAAcAAQAAAAAAAAAFAAAAAQAAAAAAAAAFAAEAAQAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAFAAQAAQAAAAAAAAAFAAUAAQAAAAAAAAAFAAYAAQAAAAAAAAAFAAcAAQAAAAAAAAAGAAAAAQAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAQAAAAAAAAAGAAMAAQAAAAAAAAAGAAQAAQAAAAAAAAAGAAUAAQAAAAAAAAAGAAYAAQAAAAAAAAAGAAcAAQAAAAAAAAAHAAAAAQAAAAAAAAAHAAEAAQAAAAAAAAAHAAIAAQAAAAAAAAAHAAMAAQAAAAAAAAAHAAQAAQAAAAAAAAAHAAUAAQAAAAAAAAAHAAYAAQAAAAAAAAAHAAcAAQAAAAAAAAAIAAAAAQAAAAAAAAAIAAEAAQAAAAAAAAAIAAIAAQAAAAAAAAAIAAMAAQAAAAAAAAAIAAQAAQAAAAAAAAAIAAUAAQAAAAAAAAAIAAYAAQAAAAAAAAAIAAcAAQAAAAAAAAAJAAAAAQAAAAAAAAAJAAEAAQAAAAAAAAAJAAIAAQAAAAAAAAAJAAMAAQAAAAAAAAAJAAQAAQAAAAAAAAAJAAUAAQAAAAAAAAAJAAYAAQAAAAAAAAAJAAcAAQAAAAAAAAAKAAAAAQAAAAAAAAAKAAEAAQAAAAAAAAAKAAIAAQAAAAAAAAAKAAMAAQAAAAAAAAAKAAQAAQAAAAAAAAAKAAUAAQAAAAAAAAAKAAYAAQAAAAAAAAAKAAcAAQAAAAAAAAALAAAAAQAAAAAAAAALAAEAAQAAAAAAAAALAAIAAQAAAAAAAAALAAMAAQAAAAAAAAALAAQAAQAAAAAAAAALAAUAAQAAAAAAAAALAAYAAQAAAAAAAAALAAcAAQAAAAAAAAAMAAAAAQAAAAAAAAAMAAEAAQAAAAAAAAAMAAIAAQAAAAAAAAAMAAMAAQAAAAAAAAAMAAQAAQAAAAAAAAAMAAUAAQAAAAAAAAAMAAYAAQAAAAAAAAAMAAcAAQAAAAAAAAANAAAAAQAAAAAAAAANAAEAAQAAAAAAAAANAAIAAQAAAAAAAAANAAMAAQAAAAAAAAANAAQAAQAAAAAAAAANAAUAAQAAAAAAAAANAAYAAQAAAAAAAAANAAcAAQAAAAAAAAAOAAAAAQAAAAAAAAAOAAEAAQAAAAAAAAAOAAIAAQAAAAAAAAAOAAMAAQAAAAAAAAAOAAQAAQAAAAAAAAAOAAUAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAcAAQAAAAAAAAAAAAgAAQAAAAAAAAABAAgAAQAAAAAAAAACAAgAAQAAAAAAAAADAAgAAQAAAAAAAAAEAAgAAQAAAAAAAAAFAAgAAQAAAAAAAAAGAAgAAQAAAAAAAAAHAAgAAQAAAAAAAAAIAAgAAQAAAAAAAAAJAAgAAQAAAAAAAAAKAAgAAQAAAAAAAAALAAgAAQAAAAAAAAAMAAgAAQAAAAAAAAANAAgAAQAAAAAAAAAOAAgAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_c2uou")
+occlusion_enabled = false
+
+[node name="SafeArea" type="MarginContainer" parent="." unique_id=171380048]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 64
+
+[node name="PanelContainer" type="PanelContainer" parent="SafeArea" unique_id=2124591170]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_c2uou")
+
+[node name="RootVBox" type="VBoxContainer" parent="SafeArea/PanelContainer" unique_id=216121502]
+layout_mode = 2
+
+[node name="TopBar" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox" unique_id=2112671475]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_yf5fn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/TopBar" unique_id=427075880]
+layout_mode = 2
+
+[node name="TopBarMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer" unique_id=96010752]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="TopBarHBox" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin" unique_id=1102274078]
+layout_mode = 2
+
+[node name="LogoTexture" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=207494777]
+custom_maximum_size = Vector2(215, 81)
+layout_mode = 2
+texture = ExtResource("3_0j3d3")
+
+[node name="TopBarSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=801058569]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VersionLabel" type="Label" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=1529773254]
+layout_mode = 2
+text = "v0.1.0"
+
+[node name="DividerMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer" unique_id=533107761]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="TitleSeparator" type="HSeparator" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/DividerMargin" unique_id=1294168192]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_3gngh")
+
+[node name="MainContent" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox" unique_id=439275274]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeftPane" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent" unique_id=2009927958]
+custom_maximum_size = Vector2(750, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_g4v7s")
+
+[node name="LeftPaneMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane" unique_id=2032940564]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="LeftPaneVBox" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin" unique_id=340669176]
+layout_mode = 2
+
+[node name="TopActionsRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox" unique_id=331751129]
+layout_mode = 2
+
+[node name="NewLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=361130273]
+custom_minimum_size = Vector2(190, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+
+[node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/NewLevelButton" unique_id=1311426592]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ContentRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/NewLevelButton/ContentMargin" unique_id=610286941]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/NewLevelButton/ContentMargin/ContentRow" unique_id=1801192315]
+layout_mode = 2
+texture = ExtResource("4_0j3d3")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextContainer" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/NewLevelButton/ContentMargin/ContentRow" unique_id=774137976]
+layout_mode = 2
+
+[node name="NewLevelTitle" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/NewLevelButton/ContentMargin/ContentRow/TextContainer" unique_id=542554000]
+layout_mode = 2
+text = "New Level"
+
+[node name="NewLevelSubtext" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/NewLevelButton/ContentMargin/ContentRow/TextContainer" unique_id=1206567011]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
+theme_override_font_sizes/font_size = 12
+text = "Create a new level"
+
+[node name="NewImportSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=182766160]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ImportLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=1849129557]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+
+[node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/ImportLevelButton" unique_id=1909908390]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ContentRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/ImportLevelButton/ContentMargin" unique_id=1040270574]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/ImportLevelButton/ContentMargin/ContentRow" unique_id=182928559]
+layout_mode = 2
+texture = ExtResource("6_rvxvj")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextContainer" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/ImportLevelButton/ContentMargin/ContentRow" unique_id=817040265]
+layout_mode = 2
+
+[node name="ImportLevelTitle" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/ImportLevelButton/ContentMargin/ContentRow/TextContainer" unique_id=199561191]
+layout_mode = 2
+text = "Import Level"
+
+[node name="ImportLevelSubtext" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/ImportLevelButton/ContentMargin/ContentRow/TextContainer" unique_id=1964042176]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
+theme_override_font_sizes/font_size = 12
+text = "Import a level folder"
+
+[node name="ImportOpenSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=936646719]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="OpenFolderButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=1916229944]
+custom_minimum_size = Vector2(230, 75)
+layout_mode = 2
+
+[node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton" unique_id=328390251]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ContentRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton/ContentMargin" unique_id=718942950]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton/ContentMargin/ContentRow" unique_id=1014028179]
+layout_mode = 2
+texture = ExtResource("7_52hie")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextContainer" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton/ContentMargin/ContentRow" unique_id=274135030]
+layout_mode = 2
+
+[node name="OpenFolderTitle" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton/ContentMargin/ContentRow/TextContainer" unique_id=345009585]
+layout_mode = 2
+text = "Open Level Folder"
+
+[node name="OpenFolderSubtext" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton/ContentMargin/ContentRow/TextContainer" unique_id=457075003]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
+theme_override_font_sizes/font_size = 12
+text = "Location of stored levels"
+
+[node name="LevelListSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox" unique_id=1375032286]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="LevelListPanel" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox" unique_id=9943232]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LevelListScroll" type="ScrollContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel" unique_id=1583564096]
+layout_mode = 2
+
+[node name="LevelList" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll" unique_id=1376289096]
+layout_mode = 2
+
+[node name="ExitRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox" unique_id=1665265409]
+layout_mode = 2
+
+[node name="ExitButtonMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow" unique_id=1788955015]
+layout_mode = 2
+theme_override_constants/margin_top = 35
+
+[node name="ExitButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin" unique_id=1356679422]
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+
+[node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton" unique_id=570388100]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ContentRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton/ContentMargin" unique_id=1095622922]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton/ContentMargin/ContentRow" unique_id=889240471]
+layout_mode = 2
+texture = ExtResource("8_vyxk2")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextContainer" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton/ContentMargin/ContentRow" unique_id=1955920845]
+layout_mode = 2
+
+[node name="ExitTile" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton/ContentMargin/ContentRow/TextContainer" unique_id=595808091]
+layout_mode = 2
+text = "Exit Editor"
+
+[node name="ExitSubtext" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton/ContentMargin/ContentRow/TextContainer" unique_id=1779291030]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
+theme_override_font_sizes/font_size = 12
+text = "Quit to desktop"
+
+[node name="CenterPane" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent" unique_id=2099896116]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3gngh")
+
+[node name="CenterPageMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane" unique_id=314253705]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 45
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 35
+
+[node name="CenterPaneVbox" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin" unique_id=558008634]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PreviewPanel" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox" unique_id=1636936152]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_57qmd")
+
+[node name="PreviewTexture" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel" unique_id=1664404116]
+layout_mode = 2
+texture = ExtResource("5_c2uou")
+stretch_mode = 2
+
+[node name="DetailsCard" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox" unique_id=1782890286]
+custom_maximum_size = Vector2(-1, 300)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d0u6y")
+
+[node name="DetailsVBox" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard" unique_id=1751434853]
+layout_mode = 2
+
+[node name="TitleRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox" unique_id=1155394002]
+layout_mode = 2
+
+[node name="SelectedLevelName" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow" unique_id=2133258789]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "LEVEL_01"
+
+[node name="NameButtonsSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow" unique_id=180871549]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FavoriteButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow" unique_id=657863021]
+layout_mode = 2
+icon = ExtResource("10_8hj4f")
+
+[node name="TitleDetailsSeparator" type="HSeparator" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox" unique_id=1733107046]
+layout_mode = 2
+
+[node name="DetailsMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox" unique_id=1011842571]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 30
+
+[node name="DetailsRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin" unique_id=897913567]
+layout_mode = 2
+
+[node name="ButtonColumn" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow" unique_id=64140966]
+layout_mode = 2
+
+[node name="DuplicateLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=980103507]
+layout_mode = 2
+icon = ExtResource("11_0nur4")
+
+[node name="DuplicateDeleteSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=2113419149]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="DeleteLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=873845671]
+layout_mode = 2
+icon = ExtResource("12_0ldeu")
+
+[node name="MetadataMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow" unique_id=18846420]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 45
+theme_override_constants/margin_right = 200
+
+[node name="MetadataRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin" unique_id=1044720387]
+layout_mode = 2
+
+[node name="LabelColumn" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow" unique_id=1388211063]
+layout_mode = 2
+
+[node name="AuthorLabel" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/LabelColumn" unique_id=1990456503]
+layout_mode = 2
+text = "Author:"
+
+[node name="DateCreatedLabel" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/LabelColumn" unique_id=710502647]
+layout_mode = 2
+text = "Date Created:"
+
+[node name="ModifiedLabel" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/LabelColumn" unique_id=726699902]
+layout_mode = 2
+text = "Modified:"
+
+[node name="DimensionsLabel" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/LabelColumn" unique_id=92634287]
+layout_mode = 2
+text = "Dimensions:"
+
+[node name="VersionLabel" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/LabelColumn" unique_id=1778590713]
+layout_mode = 2
+text = "Version:"
+
+[node name="LabelMetadataSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow" unique_id=2056489204]
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+
+[node name="MetadataColumn" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow" unique_id=1442618010]
+layout_mode = 2
+
+[node name="Author" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn" unique_id=1271155073]
+layout_mode = 2
+
+[node name="DateCreated" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn" unique_id=24275941]
+layout_mode = 2
+
+[node name="Modified" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn" unique_id=115723841]
+layout_mode = 2
+
+[node name="Dimensions" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn" unique_id=1418321816]
+layout_mode = 2
+
+[node name="Version" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn" unique_id=1023183600]
+layout_mode = 2
+
+[node name="ActionsColumn" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow" unique_id=1259268399]
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn" unique_id=1108696886]
+custom_minimum_size = Vector2(250, 65)
+layout_mode = 2
+
+[node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton" unique_id=1784265768]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ContentRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton/ContentMargin" unique_id=752699841]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton/ContentMargin/ContentRow" unique_id=507306604]
+layout_mode = 2
+texture = ExtResource("13_wnfeb")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextContainer" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton/ContentMargin/ContentRow" unique_id=563987646]
+layout_mode = 2
+
+[node name="PlayTitle" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton/ContentMargin/ContentRow/TextContainer" unique_id=2067820025]
+layout_mode = 2
+text = "Play Level"
+
+[node name="PlaySubtext" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton/ContentMargin/ContentRow/TextContainer" unique_id=1134914151]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
+theme_override_font_sizes/font_size = 12
+text = "Play level outside of editor"
+
+[node name="PlayEditSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn" unique_id=1429302573]
+layout_mode = 2
+
+[node name="EditButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn" unique_id=1777678716]
+custom_minimum_size = Vector2(250, 65)
+layout_mode = 2
+
+[node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton" unique_id=1122992598]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ContentRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton/ContentMargin" unique_id=905942806]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton/ContentMargin/ContentRow" unique_id=829417104]
+layout_mode = 2
+texture = ExtResource("14_4133s")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextContainer" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton/ContentMargin/ContentRow" unique_id=645473184]
+layout_mode = 2
+
+[node name="EditTitle" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton/ContentMargin/ContentRow/TextContainer" unique_id=1305351527]
+layout_mode = 2
+text = "Edit Level"
+
+[node name="EditSubtext" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton/ContentMargin/ContentRow/TextContainer" unique_id=1393546472]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
+theme_override_font_sizes/font_size = 12
+text = "Enter editor mode"
+
+[node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=2033598074]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0885599, 0.0885599, 0.0885599, 0.6156863)
+
+[node name="SafeArea" type="MarginContainer" parent="NewLevelOverlay" unique_id=97816700]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -68.0
+offset_right = 37.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OverlayCard" type="PanelContainer" parent="NewLevelOverlay/SafeArea" unique_id=1206689031]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_c2uou")
+
+[node name="OverlayMargin" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard" unique_id=2037301916]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="RootVbox" type="VBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin" unique_id=997545987]
+layout_mode = 2
+
+[node name="OverlayTitle" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1718110155]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "New Level"
+
+[node name="TitleNameSeparator" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1206729685]
+layout_mode = 2
+
+[node name="LevelNameAuthorRow" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=886263873]
+layout_mode = 2
+
+[node name="LabelsColumn" type="VBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow" unique_id=1718429029]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="LevelNameLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/LabelsColumn" unique_id=160009485]
+layout_mode = 2
+text = "Level Name"
+
+[node name="LevelNameAuthorSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/LabelsColumn" unique_id=901192643]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AuthorLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/LabelsColumn" unique_id=73523682]
+layout_mode = 2
+text = "Author"
+
+[node name="LabelsInputSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow" unique_id=1545810098]
+custom_maximum_size = Vector2(20, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InputsColumn" type="VBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow" unique_id=757904309]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LevelNameInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=236825485]
+layout_mode = 2
+placeholder_text = "Type here..."
+
+[node name="AuthorInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=1716910298]
+layout_mode = 2
+placeholder_text = "Type here..."
+
+[node name="NameGridSeparator" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=772753027]
+layout_mode = 2
+
+[node name="GridSettingsLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1164748144]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
+theme_override_font_sizes/font_size = 14
+text = "Grid Settings"
+
+[node name="GridSettingsRow" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=709057674]
+layout_mode = 2
+
+[node name="LabelsColumn" type="VBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow" unique_id=92997656]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="WidthLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow/LabelsColumn" unique_id=798042487]
+layout_mode = 2
+text = "Width"
+
+[node name="WidthHeightSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow/LabelsColumn" unique_id=1412024916]
+custom_minimum_size = Vector2(0, 2.5)
+layout_mode = 2
+
+[node name="HeightLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow/LabelsColumn" unique_id=1482433910]
+layout_mode = 2
+text = "Height"
+
+[node name="LabelsInputSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow" unique_id=1928161144]
+custom_maximum_size = Vector2(20, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InputsColumn" type="VBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow" unique_id=632122072]
+layout_mode = 2
+
+[node name="WidthSpinBox" type="SpinBox" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow/InputsColumn" unique_id=699625108]
+layout_mode = 2
+min_value = 2.0
+value = 2.0
+
+[node name="HeightSpinBox" type="SpinBox" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow/InputsColumn" unique_id=1250217443]
+layout_mode = 2
+min_value = 2.0
+value = 2.0
+
+[node name="GridButtonsSeparator" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=83740415]
+layout_mode = 2
+
+[node name="ErrorBanner" type="PanelContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1564116025]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="Label" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner" unique_id=1745841521]
+layout_mode = 2
+text = "Error: All Fields must be filled ou!"
+
+[node name="ButtonMargin" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=679165822]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="ButtonRow" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin" unique_id=670485762]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="CreateLevelButton" type="Button" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow" unique_id=1800619788]
+layout_mode = 2
+text = "Create Level"
+
+[node name="ButtonSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow" unique_id=1539957389]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CancelButton" type="Button" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow" unique_id=572292976]
+layout_mode = 2
+text = "Cancel
+"
+
+[node name="ImportLevelOverlay" type="ColorRect" parent="." unique_id=1459983268]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09019608, 0.09019608, 0.09019608, 0.6156863)
+
+[node name="SafeArea" type="MarginContainer" parent="ImportLevelOverlay" unique_id=763961313]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -68.0
+offset_right = 37.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OverlayCard" type="PanelContainer" parent="ImportLevelOverlay/SafeArea" unique_id=328358608]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_c2uou")
+
+[node name="OverlayMargin" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard" unique_id=665813585]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="RootVbox" type="VBoxContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin" unique_id=464673224]
+layout_mode = 2
+
+[node name="OverlayTitle" type="Label" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1794192887]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Import Level"
+
+[node name="TitleSpacer" type="Control" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=889979084]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="TitleNameSeparator" type="HSeparator" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=374898171]
+layout_mode = 2
+
+[node name="FilePathNargin" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=87018101]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="FilePathRow" type="HBoxContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/FilePathNargin" unique_id=1163467318]
+layout_mode = 2
+
+[node name="FilePathLabel" type="Label" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/FilePathNargin/FilePathRow" unique_id=206613763]
+layout_mode = 2
+text = "File Path"
+
+[node name="MarginContainer" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/FilePathNargin/FilePathRow" unique_id=1840874776]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="FilePathInput" type="LineEdit" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/FilePathNargin/FilePathRow/MarginContainer" unique_id=1258214146]
+layout_mode = 2
+placeholder_text = "Type here..."
+
+[node name="FilePathButton" type="Button" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/FilePathNargin/FilePathRow" unique_id=1385322445]
+layout_mode = 2
+icon = ExtResource("4_0j3d3")
+icon_alignment = 1
+
+[node name="InputButtonsSeparator" type="HSeparator" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1620636380]
+layout_mode = 2
+
+[node name="ErrorBanner" type="PanelContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=663620152]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="Label" type="Label" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner" unique_id=1753082738]
+layout_mode = 2
+text = "Error: Invalid File Path!"
+
+[node name="ButtonsMargin" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=706930528]
+layout_mode = 2
+theme_override_constants/margin_top = 15
+
+[node name="ButtonsRow" type="HBoxContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonsMargin" unique_id=1780521619]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="ImportLevelButton" type="Button" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonsMargin/ButtonsRow" unique_id=1402666715]
+layout_mode = 2
+text = "Import Level"
+
+[node name="ButtonSpacer" type="Control" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonsMargin/ButtonsRow" unique_id=182530781]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="CancelButton" type="Button" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonsMargin/ButtonsRow" unique_id=1954812556]
+layout_mode = 2
+text = "Cancel"
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1758093936]
+oversampling_override = 1.0

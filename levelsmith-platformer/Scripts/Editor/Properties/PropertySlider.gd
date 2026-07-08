@@ -17,6 +17,9 @@ extends VBoxContainer
 # Signal to emit when the slider is done being dragged
 signal drag_ended;
 
+# Signal to emit while the slider is being dragged
+signal dragging
+
 # Value of the slider
 var value : float;
 var enabled : bool = true;
@@ -45,6 +48,7 @@ func _process(_delta: float) -> void:
 		return;
 	if value == slider.value:
 		return;
+	dragging.emit();
 	adjust_label();
 	value = slider.value;
 

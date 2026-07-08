@@ -10,14 +10,13 @@ extends Control
 # Callback function, used for assigning a function to the reset button.
 var resetCallback : Callable = Callable();
 
-
 ## Runs when the node is first created
 func _ready() -> void:
 	if (closeButton):
 		closeButton.pressed.connect(close_popup);
 		
 	if (resetButton):
-		resetButton.pressed.connect(_on_confirm_pressed);
+		resetButton.pressed.connect(_on_reset_pressed);
 
 ## Replaces the title of the popup
 ## text: The replacement text
@@ -34,11 +33,14 @@ func close_popup() -> void:
 	queue_free();
 	# Additional functionality can be added below
 	
-func _on_confirm_pressed() -> void:
+## When the reset button is pressed, execute the callback.
+func _on_reset_pressed() -> void:
 	if (resetCallback.is_valid()):
 		resetCallback.call();
 
 	close_popup();
 
-func set_confirm_callback(callback: Callable) -> void:
+## Set the callback to the given callable function.
+## callback: Given callback function from another script.
+func set_reset_callback(callback: Callable) -> void:
 	resetCallback = callback;

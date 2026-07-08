@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b6axoaekmjyr4"]
 
 [ext_resource type="Script" uid="uid://dvbnlxepvikk0" path="res://Scripts/Game/MovingPlatform.gd" id="1_it7tw"]
-[ext_resource type="Texture2D" uid="uid://br37mj4cad57p" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
+[ext_resource type="Texture2D" uid="uid://d1oebx8abt0n" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
 [ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="2_na4dm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hvxo"]
@@ -16,7 +16,7 @@ previewLineEndpoint = NodePath("Line2D/LineEndpoint")
 previewPlatform = NodePath("PreviewPlatform")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
-scale = Vector2(6.3, 6.3)
+scale = Vector2(6.4, 6.4)
 shape = SubResource("RectangleShape2D_5hvxo")
 one_way_collision = true
 

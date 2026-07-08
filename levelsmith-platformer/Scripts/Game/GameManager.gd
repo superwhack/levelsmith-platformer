@@ -101,7 +101,7 @@ func start() -> void:
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
 	cameraManager.adjust_smoothing();
-	cameraManager.process_player_camera(true);
+	cameraManager.snap_camera(player.global_position);
 	if playerHealthUI:
 		playerHealthUI.bind_player(player);
 

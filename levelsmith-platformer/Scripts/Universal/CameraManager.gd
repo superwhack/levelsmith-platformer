@@ -184,6 +184,13 @@ func process_edge_scrolling(delta: float) -> void:
 	if edgeMovement != Vector2.ZERO:
 		global_position += edgeMovement.normalized() * edgeScrollSpeed * delta;
 
+## Snap the camera
+## snapTo: the positon to snap to
+func snap_camera(snapTo: Vector2) -> void:
+	global_position = snapTo;
+	if cameraPlayClamp:
+		clamp_camera(levelBounds);
+	reset_smoothing();
 
 ## Processes player follow camera
 ## snap: if true, the camera will snap to the player without deadzone logic

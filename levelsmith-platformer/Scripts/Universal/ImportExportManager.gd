@@ -21,6 +21,8 @@ var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tr
 
 ## Create a new level, cloning from the default folder
 ## levelName: Name of the new level, indicates where it'll go in the folder
+## levelSize: The size of the level
+## settings: The settings menu for the level
 func make_new_level(levelName: String, levelSize: Vector2, settings: SettingsMenu) -> void:
 	# When making an enemy we need to set the path name and clear all enemies
 	levelName = levelName;
@@ -86,6 +88,7 @@ func make_new_level(levelName: String, levelSize: Vector2, settings: SettingsMen
 ## tileMap: The tileMap
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
+## settings: The settings menu to export the configurations from
 func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, settings: SettingsMenu) -> void:
 	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
@@ -250,6 +253,7 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 ## Import the JSON file
 ## tileMap: Tile map for searching for enemies
 ## playerData: The panel that contains player data to adjust it
+## settings: Settings to import saved configurations to
 func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMenu) -> void:
 	# Read JSON to file and close it
 	var JSONFile : FileAccess= FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);

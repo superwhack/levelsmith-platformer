@@ -144,7 +144,6 @@ func main_menu(menuClickSound : bool = true) -> void:
 func edit() -> void:
 	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UI_Selection");
-	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	if gameManager.tileMap:
 		gameManager.tileMap.queue_free();

@@ -55,6 +55,8 @@ func _ready() -> void:
 	followSpeed.drag_ended.connect(_on_drag);
 	cameraDeadzone.drag_ended.connect(_on_drag);
 	cameraClamp.check_changed.connect(_on_drag);
+
+## When dragging, adjust the values in real time
 func _on_drag() -> void:
 	# Await needed for values to update from drag_ended
 	await get_tree().process_frame;
@@ -69,6 +71,7 @@ func _on_drag() -> void:
 	cameraManager.deadzone = cameraDeadzone.value;
 	cameraManager.cameraPlayClamp = cameraClamp.value;
 
+## Update sliders visually
 func update_sliders() -> void:
 	masterVolume.update_slider();
 	SFXVolume.update_slider();
@@ -80,6 +83,7 @@ func update_sliders() -> void:
 	cameraClamp.update_checkbox();
 	_on_drag();
 
+## Reset the settings
 func reset_settings() -> void:
 	gameplayZoom.value = 100.0;
 	followSpeed.value = 100.0;

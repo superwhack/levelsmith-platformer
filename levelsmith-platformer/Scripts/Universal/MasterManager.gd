@@ -121,7 +121,6 @@ func load_level(levelPath: String) -> void:
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
-		import_level_and_edit();
 		# Await so that the camera gets properly placed
 		await import_level_and_edit();
 		cameraManager.initialize_camera();

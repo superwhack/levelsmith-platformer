@@ -51,8 +51,6 @@ var currentSelectedItem : AssetItem;
 func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_image_selector);
-	resetButton.pressed.connect(reset);
-	resetAllButton.pressed.connect(reset_all);
 	refreshAllButton.pressed.connect(refresh_all);
 	resetButton.pressed.connect(reset_image_popup);
 	resetAllButton.pressed.connect(reset_all_popup);
@@ -127,7 +125,6 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 ## folderPath: Path to the folder
 ## returns: Image loaded if it is foundf
 func find_image_in_folder(folderPath: String) -> Image:
-	print("Folder Path: ", folderPath);
 	# Opens the folder at the given folderName path
 	var dir : DirAccess = DirAccess.open(folderPath);
 	# If a folder was sucessfully opened
@@ -136,7 +133,6 @@ func find_image_in_folder(folderPath: String) -> Image:
 		dir.list_dir_begin();
 		# Get the image name in the folder
 		var imageName : String = dir.get_next();
-		print("image name: ", imageName)
 		# If there is no image in the folder, return null
 		if (imageName == ""):
 			return null;
@@ -193,7 +189,7 @@ func reset() -> void:
 		animationSwapping.reset_animation();
 ## Creates the refresh asset popup.
 func reset_image_popup() -> void:
-	PopUpManager.create_reset_image_popup(Callable(imageSwapping, "reset_image"), currentSelectedItem.displayName);
+	PopUpManager.create_reset_image_popup(Callable(self, "reset"), currentSelectedItem.displayName);
 
 
 ## Creates the reset all assets popup.

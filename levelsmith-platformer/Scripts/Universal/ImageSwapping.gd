@@ -80,7 +80,6 @@ func replace_image(newImagePath: String) -> void:
 ## Clears the image in a given folder and replaces it with a default
 func reset_image() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
-	print("Resetting image.")
 	assetManager.clear_image(imageNameToReplace);
 	refresh_images();
 	imagePreviewTexture.texture = ImageTexture.create_from_image(get_default_image(imageNameToReplace));

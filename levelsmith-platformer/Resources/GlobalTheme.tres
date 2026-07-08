@@ -51,12 +51,10 @@
 [ext_resource type="StyleBox" uid="uid://b1tpgrjp8xpbj" path="res://Assets/UserInterface/TooltipStyleBox.tres" id="34_k74kl"]
 [ext_resource type="StyleBox" uid="uid://bryfqoermm7f4" path="res://Assets/UserInterface/HScrollAreaStyleBox.tres" id="36_3caln"]
 [ext_resource type="StyleBox" uid="uid://bwclbl24ey6hw" path="res://Assets/UserInterface/VSeparatorLine.tres" id="37_apnec"]
-[ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="39_km3k5"]
 [ext_resource type="StyleBox" uid="uid://b0bwc6kq7kfl3" path="res://Assets/UserInterface/TextListButtonPressedStyleBox.tres" id="40_ccokw"]
 [ext_resource type="StyleBox" uid="uid://csnvdq0u2kbg5" path="res://Assets/UserInterface/ToolButtonFocusStyleBox.tres" id="40_g1adj"]
 [ext_resource type="StyleBox" uid="uid://blvx1jpl8wk6y" path="res://Assets/UserInterface/TileButtonFocusStyleBox.tres" id="40_ke4fi"]
 [ext_resource type="StyleBox" uid="uid://bcx2ixaf8mxjd" path="res://Assets/UserInterface/ToolButtonNormalStyleBox.tres" id="40_km3k5"]
-[ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="40_wg75p"]
 [ext_resource type="StyleBox" uid="uid://de7k1e7p5nyw8" path="res://Assets/UserInterface/TileButtonHoverStyleBox.tres" id="41_ccokw"]
 [ext_resource type="StyleBox" uid="uid://blnb73c6181oq" path="res://Assets/UserInterface/ToolButtonHoverStyleBox.tres" id="41_p21lw"]
 [ext_resource type="StyleBox" uid="uid://depwd8khx6b5m" path="res://Assets/UserInterface/TileButtonSelectStyleBox.tres" id="42_5jgur"]
@@ -251,9 +249,9 @@ MenuButton/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 MenuButton/colors/font_pressed_color = Color(1, 1, 1, 1)
 MenuButton/fonts/font = ExtResource("1_4eou0")
 OptionButton/colors/font_color = Color(1, 1, 1, 1)
-OptionButton/constants/arrow_margin = 8
 OptionButton/constants/modulate_arrow = 1
 OptionButton/fonts/font = ExtResource("1_4eou0")
+OptionButton/icons/arrow = ExtResource("12_4eou0")
 OptionButton/styles/focus = ExtResource("5_cb87k")
 OptionButton/styles/hover_pressed = ExtResource("4_us2oy")
 OptionButton/styles/hover_pressed_mirrored = ExtResource("5_cb87k")
@@ -262,8 +260,12 @@ Panel/styles/panel = ExtResource("22_nvaf8")
 PopupMenu/colors/font_color = Color(0.8, 0.8, 0.8, 1)
 PopupMenu/colors/font_hover_color = Color(1, 1, 1, 1)
 PopupMenu/constants/h_separation = 8
+PopupMenu/icons/close = ExtResource("9_2y7gw")
+PopupMenu/icons/close_pressed = ExtResource("9_2y7gw")
 PopupMenu/icons/radio_checked = ExtResource("6_a0yo8")
 PopupMenu/icons/radio_unchecked = ExtResource("7_ofwiu")
+PopupMenu/icons/submenu = ExtResource("16_ofwiu")
+PopupMenu/icons/submenu_mirrored = ExtResource("8_2y7gw")
 PopupMenu/styles/hover = SubResource("StyleBoxFlat_4tmrm")
 PopupMenu/styles/panel = ExtResource("23_2d6mn")
 PopupMenu/styles/separator = SubResource("StyleBoxLine_74mva")
@@ -277,6 +279,14 @@ SpinBox/colors/up_icon_modulate = Color(1, 1, 1, 1)
 SpinBox/colors/up_pressed_icon_modulate = Color(1, 1, 1, 1)
 SpinBox/constants/buttons_vertical_separation = 0
 SpinBox/constants/field_and_buttons_separation = 6
+SpinBox/icons/down = ExtResource("12_4eou0")
+SpinBox/icons/down_disabled = ExtResource("12_4eou0")
+SpinBox/icons/down_hover = ExtResource("12_4eou0")
+SpinBox/icons/down_pressed = ExtResource("12_4eou0")
+SpinBox/icons/up = ExtResource("13_sd1wi")
+SpinBox/icons/up_disabled = ExtResource("13_sd1wi")
+SpinBox/icons/up_hover = ExtResource("13_sd1wi")
+SpinBox/icons/up_pressed = ExtResource("13_sd1wi")
 SpinBox/styles/down_background = ExtResource("28_km3k5")
 SpinBox/styles/down_background_hovered = ExtResource("29_wg75p")
 SpinBox/styles/down_background_pressed = ExtResource("30_u6y6t")
@@ -292,6 +302,11 @@ TabBar/colors/icon_hovered_color = Color(1, 1, 1, 1)
 TabBar/colors/icon_selected_color = Color(1, 1, 1, 1)
 TabBar/colors/icon_unselected_color = Color(1, 1, 1, 1)
 TabBar/fonts/font = ExtResource("1_4eou0")
+TabBar/icons/close = ExtResource("9_2y7gw")
+TabBar/icons/decrement = ExtResource("8_2y7gw")
+TabBar/icons/decrement_highlight = ExtResource("8_2y7gw")
+TabBar/icons/increment = ExtResource("16_ofwiu")
+TabBar/icons/increment_highlight = ExtResource("16_ofwiu")
 TabBar/styles/tab_disabled = SubResource("StyleBoxEmpty_4eou0")
 TabBar/styles/tab_focus = ExtResource("29_p7whp")
 TabBar/styles/tab_hovered = ExtResource("30_a0yo8")
@@ -301,10 +316,10 @@ TabContainer/colors/font_disabled_color = Color(0.42745098, 0.42745098, 0.427450
 TabContainer/colors/font_unselected_color = Color(1, 1, 1, 1)
 TabContainer/constants/side_margin = 0
 TabContainer/fonts/font = ExtResource("1_4eou0")
-TabContainer/icons/decrement = ExtResource("39_km3k5")
-TabContainer/icons/decrement_highlight = ExtResource("39_km3k5")
-TabContainer/icons/increment = ExtResource("40_wg75p")
-TabContainer/icons/increment_highlight = ExtResource("40_wg75p")
+TabContainer/icons/decrement = ExtResource("8_2y7gw")
+TabContainer/icons/decrement_highlight = ExtResource("8_2y7gw")
+TabContainer/icons/increment = ExtResource("16_ofwiu")
+TabContainer/icons/increment_highlight = ExtResource("16_ofwiu")
 TabContainer/styles/panel = SubResource("StyleBoxFlat_e1qli")
 TabContainer/styles/tab_disabled = SubResource("StyleBoxEmpty_2a08w")
 TabContainer/styles/tab_focus = ExtResource("29_p7whp")

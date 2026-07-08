@@ -34,7 +34,7 @@ func _process(_delta: float) -> void:
 func update_preview_object(mousePosition: Vector2, prevPosition: Vector2, previewObject: int = brushObject, isRed: bool = false) -> void:
 	if (mousePosition != prevPosition): clear();
 	
-	if tileMap.get_cell_source_id(mousePosition) >= editorManager.tileCount && previewObject >= editorManager.tileCount:
+	if !toolManager.isMoving && (tileMap.get_cell_source_id(mousePosition) >= editorManager.tileCount && previewObject >= editorManager.tileCount):
 		clear();
 		return;
 	

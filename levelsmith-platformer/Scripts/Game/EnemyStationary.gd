@@ -6,9 +6,12 @@ var gravityEnabled : bool = true;
 var isFacingRight : bool = true;
 
 func _ready() -> void:
+	deathAnim = "StationaryDeath";
 	super._ready();
 	
-	animatedSprites.animation = "idle";
+	animatedSprites.sprite_frames = AnimationManager.stationaryEnemyTemplateSprite.sprite_frames;
+	
+	animatedSprites.animation = "StationaryIdle";
 	animatedSprites.play();
 ## Processes the physics every frame
 ## delta: Time since previous frame

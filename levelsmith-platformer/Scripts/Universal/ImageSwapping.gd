@@ -18,10 +18,6 @@ var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5", "P
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	mainTileMap = assetManager.mainTileMap;
-	Global.levelCreated.connect(refresh_images);
-	# Refresh all assets
-	#refresh_images();
-	ImportExportManager.levelImported.connect(refresh_images);
 
 ## Refresh all images in game
 func refresh_images() -> void:
@@ -65,7 +61,12 @@ func replace_image(newImagePath: String) -> void:
 	var targetDirectory : DirAccess = assetManager.clear_image(imageNameToReplace);
 	# If the image is a png, create a copy
 	if (newImagePath.get_extension().to_lower() == "png"):
-		targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
+		assetManager.clear_image(imageNameToReplace);
+		var image = Image.new();
+		image.load(newImagePath);
+		assetManager.validate_image(image);
+		image.save_png(targetFilePath + "/replacement.png");
+		#targetDirectory.copy(newImagePath, targetFilePath + "/replacement.png");
 	else:
 		PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
 	
@@ -78,7 +79,7 @@ func replace_image(newImagePath: String) -> void:
 
 ## Clears the image in a given folder and replaces it with a default
 func reset_image() -> void:
-	print("Resetting image.")
+	AudioManager.play_UI_effect("UI_Selection");
 	assetManager.clear_image(imageNameToReplace);
 	refresh_images();
 	imagePreviewTexture.texture = ImageTexture.create_from_image(get_default_image(imageNameToReplace));

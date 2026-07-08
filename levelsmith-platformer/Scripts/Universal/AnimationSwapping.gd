@@ -40,6 +40,8 @@ var patrollingEnemyAnimations : Array[String] = ["PatrolWalk", "PatrolDeath"];
 var flyingEnemyAnimations : Array[String] = ["FlyMove", "FlyDeath"];
 var shootingEnemyAnimations : Array[String] = ["EnemyShoot", "ShootIdle", "ShootDeath"];
 
+const ANIMATION_LENGTH_LIMIT : int = 60;
+
 ## Connect all relevant signals
 func _ready() -> void:
 	animationPreviewRightButton.pressed.connect(anim_change.bind(true));
@@ -69,6 +71,9 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 	if (pathToFolder):
 		var dir : DirAccess = DirAccess.open(pathToFolder);
 		var allImageNames : PackedStringArray = dir.get_files();
+		if (allImageNames.size() > ANIMATION_LENGTH_LIMIT):
+			allImageNames.resize(ANIMATION_LENGTH_LIMIT);
+			PopUpManager.create_error_popup("Animation Length Limit", "Animations can only be a maximum of 60 frames. The first 60 frames will be loaded.");
 		var allImages : Array[Image] = [];
 		for imageName in allImageNames:
 			allImages.append(assetManager.find_image(imageName));
@@ -90,7 +95,14 @@ func replace_animation(newAnimationPath : String) -> void:
 		# If the file is a png, increase the file count and create a copy in the assets folder with its number
 		if (file.get_extension().to_lower() == "png"):
 			fileCount += 1;
-			targetDirectory.copy(currentFilePath, str(targetFilePath, "/", animationPreviewNameToReplace, str(fileCount).pad_zeros(2), ".png"));
+			if (fileCount > 60):
+				PopUpManager.create_error_popup("Animation Length Limit", "Animations can only be a maximum of 60 frames. The first 60 frames will be loaded.");
+				break;
+			var image = Image.new();
+			image.load(currentFilePath);
+			assetManager.validate_image(image);
+			image.save_png(str(targetFilePath, "/", animationPreviewNameToReplace, str(fileCount).pad_zeros(2), ".png"));
+			#targetDirectory.copy(currentFilePath, str(targetFilePath, "/", animationPreviewNameToReplace, str(fileCount).pad_zeros(2), ".png"));
 		else:
 			if (!file.get_extension().to_lower() == "png.import"):
 				PopUpManager.create_error_popup("File type incorrect", "File must be .png format.");
@@ -101,8 +113,18 @@ func replace_animation(newAnimationPath : String) -> void:
 		for image in get_animation_from_folder(animationPreviewNameToReplace):
 			currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 		update_animation_preview();
+		AnimationManager.update_template_sprite_by_name(selectedEntityType);
 	else:
 		PopUpManager.create_error_popup("No Defaults", "No default images yet, update this when there are default animations");
+
+func reset_animation() -> void:
+	assetManager.clear_image(animationPreviewNameToReplace);
+	animationFrameIndex = 0;
+	currentLoadedAnimation.clear()
+	for frame in AnimationManager.get_default_animation_by_name(animationPreviewNameToReplace):
+		currentLoadedAnimation.append(ImageTexture.create_from_image(frame));
+	AnimationManager.update_template_sprites();
+	update_animation_preview();
 
 ## Switch between animations within the entity
 ## next: Whether the user is switching to the next or previous animation
@@ -126,8 +148,16 @@ func anim_change(next : bool):
 	animationPreviewNameToReplace = DirAccess.get_directories_at(FileSearch.find_directory_by_name(selectedEntityType))[currentAnimationIndex];
 	# Load the current animation
 	currentLoadedAnimation.clear();
-	for image in get_animation_from_folder(animationPreviewNameToReplace):
+	
+	var animation : Array[Image] = get_animation_from_folder(animationPreviewNameToReplace);
+	if (animation.is_empty()): animation = AnimationManager.get_default_animation_by_name(animationPreviewNameToReplace);
+	for image in animation:
 		currentLoadedAnimation.append(ImageTexture.create_from_image(image));
+	FPSSpinbox.value_changed.disconnect(fps_updated.bind(true));
+	FPSSpinbox.value_changed.connect(fps_updated)
+	FPSSpinbox.value = AnimationManager.get_template_sprite(selectedEntityType).sprite_frames.get_animation_speed(animationPreviewNameToReplace);
+	FPSSpinbox.value_changed.disconnect(fps_updated)
+	FPSSpinbox.value_changed.connect(fps_updated.bind(true));
 	update_animation_preview();
 	
 ## Change the animation frame currently shown
@@ -169,5 +199,7 @@ func stop_preview_animation() -> void:
 	update_animation_preview();
 
 ## Update the FPS
-func fps_updated(value: float) -> void:
+func fps_updated(value: float, changeTemplate : bool = false) -> void:
 	FPS = value;
+	if (changeTemplate):
+		AnimationManager.update_animation_fps(animationPreviewNameToReplace, value);

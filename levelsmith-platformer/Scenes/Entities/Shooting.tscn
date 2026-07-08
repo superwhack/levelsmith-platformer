@@ -4,10 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="3_3c58l"]
 [ext_resource type="Texture2D" uid="uid://3gy2b3ctcxe5" path="res://Assets/Sprites/UI/question.png" id="3_waxnm"]
 [ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_571pn"]
-[ext_resource type="Texture2D" uid="uid://0tjelo7d1g6q" path="res://Assets/Sprites/Entities/ShootingEnemy/EnemyShoot/1.png" id="5_dvo3g"]
-[ext_resource type="Texture2D" uid="uid://bfbrsvv44qln1" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootDeath/1.png" id="5_qlrn8"]
-[ext_resource type="Texture2D" uid="uid://bm4klfnp3qj85" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/1.png" id="6_dvo3g"]
-[ext_resource type="Texture2D" uid="uid://dckpbo7pdkpt" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/2.png" id="7_roj87"]
+[ext_resource type="Texture2D" uid="uid://d20ru43oj0n8a" path="res://Assets/Sprites/Entities/ShootingEnemy/EnemyShoot/1.png" id="5_dvo3g"]
+[ext_resource type="Texture2D" uid="uid://crn3eu6y30g7q" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootDeath/1.png" id="5_qlrn8"]
+[ext_resource type="Texture2D" uid="uid://bwguhbdqe2mtc" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/1.png" id="6_dvo3g"]
+[ext_resource type="Texture2D" uid="uid://bbj73qnigb8a5" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/2.png" id="7_roj87"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
@@ -15,10 +15,18 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("5_dvo3g")
+}],
+"loop": 0,
+"name": &"EnemyShoot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("5_qlrn8")
 }],
 "loop": 1,
-"name": &"death",
+"name": &"ShootDeath",
 "speed": 5.0
 }, {
 "frames": [{
@@ -29,15 +37,7 @@ animations = [{
 "texture": ExtResource("7_roj87")
 }],
 "loop": 1,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_dvo3g")
-}],
-"loop": 0,
-"name": &"shoot",
+"name": &"ShootIdle",
 "speed": 5.0
 }]
 
@@ -61,7 +61,7 @@ shape = SubResource("CircleShape2D_lurgl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=33200389]
 sprite_frames = SubResource("SpriteFrames_ogq8d")
-animation = &"shoot"
+animation = &"EnemyShoot"
 
 [node name="QuestionMark" type="Sprite2D" parent="." unique_id=1219830817]
 visible = false

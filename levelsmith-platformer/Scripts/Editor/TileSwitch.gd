@@ -33,6 +33,7 @@ func display_entities(visibility: bool):
 ## Toggles visibility of tabs
 ## index: index of tab selected
 func entity_dropdown_select(index: int):
+	AudioManager.play_UI_effect("UI_Selection");
 	match index:
 		0:
 			editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);

@@ -20,9 +20,11 @@ var restricted : bool;
 
 ## Called when the enemy first spawns
 func _ready() -> void:
+	deathAnim = "PatrolDeath";
 	super._ready();
+	animatedSprites.sprite_frames = AnimationManager.patrollingEnemyTemplateSprite.sprite_frames;
 	
-	animatedSprites.animation = "walk";
+	animatedSprites.animation = "PatrolWalk";
 	animatedSprites.play();
 
 ## Processes the physics every frame

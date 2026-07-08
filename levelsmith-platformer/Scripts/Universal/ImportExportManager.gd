@@ -11,7 +11,7 @@ const defaultPath : String = "res://Assets/Defaults/";
 signal levelImported;
 
 ## NOTE: TEMPORARY VARIABLE FOR STORING LEVEL'S NAME
-var levelPathName : String;
+var levelName : String;
 
 # Stores size of an imported level
 var importedLevelSize : Vector2;
@@ -21,9 +21,11 @@ var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tr
 
 ## Create a new level, cloning from the default folder
 ## levelName: Name of the new level, indicates where it'll go in the folder
-func make_new_level(levelName: String, levelAuthor: String, levelSize: Vector2) -> void:
+## levelSize: The size of the level
+## settings: The settings menu for the level
+func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i, settings: SettingsMenu) -> void:
 	# When making an enemy we need to set the path name and clear all enemies
-	levelPathName = levelName;
+	levelName = levelName;
 	clear_enemies_folder();
 	
 	# Create a directory under User and set the level and asset path.
@@ -64,6 +66,12 @@ func make_new_level(levelName: String, levelAuthor: String, levelSize: Vector2) 
 			"doubleJump": playerDefault.doubleJump,
 			"wallJump": playerDefault.wallJump,
 			"wallJumpDecay": playerDefault.wallJumpDecay
+		},
+		"settings": {
+			"playZoom": 100.0,
+			"followSpeed": 100.0,
+			"deadzone": 0.0,
+			"cameraPlayClamp": false
 		}
 	};
 	
@@ -84,13 +92,14 @@ func make_new_level(levelName: String, levelAuthor: String, levelSize: Vector2) 
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 	
-	clone_data("user://Assets/", levelAssetPath);
+	#clone_data("user://Assets/", levelAssetPath);
 
 ## Export the current level
 ## tileMap: The tileMap
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
-func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) -> void:
+## settings: The settings menu to export the configurations from
+func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, settings: SettingsMenu) -> void:
 	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
@@ -137,6 +146,16 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 		"doubleJump": playerData.playerDoubleJump,
 		"wallJump": playerData.playerWallJump,
 		"wallJumpDecay": playerData.playerWallJumpDecay
+	};
+
+	##                        ##
+	## Settings JSON Creation ##
+	##                        ##
+	json["settings"] = {
+		"playZoom": settings.gameplayZoom.value,
+		"followSpeed": settings.followSpeed.value,
+		"deadzone": settings.cameraDeadzone.value,
+		"cameraPlayClamp": settings.cameraClamp.value
 	};
 	
 	##                     ##
@@ -225,11 +244,14 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 			if (tileMap.get_cell_alternative_tile(Vector2(currentCol, currentRow)) > 0):
 				tileRow.append(str(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)),"|",tileMap.get_cell_alternative_tile(Vector2(currentCol, currentRow))));
 			else:
-				tileRow.append(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)));
+				if tileMap.get_cell_source_id(Vector2(currentCol, currentRow)) == -1:
+					tileRow.append("");
+				else:
+					tileRow.append(tileMap.get_cell_source_id(Vector2(currentCol, currentRow)));
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 	
-	clone_data("user://Assets/", levelAssetPath);
+	#clone_data("user://Assets/", levelAssetPath);
 	
 	await get_tree().create_timer(0.2).timeout;
 	PopUpManager.clear_all_popups();
@@ -255,6 +277,8 @@ func validate_import(sourceName: String) -> bool:
 		errors.append(levelPath + "Tiles.CSV does not exist!");
 		
 	if (errors.size() == 0):
+		sourceName = sourceName.left(-1);
+		levelName = sourceName.substr(sourceName.rfind("/") + 1);
 		return true;
 		
 	# If import fails, send a pop-up to the user.
@@ -286,6 +310,8 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 					playerExists = true;
 				tileMap.set_cell(Vector2(col, row), int(entityTileData[0]), Vector2i.ZERO, int(entityTileData[1]));
 			else:
+				if tileData == "":
+					tileData = "-1";
 				tileMap.set_cell(Vector2(col, row), int(tileData), Vector2i.ZERO);
 			col += 1;
 		row += 1;
@@ -294,14 +320,15 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 	
 	importedLevelSize = Vector2(col, row);
 	await get_tree().process_frame;
-	clone_data(levelAssetPath, "user://Assets/");
+	#clone_data(levelAssetPath, "user://Assets/");
 	
 	return playerExists;
 
 ## Import the JSON file
 ## tileMap: Tile map for searching for enemies
 ## playerData: The panel that contains player data to adjust it
-func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
+## settings: Settings to import saved configurations to
+func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMenu) -> void:
 	# Read JSON to file and close it
 	var JSONFile : FileAccess= FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
 	var json_as_dict : Variant = JSON.parse_string(JSONFile.get_as_text());
@@ -310,7 +337,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	var player = json_as_dict.get("player", {});
 	playerData.playerHealth = player.get("health", playerData.playerHealth);
 	playerData.playerSpeed = player.get("speed", playerData.playerSpeed);
-	playerData.playerJumpHeight = player.get("jumpHeight", playerData.playerJumpHeight);
+	playerData.playerJumpHeight = player.get("jump", playerData.playerJumpHeight);
 	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
 	playerData.playerFallSpeed = player.get("fallSpeed", playerData.playerFallSpeed);
 	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
@@ -319,7 +346,15 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel) -> void:
 	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);
 	playerData.update_custom();
 	playerData.update_sliders();
-	
+
+	# Settings information read
+	var settingsConfig = json_as_dict.get("settings", {});
+	settings.gameplayZoom.value = settingsConfig.get("playZoom", settings.gameplayZoom.value);
+	settings.followSpeed.value = settingsConfig.get("followSpeed", settings.followSpeed.value);
+	settings.cameraDeadzone.value = settingsConfig.get("deadzone", settings.cameraDeadzone.value);
+	settings.cameraClamp.value = settingsConfig.get("cameraPlayClamp", settings.cameraClamp.value);
+	settings.update_sliders();
+
 	# Enemy information read, no enemies if from older version
 	var enemies : Array = json_as_dict.get("enemies", []);
 	for enemy in enemies:

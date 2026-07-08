@@ -1,14 +1,13 @@
 extends Node2D
 
 # State variable to represent the state the game is currently in
-var state : Global.State = Global.State.EDIT;
+var state : Global.State = Global.State.MAIN_MENU;
 
 # References to state managers and canvas components
 @export var editorManager : Node2D;
 @export var toolManager : Node2D;
 @export var gameManager : Node2D;
 @export var entityManager : Node2D;
-@export var audioManager : Node;
 @export var cameraManager : Camera2D;
 @export var editorManagerCanvas : CanvasLayer;
 @export var gameManagerCanvas : CanvasLayer;
@@ -33,11 +32,9 @@ var loadedMap : TileMapLayer;
 
 @export var propertyMenu : Panel;
 
+var loadedLevelPath: String = "";
+
 func _ready() -> void:
-	#ImportExportManager.make_new_level("Level01");
-	AudioManager.masterVolume = 0;
-	AudioManager.update_volume();
-	
 	Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
 	Global.levelCreated.connect(tileMap.clear);
@@ -58,14 +55,13 @@ func _ready() -> void:
 	if (!DirAccess.dir_exists_absolute("res://Resources/Enemies/")):
 		DirAccess.make_dir_absolute("res://Resources/Enemies/");
 		
-	#edit();
-	main_menu();
+	main_menu(false);
 	
 ## When the user does a save level input, save the level.
 ## event: The user input
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
@@ -81,8 +77,9 @@ func _input(event: InputEvent) -> void:
 func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	cameraManager.initialize_camera();
-	ImportExportManager.make_new_level( levelName, levelAuthor, worldSize );
+	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.settingsMenu);
 	propertyMenu.reset_custom();
+	loadedLevelPath = "user://Levels/" + levelName + "/";
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	#print("NEW LEVEL SET UP");
@@ -115,7 +112,7 @@ func import_level_and_edit() -> void:
 	entityManager.scan_goals(worldSize.x, worldSize.y);
 	editorManager.reset_enemy_positions();
 	await get_tree().process_frame;
-	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu);
+	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.settingsMenu);
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
 
@@ -124,12 +121,15 @@ func import_level_and_edit() -> void:
 func load_level(levelPath: String) -> void:
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
+		loadedLevelPath = levelPath;
 		# Await so that the camera gets properly placed
 		await import_level_and_edit();
 		cameraManager.initialize_camera();
 
 ## Swap to main menu state
-func main_menu() -> void:
+func main_menu(menuClickSound : bool = true) -> void:
+	if menuClickSound:
+		AudioManager.play_UI_effect("UI_Selection");
 	# Hide all non-menu states, show Main Menu scene
 	gameManager.hide();
 	gameManagerCanvas.hide();
@@ -140,14 +140,19 @@ func main_menu() -> void:
 	propertyMenu.close();
 	mainMenuControl.show();
 	ImportExportManager.clear_enemies_folder();
+	AudioManager.reset_audio();
 	mainMenuControl.fill_level_list();
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
+	loadedLevelPath = "";
 
 ## Swap to edit state
 func edit() -> void:
-	AudioManager.play_UI_music("EditorMusic");
+	AudioManager.reset_audio();
+	AudioManager.play_UI_effect("UI_Selection");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
+	if gameManager.tileMap:
+		gameManager.tileMap.queue_free();
 	# Update state variable
 	state = Global.State.EDIT;
 	# Change scene to edit scene
@@ -176,8 +181,8 @@ func play() -> void:
 	# Check that the game can be run
 	if (!get_play_errors().is_empty()):
 		return;
-		
 	propertyMenu.close();
+	AudioManager.play_UI_effect("UI_Selection");
 	AudioManager.play_music("LevelMusic");
 	# Update state variable
 	state = Global.State.PLAY;

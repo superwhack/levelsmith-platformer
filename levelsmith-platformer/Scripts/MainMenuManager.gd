@@ -200,7 +200,9 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 	
 	# Connect the level button signal to the double clicked function
 	item.level_double_clicked.connect(_on_level_double_clicked);
-	item.level_hovered.connect(_on_level_hovered);
+	# Hovering an item populates the metadata field.
+	#item.level_hovered.connect(_on_level_hovered);
+	# Selecting an item toggles.
 	item.level_toggled.connect(_on_level_toggled);
 	item.level_deselected.connect(_on_level_deselected);
 	
@@ -260,6 +262,11 @@ func _on_level_deselected(item) -> void:
 	if (selectedItem == item):
 		item.levelButton.button_pressed = false;
 		selectedItem = null;
+		author.text = "";
+		dateCreated.text = "";
+		dateModified.text = "";
+		dimensions.text = "";
+		version.text = "";
 
 
 ## Reusable function for updating metadata based on given item.

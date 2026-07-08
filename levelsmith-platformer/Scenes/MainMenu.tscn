@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://bvc7r3t18vixa"]
 
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_7v4os"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="2_df05h"]
 [ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_loo7a"]
@@ -117,6 +118,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_7v4os")
 script = ExtResource("2_loo7a")
 buttonNewLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/NewLevelButton")
 buttonImportLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/ImportLevelButton")

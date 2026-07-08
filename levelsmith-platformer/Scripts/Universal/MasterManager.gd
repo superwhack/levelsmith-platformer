@@ -11,7 +11,8 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var cameraManager : Camera2D;
 @export var editorManagerCanvas : CanvasLayer;
 @export var gameManagerCanvas : CanvasLayer;
-@export var loadingScreen : CanvasLayer
+@export var loadingScreen : CanvasLayer;
+@export var loadingAnimation : AnimationPlayer;
 @export var mainMenuControl : Control;
 
 # References to relevant buttons
@@ -69,11 +70,14 @@ func _input(event: InputEvent) -> void:
 	#editorManager.isValidated = true;
 	##print("LEVEL COMPLETE");
 
-func show_loading_screen() -> void:
+func screen_wipe_in() -> void:
 	loadingScreen.show();
-	await get_tree().create_timer(1.7).timeout;
+	loadingAnimation.play("WipeIn");
+	await loadingAnimation.animation_finished;
 
-func hide_loading_screen() -> void:
+func screen_wipe_out() -> void:
+	loadingAnimation.play("WipeOut");
+	await loadingAnimation.animation_finished;
 	loadingScreen.hide();
 
 ## Set up a new level
@@ -107,7 +111,7 @@ func create_bedrock_border() -> void:
 
 ## Imports a level 
 func import_level_and_edit() -> void:
-	await show_loading_screen();
+	await screen_wipe_in();
 	ImportExportManager.clear_enemies_folder();
 	for childNode in editorManager.tileMap.get_children():
 		childNode.free();
@@ -121,7 +125,7 @@ func import_level_and_edit() -> void:
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
 	await get_tree().process_frame
-	hide_loading_screen();
+	screen_wipe_out();
 
 ## Loads the given level to the player.
 ## levelPath: The folder path of the level.
@@ -134,7 +138,7 @@ func load_level(levelPath: String) -> void:
 
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true) -> void:
-	await show_loading_screen();
+	await screen_wipe_in();
 	if menuClickSound:
 		AudioManager.play_UI_effect("UI_Selection");
 	# Hide all non-menu states, show Main Menu scene
@@ -152,11 +156,11 @@ func main_menu(menuClickSound : bool = true) -> void:
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 	await get_tree().process_frame
-	hide_loading_screen();
+	screen_wipe_out();
 
 ## Swap to edit state
 func edit() -> void:
-	await show_loading_screen();
+	await screen_wipe_in();
 	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UI_Selection");
 	AudioManager.play_UI_music("EditorMusic");
@@ -184,11 +188,11 @@ func edit() -> void:
 	editorManager.reset_enemy_positions();
 	editorManager.clear_enemies();
 	await get_tree().process_frame
-	hide_loading_screen();
+	screen_wipe_out();
 
 ## Swap to play state
 func play() -> void:
-	await show_loading_screen();
+	await screen_wipe_in();
 	# Check that the game can be run
 	if (!get_play_errors().is_empty()):
 		return;
@@ -213,7 +217,7 @@ func play() -> void:
 	# Reset the play scene and load the map
 	gameManager.reset();
 	await get_tree().process_frame
-	hide_loading_screen();
+	screen_wipe_out();
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:

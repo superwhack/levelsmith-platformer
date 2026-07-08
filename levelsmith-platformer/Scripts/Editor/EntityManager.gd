@@ -176,12 +176,13 @@ func move_entity(previousClickPos: Vector2) -> void:
 		delete_entity(previousClickPos);
 
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
-func drop_entity() -> void:
+## reset: false by default, if it's true the placed object will always return to it's spawn
+func drop_entity(reset: bool = false) -> void:
 	var dropPosition : Vector2;
 	var clickedObjectId : int = tileMap.get_cell_source_id(editorManager.currentMousePosition);
 	
 	# Drop the entity on its original spot if mouse is over any object.
-	if (clickedObjectId >= 0 || !editorManager.isPlaceable):
+	if (clickedObjectId >= 0 || !editorManager.isPlaceable || reset):
 		if toolManager.prevPosition == Vector2(-1 ,-1):
 			toolManager.prevBrushObject = -1;
 			toolManager.prevPosition = Vector2(0,0);

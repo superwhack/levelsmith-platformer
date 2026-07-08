@@ -64,6 +64,13 @@ func _input(event: InputEvent) -> void:
 	# When released, the bool gets reset no matter what.
 	elif (event.is_action_released("left-click")):
 		clickOnUI = false;
+	if event.is_action_released("left-click") && prevBrushObject != -1 && get_viewport().gui_get_hovered_control():
+		isMoving = false;
+		entityManager.drop_entity(true);
+		previousClickPos = Vector2(0, 0);
+		isCopying = false;
+		justMoved = true;
+		
 
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
@@ -129,7 +136,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				justMoved = false;
 				# If the cursor moves a certain distance away from the last click, start moving
 				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > POSITION_DIFFERENCE && previousCell != -1;
-			if (event.is_action_released("left-click") && prevBrushObject == -1):
+			if (event.is_action_released("left-click") && prevBrushObject == -1 && !justMoved):
 				if (entityManager.duplicatingResource != null && Input.is_action_pressed("copy")):
 					entityManager.duplicatingResource = null;
 				# If the clicked cell is an entity and the click was short, edit its properties

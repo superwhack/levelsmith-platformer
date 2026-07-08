@@ -146,6 +146,7 @@ func close_asset_manager() -> void:
 	previewTileMap.show();
 	assetManager.hide();
 	assetManager.animationSwapping.playingAnimation = false;
+	AnimationManager.refresh_animations();
 
 ## Closes the settings menu
 func close_settings_menu() -> void:

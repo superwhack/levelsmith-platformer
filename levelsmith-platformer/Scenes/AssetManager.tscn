@@ -23,7 +23,7 @@ corner_radius_bottom_left = 12
 expand_margin_top = 2.0
 expand_margin_bottom = 3.0
 
-[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imageSwapping", "animationSwapping", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton")]
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imageSwapping", "animationSwapping", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "refreshAllButton")]
 process_mode = 2
 custom_minimum_size = Vector2(900, 600)
 offset_right = 900.0
@@ -41,6 +41,7 @@ currentAssetLabel = NodePath("ContentContainer/MainContentContainer/LeftColumnCo
 loadFileButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton")
 resetButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/ResetButton")
 resetAllButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer/ResetAllButton")
+refreshAllButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer/RefreshAllButton")
 
 [node name="ContentContainer" type="VBoxContainer" parent="." unique_id=1686367830]
 layout_mode = 1
@@ -316,10 +317,9 @@ layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 2
 
-[node name="ResetButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer" unique_id=1493047528]
+[node name="RefreshAllButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer" unique_id=1493047528]
 layout_mode = 2
-text = "Reset
-"
+text = "Refresh All"
 
 [node name="ResetAllButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer" unique_id=1076102221]
 layout_mode = 2

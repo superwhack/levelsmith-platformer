@@ -1,7 +1,12 @@
 [gd_scene format=3 uid="uid://dq165egjwmhd7"]
 
+[ext_resource type="Texture2D" uid="uid://cicj1jmudfxxy" path="res://Assets/UserInterface/Buttons/ButtonIcons/Home.png" id="1_4rbmc"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="1_mu4pu"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="2_xwalg"]
+[ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="3_cp6o3"]
+[ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="3_hl0pc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wefnb"]
 
 [node name="EditorUI" type="CanvasLayer" unique_id=1605187864]
 
@@ -15,40 +20,85 @@ grow_vertical = 2
 [node name="TopBar" type="PanelContainer" parent="MainColumn" unique_id=1171515270]
 layout_mode = 2
 
-[node name="TopBarRow" type="HBoxContainer" parent="MainColumn/TopBar" unique_id=518007996]
+[node name="TopBarMargin" type="MarginContainer" parent="MainColumn/TopBar" unique_id=1495397504]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="TopBarRow" type="HBoxContainer" parent="MainColumn/TopBar/TopBarMargin" unique_id=518007996]
 layout_mode = 2
 
-[node name="LeftTopGroup" type="HBoxContainer" parent="MainColumn/TopBar/TopBarRow" unique_id=583184912]
+[node name="LeftTopGroup" type="HBoxContainer" parent="MainColumn/TopBar/TopBarMargin/TopBarRow" unique_id=583184912]
 layout_mode = 2
 
-[node name="HomeButton" type="Button" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup" unique_id=1435724843]
+[node name="HomeButton" type="Button" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=1435724843]
+layout_mode = 2
+icon = ExtResource("1_4rbmc")
+
+[node name="HomeTileSeparator" type="VSeparator" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=563223372]
 layout_mode = 2
 
-[node name="HomeTileSeparator" type="VSeparator" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup" unique_id=563223372]
+[node name="TileSwitch" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=959816093 instance=ExtResource("1_mu4pu")]
 layout_mode = 2
 
-[node name="TileSwitch" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup" unique_id=959816093 instance=ExtResource("1_mu4pu")]
+[node name="TopSpacer" type="Control" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=385764750]
 layout_mode = 2
 
-[node name="TopSpacer" type="Control" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup" unique_id=385764750]
+[node name="TopRightGroup" type="HBoxContainer" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=473496041]
 layout_mode = 2
 
-[node name="TopRightGroup" type="HBoxContainer" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup" unique_id=473496041]
+[node name="SaveButton" type="Button" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=992230482]
 layout_mode = 2
 
-[node name="SaveButton" type="Button" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=992230482]
+[node name="SavePlaySeparator" type="VSeparator" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=1511096429]
 layout_mode = 2
 
-[node name="SavePlaySeparator" type="VSeparator" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=1511096429]
+[node name="PlayLevelButton" type="Button" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=1389293204]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+
+[node name="ContentMargin" type="MarginContainer" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton" unique_id=1143643142]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ContentRow" type="HBoxContainer" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton/ContentMargin" unique_id=1998339282]
 layout_mode = 2
 
-[node name="PlayLevelButton" type="Button" parent="MainColumn/TopBar/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=22798758]
+[node name="Icon" type="TextureRect" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton/ContentMargin/ContentRow" unique_id=1225108455]
 layout_mode = 2
+texture = ExtResource("3_cp6o3")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextContainer" type="VBoxContainer" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton/ContentMargin/ContentRow" unique_id=1136098691]
+layout_mode = 2
+
+[node name="PlayLevelTitle" type="Label" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton/ContentMargin/ContentRow/TextContainer" unique_id=1495769493]
+layout_mode = 2
+text = "Play Level"
+
+[node name="PlayLevelSubtext" type="Label" parent="MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton/ContentMargin/ContentRow/TextContainer" unique_id=154783207]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
+theme_override_font_sizes/font_size = 12
+text = "Enter testing mode"
 
 [node name="ContentRow" type="HBoxContainer" parent="MainColumn" unique_id=733223127]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="LeftToolRail" type="PanelContainer" parent="MainColumn/ContentRow" unique_id=934075751]
+custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
 
 [node name="LeftToolColumn" type="VBoxContainer" parent="MainColumn/ContentRow/LeftToolRail" unique_id=1886355995]
@@ -71,9 +121,45 @@ layout_mode = 2
 
 [node name="EditorViewport" type="PanelContainer" parent="MainColumn/ContentRow" unique_id=1635390383]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wefnb")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainColumn/ContentRow/EditorViewport" unique_id=1225120776]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="FooterHintsRow" type="HBoxContainer" parent="MainColumn/ContentRow/EditorViewport/MarginContainer" unique_id=303432404]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="ZoomHintLabel" type="Label" parent="MainColumn/ContentRow/EditorViewport/MarginContainer/FooterHintsRow" unique_id=2125551487]
+layout_mode = 2
+text = "Zoom In/Out [+ -/Scroll]"
+
+[node name="FooterSpacr" type="Control" parent="MainColumn/ContentRow/EditorViewport/MarginContainer/FooterHintsRow" unique_id=477056381]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanHintLabel" type="Label" parent="MainColumn/ContentRow/EditorViewport/MarginContainer/FooterHintsRow" unique_id=1121477506]
+layout_mode = 2
+text = "Pan [WASD / MMB]"
 
 [node name="PropertiesPanel" type="PanelContainer" parent="MainColumn/ContentRow" unique_id=1686299894]
+custom_minimum_size = Vector2(360, 0)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="PropertiesColumn" type="VBoxContainer" parent="MainColumn/ContentRow/PropertiesPanel" unique_id=1838813952]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PropertyMenu" parent="MainColumn/ContentRow/PropertiesPanel/PropertiesColumn" unique_id=1686733993 instance=ExtResource("3_hl0pc")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

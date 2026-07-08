@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends VBoxContainer
 
 # References to managers
 @export var editorManager : Node2D;

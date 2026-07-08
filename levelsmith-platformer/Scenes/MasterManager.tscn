@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -40,7 +40,7 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_8vbpr")
 sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "playPopUp", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
@@ -50,10 +50,9 @@ cameraManager = NodePath("Camera2D")
 editorManagerCanvas = NodePath("EditorManager/ScreenUI")
 gameManagerCanvas = NodePath("GameManager/CanvasLayer")
 mainMenuControl = NodePath("MainMenuCanvasLayer/MainMenu")
-editorHomeButton = NodePath("EditorManager/ScreenUI/TopLeftAnchor/TopLeftRow/HomeButton")
-editorPlayButton = NodePath("EditorManager/ScreenUI/BottomRightAnchor/PlayButton")
+editorHomeButton = NodePath("EditorManager/ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/HomeButton")
+editorPlayButton = NodePath("EditorManager/ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton")
 returnToEditorButton = NodePath("GameManager/CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ReturnEditorButton")
-playPopUp = NodePath("EditorManager/ScreenUI/BottomRightAnchor/HoverPopUpContainer")
 tileMap = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
 gridLines = NodePath("EditorManager/GridLines")
@@ -67,14 +66,14 @@ gridLines = NodePath("../EditorManager/GridLines")
 [node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager") instance=ExtResource("2_430ed")]
 masterManager = NodePath("..")
 
-[node name="Tiles" parent="EditorManager" index="0" unique_id=1452837543]
-position = Vector2(1, 0)
-tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAAAAAADAAcAAwAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAKAAYABAAAAAAAAAALAAYABAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAANAAUAAQAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAADAAkAAAAAAAAAAAACAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAD//wkAAAAAAAAAAAAJAAYABgAAAAAAAGAMAAUABgAAAAAAABACAAUABQAAAAAAAAAGAAUABQAAAAAAAAA=")
-
-[node name="GridLines" parent="EditorManager" index="1" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
+[node name="GridLines" parent="EditorManager" index="0" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
 z_index = 0
 tile_set = SubResource("TileSet_0vixy")
 masterManager = NodePath("../..")
+
+[node name="Tiles" parent="EditorManager" index="1" unique_id=1452837543]
+position = Vector2(1, 0)
+tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAAAAAADAAcAAwAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAKAAYABAAAAAAAAAALAAYABAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAANAAUAAQAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAADAAkAAAAAAAAAAAACAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAD//wkAAAAAAAAAAAAJAAYABgAAAAAAAGAMAAUABgAAAAAAABACAAUABQAAAAAAAAAGAAUABQAAAAAAAAA=")
 
 [node name="PreviewTile" parent="EditorManager" index="2" unique_id=1302011485]
 modulate = Color(1, 1, 1, 1)
@@ -99,6 +98,5 @@ script = ExtResource("7_8vbpr")
 [connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
 
 [editable path="EditorManager"]
-[editable path="EditorManager/ScreenUI/BottomRightAnchor/HoverPopUpContainer"]
 [editable path="EditorManager/CanvasLayer/AssetManager"]
 [editable path="GameManager"]

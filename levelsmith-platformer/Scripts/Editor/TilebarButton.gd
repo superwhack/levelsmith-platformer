@@ -13,6 +13,8 @@ extends Button
 
 @export var entityName : String = "";
 
+@export var image : TextureRect;
+
 func _ready() -> void:
 	pressed.connect(change_brush_object)
 
@@ -21,9 +23,9 @@ func _process(_delta: float) -> void:
 	if (isTextureUpdating): 
 		if(isEntity && entityName != ""):
 			var templateAnimation : AnimatedSprite2D = AnimationManager.get(entityName + "TemplateSprite");
-			icon = templateAnimation.sprite_frames.get_frame_texture(templateAnimation.animation, 0);
+			image.texture = templateAnimation.sprite_frames.get_frame_texture(templateAnimation.animation, 0);
 		else:
-			icon = tileSet.get_source(thisItemID).texture;
+			image.texture = tileSet.get_source(thisItemID).texture;
 	
 
 func change_brush_object() -> void:

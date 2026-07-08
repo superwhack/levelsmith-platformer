@@ -17,6 +17,7 @@ extends Control
 @export var buttonNewLevelCreate : Button;
 @export var buttonNewLevelCancel : Button;
 @export var fieldNewLevelName : LineEdit;
+@export var fieldNewLevelAuthor : LineEdit;
 @export var spinBoxNewLevelX : SpinBox;
 @export var spinBoxNewLevelY : SpinBox;
 @export var invalidWarning : MarginContainer;
@@ -46,6 +47,9 @@ var importedLevelPath : String;
 @export var version : Label;
 @export var preview : TextureRect;
 
+# The currently selected level item.
+var selectedItem : Control = null;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Hides other screens
@@ -69,8 +73,6 @@ func _ready() -> void:
 	
 	buttonQuit.pressed.connect(exit_program);
 
-	# Fill the list of levels
-	fill_level_list();
 
 	var set_directory = func (directory: String) -> void:
 		importedLevelPath = directory;
@@ -125,6 +127,7 @@ func create_new_level() -> void:
 	overlayNewLevel.hide();
 	masterManager.level_setup( 
 		fieldNewLevelName.text, 
+		fieldNewLevelAuthor.text,
 		Vector2i( 
 			int(spinBoxNewLevelX.value), 
 			int(spinBoxNewLevelY.value) 
@@ -145,7 +148,6 @@ func fill_level_list() -> void:
 	# First, kill everything inside of the list. Makes refreshing easy
 	for item in levelList.get_children():
 		item.queue_free();
-		
 	# Get the directory that contains all the level folders
 	var levelsPath : String = "user://Levels"
 	var levelListDir : DirAccess = DirAccess.open(levelsPath);
@@ -157,7 +159,6 @@ func fill_level_list() -> void:
 	levelListDir.list_dir_begin();
 	
 	var folderName : String = levelListDir.get_next();
-	
 	# So long as the folder name is not null...
 	while folderName != "":
 		if (levelListDir.current_is_dir()):
@@ -174,7 +175,7 @@ func fill_level_list() -> void:
 ## levelPath: the path of the level.
 func setup_level_item(folderName : String, levelPath : String) -> void:
 	# Instantiate and add to level list.
-	var item = levelListItem.instantiate();
+	var item : Node = levelListItem.instantiate();
 	levelList.add_child(item);
 	item.levelPath = levelPath + "/";
 
@@ -184,6 +185,9 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 	
 	# Connect the level button signal to the double clicked function
 	item.level_double_clicked.connect(_on_level_double_clicked);
+	item.level_hovered.connect(_on_level_hovered);
+	item.level_toggled.connect(_on_level_toggled);
+	item.level_deselected.connect(_on_level_deselected);
 	
 	# Fetch the level's metadata.
 	var metadata : Dictionary = ImportExportManager.get_metadata(levelPath);
@@ -194,16 +198,63 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 		item.levelTime.text = "00:00";
 		return;
 		
-	print(metadata)
+	# Adding metadata to the actual buttons themselves.
 	item.levelDate.text = metadata.get("dateCreated", "01.01.1967");
 	item.levelTime.text = metadata.get("timeCreated", "00:00");
+	
+	# Storing metadata in the buttons, for hovering/selecting.
+	item.author = str(metadata.get("author", ""));
+	item.dateCreated = "%s %s" % [
+		metadata.get("dateCreated", "01.01.1967"),
+		metadata.get("timeCreated", "00:00")];
+	item.dateModified = "%s %s" % [
+		metadata.get("dateModified", "01.01.1967"),
+		metadata.get("timeModified", "00:00")];
+	item.dimensions = str(metadata.get("dimensions", str([20, 20])));
+	item.version = str(metadata.get("version", Global.VERSION));
+	
 
 
 ## Load a level when appropriate button is pressed
 ## path: The path of the level to be loaded.
 func _on_level_double_clicked(path: String) -> void:
 	masterManager.load_level(path);
+	
+## Fills in metadata labels with appropriate data when hovered.
+## item: the level list button item.
+func _on_level_hovered(item) -> void:
+	if (!selectedItem):
+		update_metadata(item);
+	
+func _on_level_toggled(item, toggled: bool) -> void:
+	if (!toggled):
+		return;
+		
+	# Deselect the previous item if its not the same
+	if (selectedItem && selectedItem != item):
+		selectedItem.levelButton.button_pressed = false;
+	
+	selectedItem = item;
+	
+	update_metadata(item);
+	
+## Deselecting a level with right-click removes metadata.
+## item: The button item being deselected.
+func _on_level_deselected(item) -> void:
+	if (selectedItem == item):
+		item.levelButton.button_pressed = false;
+		selectedItem = null;
 
+
+## Reusable function for updating metadata based on given item.
+## item: Level item to be used for updating metadata.
+func update_metadata(item) -> void:
+	author.text = item.author;
+	dateCreated.text = item.dateCreated;
+	dateModified.text = item.dateModified;
+	dimensions.text = item.dimensions;
+	version.text = item.version;
+	
 ## Retrieves the world size from a CSV file.
 ## filePath: the file path of the CSV file.
 ## Returns a Vector2i of the world size.

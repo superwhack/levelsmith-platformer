@@ -21,7 +21,7 @@ var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tr
 
 ## Create a new level, cloning from the default folder
 ## levelName: Name of the new level, indicates where it'll go in the folder
-func make_new_level(levelName: String, levelSize: Vector2) -> void:
+func make_new_level(levelName: String, levelAuthor: String, levelSize: Vector2) -> void:
 	# When making an enemy we need to set the path name and clear all enemies
 	levelPathName = levelName;
 	clear_enemies_folder();
@@ -44,12 +44,13 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 	# Generate default JSON file as a dictionary.
 	var defaultJSON : Dictionary = {
 		"metadata": {
+			"author": levelAuthor,
 			"dateCreated": "%02d.%02d.%04d" % [now.month, now.day, now.year],
 			"timeCreated": "%02d:%02d" % [now.hour, now.minute],
 			"dateModified": "%02d.%02d.%04d" % [now.month, now.day, now.year],
 			"timeModified": "%02d:%02d" % [now.hour, now.minute],
-			"version": 1,
-			"author": "",
+			"dimensions": levelSize,
+			"version": Global.VERSION,
 			"favorited": false
 		},
 		"enemies": [],
@@ -65,8 +66,6 @@ func make_new_level(levelName: String, levelSize: Vector2) -> void:
 			"wallJumpDecay": playerDefault.wallJumpDecay
 		}
 	};
-	
-	print("HEY CHECK ME OUT", defaultJSON)
 	
 	# Convert our data to a json_string
 	var jsonString : String = JSON.stringify(defaultJSON, "\t")
@@ -102,7 +101,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 
 	# If the Settings file exists, get entire file as text
 	if (FileAccess.file_exists(levelPath + "Settings.JSON")):
-		var jsonFile := FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
+		var jsonFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
 		json = JSON.parse_string(jsonFile.get_as_text());
 		jsonFile.close();
 	
@@ -120,6 +119,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	# Update metadata without completely overwriting it.
 	metadata["dateModified"] = "%02d.%02d.%04d" % [now.month, now.day, now.year];
 	metadata["timeModified"] = "%02d:%02d" % [now.hour, now.minute];
+	metadata["dimensions"] = worldSize;
 	metadata["version"] = Global.VERSION;
 
 	json["metadata"] = metadata;
@@ -143,7 +143,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	## Enemy JSON Creation ##
 	##                     ##
 	var enemies : Array = [];
-	var enemyProperties := DirAccess.get_files_at("res://Resources/Enemies/");
+	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
 
 	for enemyProperty in enemyProperties:
 		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
@@ -212,7 +212,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2) 
 	#tmpFile.close();
 	
 	# Write JSON to file and close it
-	var jsonFile := FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE)
+	var jsonFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE)
 	jsonFile.store_string(JSON.stringify(json, "\t"))
 	jsonFile.close()
 	

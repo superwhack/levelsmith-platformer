@@ -38,6 +38,7 @@ layout_mode = 2
 layout_mode = 2
 theme = ExtResource("3_3yt47")
 theme_type_variation = &"LevelItemBlack"
+toggle_mode = true
 
 [node name="LevelHBoxContainer" type="HBoxContainer" parent="HBoxContainer/LevelMarginContainer/LevelCard" unique_id=1106093210]
 layout_mode = 0

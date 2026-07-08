@@ -28,9 +28,9 @@ var state : Global.State = Global.State.EDIT;
 # Map that is currently loaded in the Play scene
 var loadedMap : TileMapLayer;
 
-## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
 @export var worldSize : Vector2i;
+
 @export var propertyMenu : Panel;
 
 func _ready() -> void:
@@ -76,11 +76,12 @@ func _input(event: InputEvent) -> void:
 
 ## Set up a new level
 ## levelName: Name of the level
+## levelAuthor: Author of the level
 ## newSize: The width and height of the level
-func level_setup( levelName: String, newSize: Vector2i ) -> void:
+func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	cameraManager.initialize_camera();
-	ImportExportManager.make_new_level( levelName, worldSize );
+	ImportExportManager.make_new_level( levelName, levelAuthor, worldSize );
 	propertyMenu.reset_custom();
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();

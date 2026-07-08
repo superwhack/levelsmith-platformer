@@ -1,16 +1,29 @@
 [gd_scene format=3 uid="uid://b6axoaekmjyr4"]
 
 [ext_resource type="Script" uid="uid://dvbnlxepvikk0" path="res://Scripts/Game/MovingPlatform.gd" id="1_it7tw"]
-[ext_resource type="Texture2D" uid="uid://br37mj4cad57p" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
+[ext_resource type="Texture2D" uid="uid://bok26w2mmdg74" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
 [ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="2_na4dm"]
+[ext_resource type="Texture2D" uid="uid://1g1ju544ffy1" path="res://Assets/Sprites/Entities/MovingPlatform/PlatformAnimation/1.png" id="3_v67sg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hvxo"]
 
-[node name="MovingPlatform" type="AnimatableBody2D" unique_id=1993058236 node_paths=PackedStringArray("onScreen", "previewLine", "previewLineEndpoint", "previewPlatform") groups=["Moving"]]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ogq8d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_v67sg")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MovingPlatform" type="AnimatableBody2D" unique_id=1993058236 node_paths=PackedStringArray("onScreen", "animatedSprite", "previewLine", "previewLineEndpoint", "previewPlatform") groups=["Moving", "Platform"]]
 collision_layer = 3
 collision_mask = 0
 script = ExtResource("1_it7tw")
 onScreen = NodePath("OnScreen")
+animatedSprite = NodePath("AnimatedSprite2D")
 previewLine = NodePath("Line2D")
 previewLineEndpoint = NodePath("Line2D/LineEndpoint")
 previewPlatform = NodePath("PreviewPlatform")
@@ -29,8 +42,8 @@ begin_cap_mode = 2
 [node name="LineEndpoint" type="Sprite2D" parent="Line2D" unique_id=1023530108]
 texture = ExtResource("2_na4dm")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090508006]
-texture = ExtResource("2_it7tw")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1882252462]
+sprite_frames = SubResource("SpriteFrames_ogq8d")
 
 [node name="PreviewPlatform" type="Sprite2D" parent="." unique_id=535577122]
 modulate = Color(1, 1, 1, 0.5019608)

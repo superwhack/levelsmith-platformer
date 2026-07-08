@@ -12,6 +12,7 @@ var dateCreated : String = "";
 var dateModified : String = "";
 var dimensions : String = "";
 var version : String = "";
+var thumbnail : Texture2D;
 
 # The level path. Used when emitting signal.
 var levelPath : String;

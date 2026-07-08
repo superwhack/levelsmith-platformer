@@ -46,6 +46,7 @@ var importedLevelPath : String;
 @export var dimensions : Label;
 @export var version : Label;
 @export var preview : TextureRect;
+@export var previewDefault : Texture2D;
 
 # The currently selected level item.
 var selectedItem : Control = null;
@@ -206,14 +207,12 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 	item.level_toggled.connect(_on_level_toggled);
 	item.level_deselected.connect(_on_level_deselected);
 	
+	# Fetch thumbnail, if it exists
+	var levelThumbnailPath : String = levelPath + "/Preview.PNG";
+	
 	# Fetch the level's metadata.
 	var metadata : Dictionary = ImportExportManager.get_metadata(levelPath);
 	
-	# If empty...
-	if metadata.is_empty():
-		item.levelDate.text = "01.01.1967";
-		item.levelTime.text = "00:00";
-		return;
 		
 	# Adding metadata to the actual buttons themselves.
 	item.levelDate.text = metadata.get("dateCreated", "01.01.1967");
@@ -230,6 +229,14 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 	item.dimensions = str(metadata.get("dimensions", str([20, 20])));
 	item.version = str(metadata.get("version", Global.VERSION));
 	
+	# If the the thumbnail exists, add it to the 
+	if (FileAccess.file_exists(levelThumbnailPath)):
+		var image : Image = Image.new();
+		# If the image returns, add to item script
+		if (image.load(levelThumbnailPath) == OK):
+			var texture : ImageTexture = ImageTexture.create_from_image(image);
+			item.thumbnail = texture;
+			print(item.thumbnail)
 
 
 ## Load a level when appropriate button is pressed
@@ -267,6 +274,7 @@ func _on_level_deselected(item) -> void:
 		dateModified.text = "";
 		dimensions.text = "";
 		version.text = "";
+		preview.texture = item.thumbnail;
 
 
 ## Reusable function for updating metadata based on given item.
@@ -277,6 +285,10 @@ func update_metadata(item) -> void:
 	dateModified.text = item.dateModified;
 	dimensions.text = item.dimensions;
 	version.text = item.version;
+	if (item.thumbnail):
+		preview.texture = item.thumbnail;
+	else:
+		preview.texture = previewDefault;
 	
 ## Retrieves the world size from a CSV file.
 ## filePath: the file path of the CSV file.

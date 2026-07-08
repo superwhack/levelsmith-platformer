@@ -149,6 +149,7 @@ dateModified = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane
 dimensions = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Dimensions")
 version = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Version")
 preview = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture")
+previewDefault = ExtResource("10_m7n2d")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1764313566]
 layout_mode = 1
@@ -462,9 +463,10 @@ size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_57qmd")
 
 [node name="PreviewTexture" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel" unique_id=1664404116]
+custom_minimum_size = Vector2(927, 521)
+custom_maximum_size = Vector2(927, 521)
 layout_mode = 2
 texture = ExtResource("10_m7n2d")
-stretch_mode = 2
 
 [node name="DetailsCard" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox" unique_id=1782890286]
 custom_maximum_size = Vector2(-1, 300)

@@ -30,7 +30,6 @@
 [ext_resource type="StyleBox" uid="uid://decsp5gjccsk5" path="res://Assets/UserInterface/UpArrowHoverStyleBox.tres" id="32_p21lw"]
 [ext_resource type="StyleBox" uid="uid://cl3ipkuyi5ljs" path="res://Assets/UserInterface/UpArrowPressStyleBox.tres" id="33_hrj3f"]
 [ext_resource type="Texture2D" uid="uid://cfe8gw3hnl8b3" path="res://Assets/Sprites/UI/SliderGrabberHover16px.png" id="33_k74kl"]
-[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="33_nva8e"]
 [ext_resource type="StyleBox" uid="uid://b1tpgrjp8xpbj" path="res://Assets/UserInterface/TooltipStyleBox.tres" id="34_k74kl"]
 [ext_resource type="StyleBox" uid="uid://bryfqoermm7f4" path="res://Assets/UserInterface/HScrollAreaStyleBox.tres" id="36_3caln"]
 [ext_resource type="StyleBox" uid="uid://bwclbl24ey6hw" path="res://Assets/UserInterface/VSeparatorLine.tres" id="37_apnec"]
@@ -44,6 +43,7 @@
 [ext_resource type="StyleBox" uid="uid://blnb73c6181oq" path="res://Assets/UserInterface/ToolButtonHoverStyleBox.tres" id="41_p21lw"]
 [ext_resource type="StyleBox" uid="uid://depwd8khx6b5m" path="res://Assets/UserInterface/TileButtonSelectStyleBox.tres" id="42_5jgur"]
 [ext_resource type="StyleBox" uid="uid://0p7omelnc5u2" path="res://Assets/UserInterface/ToolButtonSelectStyleBox.tres" id="42_hrj3f"]
+[ext_resource type="FontFile" uid="uid://cs8lrnny6ffod" path="res://Assets/Fonts/Inter/Inter_28pt-Regular.ttf" id="42_wg75p"]
 [ext_resource type="StyleBox" uid="uid://buxbdeangr5th" path="res://Assets/UserInterface/TileButtonNormalStyleBox.tres" id="43_4tmrm"]
 [ext_resource type="FontFile" uid="uid://dmupnemlejbqj" path="res://Assets/Fonts/Variable/Inter-VariableFont_opsz,wght.ttf" id="74_apnec"]
 
@@ -312,8 +312,7 @@ ToolButton/styles/hover_pressed = ExtResource("42_hrj3f")
 ToolButton/styles/normal = ExtResource("40_km3k5")
 ToolButton/styles/pressed = ExtResource("42_hrj3f")
 TooltipLabel/colors/font_color = Color(1, 1, 1, 1)
-TooltipLabel/font_sizes/font_size = 14
-TooltipLabel/fonts/font = ExtResource("33_nva8e")
+TooltipLabel/fonts/font = ExtResource("42_wg75p")
 TooltipLabel/styles/normal = ExtResource("34_k74kl")
 VScrollBar/constants/padding_left = 2
 VScrollBar/constants/padding_right = 2

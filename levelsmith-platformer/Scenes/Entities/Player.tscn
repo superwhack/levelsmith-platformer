@@ -10,14 +10,14 @@
 [ext_resource type="Texture2D" uid="uid://s62ih2btl5m" path="res://Assets/Sprites/Entities/Player/PlayerIdle/1.png" id="8_j230w"]
 [ext_resource type="Texture2D" uid="uid://bbbegxn0etb18" path="res://Assets/Sprites/Entities/Player/PlayerJump/1.png" id="9_qkam4"]
 [ext_resource type="Texture2D" uid="uid://bg4o3wlomlskb" path="res://Assets/Sprites/Entities/Player/PlayerJump/2.png" id="10_w67ft"]
-[ext_resource type="Texture2D" uid="uid://3e70dpbjhtue" path="res://Assets/Sprites/Entities/Player/PlayerRun/2.png" id="11_7n4p1"]
-[ext_resource type="Texture2D" uid="uid://dyhywu2asl4hy" path="res://Assets/Sprites/Entities/Player/PlayerRun/3.png" id="12_pid1y"]
-[ext_resource type="Texture2D" uid="uid://copu187ct7q0o" path="res://Assets/Sprites/Entities/Player/PlayerRun/1.png" id="13_0aity"]
-[ext_resource type="Texture2D" uid="uid://cm5vmnovslnms" path="res://Assets/Sprites/Entities/Player/PlayerRun/4.png" id="14_j230w"]
-[ext_resource type="Texture2D" uid="uid://dn4bjph5gxlbg" path="res://Assets/Sprites/Entities/Player/PlayerRun/5.png" id="15_qkam4"]
-[ext_resource type="Texture2D" uid="uid://c3aa5lidm121e" path="res://Assets/Sprites/Entities/Player/PlayerRun/6.png" id="16_w67ft"]
-[ext_resource type="Texture2D" uid="uid://dxju0887xijhq" path="res://Assets/Sprites/Entities/Player/PlayerRun/7.png" id="17_7n4p1"]
-[ext_resource type="Texture2D" uid="uid://bi2h2cy3qx30e" path="res://Assets/Sprites/Entities/Player/PlayerRun/8.png" id="18_pid1y"]
+[ext_resource type="Texture2D" uid="uid://cn16lyb1eg016" path="res://Assets/Sprites/Entities/Player/PlayerRun/2.png" id="11_7n4p1"]
+[ext_resource type="Texture2D" uid="uid://bqx8xnj3mp77q" path="res://Assets/Sprites/Entities/Player/PlayerRun/3.png" id="12_pid1y"]
+[ext_resource type="Texture2D" uid="uid://btfvilp3pm5ns" path="res://Assets/Sprites/Entities/Player/PlayerRun/1.png" id="13_0aity"]
+[ext_resource type="Texture2D" uid="uid://c5ki2uvgyh33m" path="res://Assets/Sprites/Entities/Player/PlayerRun/4.png" id="14_j230w"]
+[ext_resource type="Texture2D" uid="uid://b1nv6ffmwwmvt" path="res://Assets/Sprites/Entities/Player/PlayerRun/5.png" id="15_qkam4"]
+[ext_resource type="Texture2D" uid="uid://don8qgrykwfh1" path="res://Assets/Sprites/Entities/Player/PlayerRun/6.png" id="16_w67ft"]
+[ext_resource type="Texture2D" uid="uid://d3c3la1n4525" path="res://Assets/Sprites/Entities/Player/PlayerRun/7.png" id="17_7n4p1"]
+[ext_resource type="Texture2D" uid="uid://btv7q0mvrpret" path="res://Assets/Sprites/Entities/Player/PlayerRun/8.png" id="18_pid1y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
 size = Vector2(20, 19.999996)
@@ -142,7 +142,7 @@ shape = SubResource("RectangleShape2D_2o5fe")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1554690714]
 sprite_frames = SubResource("SpriteFrames_g4v7s")
-animation = &"PlayerHurt"
+animation = &"PlayerDeath"
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=116409988]
 position = Vector2(-57, 0)

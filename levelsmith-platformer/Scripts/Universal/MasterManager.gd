@@ -167,6 +167,7 @@ func edit() -> void:
 	toolManager.clickOnUI = false;
 	entityManager.duplicatingResource = null;
 	editorManagerCanvas.show();
+	AnimationManager.pause_all_animations();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
 	for frame in range(1, 3):

@@ -203,6 +203,22 @@ func play_asset(assetName: String) -> void:
 ## If there are any current sounds in the queue and any avaliable players, start playing the sound.
 ## delta: unused
 func _process(_delta: float) -> void:
+#	print(inusePlayers.size())
+	if (!queue.is_empty() && availablePlayers.is_empty()):
+		inusePlayers[0].stop();
+		audio_finished(inusePlayers[0])
+	if (!queue.is_empty() && !availablePlayers.is_empty()):
+		var path : String = queue.pop_front(); 
+		if (path.ends_with(".mp3")):
+			availablePlayers[0].stream = AudioStreamMP3.load_from_file(path);
+		elif (path.ends_with(".wav")):
+			availablePlayers[0].stream = AudioStreamWAV.load_from_file(path);
+		else:
+			print("Error, somehow a different extention made it into here!")
+		availablePlayers[0].play();
+		inusePlayers.append(availablePlayers[0]);
+		availablePlayers.pop_front();
+	return;
 	if (!queue.is_empty() && !availablePlayers.is_empty()):
 		var path : String = queue.pop_front(); 
 		if (path.ends_with(".mp3")):

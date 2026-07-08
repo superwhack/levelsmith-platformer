@@ -7,15 +7,33 @@
 [ext_resource type="StyleBox" uid="uid://c77hfkgnkauj3" path="res://Assets/UserInterface/ButtonNormalStyleBox.tres" id="5_cb87k"]
 [ext_resource type="Texture2D" uid="uid://dfywfynomokcd" path="res://Assets/Sprites/UI/ButtonRadioSelected16px.png" id="6_a0yo8"]
 [ext_resource type="Texture2D" uid="uid://dsacdvr0wwdow" path="res://Assets/Sprites/UI/ButtonRadioNormal16px.png" id="7_ofwiu"]
+[ext_resource type="Texture2D" uid="uid://tg80b676o7cx" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="8_2y7gw"]
+[ext_resource type="Texture2D" uid="uid://d156qgjyfgwjk" path="res://Assets/Sprites/UI/Iconoir/iconoir--xmark.png" id="9_2y7gw"]
+[ext_resource type="Texture2D" uid="uid://db1vcu52w77cj" path="res://Assets/Sprites/UI/Iconoir/iconoir--folder-plus.png" id="10_hnftp"]
+[ext_resource type="Texture2D" uid="uid://d1tm33kxw6u27" path="res://Assets/Sprites/UI/Iconoir/iconoir--star.png" id="11_xat3a"]
+[ext_resource type="Texture2D" uid="uid://bupwtrv6222y3" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-down.png" id="12_4eou0"]
 [ext_resource type="StyleBox" uid="uid://bjfoydscacqbd" path="res://Assets/UserInterface/WindowBorderStyleBox.tres" id="12_5devf"]
 [ext_resource type="StyleBox" uid="uid://cwo782d4sgcr7" path="res://Assets/UserInterface/ScrollAreaStyleBox.tres" id="13_hrj3f"]
+[ext_resource type="Texture2D" uid="uid://begma3et4pbxn" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-up.png" id="13_sd1wi"]
+[ext_resource type="Texture2D" uid="uid://cn5sn16yutc1c" path="res://Assets/Sprites/UI/Iconoir/iconoir--empty-page.png" id="14_p7whp"]
 [ext_resource type="StyleBox" uid="uid://c7y2n7kpvwjmu" path="res://Assets/UserInterface/HSeparatorLine.tres" id="14_vsidl"]
+[ext_resource type="Texture2D" uid="uid://bv0q0fsv58ep0" path="res://Assets/Sprites/UI/Iconoir/iconoir--folder.png" id="15_a0yo8"]
+[ext_resource type="Texture2D" uid="uid://cyg5apmc64fb2" path="res://Assets/Sprites/UI/page-large.png" id="15_hnftp"]
+[ext_resource type="Texture2D" uid="uid://81a8w8u7pbjd" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-right.png" id="16_ofwiu"]
+[ext_resource type="Texture2D" uid="uid://dokx171ssvfjs" path="res://Assets/Sprites/UI/Iconoir/iconoir--list.png" id="17_3sr2t"]
 [ext_resource type="StyleBox" uid="uid://d0dnc4expn1x0" path="res://Assets/UserInterface/SliderStyleBox.tres" id="17_5jgur"]
+[ext_resource type="Texture2D" uid="uid://bx3x6vlboaisg" path="res://Assets/Sprites/UI/folder-large.png" id="17_xat3a"]
 [ext_resource type="StyleBox" uid="uid://kpc3pw6w1747" path="res://Assets/UserInterface/TextEntryFocusStyleBox.tres" id="18_4tmrm"]
+[ext_resource type="Texture2D" uid="uid://dijpeskkiuydc" path="res://Assets/Sprites/UI/Iconoir/iconoir--arrow-up.png" id="18_nva8e"]
 [ext_resource type="StyleBox" uid="uid://nqweanxgm6cj" path="res://Assets/UserInterface/TextEntryStyleBox.tres" id="19_5devf"]
+[ext_resource type="Texture2D" uid="uid://cvnfdbgoma8cw" path="res://Assets/Sprites/UI/Iconoir/iconoir--refresh.png" id="19_k74kl"]
+[ext_resource type="Texture2D" uid="uid://dkrr6rtq4bjuk" path="res://Assets/Sprites/UI/Iconoir/iconoir--sort.png" id="20_doeq3"]
 [ext_resource type="StyleBox" uid="uid://be7kkb87oloe4" path="res://Assets/UserInterface/ReadOnlyStyleBox.tres" id="20_lxdnb"]
+[ext_resource type="Texture2D" uid="uid://wsu7y84k2jep" path="res://Assets/Sprites/UI/Iconoir/iconoir--view-grid.png" id="21_3caln"]
+[ext_resource type="Texture2D" uid="uid://d2ch5d2fq1hsu" path="res://Assets/Sprites/UI/Iconoir/iconoir--filter.png" id="22_apnec"]
 [ext_resource type="StyleBox" uid="uid://c1uhsadputufm" path="res://Assets/UserInterface/PanelStyleBox.tres" id="22_nvaf8"]
 [ext_resource type="StyleBox" uid="uid://bi2avgb580ef6" path="res://Assets/UserInterface/DropDownStyleBox.tres" id="23_2d6mn"]
+[ext_resource type="Texture2D" uid="uid://7odjlo7yskvt" path="res://Assets/Sprites/UI/Iconoir/iconoir--eye.png" id="25_4eou0"]
 [ext_resource type="StyleBox" uid="uid://dxnkeqjjontb6" path="res://Assets/UserInterface/VScrollGrabStyleBox.tres" id="27_sd1wi"]
 [ext_resource type="StyleBox" uid="uid://dhfkj4xl4btne" path="res://Assets/UserInterface/DownArrowStyleBox.tres" id="28_km3k5"]
 [ext_resource type="StyleBox" uid="uid://dj2aecnt5v8ok" path="res://Assets/UserInterface/TabFocusStyleBox.tres" id="29_p7whp"]
@@ -139,6 +157,7 @@ Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
 Button/colors/icon_normal_color = Color(1, 1, 1, 1)
 Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
 Button/constants/icon_alignment = 2
+Button/constants/icon_max_width = 20
 Button/fonts/font = ExtResource("1_4eou0")
 Button/styles/disabled = ExtResource("2_j7er6")
 Button/styles/focus = ExtResource("3_3vm5f")
@@ -181,6 +200,24 @@ FileDialog/colors/icon_normal_color = Color(1, 1, 1, 1)
 FileDialog/colors/icon_pressed_color = Color(1, 1, 1, 1)
 FileDialog/font_sizes/title_font_size = 24
 FileDialog/fonts/title_font = ExtResource("1_4eou0")
+FileDialog/icons/back_folder = ExtResource("8_2y7gw")
+FileDialog/icons/close = ExtResource("9_2y7gw")
+FileDialog/icons/create_folder = ExtResource("10_hnftp")
+FileDialog/icons/favorite = ExtResource("11_xat3a")
+FileDialog/icons/favorite_down = ExtResource("12_4eou0")
+FileDialog/icons/favorite_up = ExtResource("13_sd1wi")
+FileDialog/icons/file = ExtResource("14_p7whp")
+FileDialog/icons/file_thumbnail = ExtResource("15_hnftp")
+FileDialog/icons/folder = ExtResource("15_a0yo8")
+FileDialog/icons/folder_thumbnail = ExtResource("17_xat3a")
+FileDialog/icons/forward_folder = ExtResource("16_ofwiu")
+FileDialog/icons/list_mode = ExtResource("17_3sr2t")
+FileDialog/icons/parent_folder = ExtResource("18_nva8e")
+FileDialog/icons/reload = ExtResource("19_k74kl")
+FileDialog/icons/sort = ExtResource("20_doeq3")
+FileDialog/icons/thumbnail_mode = ExtResource("21_3caln")
+FileDialog/icons/toggle_filename_filter = ExtResource("22_apnec")
+FileDialog/icons/toggle_hidden = ExtResource("25_4eou0")
 FileDialog/styles/embedded_border = ExtResource("12_5devf")
 FileDialog/styles/embedded_unfocused_border = ExtResource("12_5devf")
 FileDialog/styles/panel = SubResource("StyleBoxFlat_5devf")

@@ -37,6 +37,7 @@ var coyoteTimeLeft : float = 0;
 @export var FPS : int = 24;
 
 var spawnpoint : Vector2 = Vector2(0, 0);
+var currentWalkingEffect : Global.WalkingEffect;
 
 # Raycasts
 @export var raycasts : Array[RayCast2D];
@@ -54,6 +55,10 @@ var invulnerabilityCurrent := 0.0;
 # Stored friction and slowdown, saved so they are maintained while in midair
 var currentFriction : float = 1.0;
 var currentSlowdown : float = 1.0;
+var slidingSticky : bool = false;
+
+# Direction, moved here so the animations can use it as well
+var direction : float;
 
 # Speed with constant multiplier and slowdown appended in
 var trueSpeed : float;
@@ -104,6 +109,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if (check_out_of_bounds()):
 		return;
+	if deathTimer.time_left > 0:
+		animate();
+		return;
 	justWallJumped = false;
 	for enemy in enemiesInside:
 		detect_enemies(enemy);
@@ -113,6 +121,7 @@ func _physics_process(delta: float) -> void:
 	trueSpeed = groundSpeed * 400 * currentSlowdown;
 	# Add the gravity; reduce coyoteTimeLeft if in midair, and reset friction.
 	if (not is_on_floor()):
+		currentWalkingEffect = Global.WalkingEffect.NONE;
 		if (coyoteTimeLeft > 0):
 			coyoteTimeLeft -= delta;
 		velocity += get_gravity() * delta * fallSpeed;
@@ -137,7 +146,7 @@ func _physics_process(delta: float) -> void:
 	
 	if health > 0:
 		move_and_slide();
-	
+	AudioManager.play_effect_walking(currentWalkingEffect);
 	animate();
 
 ## Animates the player while processing
@@ -148,11 +157,11 @@ func animate() -> void:
 		animatedSprites.flip_h = false;
 	elif (invulnerabilityCurrent > 0):
 		animatedSprites.animation = "hurt";
-	elif (isJumping):
+	elif (isJumping && !is_on_floor()):
 		animatedSprites.animation = "jump";
 	elif (!is_on_floor()):
 		animatedSprites.animation = "fall";
-	elif (velocity.x != 0):
+	elif (abs(velocity.x) > 10 && direction):
 		animatedSprites.animation = "walk";
 	else:
 		animatedSprites.animation = "idle";
@@ -169,12 +178,14 @@ func jump() -> void:
 func walk() -> void:
 	# Acceration in the X direction for the player
 	var accelerationX : float;
-	var direction : float = Input.get_axis("left", "right");
+	direction = Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;
 	# Acceleration
 	else:
+		if !slidingSticky:
+			currentWalkingEffect = Global.WalkingEffect.NONE;
 		if (currentFriction != 1.0):
 			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 		else:
@@ -285,6 +296,7 @@ func bounce() -> void:
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
+	slidingSticky = false;
 	
 	
 	# Check all collisions with raycasts
@@ -297,6 +309,11 @@ func detect_tiles() -> void:
 		
 	for raycast in slideCollisions:
 		var collider : Object = raycast.get_collider();
+		# Moving platform
+		if collider is MovingPlatform && is_on_floor():
+			currentFriction = 1.0;
+			currentSlowdown = 1.0;
+			currentWalkingEffect = Global.WalkingEffect.GENERAL;
 		if (collider is not TileMapLayer): continue;
 		
 		var tileLayer : TileMapLayer = collider;
@@ -359,6 +376,7 @@ func detect_tiles() -> void:
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):
+			AudioManager.play_effect("BounceBlock");
 			doubleJumpAvailable = doubleJump;
 			currentSlowdown = 1.0;
 			# Horizontal bounces
@@ -382,10 +400,12 @@ func detect_tiles() -> void:
 
 		# Sticky Tiles
 		if (tileData && (tileData.get_custom_data("name") == "slow")):
+			currentWalkingEffect = Global.WalkingEffect.SLIME;
 			currentFriction = 1;
 			# Horizontal Stick
 			if (abs(raycast.target_position.x) > abs(raycast.target_position.y)):
 				velocity.y *= .9;
+				slidingSticky = true;
 				# Vertical Stick
 			## NOTE: Uncomment this to turn on the ability for the player to 'climb' on the bottom of sticky tiles
 			else:
@@ -400,11 +420,14 @@ func detect_tiles() -> void:
 				currentSlowdown = .5;
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
+			AudioManager.play_effect("BounceBlock");
 			take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"));
 		elif tileName == "death":
 			take_damage(maxHealth);
 		# Only downward rays should drive floor tile effects (except hazard)
 		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):
+			if tileName != "ice" && tileName != "slow":
+				currentWalkingEffect = Global.WalkingEffect.GENERAL;
 			if (tileData.get_custom_data("name") != "bounce" && is_on_floor()):
 				if (tileData.get_custom_data("name") != "ice"):
 					currentFriction = 1.0;
@@ -416,6 +439,7 @@ func detect_tiles() -> void:
 					if Input.is_action_just_pressed("down"):
 						position += Vector2(0, 1);
 				"ice":
+					currentWalkingEffect = Global.WalkingEffect.ICE;
 					currentFriction = .5;
 
 ## When the player walks/falls out of bounds, force kill them

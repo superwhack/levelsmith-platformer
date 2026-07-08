@@ -5,28 +5,26 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="3_pggt4"]
 [ext_resource type="Texture2D" uid="uid://c4mbh1x5fchgl" path="res://Assets/Defaults/Assets/Sprites/Tiles/OneWay.png" id="4_goodf"]
 [ext_resource type="Texture2D" uid="uid://d0p32jicqqs1w" path="res://Assets/Sprites/Tiles/Hazard.png" id="5_0gefc"]
-[ext_resource type="Texture2D" uid="uid://cclkhf0ggl5hm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Ice.png" id="6_h6q5o"]
-[ext_resource type="Texture2D" uid="uid://c21qhnriopfwm" path="res://Assets/Defaults/Assets/Sprites/Tiles/Sticky.png" id="7_0gefc"]
-[ext_resource type="Texture2D" uid="uid://b5i25baa3gfkx" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="8_g7c4e"]
-[ext_resource type="Texture2D" uid="uid://dx73rn5knscwa" path="res://Assets/Defaults/Assets/Sprites/Tiles/Death.png" id="9_g7c4e"]
-[ext_resource type="Texture2D" uid="uid://lh0kyct8ass4" path="res://Assets/Sprites/Tiles/Slope.png" id="9_vup42"]
+[ext_resource type="Texture2D" uid="uid://cv27ok0ogc0qq" path="res://Assets/Defaults/Assets/Sprites/Tiles/Ice.png" id="6_h6q5o"]
+[ext_resource type="Texture2D" uid="uid://dgmuwffx12gix" path="res://Assets/Defaults/Assets/Sprites/Tiles/Sticky.png" id="7_0gefc"]
+[ext_resource type="Texture2D" uid="uid://dbqe553n63r05" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="8_g7c4e"]
+[ext_resource type="Texture2D" uid="uid://bd65wp1rtty2a" path="res://Assets/Sprites/Tiles/death.png" id="9_g7c4e"]
+[ext_resource type="Texture2D" uid="uid://dvwhbam8uq0m4" path="res://Assets/Sprites/Tiles/slope.png" id="9_vup42"]
 [ext_resource type="PackedScene" uid="uid://dqlxqwdmgred1" path="res://Scenes/UI/TilebarButton.tscn" id="10_goodf"]
-[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Sprites/Entities/goal.png" id="11_goodf"]
-[ext_resource type="Texture2D" uid="uid://da0gjbpe87rk5" path="res://Assets/Sprites/Entities/Coin.png" id="12_0gefc"]
-[ext_resource type="Texture2D" uid="uid://cnosv0durnybp" path="res://Assets/Sprites/Entities/dude.png" id="12_goodf"]
-[ext_resource type="Texture2D" uid="uid://cnb3a68lkiwgq" path="res://Assets/Sprites/Entities/baddude.png" id="13_segfj"]
-[ext_resource type="Texture2D" uid="uid://cf8kf58h2lt2s" path="res://Assets/Defaults/Assets/Sprites/Props/Prop1.png" id="14_goodf"]
-[ext_resource type="Texture2D" uid="uid://b8b4yjwi01cw3" path="res://Assets/Defaults/Assets/Sprites/Entities/ShootingStill.png" id="14_pggt4"]
-[ext_resource type="Texture2D" uid="uid://dxv2aa1ba656r" path="res://Assets/Sprites/Entities/Flying.png" id="15_h6q5o"]
-[ext_resource type="Texture2D" uid="uid://dt2a383mg845m" path="res://Assets/Defaults/Assets/Sprites/Props/Prop2.png" id="15_pggt4"]
-[ext_resource type="Texture2D" uid="uid://bq4ixludyuv4l" path="res://Assets/Defaults/Assets/Sprites/Props/Prop3.png" id="16_h6q5o"]
-[ext_resource type="Texture2D" uid="uid://biqnms6vul5oa" path="res://Assets/Defaults/Assets/Sprites/Props/Prop4.png" id="17_0gefc"]
-[ext_resource type="Texture2D" uid="uid://c26vhixuu7u7m" path="res://Assets/Sprites/Entities/eviljumo.png" id="18_3tme8"]
-[ext_resource type="Texture2D" uid="uid://dm3c7xg21m00w" path="res://Assets/Defaults/Assets/Sprites/Props/Prop5.png" id="18_g7c4e"]
-[ext_resource type="Texture2D" uid="uid://bcu5p4cee56xc" path="res://Assets/Sprites/Tiles/oneway.png" id="18_mfvlm"]
+[ext_resource type="Texture2D" uid="uid://c6nlc4t0m4frf" path="res://Assets/Sprites/Entities/goal.png" id="11_goodf"]
+[ext_resource type="Texture2D" uid="uid://b47yd47q7ye4w" path="res://Assets/Sprites/Entities/Coin.png" id="12_0gefc"]
+[ext_resource type="Texture2D" uid="uid://bd2218b002s17" path="res://Assets/Sprites/Entities/dude.png" id="12_goodf"]
+[ext_resource type="Texture2D" uid="uid://bhrgr3llyjay7" path="res://Assets/Sprites/Entities/baddude.png" id="13_segfj"]
+[ext_resource type="Texture2D" uid="uid://g0dgsjn37x26" path="res://Assets/Defaults/Assets/Sprites/Props/Prop1.png" id="14_goodf"]
+[ext_resource type="Texture2D" uid="uid://bdirtvl06c67h" path="res://Assets/Defaults/Assets/Sprites/Entities/ShootingStill.png" id="14_pggt4"]
+[ext_resource type="Texture2D" uid="uid://b303eecjby68g" path="res://Assets/Sprites/Entities/Flying.png" id="15_h6q5o"]
+[ext_resource type="Texture2D" uid="uid://dyuxdxph8uggw" path="res://Assets/Defaults/Assets/Sprites/Props/Prop2.png" id="15_pggt4"]
+[ext_resource type="Texture2D" uid="uid://b3i8vgsp1ei7o" path="res://Assets/Defaults/Assets/Sprites/Props/Prop3.png" id="16_h6q5o"]
+[ext_resource type="Texture2D" uid="uid://bfgkn0xxjwi1q" path="res://Assets/Defaults/Assets/Sprites/Props/Prop4.png" id="17_0gefc"]
+[ext_resource type="Texture2D" uid="uid://0dwb016xnmn4" path="res://Assets/Sprites/Entities/eviljumo.png" id="18_3tme8"]
+[ext_resource type="Texture2D" uid="uid://5a0ahfxd1k0p" path="res://Assets/Defaults/Assets/Sprites/Props/Prop5.png" id="18_g7c4e"]
+[ext_resource type="Texture2D" uid="uid://c50jm0prdc6ii" path="res://Assets/Sprites/Tiles/oneway.png" id="18_mfvlm"]
 [ext_resource type="Texture2D" uid="uid://bx4gafmjxju52" path="res://Assets/Defaults/Assets/Sprites/Props/Prop6.png" id="23_vup42"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3tme8"]
 
 [node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "entityPropDropdown")]
 offset_right = 669.0
@@ -58,11 +56,13 @@ alignment = 1
 
 [node name="SolidButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1067245290 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Solid Tile [1]"
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
 
 [node name="OneWayButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=45805104 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "One-Way Tile [2]"
 icon = ExtResource("4_goodf")
 thisItemID = 2
 tilebar = NodePath("../../../..")
@@ -70,6 +70,7 @@ isTextureUpdating = true
 
 [node name="HazardButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=810406606 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Hazard Tile [3]"
 icon = ExtResource("5_0gefc")
 thisItemID = 1
 tilebar = NodePath("../../../..")
@@ -77,6 +78,7 @@ isTextureUpdating = true
 
 [node name="IceButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1696596209 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Ice Tile [4]"
 icon = ExtResource("6_h6q5o")
 thisItemID = 3
 tilebar = NodePath("../../../..")
@@ -84,6 +86,7 @@ isTextureUpdating = true
 
 [node name="StickyButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1990788713 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Slime Tile [5]"
 icon = ExtResource("7_0gefc")
 thisItemID = 4
 tilebar = NodePath("../../../..")
@@ -91,6 +94,7 @@ isTextureUpdating = true
 
 [node name="BounceButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=850045818 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Bounce Tile [6]"
 icon = ExtResource("8_g7c4e")
 thisItemID = 5
 tilebar = NodePath("../../../..")
@@ -98,6 +102,7 @@ isTextureUpdating = true
 
 [node name="DeathButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1220324445 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Death Tile [7]"
 icon = ExtResource("9_g7c4e")
 thisItemID = 6
 tilebar = NodePath("../../../..")
@@ -105,6 +110,7 @@ isTextureUpdating = true
 
 [node name="SlopeButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=456412869 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Slope [8]"
 icon = ExtResource("9_vup42")
 thisItemID = 7
 tilebar = NodePath("../../../..")
@@ -131,6 +137,7 @@ custom_minimum_size = Vector2(140, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "Entities/Props"
 selected = 0
 item_count = 2
 popup/item_0/text = "Entities"
@@ -149,48 +156,56 @@ theme_override_constants/separation = 8
 
 [node name="GoalEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1329828214 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Goal [1]"
 icon = ExtResource("11_goodf")
 thisItemID = 500
 tilebar = NodePath("../../../../..")
 
 [node name="PlayerEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=568547811 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Player [2]"
 icon = ExtResource("12_goodf")
 thisItemID = 501
 tilebar = NodePath("../../../../..")
 
 [node name="CoinEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1741178858 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Coin [3]"
 icon = ExtResource("12_0gefc")
 thisItemID = 506
 tilebar = NodePath("../../../../..")
 
 [node name="PatrollingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1549482696 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Patrolling Enemy [4]"
 icon = ExtResource("13_segfj")
 thisItemID = 502
 tilebar = NodePath("../../../../..")
 
 [node name="ShootingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=97347578 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Shooting Enemy [5]"
 icon = ExtResource("14_pggt4")
 thisItemID = 503
 tilebar = NodePath("../../../../..")
 
 [node name="FlyingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1159687364 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Flying Enemy [6]"
 icon = ExtResource("15_h6q5o")
 thisItemID = 504
 tilebar = NodePath("../../../../..")
 
 [node name="StationaryEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1637250833 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Stationary Enemy [7]"
 icon = ExtResource("18_3tme8")
 thisItemID = 505
 tilebar = NodePath("../../../../..")
 
 [node name="MovingPlatformButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=622725076 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Moving Platform [8]"
 icon = ExtResource("18_mfvlm")
 thisItemID = 507
 tilebar = NodePath("../../../../..")
@@ -202,6 +217,7 @@ theme_override_constants/separation = 8
 
 [node name="PropOneButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1349934672 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Prop [1]"
 icon = ExtResource("14_goodf")
 thisItemID = 600
 tilebar = NodePath("../../../../..")
@@ -209,6 +225,7 @@ isTextureUpdating = true
 
 [node name="PropTwoButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=425089871 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Prop [2]"
 icon = ExtResource("15_pggt4")
 thisItemID = 601
 tilebar = NodePath("../../../../..")
@@ -216,6 +233,7 @@ isTextureUpdating = true
 
 [node name="PropThreeButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=766602216 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Prop [3]"
 icon = ExtResource("16_h6q5o")
 thisItemID = 602
 tilebar = NodePath("../../../../..")
@@ -223,6 +241,7 @@ isTextureUpdating = true
 
 [node name="PropFourButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=448831461 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Prop [4]"
 icon = ExtResource("17_0gefc")
 thisItemID = 603
 tilebar = NodePath("../../../../..")
@@ -230,6 +249,7 @@ isTextureUpdating = true
 
 [node name="PropFiveButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1555120042 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Prop [5]"
 icon = ExtResource("18_g7c4e")
 thisItemID = 604
 tilebar = NodePath("../../../../..")
@@ -237,6 +257,7 @@ isTextureUpdating = true
 
 [node name="PropSixButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=923450028 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
+tooltip_text = "Prop [6]"
 icon = ExtResource("23_vup42")
 thisItemID = 605
 tilebar = NodePath("../../../../..")

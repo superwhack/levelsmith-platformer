@@ -18,4 +18,5 @@ func _process(_delta: float) -> void:
 	
 
 func change_brush_object() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
 	tilebar.toolManager.update_brush_object(thisItemID);

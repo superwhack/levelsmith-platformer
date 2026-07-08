@@ -15,6 +15,15 @@ var shootingEnemyTemplateSprite : AnimatedSprite2D;
 var stationaryEnemySprites : Array[AnimatedSprite2D];
 var stationaryEnemyTemplateSprite : AnimatedSprite2D;
 
+var goalSprites : Array[AnimatedSprite2D];
+var goalTemplateSprite : AnimatedSprite2D;
+
+var coinSprites : Array[AnimatedSprite2D];
+var coinTemplateSprite : AnimatedSprite2D;
+
+var movingPlatformSprites : Array[AnimatedSprite2D];
+var movingPlatformTemplateSprite : AnimatedSprite2D;
+
 var defaultAnimationsRootPath : String = "res://Assets/Sprites/Entities/";
 
 
@@ -23,7 +32,10 @@ playerSprites,
 patrollingEnemySprites, 
 flyingEnemySprites, 
 shootingEnemySprites, 
-stationaryEnemySprites];
+stationaryEnemySprites,
+goalSprites,
+coinSprites,
+movingPlatformSprites];
 
 var assetManager : AssetManager;
 
@@ -58,6 +70,12 @@ func get_default_animation_by_name(animationName : String) -> Array[Image]:
 		entityName = "ShootingEnemy";
 	elif "Stationary" in animationName:
 		entityName = "StationaryEnemy";
+	elif "Coin" in animationName:
+		entityName = "Coin";
+	elif "Goal" in animationName:
+		entityName = "Goal";
+	elif "Platform" in animationName:
+		entityName = "MovingPlatform";
 	var animationPath = defaultAnimationsRootPath + entityName + "/" + animationName + "/";
 	var defaultAnimation : Array[Image];
 	for i : int in FileSearch.get_clean_file_count(animationPath):
@@ -77,15 +95,27 @@ func refresh_animations() -> void:
 		sprite.sprite_frames = shootingEnemyTemplateSprite.sprite_frames;
 	for sprite in flyingEnemySprites:
 		sprite.sprite_frames = flyingEnemyTemplateSprite.sprite_frames;
+	for sprite in goalSprites:
+		sprite.sprite_frames = goalTemplateSprite.sprite_frames;
+	for sprite in coinSprites:
+		sprite.sprite_frames = coinTemplateSprite.sprite_frames;
+	for sprite in movingPlatformSprites:
+		sprite.sprite_frames = movingPlatformTemplateSprite.sprite_frames;
 
 func get_animation_frames(animationName : String) -> Array[Image]:
 	return assetManager.animationSwapping.get_animation_from_folder(animationName);
 
 func pause_all_animations() -> void:
-	pass;
+	get_all_sprites()
+	for spriteGroup in allAnimatedSprites:
+		for sprite in spriteGroup:
+			sprite.pause(); 
 
 func play_all_animations() -> void:
-	pass;
+	get_all_sprites()
+	for spriteGroup in allAnimatedSprites:
+		for sprite in spriteGroup:
+			sprite.play(); 
 
 func update_template_sprites() -> void:
 	for anim in playerTemplateSprite.sprite_frames.get_animation_names():
@@ -98,6 +128,12 @@ func update_template_sprites() -> void:
 		replace_animation_by_name(flyingEnemyTemplateSprite, anim);
 	for anim in shootingEnemyTemplateSprite.sprite_frames.get_animation_names():
 		replace_animation_by_name(shootingEnemyTemplateSprite, anim);
+	for anim in coinTemplateSprite.sprite_frames.get_animation_names():
+		replace_animation_by_name(coinTemplateSprite, anim);
+	for anim in goalTemplateSprite.sprite_frames.get_animation_names():
+		replace_animation_by_name(goalTemplateSprite, anim);
+	for anim in movingPlatformTemplateSprite.sprite_frames.get_animation_names():
+		replace_animation_by_name(movingPlatformTemplateSprite, anim);
 
 func update_template_sprite_by_name(spriteName : String) -> void:
 	var fixedSpriteName = spriteName[0].to_lower() + spriteName.substr(1);
@@ -146,6 +182,24 @@ func create_template_sprites() -> void:
 	stationaryEnemyTemplateSprite.sprite_frames.add_animation("StationaryIdle");
 	stationaryEnemyTemplateSprite.sprite_frames.remove_animation("default");
 	
+	goalTemplateSprite = AnimatedSprite2D.new();
+	goalTemplateSprite.sprite_frames = SpriteFrames.new();
+	
+	goalTemplateSprite.sprite_frames.add_animation("GoalAnimation");
+	goalTemplateSprite.sprite_frames.remove_animation("default");
+	
+	coinTemplateSprite = AnimatedSprite2D.new();
+	coinTemplateSprite.sprite_frames = SpriteFrames.new();
+	
+	coinTemplateSprite.sprite_frames.add_animation("CoinAnimation");
+	coinTemplateSprite.sprite_frames.remove_animation("default");
+	
+	movingPlatformTemplateSprite = AnimatedSprite2D.new();
+	movingPlatformTemplateSprite.sprite_frames = SpriteFrames.new();
+	
+	movingPlatformTemplateSprite.sprite_frames.add_animation("PlatformAnimation");
+	movingPlatformTemplateSprite.sprite_frames.remove_animation("default");
+	
 
 func get_all_sprites() -> void:
 	for spriteGroup in allAnimatedSprites:
@@ -161,6 +215,13 @@ func get_all_sprites() -> void:
 			stationaryEnemySprites.append(enemy.find_child("AnimatedSprite2D"));
 		if (enemy is EnemyShooting):
 			shootingEnemySprites.append(enemy.find_child("AnimatedSprite2D"));
+	for coin in get_tree().get_nodes_in_group("Coin"):
+		if (coin is Coin):
+			coinSprites.append(coin.find_child("AnimatedSprite2D"));
+	for goal in get_tree().get_nodes_in_group("Goal"):
+		goalSprites.append(goal.find_child("AnimatedSprite2D"));
+	for platform in get_tree().get_nodes_in_group("Platform"):
+		movingPlatformSprites.append(platform.find_child("AnimatedSprite2D"));
 
 func update_animation_fps(animationName : String, newFPS : float):
 	if "Player" in animationName:

@@ -214,7 +214,6 @@ func reset_menu() -> void:
 	firstAnimationSelected = null;
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);
-	generate_buttons("Entities", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
 	on_asset_tab_changed(assetTabs.current_tab);
 
@@ -275,7 +274,9 @@ func create_file_tree() -> void:
 	for type: String in imageSwapping.propTypes:
 		dir.make_dir_recursive(filePath + "/Images/Props/" + type);
 	# Create folder for goal
-	dir.make_dir_recursive(filePath + "/Images/Entities/Goal");
+	dir.make_dir_recursive(filePath + "/Animations/Goal/GoalAnimation");
+	dir.make_dir_recursive(filePath + "/Animations/MovingPlatform/PlatformAnimation");
+	dir.make_dir_recursive(filePath + "/Animations/Coin/CoinAnimation");
 	# Create all folders for animations
 	for animation: String in animationSwapping.playerAnimations:
 		dir.make_dir_recursive(filePath + "/Animations/Player/" + animation);
@@ -336,7 +337,6 @@ func setup() -> void:
 	# Generate all buttons under their tabs
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);
-	generate_buttons("Entities", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
 	on_asset_tab_changed(assetTabs.current_tab);
 	refresh_all();

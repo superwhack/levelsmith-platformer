@@ -134,7 +134,7 @@ func start() -> void:
 	timerLabel.show();
 	update_timer(timerLabel);
 	
-	#AnimationManager.refresh_animations();
+	AnimationManager.play_all_animations();
 
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:

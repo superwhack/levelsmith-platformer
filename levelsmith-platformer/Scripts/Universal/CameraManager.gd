@@ -15,7 +15,6 @@ var panSpeed : float = 1.0;
 @export var zoomSpeed : float = 0.1;
 @export var maxZoomOut : float = 0.5;
 @export var maxZoomIn : float = 2.0;
-@export var playZoom : float = 0.7;
 
 # Tilemap bound
 @export var gridLines : TileMapLayer;
@@ -26,7 +25,13 @@ var roamBounds : Rect2;
 var playerReference : CharacterBody2D = null;
 var playerSearchAttempts : int = 0;
 const maxPlayerSearchAttempts : int = 60;
-var searchForPlayer : bool = true;
+var searchForPlayer : bool = true;#
+
+# Settings for camera during play
+var playZoom : float = 1.0;
+var followSpeed : float = 1.0;
+var deadzone : float = 0.0;
+var cameraPlayClamp : bool = false;
 
 ## Initializes the camera
 func _ready() -> void:
@@ -36,6 +41,7 @@ func _ready() -> void:
 	
 	zoom = Vector2.ONE * maxZoomOut;
 	global_position = levelBounds.get_center();
+	
 	
 	# Start zoomed out
 	Global.reload.connect(reset_camera);
@@ -52,13 +58,18 @@ func initialize_camera() -> void:
 	refresh_bounds();
 	zoom = Vector2.ONE * get_min_zoom_to_fit_roam();
 	global_position = levelBounds.get_center();
-	clamp_camera_to_level();
+	clamp_camera(roamBounds);
 	#print("center:", levelBounds.get_center());
 	#print("camera:", global_position);
 
 ## Retrieve the level bounds and the camera roaming bounds.
 func refresh_bounds() -> void:
 	levelBounds = Rect2(Vector2.ZERO, masterManager.worldSize * Global.TILE_SIZE);
+	# This is so the top and bottom bedrock border are visible when clamped.
+	levelBounds.position.x -= Global.TILE_SIZE;
+	levelBounds.size.x += Global.TILE_SIZE * 2;
+	levelBounds.position.y -= Global.TILE_SIZE;
+	levelBounds.size.y += Global.TILE_SIZE * 2;
 	roamBounds = get_camera_bounds();
 
 ## Remove the player reference and restart the search for the player.
@@ -72,14 +83,16 @@ func reset_camera() -> void:
 func _process(delta: float) -> void:
 	match masterManager.state:
 		Global.State.EDIT:
+			position_smoothing_enabled = false;
 			process_build_camera(delta);
 			process_zoom_input();
-			clamp_camera_to_level();
+			clamp_camera(roamBounds);
 		Global.State.PLAY:
+			position_smoothing_speed = followSpeed;
 			if playerReference == null:
 				try_find_player();
 			else:
-				process_player_camera(delta);
+				process_player_camera();
 				zoom = Vector2.ONE * playZoom;
 
 ## find the 1st node in the group called "player"
@@ -111,7 +124,7 @@ func _input(event: InputEvent) -> void:
 	# Pan while dragging
 	if event is InputEventMouseMotion and isPanning:
 		global_position -= event.relative / zoom * (1.8);
-		clamp_camera_to_level();
+		clamp_camera(roamBounds);
 		
 	if Input.is_action_just_pressed("shift"):
 		panSpeed = 3.0;
@@ -173,12 +186,20 @@ func process_edge_scrolling(delta: float) -> void:
 
 
 ## Processes player follow camera
-## delta: time since previous frame
-func process_player_camera(_delta: float) -> void:
+## snap: if true, the camera will snap to the player without deadzone logic
+func process_player_camera(snap : bool = false) -> void:
 	if playerReference == null:
 		return;
-
-	global_position = playerReference.global_position;
+	if deadzone == 0 || snap:
+		global_position = playerReference.global_position;
+	else:
+		var differenceVector = (playerReference.global_position - global_position);
+		if abs(differenceVector.x) > deadzone * 300:
+			global_position.x += differenceVector.x - sign(differenceVector.normalized().x) * deadzone * 300;
+		if abs(differenceVector.y) > deadzone * 200:
+			global_position.y += differenceVector.y - sign(differenceVector.normalized().y) * deadzone * 200;
+	if cameraPlayClamp:
+		clamp_camera(levelBounds);
 
 ## Adjusts camera zoom
 ## zoomAmount: Zoom change amount
@@ -208,6 +229,11 @@ func process_zoom(zoomAmount: float) -> void:
 	global_position += mouseWorldBefore - mouseWorldAfter;
 	# If zoomed out enough, hide the grid layer.
 
+## Change the smoothing value, used by GameManager when followSpeed is less than 1
+## toEnable: if it's enabled, by default it's determined by the followSpeed
+func adjust_smoothing(toEnable : bool = followSpeed < 1.0) -> void:
+	position_smoothing_enabled = toEnable;
+	
 
 func process_zoom_input() -> void:
 	if masterManager.state != Global.State.EDIT:
@@ -228,38 +254,42 @@ func process_zoom_input() -> void:
 ## Determine the bounds of camera panning.
 ## Returns a rect of the limits of where the camera is able to go.
 func get_camera_bounds() -> Rect2:
-	# Convert roam cell count to pixels
+	# Roam marg
 	var roamMargin = roamCellCount * Global.TILE_SIZE;
-	var roamLimit : Vector2 = Vector2(roamMargin, roamMargin);
-	
-	# Expanded roam space adds the limit to the top and bottoms of the level boundary.
-	var size : Vector2 = levelBounds.size + (roamLimit * 2);
-	
-	return Rect2(-roamLimit, size);
+	var margin = Vector2.ONE * roamMargin;
 
-## Prevents the camera from leaving the level
-func clamp_camera_to_level() -> void:
+	# Returns roam bounds based on level bounds accurately
+	return Rect2(
+		levelBounds.position - margin,
+		levelBounds.size + margin * 2
+	);
+
+## Prevents the camera from leaving the given rect2.
+## bounds: The bounds within which the camera must remain.
+func clamp_camera(bounds: Rect2) -> void:
 	var viewportSize : Vector2 = get_viewport_rect().size;
 	
 	# visible world size
 	var visibleSize : Vector2 = viewportSize * 0.5 / zoom;
 	
-	var minX : float = roamBounds.position.x + visibleSize.x;
-	var maxX : float = roamBounds.end.x - visibleSize.x;
+	var minX : float = bounds.position.x + visibleSize.x;
+	var maxX : float = bounds.end.x - visibleSize.x;
 	
-	var minY : float = roamBounds.position.y + visibleSize.y;
-	var maxY : float = roamBounds.end.y - visibleSize.y;
+	var minY : float = bounds.position.y + visibleSize.y;
+	var maxY : float = bounds.end.y - visibleSize.y;
 	
 	# If zoom too far out, just center
 	if minX > maxX:
-		global_position.x = levelBounds.get_center().x;
+		global_position.x = bounds.get_center().x;
 	else:
 		global_position.x = clamp(global_position.x, minX, maxX);
 	
 	if minY > maxY:
-		global_position.y = levelBounds.get_center().y;
+		global_position.y = bounds.get_center().y;
 	else:
 		global_position.y = clamp(global_position.y, minY, maxY);
+		
+	
 		
 ## Determine if self contains a given rect2.
 ## roamingBounds: A rect2 of the camera panning limits

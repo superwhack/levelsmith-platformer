@@ -22,7 +22,7 @@ extends Node2D
 @export var assetManagerButton : Button;
 
 # Settings Menu and button
-@export var settingsMenu : Node;
+@export var settingsMenu : SettingsMenu;
 @export var settingsButton : Button;
 
 # Cursor Manager
@@ -57,9 +57,8 @@ func _ready() -> void:
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
 		
-		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize);
-		
+		ImportExportManager.save_level_screenshot(levelScreenshot);		
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu);
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
 	settingsButton.pressed.connect(open_settings_menu);
@@ -154,7 +153,6 @@ func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UI_Selection")
-	AudioManager.pause_music(true);
 	previewTileMap.hide();
 	assetManager.show();
 
@@ -171,10 +169,10 @@ func close_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
 	AudioManager.play_UI_effect("UI_Selection");
-	AudioManager.pause_music(false);
 	previewTileMap.show();
 	assetManager.hide();
 	assetManager.animationSwapping.playingAnimation = false;
+	AnimationManager.refresh_animations();
 
 ## Closes the settings menu
 func close_settings_menu() -> void:

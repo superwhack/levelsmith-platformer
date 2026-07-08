@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://c8bs7d04fl2yn"]
 
 [ext_resource type="Script" uid="uid://c28y2d2t7ueqp" path="res://Scripts/Game/EnemyStationary.gd" id="1_jtxg7"]
-[ext_resource type="Texture2D" uid="uid://c8pue5ii0pg5m" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryDeath/1.png" id="2_a2kej"]
-[ext_resource type="Texture2D" uid="uid://dsdwsi084txg" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/1.png" id="3_7j8u7"]
-[ext_resource type="Texture2D" uid="uid://buwpfa5ri2262" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/2.png" id="4_im557"]
+[ext_resource type="Texture2D" uid="uid://bbhd6cqj3nmnl" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryDeath/1.png" id="2_a2kej"]
+[ext_resource type="Texture2D" uid="uid://cswrfp22dwsbv" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/1.png" id="3_7j8u7"]
+[ext_resource type="Texture2D" uid="uid://crbx2ejh7cv50" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/2.png" id="4_im557"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5jdan"]
 
@@ -14,7 +14,7 @@ animations = [{
 "texture": ExtResource("2_a2kej")
 }],
 "loop": 1,
-"name": &"death",
+"name": &"StationaryDeath",
 "speed": 5.0
 }, {
 "frames": [{
@@ -25,7 +25,7 @@ animations = [{
 "texture": ExtResource("4_im557")
 }],
 "loop": 1,
-"name": &"idle",
+"name": &"StationaryIdle",
 "speed": 5.0
 }]
 
@@ -43,4 +43,4 @@ shape = SubResource("CircleShape2D_5jdan")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2014910646]
 sprite_frames = SubResource("SpriteFrames_ogq8d")
-animation = &"death"
+animation = &"StationaryIdle"

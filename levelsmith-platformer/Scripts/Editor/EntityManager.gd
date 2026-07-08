@@ -3,6 +3,7 @@ extends Node2D
 ## Managers and tile map for easy access.
 @export var editorManager : Node2D;
 @export var toolManager : Node2D;
+@export var iconManager : Node2D;
 @export var tileMap : TileMapLayer;
 
 # Reference to PropertyMenu for editing properties
@@ -108,7 +109,8 @@ func place_entity(clickPosition: Vector2) -> void:
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1)
 		Global.EntityType.PROP1, Global.EntityType.PROP2, Global.EntityType.PROP3, Global.EntityType.PROP4, Global.EntityType.PROP5, Global.EntityType.PROP6:
 			# Include rotation and foreground/background for props
-			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, toolManager.currentObjectRotation + 4 if toolManager.isBackground else 0);
+			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, toolManager.currentObjectRotation + (4 if toolManager.isBackground else 0));
+			iconManager.create_icon(clickPosition, "background" if toolManager.isBackground else "foreground");
 		_: 
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
 
@@ -128,6 +130,7 @@ func delete_entity (clickPosition: Vector2) -> void:
 		clickedEntity.queue_free();
 	
 	tileMap.erase_cell(clickPosition);
+	iconManager.delete_icon(clickPosition);
 
 ## Open the property menu and set the selected entity
 ## clickPosition: position that the mouse has clicked at

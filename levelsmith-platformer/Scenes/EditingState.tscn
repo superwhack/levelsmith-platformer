@@ -21,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://cpnh5eiw0m5fv" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
 [ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="15_ditat"]
-[ext_resource type="Texture2D" uid="uid://dmqrt6ulj2tqw" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
+[ext_resource type="Texture2D" uid="uid://pc63ho3uson2" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
@@ -359,15 +359,17 @@ toolManager = NodePath("..")
 tileMap = NodePath("../../Tiles")
 previewTile = NodePath("../../PreviewTile")
 
-[node name="EntityManager" type="Node2D" parent="ToolManager" unique_id=1126944329 node_paths=PackedStringArray("editorManager", "toolManager", "tileMap", "propertyMenu")]
+[node name="EntityManager" type="Node2D" parent="ToolManager" unique_id=1126944329 node_paths=PackedStringArray("editorManager", "toolManager", "iconManager", "tileMap", "propertyMenu")]
 script = ExtResource("14_pkt5f")
 editorManager = NodePath("../..")
 toolManager = NodePath("..")
+iconManager = NodePath("../../IconManager")
 tileMap = NodePath("../../Tiles")
 propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
 
-[node name="IconManager" type="Node2D" parent="." unique_id=1308220472]
+[node name="IconManager" type="Node2D" parent="." unique_id=1308220472 node_paths=PackedStringArray("tileMap")]
 script = ExtResource("26_vrcqo")
+tileMap = NodePath("../Tiles")
 
 [editable path="ScreenUI/BottomRightAnchor/HoverPopUpContainer"]
 [editable path="CanvasLayer/AssetManager"]

@@ -90,6 +90,9 @@ func _ready() -> void:
 		#print("Applying ", playerMovementPreset, " player movement preset.");
 		apply_preset(playerMovementPreset);
 	
+	#for animationName in animatedSprites.sprite_frames.get_animation_names():
+		#AnimationManager.replace_animation_by_name(animatedSprites, animationName);
+	
 	var swap_to_fall = func () -> void:
 		isJumping = false;
 	
@@ -101,7 +104,9 @@ func _ready() -> void:
 	deathTimer.timeout.connect(Global.death.emit);
 	add_child(deathTimer);
 	
-	animatedSprites.animation = "idle";
+	animatedSprites.sprite_frames = AnimationManager.playerTemplateSprite.sprite_frames;
+	
+	animatedSprites.animation = "PlayerIdle";
 	animatedSprites.play();
 
 ## Runs every frame during the play state
@@ -153,18 +158,18 @@ func _physics_process(delta: float) -> void:
 func animate() -> void:
 	animatedSprites.flip_h = velocity.x < 0;
 	if (health <= 0): 
-		animatedSprites.animation = "death";
+		animatedSprites.animation = "PlayerDeath";
 		animatedSprites.flip_h = false;
 	elif (invulnerabilityCurrent > 0):
-		animatedSprites.animation = "hurt";
-	elif (isJumping && !is_on_floor()):
-		animatedSprites.animation = "jump";
+		animatedSprites.animation = "PlayerHurt";
+	elif (isJumping):
+		animatedSprites.animation = "PlayerJump";
 	elif (!is_on_floor()):
-		animatedSprites.animation = "fall";
-	elif (abs(velocity.x) > 10 && direction):
-		animatedSprites.animation = "walk";
+		animatedSprites.animation = "PlayerFall";
+	elif (velocity.x != 0):
+		animatedSprites.animation = "PlayerRun";
 	else:
-		animatedSprites.animation = "idle";
+		animatedSprites.animation = "PlayerIdle";
 	animatedSprites.play();
 
 ## Make the player jump

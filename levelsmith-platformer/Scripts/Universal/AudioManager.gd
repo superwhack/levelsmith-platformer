@@ -86,18 +86,6 @@ func update_volume() -> void:
 		if (availablePlayers[i].volume_db == -LOWEST_DB):
 			availablePlayers[i].volume_db = -1000;
 
-## NOTE: These two functions can probably be shortened since we know that the associated files have specific filePaths
-## Play the music track for the builder
-## musicName: name of the song to play
-func play_UI_music(musicName: String) -> void:
-	musicPlayer.stop();
-	var fullPath : String = UI_AUDIO_LIBRARY_PATH + musicName;
-	if (FileAccess.file_exists(fullPath + ".mp3")):
-		musicPlayer.stream = load(fullPath + ".mp3");
-	elif (FileAccess.file_exists(fullPath + ".wav")):
-		musicPlayer.stream = load(fullPath + ".wav");
-	musicPlayer.play();
-
 ## Add specified SFX to the queue from builder sounds
 ## effectName: name of the effect to play
 func play_UI_effect(effectName: String) -> void:

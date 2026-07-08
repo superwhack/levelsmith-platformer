@@ -1,6 +1,8 @@
 [gd_scene format=4 uid="uid://bm5w14jlbl37k"]
 
 [ext_resource type="Script" uid="uid://bl06idiv62yg6" path="res://Scripts/Universal/MasterManager.gd" id="1_3ngsi"]
+[ext_resource type="Script" uid="uid://cnfmia7tequpl" path="res://Scripts/Universal/AnimationManager.gd" id="2_0vixy"]
+[ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/Universal/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
 [ext_resource type="PackedScene" uid="uid://bjx53xjckex6r" path="res://Scenes/MainMenu.tscn" id="2_gojh1"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
@@ -59,32 +61,53 @@ previewTileMap = NodePath("EditorManager/PreviewTile")
 gridLines = NodePath("EditorManager/GridLines")
 propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
 
+[node name="AnimationManager" type="Node" parent="." unique_id=343134313]
+script = ExtResource("2_0vixy")
+
+[node name="AudioManager" type="Node" parent="." unique_id=62565252]
+script = ExtResource("2_8vbpr")
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=101918903 node_paths=PackedStringArray("masterManager", "gridLines")]
+process_callback = 0
+position_smoothing_enabled = true
 script = ExtResource("4_mg0h4")
 masterManager = NodePath("..")
 gridLines = NodePath("../EditorManager/GridLines")
 
-[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager") instance=ExtResource("2_430ed")]
+[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera") instance=ExtResource("2_430ed")]
 masterManager = NodePath("..")
+mainCamera = NodePath("../Camera2D")
 
-[node name="Tiles" parent="EditorManager" index="0" unique_id=1452837543]
-position = Vector2(1, 0)
-tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAAAAAADAAcAAwAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAKAAYABAAAAAAAAAALAAYABAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAANAAUAAQAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAADAAkAAAAAAAAAAAACAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAD//wkAAAAAAAAAAAAJAAYABgAAAAAAAGAMAAUABgAAAAAAABACAAUABQAAAAAAAAAGAAUABQAAAAAAAAA=")
-
-[node name="GridLines" parent="EditorManager" index="1" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
+[node name="GridLines" parent="EditorManager" index="0" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
 z_index = 0
 tile_set = SubResource("TileSet_0vixy")
 masterManager = NodePath("../..")
+
+[node name="Tiles" parent="EditorManager" index="1" unique_id=1452837543]
+position = Vector2(1, 0)
+tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAAAAAADAAcAAwAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAKAAYABAAAAAAAAAALAAYABAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAANAAUAAQAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAADAAkAAAAAAAAAAAACAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAD//wkAAAAAAAAAAAAJAAYABgAAAAAAAGAMAAUABgAAAAAAABACAAUABQAAAAAAAAAGAAUABQAAAAAAAAA=")
 
 [node name="PreviewTile" parent="EditorManager" index="2" unique_id=1302011485]
 modulate = Color(1, 1, 1, 1)
 position = Vector2(0, -1)
 collision_enabled = true
 
+[node name="AssetManager" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="0" unique_id=468653693 node_paths=PackedStringArray("masterManager")]
+masterManager = NodePath("../../..")
+
+[node name="SettingsMenu" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="2" unique_id=79213823 node_paths=PackedStringArray("cameraManager")]
+cameraManager = NodePath("../../../Camera2D")
+
 [node name="CustomCursorManager" parent="EditorManager" index="6" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
 masterManager = NodePath("../..")
 
-[node name="GameManager" parent="." unique_id=344859815 instance=ExtResource("4_ggjfv")]
+[node name="LevelScreenshot" parent="EditorManager" index="8" unique_id=1423987778 node_paths=PackedStringArray("masterManager", "baseCamera")]
+enabled = false
+masterManager = NodePath("../..")
+baseCamera = NodePath("../../Camera2D")
+
+[node name="GameManager" parent="." unique_id=344859815 node_paths=PackedStringArray("cameraManager") instance=ExtResource("4_ggjfv")]
+cameraManager = NodePath("../Camera2D")
 
 [node name="MainMenuCanvasLayer" type="CanvasLayer" parent="." unique_id=1285763636]
 

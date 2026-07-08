@@ -18,6 +18,8 @@ extends Node2D
 @export var replayButton : Button;
 @export var editorButton : Button;
 
+@export var cameraManager : Node;
+
 # Is the player paused or running?
 enum PlayState {
 	PAUSE,
@@ -98,7 +100,8 @@ func start() -> void:
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
-	
+	cameraManager.adjust_smoothing();
+	cameraManager.process_player_camera(true);
 	if playerHealthUI:
 		playerHealthUI.bind_player(player);
 
@@ -130,6 +133,8 @@ func start() -> void:
 	timerRunning = true;
 	timerLabel.show();
 	update_timer(timerLabel);
+	
+	AnimationManager.play_all_animations();
 
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:

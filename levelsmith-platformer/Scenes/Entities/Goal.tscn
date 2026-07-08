@@ -1,15 +1,27 @@
 [gd_scene format=3 uid="uid://1wme1ton08gv"]
 
-[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Defaults/Assets/Sprites/Entities/Goal.png" id="1_7hjqj"]
 [ext_resource type="Script" uid="uid://cplua8142i8c3" path="res://Scripts/Game/Goal.gd" id="1_vs13i"]
+[ext_resource type="Texture2D" uid="uid://djgjbsdmt5bxa" path="res://Assets/Sprites/Entities/Goal/GoalAnimation/1.png" id="2_vs13i"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ogq8d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vs13i")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7hjqj"]
 
-[node name="Goal" type="Area2D" unique_id=2133231128]
+[node name="Goal" type="Area2D" unique_id=2133231128 node_paths=PackedStringArray("animatedSprite") groups=["Goal"]]
 script = ExtResource("1_vs13i")
+animatedSprite = NodePath("AnimatedSprite2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1006454652]
-texture = ExtResource("1_7hjqj")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1856157595]
+sprite_frames = SubResource("SpriteFrames_ogq8d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1457671285]
 scale = Vector2(6.4, 6.4)

@@ -38,6 +38,8 @@ func _process(_delta: float) -> void:
 	
 	if (toolManager.brushObject >= Global.EntityType.PROP1 && toolManager.brushObject <= Global.EntityType.PROP6):
 		previewIcon.texture = propBackgroundIcon if toolManager.isBackground else propForegroundIcon;
+		if (tileMap.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL): 
+			previewIcon.hide();
 	else:
 		previewIcon.hide();
 

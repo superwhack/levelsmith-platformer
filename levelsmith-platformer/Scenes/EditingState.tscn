@@ -62,9 +62,10 @@ sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63w0a"]
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "settingsMenu", "settingsButton", "customCursorManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "iconManager", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "settingsMenu", "settingsButton", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
+iconManager = NodePath("IconManager")
 levelScreenshotCamera = NodePath("LevelScreenshot")
 screenUI = NodePath("ScreenUI")
 tileMap = NodePath("Tiles")

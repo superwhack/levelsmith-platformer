@@ -30,7 +30,10 @@ func _ready() -> void:
 ## Processes the physics every frame
 ## delta: Time since previous frame
 func _physics_process(delta: float) -> void:
-	if (health <= 0): return;
+	if (health <= 0): 
+		super._physics_process(delta);
+		move_and_slide();
+		return;
 	
 	if !active:
 		if !onScreen.is_on_screen():

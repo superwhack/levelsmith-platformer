@@ -88,6 +88,8 @@ func take_damage(amount: int = 1) -> void:
 
 ## Kills the enemy death sound, and deletes the enemy
 func die() -> void:
+	# If this is uncommented, then the enemies will also fall through collision while dying
+	#hitbox.queue_free();
 	AudioManager.play_effect("EnemyDeath");
 	if (animatedSprites):
 		animatedSprites.play(deathAnim);

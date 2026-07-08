@@ -34,6 +34,10 @@ func _process(_delta: float) -> void:
 func update_preview_object(mousePosition: Vector2, prevPosition: Vector2, previewObject: int = brushObject, isRed: bool = false) -> void:
 	if (mousePosition != prevPosition): clear();
 	
+	if !toolManager.isMoving && (tileMap.get_cell_source_id(mousePosition) >= editorManager.tileCount && previewObject >= editorManager.tileCount):
+		clear();
+		return;
+	
 	## NOTE: Prop 1 is assumed to be the first prop, and everything after it is a prop/rotatable.
 	if (previewObject == Global.ERASING_TILE):
 		set_cell(mousePosition, previewObject, Vector2i.ZERO);

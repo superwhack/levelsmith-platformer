@@ -17,7 +17,7 @@ func _ready() -> void:
 ## delta: Time since previous frame
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	if gravityEnabled:
+	if gravityEnabled || health <= 0:
 		super._physics_process(delta);
 		move_and_slide();
 	

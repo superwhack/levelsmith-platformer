@@ -6,10 +6,14 @@
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_us2oy"]
 [ext_resource type="StyleBox" uid="uid://c77hfkgnkauj3" path="res://Assets/UserInterface/ButtonNormalStyleBox.tres" id="5_cb87k"]
 [ext_resource type="Texture2D" uid="uid://dfywfynomokcd" path="res://Assets/Sprites/UI/ButtonRadioSelected16px.png" id="6_a0yo8"]
+[ext_resource type="Texture2D" uid="uid://b1kki3kjddd40" path="res://Assets/Sprites/UI/CheckBoxOn.png" id="6_p7whp"]
 [ext_resource type="Texture2D" uid="uid://dsacdvr0wwdow" path="res://Assets/Sprites/UI/ButtonRadioNormal16px.png" id="7_ofwiu"]
 [ext_resource type="Texture2D" uid="uid://tg80b676o7cx" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="8_2y7gw"]
 [ext_resource type="Texture2D" uid="uid://d156qgjyfgwjk" path="res://Assets/Sprites/UI/Iconoir/iconoir--xmark.png" id="9_2y7gw"]
+[ext_resource type="Texture2D" uid="uid://bnaaop4hwc2ji" path="res://Assets/Sprites/UI/CheckBox.png" id="9_a0yo8"]
 [ext_resource type="Texture2D" uid="uid://db1vcu52w77cj" path="res://Assets/Sprites/UI/Iconoir/iconoir--folder-plus.png" id="10_hnftp"]
+[ext_resource type="Texture2D" uid="uid://bjj4madadegef" path="res://Assets/Sprites/UI/ToggleOn.png" id="10_ofwiu"]
+[ext_resource type="Texture2D" uid="uid://c24w7h3wshp48" path="res://Assets/Sprites/UI/ToggleOff.png" id="11_3sr2t"]
 [ext_resource type="Texture2D" uid="uid://d1tm33kxw6u27" path="res://Assets/Sprites/UI/Iconoir/iconoir--star.png" id="11_xat3a"]
 [ext_resource type="Texture2D" uid="uid://bupwtrv6222y3" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-down.png" id="12_4eou0"]
 [ext_resource type="StyleBox" uid="uid://bjfoydscacqbd" path="res://Assets/UserInterface/WindowBorderStyleBox.tres" id="12_5devf"]
@@ -170,8 +174,10 @@ CheckBox/colors/font_hover_color = Color(1, 1, 1, 1)
 CheckBox/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 CheckBox/colors/font_pressed_color = Color(1, 1, 1, 1)
 CheckBox/fonts/font = ExtResource("1_4eou0")
+CheckBox/icons/checked = ExtResource("6_p7whp")
 CheckBox/icons/radio_checked = ExtResource("6_a0yo8")
 CheckBox/icons/radio_unchecked = ExtResource("7_ofwiu")
+CheckBox/icons/unchecked = ExtResource("9_a0yo8")
 CheckBox/styles/disabled = SubResource("StyleBoxEmpty_u2jud")
 CheckBox/styles/focus = SubResource("StyleBoxEmpty_g6ve4")
 CheckBox/styles/hover = SubResource("StyleBoxEmpty_gp8ah")
@@ -184,8 +190,10 @@ CheckButton/colors/font_focus_color = Color(1, 1, 1, 1)
 CheckButton/colors/font_hover_color = Color(1, 1, 1, 1)
 CheckButton/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 CheckButton/colors/font_pressed_color = Color(1, 1, 1, 1)
-CheckButton/constants/icon_max_width = 32
+CheckButton/constants/icon_max_width = 40
 CheckButton/fonts/font = ExtResource("1_4eou0")
+CheckButton/icons/checked = ExtResource("10_ofwiu")
+CheckButton/icons/unchecked = ExtResource("11_3sr2t")
 CheckButton/styles/hover = SubResource("StyleBoxEmpty_uusg4")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_5ihoh")
 CheckButton/styles/normal = SubResource("StyleBoxEmpty_46rmy")

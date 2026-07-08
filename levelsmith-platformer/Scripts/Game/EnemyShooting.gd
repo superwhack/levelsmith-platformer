@@ -36,6 +36,10 @@ func _ready() -> void:
 	animatedSprites.animation_finished.connect(_on_animation_finished);
 
 func _physics_process(delta: float) -> void:
+	if health <= 0:
+		super._physics_process(delta);
+		move_and_slide();
+		return;
 	if !active:
 		if !onScreen.is_on_screen():
 			return;
@@ -72,6 +76,7 @@ func adjust_arrow(angle: float = fireDirection + 90, random: bool = randomDirect
 
 ## Shoots in the determined direction
 func shooting_behavior() -> void:
+	AudioManager.play_effect("EnemyShoot");
 	var projectileFired = PROJECTILE.instantiate();
 	projectileFired.speed = shotSpeed;
 	projectileFired.global_position = position;

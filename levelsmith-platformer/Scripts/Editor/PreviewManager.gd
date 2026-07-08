@@ -11,6 +11,8 @@ var brushObject : int;
 var currentMousePosition : Vector2;
 var prevMousePosition : Vector2;
 
+
+
 ## Runs every frame during the editing state.
 ## _delta: how much time has passed since the previous frame
 func _process(_delta: float) -> void:

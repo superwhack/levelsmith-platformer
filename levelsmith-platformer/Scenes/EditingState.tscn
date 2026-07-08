@@ -24,8 +24,8 @@
 [ext_resource type="Texture2D" uid="uid://pc63ho3uson2" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
-[ext_resource type="Script" uid="uid://dennrhd1fmssd" path="res://Scripts/Universal/LevelScreenshot.gd" id="25_fnjh2"]
 [ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
+[ext_resource type="Script" uid="uid://dennrhd1fmssd" path="res://Scripts/Universal/LevelScreenshot.gd" id="25_fnjh2"]
 [ext_resource type="Script" uid="uid://demhkcrctsljf" path="res://Scripts/Editor/IconManager.gd" id="26_vrcqo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -370,9 +370,11 @@ iconManager = NodePath("../../IconManager")
 tileMap = NodePath("../../Tiles")
 propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
 
-[node name="IconManager" type="Node2D" parent="." unique_id=1308220472 node_paths=PackedStringArray("tileMap")]
+[node name="IconManager" type="Node2D" parent="." unique_id=1308220472 node_paths=PackedStringArray("tileMap", "toolManager", "editorManager")]
 script = ExtResource("26_vrcqo")
 tileMap = NodePath("../Tiles")
+toolManager = NodePath("../ToolManager")
+editorManager = NodePath("..")
 
 [node name="LevelScreenshot" type="Camera2D" parent="." unique_id=1423987778]
 script = ExtResource("25_fnjh2")

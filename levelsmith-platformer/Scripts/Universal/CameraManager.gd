@@ -88,7 +88,7 @@ func _process(delta: float) -> void:
 			process_zoom_input();
 			clamp_camera(roamBounds);
 		Global.State.PLAY:
-			position_smoothing_speed = followSpeed;
+			position_smoothing_speed = followSpeed * 8;
 			if playerReference == null:
 				try_find_player();
 			else:

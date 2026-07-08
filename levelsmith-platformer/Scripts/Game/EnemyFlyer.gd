@@ -23,6 +23,7 @@ const SPEED_MODIFIER : float = 100.0;
 
 ## Adds enemy to group and sets up initial points
 func _ready() -> void:
+	deathAnim = "FlyDeath";
 	super._ready();
 
 	# Set all points to its current position
@@ -30,7 +31,11 @@ func _ready() -> void:
 	pointB = pointA;
 	targetPoint = pointA;
 	
-	animatedSprites.animation = "move";
+	#AnimationManager.replace_animation_by_name(animatedSprites, "FlyMove");
+	
+	animatedSprites.sprite_frames = AnimationManager.flyingEnemyTemplateSprite.sprite_frames;
+	
+	animatedSprites.animation = "FlyMove";
 	animatedSprites.play();
 
 ## Processes flying movement and collision handling.

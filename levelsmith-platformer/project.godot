@@ -25,6 +25,7 @@ AudioManager="*uid://b2na8kblsdcth"
 ImportExportManager="*uid://osd05p20la73"
 PopUpManager="*uid://balrchnavex6a"
 FileSearch="*uid://d470wsihf8h0"
+AnimationManager="*uid://cnfmia7tequpl"
 
 [debug]
 

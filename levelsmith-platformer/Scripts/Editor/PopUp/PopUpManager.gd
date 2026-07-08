@@ -61,7 +61,8 @@ func create_reset_asset_popup(callback : Callable) -> void:
 	
 	newPopUp.set_title("RESET ALL ASSETS");
 	newPopUp.set_body_text("This will RESET ALL ASSETS to default. All custom assets will be lost.");
-	newPopUp.set_confirm_callback(callback);
+	newPopUp.set_reset_callback(callback);
+	newPopUp.resetButton.show();
 	newPopUp.closeButton.text = "Cancel";
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
@@ -72,8 +73,39 @@ func create_reset_image_popup(callback : Callable, asset : String = "asset") -> 
 	
 	newPopUp.set_title("RESET SELECTED ASSET");
 	newPopUp.set_body_text("This will [color=#e74937]RESET[/color] your custom " + asset + " asset to its default. The current asset will be lost.");
-	newPopUp.set_confirm_callback(callback);
+	newPopUp.set_reset_callback(callback);
+	newPopUp.resetButton.show();
 	newPopUp.closeButton.text = "Cancel";
+	add_child(newPopUp);
+	currentPopUp = newPopUp;
+	
+	
+## When saving a level, create the initial popup
+func create_save_popup() -> void:
+	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
+	
+	newPopUp.set_title("Saving...");
+	newPopUp.separator.hide();
+	newPopUp.bodyText.hide();
+	newPopUp.resetButton.hide();
+	newPopUp.closeButton.hide();
+	newPopUp.self_modulate = Color(1, 1, 1, 0);
+	
+	add_child(newPopUp);
+	currentPopUp = newPopUp;
+	
+
+## When a save has been completed, create a save complete popup
+func create_save_complete_popup() -> void:
+	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
+	
+	newPopUp.set_title("Save Complete!");
+	newPopUp.separator.hide();
+	newPopUp.bodyText.hide();
+	newPopUp.resetButton.hide();
+	newPopUp.closeButton.hide();
+	newPopUp.self_modulate = Color(1, 1, 1, 0);
+	
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
 

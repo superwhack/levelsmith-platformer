@@ -1,26 +1,30 @@
 extends Node
 
 # 0% - 100% volume measured in floats 
-var masterVolume : float = 1.0;
-var musicVolume : float = 1.0;
-var SFXVolume : float = 1.0;
+var masterVolume : float = 0.7;
+var musicVolume : float = 0.7;
+var SFXVolume : float = 0.7;
 
 # Lowest DB, should be inaudible (it's negative)
 const LOWEST_DB : int = 70;
 
-# Max number of audio players to be running at once (excluding one for music)
-const AUDIO_PLAYER_COUNT : int = 6;
-
+# Max number of audio players to be running at once (excluding one for music and one for walking)
+const AUDIO_PLAYER_COUNT : int = 12;
+const AUDIO_QUEUE_LIMIT : int = AUDIO_PLAYER_COUNT;
 # All folders for audio
-var audioLibraryPath : String = "user://Audio/";
+## BUG: UNTUL AUDIO LIBRARY PATH IS READY, IT IS TO BE ASSIGNED TO THE DEFAULT
+var audioLibraryPath : String = "res://Assets/Defaults/Assets/Audio/";
+#var audioLibraryPath : String = "user://Audio/";
 const UI_AUDIO_LIBRARY_PATH : String = "res://Assets/Audio/";
 const BACKUP_AUDIO_LIBRARY_PATH : String = "res://Assets/Defaults/Assets/Audio/";
 
 # Players and the queue that holds filepaths to play
 var musicPlayer : AudioStreamPlayer;
+var walkingPlayer : AudioStreamPlayer;
 var availablePlayers : Array[AudioStreamPlayer];
 var inusePlayers : Array[AudioStreamPlayer]
 var queue : Array[String];
+var currentWalkingEffect : Global.WalkingEffect;
 
 # Audio player for the asset manager
 var assetManagerPlayer : AudioStreamPlayer
@@ -28,11 +32,15 @@ var assetManagerPlayer : AudioStreamPlayer
 ## Create all players and connect them properly
 func _ready() -> void:
 	musicPlayer = AudioStreamPlayer.new();
+	walkingPlayer = AudioStreamPlayer.new();
 	assetManagerPlayer = AudioStreamPlayer.new();
+	process_mode = Node.PROCESS_MODE_ALWAYS;
 	add_child(musicPlayer);
+	add_child(walkingPlayer);
 	add_child(assetManagerPlayer);
 	musicPlayer.finished.connect(music_loop.bind(musicPlayer));
 	musicPlayer.bus = "master";
+	walkingPlayer.bus = "master";
 	assetManagerPlayer.bus = "master";
 	
 	# Loop through and create every potential audioPlayer for use with UI and in game
@@ -42,6 +50,13 @@ func _ready() -> void:
 		availablePlayers.append(audioPlayer);
 		audioPlayer.finished.connect(audio_finished.bind(audioPlayer));
 		audioPlayer.bus = "master";
+	
+	update_volume();
+
+## Pause the current music player
+## pause: true if the music should be paused
+func pause_music(pause : bool) -> void:
+	musicPlayer.stream_paused = pause;
 
 ## Only done with music, loop instead of ending it
 ## player: the audio stream player running the music
@@ -59,6 +74,9 @@ func update_volume() -> void:
 	musicPlayer.volume_db = (LOWEST_DB * masterVolume * musicVolume) - LOWEST_DB;
 	if (musicPlayer.volume_db == -LOWEST_DB):
 			musicPlayer.volume_db = -1000;
+	walkingPlayer.volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
+	if (walkingPlayer.volume_db == -LOWEST_DB):
+			walkingPlayer.volume_db = -1000;
 	for i in inusePlayers.size():
 		inusePlayers[i].volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
 		if (inusePlayers[i].volume_db == -LOWEST_DB):
@@ -83,6 +101,8 @@ func play_UI_music(musicName: String) -> void:
 ## Add specified SFX to the queue from builder sounds
 ## effectName: name of the effect to play
 func play_UI_effect(effectName: String) -> void:
+	if queue.size() >= AUDIO_QUEUE_LIMIT:
+		return;
 	var fullPath : String = UI_AUDIO_LIBRARY_PATH + effectName;
 	if (FileAccess.file_exists(fullPath + ".mp3")):
 		queue.append(fullPath + ".mp3");
@@ -107,8 +127,22 @@ func play_music(musicName: String) -> void:
 ## Add specified SFX to the queue
 ## effectName: name of the sound effect
 func play_effect(effectName: String) -> void:
+	if queue.size() >= AUDIO_QUEUE_LIMIT:
+		return;
 	var fullPath : String = audioLibraryPath + effectName;
-	if (FileAccess.file_exists(fullPath + ".mp3")):
+	# If the path points to a folder, then one random file from the folder needs to be selected instead.
+	if DirAccess.dir_exists_absolute(fullPath + "/"):
+		var validFiles : PackedStringArray;
+		var files = DirAccess.get_files_at(fullPath);
+		# Only non .imports are accepted
+		for file in files:
+			if !file.ends_with(".import"):
+				validFiles.append(file);
+		var randomFileIndex = randi() % validFiles.size();
+		fullPath += "/" + (validFiles[randomFileIndex]);
+		queue.append(fullPath);
+	# Else just see if it's a .mp3 or .wav
+	elif (FileAccess.file_exists(fullPath + ".mp3")):
 		queue.append(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		queue.append(fullPath + ".wav");
@@ -117,11 +151,52 @@ func play_effect(effectName: String) -> void:
 		# Under the assumption all backups will be .wav for effects
 		queue.append(BACKUP_AUDIO_LIBRARY_PATH + effectName + ".wav")
 
+## Add and play a new walking effect, only one at a time
+## effectName: name of the walking effect
+func play_effect_walking(walkingEffect: Global.WalkingEffect) -> void:
+	if walkingPlayer.playing && currentWalkingEffect == walkingEffect:
+		return;
+	currentWalkingEffect = walkingEffect;
+	var effectName = "";
+	match walkingEffect:
+		Global.WalkingEffect.NONE:
+			walkingPlayer.stop();
+			return;
+		Global.WalkingEffect.GENERAL:
+			effectName = "WalkingGeneral";
+		Global.WalkingEffect.ICE:
+			effectName = "WalkingIce";
+		Global.WalkingEffect.SLIME:
+			effectName = "WalkingSlime";
+	var fullPath : String = audioLibraryPath + effectName;
+	# If the path points to a folder, then one random file from the folder needs to be selected instead.
+	if DirAccess.dir_exists_absolute(fullPath + "/"):
+		var validFiles : PackedStringArray;
+		var files = DirAccess.get_files_at(fullPath);
+		# Only non .imports are accepted
+		for file in files:
+			if !file.ends_with(".import"):
+				validFiles.append(file);
+		var randomFileIndex = randi() % validFiles.size();
+		fullPath += "/" + (validFiles[randomFileIndex]);
+		walkingPlayer.stream = load(fullPath);
+	# Else just see if it's a .mp3 or .wav
+	elif (FileAccess.file_exists(fullPath + ".mp3")):
+		walkingPlayer.stream = load(fullPath + ".mp3");
+	elif (FileAccess.file_exists(fullPath + ".wav")):
+		walkingPlayer.stream = load(fullPath + ".wav");
+	else:
+		print(effectName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
+		# Under the assumption all backups will be .wav for effects
+		walkingPlayer.stream = load(BACKUP_AUDIO_LIBRARY_PATH + effectName + ".wav")
+	walkingPlayer.play();
+
 ## Reset and stop all audio
 func reset_audio() -> void:
 	for i in inusePlayers.size():
 		inusePlayers[i].stop();
 		availablePlayers.append(inusePlayers[i]);
+	queue.clear();
 	inusePlayers.clear();
 	musicPlayer.stop();
 
@@ -140,12 +215,6 @@ func play_asset(assetName: String) -> void:
 ## If there are any current sounds in the queue and any avaliable players, start playing the sound.
 ## delta: unused
 func _process(_delta: float) -> void:
-	if (Input.is_action_just_pressed("muteTemporary")):
-		if (masterVolume == 0):
-			masterVolume = .7;
-		else:
-			masterVolume = 0;
-		update_volume();
 	if (!queue.is_empty() && !availablePlayers.is_empty()):
 		var path : String = queue.pop_front(); 
 		if (path.ends_with(".mp3")):

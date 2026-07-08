@@ -229,15 +229,18 @@ func walk() -> void:
 ## Have the player take damage
 ## amount: damage to deal, -1 is instant death
 ## direction: direction to deal damage in
-func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce : int = 0) -> void:
+## higherBounce: if the player should bounce higher
+## returns: true is damage applied
+func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce : int = 0) -> bool:
 	if invulnerabilityCurrent > 0:
-		return;
+		return false;
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
 	velocity = direction * (1000 + higherBounce * 500);
 	health -= amount;
 	if (health <= 0):
 		die();
+	return true;
 	
 ## Kill the player and send the global death signal
 func die() -> void:
@@ -374,7 +377,7 @@ func detect_tiles() -> void:
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):
-			AudioManager.play_effect("BounceBlock");
+			AudioManager.play_effect("BounceTile");
 			doubleJumpAvailable = doubleJump;
 			currentSlowdown = 1.0;
 			# Horizontal bounces
@@ -418,8 +421,8 @@ func detect_tiles() -> void:
 				currentSlowdown = .5;
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
-			AudioManager.play_effect("BounceBlock");
-			take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"));
+			if take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump")):
+				AudioManager.play_effect("HazardTile");
 		elif tileName == "death":
 			take_damage(maxHealth);
 		# Only downward rays should drive floor tile effects (except hazard)

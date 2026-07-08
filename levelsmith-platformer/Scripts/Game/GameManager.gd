@@ -158,7 +158,7 @@ func _on_coin_collected() -> void:
 func update_coin_counter(label: RichTextLabel) -> void:
 	label.clear()
 	if totalCoins > 0:
-		label.append_text("Coins: %d / %d" % [coinCount, totalCoins])
+		label.append_text("%02d" % [coinCount])
 
 ## Prints the final completion time and stops the level timer
 func print_level_completion_time() -> void:
@@ -174,7 +174,7 @@ func update_timer(label: RichTextLabel) -> void:
 	var minutes := int(testingTime) / 60;
 	var seconds := int(testingTime) % 60;
 	label.clear();
-	label.append_text("Time: %02d:%02d" % [minutes, seconds]);
+	label.append_text("%02d:%02d" % [minutes, seconds]);
 
 ## Pauses gameplay, displays the win screen, and updates the completion statistics
 func level_complete() -> void:

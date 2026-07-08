@@ -1,4 +1,5 @@
 extends Panel
+class_name SettingsMenu;
 
 # General
 @export var editorManager : Node2D;
@@ -65,3 +66,14 @@ func _on_drag() -> void:
 	cameraManager.followSpeed = followSpeed.value / 100;
 	cameraManager.deadzone = cameraDeadzone.value;
 	cameraManager.cameraPlayClamp = cameraClamp.value;
+
+func update_sliders() -> void:
+	masterVolume.update_slider();
+	SFXVolume.update_slider();
+	musicVolume.update_slider();
+	
+	gameplayZoom.update_slider();
+	followSpeed.update_slider();
+	cameraDeadzone.update_slider();
+	cameraClamp.update_checkbox();
+	_on_drag();

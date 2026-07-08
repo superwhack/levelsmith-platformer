@@ -11,12 +11,15 @@
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="9_7flhh"]
+[ext_resource type="Texture2D" uid="uid://c03ijfg5hio0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Save.png" id="10_2406q"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
+[ext_resource type="Texture2D" uid="uid://e2cnr04fpgrl" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
+[ext_resource type="Texture2D" uid="uid://8pwuej3wvl0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
 
@@ -66,9 +69,9 @@ previewTileMap = NodePath("PreviewTile")
 playButton = NodePath("ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton")
 exportButton = NodePath("ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/SaveButton")
 assetManager = NodePath("CanvasLayer/AssetManager")
-assetManagerButton = NodePath("ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/SettingsGroupBottom/AssetManagerButton")
+assetManagerButton = NodePath("ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/AssetManagerButton")
 settingsMenu = NodePath("CanvasLayer/SettingsMenu")
-settingsButton = NodePath("ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/SettingsGroupBottom/SettingsButton")
+settingsButton = NodePath("ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/SettingsButton")
 customCursorManager = NodePath("CustomCursorManager")
 
 [node name="GridLines" type="TileMapLayer" parent="." unique_id=669187714]
@@ -107,6 +110,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
 [node name="TopBar" type="PanelContainer" parent="ScreenUI/ThemeNode/MainColumn" unique_id=1760634670]
 layout_mode = 2
@@ -117,48 +121,81 @@ layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="TopBarRow" type="HBoxContainer" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin" unique_id=912450402]
 layout_mode = 2
 
 [node name="LeftTopGroup" type="HBoxContainer" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow" unique_id=1747492791]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="HomeButton" type="Button" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=1005742435]
 custom_minimum_size = Vector2(60, 60)
-custom_maximum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_vertical = 4
-icon = ExtResource("7_20xd7")
 icon_alignment = 1
 expand_icon = true
 
 [node name="MarginContainer" type="MarginContainer" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/HomeButton" unique_id=479132963]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="TextureRect" type="TextureRect" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/HomeButton/MarginContainer" unique_id=688770950]
 layout_mode = 2
 texture = ExtResource("7_20xd7")
 
-[node name="HomeTileSeparator" type="VSeparator" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=1938918365]
+[node name="TopbarSepMargin" type="MarginContainer" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=1831943124]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HomeTileSeparator" type="VSeparator" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopbarSepMargin" unique_id=1938918365]
 layout_mode = 2
 
 [node name="TileSwitch" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=959816093 instance=ExtResource("7_qupls")]
+visible = false
 layout_mode = 2
 
 [node name="TopSpacer" type="Control" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=2107671150]
-custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="TopRightGroup" type="HBoxContainer" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=2096277508]
 layout_mode = 2
 
-[node name="SaveButton" type="Button" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=998562607]
+[node name="SaveButton" type="Button" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=1022891897]
+custom_minimum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
+size_flags_vertical = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="SaveMargin" type="MarginContainer" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/SaveButton" unique_id=380404567]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SaveIcon" type="TextureRect" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/SaveButton/SaveMargin" unique_id=1265270296]
+layout_mode = 2
+texture = ExtResource("10_2406q")
 
 [node name="SavePlaySeparator" type="VSeparator" parent="ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=245140535]
 layout_mode = 2
@@ -219,15 +256,61 @@ layout_mode = 2
 
 [node name="RailSpacer" type="Control" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn" unique_id=431808822]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="SettingsGroupBottom" type="VBoxContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn" unique_id=1710278780]
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn" unique_id=1147984966]
 layout_mode = 2
 
-[node name="AssetManagerButton" type="Button" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/SettingsGroupBottom" unique_id=1261067225]
+[node name="SettingsGroupBottom" type="VBoxContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer" unique_id=1710278780]
 layout_mode = 2
 
-[node name="SettingsButton" type="Button" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/SettingsGroupBottom" unique_id=1358479644]
+[node name="AssetManagerButton" type="Button" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=293380868]
+custom_minimum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
+size_flags_horizontal = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/AssetManagerButton" unique_id=2125654722]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect" type="TextureRect" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/AssetManagerButton/MarginContainer" unique_id=1493892958]
+layout_mode = 2
+texture = ExtResource("13_ditat")
+
+[node name="SettingsButton" type="Button" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=330056258]
+custom_minimum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(65, 65)
+layout_mode = 2
+size_flags_horizontal = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/SettingsButton" unique_id=1907737059]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect" type="TextureRect" parent="ScreenUI/ThemeNode/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/SettingsButton/MarginContainer" unique_id=1811417484]
+layout_mode = 2
+texture = ExtResource("14_rdu5w")
 
 [node name="EditorViewport" type="PanelContainer" parent="ScreenUI/ThemeNode/MainColumn/ContentRow" unique_id=527771533]
 layout_mode = 2

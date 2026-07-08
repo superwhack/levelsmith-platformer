@@ -2,12 +2,10 @@
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_tgw4b"]
 [ext_resource type="Script" uid="uid://cay1awblww6u8" path="res://Scripts/Editor/TilebarButton.gd" id="2_4u4rl"]
-[ext_resource type="Texture2D" uid="uid://d3322wnij0k2g" path="res://Assets/Sprites/Tiles/solid.png" id="3_tgw4b"]
 
 [node name="TilebarButton" type="Button" unique_id=1067245290]
 process_mode = 3
-custom_minimum_size = Vector2(60, 60)
-custom_maximum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(80, 80)
 offset_right = 80.0
 offset_bottom = 80.0
 size_flags_horizontal = 4
@@ -15,22 +13,19 @@ size_flags_vertical = 4
 focus_mode = 0
 theme = ExtResource("1_tgw4b")
 theme_type_variation = &"TileButton"
-expand_icon = true
 script = ExtResource("2_4u4rl")
 
-[node name="TilebarButtonMargin" type="MarginContainer" parent="." unique_id=1301343851]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1050710244]
+custom_maximum_size = Vector2(80, 80)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="TilebarTexture" type="TextureRect" parent="TilebarButtonMargin" unique_id=57470051]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer" unique_id=284765516]
 layout_mode = 2
-texture = ExtResource("3_tgw4b")
-expand_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4

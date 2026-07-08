@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends HBoxContainer
 
 # Reference to tool manager
 @export var toolManager : Node2D;

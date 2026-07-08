@@ -3,28 +3,28 @@
 [ext_resource type="Script" uid="uid://e6pkeumdahqd" path="res://Scripts/Editor/TileSwitch.gd" id="1_aauec"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_krx33"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="3_pggt4"]
-[ext_resource type="Texture2D" uid="uid://c4mbh1x5fchgl" path="res://Assets/Defaults/Assets/Sprites/Tiles/OneWay.png" id="4_goodf"]
+[ext_resource type="Texture2D" uid="uid://c2cmw8sxi6w3t" path="res://Assets/Defaults/Assets/Sprites/Tiles/OneWay.png" id="4_goodf"]
 [ext_resource type="Texture2D" uid="uid://d0p32jicqqs1w" path="res://Assets/Sprites/Tiles/Hazard.png" id="5_0gefc"]
 [ext_resource type="Texture2D" uid="uid://cv27ok0ogc0qq" path="res://Assets/Defaults/Assets/Sprites/Tiles/Ice.png" id="6_h6q5o"]
 [ext_resource type="Texture2D" uid="uid://dgmuwffx12gix" path="res://Assets/Defaults/Assets/Sprites/Tiles/Sticky.png" id="7_0gefc"]
 [ext_resource type="Texture2D" uid="uid://dbqe553n63r05" path="res://Assets/Defaults/Assets/Sprites/Tiles/Bounce.png" id="8_g7c4e"]
-[ext_resource type="Texture2D" uid="uid://bd65wp1rtty2a" path="res://Assets/Sprites/Tiles/death.png" id="9_g7c4e"]
+[ext_resource type="Texture2D" uid="uid://c8qdejopayvw7" path="res://Assets/Sprites/Tiles/death.png" id="9_g7c4e"]
 [ext_resource type="Texture2D" uid="uid://dvwhbam8uq0m4" path="res://Assets/Sprites/Tiles/slope.png" id="9_vup42"]
 [ext_resource type="PackedScene" uid="uid://dqlxqwdmgred1" path="res://Scenes/UI/TilebarButton.tscn" id="10_goodf"]
 [ext_resource type="Texture2D" uid="uid://c6nlc4t0m4frf" path="res://Assets/Sprites/Entities/goal.png" id="11_goodf"]
-[ext_resource type="Texture2D" uid="uid://b47yd47q7ye4w" path="res://Assets/Sprites/Entities/Coin.png" id="12_0gefc"]
+[ext_resource type="Texture2D" uid="uid://da0gjbpe87rk5" path="res://Assets/Sprites/Entities/Coin.png" id="12_0gefc"]
 [ext_resource type="Texture2D" uid="uid://bd2218b002s17" path="res://Assets/Sprites/Entities/dude.png" id="12_goodf"]
 [ext_resource type="Texture2D" uid="uid://bhrgr3llyjay7" path="res://Assets/Sprites/Entities/baddude.png" id="13_segfj"]
-[ext_resource type="Texture2D" uid="uid://g0dgsjn37x26" path="res://Assets/Defaults/Assets/Sprites/Props/Prop1.png" id="14_goodf"]
-[ext_resource type="Texture2D" uid="uid://bdirtvl06c67h" path="res://Assets/Defaults/Assets/Sprites/Entities/ShootingStill.png" id="14_pggt4"]
-[ext_resource type="Texture2D" uid="uid://b303eecjby68g" path="res://Assets/Sprites/Entities/Flying.png" id="15_h6q5o"]
-[ext_resource type="Texture2D" uid="uid://dyuxdxph8uggw" path="res://Assets/Defaults/Assets/Sprites/Props/Prop2.png" id="15_pggt4"]
-[ext_resource type="Texture2D" uid="uid://b3i8vgsp1ei7o" path="res://Assets/Defaults/Assets/Sprites/Props/Prop3.png" id="16_h6q5o"]
-[ext_resource type="Texture2D" uid="uid://bfgkn0xxjwi1q" path="res://Assets/Defaults/Assets/Sprites/Props/Prop4.png" id="17_0gefc"]
-[ext_resource type="Texture2D" uid="uid://0dwb016xnmn4" path="res://Assets/Sprites/Entities/eviljumo.png" id="18_3tme8"]
-[ext_resource type="Texture2D" uid="uid://5a0ahfxd1k0p" path="res://Assets/Defaults/Assets/Sprites/Props/Prop5.png" id="18_g7c4e"]
+[ext_resource type="Texture2D" uid="uid://ccdjhbm7rajkt" path="res://Assets/Defaults/Assets/Sprites/Props/Prop1.png" id="14_goodf"]
+[ext_resource type="Texture2D" uid="uid://b8b4yjwi01cw3" path="res://Assets/Defaults/Assets/Sprites/Entities/ShootingStill.png" id="14_pggt4"]
+[ext_resource type="Texture2D" uid="uid://dxv2aa1ba656r" path="res://Assets/Sprites/Entities/Flying.png" id="15_h6q5o"]
+[ext_resource type="Texture2D" uid="uid://b14fnlxebrnom" path="res://Assets/Defaults/Assets/Sprites/Props/Prop2.png" id="15_pggt4"]
+[ext_resource type="Texture2D" uid="uid://7fxqamkfui0t" path="res://Assets/Defaults/Assets/Sprites/Props/Prop3.png" id="16_h6q5o"]
+[ext_resource type="Texture2D" uid="uid://dh4gpdg88auly" path="res://Assets/Defaults/Assets/Sprites/Props/Prop4.png" id="17_0gefc"]
+[ext_resource type="Texture2D" uid="uid://c26vhixuu7u7m" path="res://Assets/Sprites/Entities/eviljumo.png" id="18_3tme8"]
+[ext_resource type="Texture2D" uid="uid://bjdyatox127w6" path="res://Assets/Defaults/Assets/Sprites/Props/Prop5.png" id="18_g7c4e"]
 [ext_resource type="Texture2D" uid="uid://c50jm0prdc6ii" path="res://Assets/Sprites/Tiles/oneway.png" id="18_mfvlm"]
-[ext_resource type="Texture2D" uid="uid://bx4gafmjxju52" path="res://Assets/Defaults/Assets/Sprites/Props/Prop6.png" id="23_vup42"]
+[ext_resource type="Texture2D" uid="uid://dbeduke42ht32" path="res://Assets/Defaults/Assets/Sprites/Props/Prop6.png" id="23_vup42"]
 
 [node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "entityPropDropdown")]
 offset_right = 669.0
@@ -39,7 +39,7 @@ entityPropDropdown = NodePath("EntityPickerUI/MarginContainer/Tabs/EntityPropDro
 
 [node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_3tme8")
+theme_override_styles/panel = ExtResource("2_krx33")
 
 [node name="MarginContainer" type="MarginContainer" parent="TilePickerUI" unique_id=2028902409]
 layout_mode = 2
@@ -49,9 +49,10 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="Tiles" type="HBoxContainer" parent="TilePickerUI/MarginContainer" unique_id=952326033]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
+theme_override_constants/separation = 8
 alignment = 1
 
 [node name="SolidButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1067245290 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]

@@ -1,16 +1,17 @@
 [gd_scene format=3 uid="uid://dw3xar5nrf1h3"]
 
-[ext_resource type="Texture2D" uid="uid://omuc7edup2iy" path="res://Assets/Defaults/Assets/Sprites/Projectile.png" id="1_058gr"]
+[ext_resource type="Texture2D" uid="uid://dnelcxa6o83eh" path="res://Assets/Defaults/Assets/Sprites/Projectile.png" id="1_058gr"]
 [ext_resource type="Script" uid="uid://wko1dsv81sau" path="res://Scripts/Game/Projectile.gd" id="1_akala"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_akala"]
 radius = 16.0
 
-[node name="Projectile" type="Area2D" unique_id=1865549045 node_paths=PackedStringArray("onScreen") groups=["Projectile"]]
+[node name="Projectile" type="Area2D" unique_id=1865549045 node_paths=PackedStringArray("onScreen", "sprite") groups=["Projectile"]]
 collision_layer = 6
 collision_mask = 6
 script = ExtResource("1_akala")
 onScreen = NodePath("VisibleOnScreenEnabler2D")
+sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1149895723]
 texture = ExtResource("1_058gr")

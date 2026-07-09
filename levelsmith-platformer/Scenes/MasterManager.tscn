@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
+[ext_resource type="Texture2D" uid="uid://dnutrybtymj0o" path="res://Assets/Sprites/UI/LoadingScreenBgImg.png" id="9_gojh1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -42,7 +43,110 @@ physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
 sources/1 = SubResource("TileSetAtlasSource_8vbpr")
 sources/2 = SubResource("TileSetAtlasSource_64b2s")
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "playPopUp", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
+[sub_resource type="Animation" id="Animation_0vixy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -1080)]
+}
+
+[sub_resource type="Animation" id="Animation_03led"]
+resource_name = "Static"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gojh1"]
+resource_name = "WipeIn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.5),
+"transitions": PackedFloat32Array(1, 14, 1),
+"update": 0,
+"values": [Vector2(0, -1080), Vector2(0, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_iwvbt"]
+resource_name = "WipeIn1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1),
+"transitions": PackedFloat32Array(1, 8, 1),
+"update": 0,
+"values": [Vector2(0, -1080), Vector2(0, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4q5nt"]
+resource_name = "WipeOut"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 0.25, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 1080)]
+}
+
+[sub_resource type="Animation" id="Animation_8fjml"]
+resource_name = "WipOut2"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5333333, 2),
+"transitions": PackedFloat32Array(1, 0.05076582, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 1080)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0vixy"]
+_data = {
+&"RESET": SubResource("Animation_0vixy"),
+&"Static": SubResource("Animation_03led"),
+&"WipeIn": SubResource("Animation_gojh1"),
+&"WipeIn1": SubResource("Animation_iwvbt"),
+&"WipeOut": SubResource("Animation_4q5nt"),
+&"WipeOut2": SubResource("Animation_8fjml")
+}
+
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "loadingScreen", "loadingAnimation", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "playPopUp", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
@@ -51,6 +155,8 @@ entityManager = NodePath("EditorManager/ToolManager/EntityManager")
 cameraManager = NodePath("Camera2D")
 editorManagerCanvas = NodePath("EditorManager/ScreenUI")
 gameManagerCanvas = NodePath("GameManager/CanvasLayer")
+loadingScreen = NodePath("LoadingScreen")
+loadingAnimation = NodePath("LoadingScreen/ScreenContent/LoadingAnimation")
 mainMenuControl = NodePath("MainMenuCanvasLayer/MainMenu")
 editorHomeButton = NodePath("EditorManager/ScreenUI/TopLeftAnchor/TopLeftRow/HomeButton")
 editorPlayButton = NodePath("EditorManager/ScreenUI/BottomRightAnchor/PlayButton")
@@ -121,6 +227,35 @@ metadata/_edit_group_ = true
 [node name="PopUps" type="CanvasLayer" parent="." unique_id=1234008250]
 layer = 5
 script = ExtResource("7_8vbpr")
+
+[node name="LoadingScreen" type="CanvasLayer" parent="." unique_id=1622859874]
+
+[node name="ScreenContent" type="ColorRect" parent="LoadingScreen" unique_id=862553375]
+offset_top = -1080.0
+offset_right = 1920.0
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="LoadingScreen/ScreenContent" unique_id=516647452]
+layout_mode = 0
+offset_left = 960.0
+offset_top = 540.0
+offset_right = 1460.0
+offset_bottom = 1040.0
+scale = Vector2(2.139467, 2.139467)
+use_top_left = true
+
+[node name="Label" type="Label" parent="LoadingScreen/ScreenContent/CenterContainer" unique_id=241191285]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "Loading..."
+
+[node name="TextureRect" type="TextureRect" parent="LoadingScreen/ScreenContent/CenterContainer" unique_id=1476842559]
+layout_mode = 2
+texture = ExtResource("9_gojh1")
+
+[node name="LoadingAnimation" type="AnimationPlayer" parent="LoadingScreen/ScreenContent" unique_id=1749949331]
+libraries/ = SubResource("AnimationLibrary_0vixy")
 
 [connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
 

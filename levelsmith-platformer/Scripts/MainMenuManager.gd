@@ -9,6 +9,11 @@ extends Control
 @export var buttonLoadExample : Button;
 @export var buttonQuit : Button;
 @export var buttonOpenLevelFolder : Button;
+@export var buttonPlayLevel : Button;
+@export var buttonEditLevel : Button;
+@export var buttonDuplicateLevel : Button;
+@export var buttonDeleteLevel : Button;
+@export var buttonFavoriteLevel : Button;
 
 # Overlays
 @export var overlayNewLevel : ColorRect;
@@ -66,6 +71,9 @@ func _ready() -> void:
 	buttonNewLevel.pressed.connect(overlay_new_level_show);
 	buttonNewLevelCreate.pressed.connect(create_new_level);
 	buttonOpenLevelFolder.pressed.connect(open_level_folder);
+	buttonPlayLevel.pressed.connect(play_current_level);
+	buttonEditLevel.pressed.connect(edit_current_level);
+	buttonDeleteLevel.pressed.connect(delete_current_level);
 	
 	# Hiding appropriate UI when cancelling level creation
 	buttonNewLevelCancel.pressed.connect(overlay_new_level_hide);
@@ -243,9 +251,10 @@ func _on_level_toggled(item, toggled: bool) -> void:
 	# Deselect the previous item if its not the same
 	if (selectedItem && selectedItem != item):
 		selectedItem.levelButton.button_pressed = false;
-	
+	if (!selectedItem):
+		toggle_level_buttons();
+
 	selectedItem = item;
-	
 	update_metadata(item);
 	
 ## Deselecting a level with right-click removes metadata.
@@ -253,8 +262,16 @@ func _on_level_toggled(item, toggled: bool) -> void:
 func _on_level_deselected(item) -> void:
 	if (selectedItem == item):
 		item.levelButton.button_pressed = false;
+		toggle_level_buttons();
 		clear_selection();
-		
+
+## When a level is selected, toggle the buttons being disabled
+func toggle_level_buttons() -> void:
+	buttonDeleteLevel.disabled = !buttonDeleteLevel.disabled;
+	buttonDuplicateLevel.disabled = !buttonDuplicateLevel.disabled;
+	buttonEditLevel.disabled = !buttonEditLevel.disabled;
+	buttonPlayLevel.disabled = !buttonPlayLevel.disabled;
+	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
 
 func update_level_item(item: Node, folderName : String, levelPath : String) -> void:
 	item.levelPath = levelPath + "/";
@@ -335,6 +352,15 @@ func clear_selection() -> void:
 func open_level_folder() -> void:
 	var path : String = ProjectSettings.globalize_path("user://Levels");
 	OS.shell_open(path);
+	
+func play_current_level() -> void:
+	pass;
+	
+func edit_current_level() -> void:
+	pass;
+
+func delete_current_level() -> void:
+	pass;
 
 	
 ## Checks if a level folder is valid with the correct files.

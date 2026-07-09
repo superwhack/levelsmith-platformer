@@ -64,6 +64,15 @@ size_flags_vertical = 4
 tooltip_text = "This level is corrupted, and cannot be loaded."
 texture = ExtResource("4_yqi52")
 
+[node name="LevelFavorite" type="TextureRect" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/TitleHBox" unique_id=574927128]
+visible = false
+custom_maximum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tooltip_text = "This level is corrupted, and cannot be loaded."
+texture = ExtResource("4_yqi52")
+
 [node name="LevelTitle" type="Label" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/TitleHBox" unique_id=1908587017]
 layout_mode = 2
 size_flags_horizontal = 0

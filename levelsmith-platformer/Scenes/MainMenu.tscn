@@ -111,7 +111,7 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 corner_detail = 10
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "fileExplorer", "levelList", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "fileExplorer", "levelList", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -125,6 +125,11 @@ buttonImportLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftP
 buttonLoadExample = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton")
 buttonQuit = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton")
 buttonOpenLevelFolder = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton")
+buttonPlayLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton")
+buttonEditLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton")
+buttonDuplicateLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn/DuplicateLevelButton")
+buttonDeleteLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn/DeleteLevelButton")
+buttonFavoriteLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/FavoriteButton")
 overlayNewLevel = NodePath("NewLevelOverlay")
 overlayImportLevel = NodePath("ImportLevelOverlay")
 buttonNewLevelCreate = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow/CreateLevelButton")
@@ -488,6 +493,7 @@ size_flags_horizontal = 3
 
 [node name="FavoriteButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow" unique_id=657863021]
 layout_mode = 2
+disabled = true
 icon = ExtResource("11_65hh5")
 
 [node name="TitleDetailsSeparator" type="HSeparator" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox" unique_id=1733107046]
@@ -506,6 +512,7 @@ layout_mode = 2
 
 [node name="DuplicateLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=980103507]
 layout_mode = 2
+disabled = true
 icon = ExtResource("12_6byu3")
 
 [node name="DuplicateDeleteSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=2113419149]
@@ -514,6 +521,7 @@ layout_mode = 2
 
 [node name="DeleteLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=873845671]
 layout_mode = 2
+disabled = true
 icon = ExtResource("13_leunp")
 
 [node name="MetadataMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow" unique_id=18846420]
@@ -595,6 +603,7 @@ layout_mode = 2
 [node name="PlayButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn" unique_id=1108696886]
 custom_minimum_size = Vector2(250, 65)
 layout_mode = 2
+disabled = true
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton" unique_id=1784265768]
 layout_mode = 1
@@ -636,6 +645,7 @@ layout_mode = 2
 [node name="EditButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn" unique_id=1777678716]
 custom_minimum_size = Vector2(250, 65)
 layout_mode = 2
+disabled = true
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton" unique_id=1122992598]
 layout_mode = 1

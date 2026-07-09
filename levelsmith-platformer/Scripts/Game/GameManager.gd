@@ -8,6 +8,7 @@ extends Node2D
 @export var playerHealthUI : HBoxContainer;
 @export var timerLabel : RichTextLabel;
 @export var winCoinLabel : RichTextLabel;
+@export var winCoinHBox : HBoxContainer;
 @export var coinMargin : MarginContainer;
 @export var winTimeLabel : RichTextLabel;
 @export var winScreenHealthUI : HBoxContainer;
@@ -91,6 +92,7 @@ func start() -> void:
 	else:
 		coinCounterLabel.hide();
 		coinMargin.hide();
+		winCoinHBox.hide();
 	
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
 	for frame in range(1, 5):

@@ -17,7 +17,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gn8f6"]
 
-[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "winScreen", "bottomScreenGroup", "coinCounterLabel", "playerHealthUI", "timerLabel", "winCoinLabel", "coinMargin", "winTimeLabel", "winScreenHealthUI", "resetButton", "pauseButton", "resumeButton", "replayButton", "editorButton")]
+[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "winScreen", "bottomScreenGroup", "coinCounterLabel", "playerHealthUI", "timerLabel", "winCoinLabel", "winCoinHBox", "coinMargin", "winTimeLabel", "winScreenHealthUI", "resetButton", "pauseButton", "resumeButton", "replayButton", "editorButton")]
 script = ExtResource("1_habuo")
 pauseScreen = NodePath("CanvasLayer/PausedScreenContainer")
 winScreen = NodePath("CanvasLayer/WinScreen")
@@ -26,6 +26,7 @@ coinCounterLabel = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxCon
 playerHealthUI = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PlayerHealthUi")
 timerLabel = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/Timer")
 winCoinLabel = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox/CoinHBox/WinCoinCounter")
+winCoinHBox = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox/CoinHBox")
 coinMargin = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin")
 winTimeLabel = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox/WinTimer")
 winScreenHealthUI = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox/WinPlayerHealthUi")

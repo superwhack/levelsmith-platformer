@@ -35,11 +35,11 @@ func _ready() -> void:
 	musicVolume.update_slider();
 	# Sliders connection
 	# .dragging also needs a connect so sound changes can be hard while editing them
-	masterVolume.dragging.connect(_on_drag);
-	SFXVolume.dragging.connect(_on_drag);
+	masterVolume.dragging.connect(_on_dragging_SFX);
+	SFXVolume.dragging.connect(_on_dragging_SFX);
 	musicVolume.dragging.connect(_on_drag_start_music);
-	masterVolume.drag_ended.connect(_on_drag_end_SFX);
-	SFXVolume.drag_ended.connect(_on_drag_end_SFX);
+	masterVolume.drag_ended.connect(_on_dragging_SFX);
+	SFXVolume.drag_ended.connect(_on_dragging_SFX);
 	musicVolume.drag_ended.connect(_on_drag_end_music);
 	
 	# CAMERA ---
@@ -73,7 +73,7 @@ func _on_drag() -> void:
 	cameraManager.deadzone = cameraDeadzone.value;
 	cameraManager.cameraPlayClamp = cameraClamp.value;
 
-func _on_drag_end_SFX() -> void:
+func _on_dragging_SFX() -> void:
 	_on_drag();
 	AudioManager.play_UI_effect("UISelection");
 	

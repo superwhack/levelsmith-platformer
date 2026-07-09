@@ -31,25 +31,25 @@ func _process(_delta: float) -> void:
 func place_entity(clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
 	if (!editorManager.isPlaceable):
-		AudioManager.play_UI_effect("Tile_Place_Error");
+		AudioManager.play_UI_effect("TilePlaceError");
 		return;
 	
 	var clickedTileId : int = tileMap.get_cell_source_id(clickPosition);
 	
 	## Prevent placing on other objects of any kind.
 	if (clickedTileId > 0): 
-		AudioManager.play_UI_effect("Tile_Place_Error");
+		AudioManager.play_UI_effect("TilePlaceError");
 		return;
 	if brushObject != Global.EntityType.PLAYER:
-		AudioManager.play_UI_effect("Tile_Place");
+		AudioManager.play_UI_effect("TilePlace");
 	match (brushObject):
 		Global.EntityType.PLAYER:
 			if (editorManager.playerExists): 
-				AudioManager.play_UI_effect("Tile_Place_Error");
+				AudioManager.play_UI_effect("TilePlaceError");
 				return;
 			editorManager.playerExists = true;
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
-			AudioManager.play_UI_effect("Tile_Place");
+			AudioManager.play_UI_effect("TilePlace");
 		Global.EntityType.PATROLLING, Global.EntityType.SHOOTING, Global.EntityType.FLYING, Global.EntityType.STATIONARY, Global.EntityType.MOVING_PLATFORM:
 			# Place the enemy and wait until it's registered before continuing
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
@@ -187,7 +187,7 @@ func drop_entity(reset: bool = false) -> void:
 			toolManager.prevBrushObject = -1;
 			toolManager.prevPosition = Vector2(0,0);
 			toolManager.currentObjectRotation = toolManager.prevRotation;
-			AudioManager.play_UI_effect("Tile_Place_Error");
+			AudioManager.play_UI_effect("TilePlaceError");
 			return;
 		# Only allow it to be placed if you aren't copying
 		editorManager.isPlaceable = !toolManager.isCopying;

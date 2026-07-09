@@ -17,18 +17,18 @@ func _ready() -> void:
 
 ## Swaps currently selected tool to the brush
 func swap_to_brush() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	toolManager.change_tool(Global.Tool.BRUSH);
 	editorManager.change_current_hotbar(Global.HotbarState.TILES);
 
 ## Swaps currently selected tool to the box brush
 func swap_to_box_brush() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	toolManager.change_tool(Global.Tool.BOX_BRUSH);
 	editorManager.change_current_hotbar(Global.HotbarState.TILES);
 
 ## Swaps currently selected tool to the cursor
 func swap_to_cursor() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	toolManager.change_tool(Global.Tool.CURSOR);
 	editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);

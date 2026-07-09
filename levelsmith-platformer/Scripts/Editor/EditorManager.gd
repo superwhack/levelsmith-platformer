@@ -53,7 +53,7 @@ func _ready() -> void:
 		goalExists = false;
 	
 	var export_level = func() -> void:
-		AudioManager.play_UI_effect("UI_Selection")
+		AudioManager.play_UI_effect("UISelection")
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
 		
@@ -152,7 +152,7 @@ func reset_enemy_positions() -> void:
 func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
-	AudioManager.play_UI_effect("UI_Selection")
+	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
 	assetManager.show();
 
@@ -160,7 +160,7 @@ func open_asset_manager() -> void:
 func open_settings_menu() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
-	AudioManager.play_UI_effect("UI_Selection")
+	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
 	settingsMenu.show();
 
@@ -168,7 +168,7 @@ func open_settings_menu() -> void:
 func close_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	previewTileMap.show();
 	assetManager.hide();
 	assetManager.animationSwapping.playingAnimation = false;
@@ -178,6 +178,6 @@ func close_asset_manager() -> void:
 func close_settings_menu() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	previewTileMap.show();
 	settingsMenu.hide();

@@ -128,7 +128,7 @@ func load_level(levelPath: String) -> void:
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true) -> void:
 	if menuClickSound:
-		AudioManager.play_UI_effect("UI_Selection");
+		AudioManager.play_UI_effect("UISelection");
 	# Hide all non-menu states, show Main Menu scene
 	gameManager.hide();
 	gameManagerCanvas.hide();
@@ -148,7 +148,7 @@ func main_menu(menuClickSound : bool = true) -> void:
 ## Swap to edit state
 func edit() -> void:
 	AudioManager.reset_audio();
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	if gameManager.tileMap:
 		gameManager.tileMap.queue_free();
@@ -182,7 +182,7 @@ func play() -> void:
 	if (!get_play_errors().is_empty()):
 		return;
 	propertyMenu.close();
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");
 	# Update state variable
 	state = Global.State.PLAY;

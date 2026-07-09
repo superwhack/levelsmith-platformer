@@ -72,21 +72,21 @@ func _ready() -> void:
 	
 ## Functions that just make a menu appear/dissapear, used to attach the sound effects
 func overlay_new_level_show() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.show();
 func overlay_new_level_hide() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.hide();
 func overlay_import_level_show() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	overlayImportLevel.show();
 func popup_file_dialog() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	fileExplorer.popup_file_dialog();
 
 ## Called when import level button is pressed
 func import_level() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	if (!ImportExportManager.validate_import(importedLevelPath)): 
 		badImportWarning.show();
 		badImportBody.text = "Level Import Failed from directory \"" + importedLevelPath + "\"!";
@@ -109,12 +109,12 @@ func import_level() -> void:
 
 ## Called when import level is closed
 func import_cancel() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	overlayImportLevel.hide();
 
 ## Opens the menu for setting a name and size for the level
 func create_new_level() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	invalidWarning.hide();
 	emptyWarning.hide();
 	
@@ -212,7 +212,7 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 ## Load a level when appropriate button is pressed
 ## path: The path of the level to be loaded.
 func _on_level_double_clicked(path: String) -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	masterManager.load_level(path);
 
 ## Retrieves the world size from a CSV file.

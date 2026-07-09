@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dw3xar5nrf1h3"]
 
-[ext_resource type="Texture2D" uid="uid://omuc7edup2iy" path="res://Assets/Defaults/Assets/Sprites/Projectile.png" id="1_058gr"]
+[ext_resource type="Texture2D" uid="uid://dnelcxa6o83eh" path="res://Assets/Defaults/Assets/Sprites/Projectile.png" id="1_058gr"]
 [ext_resource type="Script" uid="uid://wko1dsv81sau" path="res://Scripts/Game/Projectile.gd" id="1_akala"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_akala"]

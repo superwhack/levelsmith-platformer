@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cv0ngpnmx6kwj" path="res://Scripts/Game/EnemyPatrol.gd" id="1_ecr3g"]
 [ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="2_n0k27"]
-[ext_resource type="Texture2D" uid="uid://d33pgq7ibjssv" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_0s3yh"]
-[ext_resource type="Texture2D" uid="uid://yfpy7vgkmhuo" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="3_igrap"]
-[ext_resource type="Texture2D" uid="uid://33tku5on1i8a" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="4_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://cwsprqtu1ar6d" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://qyptq3doausu" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="3_igrap"]
+[ext_resource type="Texture2D" uid="uid://8mtvtp3y4dr7" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="4_0s3yh"]
 [ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_3diox"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
@@ -15,8 +15,8 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_0s3yh")
 }],
-"loop": 1,
-"name": &"death",
+"loop": 0,
+"name": &"PatrolDeath",
 "speed": 5.0
 }, {
 "frames": [{
@@ -27,7 +27,7 @@ animations = [{
 "texture": ExtResource("4_0s3yh")
 }],
 "loop": 1,
-"name": &"walk",
+"name": &"PatrolWalk",
 "speed": 5.0
 }]
 
@@ -65,8 +65,9 @@ scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=384867185]
+z_index = -1
 sprite_frames = SubResource("SpriteFrames_ogq8d")
-animation = &"walk"
+animation = &"PatrolDeath"
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=121573990]
 rotation = 1.5707964

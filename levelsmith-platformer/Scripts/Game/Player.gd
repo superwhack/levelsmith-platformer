@@ -75,8 +75,11 @@ var enemiesInside : Array[Node2D];
 
 @export var animatedSprites : AnimatedSprite2D;
 @onready var jumpTimer : Timer = Timer.new();
-@onready var deathTimer : Timer = Timer.new();
 var isJumping : bool = false;
+var jumpAnimStarted : bool = false;
+var fallAnimStarted : bool = false;
+
+var isDead : bool = false;
 
 ## Runs once on instantiation
 func _ready() -> void:
@@ -90,6 +93,9 @@ func _ready() -> void:
 		#print("Applying ", playerMovementPreset, " player movement preset.");
 		apply_preset(playerMovementPreset);
 	
+	#for animationName in animatedSprites.sprite_frames.get_animation_names():
+		#AnimationManager.replace_animation_by_name(animatedSprites, animationName);
+	
 	var swap_to_fall = func () -> void:
 		isJumping = false;
 	
@@ -97,19 +103,19 @@ func _ready() -> void:
 	jumpTimer.timeout.connect(swap_to_fall);
 	add_child(jumpTimer);
 	
-	deathTimer.wait_time = 0.5;
-	deathTimer.timeout.connect(Global.death.emit);
-	add_child(deathTimer);
+	animatedSprites.sprite_frames = AnimationManager.playerTemplateSprite.sprite_frames;
 	
-	animatedSprites.animation = "idle";
+	animatedSprites.animation = "PlayerIdle";
 	animatedSprites.play();
+	
+	animatedSprites.animation_finished.connect(on_animation_finished);
 
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
 	if (check_out_of_bounds()):
 		return;
-	if deathTimer.time_left > 0:
+	if isDead:
 		animate();
 		return;
 	justWallJumped = false;
@@ -126,6 +132,8 @@ func _physics_process(delta: float) -> void:
 			coyoteTimeLeft -= delta;
 		velocity += get_gravity() * delta * fallSpeed;
 	else:
+		isJumping = false;
+		jumpAnimStarted = false;
 		doubleJumpAvailable = doubleJump;
 		wallJumpDirection = WallDirection.NONE;
 		coyoteTimeLeft = coyoteTime;
@@ -153,19 +161,35 @@ func _physics_process(delta: float) -> void:
 func animate() -> void:
 	animatedSprites.flip_h = velocity.x < 0;
 	if (health <= 0): 
-		animatedSprites.animation = "death";
+		animatedSprites.animation = "PlayerDeath";
 		animatedSprites.flip_h = false;
 	elif (invulnerabilityCurrent > 0):
-		animatedSprites.animation = "hurt";
-	elif (isJumping && !is_on_floor()):
-		animatedSprites.animation = "jump";
+		animatedSprites.animation = "PlayerHurt";
+		fallAnimStarted = false;
+	elif (isJumping):
+		animatedSprites.animation = "PlayerJump";
+		fallAnimStarted = false;
+		if (!jumpAnimStarted):
+			jumpAnimStarted = true;
+		else:
+			return;
 	elif (!is_on_floor()):
-		animatedSprites.animation = "fall";
-	elif (abs(velocity.x) > 10 && direction):
-		animatedSprites.animation = "walk";
+		animatedSprites.animation = "PlayerFall";
+		if (!fallAnimStarted):
+			fallAnimStarted = true;
+		else:
+			return;
+	elif (velocity.x != 0):
+		animatedSprites.animation = "PlayerRun";
+		fallAnimStarted = false;
 	else:
-		animatedSprites.animation = "idle";
+		animatedSprites.animation = "PlayerIdle";
+		fallAnimStarted = false;
 	animatedSprites.play();
+
+func on_animation_finished() -> void:
+	if (animatedSprites.animation == "PlayerDeath"):
+		Global.death.emit();
 
 ## Make the player jump
 func jump() -> void:
@@ -224,21 +248,24 @@ func walk() -> void:
 ## Have the player take damage
 ## amount: damage to deal, -1 is instant death
 ## direction: direction to deal damage in
-func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce : int = 0) -> void:
+## higherBounce: if the player should bounce higher
+## returns: true is damage applied
+func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce : int = 0) -> bool:
 	if invulnerabilityCurrent > 0:
-		return;
+		return false;
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
 	velocity = direction * (1000 + higherBounce * 500);
 	health -= amount;
 	if (health <= 0):
 		die();
+	return true;
 	
 ## Kill the player and send the global death signal
 func die() -> void:
 	health = 0;
 	AudioManager.play_effect("PlayerDeath");
-	deathTimer.start();
+	isDead = true;
 
 ## Remove enemies or projectiles when no longer inside of them
 ## body: the body or area to remove from the array
@@ -336,19 +363,12 @@ func detect_tiles() -> void:
 			# Wall jumps not allowed on bedrock or one way tiles
 			if tileName == "bedrock" || tileName == "oneway":
 				return;
-			if rayDirection.x < 0 && !Input.is_action_pressed("left"):
-				return;
-			elif rayDirection.x > 0 && !Input.is_action_pressed("right"):
-				return;
 			# Wall Slide when not on ice
-			if tileName != "ice":
-				velocity.y *= .94;
-				#if rayDirection.x < 0 && Input.is_action_pressed("left"):
-				#	velocity.y *= .94;
-				#elif rayDirection.x > 0 && Input.is_action_pressed("right"):
-				#	velocity.y *= .94;
-			if tileName != "slow":
-				currentSlowdown = 1.0;
+			if (rayDirection.x < 0 && Input.is_action_pressed("left") || rayDirection.x > 0 && Input.is_action_pressed("right")):
+				if tileName != "ice":
+					velocity.y *= .94;
+				if tileName != "slow":
+					currentSlowdown = 1.0;
 			if Input.is_action_just_pressed("jump"):
 				# Depending on direction, apply a different x velocity
 				if rayDirection.x < 0:
@@ -376,7 +396,7 @@ func detect_tiles() -> void:
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):
-			AudioManager.play_effect("BounceBlock");
+			AudioManager.play_effect("BounceTile");
 			doubleJumpAvailable = doubleJump;
 			currentSlowdown = 1.0;
 			# Horizontal bounces
@@ -420,8 +440,8 @@ func detect_tiles() -> void:
 				currentSlowdown = .5;
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
-			AudioManager.play_effect("BounceBlock");
-			take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"));
+			if take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump")):
+				AudioManager.play_effect("HazardTile");
 		elif tileName == "death":
 			take_damage(maxHealth);
 		# Only downward rays should drive floor tile effects (except hazard)

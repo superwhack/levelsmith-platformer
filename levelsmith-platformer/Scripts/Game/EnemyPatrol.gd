@@ -20,15 +20,21 @@ var restricted : bool;
 
 ## Called when the enemy first spawns
 func _ready() -> void:
+	deathAnim = "PatrolDeath";
 	super._ready();
+	animatedSprites.sprite_frames = AnimationManager.patrollingEnemyTemplateSprite.sprite_frames;
 	
-	animatedSprites.animation = "walk";
+	animatedSprites.animation = "PatrolWalk";
 	animatedSprites.play();
 
 ## Processes the physics every frame
 ## delta: Time since previous frame
 func _physics_process(delta: float) -> void:
-	if (health <= 0): return;
+	if (health <= 0): 
+		super._physics_process(delta);
+		velocity.x = 0;
+		move_and_slide();
+		return;
 	
 	if !active:
 		if !onScreen.is_on_screen():

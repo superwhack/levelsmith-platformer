@@ -3,6 +3,12 @@ extends Node2D
 # References to other managers
 @export var toolManager : Node2D;
 @export var masterManager : Node2D;
+@export var iconManager : Node2D;
+
+# Camera reference
+@export var mainCamera : Camera2D;
+@export var levelScreenshotCamera : Camera2D;
+@export var screenUI : CanvasLayer;
 
 # References to grid TileMapLayer child nodes
 @export var tileMap : TileMapLayer;
@@ -17,7 +23,7 @@ extends Node2D
 @export var assetManagerButton : Button;
 
 # Settings Menu and button
-@export var settingsMenu : Node;
+@export var settingsMenu : SettingsMenu;
 @export var settingsButton : Button;
 
 # Cursor Manager
@@ -50,7 +56,10 @@ func _ready() -> void:
 	var export_level = func() -> void:
 		AudioManager.play_UI_effect("UI_Selection")
 		masterManager.propertyMenu.close();
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize);
+		var levelScreenshot : Image = await screenshot_level();
+		
+		ImportExportManager.save_level_screenshot(levelScreenshot);		
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu);
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
 	settingsButton.pressed.connect(open_settings_menu);
@@ -80,6 +89,24 @@ func _process(_delta: float) -> void:
 	
 
 
+## Takes a screenshot of the level by hiding the UI and disabling the main camera
+## returns; The image of the level
+func screenshot_level() -> Image:
+	mainCamera.enabled = false;
+	levelScreenshotCamera.enabled = true;
+	screenUI.hide();
+	previewTileMap.hide();
+	await RenderingServer.frame_post_draw;
+	
+	var screenshotImage = levelScreenshotCamera.get_level_screenshot();
+	
+	screenUI.show();
+	previewTileMap.show();
+	mainCamera.enabled = true;
+	levelScreenshotCamera.enabled = false;
+	await RenderingServer.frame_post_draw; 
+	
+	return screenshotImage;
 
 ## NOTE: TEMPORARY FIX FUNCTION PT 1
 ## Clear all enemies without a property file
@@ -127,8 +154,8 @@ func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UI_Selection")
-	AudioManager.pause_music(true);
 	previewTileMap.hide();
+	iconManager.previewIcon.hide();
 	assetManager.show();
 
 ## Opens the settings menu
@@ -137,6 +164,7 @@ func open_settings_menu() -> void:
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UI_Selection")
 	previewTileMap.hide();
+	iconManager.previewIcon.hide();
 	settingsMenu.show();
 
 ## Closes the asset manager
@@ -144,10 +172,10 @@ func close_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
 	AudioManager.play_UI_effect("UI_Selection");
-	AudioManager.pause_music(false);
 	previewTileMap.show();
 	assetManager.hide();
 	assetManager.animationSwapping.playingAnimation = false;
+	AnimationManager.refresh_animations();
 
 ## Closes the settings menu
 func close_settings_menu() -> void:

@@ -20,11 +20,13 @@
 [ext_resource type="Texture2D" uid="uid://cyv36kpfksb3b" path="res://Assets/UserInterface/IconButtonAssetManagerWhite.png" id="13_racgb"]
 [ext_resource type="Texture2D" uid="uid://cpnh5eiw0m5fv" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="15_ditat"]
+[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="15_ditat"]
 [ext_resource type="Texture2D" uid="uid://pc63ho3uson2" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="15_k6ut3"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
+[ext_resource type="Script" uid="uid://dennrhd1fmssd" path="res://Scripts/Universal/LevelScreenshot.gd" id="25_fnjh2"]
+[ext_resource type="Script" uid="uid://demhkcrctsljf" path="res://Scripts/Editor/IconManager.gd" id="26_vrcqo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -60,9 +62,12 @@ sources/2 = SubResource("TileSetAtlasSource_dvhpf")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63w0a"]
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "settingsMenu", "settingsButton", "customCursorManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "iconManager", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "settingsMenu", "settingsButton", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
+iconManager = NodePath("IconManager")
+levelScreenshotCamera = NodePath("LevelScreenshot")
+screenUI = NodePath("ScreenUI")
 tileMap = NodePath("Tiles")
 previewTileMap = NodePath("PreviewTile")
 playButton = NodePath("ScreenUI/BottomRightAnchor/PlayButton")
@@ -84,6 +89,7 @@ tile_set = ExtResource("2_8t3j3")
 
 [node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485 node_paths=PackedStringArray("editorManager", "toolManager", "tileMap")]
 modulate = Color(1, 1, 1, 0.5058824)
+z_index = 3
 tile_set = ExtResource("2_8t3j3")
 collision_enabled = false
 script = ExtResource("15_wiuwn")
@@ -187,7 +193,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="SaveButton" type="Button" parent="ScreenUI/TopRightAnchor/TopRightRow/SavePanel/SaveMargin" unique_id=778830983]
 layout_mode = 2
-tooltip_text = "Save"
+tooltip_text = "Save [CTRL+S/F5]"
 theme = ExtResource("7_ditat")
 theme_type_variation = &"ToolButton"
 icon = ExtResource("12_vrcqo")
@@ -280,6 +286,7 @@ size_flags_horizontal = 0
 
 [node name="RightPin" parent="ScreenUI/BottomRightAnchor/HoverPopUpContainer" index="1" unique_id=1999861361]
 visible = true
+texture = null
 
 [node name="PlayButton" type="Button" parent="ScreenUI/BottomRightAnchor" unique_id=1821933362]
 custom_minimum_size = Vector2(265, 0)
@@ -357,12 +364,22 @@ toolManager = NodePath("..")
 tileMap = NodePath("../../Tiles")
 previewTile = NodePath("../../PreviewTile")
 
-[node name="EntityManager" type="Node2D" parent="ToolManager" unique_id=1126944329 node_paths=PackedStringArray("editorManager", "toolManager", "tileMap", "propertyMenu")]
+[node name="EntityManager" type="Node2D" parent="ToolManager" unique_id=1126944329 node_paths=PackedStringArray("editorManager", "toolManager", "iconManager", "tileMap", "propertyMenu")]
 script = ExtResource("14_pkt5f")
 editorManager = NodePath("../..")
 toolManager = NodePath("..")
+iconManager = NodePath("../../IconManager")
 tileMap = NodePath("../../Tiles")
 propertyMenu = NodePath("../../CanvasLayer/PropertyMenu")
+
+[node name="IconManager" type="Node2D" parent="." unique_id=1308220472 node_paths=PackedStringArray("tileMap", "toolManager", "editorManager")]
+script = ExtResource("26_vrcqo")
+tileMap = NodePath("../Tiles")
+toolManager = NodePath("../ToolManager")
+editorManager = NodePath("..")
+
+[node name="LevelScreenshot" type="Camera2D" parent="." unique_id=1423987778]
+script = ExtResource("25_fnjh2")
 
 [editable path="ScreenUI/BottomRightAnchor/HoverPopUpContainer"]
 [editable path="CanvasLayer/AssetManager"]

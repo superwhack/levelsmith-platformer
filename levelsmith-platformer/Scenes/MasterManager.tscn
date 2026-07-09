@@ -56,6 +56,21 @@ tracks/0/keys = {
 "values": [Vector2(0, -1080)]
 }
 
+[sub_resource type="Animation" id="Animation_03led"]
+resource_name = "Static"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_gojh1"]
 resource_name = "WipeIn"
 length = 0.5
@@ -97,18 +112,36 @@ tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 0.25, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, 1080)]
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 1080)]
+}
+
+[sub_resource type="Animation" id="Animation_8fjml"]
+resource_name = "WipOut2"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5333333, 2),
+"transitions": PackedFloat32Array(1, 0.05076582, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 1080)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0vixy"]
 _data = {
 &"RESET": SubResource("Animation_0vixy"),
+&"Static": SubResource("Animation_03led"),
 &"WipeIn": SubResource("Animation_gojh1"),
 &"WipeIn1": SubResource("Animation_iwvbt"),
-&"WipeOut": SubResource("Animation_4q5nt")
+&"WipeOut": SubResource("Animation_4q5nt"),
+&"WipeOut2": SubResource("Animation_8fjml")
 }
 
 [node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "loadingScreen", "loadingAnimation", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "playPopUp", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]

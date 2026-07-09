@@ -54,9 +54,10 @@ func _ready() -> void:
 	# Create the Enemies folder, github can't push empty folders
 	if (!DirAccess.dir_exists_absolute("res://Resources/Enemies/")):
 		DirAccess.make_dir_absolute("res://Resources/Enemies/");
-		
-	main_menu(false);
 	
+	await screen_static();
+	await main_menu(false, true);
+
 ## When the user does a save level input, save the level.
 ## event: The user input
 func _input(event: InputEvent) -> void:
@@ -70,13 +71,20 @@ func _input(event: InputEvent) -> void:
 	#editorManager.isValidated = true;
 	##print("LEVEL COMPLETE");
 
+## Plays the screen wipe animation that covers the screen before a state transition.
 func screen_wipe_in() -> void:
 	loadingScreen.show();
 	loadingAnimation.play("WipeIn");
 	await loadingAnimation.animation_finished;
 
+## Plays the screen wipe animation that reveals the destination state after loading.
 func screen_wipe_out() -> void:
 	loadingAnimation.play("WipeOut");
+	await loadingAnimation.animation_finished;
+	loadingScreen.hide();
+
+func screen_static() -> void:
+	loadingAnimation.play("WipeOut2");
 	await loadingAnimation.animation_finished;
 	loadingScreen.hide();
 
@@ -125,7 +133,7 @@ func import_level_and_edit() -> void:
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
 	await get_tree().process_frame
-	screen_wipe_out();
+	await screen_wipe_out();
 
 ## Loads the given level to the player.
 ## levelPath: The folder path of the level.
@@ -137,8 +145,9 @@ func load_level(levelPath: String) -> void:
 		cameraManager.initialize_camera();
 
 ## Swap to main menu state
-func main_menu(menuClickSound : bool = true) -> void:
-	await screen_wipe_in();
+func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
+	if !onStart:
+		await screen_wipe_in();
 	if menuClickSound:
 		AudioManager.play_UI_effect("UI_Selection");
 	# Hide all non-menu states, show Main Menu scene
@@ -155,8 +164,9 @@ func main_menu(menuClickSound : bool = true) -> void:
 	mainMenuControl.fill_level_list();
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
-	await get_tree().process_frame
-	screen_wipe_out();
+	await get_tree().process_frame;
+	if !onStart:
+		await screen_wipe_out();
 
 ## Swap to edit state
 func edit() -> void:
@@ -188,7 +198,7 @@ func edit() -> void:
 	editorManager.reset_enemy_positions();
 	editorManager.clear_enemies();
 	await get_tree().process_frame
-	screen_wipe_out();
+	await screen_wipe_out();
 
 ## Swap to play state
 func play() -> void:
@@ -217,7 +227,7 @@ func play() -> void:
 	# Reset the play scene and load the map
 	gameManager.reset();
 	await get_tree().process_frame
-	screen_wipe_out();
+	await screen_wipe_out();
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:

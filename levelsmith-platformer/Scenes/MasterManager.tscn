@@ -74,9 +74,10 @@ script = ExtResource("4_mg0h4")
 masterManager = NodePath("..")
 gridLines = NodePath("../EditorManager/GridLines")
 
-[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera") instance=ExtResource("2_430ed")]
+[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera", "levelScreenshotCamera") instance=ExtResource("2_430ed")]
 masterManager = NodePath("..")
 mainCamera = NodePath("../Camera2D")
+levelScreenshotCamera = NodePath("LevelScreenshot")
 
 [node name="GridLines" parent="EditorManager" index="0" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
 z_index = 0
@@ -110,6 +111,10 @@ masterManager = NodePath("../..")
 
 [node name="ToolManager" parent="EditorManager" index="7" unique_id=2103609005 node_paths=PackedStringArray("tileSwitch")]
 tileSwitch = NodePath("../ScreenUI/ThemeNode/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TileSwitch")
+
+[node name="LevelScreenshot" parent="EditorManager" index="8" unique_id=184576928 node_paths=PackedStringArray("masterManager", "baseCamera")]
+masterManager = NodePath("../..")
+baseCamera = NodePath("../../Camera2D")
 
 [node name="GameManager" parent="." unique_id=344859815 node_paths=PackedStringArray("cameraManager") instance=ExtResource("4_ggjfv")]
 cameraManager = NodePath("../Camera2D")

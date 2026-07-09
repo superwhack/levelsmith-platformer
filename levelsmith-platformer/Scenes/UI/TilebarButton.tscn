@@ -2,10 +2,12 @@
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_tgw4b"]
 [ext_resource type="Script" uid="uid://cay1awblww6u8" path="res://Scripts/Editor/TilebarButton.gd" id="2_4u4rl"]
+[ext_resource type="Texture2D" uid="uid://ikeqb6lg2tm2" path="res://Assets/Defaults/Assets/Sprites/Tiles/Solid.png" id="2_cr0v7"]
 
 [node name="TilebarButton" type="Button" unique_id=1067245290 node_paths=PackedStringArray("image")]
 process_mode = 3
-custom_minimum_size = Vector2(80, 80)
+custom_minimum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(60, 60)
 offset_right = 80.0
 offset_bottom = 80.0
 size_flags_horizontal = 4
@@ -31,3 +33,4 @@ theme_override_constants/margin_bottom = 10
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer" unique_id=251267803]
 layout_mode = 2
+expand_mode = 5

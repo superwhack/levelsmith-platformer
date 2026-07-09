@@ -19,7 +19,6 @@ var active = false;
 
 @export var hitbox: CollisionShape2D;
 @export var animatedSprites : AnimatedSprite2D;
-var deathTimer : Timer;
 
 var deathAnim : String = "death";
 
@@ -27,10 +26,7 @@ var deathAnim : String = "death";
 func _ready() -> void:
 	add_to_group("enemy");
 	
-	deathTimer = Timer.new();
-	deathTimer.wait_time = 0.4;
-	deathTimer.timeout.connect(queue_free);
-	add_child(deathTimer);
+	animatedSprites.animation_finished.connect(on_animation_finished);
 	
 	#AnimationManager.replace_animation_by_name(animatedSprites, deathAnim);
 
@@ -91,10 +87,15 @@ func die() -> void:
 	# If this is uncommented, then the enemies will also fall through collision while dying
 	#hitbox.queue_free();
 	AudioManager.play_effect("EnemyDeath");
+	self.set_collision_layer_value(3, false);
 	if (animatedSprites):
 		animatedSprites.play(deathAnim);
 	remove_from_group("enemy");
-	deathTimer.start();
+
+func on_animation_finished() -> void:
+	print("animation finished")
+	if (animatedSprites.animation == deathAnim):
+		queue_free();
 
 ## Detects whether the enemy is out of bounds.
 ## Returns a bool based on enemy being out of bounds.

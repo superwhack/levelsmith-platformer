@@ -1,0 +1,567 @@
+[gd_scene format=4 uid="uid://bjx53xjckex6r"]
+
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_3wwih"]
+[ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_hlc3j"]
+[ext_resource type="PackedScene" uid="uid://ooleujet3lhf" path="res://Scenes/UI/LevelListBox.tscn" id="3_fe37b"]
+[ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_ml86l"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_fiuc2"]
+[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="6_eweeh"]
+[ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="7_2lpb5"]
+[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="8_hlc3j"]
+[ext_resource type="Texture2D" uid="uid://caw5vfrla8ry1" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="8_mnjch"]
+[ext_resource type="Texture2D" uid="uid://cn52j7r73ygot" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="9_6ymy4"]
+[ext_resource type="Texture2D" uid="uid://5qon1fxclb4n" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="10_s456h"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rj586"]
+friction = 0.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ir8iy"]
+bounce = 1.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ce3w2"]
+texture = ExtResource("4_ml86l")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n45e2"]
+texture = ExtResource("5_fiuc2")
+texture_region_size = Vector2i(128, 128)
+
+[sub_resource type="TileSet" id="TileSet_opfnp"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_hqns4")
+physics_layer_1/collision_layer = 2
+physics_layer_1/collision_mask = 2
+physics_layer_1/physics_material = SubResource("PhysicsMaterial_rj586")
+physics_layer_2/collision_layer = 4
+physics_layer_2/collision_mask = 4
+physics_layer_2/physics_material = SubResource("PhysicsMaterial_ir8iy")
+sources/1 = SubResource("TileSetAtlasSource_ce3w2")
+sources/2 = SubResource("TileSetAtlasSource_n45e2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fh7cp"]
+bg_color = Color(0.95686275, 0.79607844, 0.43529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+
+[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "fileExplorer", "levelList")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3wwih")
+script = ExtResource("2_hlc3j")
+buttonNewLevel = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/NewLevelButton")
+buttonImportLevel = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/ImportLevelButton")
+buttonLoadExample = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/LoadExampleButton")
+buttonQuit = NodePath("Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox/QuitButton")
+overlayNewLevel = NodePath("NewLevelOverlay")
+overlayImportLevel = NodePath("ImportLevelOverlay")
+buttonNewLevelCreate = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow/CreateButton")
+buttonNewLevelCancel = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow/CancelButton")
+fieldNewLevelName = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/NameRow/NameInput")
+spinBoxNewLevelX = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX/XSpinBox")
+spinBoxNewLevelY = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY/YSpinBox")
+invalidWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/InvalidWarning")
+emptyWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/EmptyWarning")
+buttonImportLevelCancel = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/CancelButton")
+buttonImportLevelOpen = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/OpenButton")
+buttonImportLevelBrowse = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/BrowseButton")
+fieldImportLevelPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/FilePathInput")
+badImportWarning = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/BadImportWarning")
+badImportBody = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/BadImportWarning/PanelContainer/badImportBody")
+fileExplorer = NodePath("FileDialog")
+levelList = NodePath("Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer/LevelList")
+levelListItem = ExtResource("3_fe37b")
+
+[node name="Background" type="ColorRect" parent="." unique_id=2093246532]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.29411766, 0.29411766, 0.29411766, 1)
+
+[node name="Grid" type="TileMapLayer" parent="Background" unique_id=1916827353]
+clip_children = 1
+z_as_relative = false
+tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAQAAAAAAAAAAAAcAAQAAAAAAAAABAAAAAQAAAAAAAAABAAEAAQAAAAAAAAABAAIAAQAAAAAAAAABAAMAAQAAAAAAAAABAAQAAQAAAAAAAAABAAUAAQAAAAAAAAABAAYAAQAAAAAAAAABAAcAAQAAAAAAAAACAAAAAQAAAAAAAAACAAEAAQAAAAAAAAACAAIAAQAAAAAAAAACAAMAAQAAAAAAAAACAAQAAQAAAAAAAAACAAUAAQAAAAAAAAACAAYAAQAAAAAAAAACAAcAAQAAAAAAAAADAAAAAQAAAAAAAAADAAEAAQAAAAAAAAADAAIAAQAAAAAAAAADAAMAAQAAAAAAAAADAAQAAQAAAAAAAAADAAUAAQAAAAAAAAADAAYAAQAAAAAAAAADAAcAAQAAAAAAAAAEAAAAAQAAAAAAAAAEAAEAAQAAAAAAAAAEAAIAAQAAAAAAAAAEAAMAAQAAAAAAAAAEAAQAAQAAAAAAAAAEAAUAAQAAAAAAAAAEAAYAAQAAAAAAAAAEAAcAAQAAAAAAAAAFAAAAAQAAAAAAAAAFAAEAAQAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAFAAQAAQAAAAAAAAAFAAUAAQAAAAAAAAAFAAYAAQAAAAAAAAAFAAcAAQAAAAAAAAAGAAAAAQAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAQAAAAAAAAAGAAMAAQAAAAAAAAAGAAQAAQAAAAAAAAAGAAUAAQAAAAAAAAAGAAYAAQAAAAAAAAAGAAcAAQAAAAAAAAAHAAAAAQAAAAAAAAAHAAEAAQAAAAAAAAAHAAIAAQAAAAAAAAAHAAMAAQAAAAAAAAAHAAQAAQAAAAAAAAAHAAUAAQAAAAAAAAAHAAYAAQAAAAAAAAAHAAcAAQAAAAAAAAAIAAAAAQAAAAAAAAAIAAEAAQAAAAAAAAAIAAIAAQAAAAAAAAAIAAMAAQAAAAAAAAAIAAQAAQAAAAAAAAAIAAUAAQAAAAAAAAAIAAYAAQAAAAAAAAAIAAcAAQAAAAAAAAAJAAAAAQAAAAAAAAAJAAEAAQAAAAAAAAAJAAIAAQAAAAAAAAAJAAMAAQAAAAAAAAAJAAQAAQAAAAAAAAAJAAUAAQAAAAAAAAAJAAYAAQAAAAAAAAAJAAcAAQAAAAAAAAAKAAAAAQAAAAAAAAAKAAEAAQAAAAAAAAAKAAIAAQAAAAAAAAAKAAMAAQAAAAAAAAAKAAQAAQAAAAAAAAAKAAUAAQAAAAAAAAAKAAYAAQAAAAAAAAAKAAcAAQAAAAAAAAALAAAAAQAAAAAAAAALAAEAAQAAAAAAAAALAAIAAQAAAAAAAAALAAMAAQAAAAAAAAALAAQAAQAAAAAAAAALAAUAAQAAAAAAAAALAAYAAQAAAAAAAAALAAcAAQAAAAAAAAAMAAAAAQAAAAAAAAAMAAEAAQAAAAAAAAAMAAIAAQAAAAAAAAAMAAMAAQAAAAAAAAAMAAQAAQAAAAAAAAAMAAUAAQAAAAAAAAAMAAYAAQAAAAAAAAAMAAcAAQAAAAAAAAANAAAAAQAAAAAAAAANAAEAAQAAAAAAAAANAAIAAQAAAAAAAAANAAMAAQAAAAAAAAANAAQAAQAAAAAAAAANAAUAAQAAAAAAAAANAAYAAQAAAAAAAAANAAcAAQAAAAAAAAAOAAAAAQAAAAAAAAAOAAEAAQAAAAAAAAAOAAIAAQAAAAAAAAAOAAMAAQAAAAAAAAAOAAQAAQAAAAAAAAAOAAUAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAcAAQAAAAAAAAAAAAgAAQAAAAAAAAABAAgAAQAAAAAAAAACAAgAAQAAAAAAAAADAAgAAQAAAAAAAAAEAAgAAQAAAAAAAAAFAAgAAQAAAAAAAAAGAAgAAQAAAAAAAAAHAAgAAQAAAAAAAAAIAAgAAQAAAAAAAAAJAAgAAQAAAAAAAAAKAAgAAQAAAAAAAAALAAgAAQAAAAAAAAAMAAgAAQAAAAAAAAANAAgAAQAAAAAAAAAOAAgAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_opfnp")
+occlusion_enabled = false
+
+[node name="Safe Area" type="MarginContainer" parent="." unique_id=1704742385]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 156.0
+offset_top = 85.0
+offset_right = -156.0
+offset_bottom = -85.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RootVBox" type="VBoxContainer" parent="Safe Area" unique_id=132760781]
+layout_mode = 2
+
+[node name="HeaderPanel" type="PanelContainer" parent="Safe Area/RootVBox" unique_id=1137965105]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("6_eweeh")
+
+[node name="TitleBackgroundMargin" type="MarginContainer" parent="Safe Area/RootVBox/HeaderPanel" unique_id=1974822260]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 16
+
+[node name="HeaderLabel" type="Label" parent="Safe Area/RootVBox/HeaderPanel/TitleBackgroundMargin" unique_id=1244588124]
+modulate = Color(0.03137255, 0.11764706, 0.27058825, 1)
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "LevelSmith: Platformer"
+
+[node name="TitleSpacer" type="Control" parent="Safe Area/RootVBox" unique_id=931809525]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="BodyRow" type="HBoxContainer" parent="Safe Area/RootVBox" unique_id=92026558]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeftMenuPanel" type="PanelContainer" parent="Safe Area/RootVBox/BodyRow" unique_id=545994426]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("6_eweeh")
+
+[node name="LeftMenuMargin" type="MarginContainer" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel" unique_id=54071245]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="LeftMenuVBox" type="VBoxContainer" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin" unique_id=88057450]
+layout_mode = 2
+
+[node name="NewLevelButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1452622841]
+layout_mode = 2
+tooltip_text = "Create a New Level"
+theme_override_font_sizes/font_size = 35
+text = "New Level"
+
+[node name="ImportLevelButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1546369652]
+layout_mode = 2
+tooltip_text = "Import an Existing Level"
+theme_override_font_sizes/font_size = 35
+text = "Import Level"
+
+[node name="LoadExampleButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1890658956]
+visible = false
+layout_mode = 2
+text = "Load Example"
+
+[node name="LeftMenuSpacer" type="Control" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=1734759553]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="QuitButton" type="Button" parent="Safe Area/RootVBox/BodyRow/LeftMenuPanel/LeftMenuMargin/LeftMenuVBox" unique_id=879759410]
+layout_mode = 2
+tooltip_text = "Quit to Desktop"
+theme_override_font_sizes/font_size = 35
+text = "Quit"
+
+[node name="PanelSpacer" type="Control" parent="Safe Area/RootVBox/BodyRow" unique_id=1427687972]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="LevelPanel" type="PanelContainer" parent="Safe Area/RootVBox/BodyRow" unique_id=1787470239]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("6_eweeh")
+
+[node name="LevelPanelMargin" type="MarginContainer" parent="Safe Area/RootVBox/BodyRow/LevelPanel" unique_id=1190610552]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="LevelPanelVBox" type="VBoxContainer" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin" unique_id=1982352506]
+layout_mode = 2
+
+[node name="LevelPanelTitle" type="Label" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox" unique_id=842065895]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+theme_override_font_sizes/font_size = 30
+text = "Load Level:"
+
+[node name="LevelPanelDivider" type="HSeparator" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox" unique_id=376003075]
+layout_mode = 2
+theme_override_styles/separator = ExtResource("7_2lpb5")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox" unique_id=1529046712]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/scrollbar_h_separation = 6
+horizontal_scroll_mode = 0
+
+[node name="LevelList" type="GridContainer" parent="Safe Area/RootVBox/BodyRow/LevelPanel/LevelPanelMargin/LevelPanelVBox/ScrollContainer" unique_id=1343666333]
+custom_minimum_size = Vector2(1141, 176.13)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+offset_transform_enabled = true
+theme_override_constants/h_separation = 120
+theme_override_constants/v_separation = 12
+columns = 3
+
+[node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=120086451]
+custom_minimum_size = Vector2(630, 425)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.23529412, 0.23529412, 0.23529412, 0.60784316)
+
+[node name="SafeArea" type="MarginContainer" parent="NewLevelOverlay" unique_id=1711835851]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -225.0
+offset_right = 350.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OverlayCard" type="PanelContainer" parent="NewLevelOverlay/SafeArea" unique_id=1141388319]
+custom_minimum_size = Vector2(700, 450)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("6_eweeh")
+
+[node name="OverlayMargin" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard" unique_id=596298443]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 50
+
+[node name="OverlayVBox" type="VBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin" unique_id=525659560]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=2137170518]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+theme_override_font_sizes/font_size = 35
+text = "New Level"
+
+[node name="TitleDivider" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=557088841]
+layout_mode = 2
+theme_override_styles/separator = ExtResource("7_2lpb5")
+
+[node name="FormSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=1815649012]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="FormVBox" type="VBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=816520779]
+layout_mode = 2
+
+[node name="NameRow" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=1779713552]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/NameRow" unique_id=1725020308]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+text = "Name: "
+
+[node name="NameInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/NameRow" unique_id=1813530241]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+
+[node name="InvalidWarning" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=838753098]
+visible = false
+propagate_maximum_size = false
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/InvalidWarning" unique_id=1832761900]
+custom_minimum_size = Vector2(0, 60)
+propagate_maximum_size = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_fh7cp")
+metadata/_edit_use_anchors_ = true
+
+[node name="Body" type="RichTextLabel" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/InvalidWarning/PanelContainer" unique_id=1315003373]
+custom_minimum_size = Vector2(403.175, 0)
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("8_hlc3j")
+bbcode_enabled = true
+text = "The level name contains [color=#e74937]invalid[/color] characters. Please enter a valid file name."
+fit_content = true
+horizontal_alignment = 1
+
+[node name="EmptyWarning" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=896100236]
+visible = false
+propagate_maximum_size = false
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/EmptyWarning" unique_id=2082912708]
+custom_minimum_size = Vector2(0, 60)
+propagate_maximum_size = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_fh7cp")
+metadata/_edit_use_anchors_ = true
+
+[node name="Body" type="RichTextLabel" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/EmptyWarning/PanelContainer" unique_id=1597599318]
+custom_minimum_size = Vector2(403.175, 0)
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("8_hlc3j")
+bbcode_enabled = true
+text = "The level name is [color=#e74937]empty[/color]! Please enter a valid file name."
+fit_content = true
+horizontal_alignment = 1
+
+[node name="FormSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=551543159]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="GridSettingsLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=1799077670]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+text = "Grid Settings:"
+
+[node name="GridXMargin" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=1642699094]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GridRowX" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin" unique_id=223931892]
+layout_mode = 2
+
+[node name="IndentationSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=2123647650]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="XLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=279957919]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+text = "X: "
+
+[node name="XSpinBox" type="SpinBox" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridXMargin/GridRowX" unique_id=1445349375]
+layout_mode = 2
+min_value = 2.0
+max_value = 9999.0
+value = 20.0
+
+[node name="GridRowY" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=993765537]
+layout_mode = 2
+
+[node name="IndentationSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY" unique_id=155378371]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="YLabel" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY" unique_id=1681234298]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+text = "Y: "
+
+[node name="YSpinBox" type="SpinBox" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY" unique_id=739478448]
+layout_mode = 2
+min_value = 2.0
+max_value = 9999.0
+value = 20.0
+
+[node name="BottomSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=2094910545]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="ActionsRow" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=1801518463]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="CreateButton" type="Button" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow" unique_id=682596686]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Create"
+
+[node name="ButtonSpacer" type="Control" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow" unique_id=181663509]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+
+[node name="CancelButton" type="Button" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/ActionsRow" unique_id=676091898]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Cancel"
+
+[node name="ImportLevelOverlay" type="ColorRect" parent="." unique_id=684861186]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.23529412, 0.23529412, 0.23529412, 0.60784316)
+
+[node name="SafeArea" type="MarginContainer" parent="ImportLevelOverlay" unique_id=632218223]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -150.0
+offset_right = 350.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OverlayCard" type="PanelContainer" parent="ImportLevelOverlay/SafeArea" unique_id=890781810]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("6_eweeh")
+
+[node name="OverlayMargin" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard" unique_id=727763768]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 30
+
+[node name="OverlayVBox" type="VBoxContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin" unique_id=494797187]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=443612635]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Import Level"
+
+[node name="TitleDivider" type="HSeparator" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=456055516]
+layout_mode = 2
+theme_override_styles/separator = ExtResource("7_2lpb5")
+
+[node name="FormVBox" type="VBoxContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=742194365]
+layout_mode = 2
+
+[node name="FormMargin" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=1310076643]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="FilePathRow" type="HBoxContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin" unique_id=1715729587]
+layout_mode = 2
+
+[node name="FilePathLabel" type="Label" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow" unique_id=1626562155]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "File Path:"
+
+[node name="FilePathInput" type="LineEdit" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow" unique_id=183140136]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+
+[node name="BrowseButton" type="TextureButton" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow" unique_id=1729049193]
+layout_mode = 2
+texture_normal = ExtResource("8_mnjch")
+texture_pressed = ExtResource("9_6ymy4")
+texture_hover = ExtResource("10_s456h")
+
+[node name="BadImportWarning" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox" unique_id=493219676]
+visible = false
+propagate_maximum_size = false
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/BadImportWarning" unique_id=1162317938]
+propagate_maximum_size = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_fh7cp")
+metadata/_edit_use_anchors_ = true
+
+[node name="badImportBody" type="RichTextLabel" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/BadImportWarning/PanelContainer" unique_id=1881526159]
+custom_minimum_size = Vector2(403.175, 0)
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("8_hlc3j")
+bbcode_enabled = true
+text = "Level Import Failed from directory \"\"!"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=1280023487]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionsRow" type="HBoxContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox" unique_id=1229761867]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="OpenButton" type="Button" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow" unique_id=1247213690]
+custom_minimum_size = Vector2(145, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Open"
+
+[node name="Control" type="Control" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow" unique_id=686986436]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+
+[node name="CancelButton" type="Button" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow" unique_id=498307383]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Cancel"
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1904639915]
+oversampling_override = 1.0
+title = "Open a Directory"
+position = Vector2i(0, 36)
+size = Vector2i(1280, 720)
+file_mode = 2
+access = 2

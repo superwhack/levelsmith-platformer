@@ -8,6 +8,12 @@ extends Control
 @export var buttonImportLevel : Button;
 @export var buttonLoadExample : Button;
 @export var buttonQuit : Button;
+@export var buttonOpenLevelFolder : Button;
+@export var buttonPlayLevel : Button;
+@export var buttonEditLevel : Button;
+@export var buttonDuplicateLevel : Button;
+@export var buttonDeleteLevel : Button;
+@export var buttonFavoriteLevel : Button;
 
 # Overlays
 @export var overlayNewLevel : ColorRect;
@@ -17,6 +23,7 @@ extends Control
 @export var buttonNewLevelCreate : Button;
 @export var buttonNewLevelCancel : Button;
 @export var fieldNewLevelName : LineEdit;
+@export var fieldNewLevelAuthor : LineEdit;
 @export var spinBoxNewLevelX : SpinBox;
 @export var spinBoxNewLevelY : SpinBox;
 @export var invalidWarning : MarginContainer;
@@ -34,9 +41,25 @@ extends Control
 var importedLevelPath : String;
 
 ## A reference to the Level List for loading levels.
-@export var levelList : GridContainer;
+@export var levelList : VBoxContainer;
 ## A reference to a packed scene of a clickable Level List Item.
 @export var levelListItem : PackedScene;
+
+## References to meta data values.
+@export var levelName : Label;
+@export var author : Label;
+@export var dateCreated : Label;
+@export var dateModified : Label;
+@export var dimensions : Label;
+@export var objectCount : Label;
+@export var version : Label;
+@export var preview : TextureRect;
+@export var previewDefault : Texture2D;
+
+# The currently selected level item.
+var selectedItem : Control = null;
+# Dictionary of all level items. For level list filling.
+var levelItems: Dictionary = {} # path -> item
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -47,6 +70,10 @@ func _ready() -> void:
 	# Connect signals
 	buttonNewLevel.pressed.connect(overlay_new_level_show);
 	buttonNewLevelCreate.pressed.connect(create_new_level);
+	buttonOpenLevelFolder.pressed.connect(open_level_folder);
+	buttonPlayLevel.pressed.connect(play_current_level);
+	buttonEditLevel.pressed.connect(edit_current_level);
+	buttonDeleteLevel.pressed.connect(delete_current_level);
 	
 	# Hiding appropriate UI when cancelling level creation
 	buttonNewLevelCancel.pressed.connect(overlay_new_level_hide);
@@ -61,11 +88,9 @@ func _ready() -> void:
 	
 	buttonQuit.pressed.connect(exit_program);
 
-	# Fill the list of levels
-	fill_level_list();
 
 	var set_directory = func (directory: String) -> void:
-		importedLevelPath = directory;
+		importedLevelPath = directory + "/";
 		fieldImportLevelPath.text = importedLevelPath;
 	
 	fileExplorer.dir_selected.connect(set_directory);
@@ -96,6 +121,7 @@ func import_level() -> void:
 	var importedLevelArray : Array = importedLevelPath.split("/");
 	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
 	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
+	masterManager.loadedLevelPath = importedLevelPath;
 	
 	if !DirAccess.dir_exists_absolute(importDirectory):
 		DirAccess.make_dir_absolute(importDirectory);
@@ -132,10 +158,11 @@ func create_new_level() -> void:
 	overlayNewLevel.hide();
 	masterManager.level_setup( 
 		fieldNewLevelName.text, 
+		fieldNewLevelAuthor.text,
 		Vector2i( 
 			int(spinBoxNewLevelX.value), 
 			int(spinBoxNewLevelY.value) 
-			) 
+			)
 		);
 		
 	# Reset leftover data
@@ -149,10 +176,6 @@ func exit_program() -> void:
 	
 ## Fills the level list with currently existing levels from the user's directory.
 func fill_level_list() -> void:
-	# First, kill everything inside of the list. Makes refreshing easy
-	for item in levelList.get_children():
-		item.queue_free();
-		
 	# Get the directory that contains all the level folders
 	var levelsPath : String = "user://Levels"
 	var levelListDir : DirAccess = DirAccess.open(levelsPath);
@@ -161,52 +184,53 @@ func fill_level_list() -> void:
 	if (!levelListDir):
 		return;
 		
+	var levelFolders : Dictionary = {};
+	
 	levelListDir.list_dir_begin();
 	
 	var folderName : String = levelListDir.get_next();
-	
 	# So long as the folder name is not null...
 	while folderName != "":
 		if (levelListDir.current_is_dir()):
 			# Getting and creating the level list item
 			var levelPath : String = levelsPath + "/" + folderName;
-			
 			# Add the level to the level list and set it up visually.
 			if (get_level_valid(levelPath)):
-				setup_level_item(folderName, levelPath);
+				levelFolders[levelPath] = folderName;
 
 		folderName = levelListDir.get_next();
+		
+	levelListDir.list_dir_end();
+	
+	# Remove folders that do not exist anymore
+	for levelPath in levelItems.keys().duplicate():
+		if (!levelFolders.has(levelPath)):
+			var item = levelItems[levelPath];
+
+			if (selectedItem == item):
+				clear_selection();
+
+			item.queue_free();
+			levelItems.erase(levelPath);
+	
+	for levelPath in levelFolders.keys():
+		if (!levelItems.has(levelPath)):
+			setup_level_item(levelFolders[levelPath], levelPath);
+		else:
+			update_level_item(
+				levelItems[levelPath],
+				levelFolders[levelPath],
+				levelPath
+			);
 
 ## Setups each level item in the list.
 ## folderName: the folder of the level. Used for level title.
 ## levelPath: the path of the level.
 func setup_level_item(folderName : String, levelPath : String) -> void:
 	# Instantiate and add to level list.
-	var item = levelListItem.instantiate();
+	var item : Node = levelListItem.instantiate();
 	levelList.add_child(item);
-	item.levelPath = levelPath + "/";
-
-	# Setting the level list item data
-	item.levelTitle.text = folderName;
-	item.levelButton.tooltip_text = folderName; 
-	
-	# Connect the level button signal to the double clicked function
-	item.level_double_clicked.connect(_on_level_double_clicked);
-	
-	# Get the csv level size, and add it to the level item
-	var levelSize : Vector2i = get_csv_size(levelPath + "/" + "Tiles.CSV");
-	item.levelSize.text = "size: [" + (str(levelSize.x) + "," + str(levelSize.y) + "]");
-	
-	# If the thumbnail file exists, replace image (or don't)
-	var levelThumbnailPath : String = levelPath + "/thumbnail.png";
-	
-	if (FileAccess.file_exists(levelThumbnailPath)):
-		var image : Image = Image.new();
-		
-		# If the image returns ok, replace the texture
-		if (image.load(levelThumbnailPath) == OK):
-			var texture := ImageTexture.create_from_image(image)
-			item.levelThumbnail.texture = texture;
+	update_level_item(item, folderName, levelPath);
 
 
 ## Load a level when appropriate button is pressed
@@ -214,34 +238,164 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 func _on_level_double_clicked(path: String) -> void:
 	AudioManager.play_UI_effect("UISelection");
 	masterManager.load_level(path);
-
-## Retrieves the world size from a CSV file.
-## filePath: the file path of the CSV file.
-## Returns a Vector2i of the world size.
-func get_csv_size(filePath : String) -> Vector2i: 
-	var rows = [];
-	var file = FileAccess.open(filePath, FileAccess.READ);
 	
-	# If the file exists, append rows. If not, return an empty Vector2i
-	if (file != null):
-		while not file.eof_reached():
-			# Since CSV files have trailing empty lines, we need to check if 
-			# the line has any data in it.
-			var currentRow = file.get_csv_line();
-			if (currentRow.size() > 0 && currentRow[0] != ""):
-				rows.append(currentRow);
+## Fills in metadata labels with appropriate data when hovered.
+## item: the level list button item.
+func _on_level_hovered(item) -> void:
+	if (!selectedItem):
+		update_metadata(item);
+	
+func _on_level_toggled(item, toggled: bool) -> void:
+	if (!toggled):
+		return;
+		
+	# Deselect the previous item if its not the same
+	if (selectedItem && selectedItem != item):
+		selectedItem.levelButton.button_pressed = false;
+	if (!selectedItem):
+		toggle_level_buttons();
+
+	selectedItem = item;
+	update_metadata(item);
+	
+## Deselecting a level with right-click removes metadata.
+## item: The button item being deselected.
+func _on_level_deselected(item) -> void:
+	if (selectedItem == item):
+		item.levelButton.button_pressed = false;
+		toggle_level_buttons();
+		clear_selection();
+
+## When a level is selected, toggle the buttons being disabled
+func toggle_level_buttons() -> void:
+	buttonDeleteLevel.disabled = !buttonDeleteLevel.disabled;
+	buttonDuplicateLevel.disabled = !buttonDuplicateLevel.disabled;
+	buttonEditLevel.disabled = !buttonEditLevel.disabled;
+	buttonPlayLevel.disabled = !buttonPlayLevel.disabled;
+	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
+
+func update_level_item(item: Node, folderName : String, levelPath : String) -> void:
+	item.levelPath = levelPath + "/";
+	levelItems[levelPath] = item;
+
+	# Setting the level list item data
+	item.levelTitle.text = folderName;
+	item.levelButton.tooltip_text = folderName; 
+	
+	# Connect the level button signal to the double clicked function
+	if (!item.level_double_clicked.is_connected(_on_level_double_clicked)):
+		item.level_double_clicked.connect(_on_level_double_clicked);	# Hovering an item populates the metadata field.
+	#item.level_hovered.connect(_on_level_hovered);
+	# Selecting an item toggles.
+	if (!item.level_toggled.is_connected(_on_level_toggled)):
+		item.level_toggled.connect(_on_level_toggled);
+
+	if (!item.level_deselected.is_connected(_on_level_deselected)):
+		item.level_deselected.connect(_on_level_deselected);
+	
+	# Fetch thumbnail, if it exists
+	var levelThumbnailPath : String = levelPath + "/Preview.PNG";
+	
+	# Fetch the level's metadata.
+	var metadata : Dictionary = ImportExportManager.get_metadata(levelPath);
+	
+	
+	# Adding metadata to the actual buttons themselves.
+	item.levelDate.text = metadata.get("dateCreated", "01.01.1967");
+	item.levelTime.text = metadata.get("timeCreated", "00:00");
+	
+	# Storing metadata in the buttons, for hovering/selecting.
+	item.author = str(metadata.get("author", ""));
+	item.dateCreated = "%s %s" % [
+		metadata.get("dateCreated", "01.01.1967"),
+		metadata.get("timeCreated", "00:00")];
+	item.dateModified = "%s %s" % [
+		metadata.get("dateModified", "01.01.1967"),
+		metadata.get("timeModified", "00:00")];
+	item.dimensions = str(metadata.get("dimensions", str([20, 20])));
+	item.objectCount = str(int(metadata.get("objects", str(0))));
+	item.version = str(metadata.get("version", Global.VERSION));
+	
+	# If the the thumbnail exists, add it to the 
+	if (FileAccess.file_exists(levelThumbnailPath)):
+		var image : Image = Image.new();
+		# If the image returns, add to item script
+		if (image.load(levelThumbnailPath) == OK):
+			var texture : ImageTexture = ImageTexture.create_from_image(image);
+			item.thumbnail = texture;
+
+
+## Reusable function for updating metadata based on given item.
+## item: Level item to be used for updating metadata.
+func update_metadata(item) -> void:
+	levelName.text = item.levelTitle.text;
+	author.text = item.author;
+	dateCreated.text = item.dateCreated;
+	dateModified.text = item.dateModified;
+	dimensions.text = item.dimensions;
+	objectCount.text = item.objectCount;
+	version.text = item.version;
+	if (item.thumbnail):
+		preview.texture = item.thumbnail;
 	else:
-		return Vector2i.ZERO;
+		preview.texture = previewDefault;
+		
+## Clears the metadata selection.
+func clear_selection() -> void:
+		selectedItem = null;
+		levelName.text = "";
+		author.text = "";
+		dateCreated.text = "";
+		dateModified.text = "";
+		dimensions.text = "";
+		objectCount.text = "";
+		version.text = "";
+		preview.texture = previewDefault;
 
-	# Height is the number of rows we have
-	var height = rows.size();
-	var width = 0;
+## Opens OS file explorer to the users Level folder.
+func open_level_folder() -> void:
+	var path : String = ProjectSettings.globalize_path("user://Levels");
+	OS.shell_open(path);
+
+
+## Play the currently selected level.
+func play_current_level() -> void:
+	if (!selectedItem):
+		return;
+
+	AudioManager.play_UI_effect("UI_Selection");
+	masterManager.load_level(selectedItem.levelPath, true);
+
+
+## Edit the currently selected level.
+func edit_current_level() -> void:
+	if (!selectedItem):
+		return;
+
+	AudioManager.play_UI_effect("UI_Selection");
+	masterManager.load_level(selectedItem.levelPath);
+
+func delete_current_level() -> void:
+	if (!selectedItem):
+		return;
+
+	AudioManager.play_UI_effect("UI_Selection");
 	
-	# So long as there is one row, get the size of it as width
-	if height > 0:
-		width = rows[0].size();
+	var levelPath : String = selectedItem.levelPath.rstrip("/");
 
-	return Vector2i(width, height);
+	# Delete all files and folders inside the level directory
+	# Thank you: https://tinyurl.com/ak58bfvd
+	var dir = DirAccess.open(selectedItem.levelPath);
+	for file in dir.get_files():
+		dir.remove(file);
+
+	var item = levelItems[levelPath];
+	item.queue_free();
+	levelItems.erase(levelPath);
+	
+	clear_selection();
+	toggle_level_buttons();
+
 	
 ## Checks if a level folder is valid with the correct files.
 ## filePath: The file path of the folder.

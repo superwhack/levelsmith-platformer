@@ -10,6 +10,9 @@ signal onCoinCollected;
 # Tile size
 const TILE_SIZE : int = 128;
 
+# Current version of Foundry 2D
+const VERSION = 0.0067;
+
 # Application State
 enum State {
 	MAIN_MENU,
@@ -78,5 +81,6 @@ enum EntityType {
 	PROP6 = 605,
 }
 
+const EMPTY_TILE: int = -1
 const BEDROCK_TILE: int = 9998;
 const ERASING_TILE: int = 9999;

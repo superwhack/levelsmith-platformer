@@ -30,8 +30,8 @@ winTimeLabel = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxConta
 resetButton = NodePath("CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ResetButton")
 pauseButton = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PauseButton")
 resumeButton = NodePath("CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer/ResumeButton")
-replayButton = NodePath("CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ResetButton")
-editorButton = NodePath("CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ReturnEditorButton")
+replayButton = NodePath("CanvasLayer/WinScreen/TopRightMargin/Container/ReplayButton")
+editorButton = NodePath("CanvasLayer/WinScreen/TopRightMargin/Container/ReturnEditorWinButton")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1567020351]
 

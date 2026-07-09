@@ -27,7 +27,7 @@ theme_override_constants/margin_right = 25
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="ResetButton" type="Button" parent="TopRightMargin/Container" unique_id=1310979275]
+[node name="ReplayButton" type="Button" parent="TopRightMargin/Container" unique_id=1310979275]
 custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(60, 60)
 layout_mode = 2
@@ -38,7 +38,7 @@ theme = ExtResource("1_pj8m8")
 action_mode = 0
 icon_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="TopRightMargin/Container/ResetButton" unique_id=590839823]
+[node name="MarginContainer" type="MarginContainer" parent="TopRightMargin/Container/ReplayButton" unique_id=590839823]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,11 +50,11 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="Control" type="Control" parent="TopRightMargin/Container/ResetButton/MarginContainer" unique_id=1340045511]
+[node name="Control" type="Control" parent="TopRightMargin/Container/ReplayButton/MarginContainer" unique_id=1340045511]
 layout_mode = 2
 mouse_filter = 1
 
-[node name="Icon" type="TextureRect" parent="TopRightMargin/Container/ResetButton/MarginContainer/Control" unique_id=53316215]
+[node name="Icon" type="TextureRect" parent="TopRightMargin/Container/ReplayButton/MarginContainer/Control" unique_id=53316215]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,7 +72,7 @@ custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ReturnEditorButton" type="Button" parent="TopRightMargin/Container" unique_id=1148860713]
+[node name="ReturnEditorWinButton" type="Button" parent="TopRightMargin/Container" unique_id=1148860713]
 custom_minimum_size = Vector2(200, 0)
 custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
@@ -82,7 +82,7 @@ theme = ExtResource("1_pj8m8")
 action_mode = 0
 icon_alignment = 1
 
-[node name="ContentMargin" type="MarginContainer" parent="TopRightMargin/Container/ReturnEditorButton" unique_id=1303114911]
+[node name="ContentMargin" type="MarginContainer" parent="TopRightMargin/Container/ReturnEditorWinButton" unique_id=1303114911]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,23 +94,23 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="ContentRow" type="HBoxContainer" parent="TopRightMargin/Container/ReturnEditorButton/ContentMargin" unique_id=1292625286]
+[node name="ContentRow" type="HBoxContainer" parent="TopRightMargin/Container/ReturnEditorWinButton/ContentMargin" unique_id=1292625286]
 layout_mode = 2
 
-[node name="Icon" type="TextureRect" parent="TopRightMargin/Container/ReturnEditorButton/ContentMargin/ContentRow" unique_id=1699532654]
+[node name="Icon" type="TextureRect" parent="TopRightMargin/Container/ReturnEditorWinButton/ContentMargin/ContentRow" unique_id=1699532654]
 layout_mode = 2
 texture = ExtResource("5_dhi7o")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextContainer" type="VBoxContainer" parent="TopRightMargin/Container/ReturnEditorButton/ContentMargin/ContentRow" unique_id=325770538]
+[node name="TextContainer" type="VBoxContainer" parent="TopRightMargin/Container/ReturnEditorWinButton/ContentMargin/ContentRow" unique_id=325770538]
 layout_mode = 2
 
-[node name="EditTitle" type="Label" parent="TopRightMargin/Container/ReturnEditorButton/ContentMargin/ContentRow/TextContainer" unique_id=2062794810]
+[node name="EditTitle" type="Label" parent="TopRightMargin/Container/ReturnEditorWinButton/ContentMargin/ContentRow/TextContainer" unique_id=2062794810]
 layout_mode = 2
 text = "Return to Editor"
 
-[node name="EditSubtext" type="Label" parent="TopRightMargin/Container/ReturnEditorButton/ContentMargin/ContentRow/TextContainer" unique_id=126654013]
+[node name="EditSubtext" type="Label" parent="TopRightMargin/Container/ReturnEditorWinButton/ContentMargin/ContentRow/TextContainer" unique_id=126654013]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 theme_override_font_sizes/font_size = 12

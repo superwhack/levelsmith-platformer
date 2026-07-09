@@ -250,6 +250,12 @@ func update_animation_fps(animationName : String, newFPS : float):
 		flyingEnemyTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
 	elif "Shoot" in animationName:
 		shootingEnemyTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
+	elif "Coin" in animationName:
+		coinTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
+	elif "Goal" in animationName:
+		goalTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
+	elif "Platform" in animationName:
+		movingPlatformTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
 	
 func get_template_sprite(spriteName : String) -> AnimatedSprite2D:
 	return get(spriteName[0].to_lower() + spriteName.substr(1) + "TemplateSprite");

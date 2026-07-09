@@ -71,20 +71,26 @@ func audio_finished(player: AudioStreamPlayer) -> void:
 
 ## Update the current volume by adjusting every player. If the volume is set to 0 for anything, mute completely
 func update_volume() -> void:
-	musicPlayer.volume_db = (LOWEST_DB * masterVolume * musicVolume) - LOWEST_DB;
-	if (musicPlayer.volume_db == -LOWEST_DB):
-			musicPlayer.volume_db = -1000;
-	walkingPlayer.volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
-	if (walkingPlayer.volume_db == -LOWEST_DB):
-			walkingPlayer.volume_db = -1000;
+	musicPlayer.volume_db = linear_to_db(masterVolume * musicVolume);
+	walkingPlayer.volume_db = linear_to_db(masterVolume * SFXVolume);
 	for i in inusePlayers.size():
-		inusePlayers[i].volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
-		if (inusePlayers[i].volume_db == -LOWEST_DB):
-			inusePlayers[i].volume_db = -1000;
+		inusePlayers[i].volume_db = linear_to_db(masterVolume * SFXVolume);
 	for i in availablePlayers.size():
-		availablePlayers[i].volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
-		if (availablePlayers[i].volume_db == -LOWEST_DB):
-			availablePlayers[i].volume_db = -1000;
+		availablePlayers[i].volume_db = linear_to_db(masterVolume * SFXVolume);
+	#musicPlayer.volume_db = (LOWEST_DB * masterVolume * musicVolume) - LOWEST_DB;
+	#if (musicPlayer.volume_db == -LOWEST_DB):
+	#		musicPlayer.volume_db = -1000;
+	#walkingPlayer.volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
+	#if (walkingPlayer.volume_db == -LOWEST_DB):
+	#		walkingPlayer.volume_db = -1000;
+	#for i in inusePlayers.size():
+	#	inusePlayers[i].volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
+	#	if (inusePlayers[i].volume_db == -LOWEST_DB):
+	#		inusePlayers[i].volume_db = -1000;
+	#for i in availablePlayers.size():
+	#	availablePlayers[i].volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
+	#	if (availablePlayers[i].volume_db == -LOWEST_DB):
+	#		availablePlayers[i].volume_db = -1000;
 
 ## Add specified SFX to the queue from builder sounds
 ## effectName: name of the effect to play

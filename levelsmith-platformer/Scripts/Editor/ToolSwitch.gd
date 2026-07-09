@@ -1,8 +1,9 @@
-extends HBoxContainer
+extends VBoxContainer
 
 # References to managers
 @export var editorManager : Node2D;
 @export var toolManager : Node2D;
+@export var tileSwitch : HBoxContainer;
 
 # Button references for signal connections
 @export var brushButton : Button;
@@ -31,4 +32,6 @@ func swap_to_box_brush() -> void:
 func swap_to_cursor() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	toolManager.change_tool(Global.Tool.CURSOR);
-	editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);
+	
+	var dropdownState = tileSwitch.entityPropDropdown.get_selected_id();
+	editorManager.change_current_hotbar(dropdownState + 1);

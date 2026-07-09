@@ -158,14 +158,14 @@ gameManagerCanvas = NodePath("GameManager/CanvasLayer")
 loadingScreen = NodePath("LoadingScreen")
 loadingAnimation = NodePath("LoadingScreen/ScreenContent/LoadingAnimation")
 mainMenuControl = NodePath("MainMenuCanvasLayer/MainMenu")
-editorHomeButton = NodePath("EditorManager/ScreenUI/TopLeftAnchor/TopLeftRow/HomeButton")
-editorPlayButton = NodePath("EditorManager/ScreenUI/BottomRightAnchor/PlayButton")
+editorHomeButton = NodePath("EditorManager/ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/HomeButton")
+editorPlayButton = NodePath("EditorManager/ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton")
 returnToEditorButton = NodePath("GameManager/CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ReturnEditorButton")
-playPopUp = NodePath("EditorManager/ScreenUI/BottomRightAnchor/HoverPopUpContainer")
+playPopUp = NodePath("EditorManager/ScreenUI/MainColumn/ContentRow/HoverPopUpContainer")
 tileMap = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
 gridLines = NodePath("EditorManager/GridLines")
-propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
+propertyMenu = NodePath("EditorManager/ScreenUI/MainColumn/ContentRow/PropertiesPanel/PropertyMenu")
 
 [node name="AnimationManager" type="Node" parent="." unique_id=343134313]
 script = ExtResource("2_0vixy")
@@ -180,9 +180,10 @@ script = ExtResource("4_mg0h4")
 masterManager = NodePath("..")
 gridLines = NodePath("../EditorManager/GridLines")
 
-[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera") instance=ExtResource("2_430ed")]
+[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera", "levelScreenshotCamera") instance=ExtResource("2_430ed")]
 masterManager = NodePath("..")
 mainCamera = NodePath("../Camera2D")
+levelScreenshotCamera = NodePath("LevelScreenshot")
 
 [node name="GridLines" parent="EditorManager" index="0" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
 z_index = 0
@@ -201,7 +202,7 @@ collision_enabled = true
 [node name="AssetManager" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="0" unique_id=468653693 node_paths=PackedStringArray("masterManager")]
 masterManager = NodePath("../../..")
 
-[node name="SettingsMenu" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="2" unique_id=79213823 node_paths=PackedStringArray("cameraManager")]
+[node name="SettingsMenu" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=79213823 node_paths=PackedStringArray("cameraManager")]
 cameraManager = NodePath("../../../Camera2D")
 
 [node name="CustomCursorManager" parent="EditorManager" index="6" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
@@ -211,7 +212,6 @@ masterManager = NodePath("../..")
 masterManager = NodePath("../..")
 
 [node name="LevelScreenshot" parent="EditorManager" index="9" unique_id=1423987778 node_paths=PackedStringArray("masterManager", "baseCamera")]
-enabled = false
 masterManager = NodePath("../..")
 baseCamera = NodePath("../../Camera2D")
 
@@ -260,6 +260,5 @@ libraries/ = SubResource("AnimationLibrary_0vixy")
 [connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
 
 [editable path="EditorManager"]
-[editable path="EditorManager/ScreenUI/BottomRightAnchor/HoverPopUpContainer"]
 [editable path="EditorManager/CanvasLayer/AssetManager"]
 [editable path="GameManager"]

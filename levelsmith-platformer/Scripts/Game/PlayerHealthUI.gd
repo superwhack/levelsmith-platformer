@@ -28,7 +28,7 @@ func bind_player(new_player: Player) -> void:
 func _sync_to_player() -> void:
 	if not player:
 		return
-	
+
 	_clear_hearts();
 	_create_hearts(player.maxHealth);
 	_apply_health_visuals(player.health)

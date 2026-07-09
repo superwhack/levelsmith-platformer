@@ -8,7 +8,6 @@
 [node name="PlayerHealthUi" type="HBoxContainer" unique_id=621394887]
 script = ExtResource("1_qhy4u")
 heart_scene = ExtResource("2_qhy4u")
-empty_heart_modulate = Color(0.24840015, 0.24840018, 0.24840015, 1)
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=70166934]
 layout_mode = 2

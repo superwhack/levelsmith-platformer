@@ -10,6 +10,7 @@ extends Node2D
 @export var winCoinLabel : RichTextLabel;
 @export var coinMargin : MarginContainer;
 @export var winTimeLabel : RichTextLabel;
+@export var winScreenHealthUI : HBoxContainer;
 
 # Button references for signals
 @export var resetButton : Button;
@@ -191,6 +192,8 @@ func level_complete() -> void:
 	timerLabel.hide();
 	winScreen.show();
 	bottomScreenGroup.hide();
+	winScreenHealthUI.bind_player(player);
+	winScreenHealthUI._sync_to_player();
 
 ## Returns to the level editor and restores the editor state
 func return_to_editor() -> void:

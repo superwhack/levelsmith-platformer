@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_ym18m"]
 [ext_resource type="Texture2D" uid="uid://cvme7suepttij" path="res://Assets/Sprites/UI/material-symbols-light--pause-rounded.png" id="3_4pdbi"]
-[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="6_4i4ea"]
+[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="6_4i4ea"]
 [ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="6_x53pn"]
 [ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
-[ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
+[ext_resource type="Texture2D" uid="uid://dk7k888johpa6" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
 [ext_resource type="Texture2D" uid="uid://qf7uq7d7mpai" path="res://Assets/UserInterface/line-md--heart-filled.png" id="7_j23bb"]
 [ext_resource type="PackedScene" uid="uid://cmpj0a4yqf4gu" path="res://Scenes/UI/WinScreen.tscn" id="8_4i4ea"]
 [ext_resource type="Texture2D" uid="uid://cerg25kv03gd3" path="res://Assets/UserInterface/tabler--heart.png" id="8_qxglv"]
@@ -18,7 +18,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gn8f6"]
 
-[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "winScreen", "bottomScreenGroup", "coinCounterLabel", "playerHealthUI", "timerLabel", "winCoinLabel", "coinMargin", "winTimeLabel", "resetButton", "pauseButton", "resumeButton", "replayButton", "editorButton")]
+[node name="GameManager" type="Node2D" unique_id=344859815 node_paths=PackedStringArray("pauseScreen", "winScreen", "bottomScreenGroup", "coinCounterLabel", "playerHealthUI", "timerLabel", "winCoinLabel", "coinMargin", "winTimeLabel", "winScreenHealthUI", "resetButton", "pauseButton", "resumeButton", "replayButton", "editorButton")]
 script = ExtResource("1_habuo")
 pauseScreen = NodePath("CanvasLayer/PausedScreenContainer")
 winScreen = NodePath("CanvasLayer/WinScreen")
@@ -29,6 +29,7 @@ timerLabel = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer
 winCoinLabel = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox/CoinHBox/WinCoinCounter")
 coinMargin = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin")
 winTimeLabel = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox/WinTimer")
+winScreenHealthUI = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox/PlayerHealthUi")
 resetButton = NodePath("CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ResetButton")
 pauseButton = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PauseButton")
 resumeButton = NodePath("CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer/ResumeButton")

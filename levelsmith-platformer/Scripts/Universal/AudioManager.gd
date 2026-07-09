@@ -95,6 +95,13 @@ func play_UI_effect(effectName: String) -> void:
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		queue.append(fullPath + ".wav");
 
+func play_music_preview(musicName:  String) -> void:
+	if musicPlayer.playing:
+		return;
+	play_music(musicName);
+	await get_tree().create_timer(1.5).timeout
+	musicPlayer.stop();
+
 ## Play the music track
 ## musicName: name of the sound effect
 func play_music(musicName: String) -> void:
@@ -185,6 +192,7 @@ func reset_audio() -> void:
 	queue.clear();
 	inusePlayers.clear();
 	musicPlayer.stop();
+	walkingPlayer.stop();
 
 ## Play the sound for an asset when in the AssetManager
 ## assetName: the name of the file to play from, no extentions
@@ -211,7 +219,6 @@ func _process(_delta: float) -> void:
 		# If the sound level has an adjustment, apply it
 		var audioName = path.substr(path.rfind("/") + 1);
 		audioName = audioName.erase(audioName.rfind("."), 4);
-		print(audioName);
 		if soundLevels.has(audioName):
 			availablePlayers[0].volume_db = linear_to_db(masterVolume * SFXVolume * soundLevels[audioName]);
 		

@@ -36,9 +36,9 @@ func _ready() -> void:
 	masterVolume.dragging.connect(_on_drag);
 	SFXVolume.dragging.connect(_on_drag);
 	musicVolume.dragging.connect(_on_drag);
-	masterVolume.drag_ended.connect(_on_drag);
-	SFXVolume.drag_ended.connect(_on_drag);
-	musicVolume.drag_ended.connect(_on_drag);
+	masterVolume.drag_ended.connect(_on_drag_end_SFX);
+	SFXVolume.drag_ended.connect(_on_drag_end_SFX);
+	musicVolume.drag_ended.connect(_on_drag_end_music);
 	
 	# CAMERA ---
 	# Set current default values
@@ -70,6 +70,14 @@ func _on_drag() -> void:
 	cameraManager.followSpeed = followSpeed.value / 100;
 	cameraManager.deadzone = cameraDeadzone.value;
 	cameraManager.cameraPlayClamp = cameraClamp.value;
+
+func _on_drag_end_SFX() -> void:
+	_on_drag();
+	AudioManager.play_UI_effect("UISelection");
+	
+func _on_drag_end_music() -> void:
+	_on_drag();
+	AudioManager.play_music_preview("LevelMusic");
 
 ## Update sliders visually
 func update_sliders() -> void:

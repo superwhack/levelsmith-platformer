@@ -60,6 +60,7 @@ scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=33200389]
+z_index = -1
 sprite_frames = SubResource("SpriteFrames_ogq8d")
 animation = &"EnemyShoot"
 

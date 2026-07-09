@@ -32,6 +32,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if (health <= 0): 
 		super._physics_process(delta);
+		velocity.x = 0;
 		move_and_slide();
 		return;
 	

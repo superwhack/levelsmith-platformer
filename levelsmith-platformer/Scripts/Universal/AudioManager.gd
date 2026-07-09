@@ -5,14 +5,14 @@ var masterVolume : float = 0.7;
 var musicVolume : float = 0.7;
 var SFXVolume : float = 0.7;
 
-# Lowest DB, should be inaudible (it's negative)
-const LOWEST_DB : int = 70;
+var soundLevels : Dictionary;
 
 # Max number of audio players to be running at once (excluding one for music and one for walking)
 const AUDIO_PLAYER_COUNT : int = 12;
 const AUDIO_QUEUE_LIMIT : int = AUDIO_PLAYER_COUNT;
+
 # All folders for audio
-## BUG: UNTUL AUDIO LIBRARY PATH IS READY, IT IS TO BE ASSIGNED TO THE DEFAULT
+## BUG: UNTIL AUDIO LIBRARY PATH IS READY, IT IS TO BE ASSIGNED TO THE DEFAULT
 var audioLibraryPath : String = "res://Assets/Defaults/Assets/Audio/";
 #var audioLibraryPath : String = "user://Audio/";
 const UI_AUDIO_LIBRARY_PATH : String = "res://Assets/Audio/";
@@ -31,6 +31,11 @@ var assetManagerPlayer : AudioStreamPlayer
 
 ## Create all players and connect them properly
 func _ready() -> void:
+	
+	soundLevels = {
+		"Tile_Place_Error": 0.5,
+	}
+	
 	musicPlayer = AudioStreamPlayer.new();
 	walkingPlayer = AudioStreamPlayer.new();
 	assetManagerPlayer = AudioStreamPlayer.new();
@@ -67,6 +72,7 @@ func music_loop(player: AudioStreamPlayer) -> void:
 ## player: the audio stream player to end
 func audio_finished(player: AudioStreamPlayer) -> void:
 	availablePlayers.append(player);
+	player.volume_db = linear_to_db(masterVolume * SFXVolume);
 	inusePlayers.erase(player);
 
 ## Update the current volume by adjusting every player. If the volume is set to 0 for anything, mute completely
@@ -77,20 +83,6 @@ func update_volume() -> void:
 		inusePlayers[i].volume_db = linear_to_db(masterVolume * SFXVolume);
 	for i in availablePlayers.size():
 		availablePlayers[i].volume_db = linear_to_db(masterVolume * SFXVolume);
-	#musicPlayer.volume_db = (LOWEST_DB * masterVolume * musicVolume) - LOWEST_DB;
-	#if (musicPlayer.volume_db == -LOWEST_DB):
-	#		musicPlayer.volume_db = -1000;
-	#walkingPlayer.volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
-	#if (walkingPlayer.volume_db == -LOWEST_DB):
-	#		walkingPlayer.volume_db = -1000;
-	#for i in inusePlayers.size():
-	#	inusePlayers[i].volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
-	#	if (inusePlayers[i].volume_db == -LOWEST_DB):
-	#		inusePlayers[i].volume_db = -1000;
-	#for i in availablePlayers.size():
-	#	availablePlayers[i].volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
-	#	if (availablePlayers[i].volume_db == -LOWEST_DB):
-	#		availablePlayers[i].volume_db = -1000;
 
 ## Add specified SFX to the queue from builder sounds
 ## effectName: name of the effect to play
@@ -215,6 +207,14 @@ func _process(_delta: float) -> void:
 		audio_finished(inusePlayers[0]);
 	if (!queue.is_empty() && !availablePlayers.is_empty()):
 		var path : String = queue.pop_front(); 
+		
+		# If the sound level has an adjustment, apply it
+		var audioName = path.substr(path.rfind("/") + 1);
+		audioName = audioName.erase(audioName.rfind("."), 4);
+		print(audioName);
+		if soundLevels.has(audioName):
+			availablePlayers[0].volume_db = linear_to_db(masterVolume * SFXVolume * soundLevels[audioName]);
+		
 		if (path.ends_with(".mp3")):
 			availablePlayers[0].stream = AudioStreamMP3.load_from_file(path);
 		elif (path.ends_with(".wav")):

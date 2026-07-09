@@ -15,7 +15,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_0s3yh")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"PatrolDeath",
 "speed": 5.0
 }, {
@@ -65,8 +65,9 @@ scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=384867185]
+z_index = -1
 sprite_frames = SubResource("SpriteFrames_ogq8d")
-animation = &"PatrolWalk"
+animation = &"PatrolDeath"
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=121573990]
 rotation = 1.5707964

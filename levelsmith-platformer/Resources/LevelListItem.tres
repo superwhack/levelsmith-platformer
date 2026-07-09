@@ -1,15 +1,15 @@
 [gd_resource type="Theme" format=3 uid="uid://dsbkv6718ooq1"]
 
-[ext_resource type="FontFile" uid="uid://dp7iib08p6748" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="1_m0ts6"]
+[ext_resource type="FontFile" uid="uid://ibgv3ey3taus" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="1_m0ts6"]
 [ext_resource type="StyleBox" uid="uid://cpf1gfwh4cnqm" path="res://Assets/UserInterface/DisabledStyleBox.tres" id="2_tsa1n"]
-[ext_resource type="StyleBox" uid="uid://73sk20dbjygq" path="res://Assets/UserInterface/FocusStyleBox.tres" id="3_8h78n"]
-[ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_o8ej4"]
-[ext_resource type="StyleBox" uid="uid://c77hfkgnkauj3" path="res://Assets/UserInterface/ButtonNormalStyleBox.tres" id="5_i1eng"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/FocusStyleBox.tres" id="3_8h78n"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_o8ej4"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/ButtonNormalStyleBox.tres" id="5_i1eng"]
 [ext_resource type="Texture2D" uid="uid://b88f0rfl1f7l6" path="res://Assets/Sprites/UI/BoxChecked.png" id="6_o4xp5"]
-[ext_resource type="Texture2D" uid="uid://4lhru8m58bnr" path="res://Assets/Sprites/UI/RadioSelected.png" id="7_iq3m7"]
+[ext_resource type="Texture2D" uid="uid://b37y02dsq5qyb" path="res://Assets/Sprites/UI/RadioSelected.png" id="7_iq3m7"]
 [ext_resource type="Texture2D" uid="uid://dekrnt44tg4hi" path="res://Assets/Sprites/UI/GrabInvert.png" id="8_vop3r"]
 [ext_resource type="Texture2D" uid="uid://bn0uohdiojkbm" path="res://Assets/Sprites/UI/BoxUnchecked.png" id="9_3e43e"]
-[ext_resource type="Texture2D" uid="uid://fov1jabv7qhq" path="res://Assets/Sprites/UI/SwitchOn.png" id="10_7riwp"]
+[ext_resource type="Texture2D" uid="uid://bc5en51l7hpq" path="res://Assets/Sprites/UI/SwitchOn.png" id="10_7riwp"]
 [ext_resource type="Texture2D" uid="uid://bsy8p1h6nbdtb" path="res://Assets/Sprites/UI/SwitchOff.png" id="11_xe342"]
 [ext_resource type="Texture2D" uid="uid://cl5qxephdid3m" path="res://Assets/Sprites/UI/ArrowLeftMedium.PNG" id="12_vbcru"]
 [ext_resource type="Texture2D" uid="uid://doqio61v4hwf4" path="res://Assets/Sprites/UI/CloseMedium.PNG" id="13_nytbq"]
@@ -31,13 +31,13 @@
 [ext_resource type="Texture2D" uid="uid://bmb2tygklbuf6" path="res://Assets/Sprites/UI/FilterMedium.PNG" id="29_hnbli"]
 [ext_resource type="Texture2D" uid="uid://br5r7c7w8jie5" path="res://Assets/Sprites/UI/ToggleHiddenMedium.PNG" id="30_yuo03"]
 [ext_resource type="StyleBox" uid="uid://bjfoydscacqbd" path="res://Assets/UserInterface/WindowBorderStyleBox.tres" id="31_kduco"]
-[ext_resource type="StyleBox" uid="uid://cixip2eyb83r1" path="res://Assets/UserInterface/ScrollGrabStyleBox.tres" id="32_qtni8"]
-[ext_resource type="StyleBox" uid="uid://cwo782d4sgcr7" path="res://Assets/UserInterface/ScrollAreaStyleBox.tres" id="33_pjbvv"]
-[ext_resource type="StyleBox" uid="uid://d0dnc4expn1x0" path="res://Assets/UserInterface/SliderStyleBox.tres" id="36_hkmms"]
-[ext_resource type="StyleBox" uid="uid://kpc3pw6w1747" path="res://Assets/UserInterface/TextEntryFocusStyleBox.tres" id="37_4gjgn"]
-[ext_resource type="StyleBox" uid="uid://nqweanxgm6cj" path="res://Assets/UserInterface/TextEntryStyleBox.tres" id="38_fjjyi"]
-[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="57_623mq"]
-[ext_resource type="FontFile" uid="uid://bjvuowr03n5wu" path="res://Assets/Fonts/Variable/JetBrainsMono-VariableFont_wght.ttf" id="60_hanqy"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/ScrollGrabStyleBox.tres" id="32_qtni8"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/ScrollAreaStyleBox.tres" id="33_pjbvv"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/SliderStyleBox.tres" id="36_hkmms"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/TextEntryFocusStyleBox.tres" id="37_4gjgn"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/TextEntryStyleBox.tres" id="38_fjjyi"]
+[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="57_623mq"]
+[ext_resource type="FontFile" uid="uid://cgycilgp5dv06" path="res://Assets/Fonts/Variable/JetBrainsMono-VariableFont_wght.ttf" id="60_hanqy"]
 [ext_resource type="StyleBox" uid="uid://b0bwc6kq7kfl3" path="res://Assets/UserInterface/TextListButtonPressedStyleBox.tres" id="61_4mhju"]
 [ext_resource type="StyleBox" uid="uid://blvx1jpl8wk6y" path="res://Assets/UserInterface/TileButtonFocusStyleBox.tres" id="62_bwuo0"]
 [ext_resource type="StyleBox" uid="uid://de7k1e7p5nyw8" path="res://Assets/UserInterface/TileButtonHoverStyleBox.tres" id="63_s5xya"]
@@ -47,10 +47,10 @@
 [ext_resource type="StyleBox" uid="uid://blnb73c6181oq" path="res://Assets/UserInterface/ToolButtonHoverStyleBox.tres" id="67_ye1yh"]
 [ext_resource type="StyleBox" uid="uid://0p7omelnc5u2" path="res://Assets/UserInterface/ToolButtonSelectStyleBox.tres" id="68_yc7jw"]
 [ext_resource type="StyleBox" uid="uid://bcx2ixaf8mxjd" path="res://Assets/UserInterface/ToolButtonNormalStyleBox.tres" id="69_67vac"]
-[ext_resource type="StyleBox" uid="uid://b1tpgrjp8xpbj" path="res://Assets/UserInterface/TooltipStyleBox.tres" id="70_8qaa0"]
-[ext_resource type="StyleBox" uid="uid://du2kuqvwpo5j0" path="res://Assets/UserInterface/HScrollGrabStyleBox.tres" id="71_wlj8r"]
-[ext_resource type="StyleBox" uid="uid://bryfqoermm7f4" path="res://Assets/UserInterface/HScrollAreaStyleBox.tres" id="72_8woi7"]
-[ext_resource type="StyleBox" uid="uid://bwclbl24ey6hw" path="res://Assets/UserInterface/VSeparatorLine.tres" id="73_hvxol"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/TooltipStyleBox.tres" id="70_8qaa0"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/HScrollGrabStyleBox.tres" id="71_wlj8r"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/HScrollAreaStyleBox.tres" id="72_8woi7"]
+[ext_resource type="StyleBox" path="res://Assets/UserInterface/VSeparatorLine.tres" id="73_hvxol"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2jud"]
 
@@ -86,38 +86,85 @@ content_margin_left = 12.0
 content_margin_top = 4.0
 content_margin_right = 12.0
 content_margin_bottom = 4.0
-bg_color = Color(0.7372549, 0.7372549, 0.7372549, 0)
+bg_color = Color(0.7372549, 0.7372549, 0.7372549, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cs85n"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4tjyu"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5euh2"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yovv1"]
+bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lyud6"]
-bg_color = Color(0.12156863, 0.16078432, 0.20784314, 1)
+bg_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
-border_color = Color(0.30588236, 0.3882353, 0.49411765, 1)
+border_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cs85n"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4tjyu"]
-bg_color = Color(0.12156863, 0.16078432, 0.20784314, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.30588236, 0.3882353, 0.49411765, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ke4fi"]
 
@@ -225,13 +272,14 @@ HScrollBar/styles/grabber_highlight = ExtResource("32_qtni8")
 HScrollBar/styles/grabber_pressed = ExtResource("32_qtni8")
 HScrollBar/styles/scroll = ExtResource("33_pjbvv")
 Label/colors/font_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
-LevelItemBlack/base_type = &"Button"
-LevelItemBlack/styles/disabled = SubResource("StyleBoxFlat_wefnb")
-LevelItemBlack/styles/focus = SubResource("StyleBoxFlat_lyud6")
-LevelItemBlack/styles/hover = SubResource("StyleBoxFlat_lyud6")
-LevelItemBlack/styles/hover_pressed = SubResource("StyleBoxFlat_lyud6")
-LevelItemBlack/styles/normal = SubResource("StyleBoxFlat_cs85n")
-LevelItemBlack/styles/pressed = SubResource("StyleBoxFlat_4tjyu")
+LevelItemBlue/base_type = &"Button"
+LevelItemWhite/base_type = &"Button"
+LevelItemWhite/styles/disabled = SubResource("StyleBoxFlat_wefnb")
+LevelItemWhite/styles/focus = SubResource("StyleBoxFlat_cs85n")
+LevelItemWhite/styles/hover = SubResource("StyleBoxFlat_4tjyu")
+LevelItemWhite/styles/hover_pressed = SubResource("StyleBoxFlat_5euh2")
+LevelItemWhite/styles/normal = SubResource("StyleBoxFlat_yovv1")
+LevelItemWhite/styles/pressed = SubResource("StyleBoxFlat_lyud6")
 TextEdit/colors/font_color = Color(0, 0, 0, 1)
 TextEdit/styles/focus = ExtResource("37_4gjgn")
 TextEdit/styles/normal = ExtResource("38_fjjyi")

@@ -1,26 +1,26 @@
 [gd_scene format=3 uid="uid://84u38evaexwi"]
 
 [ext_resource type="Script" uid="uid://bc0t4fwnf3jge" path="res://Scripts/Editor/ToolSwitch.gd" id="1_8le6k"]
-[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="2_bma6q"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="3_0ykeq"]
-[ext_resource type="Texture2D" uid="uid://bvs8x1xbu3h1d" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBrushWhite.png" id="4_8yt78"]
-[ext_resource type="Texture2D" uid="uid://gj3v4xu6abnf" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBoxWhite.png" id="8_bma6q"]
-[ext_resource type="Texture2D" uid="uid://b2f8nimrmbfjr" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolCursorWhite.png" id="12_126op"]
+[ext_resource type="Texture2D" uid="uid://cc85uk0ba7r73" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBrushWhite.png" id="4_8yt78"]
+[ext_resource type="Texture2D" uid="uid://kqxcpbn4i32k" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBoxWhite.png" id="8_bma6q"]
+[ext_resource type="Texture2D" uid="uid://ccof3ja31cgcx" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolCursorWhite.png" id="12_126op"]
 
-[node name="ToolSwitch" type="HBoxContainer" unique_id=1469240724 node_paths=PackedStringArray("brushButton", "boxBrushButton", "cursorButton")]
-offset_right = 313.0
-offset_bottom = 100.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
+
+[node name="ToolSwitch" type="VBoxContainer" unique_id=537968072 node_paths=PackedStringArray("brushButton", "boxBrushButton", "cursorButton")]
+offset_right = 100.0
+offset_bottom = 276.0
 focus_behavior_recursive = 1
 theme = ExtResource("3_0ykeq")
-theme_override_constants/separation = 25
 script = ExtResource("1_8le6k")
 brushButton = NodePath("TileEditingToolUI/MarginContainer/TileTools/BrushButton")
 boxBrushButton = NodePath("TileEditingToolUI/MarginContainer/TileTools/BoxBrushButton")
-cursorButton = NodePath("EntityEditingToolsUI/MarginContainer/EntityTools/CursorButton")
+cursorButton = NodePath("TileEditingToolUI/MarginContainer/TileTools/CursorButton")
 
 [node name="TileEditingToolUI" type="PanelContainer" parent="." unique_id=1533380283]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("2_bma6q")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_g4v7s")
 
 [node name="MarginContainer" type="MarginContainer" parent="TileEditingToolUI" unique_id=41147329]
 layout_mode = 2
@@ -29,16 +29,16 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="TileTools" type="HBoxContainer" parent="TileEditingToolUI/MarginContainer" unique_id=131455001]
+[node name="TileTools" type="VBoxContainer" parent="TileEditingToolUI/MarginContainer" unique_id=179559872]
 layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="BrushButton" type="Button" parent="TileEditingToolUI/MarginContainer/TileTools" unique_id=1356283111]
 layout_mode = 2
 tooltip_text = "Brush Tool [Z]
-Paint            [LMB]
-Erase            [RMB]
-Rotate             [R]"
+Paint [LMB]
+Erase [RMB]
+Rotate [R]"
 mouse_filter = 1
 theme_type_variation = &"ToolButton"
 icon = ExtResource("4_8yt78")
@@ -47,34 +47,22 @@ icon_alignment = 1
 [node name="BoxBrushButton" type="Button" parent="TileEditingToolUI/MarginContainer/TileTools" unique_id=571777754]
 layout_mode = 2
 tooltip_text = "Box Brush [X]
-Fill             [LMB]
-Erase            [RMB]
-Rotate             [R]
-Confirm        [Space]"
+Fill [LMB]
+Erase [RMB]
+Rotate [R]
+Confirm [Space]"
 theme_type_variation = &"ToolButton"
 icon = ExtResource("8_bma6q")
 icon_alignment = 1
 
-[node name="EntityEditingToolsUI" type="PanelContainer" parent="." unique_id=147750149]
-layout_mode = 2
-theme_override_styles/panel = ExtResource("2_bma6q")
-
-[node name="MarginContainer" type="MarginContainer" parent="EntityEditingToolsUI" unique_id=2062202130]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="EntityTools" type="HBoxContainer" parent="EntityEditingToolsUI/MarginContainer" unique_id=196862975]
+[node name="TileEntitySeparator" type="HSeparator" parent="TileEditingToolUI/MarginContainer/TileTools" unique_id=1874806720]
 layout_mode = 2
 
-[node name="CursorButton" type="Button" parent="EntityEditingToolsUI/MarginContainer/EntityTools" unique_id=1112685996]
+[node name="CursorButton" type="Button" parent="TileEditingToolUI/MarginContainer/TileTools" unique_id=1112685996]
 layout_mode = 2
 tooltip_text = "Cursor [C]
-Place            [LMB]
-Delete           [RMB]
-Rotate             [R]
-Move        [LMB+Drag]"
+Place [LMB]
+Delete [RMB]
+Move [LMB+Drag]"
 theme_type_variation = &"ToolButton"
 icon = ExtResource("12_126op")

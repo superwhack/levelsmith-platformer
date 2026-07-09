@@ -42,6 +42,7 @@ var cursorEditInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/Cur
 # Selector Frame
 var selectorFrameSprite : Texture2D = preload("res://Assets/Sprites/UI/SelectorFrame.png");
 
+
 # mouse position reference  (always updated)
 var currentMousePosition : Vector2;
 

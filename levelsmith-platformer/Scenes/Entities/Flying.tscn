@@ -55,5 +55,6 @@ texture = ExtResource("2_lq205")
 [node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1562874782]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1379822224]
+z_index = -1
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"FlyMove"

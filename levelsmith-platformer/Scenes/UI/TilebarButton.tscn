@@ -32,3 +32,4 @@ theme_override_constants/margin_bottom = 10
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer" unique_id=251267803]
 layout_mode = 2
+expand_mode = 5

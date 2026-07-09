@@ -134,6 +134,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 	dataToSend += '], "player": {';
 	dataToSend += '"health": ' + str(playerData.playerHealth) + ", ";
 	dataToSend += '"speed": ' + str(playerData.playerSpeed) + ", ";
+	dataToSend += '"acceleration": ' + str(playerData.playerAcceleration) + ", ";
 	dataToSend += '"jump": ' + str(playerData.playerJumpHeight) + ", ";
 	dataToSend += '"airControl": ' + str(playerData.playerAirControl) + ", ";
 	dataToSend += '"fallSpeed": ' + str(playerData.playerFallSpeed) + ", ";
@@ -268,6 +269,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	var player = json_as_dict.get("player", {});
 	playerData.playerHealth = player.get("health", playerData.playerHealth);
 	playerData.playerSpeed = player.get("speed", playerData.playerSpeed);
+	playerData.playerAcceleration = player.get("acceleration", playerData.playerAcceleration);
 	playerData.playerJumpHeight = player.get("jump", playerData.playerJumpHeight);
 	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
 	playerData.playerFallSpeed = player.get("fallSpeed", playerData.playerFallSpeed);

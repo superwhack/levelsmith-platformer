@@ -6,6 +6,7 @@
 script = ExtResource("1_gtxmj")
 health = 3
 groundSpeed = 2.5
+acceleration = 0.8
 jumpHeight = 3.0
 airControl = 0.4
 fallSpeed = 0.6

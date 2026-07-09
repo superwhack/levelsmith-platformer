@@ -16,6 +16,7 @@ var selectedEntity : Node2D;
 # Player values
 var playerHealth: int;
 var playerSpeed: float;
+var playerAcceleration: float;
 var playerJumpHeight : float;
 var playerAirControl : float;
 var playerFallSpeed : float;
@@ -27,6 +28,7 @@ var playerWallJumpDecay : bool;
 # Player value sliders
 @export var playerHealthSlider: VBoxContainer;
 @export var playerSpeedSlider: VBoxContainer;
+@export var playerAccelerationSlider : VBoxContainer;
 @export var playerJumpSlider: VBoxContainer;
 @export var playerAirControlSlider: VBoxContainer;
 @export var playerFallSpeedSlider: VBoxContainer;
@@ -81,6 +83,7 @@ func _ready() -> void:
 	
 	playerHealthSlider.drag_ended.connect(_on_drag_ended);
 	playerSpeedSlider.drag_ended.connect(_on_drag_ended);
+	playerAccelerationSlider.drag_ended.connect(_on_drag_ended);
 	playerJumpSlider.drag_ended.connect(_on_drag_ended);
 	playerAirControlSlider.drag_ended.connect(_on_drag_ended);
 	playerFallSpeedSlider.drag_ended.connect(_on_drag_ended);
@@ -161,6 +164,7 @@ func _on_preset_options_item_selected(index: int) -> void:
 	selectedPlayerPreset = load("res://Resources/PlayerPresets/" + presetOptions.get_item_text(index) + ".tres")
 	playerHealth = selectedPlayerPreset.health;
 	playerSpeed = selectedPlayerPreset.groundSpeed;
+	playerAcceleration = selectedPlayerPreset.acceleration;
 	playerJumpHeight = selectedPlayerPreset.jumpHeight;
 	playerAirControl = selectedPlayerPreset.airControl;
 	playerFallSpeed = selectedPlayerPreset.fallSpeed;
@@ -183,6 +187,7 @@ func update_custom() -> void:
 	var customPreset = load("res://Resources/PlayerPresets/Custom.tres");
 	customPreset.health = playerHealth;
 	customPreset.groundSpeed = playerSpeed;
+	customPreset.acceleration = playerAcceleration;
 	customPreset.jumpHeight = playerJumpHeight;
 	customPreset.airControl = playerAirControl;
 	customPreset.fallSpeed = playerFallSpeed;
@@ -203,6 +208,8 @@ func update_sliders() -> void:
 	playerHealthSlider.update_slider();
 	playerSpeedSlider.value = playerSpeed;
 	playerSpeedSlider.update_slider();
+	playerAccelerationSlider.value = playerAcceleration;
+	playerAccelerationSlider.update_slider();
 	playerJumpSlider.value = playerJumpHeight;
 	playerJumpSlider.update_slider();
 	playerAirControlSlider.value = playerAirControl;
@@ -279,6 +286,7 @@ func make_selectable(property : VBoxContainer, selectable : bool) -> void:
 func update_values() -> void:
 	playerHealth = playerHealthSlider.value;
 	playerSpeed = playerSpeedSlider.value;
+	playerAcceleration = playerAccelerationSlider.value;
 	playerJumpHeight = playerJumpSlider.value;
 	playerAirControl = playerAirControlSlider.value;
 	playerFallSpeed = playerFallSpeedSlider.value;

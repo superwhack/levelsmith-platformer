@@ -150,6 +150,7 @@ func create_template_sprites() -> void:
 	playerTemplateSprite.sprite_frames.add_animation("PlayerRun");
 	playerTemplateSprite.sprite_frames.add_animation("PlayerHurt");
 	playerTemplateSprite.sprite_frames.add_animation("PlayerFall");
+	playerTemplateSprite.sprite_frames.set_animation_loop_mode("PlayerFall", SpriteFrames.LoopMode.LOOP_NONE);
 	playerTemplateSprite.sprite_frames.add_animation("PlayerJump");
 	playerTemplateSprite.sprite_frames.set_animation_loop_mode("PlayerJump", SpriteFrames.LoopMode.LOOP_NONE);
 	playerTemplateSprite.sprite_frames.add_animation("PlayerIdle");

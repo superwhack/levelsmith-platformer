@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
-[ext_resource type="Texture2D" uid="uid://dnutrybtymj0o" path="res://Assets/Sprites/UI/LoadingScreenBgImg.png" id="9_gojh1"]
+[ext_resource type="Texture2D" uid="uid://bjuw01i372ec7" path="res://Assets/Sprites/UI/LoadingScreenBgImg.png" id="9_gojh1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -180,10 +180,9 @@ script = ExtResource("4_mg0h4")
 masterManager = NodePath("..")
 gridLines = NodePath("../EditorManager/GridLines")
 
-[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera", "levelScreenshotCamera") instance=ExtResource("2_430ed")]
+[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera") instance=ExtResource("2_430ed")]
 masterManager = NodePath("..")
 mainCamera = NodePath("../Camera2D")
-levelScreenshotCamera = NodePath("LevelScreenshot")
 
 [node name="GridLines" parent="EditorManager" index="0" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
 z_index = 0

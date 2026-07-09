@@ -208,8 +208,10 @@ func walk() -> void:
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;
-		if baseAcceleration != 1.0 && sign(velocity.x) == sign(direction):
+		# Acceleration if moving in direction of current movement
+		if baseAcceleration != 1.0 && (sign(velocity.x) == sign(direction) || velocity.x == 0):
 			accelerationX *= pow(baseAcceleration, 5);
+		# Deceleration if moving in opposite direction
 		elif baseDeceleration != 1.0 && sign(velocity.x) != sign(direction):
 			accelerationX *= pow(baseDeceleration, 5);
 	# Acceleration
@@ -220,11 +222,12 @@ func walk() -> void:
 			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 		else:
 			accelerationX = clamp(-velocity.x, -trueSpeed * .75, trueSpeed * .75);
+		# Deceleration if not moving
 		if baseDeceleration != 1.0:
 			accelerationX *= pow(baseDeceleration, 5);
+		# Clamping if velocity is too low
 		if abs(velocity.x) < 10 * groundSpeed:
 			accelerationX = -velocity.x;
-			
 	# Air Control
 	if (not is_on_floor()):
 		accelerationX *= airControl * airControl;

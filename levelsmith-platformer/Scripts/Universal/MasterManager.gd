@@ -19,6 +19,7 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var editorHomeButton : Button;
 @export var editorPlayButton : Button;
 @export var returnToEditorButton : Button;
+@export var WinReturnToEditorButton : Button;
 @export var playPopUp : HBoxContainer;
 
 # Reference to tile maps
@@ -51,6 +52,7 @@ func _ready() -> void:
 	editorPlayButton.mouse_entered.connect(mouse_entered_play_button);
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
+	WinReturnToEditorButton.pressed.connect(edit);
 	
 	# NOTE: This probably shouldn't be here for the final build
 	# Create the Enemies folder, github can't push empty folders

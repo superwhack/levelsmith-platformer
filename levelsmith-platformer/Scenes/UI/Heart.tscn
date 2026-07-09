@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bfmexmkn6uy3f"]
 
-[ext_resource type="Texture2D" uid="uid://b0m0ynvgtqr88" path="res://Assets/UserInterface/HeartIcon.png" id="1_3r3sn"]
+[ext_resource type="Texture2D" uid="uid://qf7uq7d7mpai" path="res://Assets/UserInterface/line-md--heart-filled.png" id="1_h7kbl"]
 
 [node name="Heart" type="TextureRect" unique_id=760190380]
-texture = ExtResource("1_3r3sn")
+texture = ExtResource("1_h7kbl")

@@ -8,8 +8,10 @@ extends Node2D
 @export var playerHealthUI : HBoxContainer;
 @export var timerLabel : RichTextLabel;
 @export var winCoinLabel : RichTextLabel;
+@export var winCoinHBox : HBoxContainer;
 @export var coinMargin : MarginContainer;
 @export var winTimeLabel : RichTextLabel;
+@export var winScreenHealthUI : HBoxContainer;
 
 # Button references for signals
 @export var resetButton : Button;
@@ -90,6 +92,7 @@ func start() -> void:
 	else:
 		coinCounterLabel.hide();
 		coinMargin.hide();
+		winCoinHBox.hide();
 	
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
 	for frame in range(1, 5):
@@ -163,7 +166,7 @@ func _on_coin_collected() -> void:
 func update_coin_counter(label: RichTextLabel) -> void:
 	label.clear()
 	if totalCoins > 0:
-		label.append_text("Coins: %d / %d" % [coinCount, totalCoins])
+		label.append_text("%02d" % [coinCount])
 
 ## Prints the final completion time and stops the level timer
 func print_level_completion_time() -> void:
@@ -179,7 +182,7 @@ func update_timer(label: RichTextLabel) -> void:
 	var minutes := int(testingTime) / 60;
 	var seconds := int(testingTime) % 60;
 	label.clear();
-	label.append_text("Time: %02d:%02d" % [minutes, seconds]);
+	label.append_text("%02d:%02d" % [minutes, seconds]);
 
 ## Pauses gameplay, displays the win screen, and updates the completion statistics
 func level_complete() -> void:
@@ -191,6 +194,8 @@ func level_complete() -> void:
 	timerLabel.hide();
 	winScreen.show();
 	bottomScreenGroup.hide();
+	winScreenHealthUI.bind_player(player);
+	winScreenHealthUI._sync_to_player();
 
 ## Returns to the level editor and restores the editor state
 func return_to_editor() -> void:

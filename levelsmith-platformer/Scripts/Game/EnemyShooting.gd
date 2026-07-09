@@ -23,13 +23,23 @@ const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn"
 var timeLeft : float = 1;
 
 func _ready() -> void:
+	deathAnim = "ShootDeath";
 	super._ready();
 	
-	animatedSprites.animation = "idle";
+	#AnimationManager.replace_animation_by_name(animatedSprites, "ShootIdle");
+	#AnimationManager.replace_animation_by_name(animatedSprites, "EnemyShoot");
+	
+	animatedSprites.sprite_frames = AnimationManager.shootingEnemyTemplateSprite.sprite_frames;
+	
+	animatedSprites.animation = "ShootIdle";
 	animatedSprites.play();
 	animatedSprites.animation_finished.connect(_on_animation_finished);
 
 func _physics_process(delta: float) -> void:
+	if health <= 0:
+		super._physics_process(delta);
+		move_and_slide();
+		return;
 	if !active:
 		if !onScreen.is_on_screen():
 			return;
@@ -66,6 +76,7 @@ func adjust_arrow(angle: float = fireDirection + 90, random: bool = randomDirect
 
 ## Shoots in the determined direction
 func shooting_behavior() -> void:
+	AudioManager.play_effect("EnemyShoot");
 	var projectileFired = PROJECTILE.instantiate();
 	projectileFired.speed = shotSpeed;
 	projectileFired.global_position = position;
@@ -77,11 +88,11 @@ func shooting_behavior() -> void:
 		projectileFired.global_rotation_degrees = fireDirection;
 	projectileFired.bounceable = projBounce;
 	add_sibling(projectileFired);
-	animatedSprites.play("shoot");
+	animatedSprites.play("EnemyShoot");
 
 func _on_animation_finished():
-	if (animatedSprites.animation == "shoot"):
-		animatedSprites.play("idle");
+	if (animatedSprites.animation == "EnemyShoot"):
+		animatedSprites.play("ShootIdle");
 
 # Updates the orientation of the enemy
 func update_flipped(facingRight: bool) -> void:

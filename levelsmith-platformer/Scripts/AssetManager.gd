@@ -2,7 +2,7 @@ extends Panel
 class_name AssetManager
 
 # Path to the root folder of all assets
-var filePath : String = "user://Assets";
+var filePath : String = "";
 var defaultsFilePath : String = "res://Assets/Defaults/Assets/Sprites/";
 
 # References to audio
@@ -26,6 +26,7 @@ var audioToReplace : AudioStream;
 @export var loadFileButton : Button;
 @export var resetButton : Button;
 @export var resetAllButton: Button;
+@export var refreshAllButton : Button;
 
 # Reference to the editor manager
 @export var editorManager : Node2D;
@@ -44,12 +45,13 @@ var currentSelectedItem : AssetItem;
 
 @export var mainTileMap : TileMapLayer;
 
-@export var defaults : Resource;
+@export var masterManager : Node2D;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_image_selector);
+	refreshAllButton.pressed.connect(refresh_all);
 	resetButton.pressed.connect(reset_image_popup);
 	resetAllButton.pressed.connect(reset_all_popup);
 	fileSelect.file_selected.connect(imageSwapping.replace_image);
@@ -57,22 +59,11 @@ func _ready() -> void:
 	
 	assetTabs.tab_changed.connect(on_asset_tab_changed);
 	
-	# Checks if the user has an assets root folder, creates one if not
-	var dir : DirAccess = DirAccess.open(filePath);
-	if (!dir):
-		create_file_tree();
-	# Generate all buttons under their tabs
-	generate_buttons("Tiles", imagesTab);
-	generate_buttons("Props", imagesTab);
-	generate_buttons("Entities", imagesTab);
-	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
-	item_selected(firstImageSelected);
-	on_asset_tab_changed(assetTabs.current_tab);
-	# If there is a currently selected item, connect based on the current item
-	ImportExportManager.levelImported.connect(func():
-		if currentSelectedItem:
-			item_selected(currentSelectedItem);
-		);
+	AnimationManager.assetManager = self;
+	
+	ImportExportManager.levelImported.connect(setup);
+	Global.levelCreated.connect(setup);
+	
 
 # WARNING Only refreshes all files once, might be worth it later to do individually
 ## Generate buttons for each asset
@@ -107,13 +98,6 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 ## returns: Loaded image
 func find_image(imageName: String, currentDirectory: String = filePath) -> Image:
 	var image : Image = Image.new();
-	if (currentDirectory.begins_with("res://")):
-		var simpleName = imageName.to_lower().get_basename();
-		if (defaults.get(simpleName)):
-			print(defaults.get(simpleName));
-			var texture = load(defaults.get(simpleName));
-			image = texture.get_image();
-		return image;
 	# Get the path to the image
 	var imagePath : String = FileSearch.find_file_by_name(imageName, currentDirectory);
 	# If the path exists
@@ -141,7 +125,6 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 ## folderPath: Path to the folder
 ## returns: Image loaded if it is foundf
 func find_image_in_folder(folderPath: String) -> Image:
-	print("Folder Path: ", folderPath);
 	# Opens the folder at the given folderName path
 	var dir : DirAccess = DirAccess.open(folderPath);
 	# If a folder was sucessfully opened
@@ -150,7 +133,6 @@ func find_image_in_folder(folderPath: String) -> Image:
 		dir.list_dir_begin();
 		# Get the image name in the folder
 		var imageName : String = dir.get_next();
-		print("image name: ", imageName)
 		# If there is no image in the folder, return null
 		if (imageName == ""):
 			return null;
@@ -200,9 +182,14 @@ func on_asset_tab_changed(tabIndex: int) -> void:
 #func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 #	pass;
 
+func reset() -> void:
+	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
+		imageSwapping.reset_image();
+	elif (currentSelectedItem.type == AssetItem.AssetType.ANIMATION):
+		animationSwapping.reset_animation();
 ## Creates the refresh asset popup.
 func reset_image_popup() -> void:
-	PopUpManager.create_reset_image_popup(Callable(imageSwapping, "reset_image"), currentSelectedItem.displayName);
+	PopUpManager.create_reset_image_popup(Callable(self, "reset"), currentSelectedItem.displayName);
 
 
 ## Creates the reset all assets popup.
@@ -215,7 +202,7 @@ func reset_all() -> void:
 	FileSearch.delete_folder(filePath);
 	create_file_tree();
 	reset_menu();
-	imageSwapping.refresh_images();
+	refresh_all();
 
 ## Deletes and regenerates all buttons
 func reset_menu() -> void:
@@ -227,7 +214,6 @@ func reset_menu() -> void:
 	firstAnimationSelected = null;
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);
-	generate_buttons("Entities", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
 	on_asset_tab_changed(assetTabs.current_tab);
 
@@ -262,7 +248,16 @@ func item_selected(selectedItem: AssetItem) -> void:
 			FileSearch.find_directory_by_name(
 				animationSwapping.selectedEntityType))[animationSwapping.currentAnimationIndex];
 		animationSwapping.currentLoadedAnimation.clear();
-		for image in animationSwapping.get_animation_from_folder(animationSwapping.animationPreviewNameToReplace):
+		animationSwapping.FPSSpinbox.value_changed.disconnect(animationSwapping.fps_updated.bind(true));
+		animationSwapping.FPSSpinbox.value_changed.connect(animationSwapping.fps_updated);
+		animationSwapping.FPSSpinbox.value = AnimationManager.get_template_sprite(animationSwapping.selectedEntityType).sprite_frames.get_animation_speed(animationSwapping.animationPreviewNameToReplace);
+		animationSwapping.FPSSpinbox.value_changed.disconnect(animationSwapping.fps_updated);
+		animationSwapping.FPSSpinbox.value_changed.connect(animationSwapping.fps_updated.bind(true));
+		
+		var animation : Array[Image]= animationSwapping.get_animation_from_folder(animationSwapping.animationPreviewNameToReplace);
+		if (animation.is_empty()):
+			animation = AnimationManager.get_default_animation_by_name(animationSwapping.animationPreviewNameToReplace);
+		for image in animation:
 			animationSwapping.currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 		animationSwapping.update_animation_preview();
 	currentAssetLabel.text = selectedItem.displayName;
@@ -279,7 +274,9 @@ func create_file_tree() -> void:
 	for type: String in imageSwapping.propTypes:
 		dir.make_dir_recursive(filePath + "/Images/Props/" + type);
 	# Create folder for goal
-	dir.make_dir_recursive(filePath + "/Images/Entities/Goal");
+	dir.make_dir_recursive(filePath + "/Animations/Goal/GoalAnimation");
+	dir.make_dir_recursive(filePath + "/Animations/MovingPlatform/PlatformAnimation");
+	dir.make_dir_recursive(filePath + "/Animations/Coin/CoinAnimation");
 	# Create all folders for animations
 	for animation: String in animationSwapping.playerAnimations:
 		dir.make_dir_recursive(filePath + "/Animations/Player/" + animation);
@@ -323,3 +320,23 @@ func clear_image(nameToClear : String) -> DirAccess:
 	for file in existingFiles:
 		targetDirectory.remove(file); 
 	return targetDirectory;
+
+func refresh_all() -> void:
+	AnimationManager.update_template_sprites();
+	AnimationManager.refresh_animations();
+	imageSwapping.refresh_images();
+	animationSwapping.update_animation_preview();
+
+func setup() -> void:
+	filePath = masterManager.loadedLevelPath + "Assets";
+	FileSearch.filePath = filePath;
+	# Checks if the user has an assets root folder, creates one if not
+	var dir : DirAccess = DirAccess.open(filePath);
+	if (!dir || dir.get_directories().is_empty()):
+		create_file_tree();
+	# Generate all buttons under their tabs
+	generate_buttons("Tiles", imagesTab);
+	generate_buttons("Props", imagesTab);
+	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
+	on_asset_tab_changed(assetTabs.current_tab);
+	refresh_all();

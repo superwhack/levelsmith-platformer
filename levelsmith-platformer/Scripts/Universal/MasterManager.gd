@@ -32,6 +32,8 @@ var loadedMap : TileMapLayer;
 @export var worldSize : Vector2i;
 @export var propertyMenu : Panel;
 
+var loadedLevelPath: String = "";
+
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
@@ -59,7 +61,7 @@ func _ready() -> void:
 ## event: The user input
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
@@ -74,8 +76,9 @@ func _input(event: InputEvent) -> void:
 func level_setup( levelName: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	cameraManager.initialize_camera();
-	ImportExportManager.make_new_level( levelName, worldSize );
+	ImportExportManager.make_new_level(levelName, worldSize, editorManager.settingsMenu);
 	propertyMenu.reset_custom();
+	loadedLevelPath = "user://Levels/" + levelName + "/";
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	#print("NEW LEVEL SET UP");
@@ -108,7 +111,7 @@ func import_level_and_edit() -> void:
 	entityManager.scan_goals(worldSize.x, worldSize.y);
 	editorManager.reset_enemy_positions();
 	await get_tree().process_frame;
-	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu);
+	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.settingsMenu);
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
 
@@ -117,6 +120,7 @@ func import_level_and_edit() -> void:
 func load_level(levelPath: String) -> void:
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
+		loadedLevelPath = levelPath;
 		# Await so that the camera gets properly placed
 		await import_level_and_edit();
 		cameraManager.initialize_camera();
@@ -139,13 +143,15 @@ func main_menu(menuClickSound : bool = true) -> void:
 	mainMenuControl.fill_level_list();
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
+	loadedLevelPath = "";
 
 ## Swap to edit state
 func edit() -> void:
 	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UI_Selection");
-	AudioManager.play_UI_music("EditorMusic");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
+	if gameManager.tileMap:
+		gameManager.tileMap.queue_free();
 	# Update state variable
 	state = Global.State.EDIT;
 	# Change scene to edit scene
@@ -162,6 +168,7 @@ func edit() -> void:
 	toolManager.clickOnUI = false;
 	entityManager.duplicatingResource = null;
 	editorManagerCanvas.show();
+	AnimationManager.pause_all_animations();
 	# Play the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_INHERIT;
 	for frame in range(1, 3):

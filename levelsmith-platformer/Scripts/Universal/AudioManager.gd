@@ -86,18 +86,6 @@ func update_volume() -> void:
 		if (availablePlayers[i].volume_db == -LOWEST_DB):
 			availablePlayers[i].volume_db = -1000;
 
-## NOTE: These two functions can probably be shortened since we know that the associated files have specific filePaths
-## Play the music track for the builder
-## musicName: name of the song to play
-func play_UI_music(musicName: String) -> void:
-	musicPlayer.stop();
-	var fullPath : String = UI_AUDIO_LIBRARY_PATH + musicName;
-	if (FileAccess.file_exists(fullPath + ".mp3")):
-		musicPlayer.stream = load(fullPath + ".mp3");
-	elif (FileAccess.file_exists(fullPath + ".wav")):
-		musicPlayer.stream = load(fullPath + ".wav");
-	musicPlayer.play();
-
 ## Add specified SFX to the queue from builder sounds
 ## effectName: name of the effect to play
 func play_UI_effect(effectName: String) -> void:
@@ -215,6 +203,10 @@ func play_asset(assetName: String) -> void:
 ## If there are any current sounds in the queue and any avaliable players, start playing the sound.
 ## delta: unused
 func _process(_delta: float) -> void:
+	# If there aren't any available players, stop the longest running player early.
+	if (!queue.is_empty() && availablePlayers.is_empty()):
+		inusePlayers[0].stop();
+		audio_finished(inusePlayers[0]);
 	if (!queue.is_empty() && !availablePlayers.is_empty()):
 		var path : String = queue.pop_front(); 
 		if (path.ends_with(".mp3")):
@@ -224,4 +216,5 @@ func _process(_delta: float) -> void:
 		else:
 			print("Error, somehow a different extention made it into here!")
 		availablePlayers[0].play();
+		inusePlayers.append(availablePlayers[0]);
 		availablePlayers.pop_front();

@@ -9,6 +9,8 @@ var active = false;
 # Movement speed of the enemy.
 @export var speed : float = 1.0;
 
+@export var animatedSprite : AnimatedSprite2D;
+
 # Movement points, from the spawn position to the preset offset.
 var pointA : Vector2;
 var pointB : Vector2;
@@ -33,6 +35,8 @@ func _ready() -> void:
 	pointA = global_position;
 	pointB = pointA;
 	targetPoint = pointA;
+	animatedSprite.sprite_frames = AnimationManager.movingPlatformTemplateSprite.sprite_frames;
+	previewPlatform.texture = animatedSprite.sprite_frames.get_frame_texture("PlatformAnimation", 0);
 
 ## Processes flying movement and collision handling.
 ## delta: Time since previous frame.

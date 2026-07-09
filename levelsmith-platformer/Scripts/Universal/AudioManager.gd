@@ -33,7 +33,7 @@ var assetManagerPlayer : AudioStreamPlayer
 func _ready() -> void:
 	
 	soundLevels = {
-		"Tile_Place_Error": 0.5,
+		"Tile_Place_Error": 0.3,
 	}
 	
 	musicPlayer = AudioStreamPlayer.new();

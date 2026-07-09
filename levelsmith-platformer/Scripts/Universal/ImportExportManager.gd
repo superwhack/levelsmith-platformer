@@ -189,10 +189,10 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 	## Enemy JSON Creation ##
 	##                     ##
 	var enemies : Array = [];
-	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
+	var enemyProperties : PackedStringArray = DirAccess.get_files_at("user://Resources/Enemies/");
 
 	for enemyProperty in enemyProperties:
-		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
+		var propertyFile : Resource = load("user://Resources/Enemies/" + enemyProperty);
 		
 		# Shared enemy properties, like the position.
 		var enemy : Dictionary = {

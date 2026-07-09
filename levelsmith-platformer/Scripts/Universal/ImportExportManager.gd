@@ -97,10 +97,10 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 		
 	# Creating Enemy Data in JSON.
 	var dataToSend : String = '{"enemies": [';
-	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
+	var enemyProperties : PackedStringArray = DirAccess.get_files_at("user://Resources/Enemies/");
 	for enemyPropertyIndex in range(0, enemyProperties.size()):
 		var enemyProperty : String = enemyProperties[enemyPropertyIndex];
-		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
+		var propertyFile : Resource = load("user://Resources/Enemies/" + enemyProperty);
 		dataToSend += '{"pos":{"x":' + str(propertyFile.position.x) + ',"y":' + str(propertyFile.position.y) + '},';
 		if enemyProperty.contains("Patrol"):
 			dataToSend += '"type":"patrolling", "stats":{';
@@ -331,10 +331,10 @@ func clone_data(from: String, to: String, directory: String = ""):
 
 ## Gets files in the enemies folder and delete every single file.
 func clear_enemies_folder() -> void:
-	var files : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
+	var files : PackedStringArray = DirAccess.get_files_at("user://Resources/Enemies/");
 	
 	for file in files:
-		DirAccess.remove_absolute("res://Resources/Enemies/" + file);
+		DirAccess.remove_absolute("user://Resources/Enemies/" + file);
 
 ## Matches the enemy type with the correct data, used when importing data
 ## type: The type of enemy, stored as an Enum.
@@ -367,7 +367,7 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.pointBOffset.x = enemy.stats.endpoint.x;
 			newResource.pointBOffset.y = enemy.stats.endpoint.y;
 			newResource.progress = enemy.stats.progress;
-	ResourceSaver.save(newResource, "res://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
+	ResourceSaver.save(newResource, "user://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();
 			
@@ -378,23 +378,23 @@ func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
 			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultPatrolling : Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 			var newPatrolling : Resource = defaultPatrolling.duplicate(true);
-			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrolling-" + nodePos + ".tres");
+			ResourceSaver.save(newPatrolling, "user://Resources/Enemies/Patrolling-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
 		elif node is EnemyShooting && node.propertyFile == null:
 			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultShooting : Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 			var newShooting : Resource = defaultShooting.duplicate(true);
-			ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + nodePos + ".tres");
+			ResourceSaver.save(newShooting, "user://Resources/Enemies/Shooting-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
 		elif node is EnemyFlyer && node.propertyFile == null:
 			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
 			var newFlying : Resource = defaultFlying.duplicate(true);
-			ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying-" + nodePos + ".tres");
+			ResourceSaver.save(newFlying, "user://Resources/Enemies/Flying-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
 		elif node is EnemyStationary && node.propertyFile == null:
 			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultStationary : Resource = load("res://Resources/PlayerPresets/StationaryDefault.tres");
 			var newStationary : Resource = defaultStationary.duplicate(true);
-			ResourceSaver.save(newStationary, "res://Resources/Enemies/Stationary-" + nodePos + ".tres");
+			ResourceSaver.save(newStationary, "user://Resources/Enemies/Stationary-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));

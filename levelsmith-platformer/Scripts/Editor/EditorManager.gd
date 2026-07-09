@@ -153,7 +153,7 @@ func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UI_Selection")
-	previewTileMap.hide();
+	previewTileMap.hide();	
 	assetManager.show();
 
 ## Opens the settings menu

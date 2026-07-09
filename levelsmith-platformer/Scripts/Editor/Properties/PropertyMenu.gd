@@ -158,7 +158,12 @@ func _process(_delta: float) -> void:
 ## index: the index of the preset selected
 ## update: If the sliders should be updated right after running
 func _on_preset_options_item_selected(index: int) -> void:
-	selectedPlayerPreset = load("res://Resources/PlayerPresets/" + presetOptions.get_item_text(index) + ".tres")
+	var presetType : String = presetOptions.get_item_text(index);
+	if (presetType == "Custom"):
+		selectedPlayerPreset = load("user://Resources/Custom.tres");
+	else:
+		selectedPlayerPreset = load("res://Resources/PlayerPresets/" + presetType + ".tres");
+	
 	playerHealth = selectedPlayerPreset.health;
 	playerSpeed = selectedPlayerPreset.groundSpeed;
 	playerJumpHeight = selectedPlayerPreset.jumpHeight;
@@ -174,13 +179,13 @@ func _on_preset_options_item_selected(index: int) -> void:
 func reset_custom() -> void:
 	var defaultPreset : Resource = load("res://Resources/PlayerPresets/Default.tres");
 	var resetedCustom = defaultPreset.duplicate(true);
-	ResourceSaver.save(resetedCustom, "res://Resources/PlayerPresets/Custom.tres");
+	ResourceSaver.save(resetedCustom, "user://Resources/Custom.tres");
 	presetOptions.select(0);
 	_on_preset_options_item_selected(0);
 
 ## Load and update the custom preset, then save its changes
 func update_custom() -> void:
-	var customPreset = load("res://Resources/PlayerPresets/Custom.tres");
+	var customPreset = load("user://Resources/Custom.tres");
 	customPreset.health = playerHealth;
 	customPreset.groundSpeed = playerSpeed;
 	customPreset.jumpHeight = playerJumpHeight;
@@ -190,7 +195,7 @@ func update_custom() -> void:
 	customPreset.doubleJump = playerDoubleJump;
 	customPreset.wallJump = playerWallJump;
 	customPreset.wallJumpDecay = playerWallJumpDecay;
-	ResourceSaver.save(customPreset, "res://Resources/PlayerPresets/Custom.tres");
+	ResourceSaver.save(customPreset, "user://Resources/Custom.tres");
 	
 	presetOptions.select(4);
 	_on_preset_options_item_selected(4);
@@ -291,7 +296,7 @@ func update_values() -> void:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
 		selectedPreset.direction = patrollingDirectionDropdown.value;
 		selectedPreset.restricted = patrollingRestrictedCheckbox.value;
-		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyShooting:
 		selectedPreset.randomDirection = shootingRandomDirection.value;
 		make_selectable(shootingDirectionSlider, !selectedPreset.randomDirection);
@@ -300,20 +305,20 @@ func update_values() -> void:
 		selectedPreset.fireRate = shootingFireRateSlider.value;
 		selectedPreset.projBounce = shootingProjectileBounce.value;
 		selectedPreset.gravity = shootingGravity.value
-		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyFlyer:
 		selectedPreset.speed = flyingSpeedSlider.value;
 		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.TILE_SIZE, flyingOffsetYSlider.value * Global.TILE_SIZE);
-		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyStationary:
 		selectedPreset.isFacingRight = !stationaryDirectionDropdown.value;
 		selectedPreset.gravity = stationaryGravity.value;
-		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is MovingPlatform:
 		selectedPreset.speed = movingPlatformSpeedSlider.value;
 		selectedPreset.pointBOffset = Vector2(movingPlatformOffsetXSlider.value * Global.TILE_SIZE, movingPlatformOffsetYSlider.value * Global.TILE_SIZE);
 		selectedPreset.progress = movingPlatformProgressSlider.value;
-		ResourceSaver.save(selectedPreset, "res://Resources/Enemies/" + selectedEntity.name + ".tres");
+		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset

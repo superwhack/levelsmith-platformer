@@ -85,7 +85,7 @@ func adjust_arrow(angle: float) -> void:
 	directionArrow.position.y = -cos(deg_to_rad(directionArrow.rotation_degrees)) * 90;
 
 func assign_script(id: String, assignPosition: Vector2i) -> void:
-	propertyFile = ResourceLoader.load("res://Resources/Enemies/Patrolling" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
+	propertyFile = ResourceLoader.load("user://Resources/Enemies/Patrolling" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	name = "Patrolling" + id;
 	propertyFile.position = assignPosition;
 	groundSpeed = propertyFile.groundSpeed; 

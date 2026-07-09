@@ -122,7 +122,7 @@ func update_line_preview(x : int = int((pointB.x - pointA.x) / Global.TILE_SIZE)
 ## id is the unique identifier of the preset.
 ## position: Tilemap position of the enemy.
 func assign_script(id: String, assignPosition: Vector2i) -> void:
-	propertyFile = ResourceLoader.load("res://Resources/Enemies/Flying" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
+	propertyFile = ResourceLoader.load("user://Resources/Enemies/Flying" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	
 	name = "Flying" + id;
 	propertyFile.position = assignPosition;

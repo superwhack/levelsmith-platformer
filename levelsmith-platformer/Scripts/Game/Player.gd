@@ -369,7 +369,7 @@ func detect_tiles() -> void:
 					velocity.y *= .94;
 				if tileName != "slow":
 					currentSlowdown = 1.0;
-			if Input.is_action_just_pressed("jump"):
+			if Input.is_action_just_pressed("jump") && !is_on_floor():
 				# Depending on direction, apply a different x velocity
 				if rayDirection.x < 0:
 					if wallJumpDirection != WallDirection.LEFT:

@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://eirshpbhdpcx" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="6_nbee4"]
 [ext_resource type="PackedScene" uid="uid://bl34k1jvcme78" path="res://Scenes/Preview/FlyingPreview.tscn" id="6_pqfav"]
 [ext_resource type="Texture2D" uid="uid://bmw7jphva44jr" path="res://Assets/Sprites/Entities/Props/Prop5.png" id="7_eksy4"]
-[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Sprites/Tiles/slope.png" id="7_jbnof"]
+[ext_resource type="Texture2D" uid="uid://cgn16a0gx5fwa" path="res://Assets/Sprites/Tiles/Slope.png" id="7_jbnof"]
 [ext_resource type="PackedScene" uid="uid://87eq7bxythec" path="res://Scenes/Entities/Player.tscn" id="8_alyph"]
 [ext_resource type="PackedScene" uid="uid://1wme1ton08gv" path="res://Scenes/Entities/Goal.tscn" id="8_jbnof"]
 [ext_resource type="PackedScene" uid="uid://c0lnvjeoj8xif" path="res://Scenes/Preview/GoalPreview.tscn" id="9_5jxy7"]

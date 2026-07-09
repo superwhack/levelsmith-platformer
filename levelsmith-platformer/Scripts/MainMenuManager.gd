@@ -18,6 +18,7 @@ extends Control
 # Overlays
 @export var overlayNewLevel : ColorRect;
 @export var overlayImportLevel : ColorRect;
+@export var overlayDuplicateLevel : ColorRect;
 
 # New level overlay children
 @export var buttonNewLevelCreate : Button;
@@ -36,6 +37,13 @@ extends Control
 @export var fieldImportLevelPath : LineEdit;
 @export var badImportWarning : MarginContainer;
 @export var badImportBody : RichTextLabel;
+
+# Duplicate Level Overlay Children <3
+@export var buttonDuplicateLevelCancel : Button;
+@export var buttonDuplicateLevelConfirm : Button;
+@export var buttonDuplicateName : LineEdit;
+@export var spinBoxDuplicateLevelX : SpinBox;
+@export var spinBoxDuplicateLevelY : SpinBox;
 
 @export var fileExplorer : FileDialog;
 var importedLevelPath : String;
@@ -66,6 +74,7 @@ func _ready() -> void:
 	# Hides other screens
 	overlayImportLevel.hide();
 	overlayNewLevel.hide();
+	overlayDuplicateLevel.hide();
 
 	# Connect signals
 	buttonNewLevel.pressed.connect(overlay_new_level_show);
@@ -74,6 +83,8 @@ func _ready() -> void:
 	buttonPlayLevel.pressed.connect(play_current_level);
 	buttonEditLevel.pressed.connect(edit_current_level);
 	buttonDeleteLevel.pressed.connect(delete_current_level);
+	buttonDuplicateLevel.pressed.connect(duplicate_current_level);
+	buttonFavoriteLevel.pressed.connect(favorite_current_level);
 	
 	# Hiding appropriate UI when cancelling level creation
 	buttonNewLevelCancel.pressed.connect(overlay_new_level_hide);
@@ -85,6 +96,13 @@ func _ready() -> void:
 	buttonImportLevelCancel.pressed.connect(import_cancel);
 	buttonImportLevelCancel.pressed.connect(badImportWarning.hide);
 	buttonImportLevelBrowse.pressed.connect(fileExplorer.popup_file_dialog);
+	
+	# Duplicate buttons
+	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
+	buttonDuplicateLevelConfirm.pressed.connect(duplicate_current_level);
+	buttonDuplicateLevelCancel.pressed.connect(overlay_duplicate_level_hide);
+
+
 	
 	buttonQuit.pressed.connect(exit_program);
 
@@ -108,6 +126,12 @@ func overlay_import_level_show() -> void:
 func popup_file_dialog() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	fileExplorer.popup_file_dialog();
+func overlay_duplicate_level_show() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
+	overlayDuplicateLevel.show();
+func overlay_duplicate_level_hide() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
+	overlayDuplicateLevel.hide();
 
 ## Called when import level button is pressed
 func import_level() -> void:
@@ -169,6 +193,7 @@ func create_new_level() -> void:
 	fieldNewLevelName.text = "";
 	spinBoxNewLevelX.value = 20;
 	spinBoxNewLevelY.value = 20;
+	
 
 ## Exits the program
 func exit_program() -> void:
@@ -395,6 +420,32 @@ func delete_current_level() -> void:
 	
 	clear_selection();
 	toggle_level_buttons();
+
+
+func duplicate_current_level() -> void:
+	var newLevelName :String = buttonDuplicateName.text.strip_edges()
+
+	if newLevelName.is_empty() || !newLevelName.is_valid_filename():
+		return
+
+	if !newLevelName.is_valid_filename():
+		return
+
+	var source : String = selectedItem.levelPath
+	var destination : String = "user://Levels/" + newLevelName + "/";
+
+	# Don't overwrite an existing level.
+	if DirAccess.dir_exists_absolute(destination):
+		return
+
+	DirAccess.make_dir_absolute(destination)
+	ImportExportManager.clone_data(source, destination)
+
+	overlayDuplicateLevel.hide()
+	fill_level_list()
+	
+func favorite_current_level() -> void:
+	pass;
 
 	
 ## Checks if a level folder is valid with the correct files.

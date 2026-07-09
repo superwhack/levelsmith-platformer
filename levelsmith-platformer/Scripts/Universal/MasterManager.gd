@@ -34,8 +34,6 @@ var loadedMap : TileMapLayer;
 
 var loadedLevelPath : String = "";
 
-# Default player preset for copying to "user://"
-
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);

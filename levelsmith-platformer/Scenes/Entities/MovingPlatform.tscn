@@ -29,7 +29,7 @@ previewLineEndpoint = NodePath("Line2D/LineEndpoint")
 previewPlatform = NodePath("PreviewPlatform")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
-scale = Vector2(6.3, 6.3)
+scale = Vector2(6.4, 6.4)
 shape = SubResource("RectangleShape2D_5hvxo")
 one_way_collision = true
 

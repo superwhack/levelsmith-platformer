@@ -151,6 +151,7 @@ func create_template_sprites() -> void:
 	playerTemplateSprite.sprite_frames.add_animation("PlayerFall");
 	playerTemplateSprite.sprite_frames.add_animation("PlayerJump");
 	playerTemplateSprite.sprite_frames.add_animation("PlayerIdle");
+	playerTemplateSprite.animation = "PlayerIdle";
 	playerTemplateSprite.sprite_frames.remove_animation("default");
 	
 	patrollingEnemyTemplateSprite = AnimatedSprite2D.new();
@@ -158,6 +159,7 @@ func create_template_sprites() -> void:
 	
 	patrollingEnemyTemplateSprite.sprite_frames.add_animation("PatrolDeath");
 	patrollingEnemyTemplateSprite.sprite_frames.add_animation("PatrolWalk");
+	patrollingEnemyTemplateSprite.animation = "PatrolWalk"
 	patrollingEnemyTemplateSprite.sprite_frames.remove_animation("default");
 	
 	flyingEnemyTemplateSprite = AnimatedSprite2D.new();
@@ -165,6 +167,7 @@ func create_template_sprites() -> void:
 	
 	flyingEnemyTemplateSprite.sprite_frames.add_animation("FlyDeath");
 	flyingEnemyTemplateSprite.sprite_frames.add_animation("FlyMove");
+	flyingEnemyTemplateSprite.animation = "FlyMove";
 	flyingEnemyTemplateSprite.sprite_frames.remove_animation("default");
 	
 	shootingEnemyTemplateSprite = AnimatedSprite2D.new();
@@ -173,6 +176,7 @@ func create_template_sprites() -> void:
 	shootingEnemyTemplateSprite.sprite_frames.add_animation("ShootDeath");
 	shootingEnemyTemplateSprite.sprite_frames.add_animation("ShootIdle");
 	shootingEnemyTemplateSprite.sprite_frames.add_animation("EnemyShoot");
+	shootingEnemyTemplateSprite.animation = "ShootIdle";
 	shootingEnemyTemplateSprite.sprite_frames.remove_animation("default");
 	
 	stationaryEnemyTemplateSprite = AnimatedSprite2D.new();
@@ -180,24 +184,28 @@ func create_template_sprites() -> void:
 	
 	stationaryEnemyTemplateSprite.sprite_frames.add_animation("StationaryDeath");
 	stationaryEnemyTemplateSprite.sprite_frames.add_animation("StationaryIdle");
+	stationaryEnemyTemplateSprite.animation = "StationaryIdle";
 	stationaryEnemyTemplateSprite.sprite_frames.remove_animation("default");
 	
 	goalTemplateSprite = AnimatedSprite2D.new();
 	goalTemplateSprite.sprite_frames = SpriteFrames.new();
 	
 	goalTemplateSprite.sprite_frames.add_animation("GoalAnimation");
+	goalTemplateSprite.animation = "GoalAnimation";
 	goalTemplateSprite.sprite_frames.remove_animation("default");
 	
 	coinTemplateSprite = AnimatedSprite2D.new();
 	coinTemplateSprite.sprite_frames = SpriteFrames.new();
 	
 	coinTemplateSprite.sprite_frames.add_animation("CoinAnimation");
+	coinTemplateSprite.animation = "CoinAnimation";
 	coinTemplateSprite.sprite_frames.remove_animation("default");
 	
 	movingPlatformTemplateSprite = AnimatedSprite2D.new();
 	movingPlatformTemplateSprite.sprite_frames = SpriteFrames.new();
 	
 	movingPlatformTemplateSprite.sprite_frames.add_animation("PlatformAnimation");
+	movingPlatformTemplateSprite.animation = "PlatformAnimation";
 	movingPlatformTemplateSprite.sprite_frames.remove_animation("default");
 	
 

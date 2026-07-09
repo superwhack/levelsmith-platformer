@@ -186,7 +186,7 @@ func reset_audio() -> void:
 	inusePlayers.clear();
 	musicPlayer.stop();
 
-## Play the sound for an asset when in the assetmanager
+## Play the sound for an asset when in the AssetManager
 ## assetName: the name of the file to play from, no extentions
 func play_asset(assetName: String) -> void:
 	var fullPath : String = audioLibraryPath + assetName;
@@ -224,3 +224,5 @@ func _process(_delta: float) -> void:
 		availablePlayers[0].play();
 		inusePlayers.append(availablePlayers[0]);
 		availablePlayers.pop_front();
+
+#func find_effect_name(path: String) -> String:

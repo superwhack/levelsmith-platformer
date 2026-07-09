@@ -19,6 +19,8 @@ class_name SettingsMenu;
 @export var cameraDeadzone : VBoxContainer;
 @export var cameraClamp : VBoxContainer;
 
+var musicPreviewing = false;
+
 func _ready() -> void:
 	closeButton.pressed.connect(editorManager.close_settings_menu);
 	resetButton.pressed.connect(reset_settings);
@@ -35,7 +37,7 @@ func _ready() -> void:
 	# .dragging also needs a connect so sound changes can be hard while editing them
 	masterVolume.dragging.connect(_on_drag);
 	SFXVolume.dragging.connect(_on_drag);
-	musicVolume.dragging.connect(_on_drag);
+	musicVolume.dragging.connect(_on_drag_start_music);
 	masterVolume.drag_ended.connect(_on_drag_end_SFX);
 	SFXVolume.drag_ended.connect(_on_drag_end_SFX);
 	musicVolume.drag_ended.connect(_on_drag_end_music);
@@ -77,7 +79,14 @@ func _on_drag_end_SFX() -> void:
 	
 func _on_drag_end_music() -> void:
 	_on_drag();
-	AudioManager.play_music_preview("LevelMusic");
+	musicPreviewing = false;
+	AudioManager.stop_music();
+
+func _on_drag_start_music() -> void:
+	_on_drag();
+	if !musicPreviewing:
+		musicPreviewing = true;
+		AudioManager.play_music("LevelMusic");
 
 ## Update sliders visually
 func update_sliders() -> void:

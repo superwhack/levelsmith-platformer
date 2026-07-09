@@ -63,6 +63,9 @@ func _ready() -> void:
 func pause_music(pause : bool) -> void:
 	musicPlayer.stream_paused = pause;
 
+func stop_music() -> void:
+	musicPlayer.stop();
+
 ## Only done with music, loop instead of ending it
 ## player: the audio stream player running the music
 func music_loop(player: AudioStreamPlayer) -> void:
@@ -94,13 +97,6 @@ func play_UI_effect(effectName: String) -> void:
 		queue.append(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		queue.append(fullPath + ".wav");
-
-func play_music_preview(musicName:  String) -> void:
-	if musicPlayer.playing:
-		return;
-	play_music(musicName);
-	await get_tree().create_timer(1.5).timeout
-	musicPlayer.stop();
 
 ## Play the music track
 ## musicName: name of the sound effect

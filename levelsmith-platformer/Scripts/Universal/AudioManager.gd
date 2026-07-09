@@ -29,6 +29,9 @@ var currentWalkingEffect : Global.WalkingEffect;
 # Audio player for the asset manager
 var assetManagerPlayer : AudioStreamPlayer
 
+# Preview music timer for the settings menu
+var previewMusicTimer : float = -1.0;
+
 ## Create all players and connect them properly
 func _ready() -> void:
 	
@@ -63,8 +66,22 @@ func _ready() -> void:
 func pause_music(pause : bool) -> void:
 	musicPlayer.stream_paused = pause;
 
-func stop_music() -> void:
-	musicPlayer.stop();
+## Play the music to preview sound levels
+## musicName: music to play
+func play_music_preview(musicName:  String) -> void:
+	if musicPlayer.playing:
+		return;
+	play_music(musicName);
+	previewMusicTimer = 0;
+
+## Stop playing the music
+func stop_music_preview() -> void:
+	await get_tree().process_frame;
+	if previewMusicTimer >= 1.5:
+		musicPlayer.stop();
+		previewMusicTimer = -1;
+	else:
+		stop_music_preview();
 
 ## Only done with music, loop instead of ending it
 ## player: the audio stream player running the music
@@ -97,6 +114,8 @@ func play_UI_effect(effectName: String) -> void:
 		queue.append(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		queue.append(fullPath + ".wav");
+
+
 
 ## Play the music track
 ## musicName: name of the sound effect
@@ -203,8 +222,10 @@ func play_asset(assetName: String) -> void:
 	assetManagerPlayer.play();
 
 ## If there are any current sounds in the queue and any avaliable players, start playing the sound.
-## delta: unused
-func _process(_delta: float) -> void:
+## delta: used for tracking preview timer
+func _process(delta: float) -> void:
+	if previewMusicTimer >= 0:
+		previewMusicTimer += delta;
 	# If there aren't any available players, stop the longest running player early.
 	if (!queue.is_empty() && availablePlayers.is_empty()):
 		inusePlayers[0].stop();

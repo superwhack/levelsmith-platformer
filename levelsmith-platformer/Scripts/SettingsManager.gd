@@ -79,14 +79,16 @@ func _on_drag_end_SFX() -> void:
 	
 func _on_drag_end_music() -> void:
 	_on_drag();
-	musicPreviewing = false;
-	AudioManager.stop_music();
+	await get_tree().process_frame;
+	if musicPreviewing:
+		musicPreviewing = false;
+		AudioManager.stop_music_preview();
 
 func _on_drag_start_music() -> void:
 	_on_drag();
 	if !musicPreviewing:
 		musicPreviewing = true;
-		AudioManager.play_music("LevelMusic");
+		AudioManager.play_music_preview("LevelMusic");
 
 ## Update sliders visually
 func update_sliders() -> void:

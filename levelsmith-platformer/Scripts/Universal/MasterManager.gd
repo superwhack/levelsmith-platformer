@@ -83,6 +83,7 @@ func screen_wipe_out() -> void:
 	await loadingAnimation.animation_finished;
 	loadingScreen.hide();
 
+## special loading screen specific for main menu
 func screen_static() -> void:
 	loadingAnimation.play("WipeOut2");
 	await loadingAnimation.animation_finished;
@@ -170,6 +171,7 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 
 ## Swap to edit state
 func edit() -> void:
+	await get_tree().process_frame;
 	await screen_wipe_in();
 	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UI_Selection");
@@ -197,7 +199,7 @@ func edit() -> void:
 		await get_tree().process_frame;
 	editorManager.reset_enemy_positions();
 	editorManager.clear_enemies();
-	await get_tree().process_frame
+	await get_tree().process_frame;
 	await screen_wipe_out();
 
 ## Swap to play state

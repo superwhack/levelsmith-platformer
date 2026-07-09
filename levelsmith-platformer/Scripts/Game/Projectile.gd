@@ -5,28 +5,23 @@ extends Area2D
 
 # Reference to child Sprite2D
 @export var sprite : Sprite2D;
-# Reverences to Texture2D assets for bullet variants
-@export var dangerTexture : Texture2D;
-@export var bounceTexture : Texture2D;
 
 #var direction : float;
 var speed : float;
 # Whether or not the projectile can be bounced on
 var bounceable : bool;
 
-## When the scene enters the tree, assign proper texture and connect important signals
+## When the scene enters the tree, connect important signals
 func _ready() -> void:
 	body_entered.connect(delete_projectile);
 	onScreen.screen_exited.connect(delete_projectile);
-	
-	if bounceable:
-		sprite.texture = bounceTexture;
-	else:
-		sprite.texture = dangerTexture;
 
 ## Move the projectile at a speed
 func _process(delta: float) -> void:
 	global_position += transform.x * delta * speed * 100;
+
+func assign_texture(texture: Texture2D) -> void:
+	sprite.texture = texture;
 
 ## Delete this projectile once it's offscreen
 func delete_projectile(body: Node2D = null) -> void:

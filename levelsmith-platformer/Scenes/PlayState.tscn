@@ -3,10 +3,9 @@
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_ym18m"]
 [ext_resource type="Texture2D" uid="uid://cvme7suepttij" path="res://Assets/Sprites/UI/material-symbols-light--pause-rounded.png" id="3_4pdbi"]
-[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="6_4i4ea"]
 [ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="6_x53pn"]
 [ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
-[ext_resource type="Texture2D" uid="uid://dk7k888johpa6" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
+[ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
 [ext_resource type="Texture2D" uid="uid://qf7uq7d7mpai" path="res://Assets/UserInterface/line-md--heart-filled.png" id="7_j23bb"]
 [ext_resource type="PackedScene" uid="uid://cmpj0a4yqf4gu" path="res://Scenes/UI/WinScreen.tscn" id="8_4i4ea"]
 [ext_resource type="Texture2D" uid="uid://cerg25kv03gd3" path="res://Assets/UserInterface/tabler--heart.png" id="8_qxglv"]
@@ -29,7 +28,7 @@ timerLabel = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer
 winCoinLabel = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox/CoinHBox/WinCoinCounter")
 coinMargin = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin")
 winTimeLabel = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox/WinTimer")
-winScreenHealthUI = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox/PlayerHealthUi")
+winScreenHealthUI = NodePath("CanvasLayer/WinScreen/Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox/WinPlayerHealthUi")
 resetButton = NodePath("CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ResetButton")
 pauseButton = NodePath("CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PauseButton")
 resumeButton = NodePath("CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer/ResumeButton")
@@ -143,6 +142,11 @@ theme = ExtResource("2_ym18m")
 icon = ExtResource("3_4pdbi")
 icon_alignment = 1
 
+[node name="PlayUISpacer5" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=1478978677]
+custom_minimum_size = Vector2(10, 0)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+
 [node name="PlayerHealthUi" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=621394887 instance=ExtResource("6_x53pn")]
 custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
@@ -150,13 +154,18 @@ full_heart_texture = ExtResource("7_j23bb")
 empty_heart_texture = ExtResource("8_qxglv")
 
 [node name="PlayUISpacer" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=79976120]
-custom_minimum_size = Vector2(20, 0)
+custom_minimum_size = Vector2(10, 0)
 custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
 
 [node name="VSeparator2" type="VSeparator" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=2065018084]
 layout_mode = 2
 theme = ExtResource("2_ym18m")
+
+[node name="PlayUISpacer2" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=708364954]
+custom_minimum_size = Vector2(10, 0)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
 
 [node name="Timer" type="RichTextLabel" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=1225691579]
 custom_minimum_size = Vector2(100, 0)
@@ -169,26 +178,28 @@ scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="PlayUISpacer3" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=1852751775]
+custom_minimum_size = Vector2(10, 0)
+custom_maximum_size = Vector2(-1, 60)
+layout_mode = 2
+
 [node name="VSeparator" type="VSeparator" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=6181074]
 layout_mode = 2
 theme = ExtResource("2_ym18m")
 
-[node name="PlayUISpacer2" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=708364954]
-custom_minimum_size = Vector2(20, 0)
+[node name="PlayUISpacer4" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=216647927]
+custom_minimum_size = Vector2(10, 0)
 custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
 
 [node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=562975845]
-custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_2riqt")
 
 [node name="CoinMargin" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2" unique_id=1014826280]
-custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin" unique_id=2030686756]
-custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin/HBoxContainer" unique_id=1871652344]
@@ -199,11 +210,17 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin/HBoxContainer/MarginContainer" unique_id=1957267496]
-custom_maximum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(0, 60)
+custom_maximum_size = Vector2(60, 60)
 layout_mode = 2
 texture = ExtResource("7_4pdbi")
+stretch_mode = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin/HBoxContainer" unique_id=164032238]
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin/HBoxContainer" unique_id=1068036198]
+layout_mode = 2
+theme_override_constants/margin_top = -5
+
+[node name="Label" type="Label" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer/PanelContainer2/CoinMargin/HBoxContainer/MarginContainer2" unique_id=164032238]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = ":"
@@ -230,8 +247,6 @@ theme_override_constants/margin_left = 20
 [node name="ControlsLabel" type="Label" parent="CanvasLayer/BottomScreenGroup/BottomLeftMargin" unique_id=1113873687]
 layout_mode = 2
 theme = ExtResource("2_ym18m")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("6_4i4ea")
 theme_override_font_sizes/font_size = 16
 text = "Move [WASD / Arrow Keys]	     Jump [Space]"
 

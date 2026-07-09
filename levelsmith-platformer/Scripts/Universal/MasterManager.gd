@@ -120,7 +120,6 @@ func create_bedrock_border() -> void:
 
 ## Imports a level 
 func import_level_and_edit() -> void:
-	await screen_wipe_in();
 	ImportExportManager.clear_enemies_folder();
 	for childNode in editorManager.tileMap.get_children():
 		childNode.free();
@@ -134,7 +133,6 @@ func import_level_and_edit() -> void:
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
 	await get_tree().process_frame
-	await screen_wipe_out();
 
 ## Loads the given level to the player.
 ## levelPath: The folder path of the level.

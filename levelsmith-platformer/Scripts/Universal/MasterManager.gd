@@ -38,7 +38,8 @@ var loadedLevelPath: String = "";
 
 # Tween information
 var loadingTween : Tween
-var loadingTweenTime : float = 0.75
+var loadingTweenTime : float = 0.5
+var loadingHold : float = 0.25
 
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
@@ -82,17 +83,15 @@ func _input(event: InputEvent) -> void:
 
 ## Plays the screen wipe animation that covers the screen before a state transition.
 func screen_wipe_in() -> void:
-	print("wiping in")
 	loadingScreen.show();
 	# Create the loading animation tween
 	loadingTween = create_tween()
 	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 1.0, loadingTweenTime)
 	await loadingTween.finished;
+	await get_tree().create_timer(loadingHold).timeout
 
 ## Plays the screen wipe animation that reveals the destination state after loading.
 func screen_wipe_out() -> void:
-	print("wiping out")
-	
 	# Create the loading animation tween
 	loadingTween = create_tween()
 	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 0.0, loadingTweenTime)
@@ -101,6 +100,7 @@ func screen_wipe_out() -> void:
 
 ## special loading screen specific for main menu
 func screen_static() -> void:
+	await get_tree().create_timer(loadingHold).timeout
 	screen_wipe_out()
 	#loadingAnimation.play("WipeOut2");
 	#await loadingAnimation.animation_finished;

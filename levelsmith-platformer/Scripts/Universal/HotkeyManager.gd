@@ -11,6 +11,8 @@ extends Node
 func _unhandled_key_input(event : InputEvent) -> void:
 	if event.is_action_pressed("rotate"):
 		toolManager.rotate_object();
+	if event.is_action_pressed("toggle-background"):
+		toolManager.isBackground = !toolManager.isBackground;
 	
 	# Switching Tools
 	if event.is_action_pressed("brush-tool"):

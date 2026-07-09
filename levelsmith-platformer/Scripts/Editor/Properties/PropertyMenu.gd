@@ -17,6 +17,7 @@ var selectedEntity : Node2D;
 var playerHealth: int;
 var playerSpeed: float;
 var playerAcceleration: float;
+var playerDeceleration: float;
 var playerJumpHeight : float;
 var playerAirControl : float;
 var playerFallSpeed : float;
@@ -29,6 +30,7 @@ var playerWallJumpDecay : bool;
 @export var playerHealthSlider: VBoxContainer;
 @export var playerSpeedSlider: VBoxContainer;
 @export var playerAccelerationSlider : VBoxContainer;
+@export var playerDecelerationSlider : VBoxContainer;
 @export var playerJumpSlider: VBoxContainer;
 @export var playerAirControlSlider: VBoxContainer;
 @export var playerFallSpeedSlider: VBoxContainer;
@@ -84,6 +86,7 @@ func _ready() -> void:
 	playerHealthSlider.drag_ended.connect(_on_drag_ended);
 	playerSpeedSlider.drag_ended.connect(_on_drag_ended);
 	playerAccelerationSlider.drag_ended.connect(_on_drag_ended);
+	playerDecelerationSlider.drag_ended.connect(_on_drag_ended);
 	playerJumpSlider.drag_ended.connect(_on_drag_ended);
 	playerAirControlSlider.drag_ended.connect(_on_drag_ended);
 	playerFallSpeedSlider.drag_ended.connect(_on_drag_ended);
@@ -165,6 +168,7 @@ func _on_preset_options_item_selected(index: int) -> void:
 	playerHealth = selectedPlayerPreset.health;
 	playerSpeed = selectedPlayerPreset.groundSpeed;
 	playerAcceleration = selectedPlayerPreset.acceleration;
+	playerDeceleration = selectedPlayerPreset.deceleration;
 	playerJumpHeight = selectedPlayerPreset.jumpHeight;
 	playerAirControl = selectedPlayerPreset.airControl;
 	playerFallSpeed = selectedPlayerPreset.fallSpeed;
@@ -188,6 +192,7 @@ func update_custom() -> void:
 	customPreset.health = playerHealth;
 	customPreset.groundSpeed = playerSpeed;
 	customPreset.acceleration = playerAcceleration;
+	customPreset.deceleration = playerDeceleration;
 	customPreset.jumpHeight = playerJumpHeight;
 	customPreset.airControl = playerAirControl;
 	customPreset.fallSpeed = playerFallSpeed;
@@ -210,6 +215,8 @@ func update_sliders() -> void:
 	playerSpeedSlider.update_slider();
 	playerAccelerationSlider.value = playerAcceleration;
 	playerAccelerationSlider.update_slider();
+	playerDecelerationSlider.value = playerDeceleration;
+	playerDecelerationSlider.update_slider();
 	playerJumpSlider.value = playerJumpHeight;
 	playerJumpSlider.update_slider();
 	playerAirControlSlider.value = playerAirControl;
@@ -287,6 +294,7 @@ func update_values() -> void:
 	playerHealth = playerHealthSlider.value;
 	playerSpeed = playerSpeedSlider.value;
 	playerAcceleration = playerAccelerationSlider.value;
+	playerDeceleration = playerDecelerationSlider.value;
 	playerJumpHeight = playerJumpSlider.value;
 	playerAirControl = playerAirControlSlider.value;
 	playerFallSpeed = playerFallSpeedSlider.value;

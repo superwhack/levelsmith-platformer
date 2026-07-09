@@ -10,7 +10,8 @@ enum WallDirection {
 
 # The player settings that can be changed in editor
 @export var groundSpeed : float = 1.0;
-@export var acceleration : float = 1.0;
+@export var baseAcceleration : float = 1.0;
+@export var baseDeceleration : float = 1.0;
 @export var jumpHeight : float = 2.0;
 @export var doubleJump : bool = false;
 var doubleJumpAvailable : bool = doubleJump;
@@ -188,7 +189,11 @@ func walk() -> void:
 	direction = Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if (direction):
-		accelerationX = direction * trueSpeed * pow(acceleration, 5);
+		accelerationX = direction * trueSpeed;
+		if baseAcceleration != 1.0 && sign(velocity.x) == sign(direction):
+			accelerationX *= pow(baseAcceleration, 5);
+		elif baseDeceleration != 1.0 && sign(velocity.x) != sign(direction):
+			accelerationX *= pow(baseDeceleration, 5);
 	# Acceleration
 	else:
 		if !slidingSticky:
@@ -197,6 +202,11 @@ func walk() -> void:
 			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 		else:
 			accelerationX = clamp(-velocity.x, -trueSpeed * .75, trueSpeed * .75);
+		if baseDeceleration != 1.0:
+			accelerationX *= pow(baseDeceleration, 5);
+		if abs(velocity.x) < 10 * groundSpeed:
+			accelerationX = -velocity.x;
+			
 	# Air Control
 	if (not is_on_floor()):
 		accelerationX *= airControl * airControl;
@@ -467,7 +477,8 @@ func apply_preset(preset: PlayerMovementPreset) -> void:
 	maxHealth = preset.health;
 	health = maxHealth
 	groundSpeed = preset.groundSpeed;
-	acceleration = preset.acceleration;
+	baseAcceleration = preset.acceleration;
+	baseDeceleration = preset.deceleration;
 	jumpHeight = preset.jumpHeight;
 	airControl = preset.airControl / 100.0;
 	fallSpeed = preset.fallSpeed;

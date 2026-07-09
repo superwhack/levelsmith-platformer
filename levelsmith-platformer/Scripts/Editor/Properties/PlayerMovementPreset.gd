@@ -7,6 +7,7 @@ class_name PlayerMovementPreset
 @export var health : int;
 @export var groundSpeed : float;
 @export var acceleration : float;
+@export var deceleration : float;
 @export var jumpHeight : float;
 @export var airControl : float;
 @export var fallSpeed : float;

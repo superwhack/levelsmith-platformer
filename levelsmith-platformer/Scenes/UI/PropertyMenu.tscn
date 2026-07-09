@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
 [ext_resource type="PackedScene" uid="uid://d33iu75vytjse" path="res://Scenes/UI/PropertyDropdown.tscn" id="5_ehgsd"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "presetOptions", "closeButton")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "presetOptions", "closeButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -30,6 +30,7 @@ movingPlatformMenu = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatfor
 playerHealthSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerHealth")
 playerSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerSpeed")
 playerAccelerationSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerAcceleration")
+playerDecelerationSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerDeceleration")
 playerJumpSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerJump")
 playerAirControlSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerAirControl")
 playerFallSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerFallSpeed")
@@ -116,6 +117,14 @@ sliderStep = 0.1
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Acceleration"
+propertyUnit = "m/s/s"
+minMax = Vector2(0.4, 1)
+sliderStep = 0.1
+
+[node name="PlayerDeceleration" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=2070335992 instance=ExtResource("2_w5eld")]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+propertyName = "Deceleration"
 propertyUnit = "m/s/s"
 minMax = Vector2(0.4, 1)
 sliderStep = 0.1

@@ -6,7 +6,8 @@
 script = ExtResource("1_22dwl")
 health = 3
 groundSpeed = 1.0
-acceleration = 0.4
+acceleration = 0.5
+deceleration = 0.5
 jumpHeight = 2.0
 airControl = 100.0
 fallSpeed = 1.0

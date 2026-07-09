@@ -283,12 +283,15 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 	item.levelButton.tooltip_text = folderName; 
 	
 	# Connect the level button signal to the double clicked function
-	item.level_double_clicked.connect(_on_level_double_clicked);
-	# Hovering an item populates the metadata field.
+	if (!item.level_double_clicked.is_connected(_on_level_double_clicked)):
+		item.level_double_clicked.connect(_on_level_double_clicked);	# Hovering an item populates the metadata field.
 	#item.level_hovered.connect(_on_level_hovered);
 	# Selecting an item toggles.
-	item.level_toggled.connect(_on_level_toggled);
-	item.level_deselected.connect(_on_level_deselected);
+	if (!item.level_toggled.is_connected(_on_level_toggled)):
+		item.level_toggled.connect(_on_level_toggled);
+
+	if (!item.level_deselected.is_connected(_on_level_deselected)):
+		item.level_deselected.connect(_on_level_deselected);
 	
 	# Fetch thumbnail, if it exists
 	var levelThumbnailPath : String = levelPath + "/Preview.PNG";

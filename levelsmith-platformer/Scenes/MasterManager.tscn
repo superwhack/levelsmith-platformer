@@ -101,7 +101,10 @@ cameraManager = NodePath("../../../Camera2D")
 [node name="CustomCursorManager" parent="EditorManager" index="6" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
 masterManager = NodePath("../..")
 
-[node name="LevelScreenshot" parent="EditorManager" index="8" unique_id=1423987778 node_paths=PackedStringArray("masterManager", "baseCamera")]
+[node name="IconManager" parent="EditorManager" index="8" unique_id=1308220472 node_paths=PackedStringArray("masterManager")]
+masterManager = NodePath("../..")
+
+[node name="LevelScreenshot" parent="EditorManager" index="9" unique_id=1423987778 node_paths=PackedStringArray("masterManager", "baseCamera")]
 enabled = false
 masterManager = NodePath("../..")
 baseCamera = NodePath("../../Camera2D")

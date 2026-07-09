@@ -90,7 +90,7 @@ func _ready() -> void:
 
 
 	var set_directory = func (directory: String) -> void:
-		importedLevelPath = directory;
+		importedLevelPath = directory + "/";
 		fieldImportLevelPath.text = importedLevelPath;
 	
 	fileExplorer.dir_selected.connect(set_directory);
@@ -121,6 +121,7 @@ func import_level() -> void:
 	var importedLevelArray : Array = importedLevelPath.split("/");
 	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
 	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
+	masterManager.loadedLevelPath = importedLevelPath;
 	
 	if !DirAccess.dir_exists_absolute(importDirectory):
 		DirAccess.make_dir_absolute(importDirectory);
@@ -211,7 +212,7 @@ func fill_level_list() -> void:
 
 			item.queue_free();
 			levelItems.erase(levelPath);
-			
+	
 	for levelPath in levelFolders.keys():
 		if (!levelItems.has(levelPath)):
 			setup_level_item(levelFolders[levelPath], levelPath);
@@ -372,7 +373,25 @@ func edit_current_level() -> void:
 	masterManager.load_level(selectedItem.levelPath);
 
 func delete_current_level() -> void:
-	pass;
+	if (!selectedItem):
+		return;
+
+	AudioManager.play_UI_effect("UI_Selection");
+	
+	var levelPath : String = selectedItem.levelPath.rstrip("/");
+
+	# Delete all files and folders inside the level directory
+	# Thank you: https://tinyurl.com/ak58bfvd
+	var dir = DirAccess.open(selectedItem.levelPath);
+	for file in dir.get_files():
+		dir.remove(file);
+
+	var item = levelItems[levelPath];
+	item.queue_free();
+	levelItems.erase(levelPath);
+	
+	clear_selection();
+	toggle_level_buttons();
 
 	
 ## Checks if a level folder is valid with the correct files.

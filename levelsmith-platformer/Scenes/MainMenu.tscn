@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://bvc7r3t18vixa"]
+[gd_scene format=4 uid="uid://bjx53xjckex6r"]
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_7v4os"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="1_ghw46"]
@@ -1053,4 +1053,6 @@ text = "Cancel"
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1758093936]
 oversampling_override = 1.0
+title = "Open a Level Folder"
+file_mode = 2
 access = 2

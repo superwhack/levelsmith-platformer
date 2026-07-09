@@ -54,7 +54,7 @@ func _ready() -> void:
 	# Create the Enemies folder, github can't push empty folders
 	if (!DirAccess.dir_exists_absolute("res://Resources/Enemies/")):
 		DirAccess.make_dir_absolute("res://Resources/Enemies/");
-		
+	
 	main_menu(false);
 	
 
@@ -107,6 +107,7 @@ func import_level_and_edit() -> void:
 	entityManager.scan_goals(worldSize.x, worldSize.y);
 	editorManager.reset_enemy_positions();
 	await get_tree().process_frame;
+	cameraManager.initialize_camera();
 	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.settingsMenu);
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
@@ -119,7 +120,6 @@ func load_level(levelPath: String, play: bool = false) -> void:
 		loadedLevelPath = levelPath;
 		# Await so that the camera gets properly placed
 		await import_level_and_edit();
-		cameraManager.initialize_camera();
 		if (play):
 			play();
 

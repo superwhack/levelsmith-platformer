@@ -307,7 +307,6 @@ func validate_import(sourceName: String) -> bool:
 		
 	if (!FileAccess.file_exists(levelPath + "Tiles.CSV")):
 		errors.append(levelPath + "Tiles.CSV does not exist!");
-		
 	if (errors.size() == 0):
 		sourceName = sourceName.left(-1);
 		levelName = sourceName.substr(sourceName.rfind("/") + 1);

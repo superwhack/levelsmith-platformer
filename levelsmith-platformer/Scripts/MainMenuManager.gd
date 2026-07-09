@@ -8,6 +8,7 @@ extends Control
 @export var buttonImportLevel : Button;
 @export var buttonLoadExample : Button;
 @export var buttonQuit : Button;
+@export var buttonOpenLevelFolder : Button;
 
 # Overlays
 @export var overlayNewLevel : ColorRect;
@@ -64,6 +65,7 @@ func _ready() -> void:
 	# Connect signals
 	buttonNewLevel.pressed.connect(overlay_new_level_show);
 	buttonNewLevelCreate.pressed.connect(create_new_level);
+	buttonOpenLevelFolder.pressed.connect(open_level_folder);
 	
 	# Hiding appropriate UI when cancelling level creation
 	buttonNewLevelCancel.pressed.connect(overlay_new_level_hide);
@@ -328,34 +330,12 @@ func clear_selection() -> void:
 		objectCount.text = "";
 		version.text = "";
 		preview.texture = previewDefault;
-	
-## Retrieves the world size from a CSV file.
-## filePath: the file path of the CSV file.
-## Returns a Vector2i of the world size.
-func get_csv_size(filePath : String) -> Vector2i: 
-	var rows = [];
-	var file = FileAccess.open(filePath, FileAccess.READ);
-	
-	# If the file exists, append rows. If not, return an empty Vector2i
-	if (file != null):
-		while not file.eof_reached():
-			# Since CSV files have trailing empty lines, we need to check if 
-			# the line has any data in it.
-			var currentRow = file.get_csv_line();
-			if (currentRow.size() > 0 && currentRow[0] != ""):
-				rows.append(currentRow);
-	else:
-		return Vector2i.ZERO;
 
-	# Height is the number of rows we have
-	var height = rows.size();
-	var width = 0;
-	
-	# So long as there is one row, get the size of it as width
-	if height > 0:
-		width = rows[0].size();
+## Opens OS file explorer to the users Level folder.
+func open_level_folder() -> void:
+	var path : String = ProjectSettings.globalize_path("user://Levels");
+	OS.shell_open(path);
 
-	return Vector2i(width, height);
 	
 ## Checks if a level folder is valid with the correct files.
 ## filePath: The file path of the folder.

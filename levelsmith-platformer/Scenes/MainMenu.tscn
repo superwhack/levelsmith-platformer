@@ -111,7 +111,7 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 corner_detail = 10
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "fileExplorer", "levelList", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "fileExplorer", "levelList", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -124,6 +124,7 @@ buttonNewLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane
 buttonImportLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/ImportLevelButton")
 buttonLoadExample = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton")
 buttonQuit = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton")
+buttonOpenLevelFolder = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton")
 overlayNewLevel = NodePath("NewLevelOverlay")
 overlayImportLevel = NodePath("ImportLevelOverlay")
 buttonNewLevelCreate = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow/CreateLevelButton")
@@ -1042,3 +1043,4 @@ text = "Cancel"
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1758093936]
 oversampling_override = 1.0
+access = 2

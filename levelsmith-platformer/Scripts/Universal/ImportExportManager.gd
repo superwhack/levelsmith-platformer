@@ -39,17 +39,25 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 	DirAccess.make_dir_absolute(levelPath);
 	DirAccess.make_dir_absolute(levelAssetPath);
 	
-	# The current date and time from system.
+	# The current date and time from system. 
 	var now : Dictionary = Time.get_datetime_dict_from_system()
+	var meridiem : String = "AM";
+	if (now.hour >= 12):
+		meridiem = "PM";
+		
+	# So that time cannot equal 0:15 AM
+	now.hour %= 12;
+	if (now.hour == 0):
+		now.hour = 12;
 	
 	# Generate default JSON file as a dictionary.
 	var defaultJSON : Dictionary = {
 		"metadata": {
 			"author": levelAuthor,
 			"dateCreated": "%02d.%02d.%04d" % [now.month, now.day, now.year],
-			"timeCreated": "%02d:%02d" % [now.hour, now.minute],
+			"timeCreated": "%02d:%02d" % [now.hour, now.minute] + " " + meridiem,
 			"dateModified": "%02d.%02d.%04d" % [now.month, now.day, now.year],
-			"timeModified": "%02d:%02d" % [now.hour, now.minute],
+			"timeModified": "%02d:%02d" % [now.hour, now.minute] + " " + meridiem,
 			"dimensions": levelSize,
 			"objects": 0,
 			"version": Global.VERSION,
@@ -124,12 +132,28 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 	var metadata : Dictionary = json["metadata"];
 
 	var now : Dictionary = Time.get_datetime_dict_from_system();
+	var meridiem : String = "AM";
 	
+	if (now.hour >= 12):
+		meridiem = "PM";
+		
+	# So that time cannot equal 0:15 AM
+	now.hour %= 12;
+	if (now.hour == 0):
+		now.hour = 12;
+		
 	var objects : int = get_object_count(tileMap, worldSize);
 
 	# Update metadata without completely overwriting it.
+	# If date created is missing, fill it in with the now
+	if !metadata.has("dateCreated"):
+		metadata["dateCreated"] = "%02d.%02d.%04d" % [now.month, now.day, now.year];
+
+	if !metadata.has("timeCreated"):
+		metadata["timeCreated"] = "%02d:%02d" % [now.hour, now.minute] + " " + meridiem;
+		
 	metadata["dateModified"] = "%02d.%02d.%04d" % [now.month, now.day, now.year];
-	metadata["timeModified"] = "%02d:%02d" % [now.hour, now.minute];
+	metadata["timeModified"] = "%02d:%02d" % [now.hour, now.minute] + " " + meridiem;
 	metadata["dimensions"] = worldSize;
 	metadata["version"] = Global.VERSION;
 	metadata["objects"] = objects;

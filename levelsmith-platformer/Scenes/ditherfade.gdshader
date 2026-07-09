@@ -1,0 +1,64 @@
+shader_type canvas_item;
+
+// 0.0 = fully hidden, 1.0 = fully visible
+uniform float progress : hint_range(0.0, 1.0) = 0.0;
+
+// Size of each dither "pixel" in screen pixels. Higher = chunkier dither.
+uniform float dither_scale : hint_range(1.0, 16.0) = 4.0;
+
+// Width of the dithered transition ring (in UV-distance units).
+uniform float edge_softness : hint_range(0.01, 1.0) = 0.15;
+
+// Center of the circle in UV space (0.5, 0.5 = middle of the item).
+uniform vec2 center = vec2(0.5, 0.5);
+
+// How far the circle has to grow to cover the whole item.
+// 0.7071 (sqrt(0.5)) reaches the corners of a square item.
+uniform float max_radius : hint_range(0.1, 1.5) = 0.75;
+
+// If your item isn't square, set this to (width, height) or
+// (width/height, 1.0) so the circle doesn't stretch into an ellipse.
+uniform vec2 aspect_correction = vec2(1.0, 1.0);
+
+// Classic 8x8 Bayer ordered-dither matrix, normalized 0..1
+const int bayer_matrix_8x8[64] = int[](
+    0, 32, 8, 40, 2, 34, 10, 42,
+    48, 16, 56, 24, 50, 18, 58, 26,
+    12, 44, 4, 36, 14, 46, 6, 38,
+    60, 28, 52, 20, 62, 30, 54, 22,
+    3, 35, 11, 43, 1, 33, 9, 41,
+    51, 19, 59, 27, 49, 17, 57, 25,
+    15, 47, 7, 39, 13, 45, 5, 37,
+    63, 31, 55, 23, 61, 29, 53, 21
+);
+
+float get_bayer_value(vec2 screen_pos) {
+    ivec2 pos = ivec2(mod(screen_pos, 8.0));
+    int index = pos.y * 8 + pos.x;
+    return float(bayer_matrix_8x8[index]) / 64.0;
+}
+
+void fragment() {
+    vec4 tex_color = texture(TEXTURE, UV);
+
+    // Distance from center, corrected for aspect ratio so the ring stays circular.
+    vec2 delta = (UV - center) * aspect_correction;
+    float axis_pos = length(delta);
+
+    // Sweep the growing circle's edge from just inside the center (progress = 0,
+    // nothing visible) to just past max_radius (progress = 1, everything visible).
+    float threshold = progress * (max_radius + edge_softness) - edge_softness;
+    float local_amount = clamp((axis_pos - threshold + edge_softness) / edge_softness, 0.0, 1.0);
+
+    // Sample the dither threshold from screen-space pixel position so the
+    // pattern stays fixed relative to the screen, not the object.
+    vec2 pixel_pos = FRAGCOORD.xy / dither_scale;
+    float dither = get_bayer_value(pixel_pos);
+
+    // Once the local amount exceeds this pixel's dither threshold, drop it.
+    if (local_amount > dither) {
+        discard;
+    }
+
+    COLOR = tex_color;
+}

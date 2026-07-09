@@ -214,10 +214,10 @@ func edit() -> void:
 
 ## Swap to play state
 func play() -> void:
-	await screen_wipe_in();
 	# Check that the game can be run
 	if (!get_play_errors().is_empty()):
 		return;
+	await screen_wipe_in();
 	propertyMenu.close();
 	AudioManager.play_UI_effect("UI_Selection");
 	AudioManager.play_music("LevelMusic");

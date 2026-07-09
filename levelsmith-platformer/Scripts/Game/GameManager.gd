@@ -67,7 +67,7 @@ func pause() -> void:
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	pauseButton.show();
 	get_tree().paused = false;
 	winScreen.hide();

@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://d11oqcc1xaqai" path="res://Scripts/Game/Player.gd" id="1_kyqiw"]
 [ext_resource type="Resource" uid="uid://nd3ng1cl05pa" path="res://Resources/PlayerPresets/Default.tres" id="2_agccv"]
-[ext_resource type="Texture2D" uid="uid://c1fuvlvobt6lk" path="res://Assets/Sprites/Entities/Player/PlayerDeath/1.png" id="3_3m754"]
-[ext_resource type="Texture2D" uid="uid://d18jyxugqcfqf" path="res://Assets/Sprites/Entities/Player/PlayerFall/1.png" id="4_46t5s"]
-[ext_resource type="Texture2D" uid="uid://dqxyw86d3b8kn" path="res://Assets/Sprites/Entities/Player/PlayerHurt/1.png" id="5_0pa8p"]
-[ext_resource type="Texture2D" uid="uid://c5q8eumm5pxfv" path="res://Assets/Sprites/Entities/Player/PlayerHurt/2.png" id="6_0hljs"]
-[ext_resource type="Texture2D" uid="uid://bbtpujmucocy7" path="res://Assets/Sprites/Entities/Player/PlayerHurt/3.png" id="7_crkm8"]
-[ext_resource type="Texture2D" uid="uid://s62ih2btl5m" path="res://Assets/Sprites/Entities/Player/PlayerIdle/1.png" id="8_j230w"]
-[ext_resource type="Texture2D" uid="uid://bbbegxn0etb18" path="res://Assets/Sprites/Entities/Player/PlayerJump/1.png" id="9_qkam4"]
-[ext_resource type="Texture2D" uid="uid://bg4o3wlomlskb" path="res://Assets/Sprites/Entities/Player/PlayerJump/2.png" id="10_w67ft"]
+[ext_resource type="Texture2D" uid="uid://bj5yi8uuy6osq" path="res://Assets/Sprites/Entities/Player/PlayerDeath/1.png" id="3_3m754"]
+[ext_resource type="Texture2D" uid="uid://cxub5rcls16a7" path="res://Assets/Sprites/Entities/Player/PlayerFall/1.png" id="4_46t5s"]
+[ext_resource type="Texture2D" uid="uid://c33oqgkuiuacx" path="res://Assets/Sprites/Entities/Player/PlayerHurt/1.png" id="5_0pa8p"]
+[ext_resource type="Texture2D" uid="uid://b2exxw3vlw6i0" path="res://Assets/Sprites/Entities/Player/PlayerHurt/2.png" id="6_0hljs"]
+[ext_resource type="Texture2D" uid="uid://csiehpikc3hd6" path="res://Assets/Sprites/Entities/Player/PlayerHurt/3.png" id="7_crkm8"]
+[ext_resource type="Texture2D" uid="uid://dcmdhpnamm8rr" path="res://Assets/Sprites/Entities/Player/PlayerIdle/1.png" id="8_j230w"]
+[ext_resource type="Texture2D" uid="uid://c3lkhqngir1ha" path="res://Assets/Sprites/Entities/Player/PlayerJump/1.png" id="9_qkam4"]
+[ext_resource type="Texture2D" uid="uid://dmjr2cug8wt3s" path="res://Assets/Sprites/Entities/Player/PlayerJump/2.png" id="10_w67ft"]
 [ext_resource type="Texture2D" uid="uid://cn16lyb1eg016" path="res://Assets/Sprites/Entities/Player/PlayerRun/2.png" id="11_7n4p1"]
 [ext_resource type="Texture2D" uid="uid://bqx8xnj3mp77q" path="res://Assets/Sprites/Entities/Player/PlayerRun/3.png" id="12_pid1y"]
 [ext_resource type="Texture2D" uid="uid://btfvilp3pm5ns" path="res://Assets/Sprites/Entities/Player/PlayerRun/1.png" id="13_0aity"]
@@ -145,7 +145,7 @@ sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"PlayerJump"
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=116409988]
-position = Vector2(-57, 0)
+position = Vector2(-45, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 60)
 
@@ -154,7 +154,7 @@ scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 60)
 
 [node name="RayCastDown3" type="RayCast2D" parent="." unique_id=1487377010]
-position = Vector2(57, 0)
+position = Vector2(45, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 60)
 
@@ -187,7 +187,7 @@ scale = Vector2(1.1, 1.1)
 target_position = Vector2(56, 0)
 
 [node name="RayCastUp" type="RayCast2D" parent="." unique_id=365446800]
-position = Vector2(-50, 0)
+position = Vector2(-45, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -56)
 
@@ -196,6 +196,6 @@ scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -56)
 
 [node name="RayCastUp3" type="RayCast2D" parent="." unique_id=596214337]
-position = Vector2(50, 0)
+position = Vector2(45, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -56)

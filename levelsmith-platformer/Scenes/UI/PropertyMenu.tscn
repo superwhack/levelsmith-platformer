@@ -118,16 +118,16 @@ custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Acceleration"
 propertyUnit = "m/s/s"
-minMax = Vector2(0.4, 1)
-sliderStep = 0.1
+minMax = Vector2(0.5, 1)
+sliderStep = 0.05
 
 [node name="PlayerDeceleration" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=2070335992 instance=ExtResource("2_w5eld")]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Deceleration"
 propertyUnit = "m/s/s"
-minMax = Vector2(0.4, 1)
-sliderStep = 0.1
+minMax = Vector2(0.5, 1)
+sliderStep = 0.05
 
 [node name="PlayerJump" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=1835714671 instance=ExtResource("2_w5eld")]
 custom_minimum_size = Vector2(0, 80)

@@ -113,13 +113,15 @@ func import_level_and_edit() -> void:
 
 ## Loads the given level to the player.
 ## levelPath: The folder path of the level.
-func load_level(levelPath: String) -> void:
+func load_level(levelPath: String, play: bool = false) -> void:
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
 		# Await so that the camera gets properly placed
 		await import_level_and_edit();
 		cameraManager.initialize_camera();
+		if (play):
+			play();
 
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true) -> void:

@@ -352,12 +352,24 @@ func clear_selection() -> void:
 func open_level_folder() -> void:
 	var path : String = ProjectSettings.globalize_path("user://Levels");
 	OS.shell_open(path);
-	
+
+
+## Play the currently selected level.
 func play_current_level() -> void:
-	pass;
-	
+	if (!selectedItem):
+		return;
+
+	AudioManager.play_UI_effect("UI_Selection");
+	masterManager.load_level(selectedItem.levelPath, true);
+
+
+## Edit the currently selected level.
 func edit_current_level() -> void:
-	pass;
+	if (!selectedItem):
+		return;
+
+	AudioManager.play_UI_effect("UI_Selection");
+	masterManager.load_level(selectedItem.levelPath);
 
 func delete_current_level() -> void:
 	pass;

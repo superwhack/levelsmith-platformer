@@ -206,42 +206,54 @@ theme_override_constants/separation = 8
 
 [node name="PropOneButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1349934672 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Prop [1]"
+tooltip_text = "Prop [1] 
+Rotate [R]
+Swap Foreground/Background [F]"
 thisItemID = 600
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
 
 [node name="PropTwoButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=425089871 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Prop [2]"
+tooltip_text = "Prop [2]
+Rotate [R]
+Swap Foreground/Background [F]"
 thisItemID = 601
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
 
 [node name="PropThreeButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=766602216 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Prop [3]"
+tooltip_text = "Prop [3]
+Rotate [R]
+Swap Foreground/Background [F]"
 thisItemID = 602
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
 
 [node name="PropFourButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=448831461 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Prop [4]"
+tooltip_text = "Prop [4]
+Rotate [R]
+Swap Foreground/Background [F]"
 thisItemID = 603
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
 
 [node name="PropFiveButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1555120042 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Prop [5]"
+tooltip_text = "Prop [5]
+Rotate [R]
+Swap Foreground/Background [F]"
 thisItemID = 604
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
 
 [node name="PropSixButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=923450028 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Prop [6]"
+tooltip_text = "Prop [6]
+Rotate [R]
+Swap Foreground/Background [F]"
 thisItemID = 605
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true

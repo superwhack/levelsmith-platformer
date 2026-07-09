@@ -8,6 +8,8 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gojh1"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3i2rc"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gn8f6"]
 
 [node name="WinScreen" type="PanelContainer" unique_id=1204440589]
@@ -118,6 +120,7 @@ text = "Enter Editing mode"
 
 [node name="Panel" type="Panel" parent="." unique_id=1175347454]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3i2rc")
 
 [node name="PanelContainer" type="PanelContainer" parent="Panel" unique_id=1404947995]
 layout_mode = 1

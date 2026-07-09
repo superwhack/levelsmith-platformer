@@ -20,9 +20,9 @@ func _ready() -> void:
 	onScreen.screen_exited.connect(delete_projectile);
 	
 	if bounceable:
-		sprite.texture = bounceTexture
+		sprite.texture = bounceTexture;
 	else:
-		sprite.texture = dangerTexture
+		sprite.texture = dangerTexture;
 
 ## Move the projectile at a speed
 func _process(delta: float) -> void:

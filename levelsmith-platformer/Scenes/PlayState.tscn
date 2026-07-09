@@ -7,7 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="6_x53pn"]
 [ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
 [ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
+[ext_resource type="Texture2D" uid="uid://qf7uq7d7mpai" path="res://Assets/UserInterface/line-md--heart-filled.png" id="7_j23bb"]
 [ext_resource type="PackedScene" uid="uid://cmpj0a4yqf4gu" path="res://Scenes/UI/WinScreen.tscn" id="8_4i4ea"]
+[ext_resource type="Texture2D" uid="uid://cerg25kv03gd3" path="res://Assets/UserInterface/tabler--heart.png" id="8_qxglv"]
 [ext_resource type="Texture2D" uid="uid://dvs3jqnfvwc0y" path="res://Assets/Sprites/UI/solar--restart-broken.png" id="10_2riqt"]
 [ext_resource type="Texture2D" uid="uid://btuksk07vr1o3" path="res://Assets/UserInterface/material-symbols--resume-rounded.png" id="10_4pdbi"]
 [ext_resource type="Texture2D" uid="uid://dkvjfsrhqtfgp" path="res://Assets/Sprites/UI/mdi--pencil.png" id="11_j23bb"]
@@ -171,6 +173,8 @@ icon_alignment = 1
 [node name="PlayerHealthUi" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=621394887 instance=ExtResource("6_x53pn")]
 custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
+full_heart_texture = ExtResource("7_j23bb")
+empty_heart_texture = ExtResource("8_qxglv")
 
 [node name="PlayUISpacer" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=79976120]
 custom_minimum_size = Vector2(20, 0)

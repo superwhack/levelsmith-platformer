@@ -1,7 +1,8 @@
 extends HBoxContainer
 
 @export var heart_scene: PackedScene;
-@export var empty_heart_modulate: Color = Color(0.55, 0.55, 0.55, 1.0);
+@export var full_heart_texture: Texture2D
+@export var empty_heart_texture: Texture2D 
 
 @onready var health_container: HBoxContainer = $PanelContainer/MarginContainer/HealthContainer;
 
@@ -55,4 +56,8 @@ func _apply_health_visuals(current_health: int) -> void:
 
 	for i in range(heart_icons.size()):
 		heart_icons[i].visible = true
-		heart_icons[i].modulate = Color.WHITE if i < current_health else empty_heart_modulate
+		
+		if i < current_health:
+			heart_icons[i].texture = full_heart_texture
+		else: 
+			heart_icons[i].texture = empty_heart_texture 

@@ -42,5 +42,6 @@ scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_5jdan")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2014910646]
+z_index = -1
 sprite_frames = SubResource("SpriteFrames_ogq8d")
 animation = &"StationaryIdle"

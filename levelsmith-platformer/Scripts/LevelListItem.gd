@@ -11,6 +11,7 @@ var author : String = "";
 var dateCreated : String = "";
 var dateModified : String = "";
 var dimensions : String = "";
+var objectCount : String = "";
 var version : String = "";
 var thumbnail : Texture2D;
 

@@ -40,16 +40,20 @@ var importedLevelPath : String;
 @export var levelListItem : PackedScene;
 
 ## References to meta data values.
+@export var levelName : Label;
 @export var author : Label;
 @export var dateCreated : Label;
 @export var dateModified : Label;
 @export var dimensions : Label;
+@export var objectCount : Label;
 @export var version : Label;
 @export var preview : TextureRect;
 @export var previewDefault : Texture2D;
 
 # The currently selected level item.
 var selectedItem : Control = null;
+# Dictionary of all level items. For level list filling.
+var levelItems: Dictionary = {} # path -> item
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -147,7 +151,7 @@ func create_new_level() -> void:
 		Vector2i( 
 			int(spinBoxNewLevelX.value), 
 			int(spinBoxNewLevelY.value) 
-			) 
+			)
 		);
 		
 	# Reset leftover data
@@ -161,9 +165,6 @@ func exit_program() -> void:
 	
 ## Fills the level list with currently existing levels from the user's directory.
 func fill_level_list() -> void:
-	# First, kill everything inside of the list. Makes refreshing easy
-	for item in levelList.get_children():
-		item.queue_free();
 	# Get the directory that contains all the level folders
 	var levelsPath : String = "user://Levels"
 	var levelListDir : DirAccess = DirAccess.open(levelsPath);
@@ -172,6 +173,8 @@ func fill_level_list() -> void:
 	if (!levelListDir):
 		return;
 		
+	var levelFolders : Dictionary = {};
+	
 	levelListDir.list_dir_begin();
 	
 	var folderName : String = levelListDir.get_next();
@@ -182,9 +185,32 @@ func fill_level_list() -> void:
 			var levelPath : String = levelsPath + "/" + folderName;
 			# Add the level to the level list and set it up visually.
 			if (get_level_valid(levelPath)):
-				setup_level_item(folderName, levelPath);
+				levelFolders[levelPath] = folderName;
 
 		folderName = levelListDir.get_next();
+		
+	levelListDir.list_dir_end();
+	
+	# Remove folders that do not exist anymore
+	for levelPath in levelItems.keys().duplicate():
+		if (!levelFolders.has(levelPath)):
+			var item = levelItems[levelPath];
+
+			if (selectedItem == item):
+				clear_selection();
+
+			item.queue_free();
+			levelItems.erase(levelPath);
+			
+	for levelPath in levelFolders.keys():
+		if (!levelItems.has(levelPath)):
+			setup_level_item(levelFolders[levelPath], levelPath);
+		else:
+			update_level_item(
+				levelItems[levelPath],
+				levelFolders[levelPath],
+				levelPath
+			);
 
 ## Setups each level item in the list.
 ## folderName: the folder of the level. Used for level title.
@@ -193,50 +219,7 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 	# Instantiate and add to level list.
 	var item : Node = levelListItem.instantiate();
 	levelList.add_child(item);
-	item.levelPath = levelPath + "/";
-
-	# Setting the level list item data
-	item.levelTitle.text = folderName;
-	item.levelButton.tooltip_text = folderName; 
-	
-	# Connect the level button signal to the double clicked function
-	item.level_double_clicked.connect(_on_level_double_clicked);
-	# Hovering an item populates the metadata field.
-	#item.level_hovered.connect(_on_level_hovered);
-	# Selecting an item toggles.
-	item.level_toggled.connect(_on_level_toggled);
-	item.level_deselected.connect(_on_level_deselected);
-	
-	# Fetch thumbnail, if it exists
-	var levelThumbnailPath : String = levelPath + "/Preview.PNG";
-	
-	# Fetch the level's metadata.
-	var metadata : Dictionary = ImportExportManager.get_metadata(levelPath);
-	
-		
-	# Adding metadata to the actual buttons themselves.
-	item.levelDate.text = metadata.get("dateCreated", "01.01.1967");
-	item.levelTime.text = metadata.get("timeCreated", "00:00");
-	
-	# Storing metadata in the buttons, for hovering/selecting.
-	item.author = str(metadata.get("author", ""));
-	item.dateCreated = "%s %s" % [
-		metadata.get("dateCreated", "01.01.1967"),
-		metadata.get("timeCreated", "00:00")];
-	item.dateModified = "%s %s" % [
-		metadata.get("dateModified", "01.01.1967"),
-		metadata.get("timeModified", "00:00")];
-	item.dimensions = str(metadata.get("dimensions", str([20, 20])));
-	item.version = str(metadata.get("version", Global.VERSION));
-	
-	# If the the thumbnail exists, add it to the 
-	if (FileAccess.file_exists(levelThumbnailPath)):
-		var image : Image = Image.new();
-		# If the image returns, add to item script
-		if (image.load(levelThumbnailPath) == OK):
-			var texture : ImageTexture = ImageTexture.create_from_image(image);
-			item.thumbnail = texture;
-			print(item.thumbnail)
+	update_level_item(item, folderName, levelPath);
 
 
 ## Load a level when appropriate button is pressed
@@ -268,26 +251,82 @@ func _on_level_toggled(item, toggled: bool) -> void:
 func _on_level_deselected(item) -> void:
 	if (selectedItem == item):
 		item.levelButton.button_pressed = false;
-		selectedItem = null;
-		author.text = "";
-		dateCreated.text = "";
-		dateModified.text = "";
-		dimensions.text = "";
-		version.text = "";
-		preview.texture = item.thumbnail;
+		clear_selection();
+		
+
+func update_level_item(item: Node, folderName : String, levelPath : String) -> void:
+	item.levelPath = levelPath + "/";
+	levelItems[levelPath] = item;
+
+	# Setting the level list item data
+	item.levelTitle.text = folderName;
+	item.levelButton.tooltip_text = folderName; 
+	
+	# Connect the level button signal to the double clicked function
+	item.level_double_clicked.connect(_on_level_double_clicked);
+	# Hovering an item populates the metadata field.
+	#item.level_hovered.connect(_on_level_hovered);
+	# Selecting an item toggles.
+	item.level_toggled.connect(_on_level_toggled);
+	item.level_deselected.connect(_on_level_deselected);
+	
+	# Fetch thumbnail, if it exists
+	var levelThumbnailPath : String = levelPath + "/Preview.PNG";
+	
+	# Fetch the level's metadata.
+	var metadata : Dictionary = ImportExportManager.get_metadata(levelPath);
+	
+	
+	# Adding metadata to the actual buttons themselves.
+	item.levelDate.text = metadata.get("dateCreated", "01.01.1967");
+	item.levelTime.text = metadata.get("timeCreated", "00:00");
+	
+	# Storing metadata in the buttons, for hovering/selecting.
+	item.author = str(metadata.get("author", ""));
+	item.dateCreated = "%s %s" % [
+		metadata.get("dateCreated", "01.01.1967"),
+		metadata.get("timeCreated", "00:00")];
+	item.dateModified = "%s %s" % [
+		metadata.get("dateModified", "01.01.1967"),
+		metadata.get("timeModified", "00:00")];
+	item.dimensions = str(metadata.get("dimensions", str([20, 20])));
+	item.objectCount = str(int(metadata.get("objects", str(0))));
+	item.version = str(metadata.get("version", Global.VERSION));
+	
+	# If the the thumbnail exists, add it to the 
+	if (FileAccess.file_exists(levelThumbnailPath)):
+		var image : Image = Image.new();
+		# If the image returns, add to item script
+		if (image.load(levelThumbnailPath) == OK):
+			var texture : ImageTexture = ImageTexture.create_from_image(image);
+			item.thumbnail = texture;
 
 
 ## Reusable function for updating metadata based on given item.
 ## item: Level item to be used for updating metadata.
 func update_metadata(item) -> void:
+	levelName.text = item.levelTitle.text;
 	author.text = item.author;
 	dateCreated.text = item.dateCreated;
 	dateModified.text = item.dateModified;
 	dimensions.text = item.dimensions;
+	objectCount.text = item.objectCount;
 	version.text = item.version;
 	if (item.thumbnail):
 		preview.texture = item.thumbnail;
 	else:
+		preview.texture = previewDefault;
+		
+## Clears the metadata selection.
+func clear_selection() -> void:
+		selectedItem = null;
+		levelName.text = "";
+		author.text = "";
+		dateCreated.text = "";
+		dateModified.text = "";
+		dimensions.text = "";
+		objectCount.text = "";
+		version.text = "";
 		preview.texture = previewDefault;
 	
 ## Retrieves the world size from a CSV file.

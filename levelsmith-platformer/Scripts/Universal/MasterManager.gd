@@ -57,11 +57,6 @@ func _ready() -> void:
 		
 	main_menu(false);
 	
-## When the user does a save level input, save the level.
-## event: The user input
-func _input(event: InputEvent) -> void:
-	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
@@ -142,6 +137,8 @@ func main_menu(menuClickSound : bool = true) -> void:
 	ImportExportManager.clear_enemies_folder();
 	AudioManager.reset_audio();
 	mainMenuControl.fill_level_list();
+	if (mainMenuControl.selectedItem):
+		mainMenuControl.update_metadata(mainMenuControl.selectedItem);
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 	loadedLevelPath = "";

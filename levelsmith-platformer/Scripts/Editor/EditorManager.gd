@@ -57,7 +57,7 @@ func _ready() -> void:
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
 		
-		ImportExportManager.save_level_screenshot(levelScreenshot);		
+		ImportExportManager.save_level_screenshot(levelScreenshot);
 		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu);
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
@@ -86,6 +86,14 @@ func _process(_delta: float) -> void:
 	# Save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
 	
+## When the user does a save level input, save the level.
+## event: The user input
+func _input(event: InputEvent) -> void:
+	if (event.is_action_pressed("level_save")):
+		masterManager.propertyMenu.close();
+		var levelScreenshot : Image = await screenshot_level();
+		ImportExportManager.save_level_screenshot(levelScreenshot);
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu);
 
 
 ## Takes a screenshot of the level by hiding the UI and disabling the main camera

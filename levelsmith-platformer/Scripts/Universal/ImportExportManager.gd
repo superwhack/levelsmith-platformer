@@ -41,7 +41,6 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 	
 	# The current date and time from system.
 	var now : Dictionary = Time.get_datetime_dict_from_system()
-
 	
 	# Generate default JSON file as a dictionary.
 	var defaultJSON : Dictionary = {
@@ -52,6 +51,7 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"dateModified": "%02d.%02d.%04d" % [now.month, now.day, now.year],
 			"timeModified": "%02d:%02d" % [now.hour, now.minute],
 			"dimensions": levelSize,
+			"objects": 0,
 			"version": Global.VERSION,
 			"favorited": false
 		},
@@ -124,12 +124,15 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 	var metadata : Dictionary = json["metadata"];
 
 	var now : Dictionary = Time.get_datetime_dict_from_system();
+	
+	var objects : int = get_object_count(tileMap, worldSize);
 
 	# Update metadata without completely overwriting it.
 	metadata["dateModified"] = "%02d.%02d.%04d" % [now.month, now.day, now.year];
 	metadata["timeModified"] = "%02d:%02d" % [now.hour, now.minute];
 	metadata["dimensions"] = worldSize;
 	metadata["version"] = Global.VERSION;
+	metadata["objects"] = objects;
 
 	json["metadata"] = metadata;
 	
@@ -459,6 +462,7 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();
 			
 ## If any enemy data is corrupted, we can repair it by giving it default values.
+## tileMap: the main tile map layer.
 func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
 	for node in tileMap.get_children():
 		if node is EnemyPatrol && node.propertyFile == null:
@@ -485,3 +489,19 @@ func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
 			var newStationary : Resource = defaultStationary.duplicate(true);
 			ResourceSaver.save(newStationary, "res://Resources/Enemies/Stationary-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
+			
+## Gets the object count of the given tile map and worldsize.
+## tileMap: the main tile map layer.
+## worldSize: the world size.
+## Returns the amount of tiles that are not empty and not ignored IDs.
+func get_object_count(tileMap: TileMapLayer, worldSize : Vector2i) -> int:
+	var count : int = 0;
+
+	for y in worldSize.y:
+		for x in worldSize.x:
+			var tile_id := tileMap.get_cell_source_id(Vector2i(x, y));
+
+			if (tile_id != Global.EMPTY_TILE && tile_id != Global.BEDROCK_TILE):
+				count += 1;
+
+	return count;

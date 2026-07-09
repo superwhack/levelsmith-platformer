@@ -111,7 +111,7 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 corner_detail = 10
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "fileExplorer", "levelList", "author", "dateCreated", "dateModified", "dimensions", "version", "preview")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "fileExplorer", "levelList", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -143,10 +143,12 @@ badImportBody = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/
 fileExplorer = NodePath("FileDialog")
 levelList = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll/LevelList")
 levelListItem = ExtResource("2_riqfo")
+levelName = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/SelectedLevelName")
 author = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Author")
 dateCreated = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/DateCreated")
 dateModified = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Modified")
 dimensions = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Dimensions")
+objectCount = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Objects")
 version = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Version")
 preview = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture")
 previewDefault = ExtResource("10_m7n2d")
@@ -389,12 +391,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="LevelListItem2" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll/LevelList" unique_id=2067988774 instance=ExtResource("2_riqfo")]
-layout_mode = 2
-
-[node name="LevelListItem" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll/LevelList" unique_id=294074081 instance=ExtResource("2_riqfo")]
-layout_mode = 2
-
 [node name="ExitRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox" unique_id=1665265409]
 layout_mode = 2
 
@@ -551,6 +547,11 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
 text = "Dimensions:"
 
+[node name="ObjectLabel" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/LabelColumn" unique_id=1665498107]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+text = "Object Count:"
+
 [node name="VersionLabel" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/LabelColumn" unique_id=1778590713]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
@@ -566,27 +567,26 @@ layout_mode = 2
 [node name="Author" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn" unique_id=1271155073]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-text = "ABBCDEJSTTZZ"
 
 [node name="DateCreated" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn" unique_id=24275941]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-text = "07.07.2026"
 
 [node name="Modified" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn" unique_id=115723841]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-text = "07.07.2026"
 
 [node name="Dimensions" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn" unique_id=1418321816]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-text = "20 x 20 Tiles"
+
+[node name="Objects" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn" unique_id=925562641]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
 
 [node name="Version" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn" unique_id=1023183600]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-text = "1.0"
 
 [node name="ActionsColumn" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow" unique_id=1259268399]
 layout_mode = 2
@@ -852,6 +852,7 @@ layout_mode = 2
 min_value = 2.0
 max_value = 1000.0
 value = 20.0
+rounded = true
 
 [node name="HeightSpinBox" type="SpinBox" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow/InputsColumn" unique_id=1250217443]
 layout_mode = 2

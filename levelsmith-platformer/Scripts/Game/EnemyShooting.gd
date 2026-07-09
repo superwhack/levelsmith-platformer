@@ -17,6 +17,10 @@ var gravityOn : bool;
 @export var directionArrow : Sprite2D;
 @export var questionMark : Sprite2D;
 
+# Reverences to Texture2D assets for bullet variants
+@export var dangerTexture : Texture2D;
+@export var bounceTexture : Texture2D;
+
 # Projectile scene for instantiating
 const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn");
 
@@ -87,6 +91,10 @@ func shooting_behavior() -> void:
 	else:
 		projectileFired.global_rotation_degrees = fireDirection;
 	projectileFired.bounceable = projBounce;
+	if (projBounce):
+		projectileFired.assign_texture(bounceTexture);
+	else:
+		projectileFired.assign_texture(dangerTexture);
 	add_sibling(projectileFired);
 	animatedSprites.play("EnemyShoot");
 

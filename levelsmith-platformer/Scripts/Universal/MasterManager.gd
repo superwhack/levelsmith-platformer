@@ -76,18 +76,18 @@ func _input(event: InputEvent) -> void:
 ## Plays the screen wipe animation that covers the screen before a state transition.
 func screen_wipe_in() -> void:
 	loadingScreen.show();
-	loadingAnimation.play("WipeIn");
+	loadingAnimation.play("WipeIn1");
 	await loadingAnimation.animation_finished;
 
 ## Plays the screen wipe animation that reveals the destination state after loading.
 func screen_wipe_out() -> void:
-	loadingAnimation.play("WipeOut");
+	loadingAnimation.play("WipeOut2");
 	await loadingAnimation.animation_finished;
 	loadingScreen.hide();
 
 ## special loading screen specific for main menu
 func screen_static() -> void:
-	loadingAnimation.play("WipeOut2");
+	loadingAnimation.play("Static");
 	await loadingAnimation.animation_finished;
 	loadingScreen.hide();
 

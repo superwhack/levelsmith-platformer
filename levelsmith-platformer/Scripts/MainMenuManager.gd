@@ -378,7 +378,7 @@ func delete_current_level() -> void:
 
 	AudioManager.play_UI_effect("UI_Selection");
 	
-	var levelPath : String = selectedItem.levelPath;
+	var levelPath : String = selectedItem.levelPath.rstrip("/");
 
 	# Delete all files and folders inside the level directory
 	# Thank you: https://tinyurl.com/ak58bfvd

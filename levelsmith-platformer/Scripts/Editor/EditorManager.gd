@@ -3,6 +3,7 @@ extends Node2D
 # References to other managers
 @export var toolManager : Node2D;
 @export var masterManager : Node2D;
+@export var iconManager : Node2D;
 
 # Camera reference
 @export var mainCamera : Camera2D;
@@ -154,6 +155,7 @@ func open_asset_manager() -> void:
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UI_Selection")
 	previewTileMap.hide();
+	iconManager.previewIcon.hide();
 	assetManager.show();
 
 ## Opens the settings menu
@@ -162,6 +164,7 @@ func open_settings_menu() -> void:
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UI_Selection")
 	previewTileMap.hide();
+	iconManager.previewIcon.hide();
 	settingsMenu.show();
 
 ## Closes the asset manager

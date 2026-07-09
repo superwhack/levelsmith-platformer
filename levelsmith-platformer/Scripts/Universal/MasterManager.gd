@@ -19,6 +19,7 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var editorHomeButton : Button;
 @export var editorPlayButton : Button;
 @export var returnToEditorButton : Button;
+@export var WinReturnToEditorButton : Button;
 @export var playPopUp : HBoxContainer;
 
 # Reference to tile maps
@@ -29,9 +30,9 @@ var state : Global.State = Global.State.MAIN_MENU;
 # Map that is currently loaded in the Play scene
 var loadedMap : TileMapLayer;
 
-## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
 @export var worldSize : Vector2i;
+
 @export var propertyMenu : Panel;
 
 var loadedLevelPath : String = "";
@@ -51,6 +52,7 @@ func _ready() -> void:
 	editorPlayButton.mouse_entered.connect(mouse_entered_play_button);
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
+	WinReturnToEditorButton.pressed.connect(edit);
 	
 	# Create the enemy resource folder and custom player preset.
 	if (!DirAccess.dir_exists_absolute("user://Resources/")):
@@ -96,11 +98,12 @@ func screen_static() -> void:
 
 ## Set up a new level
 ## levelName: Name of the level
+## levelAuthor: Author of the level
 ## newSize: The width and height of the level
-func level_setup( levelName: String, newSize: Vector2i ) -> void:
+func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	cameraManager.initialize_camera();
-	ImportExportManager.make_new_level(levelName, worldSize, editorManager.settingsMenu);
+	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.settingsMenu);
 	propertyMenu.reset_custom();
 	loadedLevelPath = "user://Levels/" + levelName + "/";
 	#AudioManager.masterVolume = 0;
@@ -135,6 +138,7 @@ func import_level_and_edit() -> void:
 	entityManager.scan_goals(worldSize.x, worldSize.y);
 	editorManager.reset_enemy_positions();
 	await get_tree().process_frame;
+	cameraManager.initialize_camera();
 	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.settingsMenu);
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
@@ -142,13 +146,14 @@ func import_level_and_edit() -> void:
 
 ## Loads the given level to the player.
 ## levelPath: The folder path of the level.
-func load_level(levelPath: String) -> void:
+func load_level(levelPath: String, play: bool = false) -> void:
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
 		# Await so that the camera gets properly placed
 		await import_level_and_edit();
-		cameraManager.initialize_camera();
+		if (play):
+			play();
 
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
@@ -168,6 +173,8 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	ImportExportManager.clear_enemies_folder();
 	AudioManager.reset_audio();
 	mainMenuControl.fill_level_list();
+	if (mainMenuControl.selectedItem):
+		mainMenuControl.update_metadata(mainMenuControl.selectedItem);
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 	await get_tree().process_frame;

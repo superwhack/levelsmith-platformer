@@ -4,13 +4,13 @@
 [ext_resource type="Script" uid="uid://cnfmia7tequpl" path="res://Scripts/Universal/AnimationManager.gd" id="2_0vixy"]
 [ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/Universal/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
-[ext_resource type="PackedScene" uid="uid://bjx53xjckex6r" path="res://Scenes/MainMenu.tscn" id="2_gojh1"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
-[ext_resource type="Texture2D" uid="uid://dnutrybtymj0o" path="res://Assets/Sprites/UI/LoadingScreenBgImg.png" id="9_gojh1"]
+[ext_resource type="PackedScene" uid="uid://bjx53xjckex6r" path="res://Scenes/MainMenu.tscn" id="8_gojh1"]
+[ext_resource type="Texture2D" uid="uid://c6h10n2uw81h7" path="res://Assets/Sprites/UI/LoadingScreenBgImg.png" id="9_gojh1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -146,7 +146,7 @@ _data = {
 &"WipeOut2": SubResource("Animation_8fjml")
 }
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "loadingScreen", "loadingAnimation", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "playPopUp", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "loadingScreen", "loadingAnimation", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "WinReturnToEditorButton", "playPopUp", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
@@ -158,14 +158,15 @@ gameManagerCanvas = NodePath("GameManager/CanvasLayer")
 loadingScreen = NodePath("LoadingScreen")
 loadingAnimation = NodePath("LoadingScreen/ScreenContent/LoadingAnimation")
 mainMenuControl = NodePath("MainMenuCanvasLayer/MainMenu")
-editorHomeButton = NodePath("EditorManager/ScreenUI/TopLeftAnchor/TopLeftRow/HomeButton")
-editorPlayButton = NodePath("EditorManager/ScreenUI/BottomRightAnchor/PlayButton")
-returnToEditorButton = NodePath("GameManager/CanvasLayer/BottomScreenGroup/BottomRightMargin/Container/ReturnEditorButton")
-playPopUp = NodePath("EditorManager/ScreenUI/BottomRightAnchor/HoverPopUpContainer")
+editorHomeButton = NodePath("EditorManager/ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/HomeButton")
+editorPlayButton = NodePath("EditorManager/ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton")
+returnToEditorButton = NodePath("GameManager/CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ReturnEditorButton")
+WinReturnToEditorButton = NodePath("GameManager/CanvasLayer/WinScreen/Panel/TopRightMargin/Container/ReturnEditorWinButton")
+playPopUp = NodePath("EditorManager/ScreenUI/MainColumn/ContentRow/HoverPopUpContainer")
 tileMap = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
 gridLines = NodePath("EditorManager/GridLines")
-propertyMenu = NodePath("EditorManager/CanvasLayer/PropertyMenu")
+propertyMenu = NodePath("EditorManager/ScreenUI/MainColumn/ContentRow/PropertiesPanel/PropertyMenu")
 
 [node name="AnimationManager" type="Node" parent="." unique_id=343134313]
 script = ExtResource("2_0vixy")
@@ -201,7 +202,7 @@ collision_enabled = true
 [node name="AssetManager" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="0" unique_id=468653693 node_paths=PackedStringArray("masterManager")]
 masterManager = NodePath("../../..")
 
-[node name="SettingsMenu" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="2" unique_id=79213823 node_paths=PackedStringArray("cameraManager")]
+[node name="SettingsMenu" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=79213823 node_paths=PackedStringArray("cameraManager")]
 cameraManager = NodePath("../../../Camera2D")
 
 [node name="CustomCursorManager" parent="EditorManager" index="6" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
@@ -211,7 +212,6 @@ masterManager = NodePath("../..")
 masterManager = NodePath("../..")
 
 [node name="LevelScreenshot" parent="EditorManager" index="9" unique_id=1423987778 node_paths=PackedStringArray("masterManager", "baseCamera")]
-enabled = false
 masterManager = NodePath("../..")
 baseCamera = NodePath("../../Camera2D")
 
@@ -220,9 +220,8 @@ cameraManager = NodePath("../Camera2D")
 
 [node name="MainMenuCanvasLayer" type="CanvasLayer" parent="." unique_id=1285763636]
 
-[node name="MainMenu" parent="MainMenuCanvasLayer" unique_id=422065839 node_paths=PackedStringArray("masterManager") instance=ExtResource("2_gojh1")]
+[node name="MainMenu" parent="MainMenuCanvasLayer" unique_id=1798083708 node_paths=PackedStringArray("masterManager") instance=ExtResource("8_gojh1")]
 masterManager = NodePath("../..")
-metadata/_edit_group_ = true
 
 [node name="PopUps" type="CanvasLayer" parent="." unique_id=1234008250]
 layer = 5
@@ -260,6 +259,6 @@ libraries/ = SubResource("AnimationLibrary_0vixy")
 [connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
 
 [editable path="EditorManager"]
-[editable path="EditorManager/ScreenUI/BottomRightAnchor/HoverPopUpContainer"]
 [editable path="EditorManager/CanvasLayer/AssetManager"]
 [editable path="GameManager"]
+[editable path="GameManager/CanvasLayer/WinScreen"]

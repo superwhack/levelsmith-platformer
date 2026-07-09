@@ -41,36 +41,8 @@ tooltip_text = "Reset"
 focus_behavior_recursive = 1
 theme = ExtResource("1_pj8m8")
 action_mode = 0
+icon = ExtResource("4_3i2rc")
 icon_alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="Panel/TopRightMargin/Container/ReplayButton" unique_id=590839823]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 3
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 3
-theme_override_constants/margin_bottom = 3
-
-[node name="Control" type="Control" parent="Panel/TopRightMargin/Container/ReplayButton/MarginContainer" unique_id=1340045511]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Icon" type="TextureRect" parent="Panel/TopRightMargin/Container/ReplayButton/MarginContainer/Control" unique_id=53316215]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -1.0
-offset_bottom = -1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_3i2rc")
-expand_mode = 2
-stretch_mode = 5
 
 [node name="Spacer" type="Control" parent="Panel/TopRightMargin/Container" unique_id=185393761]
 custom_minimum_size = Vector2(20, 0)

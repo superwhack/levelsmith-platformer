@@ -477,6 +477,27 @@ func duplicate_current_level() -> void:
 	DirAccess.make_dir_absolute(destination);
 	ImportExportManager.clone_data(itemLevelPath, destination);
 
+	# Reset duplicate metadata
+	var now : Dictionary = Time.get_datetime_dict_from_system()
+	var meridiem : String = "AM";
+	if (now.hour >= 12):
+		meridiem = "PM";
+		
+	# So that time cannot equal 0:15 AM
+	now.hour %= 12;
+	if (now.hour == 0):
+		now.hour = 12;
+
+	var date := "%02d.%02d.%04d" % [now.month, now.day, now.year];
+	var time := "%02d:%02d %s" % [now.hour, now.minute, meridiem];
+
+	# set all metadata when duplicating appropriately
+	ImportExportManager.set_metadata(destination.rstrip("/"), "favorited", false);
+	ImportExportManager.set_metadata(destination.rstrip("/"), "dateCreated", date);
+	ImportExportManager.set_metadata(destination.rstrip("/"), "timeCreated", time);
+	ImportExportManager.set_metadata(destination.rstrip("/"), "dateModified", date);
+	ImportExportManager.set_metadata(destination.rstrip("/"), "timeModified", time);
+
 	overlayDuplicateLevel.hide();
 	duplicateName.clear();
 	fill_level_list();

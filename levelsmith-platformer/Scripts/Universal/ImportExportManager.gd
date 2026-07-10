@@ -108,7 +108,7 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
 ## settings: The settings menu to export the configurations from
-func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, settings: SettingsMenu, isValidated : bool = false) -> void:
+func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i, settings: SettingsMenu, isValidated : bool = false) -> void:
 	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):

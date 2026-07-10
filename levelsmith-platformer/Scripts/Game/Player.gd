@@ -10,6 +10,8 @@ enum WallDirection {
 
 # The player settings that can be changed in editor
 @export var groundSpeed : float = 1.0;
+@export var baseAcceleration : float = 1.0;
+@export var baseDeceleration : float = 1.0;
 @export var jumpHeight : float = 2.0;
 @export var doubleJump : bool = false;
 var doubleJumpAvailable : bool = doubleJump;
@@ -130,7 +132,9 @@ func _physics_process(delta: float) -> void:
 		currentWalkingEffect = Global.WalkingEffect.NONE;
 		if (coyoteTimeLeft > 0):
 			coyoteTimeLeft -= delta;
-		velocity += get_gravity() * delta * fallSpeed;
+		velocity += get_gravity() * delta;
+		if velocity.y > 1300 * fallSpeed:
+			velocity.y = 1300 * fallSpeed;
 	else:
 		isJumping = false;
 		jumpAnimStarted = false;
@@ -179,7 +183,7 @@ func animate() -> void:
 			fallAnimStarted = true;
 		else:
 			return;
-	elif (velocity.x != 0):
+	elif (direction):
 		animatedSprites.animation = "PlayerRun";
 		fallAnimStarted = false;
 	else:
@@ -206,6 +210,12 @@ func walk() -> void:
 	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;
+		# Acceleration if moving in direction of current movement
+		if baseAcceleration != 1.0 && (sign(velocity.x) == sign(direction) || velocity.x == 0):
+			accelerationX = direction * pow(abs(accelerationX), pow(baseAcceleration, 2));
+		# Deceleration if moving in opposite direction
+		elif baseDeceleration != 1.0 && sign(velocity.x) != sign(direction):
+			accelerationX *= pow(baseDeceleration, 5);
 	# Acceleration
 	else:
 		if !slidingSticky:
@@ -214,6 +224,12 @@ func walk() -> void:
 			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 		else:
 			accelerationX = clamp(-velocity.x, -trueSpeed * .75, trueSpeed * .75);
+		# Deceleration if not moving
+		if baseDeceleration != 1.0:
+			accelerationX *= pow(baseDeceleration, 5);
+		# Clamping if velocity is too low
+		if abs(velocity.x) < 10 * groundSpeed:
+			accelerationX = -velocity.x;
 	# Air Control
 	if (not is_on_floor()):
 		accelerationX *= airControl * airControl;
@@ -231,7 +247,10 @@ func walk() -> void:
 		if direction / velocity.x > 0 && abs(velocity.x + accelerationX * .1) > trueSpeed:
 			accelerationX = 0;
 		else:
-			accelerationX *= .05;
+			if airControl != 0:
+				accelerationX *= .05 / pow(airControl, 2);
+			else:
+				accelerationX *= .05;
 		
 	# Velocity gets capped so you can't accelerate faster
 	elif (abs(velocity.x + accelerationX) > trueSpeed):
@@ -255,7 +274,9 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 		return false;
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
-	velocity = direction * (1000 + higherBounce * 500);
+	velocity = direction * (1000 + higherBounce * 500)
+	if is_on_floor():
+		velocity *= pow(groundSpeed, .9);
 	health -= amount;
 	if (health <= 0):
 		die();
@@ -369,7 +390,7 @@ func detect_tiles() -> void:
 					velocity.y *= .94;
 				if tileName != "slow":
 					currentSlowdown = 1.0;
-			if Input.is_action_just_pressed("jump"):
+			if Input.is_action_just_pressed("jump") && !is_on_floor():
 				# Depending on direction, apply a different x velocity
 				if rayDirection.x < 0:
 					if wallJumpDirection != WallDirection.LEFT:
@@ -484,6 +505,8 @@ func apply_preset(preset: PlayerMovementPreset) -> void:
 	maxHealth = preset.health;
 	health = maxHealth
 	groundSpeed = preset.groundSpeed;
+	baseAcceleration = preset.acceleration;
+	baseDeceleration = preset.deceleration;
 	jumpHeight = preset.jumpHeight;
 	airControl = preset.airControl / 100.0;
 	fallSpeed = preset.fallSpeed;

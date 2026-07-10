@@ -12,13 +12,14 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var editorManagerCanvas : CanvasLayer;
 @export var gameManagerCanvas : CanvasLayer;
 @export var loadingScreen : CanvasLayer;
-@export var loadingAnimation : AnimationPlayer;
+@export var loadingImage : TextureRect;
 @export var mainMenuControl : Control;
 
 # References to relevant buttons
 @export var editorHomeButton : Button;
 @export var editorPlayButton : Button;
 @export var returnToEditorButton : Button;
+@export var WinReturnToEditorButton : Button;
 @export var playPopUp : HBoxContainer;
 
 # Reference to tile maps
@@ -29,12 +30,19 @@ var state : Global.State = Global.State.MAIN_MENU;
 # Map that is currently loaded in the Play scene
 var loadedMap : TileMapLayer;
 
-## NOTE: Magic numbers!!! This should be dynamic when loading/creating a level!
 ## Vars for the world size.
 @export var worldSize : Vector2i;
+
 @export var propertyMenu : Panel;
 
 var loadedLevelPath : String = "";
+
+# Tween information
+var loadingTween : Tween
+# The time that the screen wipe takes
+var loadingTweenTime : float = 0.35
+#The time that the full screen holds
+var loadingHold : float = 0.30
 
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
@@ -51,6 +59,7 @@ func _ready() -> void:
 	editorPlayButton.mouse_entered.connect(mouse_entered_play_button);
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
+	WinReturnToEditorButton.pressed.connect(edit);
 	
 	# Create the enemy resource folder and custom player preset.
 	if (!DirAccess.dir_exists_absolute("user://Resources/")):
@@ -59,6 +68,9 @@ func _ready() -> void:
 		DirAccess.copy_absolute("res://Resources/PlayerPresets/Default.tres", "user://Resources/Custom.tres");
 		
 	main_menu(false);
+	
+	
+	
 	
 	await screen_static();
 	await main_menu(false, true);
@@ -79,28 +91,36 @@ func _input(event: InputEvent) -> void:
 ## Plays the screen wipe animation that covers the screen before a state transition.
 func screen_wipe_in() -> void:
 	loadingScreen.show();
-	loadingAnimation.play("WipeIn");
-	await loadingAnimation.animation_finished;
+	# Create the loading animation tween
+	loadingTween = create_tween()
+	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 1.0, loadingTweenTime)
+	await loadingTween.finished;
+	await get_tree().create_timer(loadingHold).timeout
 
 ## Plays the screen wipe animation that reveals the destination state after loading.
 func screen_wipe_out() -> void:
-	loadingAnimation.play("WipeOut");
-	await loadingAnimation.animation_finished;
+	# Create the loading animation tween
+	loadingTween = create_tween()
+	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 0.0, loadingTweenTime)
+	await loadingTween.finished;
 	loadingScreen.hide();
 
 ## special loading screen specific for main menu
 func screen_static() -> void:
-	loadingAnimation.play("WipeOut2");
-	await loadingAnimation.animation_finished;
-	loadingScreen.hide();
+	await get_tree().create_timer(loadingHold).timeout
+	screen_wipe_out()
+	#loadingAnimation.play("WipeOut2");
+	#await loadingAnimation.animation_finished;
+	#loadingScreen.hide();
 
 ## Set up a new level
 ## levelName: Name of the level
+## levelAuthor: Author of the level
 ## newSize: The width and height of the level
-func level_setup( levelName: String, newSize: Vector2i ) -> void:
+func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	cameraManager.initialize_camera();
-	ImportExportManager.make_new_level(levelName, worldSize, editorManager.settingsMenu);
+	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.settingsMenu);
 	propertyMenu.reset_custom();
 	loadedLevelPath = "user://Levels/" + levelName + "/";
 	#AudioManager.masterVolume = 0;
@@ -135,6 +155,7 @@ func import_level_and_edit() -> void:
 	entityManager.scan_goals(worldSize.x, worldSize.y);
 	editorManager.reset_enemy_positions();
 	await get_tree().process_frame;
+	cameraManager.initialize_camera();
 	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.settingsMenu);
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
@@ -142,20 +163,22 @@ func import_level_and_edit() -> void:
 
 ## Loads the given level to the player.
 ## levelPath: The folder path of the level.
-func load_level(levelPath: String) -> void:
+func load_level(levelPath: String, play: bool = false) -> void:
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
 		# Await so that the camera gets properly placed
 		await import_level_and_edit();
-		cameraManager.initialize_camera();
+		if (play):
+			play();
 
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
+	mainMenuControl.fill_level_list();
 	if !onStart:
 		await screen_wipe_in();
 	if menuClickSound:
-		AudioManager.play_UI_effect("UI_Selection");
+		AudioManager.play_UI_effect("UISelection");
 	# Hide all non-menu states, show Main Menu scene
 	gameManager.hide();
 	gameManagerCanvas.hide();
@@ -167,7 +190,8 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	mainMenuControl.show();
 	ImportExportManager.clear_enemies_folder();
 	AudioManager.reset_audio();
-	mainMenuControl.fill_level_list();
+	if (mainMenuControl.selectedItem):
+		mainMenuControl.update_metadata(mainMenuControl.selectedItem);
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 	await get_tree().process_frame;
@@ -180,7 +204,7 @@ func edit() -> void:
 	await get_tree().process_frame;
 	await screen_wipe_in();
 	AudioManager.reset_audio();
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	if gameManager.tileMap:
 		gameManager.tileMap.queue_free();
@@ -217,7 +241,7 @@ func play() -> void:
 		return;
 	await screen_wipe_in();
 	propertyMenu.close();
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");
 	# Update state variable
 	state = Global.State.PLAY;

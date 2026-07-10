@@ -106,6 +106,7 @@ func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) ->
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	#print("NEW LEVEL SET UP");
+	AnimationManager.set_all_fps_to_json(loadedLevelPath + "Settings.JSON");
 	Global.levelCreated.emit();
 	editorManager.returnClick = false;
 

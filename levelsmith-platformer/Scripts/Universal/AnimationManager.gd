@@ -259,3 +259,29 @@ func update_animation_fps(animationName : String, newFPS : float):
 	
 func get_template_sprite(spriteName : String) -> AnimatedSprite2D:
 	return get(spriteName[0].to_lower() + spriteName.substr(1) + "TemplateSprite");
+
+func get_animation_fps(animationName : String) -> float:
+	var fps : float = 12;
+	if "Player" in animationName:
+		fps = playerTemplateSprite.sprite_frames.get_animation_speed(animationName);
+	elif "Patrol" in animationName:
+		fps = patrollingEnemyTemplateSprite.sprite_frames.get_animation_speed(animationName);
+	elif "Stationary" in animationName:
+		fps = stationaryEnemyTemplateSprite.sprite_frames.get_animation_speed(animationName);
+	elif "Fly" in animationName:
+		fps = flyingEnemyTemplateSprite.sprite_frames.get_animation_speed(animationName);
+	elif "Shoot" in animationName:
+		fps = shootingEnemyTemplateSprite.sprite_frames.get_animation_speed(animationName);
+	elif "Coin" in animationName:
+		fps = coinTemplateSprite.sprite_frames.get_animation_speed(animationName);
+	elif "Goal" in animationName:
+		fps = goalTemplateSprite.sprite_frames.get_animation_speed(animationName);
+	elif "Platform" in animationName:
+		fps = movingPlatformTemplateSprite.sprite_frames.get_animation_speed(animationName);
+	return fps
+
+func set_all_fps_to_json(jsonPath : String) -> void:
+	var JSONFile : FileAccess= FileAccess.open(jsonPath, FileAccess.READ);
+	var json_as_dict : Variant = JSON.parse_string(JSONFile.get_as_text());
+	for anim in json_as_dict.get("animations", {}):
+		AnimationManager.update_animation_fps(anim, json_as_dict["animations"][anim]);

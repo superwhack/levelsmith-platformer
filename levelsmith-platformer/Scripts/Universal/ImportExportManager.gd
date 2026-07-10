@@ -95,7 +95,11 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"ShootIdle": 12.0,
 			"PatrolDeath": 12.0,
 			"PatrolWalk": 12.0,
-			"PlatformAnimation": 12.0
+			"FlyDeath": 12.0,
+			"FlyMove": 12.0,
+			"PlatformAnimation": 12.0,
+			"GoalAnimation": 12.0,
+			"CoinAnimation": 12.0
 		}
 	};
 	
@@ -269,6 +273,27 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 
 	json["enemies"] = enemies;
 	
+	json["animations"] = {
+		"PlayerDeath": AnimationManager.get_animation_fps("PlayerDeath"),
+		"PlayerFall": AnimationManager.get_animation_fps("PlayerFall"),
+		"PlayerHurt": AnimationManager.get_animation_fps("PlayerHurt"),
+		"PlayerIdle": AnimationManager.get_animation_fps("PlayerIdle"),
+		"PlayerJump": AnimationManager.get_animation_fps("PlayerJump"),
+		"PlayerRun": AnimationManager.get_animation_fps("PlayerRun"),
+		"StationaryDeath": AnimationManager.get_animation_fps("StationaryDeath"),
+		"StationaryIdle": AnimationManager.get_animation_fps("StationaryIdle"),
+		"EnemyShoot": AnimationManager.get_animation_fps("EnemyShoot"),
+		"ShootDeath": AnimationManager.get_animation_fps("ShootDeath"),
+		"ShootIdle": AnimationManager.get_animation_fps("ShootIdle"),
+		"PatrolDeath": AnimationManager.get_animation_fps("PatrolDeath"),
+		"PatrolWalk": AnimationManager.get_animation_fps("PatrolWalk"),
+		"FlyDeath": AnimationManager.get_animation_fps("FlyDeath"),
+		"FlyMove": AnimationManager.get_animation_fps("FlyMove"),
+		"PlatformAnimation": AnimationManager.get_animation_fps("PlatformAnimation"),
+		"GoalAnimation": AnimationManager.get_animation_fps("GoalAnimation"),
+		"CoinAnimation": AnimationManager.get_animation_fps("CoinAnimation")
+	}
+	
 	
 	## NOTE: THIS IS TEMPORARY CODE TO TURN ON WHEN JSON FILE NEEDS TO BE VALIDATED
 	#var tmpFile : FileAccess = FileAccess.open(levelPath + "Temp.txt", FileAccess.WRITE);
@@ -405,6 +430,8 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	settings.cameraDeadzone.value = settingsConfig.get("deadzone", settings.cameraDeadzone.value);
 	settings.cameraClamp.value = settingsConfig.get("cameraPlayClamp", settings.cameraClamp.value);
 	settings.update_sliders();
+	
+	AnimationManager.set_all_fps_to_json(levelPath + "Settings.JSON");
 
 	# Enemy information read, no enemies if from older version
 	var enemies : Array = json_as_dict.get("enemies", []);

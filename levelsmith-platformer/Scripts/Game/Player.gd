@@ -163,13 +163,19 @@ func _physics_process(delta: float) -> void:
 
 ## Animates the player while processing
 func animate() -> void:
-	animatedSprites.flip_h = velocity.x < 0;
+	
+	if ( Input.is_action_pressed("right") ): animatedSprites.flip_h = false;
+	elif ( Input.is_action_pressed("left") ): animatedSprites.flip_h = true;
+	
 	if (health <= 0): 
 		animatedSprites.animation = "PlayerDeath";
 		animatedSprites.flip_h = false;
 	elif (invulnerabilityCurrent > 0):
 		animatedSprites.animation = "PlayerHurt";
 		fallAnimStarted = false;
+	
+	# TODO: Add condition for wall sliding animation
+		
 	elif (!is_on_floor() && velocity.y < 0):
 		animatedSprites.animation = "PlayerJump";
 		fallAnimStarted = false;

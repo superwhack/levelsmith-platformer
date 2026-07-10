@@ -247,7 +247,10 @@ func walk() -> void:
 		if direction / velocity.x > 0 && abs(velocity.x + accelerationX * .1) > trueSpeed:
 			accelerationX = 0;
 		else:
-			accelerationX *= .05;
+			if airControl != 0:
+				accelerationX *= .05 / pow(airControl, 2);
+			else:
+				accelerationX *= .05;
 		
 	# Velocity gets capped so you can't accelerate faster
 	elif (abs(velocity.x + accelerationX) > trueSpeed):
@@ -271,7 +274,9 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 		return false;
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
-	velocity = direction * (1000 + higherBounce * 500);
+	velocity = direction * (1000 + higherBounce * 500)
+	if is_on_floor():
+		velocity *= pow(groundSpeed, .9);
 	health -= amount;
 	if (health <= 0):
 		die();

@@ -480,8 +480,14 @@ func duplicate_current_level() -> void:
 	overlayDuplicateLevel.hide();
 	duplicateName.clear();
 	fill_level_list();
-	masterManager.load_level(destination);
 	
+	# Select the new level automatically
+	var newLevelPath: String = destination.rstrip("/");
+	if (levelItems.has(newLevelPath)):
+		var newItem = levelItems[newLevelPath];
+		newItem.levelButton.button_pressed = true;
+		_on_level_toggled(newItem, true);
+
 
 ## Sets whether the currently selected level is favorited or not.
 func favorite_current_level() -> void:
@@ -540,9 +546,32 @@ func sort_levels_by_favorite(levelPaths: Array) -> Array:
 		# Favorites first
 		if (aFavorite != bFavorite):
 			return aFavorite;
-
-		# sort alphabetically by default
-		return a.get_file().to_lower() < b.get_file().to_lower();
+			
+		# Since we do date american way, need to rearrange for easy comparison
+		var aDate = str(aMetadata.get("dateModified", "01.01.1970")).split(".");
+		var aTime = str(aMetadata.get("timeModified", "00:00")).split(":");
+		
+		var bDate = str(bMetadata.get("dateModified", "01.01.1970")).split(".");
+		var bTime = str(bMetadata.get("timeModified", "00:00")).split(":");
+		
+		var aModified = {
+			"year": int(aDate[2]),
+			"month": int(aDate[1]),
+			"day": int(aDate[0]),
+			"hour": int(aTime[0]),
+			"minute": int(aTime[1])
+		};
+		
+		var bModified = {
+			"year": int(bDate[2]),
+			"month": int(bDate[1]),
+			"day": int(bDate[0]),
+			"hour": int(bTime[0]),
+			"minute": int(bTime[1])
+		};
+		
+		# convenient function for time comparison :D
+		return Time.get_unix_time_from_datetime_dict(aModified) > Time.get_unix_time_from_datetime_dict(bModified);;
 	);
 	# return sorted array
 	return levelPaths;

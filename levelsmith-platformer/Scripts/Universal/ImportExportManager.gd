@@ -61,7 +61,8 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"dimensions": levelSize,
 			"objects": 0,
 			"version": Global.VERSION,
-			"favorited": false
+			"favorited": false,
+			"validated": false
 		},
 		"enemies": [],
 		"player": {
@@ -107,7 +108,7 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
 ## settings: The settings menu to export the configurations from
-func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, settings: SettingsMenu) -> void:
+func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, settings: SettingsMenu, isValidated : bool = false) -> void:
 	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
@@ -157,6 +158,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 	metadata["dimensions"] = worldSize;
 	metadata["version"] = Global.VERSION;
 	metadata["objects"] = objects;
+	metadata["validated"] = isValidated;
 
 	json["metadata"] = metadata;
 	

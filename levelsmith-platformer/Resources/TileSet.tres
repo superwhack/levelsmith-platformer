@@ -27,7 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://b6axoaekmjyr4" path="res://Scenes/Entities/MovingPlatform.tscn" id="19_yoa8o"]
 [ext_resource type="PackedScene" uid="uid://bpnflie3xuof8" path="res://Scenes/Preview/MovingPlatformPreview.tscn" id="20_4pytx"]
 [ext_resource type="PackedScene" uid="uid://b1he4q1q33j0e" path="res://Scenes/Entities/Coin.tscn" id="22_38lp2"]
-[ext_resource type="Texture2D" uid="uid://bkquthck5o5sq" path="res://Assets/Sprites/Entities/Props/Prop6.png" id="22_hkman"]
+[ext_resource type="Texture2D" uid="uid://7w1us52d03lk" path="res://Assets/Sprites/Entities/Props/Prop6.png" id="22_hkman"]
 [ext_resource type="PackedScene" uid="uid://nquey6f2ob44" path="res://Scenes/Preview/CoinPreview.tscn" id="23_hkman"]
 [ext_resource type="Texture2D" uid="uid://br10hb73uokcq" path="res://Assets/UserInterface/TileBedrock.png" id="23_mtirn"]
 [ext_resource type="Texture2D" uid="uid://tercdgy7ber" path="res://Assets/Sprites/Tiles/death.png" id="24_hkman"]

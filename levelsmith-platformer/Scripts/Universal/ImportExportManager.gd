@@ -80,6 +80,22 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"followSpeed": 100.0,
 			"deadzone": 0.0,
 			"cameraPlayClamp": false
+		},
+		"animations": {
+			"PlayerDeath": 12.0,
+			"PlayerFall": 12.0,
+			"PlayerHurt": 12.0,
+			"PlayerIdle": 12.0,
+			"PlayerJump": 12.0,
+			"PlayerRun": 12.0,
+			"StationaryDeath": 12.0,
+			"StationaryIdle": 12.0,
+			"EnemyShoot": 12.0,
+			"ShootDeath": 12.0,
+			"ShootIdle": 12.0,
+			"PatrolDeath": 12.0,
+			"PatrolWalk": 12.0,
+			"PlatformAnimation": 12.0
 		}
 	};
 	

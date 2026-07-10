@@ -3,7 +3,6 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_02c1u"]
 [ext_resource type="Script" uid="uid://no4fqovbkfha" path="res://Scripts/SettingsManager.gd" id="2_5bsrg"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_w0xpy"]
-[ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="4_bpp5a"]
 [ext_resource type="Texture2D" uid="uid://b8wetv4xd30wg" path="res://Assets/Sprites/UI/BlankArrowUpSmall.png" id="4_w0xpy"]
 [ext_resource type="PackedScene" uid="uid://d4nqq7rlhq0q8" path="res://Scenes/UI/SettingsMenuSlider.tscn" id="5_aixuf"]
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="6_5bsrg"]
@@ -93,7 +92,6 @@ icon = ExtResource("4_w0xpy")
 
 [node name="HeaderLine" type="HSeparator" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/HeaderBlock" unique_id=251268854]
 layout_mode = 2
-theme_override_styles/separator = ExtResource("4_bpp5a")
 
 [node name="HeaderSpacer" type="Control" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/HeaderBlock" unique_id=1843349757]
 custom_minimum_size = Vector2(0, 15)
@@ -270,7 +268,6 @@ icon = ExtResource("4_w0xpy")
 
 [node name="HeaderLine" type="HSeparator" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/ProjectHeader" unique_id=277764918]
 layout_mode = 2
-theme_override_styles/separator = ExtResource("4_bpp5a")
 
 [node name="HeaderSpacer" type="Control" parent="MainMargin/PanelContainer/BorderMargin/ScrollContainer/SettingsBox/LevelSettings" unique_id=145924532]
 custom_minimum_size = Vector2(0, 15)

@@ -389,7 +389,6 @@ mainTileMap = NodePath("../../Tiles")
 [node name="SettingsMenu" parent="CanvasLayer" unique_id=79213823 node_paths=PackedStringArray("editorManager") instance=ExtResource("20_fnjh2")]
 process_mode = 2
 visible = false
-self_modulate = Color(0, 0, 0, 0.3764706)
 editorManager = NodePath("../..")
 
 [node name="HotkeyManager" type="Node2D" parent="." unique_id=1848065233 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager", "tileSwitch")]

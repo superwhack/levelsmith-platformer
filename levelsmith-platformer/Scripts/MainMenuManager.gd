@@ -145,12 +145,12 @@ func import_level() -> void:
 		return;
 	
 	# Extract the name of the folder from the file path
-	var importedLevelArray : Array = fieldImportLevelPath.text.split("/");
+	var importedLevelArray : Array = fieldImportLevelPath.text.rstrip("/").split("/");
 	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
 	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
 	masterManager.loadedLevelPath = fieldImportLevelPath.text;
-	
-	if !DirAccess.dir_exists_absolute(importDirectory):
+
+	if (!DirAccess.dir_exists_absolute(importDirectory)):
 		DirAccess.make_dir_absolute(importDirectory);
 		ImportExportManager.clone_data(fieldImportLevelPath.text + "/", importDirectory);
 	masterManager.import_level_and_edit();
@@ -387,8 +387,8 @@ func update_metadata(item) -> void:
 		buttonFavoriteLevel.icon = favoriteFilled;
 	else:
 		buttonFavoriteLevel.icon = favoriteEmpty;
-	
-		
+
+
 ## Clears the metadata selection.
 func clear_selection() -> void:
 		selectedItem = null;
@@ -425,6 +425,7 @@ func edit_current_level() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	masterManager.load_level(selectedItem.levelPath);
 
+## Deletes the currently selected level.
 func delete_current_level() -> void:
 	if (!selectedItem):
 		return;
@@ -435,9 +436,7 @@ func delete_current_level() -> void:
 
 	# Delete all files and folders inside the level directory
 	# Thank you: https://tinyurl.com/ak58bfvd
-	var dir = DirAccess.open(selectedItem.levelPath);
-	for file in dir.get_files():
-		dir.remove(file);
+	remove_recursively(selectedItem.levelPath);
 
 	var item = levelItems[levelPath];
 	item.queue_free();
@@ -446,7 +445,7 @@ func delete_current_level() -> void:
 	clear_selection();
 	toggle_level_buttons();
 
-
+## Duplicates the currently selected level.
 func duplicate_current_level() -> void:
 	var newLevelName : String = duplicateName.text.strip_edges()
 
@@ -547,3 +546,14 @@ func sort_levels_by_favorite(levelPaths: Array) -> Array:
 	);
 	# return sorted array
 	return levelPaths;
+
+## Removes all files in a directory, recursively.
+## Credit: https://github.com/godotengine/godot-proposals/issues/11598
+## directory: The directory to delete all files within.
+func remove_recursively(directory: String) -> void:
+	for directoryName in DirAccess.get_directories_at(directory):
+		remove_recursively(directory.path_join(directoryName));
+	for file in DirAccess.get_files_at(directory):
+		DirAccess.remove_absolute(directory.path_join(file));
+
+	DirAccess.remove_absolute(directory)

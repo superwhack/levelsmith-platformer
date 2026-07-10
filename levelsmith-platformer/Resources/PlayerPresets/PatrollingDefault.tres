@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_3ovdx")
-groundSpeed = 1.0
+groundSpeed = 0.5

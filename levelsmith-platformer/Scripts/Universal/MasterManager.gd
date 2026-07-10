@@ -295,7 +295,6 @@ func mouse_entered_play_button() -> void:
 ## Hides the play pop up from the user.
 func mouse_exited_play_button() -> void:
 	playPopUp.hide();
-
 	
 ## Validates if a level is playable, and returns a string of any found errors
 ## Returns an array of error points, but not a full error description.

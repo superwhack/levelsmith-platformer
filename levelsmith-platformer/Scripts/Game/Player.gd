@@ -247,7 +247,10 @@ func walk() -> void:
 		if direction / velocity.x > 0 && abs(velocity.x + accelerationX * .1) > trueSpeed:
 			accelerationX = 0;
 		else:
-			accelerationX *= .05;
+			if airControl != 0:
+				accelerationX *= .05 / pow(airControl, 2);
+			else:
+				accelerationX *= .05;
 		
 	# Velocity gets capped so you can't accelerate faster
 	elif (abs(velocity.x + accelerationX) > trueSpeed):

@@ -132,7 +132,9 @@ func _physics_process(delta: float) -> void:
 		currentWalkingEffect = Global.WalkingEffect.NONE;
 		if (coyoteTimeLeft > 0):
 			coyoteTimeLeft -= delta;
-		velocity += get_gravity() * delta * fallSpeed;
+		velocity += get_gravity() * delta;
+		if velocity.y > 1300 * fallSpeed:
+			velocity.y = 1300 * fallSpeed;
 	else:
 		isJumping = false;
 		jumpAnimStarted = false;
@@ -383,7 +385,7 @@ func detect_tiles() -> void:
 					velocity.y *= .94;
 				if tileName != "slow":
 					currentSlowdown = 1.0;
-			if Input.is_action_just_pressed("jump") && velocity.y != 0:
+			if Input.is_action_just_pressed("jump") && !is_on_floor():
 				# Depending on direction, apply a different x velocity
 				if rayDirection.x < 0:
 					if wallJumpDirection != WallDirection.LEFT:

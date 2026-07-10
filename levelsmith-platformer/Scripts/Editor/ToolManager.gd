@@ -79,13 +79,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	# Return early if clicking on UI, to fix key release issues.
 	if (clickOnUI):
 		return;
-	
-	if editorManager.returnClick:
-		if (Input.is_action_just_released("left-click")):
-			editorManager.returnClick = false;
-			
-		if (currentTool != Global.Tool.BRUSH):
-			return;
 			
 	match (currentTool):
 		Global.Tool.BRUSH:
@@ -183,7 +176,6 @@ func change_tool(tool: Global.Tool) -> void:
 	if (currentTool == tool):
 		return;
 
-	editorManager.returnClick = false;
 	reset_tool_states();
 	currentObjectRotation = 0;
 	entityManager.duplicatingResource = null;

@@ -107,7 +107,6 @@ func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) ->
 	#AudioManager.update_volume();
 	#print("NEW LEVEL SET UP");
 	Global.levelCreated.emit();
-	editorManager.returnClick = false;
 
 func create_bedrock_border() -> void:
 	for x in range(-1, worldSize.x + 1):
@@ -131,7 +130,6 @@ func import_level_and_edit() -> void:
 		childNode.free();
 	editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileMap);
 	worldSize = ImportExportManager.importedLevelSize;
-	editorManager.returnClick = false;
 	entityManager.scan_goals(worldSize.x, worldSize.y);
 	editorManager.reset_enemy_positions();
 	await get_tree().process_frame;
@@ -195,8 +193,6 @@ func edit() -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
-	if !gameManager.goalReached:
-		editorManager.returnClick = true;
 	# Just so there aren't any issues when holding down a button before swapping to play
 	toolManager.isErasing = false;
 	toolManager.isPainting = false;

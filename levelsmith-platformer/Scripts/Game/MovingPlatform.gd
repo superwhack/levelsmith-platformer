@@ -78,7 +78,7 @@ func switch_target() -> void:
 ## id is the unique identifier of the preset.
 ## position: Tilemap position of the enemy.
 func assign_script(id: String, assignPosition: Vector2i) -> void:
-	propertyFile = ResourceLoader.load("res://Resources/Enemies/MovingPlatform" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
+	propertyFile = ResourceLoader.load("user://Resources/Enemies/MovingPlatform" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	
 	name = "MovingPlatform" + id;
 	propertyFile.position = assignPosition;

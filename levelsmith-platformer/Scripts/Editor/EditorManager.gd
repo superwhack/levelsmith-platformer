@@ -42,6 +42,8 @@ var isPlaceable : bool = true;
 var playerExists : bool = false;
 var goalExists : bool = false;
 
+var returnClick : bool = false;
+
 # Stores the number of tiles made
 var tileCount : int = Global.TileType.size();
 

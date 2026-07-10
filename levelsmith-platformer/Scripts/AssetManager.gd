@@ -93,6 +93,10 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 			if (type == AssetItem.AssetType.ANIMATION && !firstAnimationSelected):
 				firstAnimationSelected = newButton;
 
+func clear_buttons(container : VBoxContainer):
+	for button in container.get_children() :
+		button.queue_free();
+
 ## Finds an image by its name
 ## imageName: Name of the image
 ## returns: Loaded image
@@ -198,7 +202,7 @@ func reset_all_popup() -> void:
 
 ## Resets everything within the assets manager
 func reset_all() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	FileSearch.delete_folder(filePath);
 	create_file_tree();
 	reset_menu();
@@ -226,7 +230,7 @@ func reset_menu() -> void:
 ## Signal that is emitted when an asset in the menu is selected
 ## selectedItem: The item that is selected, defaults to the firstImageSelected
 func item_selected(selectedItem: AssetItem) -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	# Pause the animation
 	animationSwapping.playingAnimation = false;
 	# If the selected item is an image, replace its preview
@@ -292,7 +296,7 @@ func create_file_tree() -> void:
 	# TODO: Add folders for audio
 
 func open_image_selector() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
 		fileSelect.title = "Replace " + imageSwapping.imageNameToReplace;
 		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_FILE;
@@ -328,12 +332,16 @@ func refresh_all() -> void:
 	animationSwapping.update_animation_preview();
 
 func setup() -> void:
+	print("Setup");
 	filePath = masterManager.loadedLevelPath + "Assets";
 	FileSearch.filePath = filePath;
 	# Checks if the user has an assets root folder, creates one if not
 	var dir : DirAccess = DirAccess.open(filePath);
 	if (!dir || dir.get_directories().is_empty()):
 		create_file_tree();
+	# Clear all buttons;
+	clear_buttons(imagesTab);
+	clear_buttons(animationsTab);
 	# Generate all buttons under their tabs
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);

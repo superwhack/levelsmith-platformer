@@ -8,8 +8,10 @@ extends Node2D
 @export var playerHealthUI : HBoxContainer;
 @export var timerLabel : RichTextLabel;
 @export var winCoinLabel : RichTextLabel;
+@export var winCoinHBox : HBoxContainer;
 @export var coinMargin : MarginContainer;
 @export var winTimeLabel : RichTextLabel;
+@export var winScreenHealthUI : HBoxContainer;
 
 # Button references for signals
 @export var resetButton : Button;
@@ -65,7 +67,7 @@ func pause() -> void:
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	pauseButton.show();
 	get_tree().paused = false;
 	winScreen.hide();
@@ -90,6 +92,7 @@ func start() -> void:
 	else:
 		coinCounterLabel.hide();
 		coinMargin.hide();
+		winCoinHBox.hide();
 	
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
 	for frame in range(1, 5):
@@ -108,9 +111,9 @@ func start() -> void:
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
 	get_tree().set_group("Moving", "process_mode", Node.PROCESS_MODE_INHERIT);
-	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
+	var enemyProperties : PackedStringArray = DirAccess.get_files_at("user://Resources/Enemies/");
 	for enemyProperty in enemyProperties:
-		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
+		var propertyFile : Resource = load("user://Resources/Enemies/" + enemyProperty);
 		for node in tileMap.get_children():
 			if tileMap.local_to_map(node.global_position) == propertyFile.position:
 				node.apply_script(propertyFile);
@@ -163,7 +166,7 @@ func _on_coin_collected() -> void:
 func update_coin_counter(label: RichTextLabel) -> void:
 	label.clear()
 	if totalCoins > 0:
-		label.append_text("Coins: %d / %d" % [coinCount, totalCoins])
+		label.append_text("%02d" % [coinCount])
 
 ## Prints the final completion time and stops the level timer
 func print_level_completion_time() -> void:
@@ -179,7 +182,7 @@ func update_timer(label: RichTextLabel) -> void:
 	var minutes := int(testingTime) / 60;
 	var seconds := int(testingTime) % 60;
 	label.clear();
-	label.append_text("Time: %02d:%02d" % [minutes, seconds]);
+	label.append_text("%02d:%02d" % [minutes, seconds]);
 
 ## Pauses gameplay, displays the win screen, and updates the completion statistics
 func level_complete() -> void:
@@ -191,6 +194,8 @@ func level_complete() -> void:
 	timerLabel.hide();
 	winScreen.show();
 	bottomScreenGroup.hide();
+	winScreenHealthUI.bind_player(player);
+	winScreenHealthUI._sync_to_player();
 
 ## Returns to the level editor and restores the editor state
 func return_to_editor() -> void:

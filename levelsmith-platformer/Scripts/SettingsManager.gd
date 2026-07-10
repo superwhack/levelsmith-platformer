@@ -19,6 +19,8 @@ class_name SettingsMenu;
 @export var cameraDeadzone : VBoxContainer;
 @export var cameraClamp : VBoxContainer;
 
+var musicPreviewing = false;
+
 func _ready() -> void:
 	closeButton.pressed.connect(editorManager.close_settings_menu);
 	resetButton.pressed.connect(reset_settings);
@@ -33,12 +35,12 @@ func _ready() -> void:
 	musicVolume.update_slider();
 	# Sliders connection
 	# .dragging also needs a connect so sound changes can be hard while editing them
-	masterVolume.dragging.connect(_on_drag);
-	SFXVolume.dragging.connect(_on_drag);
-	musicVolume.dragging.connect(_on_drag);
-	masterVolume.drag_ended.connect(_on_drag);
-	SFXVolume.drag_ended.connect(_on_drag);
-	musicVolume.drag_ended.connect(_on_drag);
+	masterVolume.dragging.connect(_on_dragging_SFX);
+	SFXVolume.dragging.connect(_on_dragging_SFX);
+	musicVolume.dragging.connect(_on_drag_start_music);
+	masterVolume.drag_ended.connect(_on_dragging_SFX);
+	SFXVolume.drag_ended.connect(_on_dragging_SFX);
+	musicVolume.drag_ended.connect(_on_drag_end_music);
 	
 	# CAMERA ---
 	# Set current default values
@@ -70,6 +72,23 @@ func _on_drag() -> void:
 	cameraManager.followSpeed = followSpeed.value / 100;
 	cameraManager.deadzone = cameraDeadzone.value;
 	cameraManager.cameraPlayClamp = cameraClamp.value;
+
+func _on_dragging_SFX() -> void:
+	_on_drag();
+	AudioManager.play_UI_effect("UISelection");
+	
+func _on_drag_end_music() -> void:
+	_on_drag();
+	await get_tree().process_frame;
+	if musicPreviewing:
+		musicPreviewing = false;
+		AudioManager.stop_music_preview();
+
+func _on_drag_start_music() -> void:
+	_on_drag();
+	if !musicPreviewing:
+		musicPreviewing = true;
+		AudioManager.play_music_preview("LevelMusic");
 
 ## Update sliders visually
 func update_sliders() -> void:

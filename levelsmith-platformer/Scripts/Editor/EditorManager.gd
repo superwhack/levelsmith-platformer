@@ -54,11 +54,11 @@ func _ready() -> void:
 		goalExists = false;
 	
 	var export_level = func() -> void:
-		AudioManager.play_UI_effect("UI_Selection")
+		AudioManager.play_UI_effect("UISelection")
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
 		
-		ImportExportManager.save_level_screenshot(levelScreenshot);		
+		ImportExportManager.save_level_screenshot(levelScreenshot);
 		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu);
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
@@ -87,6 +87,14 @@ func _process(_delta: float) -> void:
 	# Save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
 	
+## When the user does a save level input, save the level.
+## event: The user input
+func _input(event: InputEvent) -> void:
+	if (event.is_action_pressed("level_save")):
+		masterManager.propertyMenu.close();
+		var levelScreenshot : Image = await screenshot_level();
+		ImportExportManager.save_level_screenshot(levelScreenshot);
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu);
 
 
 ## Takes a screenshot of the level by hiding the UI and disabling the main camera
@@ -138,10 +146,10 @@ func reset_enemy_positions() -> void:
 	for moving in get_tree().get_nodes_in_group("Moving"):
 		if (moving is Enemy || moving is MovingPlatform) && moving.propertyFile:
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
-#			if moving is EnemyPatrol:
-#				moving.directionArrow.show();
-#			elif moving is EnemyShooting:
-#				moving.directionArrow.show();
+			if moving is EnemyPatrol:
+				moving.directionArrow.show();
+			elif moving is EnemyShooting:
+				moving.directionArrow.show();
 			if moving is EnemyFlyer:
 				moving.previewLine.show();
 		if moving is MovingPlatform && moving.propertyFile:
@@ -153,7 +161,7 @@ func reset_enemy_positions() -> void:
 func open_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
-	AudioManager.play_UI_effect("UI_Selection")
+	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
 	iconManager.previewIcon.hide();
 	assetManager.show();
@@ -162,7 +170,7 @@ func open_asset_manager() -> void:
 func open_settings_menu() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
-	AudioManager.play_UI_effect("UI_Selection")
+	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
 	iconManager.previewIcon.hide();
 	settingsMenu.show();
@@ -171,7 +179,7 @@ func open_settings_menu() -> void:
 func close_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	previewTileMap.show();
 	assetManager.hide();
 	assetManager.animationSwapping.playingAnimation = false;
@@ -181,6 +189,6 @@ func close_asset_manager() -> void:
 func close_settings_menu() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	previewTileMap.show();
 	settingsMenu.hide();

@@ -32,25 +32,25 @@ func _process(_delta: float) -> void:
 func place_entity(clickPosition: Vector2) -> void:
 	editorManager.isValidated = false;
 	if (!editorManager.isPlaceable):
-		AudioManager.play_UI_effect("Tile_Place_Error");
+		AudioManager.play_UI_effect("TilePlaceError");
 		return;
 	
 	var clickedTileId : int = tileMap.get_cell_source_id(clickPosition);
 	
 	## Prevent placing on other objects of any kind.
 	if (clickedTileId > 0): 
-		AudioManager.play_UI_effect("Tile_Place_Error");
+		AudioManager.play_UI_effect("TilePlaceError");
 		return;
 	if brushObject != Global.EntityType.PLAYER:
-		AudioManager.play_UI_effect("Tile_Place");
+		AudioManager.play_UI_effect("TilePlace");
 	match (brushObject):
 		Global.EntityType.PLAYER:
 			if (editorManager.playerExists): 
-				AudioManager.play_UI_effect("Tile_Place_Error");
+				AudioManager.play_UI_effect("TilePlaceError");
 				return;
 			editorManager.playerExists = true;
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
-			AudioManager.play_UI_effect("Tile_Place");
+			AudioManager.play_UI_effect("TilePlace");
 		Global.EntityType.PATROLLING, Global.EntityType.SHOOTING, Global.EntityType.FLYING, Global.EntityType.STATIONARY, Global.EntityType.MOVING_PLATFORM:
 			# Place the enemy and wait until it's registered before continuing
 			tileMap.set_cell(clickPosition, brushObject, Vector2i.ZERO, 1);
@@ -70,7 +70,7 @@ func place_entity(clickPosition: Vector2) -> void:
 					newEntity = defaultPatrolling.duplicate(true);
 				placedEnemy.adjust_arrow(90);
 				placedEnemy.directionArrow.scale = Vector2(1, 1);
-				file = "res://Resources/Enemies/Patrolling" + str(time) + ".tres";
+				file = "user://Resources/Enemies/Patrolling" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.SHOOTING):
 				var defaultShooting : Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 				if duplicatingResource:
@@ -79,25 +79,25 @@ func place_entity(clickPosition: Vector2) -> void:
 					newEntity = defaultShooting.duplicate(true);
 				placedEnemy.adjust_arrow(90);
 				placedEnemy.directionArrow.scale = Vector2(1, 1);
-				file = "res://Resources/Enemies/Shooting" + str(time) + ".tres";
+				file = "user://Resources/Enemies/Shooting" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.FLYING):
 				var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
 				if duplicatingResource:
 					newEntity = duplicatingResource.duplicate(true);
 				else:
 					newEntity = defaultFlying.duplicate(true);
-				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
+				file = "user://Resources/Enemies/Flying" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.STATIONARY):
 				var defaultStationary : Resource = load("res://Resources/PlayerPresets/StationaryDefault.tres");
 				newEntity = defaultStationary.duplicate(true);
-				file = "res://Resources/Enemies/Stationary" + str(time) + ".tres";
+				file = "user://Resources/Enemies/Stationary" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.MOVING_PLATFORM):
 				var defaultMoving : Resource = load("res://Resources/PlayerPresets/MovingPlatformDefault.tres");
 				if duplicatingResource:
 					newEntity = duplicatingResource.duplicate(true);
 				else:
 					newEntity = defaultMoving.duplicate(true);
-				file = "res://Resources/Enemies/MovingPlatform" + str(time) + ".tres";
+				file = "user://Resources/Enemies/MovingPlatform" + str(time) + ".tres";
 			ResourceSaver.save(newEntity, file);
 			placedEnemy.assign_script(str(time), clickPosition);
 			await get_tree().process_frame;
@@ -126,7 +126,7 @@ func delete_entity (clickPosition: Vector2) -> void:
 	elif (clickedObjectId == Global.EntityType.PLAYER): editorManager.playerExists = false;
 	elif (clickedObjectId == Global.EntityType.GOAL): goalCount -= 1;
 	elif (clickedEntity is Enemy || clickedEntity is MovingPlatform):
-		DirAccess.remove_absolute("res://Resources/Enemies/" + clickedEntity.name + ".tres");
+		DirAccess.remove_absolute("user://Resources/Enemies/" + clickedEntity.name + ".tres");
 		clickedEntity.queue_free();
 	
 	tileMap.erase_cell(clickPosition);
@@ -184,18 +184,19 @@ func move_entity(previousClickPos: Vector2) -> void:
 		delete_entity(previousClickPos);
 
 ## Drop the tile currently selected, to be used with dragging tiles and entities with the cursor
-func drop_entity() -> void:
+## reset: false by default, if it's true the placed object will always return to it's spawn
+func drop_entity(reset: bool = false) -> void:
 	var dropPosition : Vector2;
 	var clickedObjectId : int = tileMap.get_cell_source_id(editorManager.currentMousePosition);
 	
 	# Drop the entity on its original spot if mouse is over any object.
-	if (clickedObjectId >= 0 || !editorManager.isPlaceable):
+	if (clickedObjectId >= 0 || !editorManager.isPlaceable || reset):
 		if toolManager.prevPosition == Vector2(-1 ,-1):
 			toolManager.prevBrushObject = -1;
 			toolManager.prevPosition = Vector2(0,0);
 			toolManager.currentObjectRotation = toolManager.prevRotation;
 			toolManager.isBackground = toolManager.prevIsBackground;
-			AudioManager.play_UI_effect("Tile_Place_Error");
+			AudioManager.play_UI_effect("TilePlaceError");
 			return;
 		# Only allow it to be placed if you aren't copying
 		editorManager.isPlaceable = !toolManager.isCopying;
@@ -243,7 +244,7 @@ func drop_entity() -> void:
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
 	elif droppedEntity is EnemyStationary:
 		droppedEntity.update_flipped();
-	ResourceSaver.save(newResource, "res://Resources/Enemies/" + droppedEntity.name + ".tres");
+	ResourceSaver.save(newResource, "user://Resources/Enemies/" + droppedEntity.name + ".tres");
 	newResource = null;
 	editorManager.reset_enemy_positions();
 

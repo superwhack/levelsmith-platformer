@@ -12,7 +12,7 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var editorManagerCanvas : CanvasLayer;
 @export var gameManagerCanvas : CanvasLayer;
 @export var loadingScreen : CanvasLayer;
-@export var loadingAnimation : AnimationPlayer;
+@export var loadingImage : TextureRect;
 @export var mainMenuControl : Control;
 
 # References to relevant buttons
@@ -36,6 +36,13 @@ var loadedMap : TileMapLayer;
 @export var propertyMenu : Panel;
 
 var loadedLevelPath : String = "";
+
+# Tween information
+var loadingTween : Tween
+# The time that the screen wipe takes
+var loadingTweenTime : float = 0.35
+#The time that the full screen holds
+var loadingHold : float = 0.30
 
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
@@ -62,6 +69,9 @@ func _ready() -> void:
 		
 	main_menu(false);
 	
+	
+	
+	
 	await screen_static();
 	await main_menu(false, true);
 
@@ -81,20 +91,27 @@ func _input(event: InputEvent) -> void:
 ## Plays the screen wipe animation that covers the screen before a state transition.
 func screen_wipe_in() -> void:
 	loadingScreen.show();
-	loadingAnimation.play("WipeIn");
-	await loadingAnimation.animation_finished;
+	# Create the loading animation tween
+	loadingTween = create_tween()
+	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 1.0, loadingTweenTime)
+	await loadingTween.finished;
+	await get_tree().create_timer(loadingHold).timeout
 
 ## Plays the screen wipe animation that reveals the destination state after loading.
 func screen_wipe_out() -> void:
-	loadingAnimation.play("WipeOut");
-	await loadingAnimation.animation_finished;
+	# Create the loading animation tween
+	loadingTween = create_tween()
+	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 0.0, loadingTweenTime)
+	await loadingTween.finished;
 	loadingScreen.hide();
 
 ## special loading screen specific for main menu
 func screen_static() -> void:
-	loadingAnimation.play("WipeOut2");
-	await loadingAnimation.animation_finished;
-	loadingScreen.hide();
+	await get_tree().create_timer(loadingHold).timeout
+	screen_wipe_out()
+	#loadingAnimation.play("WipeOut2");
+	#await loadingAnimation.animation_finished;
+	#loadingScreen.hide();
 
 ## Set up a new level
 ## levelName: Name of the level

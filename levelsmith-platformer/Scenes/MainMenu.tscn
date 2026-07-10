@@ -1053,7 +1053,7 @@ text = "Cancel"
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1758093936]
 oversampling_override = 1.0
-title = "Open a Level Folder"
+title = "Open a Directory"
 ok_button_text = "Select Current Level"
 file_mode = 2
 access = 2

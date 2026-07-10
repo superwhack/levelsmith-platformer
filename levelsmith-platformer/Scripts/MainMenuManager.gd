@@ -41,9 +41,12 @@ extends Control
 # Duplicate Level Overlay Children <3
 @export var buttonDuplicateLevelCancel : Button;
 @export var buttonDuplicateLevelConfirm : Button;
-@export var buttonDuplicateName : LineEdit;
+@export var duplicateName : LineEdit;
 @export var spinBoxDuplicateLevelX : SpinBox;
 @export var spinBoxDuplicateLevelY : SpinBox;
+@export var duplicateErrorBanner : PanelContainer;
+@export var duplicateEmptyBanner : PanelContainer;
+@export var duplicateExistsBanner : PanelContainer;
 
 @export var fileExplorer : FileDialog;
 var importedLevelPath : String;
@@ -83,7 +86,7 @@ func _ready() -> void:
 	buttonPlayLevel.pressed.connect(play_current_level);
 	buttonEditLevel.pressed.connect(edit_current_level);
 	buttonDeleteLevel.pressed.connect(delete_current_level);
-	buttonDuplicateLevel.pressed.connect(duplicate_current_level);
+	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
 	buttonFavoriteLevel.pressed.connect(favorite_current_level);
 	
 	# Hiding appropriate UI when cancelling level creation
@@ -98,7 +101,6 @@ func _ready() -> void:
 	buttonImportLevelBrowse.pressed.connect(fileExplorer.popup_file_dialog);
 	
 	# Duplicate buttons
-	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
 	buttonDuplicateLevelConfirm.pressed.connect(duplicate_current_level);
 	buttonDuplicateLevelCancel.pressed.connect(overlay_duplicate_level_hide);
 
@@ -423,26 +425,41 @@ func delete_current_level() -> void:
 
 
 func duplicate_current_level() -> void:
-	var newLevelName :String = buttonDuplicateName.text.strip_edges()
+	print("attempted")
+	var newLevelName : String = duplicateName.text.strip_edges()
 
-	if newLevelName.is_empty() || !newLevelName.is_valid_filename():
-		return
+	# If the given level name is empty, return early.
+	if (newLevelName.strip_edges().is_empty()):
+		duplicateEmptyBanner.show();
+		duplicateErrorBanner.hide();
+		duplicateExistsBanner.hide();
+		return;
+		
+	# If the given level name is invalid, return early.
+	if (!newLevelName.strip_edges().is_valid_filename() || newLevelName[-1] == "."  || newLevelName.length() > 255):
+		duplicateErrorBanner.show();
+		duplicateEmptyBanner.hide();
+		duplicateExistsBanner.hide();
+		return;
 
-	if !newLevelName.is_valid_filename():
-		return
-
-	var source : String = selectedItem.levelPath
+	var itemLevelPath : String = selectedItem.levelPath;
 	var destination : String = "user://Levels/" + newLevelName + "/";
 
-	# Don't overwrite an existing level.
+	# Don't overwrite an existing level!!!
 	if DirAccess.dir_exists_absolute(destination):
-		return
+		duplicateExistsBanner.show();
+		duplicateErrorBanner.hide();
+		duplicateEmptyBanner.hide();
+		return;
 
-	DirAccess.make_dir_absolute(destination)
-	ImportExportManager.clone_data(source, destination)
+	# Create the directory and clone our data right there
+	DirAccess.make_dir_absolute(destination);
+	ImportExportManager.clone_data(itemLevelPath, destination);
 
-	overlayDuplicateLevel.hide()
-	fill_level_list()
+	overlayDuplicateLevel.hide();
+	fill_level_list();
+	masterManager.load_level(destination);
+	
 	
 func favorite_current_level() -> void:
 	pass;

@@ -111,7 +111,7 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 corner_detail = 10
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "buttonDuplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "fileExplorer", "levelList", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "fileExplorer", "levelList", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -149,9 +149,12 @@ badImportWarning = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMarg
 badImportBody = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/BadImportWarning/PanelContainer/badImportBody")
 buttonDuplicateLevelCancel = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow/DuplicateCancelButton")
 buttonDuplicateLevelConfirm = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow/DuplicateLevelButton")
-buttonDuplicateName = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn/RenameLevelInput")
+duplicateName = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn/RenameLevelInput")
 spinBoxDuplicateLevelX = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow/InputsColumn/DuplicateWidthSpinBox")
 spinBoxDuplicateLevelY = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow/InputsColumn/DuplicateHeightSpinBox")
+duplicateErrorBanner = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner")
+duplicateEmptyBanner = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/EmptyBanner")
+duplicateExistsBanner = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ExistsBanner")
 fileExplorer = NodePath("FileDialog")
 levelList = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll/LevelList")
 levelListItem = ExtResource("2_riqfo")
@@ -966,7 +969,7 @@ size_flags_vertical = 4
 
 [node name="LevelNameLabel" type="Label" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/LabelsColumn" unique_id=1828555883]
 layout_mode = 2
-text = "Rename Level"
+text = "Name Duplicate"
 
 [node name="LevelNameAuthorSpacer" type="Control" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/LabelsColumn" unique_id=1630654212]
 layout_mode = 2
@@ -983,30 +986,18 @@ size_flags_horizontal = 3
 
 [node name="RenameLevelInput" type="LineEdit" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=240684583]
 layout_mode = 2
-placeholder_text = "My Level"
+placeholder_text = "My Duplicate Level"
 
-[node name="InvalidWarning" type="MarginContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1517172336]
+[node name="ErrorBanner" type="PanelContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=418759891]
 visible = false
-propagate_maximum_size = false
 layout_mode = 2
-size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="MarginContainer" type="MarginContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner" unique_id=2059781630]
+layout_mode = 2
 theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
-[node name="PanelContainer" type="PanelContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/InvalidWarning" unique_id=1889076562]
-custom_minimum_size = Vector2(0, 60)
-propagate_maximum_size = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_yxkem")
-metadata/_edit_use_anchors_ = true
-
-[node name="Body" type="RichTextLabel" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/InvalidWarning/PanelContainer" unique_id=1005409563]
-custom_minimum_size = Vector2(403.175, 0)
-clip_contents = false
+[node name="Label" type="RichTextLabel" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner/MarginContainer" unique_id=551310154]
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("8_rrcx7")
 bbcode_enabled = true
@@ -1014,28 +1005,16 @@ text = "The level name contains [color=#e74937]invalid[/color] characters. Pleas
 fit_content = true
 horizontal_alignment = 1
 
-[node name="EmptyWarning" type="MarginContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=508221749]
+[node name="EmptyBanner" type="PanelContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=286197191]
 visible = false
-propagate_maximum_size = false
 layout_mode = 2
-size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="MarginContainer" type="MarginContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/EmptyBanner" unique_id=312250790]
+layout_mode = 2
 theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
-[node name="PanelContainer" type="PanelContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/EmptyWarning" unique_id=1175062866]
-custom_minimum_size = Vector2(0, 60)
-propagate_maximum_size = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_yxkem")
-metadata/_edit_use_anchors_ = true
-
-[node name="Body" type="RichTextLabel" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/EmptyWarning/PanelContainer" unique_id=1663630432]
-custom_minimum_size = Vector2(403.175, 0)
-clip_contents = false
+[node name="Label" type="RichTextLabel" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/EmptyBanner/MarginContainer" unique_id=1606136707]
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("8_rrcx7")
 bbcode_enabled = true
@@ -1043,16 +1022,36 @@ text = "The level name is [color=#e74937]empty[/color]! Please enter a valid fil
 fit_content = true
 horizontal_alignment = 1
 
+[node name="ExistsBanner" type="PanelContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1387121709]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="MarginContainer" type="MarginContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ExistsBanner" unique_id=701339465]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+
+[node name="Label" type="RichTextLabel" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ExistsBanner/MarginContainer" unique_id=1366639697]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("8_rrcx7")
+bbcode_enabled = true
+text = "The level name [color=#e74937]already exists[/color]. "
+fit_content = true
+horizontal_alignment = 1
+
 [node name="NameGridSeparator" type="HSeparator" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1205158791]
+visible = false
 layout_mode = 2
 
 [node name="GridSettingsLabel" type="Label" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=434455335]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 theme_override_font_sizes/font_size = 14
 text = "Grid Settings"
 
 [node name="GridSettingsRow" type="HBoxContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1076449340]
+visible = false
 layout_mode = 2
 
 [node name="LabelsColumn" type="VBoxContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow" unique_id=202215094]
@@ -1094,15 +1093,6 @@ value = 20.0
 
 [node name="GridButtonsSeparator" type="HSeparator" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=229976487]
 layout_mode = 2
-
-[node name="ErrorBanner" type="PanelContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=2118892835]
-visible = false
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
-
-[node name="Label" type="Label" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner" unique_id=853900623]
-layout_mode = 2
-text = "Error: All Fields must be filled ou!"
 
 [node name="ButtonMargin" type="MarginContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1647205680]
 layout_mode = 2

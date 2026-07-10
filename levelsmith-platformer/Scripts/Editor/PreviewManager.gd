@@ -11,7 +11,10 @@ var brushObject : int;
 var currentMousePosition : Vector2;
 var prevMousePosition : Vector2;
 
+var entityPreviewSprite : Sprite2D = Sprite2D.new();
 
+func _ready() -> void:
+	add_child(entityPreviewSprite);
 
 ## Runs every frame during the editing state.
 ## _delta: how much time has passed since the previous frame
@@ -36,6 +39,7 @@ func _process(_delta: float) -> void:
 func update_preview_object(mousePosition: Vector2, prevPosition: Vector2, previewObject: int = brushObject, isRed: bool = false) -> void:
 	if (mousePosition != prevPosition): clear();
 	
+	entityPreviewSprite.hide();
 	if !toolManager.isMoving && (tileMap.get_cell_source_id(mousePosition) >= editorManager.tileCount && previewObject >= editorManager.tileCount):
 		clear();
 		return;
@@ -49,6 +53,11 @@ func update_preview_object(mousePosition: Vector2, prevPosition: Vector2, previe
 		# Add 4 to the alternative ID to use red unplaceable slopes.
 		var alternativeId : int = toolManager.currentObjectRotation + (4 if isRed else 0);
 		set_cell(mousePosition, previewObject, Vector2i.ZERO, alternativeId);
+	elif (previewObject >= Global.EntityType.GOAL && previewObject <= Global.EntityType.MOVING_PLATFORM):
+		var templateSprite = AnimationManager.get_template_sprite(tileMap.tile_set.get_source(previewObject).resource_name);
+		entityPreviewSprite.texture = templateSprite.sprite_frames.get_frame_texture(templateSprite.animation, 0);
+		entityPreviewSprite.position = map_to_local(mousePosition);
+		entityPreviewSprite.show();
 	elif (previewObject >= editorManager.tileCount):
 		set_cell(mousePosition, previewObject, Vector2i.ZERO, 2);
 	else:

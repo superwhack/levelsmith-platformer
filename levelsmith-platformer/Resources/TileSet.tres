@@ -108,22 +108,22 @@ scenes/1/scene = ExtResource("8_alyph")
 scenes/2/scene = ExtResource("9_6ba2f")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_8sjof"]
-resource_name = "Patrolling"
+resource_name = "PatrollingEnemy"
 scenes/1/scene = ExtResource("10_6ba2f")
 scenes/2/scene = ExtResource("11_8sjof")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_pqfav"]
-resource_name = "Shooting"
+resource_name = "ShootingEnemy"
 scenes/1/scene = ExtResource("3_k4kw2")
 scenes/2/scene = ExtResource("4_3boqi")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_eqdrb"]
-resource_name = "Flying"
+resource_name = "FlyingEnemy"
 scenes/1/scene = ExtResource("5_3boqi")
 scenes/2/scene = ExtResource("6_pqfav")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_flggt"]
-resource_name = "Stationary"
+resource_name = "StationaryEnemy"
 scenes/1/scene = ExtResource("17_38lp2")
 scenes/2/scene = ExtResource("18_38lp2")
 
@@ -133,7 +133,7 @@ scenes/1/scene = ExtResource("22_38lp2")
 scenes/2/scene = ExtResource("23_hkman")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_6ti6x"]
-resource_name = "Moving Platform"
+resource_name = "MovingPlatform"
 scenes/1/scene = ExtResource("19_yoa8o")
 scenes/2/scene = ExtResource("20_4pytx")
 

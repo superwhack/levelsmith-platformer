@@ -93,6 +93,10 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 			if (type == AssetItem.AssetType.ANIMATION && !firstAnimationSelected):
 				firstAnimationSelected = newButton;
 
+func clear_buttons(container : VBoxContainer):
+	for button in container.get_children() :
+		button.queue_free();
+
 ## Finds an image by its name
 ## imageName: Name of the image
 ## returns: Loaded image
@@ -328,12 +332,16 @@ func refresh_all() -> void:
 	animationSwapping.update_animation_preview();
 
 func setup() -> void:
+	print("Setup");
 	filePath = masterManager.loadedLevelPath + "Assets";
 	FileSearch.filePath = filePath;
 	# Checks if the user has an assets root folder, creates one if not
 	var dir : DirAccess = DirAccess.open(filePath);
 	if (!dir || dir.get_directories().is_empty()):
 		create_file_tree();
+	# Clear all buttons;
+	clear_buttons(imagesTab);
+	clear_buttons(animationsTab);
 	# Generate all buttons under their tabs
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);

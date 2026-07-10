@@ -70,7 +70,7 @@ func place_entity(clickPosition: Vector2) -> void:
 					newEntity = defaultPatrolling.duplicate(true);
 				placedEnemy.adjust_arrow(90);
 				placedEnemy.directionArrow.scale = Vector2(1, 1);
-				file = "res://Resources/Enemies/Patrolling" + str(time) + ".tres";
+				file = "user://Resources/Enemies/Patrolling" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.SHOOTING):
 				var defaultShooting : Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 				if duplicatingResource:
@@ -79,25 +79,25 @@ func place_entity(clickPosition: Vector2) -> void:
 					newEntity = defaultShooting.duplicate(true);
 				placedEnemy.adjust_arrow(90);
 				placedEnemy.directionArrow.scale = Vector2(1, 1);
-				file = "res://Resources/Enemies/Shooting" + str(time) + ".tres";
+				file = "user://Resources/Enemies/Shooting" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.FLYING):
 				var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
 				if duplicatingResource:
 					newEntity = duplicatingResource.duplicate(true);
 				else:
 					newEntity = defaultFlying.duplicate(true);
-				file = "res://Resources/Enemies/Flying" + str(time) + ".tres";
+				file = "user://Resources/Enemies/Flying" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.STATIONARY):
 				var defaultStationary : Resource = load("res://Resources/PlayerPresets/StationaryDefault.tres");
 				newEntity = defaultStationary.duplicate(true);
-				file = "res://Resources/Enemies/Stationary" + str(time) + ".tres";
+				file = "user://Resources/Enemies/Stationary" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.MOVING_PLATFORM):
 				var defaultMoving : Resource = load("res://Resources/PlayerPresets/MovingPlatformDefault.tres");
 				if duplicatingResource:
 					newEntity = duplicatingResource.duplicate(true);
 				else:
 					newEntity = defaultMoving.duplicate(true);
-				file = "res://Resources/Enemies/MovingPlatform" + str(time) + ".tres";
+				file = "user://Resources/Enemies/MovingPlatform" + str(time) + ".tres";
 			ResourceSaver.save(newEntity, file);
 			placedEnemy.assign_script(str(time), clickPosition);
 			await get_tree().process_frame;
@@ -126,7 +126,7 @@ func delete_entity (clickPosition: Vector2) -> void:
 	elif (clickedObjectId == Global.EntityType.PLAYER): editorManager.playerExists = false;
 	elif (clickedObjectId == Global.EntityType.GOAL): goalCount -= 1;
 	elif (clickedEntity is Enemy || clickedEntity is MovingPlatform):
-		DirAccess.remove_absolute("res://Resources/Enemies/" + clickedEntity.name + ".tres");
+		DirAccess.remove_absolute("user://Resources/Enemies/" + clickedEntity.name + ".tres");
 		clickedEntity.queue_free();
 	
 	tileMap.erase_cell(clickPosition);
@@ -243,7 +243,7 @@ func drop_entity() -> void:
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
 	elif droppedEntity is EnemyStationary:
 		droppedEntity.update_flipped();
-	ResourceSaver.save(newResource, "res://Resources/Enemies/" + droppedEntity.name + ".tres");
+	ResourceSaver.save(newResource, "user://Resources/Enemies/" + droppedEntity.name + ".tres");
 	newResource = null;
 	editorManager.reset_enemy_positions();
 

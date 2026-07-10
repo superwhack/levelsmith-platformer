@@ -111,9 +111,9 @@ func start() -> void:
 	# Unpause enemies and set their properties
 	get_tree().set_group("Enemy", "process_mode", Node.PROCESS_MODE_INHERIT);
 	get_tree().set_group("Moving", "process_mode", Node.PROCESS_MODE_INHERIT);
-	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
+	var enemyProperties : PackedStringArray = DirAccess.get_files_at("user://Resources/Enemies/");
 	for enemyProperty in enemyProperties:
-		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
+		var propertyFile : Resource = load("user://Resources/Enemies/" + enemyProperty);
 		for node in tileMap.get_children():
 			if tileMap.local_to_map(node.global_position) == propertyFile.position:
 				node.apply_script(propertyFile);

@@ -80,8 +80,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if (clickOnUI):
 		return;
 	
-	if editorManager.returnClick:
-		if (Input.is_action_just_released("left-click")):
+	if editorManager.returnClick && !Input.is_action_just_pressed("right-click"):
+		if (Input.is_action_just_released("left-click") || Input.is_action_just_pressed("left-click")):
 			editorManager.returnClick = false;
 			
 		if (currentTool != Global.Tool.BRUSH):

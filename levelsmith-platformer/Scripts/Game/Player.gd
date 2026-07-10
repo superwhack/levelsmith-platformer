@@ -132,7 +132,9 @@ func _physics_process(delta: float) -> void:
 		currentWalkingEffect = Global.WalkingEffect.NONE;
 		if (coyoteTimeLeft > 0):
 			coyoteTimeLeft -= delta;
-		velocity += get_gravity() * delta * fallSpeed;
+		velocity += get_gravity() * delta;
+		if velocity.y > 1300 * fallSpeed:
+			velocity.y = 1300 * fallSpeed;
 	else:
 		isJumping = false;
 		jumpAnimStarted = false;
@@ -168,20 +170,20 @@ func animate() -> void:
 	elif (invulnerabilityCurrent > 0):
 		animatedSprites.animation = "PlayerHurt";
 		fallAnimStarted = false;
-	elif (isJumping):
+	elif (!is_on_floor() && velocity.y < 0):
 		animatedSprites.animation = "PlayerJump";
 		fallAnimStarted = false;
 		if (!jumpAnimStarted):
 			jumpAnimStarted = true;
 		else:
 			return;
-	elif (!is_on_floor()):
+	elif (!is_on_floor() && velocity.y > 0):
 		animatedSprites.animation = "PlayerFall";
 		if (!fallAnimStarted):
 			fallAnimStarted = true;
 		else:
 			return;
-	elif (velocity.x != 0):
+	elif (direction):
 		animatedSprites.animation = "PlayerRun";
 		fallAnimStarted = false;
 	else:
@@ -245,7 +247,10 @@ func walk() -> void:
 		if direction / velocity.x > 0 && abs(velocity.x + accelerationX * .1) > trueSpeed:
 			accelerationX = 0;
 		else:
-			accelerationX *= .05;
+			if airControl != 0:
+				accelerationX *= .05 / pow(airControl, 2);
+			else:
+				accelerationX *= .05;
 		
 	# Velocity gets capped so you can't accelerate faster
 	elif (abs(velocity.x + accelerationX) > trueSpeed):
@@ -269,7 +274,9 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 		return false;
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
-	velocity = direction * (1000 + higherBounce * 500);
+	velocity = direction * (1000 + higherBounce * 500)
+	if is_on_floor():
+		velocity *= pow(groundSpeed, .9);
 	health -= amount;
 	if (health <= 0):
 		die();
@@ -383,7 +390,7 @@ func detect_tiles() -> void:
 					velocity.y *= .94;
 				if tileName != "slow":
 					currentSlowdown = 1.0;
-			if Input.is_action_just_pressed("jump") && velocity.y != 0:
+			if Input.is_action_just_pressed("jump") && !is_on_floor():
 				# Depending on direction, apply a different x velocity
 				if rayDirection.x < 0:
 					if wallJumpDirection != WallDirection.LEFT:

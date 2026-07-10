@@ -47,7 +47,7 @@ scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
 
 [node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
-default_color = Color(0.78039217, 0, 0.05490196, 0.8352941)
+default_color = Color(0.04557035, 0.048425518, 0.046807036, 0.8352941)
 
 [node name="LineEndpoint" type="Sprite2D" parent="Line2D" unique_id=1864633844]
 texture = ExtResource("2_lq205")

@@ -21,6 +21,7 @@ extends Node2D
 @export var editorButton : Button;
 
 @export var cameraManager : Node;
+@export var masterManager : Node;
 
 # Is the player paused or running?
 enum PlayState {
@@ -196,6 +197,9 @@ func level_complete() -> void:
 	bottomScreenGroup.hide();
 	winScreenHealthUI.bind_player(player);
 	winScreenHealthUI._sync_to_player();
+	masterManager.editorManager.isValidated = true;
+	print(masterManager.loadedLevelPath)
+	ImportExportManager.set_metadata(masterManager.loadedLevelPath, "validated", true)
 
 ## Returns to the level editor and restores the editor state
 func return_to_editor() -> void:
@@ -203,8 +207,8 @@ func return_to_editor() -> void:
 	winScreen.hide();
 	goalReached = false;
 	timerRunning = false;
-	get_parent().edit();
-	get_parent().editorManager.isValidated = true;
+	masterManager.edit();
+	
 
 ## Restarts the current level from the beginning
 func replay_level() -> void:

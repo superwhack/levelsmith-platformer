@@ -121,8 +121,9 @@ masterManager = NodePath("../..")
 masterManager = NodePath("../..")
 baseCamera = NodePath("../../Camera2D")
 
-[node name="GameManager" parent="." unique_id=344859815 node_paths=PackedStringArray("cameraManager") instance=ExtResource("4_ggjfv")]
+[node name="GameManager" parent="." unique_id=344859815 node_paths=PackedStringArray("cameraManager", "masterManager") instance=ExtResource("4_ggjfv")]
 cameraManager = NodePath("../Camera2D")
+masterManager = NodePath("..")
 
 [node name="MainMenuCanvasLayer" type="CanvasLayer" parent="." unique_id=1285763636]
 

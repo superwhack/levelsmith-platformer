@@ -5,14 +5,14 @@ var masterVolume : float = 0.7;
 var musicVolume : float = 0.7;
 var SFXVolume : float = 0.7;
 
-# Lowest DB, should be inaudible (it's negative)
-const LOWEST_DB : int = 70;
+var soundLevels : Dictionary;
 
 # Max number of audio players to be running at once (excluding one for music and one for walking)
 const AUDIO_PLAYER_COUNT : int = 12;
 const AUDIO_QUEUE_LIMIT : int = AUDIO_PLAYER_COUNT;
+
 # All folders for audio
-## BUG: UNTUL AUDIO LIBRARY PATH IS READY, IT IS TO BE ASSIGNED TO THE DEFAULT
+## BUG: UNTIL AUDIO LIBRARY PATH IS READY, IT IS TO BE ASSIGNED TO THE DEFAULT
 var audioLibraryPath : String = "res://Assets/Defaults/Assets/Audio/";
 #var audioLibraryPath : String = "user://Audio/";
 const UI_AUDIO_LIBRARY_PATH : String = "res://Assets/Audio/";
@@ -29,8 +29,16 @@ var currentWalkingEffect : Global.WalkingEffect;
 # Audio player for the asset manager
 var assetManagerPlayer : AudioStreamPlayer
 
+# Preview music timer for the settings menu
+var previewMusicTimer : float = -1.0;
+
 ## Create all players and connect them properly
 func _ready() -> void:
+	
+	soundLevels = {
+		"Tile_Place_Error": 0.3,
+	}
+	
 	musicPlayer = AudioStreamPlayer.new();
 	walkingPlayer = AudioStreamPlayer.new();
 	assetManagerPlayer = AudioStreamPlayer.new();
@@ -58,6 +66,23 @@ func _ready() -> void:
 func pause_music(pause : bool) -> void:
 	musicPlayer.stream_paused = pause;
 
+## Play the music to preview sound levels
+## musicName: music to play
+func play_music_preview(musicName:  String) -> void:
+	if musicPlayer.playing:
+		return;
+	play_music(musicName);
+	previewMusicTimer = 0;
+
+## Stop playing the music
+func stop_music_preview() -> void:
+	await get_tree().process_frame;
+	if previewMusicTimer >= 1.5:
+		musicPlayer.stop();
+		previewMusicTimer = -1;
+	else:
+		stop_music_preview();
+
 ## Only done with music, loop instead of ending it
 ## player: the audio stream player running the music
 func music_loop(player: AudioStreamPlayer) -> void:
@@ -67,24 +92,17 @@ func music_loop(player: AudioStreamPlayer) -> void:
 ## player: the audio stream player to end
 func audio_finished(player: AudioStreamPlayer) -> void:
 	availablePlayers.append(player);
+	player.volume_db = linear_to_db(masterVolume * SFXVolume);
 	inusePlayers.erase(player);
 
 ## Update the current volume by adjusting every player. If the volume is set to 0 for anything, mute completely
 func update_volume() -> void:
-	musicPlayer.volume_db = (LOWEST_DB * masterVolume * musicVolume) - LOWEST_DB;
-	if (musicPlayer.volume_db == -LOWEST_DB):
-			musicPlayer.volume_db = -1000;
-	walkingPlayer.volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
-	if (walkingPlayer.volume_db == -LOWEST_DB):
-			walkingPlayer.volume_db = -1000;
+	musicPlayer.volume_db = linear_to_db(masterVolume * musicVolume);
+	walkingPlayer.volume_db = linear_to_db(masterVolume * SFXVolume);
 	for i in inusePlayers.size():
-		inusePlayers[i].volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
-		if (inusePlayers[i].volume_db == -LOWEST_DB):
-			inusePlayers[i].volume_db = -1000;
+		inusePlayers[i].volume_db = linear_to_db(masterVolume * SFXVolume);
 	for i in availablePlayers.size():
-		availablePlayers[i].volume_db = (LOWEST_DB * masterVolume * SFXVolume) - LOWEST_DB;
-		if (availablePlayers[i].volume_db == -LOWEST_DB):
-			availablePlayers[i].volume_db = -1000;
+		availablePlayers[i].volume_db = linear_to_db(masterVolume * SFXVolume);
 
 ## Add specified SFX to the queue from builder sounds
 ## effectName: name of the effect to play
@@ -96,6 +114,8 @@ func play_UI_effect(effectName: String) -> void:
 		queue.append(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		queue.append(fullPath + ".wav");
+
+
 
 ## Play the music track
 ## musicName: name of the sound effect
@@ -187,8 +207,9 @@ func reset_audio() -> void:
 	queue.clear();
 	inusePlayers.clear();
 	musicPlayer.stop();
+	walkingPlayer.stop();
 
-## Play the sound for an asset when in the assetmanager
+## Play the sound for an asset when in the AssetManager
 ## assetName: the name of the file to play from, no extentions
 func play_asset(assetName: String) -> void:
 	var fullPath : String = audioLibraryPath + assetName;
@@ -201,14 +222,23 @@ func play_asset(assetName: String) -> void:
 	assetManagerPlayer.play();
 
 ## If there are any current sounds in the queue and any avaliable players, start playing the sound.
-## delta: unused
-func _process(_delta: float) -> void:
+## delta: used for tracking preview timer
+func _process(delta: float) -> void:
+	if previewMusicTimer >= 0:
+		previewMusicTimer += delta;
 	# If there aren't any available players, stop the longest running player early.
 	if (!queue.is_empty() && availablePlayers.is_empty()):
 		inusePlayers[0].stop();
 		audio_finished(inusePlayers[0]);
 	if (!queue.is_empty() && !availablePlayers.is_empty()):
 		var path : String = queue.pop_front(); 
+		
+		# If the sound level has an adjustment, apply it
+		var audioName = path.substr(path.rfind("/") + 1);
+		audioName = audioName.erase(audioName.rfind("."), 4);
+		if soundLevels.has(audioName):
+			availablePlayers[0].volume_db = linear_to_db(masterVolume * SFXVolume * soundLevels[audioName]);
+		
 		if (path.ends_with(".mp3")):
 			availablePlayers[0].stream = AudioStreamMP3.load_from_file(path);
 		elif (path.ends_with(".wav")):
@@ -218,3 +248,5 @@ func _process(_delta: float) -> void:
 		availablePlayers[0].play();
 		inusePlayers.append(availablePlayers[0]);
 		availablePlayers.pop_front();
+
+#func find_effect_name(path: String) -> String:

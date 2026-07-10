@@ -2,24 +2,24 @@
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/Editor/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
-[ext_resource type="Texture2D" uid="uid://tjgnomv6tiqo" path="res://Assets/UserInterface/Buttons/ButtonIcons/Home.png" id="7_20xd7"]
+[ext_resource type="Texture2D" uid="uid://cicj1jmudfxxy" path="res://Assets/UserInterface/Buttons/ButtonIcons/Home.png" id="7_20xd7"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="9_7flhh"]
-[ext_resource type="Texture2D" uid="uid://dihwhto85f8g3" path="res://Assets/UserInterface/Buttons/ButtonIcons/Save.png" id="10_2406q"]
+[ext_resource type="Texture2D" uid="uid://c03ijfg5hio0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Save.png" id="10_2406q"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Texture2D" uid="uid://d315qaek3rfyv" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
+[ext_resource type="Texture2D" uid="uid://e2cnr04fpgrl" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="Texture2D" uid="uid://cv7qdxd1griu2" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
+[ext_resource type="Texture2D" uid="uid://8pwuej3wvl0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
@@ -415,11 +415,12 @@ editorManager = NodePath("..")
 toolManager = NodePath("../ToolManager")
 entityManager = NodePath("../ToolManager/EntityManager")
 
-[node name="ToolManager" type="Node2D" parent="." unique_id=2103609005 node_paths=PackedStringArray("editorManager", "entityManager", "tileManager", "tileSwitch", "propertyMenu", "previewTile")]
+[node name="ToolManager" type="Node2D" parent="." unique_id=2103609005 node_paths=PackedStringArray("editorManager", "entityManager", "tileManager", "customCursorManager", "tileSwitch", "propertyMenu", "previewTile")]
 script = ExtResource("12_20xd7")
 editorManager = NodePath("..")
 entityManager = NodePath("EntityManager")
 tileManager = NodePath("TileManager")
+customCursorManager = NodePath("../CustomCursorManager")
 tileSwitch = NodePath("../ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TileSwitch")
 propertyMenu = NodePath("../ScreenUI/MainColumn/ContentRow/PropertiesPanel/PropertyMenu")
 previewTile = NodePath("../PreviewTile")

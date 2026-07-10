@@ -144,7 +144,7 @@ func _process(_delta: float) -> void:
 		selectedEntity.adjust_arrow(int(patrollingDirectionDropdown.value) * 180 + 90);
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
-		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90, shootingRandomDirection.value);
+		selectedEntity.adjust_arrow(-shootingDirectionSlider.value, shootingRandomDirection.value);
 	elif selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
 		selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
@@ -365,6 +365,7 @@ func show_menu(resource: Resource = null) -> void:
 		update_sliders();
 		if selectedEntity is EnemyPatrol:
 			directionArrow = selectedEntity.directionArrow;
+			directionArrow.scale = Vector2(2,2);
 			patrollingMenu.show();
 		elif selectedEntity is EnemyShooting:
 			directionArrow = selectedEntity.directionArrow;

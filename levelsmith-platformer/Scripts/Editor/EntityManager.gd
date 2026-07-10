@@ -223,6 +223,7 @@ func drop_entity(reset: bool = false) -> void:
 			await get_tree().process_frame;
 		if (toolManager.prevBrushObject != -2):
 			toolManager.brushObject = toolManager.prevBrushObject;
+			toolManager.brushObject = toolManager.prevBrushObject;
 		toolManager.prevBrushObject = -1;
 		toolManager.prevPosition = Vector2(0,0);
 		toolManager.currentObjectRotation = toolManager.prevRotation;
@@ -237,7 +238,7 @@ func drop_entity(reset: bool = false) -> void:
 	
 	# Reset direciton arrows
 	if droppedEntity is EnemyShooting:
-		droppedEntity.adjust_arrow(droppedEntity.fireDirection + 90, droppedEntity.randomDirection);
+		droppedEntity.adjust_arrow(droppedEntity.fireDirection, droppedEntity.randomDirection);
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
 	elif droppedEntity is EnemyPatrol:
 		droppedEntity.adjust_arrow(int(newResource.direction) * 180 + 90);

@@ -291,9 +291,7 @@ func _on_level_toggled(item, toggled: bool) -> void:
 
 	selectedItem = item;
 	update_metadata(item);
-	print("On level toggle: ", selectedItem.favorited)
 	if (selectedItem.favorited):
-		print("fav")
 		buttonFavoriteLevel.icon = favoriteFilled;
 	else:
 		buttonFavoriteLevel.icon = favoriteEmpty;
@@ -385,9 +383,7 @@ func update_metadata(item) -> void:
 		preview.texture = item.thumbnail;
 	else:
 		preview.texture = previewDefault;
-	print("favorite in update: ", item.favorited)
 	if (item.favorited):
-		print("fav")
 		buttonFavoriteLevel.icon = favoriteFilled;
 	else:
 		buttonFavoriteLevel.icon = favoriteEmpty;
@@ -452,7 +448,6 @@ func delete_current_level() -> void:
 
 
 func duplicate_current_level() -> void:
-	print("attempted")
 	var newLevelName : String = duplicateName.text.strip_edges()
 
 	# If the given level name is empty, return early.
@@ -484,6 +479,7 @@ func duplicate_current_level() -> void:
 	ImportExportManager.clone_data(itemLevelPath, destination);
 
 	overlayDuplicateLevel.hide();
+	duplicateName.clear();
 	fill_level_list();
 	masterManager.load_level(destination);
 	

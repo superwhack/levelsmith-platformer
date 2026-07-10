@@ -419,7 +419,8 @@ func get_metadata(levelPath : String) -> Dictionary:
 	jsonFile.close();
 	# Return metadata
 	return jsonDict.get("metadata", {});
-	
+
+
 ## Sets a specific metadata value.
 ## levelPath: The given path to the level directory.
 ## key: The name of the metadata value to be changed.
@@ -513,7 +514,8 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 	ResourceSaver.save(newResource, "user://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();
-			
+
+
 ## If any enemy data is corrupted, we can repair it by giving it default values.
 ## tileMap: the main tile map layer.
 func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:

@@ -82,24 +82,24 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"cameraPlayClamp": false
 		},
 		"animations": {
-			"PlayerDeath": 12.0,
-			"PlayerFall": 12.0,
-			"PlayerHurt": 12.0,
-			"PlayerIdle": 12.0,
-			"PlayerJump": 12.0,
-			"PlayerRun": 12.0,
-			"StationaryDeath": 12.0,
-			"StationaryIdle": 12.0,
-			"EnemyShoot": 12.0,
-			"ShootDeath": 12.0,
-			"ShootIdle": 12.0,
-			"PatrolDeath": 12.0,
-			"PatrolWalk": 12.0,
-			"FlyDeath": 12.0,
-			"FlyMove": 12.0,
-			"PlatformAnimation": 12.0,
-			"GoalAnimation": 12.0,
-			"CoinAnimation": 12.0
+			"PlayerDeath": 8.0,
+			"PlayerFall": 8.0,
+			"PlayerHurt": 8.0,
+			"PlayerIdle": 8.0,
+			"PlayerJump": 8.0,
+			"PlayerRun": 8.0,
+			"StationaryDeath": 8.0,
+			"StationaryIdle": 8.0,
+			"EnemyShoot": 8.0,
+			"ShootDeath": 8.0,
+			"ShootIdle": 8.0,
+			"PatrolDeath": 8.0,
+			"PatrolWalk": 8.0,
+			"FlyDeath": 8.0,
+			"FlyMove": 8.0,
+			"PlatformAnimation": 8.0,
+			"GoalAnimation": 8.0,
+			"CoinAnimation": 8.0
 		}
 	};
 	

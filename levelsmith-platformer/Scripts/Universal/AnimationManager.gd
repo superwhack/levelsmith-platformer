@@ -183,7 +183,7 @@ func create_template_sprites() -> void:
 	shootingEnemyTemplateSprite.sprite_frames.add_animation("ShootIdle");
 	shootingEnemyTemplateSprite.sprite_frames.add_animation("EnemyShoot");
 	shootingEnemyTemplateSprite.sprite_frames.set_animation_loop_mode("EnemyShoot", SpriteFrames.LoopMode.LOOP_NONE);
-	shootingEnemyTemplateSprite.animation = "ShootIdle";
+	shootingEnemyTemplateSprite.animation = "EnemyShoot";
 	shootingEnemyTemplateSprite.sprite_frames.remove_animation("default");
 	
 	stationaryEnemyTemplateSprite = AnimatedSprite2D.new();

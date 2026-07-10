@@ -157,6 +157,7 @@ func load_level(levelPath: String, play: bool = false) -> void:
 
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
+	mainMenuControl.fill_level_list();
 	if !onStart:
 		await screen_wipe_in();
 	if menuClickSound:
@@ -172,7 +173,6 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	mainMenuControl.show();
 	ImportExportManager.clear_enemies_folder();
 	AudioManager.reset_audio();
-	mainMenuControl.fill_level_list();
 	if (mainMenuControl.selectedItem):
 		mainMenuControl.update_metadata(mainMenuControl.selectedItem);
 	# Set the state to the Main Menu

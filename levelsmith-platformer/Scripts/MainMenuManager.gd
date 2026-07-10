@@ -279,15 +279,14 @@ func _on_level_hovered(item) -> void:
 	if (!selectedItem):
 		update_metadata(item);
 	
-func _on_level_toggled(item, toggled: bool) -> void:
-	if (!toggled):
+func _on_level_pressed(item) -> void:
+	if (selectedItem == item):
 		return;
 		
-	# Deselect the previous item if its not the same
-	if (selectedItem && selectedItem != item):
-		selectedItem.levelButton.button_pressed = false;
-	if (!selectedItem):
-		toggle_level_buttons();
+	if (selectedItem):
+		selectedItem.levelButton.button_pressed = false
+	else:
+		toggle_level_buttons()
 
 	selectedItem = item;
 	update_metadata(item);
@@ -325,8 +324,8 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 		item.level_double_clicked.connect(_on_level_double_clicked);	# Hovering an item populates the metadata field.
 	#item.level_hovered.connect(_on_level_hovered);
 	# Selecting an item toggles.
-	if (!item.level_toggled.is_connected(_on_level_toggled)):
-		item.level_toggled.connect(_on_level_toggled);
+	if (!item.level_pressed.is_connected(_on_level_pressed)):
+		item.level_pressed.connect(_on_level_pressed);
 
 	if (!item.level_deselected.is_connected(_on_level_deselected)):
 		item.level_deselected.connect(_on_level_deselected);
@@ -507,7 +506,7 @@ func duplicate_current_level() -> void:
 	if (levelItems.has(newLevelPath)):
 		var newItem = levelItems[newLevelPath];
 		newItem.levelButton.button_pressed = true;
-		_on_level_toggled(newItem, true);
+		_on_level_pressed(newItem);
 
 
 ## Sets whether the currently selected level is favorited or not.

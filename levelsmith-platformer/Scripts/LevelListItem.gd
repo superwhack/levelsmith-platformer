@@ -24,7 +24,7 @@ var levelPath : String;
 # Signal for double clicking main button, for hovering level button
 signal level_double_clicked(path: String);
 signal level_hovered(item: Control);
-signal level_toggled(item: Control, toggled: bool);
+signal level_pressed(item: Control);
 signal level_deselected(item: Control);
 
 
@@ -42,7 +42,7 @@ func _ready() -> void:
 	#levelButton.mouse_entered.connect(_on_mouse_enter);
 	#levelButton.mouse_exited.connect(_on_mouse_exit);
 	levelButton.mouse_entered.connect(_on_mouse_entered);
-	levelButton.toggled.connect(_on_button_toggled);
+	levelButton.pressed.connect(_on_button_pressed);
 	levelButton.gui_input.connect(_on_level_button_input);
 	levelButton.gui_input.connect(_on_gui_input);
 	
@@ -90,8 +90,8 @@ func _on_mouse_entered() -> void:
 
 ## When the button is toggled, emit a signal. Used for main menu level selection.
 ## buttonPressed: 
-func _on_button_toggled(buttonPressed: bool) -> void:
-	level_toggled.emit(self, buttonPressed);
+func _on_button_pressed() -> void:
+	level_pressed.emit(self);
 
 ## Set the color of the text inside the button to be the opposite color.
 #func _on_mouse_enter() -> void:

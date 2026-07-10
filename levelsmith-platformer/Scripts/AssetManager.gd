@@ -198,7 +198,7 @@ func reset_all_popup() -> void:
 
 ## Resets everything within the assets manager
 func reset_all() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	FileSearch.delete_folder(filePath);
 	create_file_tree();
 	reset_menu();
@@ -226,7 +226,7 @@ func reset_menu() -> void:
 ## Signal that is emitted when an asset in the menu is selected
 ## selectedItem: The item that is selected, defaults to the firstImageSelected
 func item_selected(selectedItem: AssetItem) -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	# Pause the animation
 	animationSwapping.playingAnimation = false;
 	# If the selected item is an image, replace its preview
@@ -292,7 +292,7 @@ func create_file_tree() -> void:
 	# TODO: Add folders for audio
 
 func open_image_selector() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
 		fileSelect.title = "Replace " + imageSwapping.imageNameToReplace;
 		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_FILE;

@@ -205,7 +205,7 @@ sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"PlayerJump"
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=116409988]
-position = Vector2(-57, 0)
+position = Vector2(-45, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 60)
 
@@ -214,7 +214,7 @@ scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 60)
 
 [node name="RayCastDown3" type="RayCast2D" parent="." unique_id=1487377010]
-position = Vector2(57, 0)
+position = Vector2(45, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, 60)
 
@@ -247,7 +247,7 @@ scale = Vector2(1.1, 1.1)
 target_position = Vector2(56, 0)
 
 [node name="RayCastUp" type="RayCast2D" parent="." unique_id=365446800]
-position = Vector2(-50, 0)
+position = Vector2(-45, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -56)
 
@@ -256,6 +256,6 @@ scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -56)
 
 [node name="RayCastUp3" type="RayCast2D" parent="." unique_id=596214337]
-position = Vector2(50, 0)
+position = Vector2(45, 0)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -56)

@@ -109,6 +109,7 @@ animations = [{
 [node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "enemyBounceCollision", "enemyCollision", "animatedSprites") groups=["Player"]]
 position = Vector2(0, 10)
 scale = Vector2(0.9, 0.9)
+floor_block_on_wall = false
 floor_snap_length = 32.0
 script = ExtResource("1_kyqiw")
 raycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastDown2"), NodePath("RayCastUp"), NodePath("RayCastUp2"), NodePath("RayCastUp3"), NodePath("RayCastLeft2"), NodePath("RayCastLeft"), NodePath("RayCastLeft3"), NodePath("RayCastRight2"), NodePath("RayCastRight"), NodePath("RayCastRight3")]

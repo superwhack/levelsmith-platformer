@@ -7,10 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://do2buhww044b1" path="res://Scenes/MainMenu.tscn" id="9_4q5nt"]
-[ext_resource type="Shader" uid="uid://b14dktt7cmvkx" path="res://Scenes/ditherfade.gdshader" id="11_iwvbt"]
+[ext_resource type="Shader" uid="uid://cdtehxsgxkdly" path="res://ditherfadesquare.gdshader" id="11_iwvbt"]
 [ext_resource type="Texture2D" uid="uid://daeif0gohnc4o" path="res://Assets/Sprites/UI/LoadingScreen.png" id="12_8fjml"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -47,11 +47,10 @@ sources/2 = SubResource("TileSetAtlasSource_64b2s")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i4j32"]
 shader = ExtResource("11_iwvbt")
 shader_parameter/progress = 1.0
-shader_parameter/dither_scale = 4.0
-shader_parameter/edge_softness = 0.15
+shader_parameter/dither_scale = 12.0000005225
+shader_parameter/edge_softness = 0.70000003255148
 shader_parameter/center = Vector2(0.5, 0.5)
-shader_parameter/max_radius = 0.85000003711512
-shader_parameter/aspect_correction = Vector2(1, 1)
+shader_parameter/item_size = Vector2(1, 1)
 
 [node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "loadingScreen", "loadingImage", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "WinReturnToEditorButton", "playPopUp", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
 script = ExtResource("1_3ngsi")

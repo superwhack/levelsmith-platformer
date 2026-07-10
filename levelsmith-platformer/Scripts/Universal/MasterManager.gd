@@ -39,8 +39,10 @@ var loadedLevelPath: String = "";
 
 # Tween information
 var loadingTween : Tween
-var loadingTweenTime : float = 0.5
-var loadingHold : float = 0.25
+# The time that the screen wipe takes
+var loadingTweenTime : float = 0.35
+#The time that the full screen holds
+var loadingHold : float = 0.30
 
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);

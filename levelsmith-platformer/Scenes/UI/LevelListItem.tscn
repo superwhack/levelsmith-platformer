@@ -3,9 +3,10 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_v6rci"]
 [ext_resource type="Script" uid="uid://bwa6vqp2x282t" path="res://Scripts/LevelListItem.gd" id="2_3yt47"]
 [ext_resource type="Theme" uid="uid://dsbkv6718ooq1" path="res://Resources/LevelListItem.tres" id="3_3yt47"]
-[ext_resource type="Texture2D" uid="uid://eirshpbhdpcx" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="4_yqi52"]
+[ext_resource type="Texture2D" uid="uid://vhfbfauqi788" path="res://Assets/Sprites/UI/Invalid.png" id="4_3yt47"]
+[ext_resource type="Texture2D" uid="uid://2j2py7hm4a7o" path="res://Assets/Sprites/UI/FavoriteMedium.PNG" id="5_3yt47"]
 
-[node name="LevelListItem" type="Control" unique_id=2067988774 node_paths=PackedStringArray("levelTitle", "levelDate", "levelTime", "levelButton")]
+[node name="LevelListItem" type="Control" unique_id=2067988774 node_paths=PackedStringArray("levelTitle", "levelDate", "levelTime", "levelButton", "levelErrorIcon", "levelFavoriteIcon")]
 custom_minimum_size = Vector2(500, 100)
 custom_maximum_size = Vector2(1150, 100)
 layout_mode = 3
@@ -22,6 +23,8 @@ levelTitle = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxCon
 levelDate = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/DateAndTimeHBox/LevelDate")
 levelTime = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/DateAndTimeHBox/LevelTime")
 levelButton = NodePath("HBoxContainer/LevelMarginContainer/LevelCard")
+levelErrorIcon = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/TitleHBox/LevelError")
+levelFavoriteIcon = NodePath("HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/TitleHBox/LevelFavorite")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=467178205]
 custom_minimum_size = Vector2(900, -1)
@@ -53,7 +56,7 @@ size_flags_vertical = 4
 
 [node name="TitleHBox" type="HBoxContainer" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1097758974]
 layout_mode = 2
-theme_override_constants/separation = -90
+theme_override_constants/separation = 0
 
 [node name="LevelError" type="TextureRect" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/TitleHBox" unique_id=1951360806]
 visible = false
@@ -62,7 +65,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 tooltip_text = "This level is corrupted, and cannot be loaded."
-texture = ExtResource("4_yqi52")
+texture = ExtResource("4_3yt47")
 
 [node name="LevelFavorite" type="TextureRect" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/TitleHBox" unique_id=574927128]
 visible = false
@@ -70,8 +73,8 @@ custom_maximum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-tooltip_text = "This level is corrupted, and cannot be loaded."
-texture = ExtResource("4_yqi52")
+tooltip_text = "This level has been favorited."
+texture = ExtResource("5_3yt47")
 
 [node name="LevelTitle" type="Label" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/TitleHBox" unique_id=1908587017]
 layout_mode = 2

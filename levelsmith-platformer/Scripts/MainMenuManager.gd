@@ -35,7 +35,7 @@ extends Control
 @export var buttonImportLevelOpen : Button;
 @export var buttonImportLevelBrowse : TextureButton;
 @export var fieldImportLevelPath : LineEdit;
-@export var badImportWarning : MarginContainer;
+@export var badImportWarning : PanelContainer;
 @export var badImportBody : RichTextLabel;
 
 # Duplicate Level Overlay Children <3
@@ -49,7 +49,6 @@ extends Control
 @export var duplicateExistsBanner : PanelContainer;
 
 @export var fileExplorer : FileDialog;
-var importedLevelPath : String;
 
 ## A reference to the Level List for loading levels.
 @export var levelList : VBoxContainer;
@@ -66,6 +65,8 @@ var importedLevelPath : String;
 @export var version : Label;
 @export var preview : TextureRect;
 @export var previewDefault : Texture2D;
+@export var favoriteEmpty : Texture2D;
+@export var favoriteFilled : Texture2D;
 
 # The currently selected level item.
 var selectedItem : Control = null;
@@ -88,6 +89,7 @@ func _ready() -> void:
 	buttonDeleteLevel.pressed.connect(delete_current_level);
 	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
 	buttonFavoriteLevel.pressed.connect(favorite_current_level);
+	get_window().focus_entered.connect(fill_level_list);
 	
 	# Hiding appropriate UI when cancelling level creation
 	buttonNewLevelCancel.pressed.connect(overlay_new_level_hide);
@@ -110,8 +112,7 @@ func _ready() -> void:
 
 
 	var set_directory = func (directory: String) -> void:
-		importedLevelPath = directory + "/";
-		fieldImportLevelPath.text = importedLevelPath;
+		fieldImportLevelPath.text = directory + "/";
 	
 	fileExplorer.dir_selected.connect(set_directory);
 	
@@ -138,20 +139,20 @@ func overlay_duplicate_level_hide() -> void:
 ## Called when import level button is pressed
 func import_level() -> void:
 	AudioManager.play_UI_effect("UISelection");
-	if (!ImportExportManager.validate_import(importedLevelPath)): 
+	if (!ImportExportManager.validate_import(fieldImportLevelPath.text)): 
 		badImportWarning.show();
-		badImportBody.text = "Level Import Failed from directory \"" + importedLevelPath + "\"!";
+		badImportBody.text = "Level Import Failed from directory \"" + fieldImportLevelPath.text + "\"!";
 		return;
 	
 	# Extract the name of the folder from the file path
-	var importedLevelArray : Array = importedLevelPath.split("/");
+	var importedLevelArray : Array = fieldImportLevelPath.text.split("/");
 	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
 	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
-	masterManager.loadedLevelPath = importedLevelPath;
+	masterManager.loadedLevelPath = fieldImportLevelPath.text;
 	
 	if !DirAccess.dir_exists_absolute(importDirectory):
 		DirAccess.make_dir_absolute(importDirectory);
-		ImportExportManager.clone_data(importedLevelPath + "/", importDirectory);
+		ImportExportManager.clone_data(fieldImportLevelPath.text + "/", importDirectory);
 	masterManager.import_level_and_edit();
 	
 	# Resets the ui overlay
@@ -240,7 +241,10 @@ func fill_level_list() -> void:
 			item.queue_free();
 			levelItems.erase(levelPath);
 	
-	for levelPath in levelFolders.keys():
+	# Get an array of levels sorted by favorite
+	var sortedPaths: Array = sort_levels_by_favorite(levelFolders.keys());
+	
+	for levelPath in sortedPaths:
 		if (!levelItems.has(levelPath)):
 			setup_level_item(levelFolders[levelPath], levelPath);
 		else:
@@ -249,6 +253,9 @@ func fill_level_list() -> void:
 				levelFolders[levelPath],
 				levelPath
 			);
+
+		# Move the item into the correct order
+		levelList.move_child(levelItems[levelPath], sortedPaths.find(levelPath));
 
 ## Setups each level item in the list.
 ## folderName: the folder of the level. Used for level title.
@@ -284,6 +291,12 @@ func _on_level_toggled(item, toggled: bool) -> void:
 
 	selectedItem = item;
 	update_metadata(item);
+	print("On level toggle: ", selectedItem.favorited)
+	if (selectedItem.favorited):
+		print("fav")
+		buttonFavoriteLevel.icon = favoriteFilled;
+	else:
+		buttonFavoriteLevel.icon = favoriteEmpty;
 	
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
@@ -342,6 +355,11 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 	item.dimensions = str(metadata.get("dimensions", str([20, 20])));
 	item.objectCount = str(int(metadata.get("objects", str(0))));
 	item.version = str(metadata.get("version", Global.VERSION));
+	item.favorited = metadata.get("favorited", false);
+	if (item.favorited):
+		item.levelFavoriteIcon.show();
+	else:
+		item.levelFavoriteIcon.hide();
 	
 	# If the the thumbnail exists, add it to the 
 	if (FileAccess.file_exists(levelThumbnailPath)):
@@ -362,10 +380,18 @@ func update_metadata(item) -> void:
 	dimensions.text = item.dimensions;
 	objectCount.text = item.objectCount;
 	version.text = item.version;
+	
 	if (item.thumbnail):
 		preview.texture = item.thumbnail;
 	else:
 		preview.texture = previewDefault;
+	print("favorite in update: ", item.favorited)
+	if (item.favorited):
+		print("fav")
+		buttonFavoriteLevel.icon = favoriteFilled;
+	else:
+		buttonFavoriteLevel.icon = favoriteEmpty;
+	
 		
 ## Clears the metadata selection.
 func clear_selection() -> void:
@@ -378,6 +404,7 @@ func clear_selection() -> void:
 		objectCount.text = "";
 		version.text = "";
 		preview.texture = previewDefault;
+		buttonFavoriteLevel.icon = favoriteEmpty;
 
 ## Opens OS file explorer to the users Level folder.
 func open_level_folder() -> void:
@@ -460,11 +487,35 @@ func duplicate_current_level() -> void:
 	fill_level_list();
 	masterManager.load_level(destination);
 	
-	
-func favorite_current_level() -> void:
-	pass;
 
+## Sets whether the currently selected level is favorited or not.
+func favorite_current_level() -> void:
+	if (!selectedItem):
+		return;
+
+	selectedItem.favorited = !selectedItem.favorited;
+
+	# Set the metadata value for favorited in the file
+	ImportExportManager.set_metadata(
+		selectedItem.levelPath.rstrip("/"),
+		"favorited",
+		selectedItem.favorited
+	);
 	
+	if (selectedItem.favorited):
+		buttonFavoriteLevel.icon = favoriteFilled;
+	else:
+		buttonFavoriteLevel.icon = favoriteEmpty;
+		
+	if (selectedItem.favorited):
+		selectedItem.levelFavoriteIcon.show();
+	else:
+		selectedItem.levelFavoriteIcon.hide();
+	
+	update_metadata(selectedItem);
+	fill_level_list();
+
+
 ## Checks if a level folder is valid with the correct files.
 ## filePath: The file path of the folder.
 ## Returns a bool based on the folder being valid.
@@ -478,3 +529,25 @@ func get_level_valid(filePath : String) -> bool:
 		if (!FileAccess.file_exists(filePath + "/Tiles.CSV")):
 			return false;
 	return true;
+
+## Sorts the levels by favorites first.
+## levelPaths: An array of every level path.
+func sort_levels_by_favorite(levelPaths: Array) -> Array:
+	# Custom callable built-in to arrays
+	levelPaths.sort_custom(func(a, b):
+		var aMetadata = ImportExportManager.get_metadata(a);
+		var bMetadata = ImportExportManager.get_metadata(b);
+
+		# get favorite state from metadata
+		var aFavorite: bool = aMetadata.get("favorited", false);
+		var bFavorite: bool = bMetadata.get("favorited", false);
+
+		# Favorites first
+		if (aFavorite != bFavorite):
+			return aFavorite;
+
+		# sort alphabetically by default
+		return a.get_file().to_lower() < b.get_file().to_lower();
+	);
+	# return sorted array
+	return levelPaths;

@@ -5,7 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://cv3y1gdfsbknd" path="res://Scenes/UI/LevelListItem.tscn" id="3_07k0b"]
 [ext_resource type="Texture2D" uid="uid://ylg2mfdy5c41" path="res://Assets/UserInterface/PreviewPlaceholder.png" id="4_k6vji"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="5_h35r6"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
+[ext_resource type="Texture2D" uid="uid://2j2py7hm4a7o" path="res://Assets/Sprites/UI/FavoriteMedium.PNG" id="6_pjscj"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
 [ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
 [ext_resource type="Texture2D" uid="uid://cuqx70ij8cotk" path="res://Assets/UserInterface/Buttons/ButtonIcons/PlaceholderButtonAsset.png" id="9_a2vo5"]
@@ -17,8 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://c0phqqwjx130p" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Delete.png" id="15_0ffkm"]
 [ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="16_w5rev"]
 [ext_resource type="Texture2D" uid="uid://dd3080y6r8vxe" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Edit.png" id="17_34n7o"]
-[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
-[ext_resource type="Texture2D" uid="uid://bbn361u6ti6j8" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
+[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
+[ext_resource type="Texture2D" uid="uid://bo1m348j85vww" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -103,14 +104,6 @@ corner_radius_bottom_left = 15
 corner_detail = 17
 expand_margin_left = 5.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7v4os"]
-bg_color = Color(0.95686275, 0.79607844, 0.43529412, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-corner_detail = 10
-
 [node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "fileExplorer", "levelList", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview")]
 layout_mode = 3
 anchors_preset = 15
@@ -145,8 +138,8 @@ buttonImportLevelCancel = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/Over
 buttonImportLevelOpen = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonsMargin/ButtonsRow/ImportLevelButton")
 buttonImportLevelBrowse = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/FilePathMargin/FilePathRow/FilePathButton")
 fieldImportLevelPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/FilePathMargin/FilePathRow/MarginContainer/FilePathInput")
-badImportWarning = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/BadImportWarning")
-badImportBody = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/BadImportWarning/PanelContainer/badImportBody")
+badImportWarning = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ImportBannerWarning")
+badImportBody = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ImportBannerWarning/MarginContainer/BadImportBody")
 buttonDuplicateLevelCancel = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow/DuplicateCancelButton")
 buttonDuplicateLevelConfirm = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow/DuplicateLevelButton")
 duplicateName = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn/RenameLevelInput")
@@ -167,6 +160,8 @@ objectCount = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/
 version = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Version")
 preview = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture")
 previewDefault = ExtResource("4_k6vji")
+favoriteEmpty = ExtResource("13_gcoc3")
+favoriteFilled = ExtResource("6_pjscj")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1764313566]
 layout_mode = 1
@@ -915,6 +910,7 @@ text = "Cancel
 "
 
 [node name="DuplicateLevelOverlay" type="ColorRect" parent="." unique_id=918952892]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -940,7 +936,7 @@ grow_vertical = 2
 [node name="OverlayCard" type="PanelContainer" parent="DuplicateLevelOverlay/SafeArea" unique_id=654238869]
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
-theme_override_styles/panel = ExtResource("4_7467j")
+theme_override_styles/panel = ExtResource("7_w016u")
 
 [node name="OverlayMargin" type="MarginContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard" unique_id=339819368]
 layout_mode = 2
@@ -999,7 +995,7 @@ theme_override_constants/margin_left = 10
 
 [node name="Label" type="RichTextLabel" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner/MarginContainer" unique_id=551310154]
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("8_rrcx7")
+theme_override_fonts/normal_font = ExtResource("18_0g0bm")
 bbcode_enabled = true
 text = "The level name contains [color=#e74937]invalid[/color] characters. Please enter a valid file name."
 fit_content = true
@@ -1016,7 +1012,7 @@ theme_override_constants/margin_left = 10
 
 [node name="Label" type="RichTextLabel" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/EmptyBanner/MarginContainer" unique_id=1606136707]
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("8_rrcx7")
+theme_override_fonts/normal_font = ExtResource("18_0g0bm")
 bbcode_enabled = true
 text = "The level name is [color=#e74937]empty[/color]! Please enter a valid file name."
 fit_content = true
@@ -1033,7 +1029,7 @@ theme_override_constants/margin_left = 10
 
 [node name="Label" type="RichTextLabel" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ExistsBanner/MarginContainer" unique_id=1366639697]
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("8_rrcx7")
+theme_override_fonts/normal_font = ExtResource("18_0g0bm")
 bbcode_enabled = true
 text = "The level name [color=#e74937]already exists[/color]. "
 fit_content = true
@@ -1117,7 +1113,6 @@ text = "Cancel
 "
 
 [node name="ImportLevelOverlay" type="ColorRect" parent="." unique_id=1459983268]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1198,49 +1193,25 @@ texture_hover = ExtResource("19_47c6y")
 texture_disabled = ExtResource("19_47c6y")
 texture_focused = ExtResource("19_47c6y")
 
-[node name="BadImportWarning" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1135629102]
+[node name="ImportBannerWarning" type="PanelContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=469845630]
 visible = false
-propagate_maximum_size = false
 layout_mode = 2
-size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="MarginContainer" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ImportBannerWarning" unique_id=1830994161]
+layout_mode = 2
 theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
-[node name="PanelContainer" type="PanelContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/BadImportWarning" unique_id=1727519219]
-propagate_maximum_size = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_7v4os")
-metadata/_edit_use_anchors_ = true
-
-[node name="badImportBody" type="RichTextLabel" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/BadImportWarning/PanelContainer" unique_id=929759938]
-custom_minimum_size = Vector2(403.175, 0)
-clip_contents = false
+[node name="BadImportBody" type="RichTextLabel" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ImportBannerWarning/MarginContainer" unique_id=1247428860]
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("18_0g0bm")
 bbcode_enabled = true
-text = "Level Import Failed from directory \"\"!"
+text = "The level name contains [color=#e74937]invalid[/color] characters. Please enter a valid file name."
 fit_content = true
 horizontal_alignment = 1
 
 [node name="InputButtonsSeparator" type="HSeparator" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1620636380]
 layout_mode = 2
-
-[node name="ErrorBanner" type="PanelContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=663620152]
-visible = false
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
-
-[node name="MarginContainer" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner" unique_id=679210477]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-
-[node name="Label" type="Label" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner/MarginContainer" unique_id=1753082738]
-layout_mode = 2
-text = "Error: Invalid File Path!"
 
 [node name="ButtonsMargin" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=706930528]
 layout_mode = 2

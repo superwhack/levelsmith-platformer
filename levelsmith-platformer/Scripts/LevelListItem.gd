@@ -5,6 +5,8 @@ extends Node
 @export var levelDate : Label;
 @export var levelTime : Label;
 @export var levelButton : Button;
+@export var levelErrorIcon : TextureRect;
+@export var levelFavoriteIcon : TextureRect;
 
 # We need to store metadata in button to retrieve when hovering/selecting
 var author : String = "";
@@ -13,6 +15,7 @@ var dateModified : String = "";
 var dimensions : String = "";
 var objectCount : String = "";
 var version : String = "";
+var favorited : bool = false;
 var thumbnail : Texture2D;
 
 # The level path. Used when emitting signal.

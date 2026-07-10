@@ -407,6 +407,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	JSONFile.close();
 	
 ## Reads the metadata section from the Settings JSON
+## levelPath: The given path to the level directory.
 ## Returns either a full or empty dictionary.
 func get_metadata(levelPath : String) -> Dictionary:
 	# If no settings JSON, return empty
@@ -418,6 +419,31 @@ func get_metadata(levelPath : String) -> Dictionary:
 	jsonFile.close();
 	# Return metadata
 	return jsonDict.get("metadata", {});
+	
+## Sets a specific metadata value.
+## levelPath: The given path to the level directory.
+## key: The name of the metadata value to be changed.
+## value: The new value of the metadata being changed.
+func set_metadata(levelPath: String, key: String, value: Variant) -> void:
+	if (!FileAccess.file_exists(levelPath + "/Settings.JSON")):
+		return;
+		
+	# Read file
+	var file : FileAccess = FileAccess.open(levelPath + "/Settings.JSON", FileAccess.READ);
+	var json : Dictionary = JSON.parse_string(file.get_as_text());
+	file.close();
+
+	# Not all files have metadata, so lets check first
+	if !json.has("metadata"):
+		json["metadata"] = {};
+
+	# Change the given key to the value in the metadata.
+	json["metadata"][key] = value;
+
+	# Write it to the file and close again.
+	file = FileAccess.open(levelPath + "/Settings.JSON", FileAccess.WRITE);
+	file.store_string(JSON.stringify(json, "\t"));
+	file.close();
 
 ## Clone all of the data from the user asset folder 
 ## from: the source directory

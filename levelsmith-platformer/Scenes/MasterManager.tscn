@@ -4,13 +4,13 @@
 [ext_resource type="Script" uid="uid://cnfmia7tequpl" path="res://Scripts/Universal/AnimationManager.gd" id="2_0vixy"]
 [ext_resource type="Script" uid="uid://b2na8kblsdcth" path="res://Scripts/Universal/AudioManager.gd" id="2_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://dgg6vutiewgw2" path="res://Scenes/EditingState.tscn" id="2_430ed"]
-[ext_resource type="PackedScene" uid="uid://bjx53xjckex6r" path="res://Scenes/MainMenu.tscn" id="2_gojh1"]
+[ext_resource type="PackedScene" uid="uid://do2buhww044b1" path="res://Scenes/MainMenu.tscn" id="2_gojh1"]
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
-[ext_resource type="Texture2D" uid="uid://dnutrybtymj0o" path="res://Assets/Sprites/UI/LoadingScreenBgImg.png" id="9_gojh1"]
+[ext_resource type="Texture2D" uid="uid://bjuw01i372ec7" path="res://Assets/Sprites/UI/LoadingScreenBgImg.png" id="9_gojh1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -180,10 +180,10 @@ script = ExtResource("4_mg0h4")
 masterManager = NodePath("..")
 gridLines = NodePath("../EditorManager/GridLines")
 
-[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera", "levelScreenshotCamera") instance=ExtResource("2_430ed")]
+[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera", "closeAssetManagerButton") instance=ExtResource("2_430ed")]
 masterManager = NodePath("..")
 mainCamera = NodePath("../Camera2D")
-levelScreenshotCamera = NodePath("LevelScreenshot")
+closeAssetManagerButton = NodePath("CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton")
 
 [node name="GridLines" parent="EditorManager" index="0" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
 z_index = 0
@@ -256,8 +256,6 @@ texture = ExtResource("9_gojh1")
 
 [node name="LoadingAnimation" type="AnimationPlayer" parent="LoadingScreen/ScreenContent" unique_id=1749949331]
 libraries/ = SubResource("AnimationLibrary_0vixy")
-
-[connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
 
 [editable path="EditorManager"]
 [editable path="EditorManager/CanvasLayer/AssetManager"]

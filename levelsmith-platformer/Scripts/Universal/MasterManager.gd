@@ -19,6 +19,7 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var editorHomeButton : Button;
 @export var editorPlayButton : Button;
 @export var returnToEditorButton : Button;
+@export var WinReturnToEditorButton : Button;
 @export var playPopUp : HBoxContainer;
 
 # Reference to tile maps
@@ -56,6 +57,7 @@ func _ready() -> void:
 	editorPlayButton.mouse_entered.connect(mouse_entered_play_button);
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
+	WinReturnToEditorButton.pressed.connect(edit);
 	
 	# NOTE: This probably shouldn't be here for the final build
 	# Create the Enemies folder, github can't push empty folders
@@ -170,7 +172,7 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	if !onStart:
 		await screen_wipe_in();
 	if menuClickSound:
-		AudioManager.play_UI_effect("UI_Selection");
+		AudioManager.play_UI_effect("UISelection");
 	# Hide all non-menu states, show Main Menu scene
 	gameManager.hide();
 	gameManagerCanvas.hide();
@@ -197,7 +199,7 @@ func edit() -> void:
 	await get_tree().process_frame;
 	await screen_wipe_in();
 	AudioManager.reset_audio();
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	if gameManager.tileMap:
 		gameManager.tileMap.queue_free();
@@ -234,7 +236,7 @@ func play() -> void:
 	if (!get_play_errors().is_empty()):
 		return;
 	propertyMenu.close();
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");
 	# Update state variable
 	state = Global.State.PLAY;

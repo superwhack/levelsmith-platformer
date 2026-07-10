@@ -166,6 +166,8 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 	json["player"] = {
 		"health": playerData.playerHealth,
 		"speed": playerData.playerSpeed,
+		"acceleration": playerData.playerAcceleration,
+		"deceleration": playerData.playerDeceleration,
 		"jump": playerData.playerJumpHeight,
 		"airControl": playerData.playerAirControl,
 		"fallSpeed": playerData.playerFallSpeed,
@@ -368,6 +370,8 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	var player = json_as_dict.get("player", {});
 	playerData.playerHealth = player.get("health", playerData.playerHealth);
 	playerData.playerSpeed = player.get("speed", playerData.playerSpeed);
+	playerData.playerAcceleration = player.get("acceleration", playerData.playerAcceleration);
+	playerData.playerDeceleration = player.get("deceleration", playerData.playerDeceleration);
 	playerData.playerJumpHeight = player.get("jump", playerData.playerJumpHeight);
 	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
 	playerData.playerFallSpeed = player.get("fallSpeed", playerData.playerFallSpeed);

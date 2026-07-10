@@ -183,7 +183,7 @@ func animate() -> void:
 			fallAnimStarted = true;
 		else:
 			return;
-	elif (velocity.x != 0):
+	elif (direction):
 		animatedSprites.animation = "PlayerRun";
 		fallAnimStarted = false;
 	else:

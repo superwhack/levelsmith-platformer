@@ -3,17 +3,17 @@
 [ext_resource type="Script" uid="uid://u63l1aalo6tr" path="res://Scripts/Editor/Properties/PropertySlider.gd" id="1_j2xmv"]
 
 [node name="PropertySlider" type="VBoxContainer" unique_id=305056832 node_paths=PackedStringArray("nameLabel", "unit", "slider", "textField", "minLabel", "maxLabel")]
-offset_right = 900.0
-offset_bottom = 70.0
-size_flags_horizontal = 4
+offset_right = 107.0
+offset_bottom = 89.0
+size_flags_horizontal = 3
 script = ExtResource("1_j2xmv")
 propertyName = "Name"
 nameLabel = NodePath("NameContainer/Name")
 unit = NodePath("NameContainer/Unit")
-slider = NodePath("HBoxContainer/VBoxContainer/Slider")
-textField = NodePath("HBoxContainer/Value")
-minLabel = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/Minimum")
-maxLabel = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/Maximum")
+slider = NodePath("SliderValuesVbox/SliderHBox/Slider")
+textField = NodePath("SliderValuesVbox/SliderHBox/Value")
+minLabel = NodePath("SliderValuesVbox/MinMaxHbox/Minimum")
+maxLabel = NodePath("SliderValuesVbox/MinMaxHbox/Maximum")
 
 [node name="NameContainer" type="HBoxContainer" parent="." unique_id=440181073]
 layout_mode = 2
@@ -35,34 +35,20 @@ size_flags_vertical = 8
 theme_override_colors/font_color = Color(0.52975416, 0.51892054, 0.5297661, 1)
 text = "Name"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1927265922]
+[node name="SliderValuesVbox" type="VBoxContainer" parent="." unique_id=815945846]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=815945846]
-custom_minimum_size = Vector2(700, 0)
+[node name="SliderHBox" type="HBoxContainer" parent="SliderValuesVbox" unique_id=1927265922]
 layout_mode = 2
 
-[node name="Slider" type="HSlider" parent="HBoxContainer/VBoxContainer" unique_id=1360091613]
+[node name="Slider" type="HSlider" parent="SliderValuesVbox/SliderHBox" unique_id=1360091613]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 1
 max_value = 5.0
 step = 0.1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer" unique_id=1671465826]
-layout_mode = 2
-
-[node name="Minimum" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=673215653]
-custom_minimum_size = Vector2(350, 0)
-layout_mode = 2
-text = "Name"
-
-[node name="Maximum" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=506243516]
-custom_minimum_size = Vector2(350, 0)
-layout_mode = 2
-text = "Name"
-horizontal_alignment = 2
-
-[node name="Value" type="TextEdit" parent="HBoxContainer" unique_id=281473897]
+[node name="Value" type="TextEdit" parent="SliderValuesVbox/SliderHBox" unique_id=281473897]
 custom_minimum_size = Vector2(64, 20)
 custom_maximum_size = Vector2(64, 35)
 layout_mode = 2
@@ -70,3 +56,23 @@ text = "0.00"
 emoji_menu_enabled = false
 scroll_fit_content_height = true
 scroll_fit_content_width = true
+
+[node name="MinMaxHbox" type="HBoxContainer" parent="SliderValuesVbox" unique_id=1601587]
+layout_mode = 2
+
+[node name="Minimum" type="Label" parent="SliderValuesVbox/MinMaxHbox" unique_id=673215653]
+layout_mode = 2
+text = "Name"
+
+[node name="MinMaxSpacer" type="Control" parent="SliderValuesVbox/MinMaxHbox" unique_id=613611067]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Maximum" type="Label" parent="SliderValuesVbox/MinMaxHbox" unique_id=506243516]
+layout_mode = 2
+text = "Name"
+horizontal_alignment = 2
+
+[node name="ValueBoxSizer" type="Control" parent="SliderValuesVbox/MinMaxHbox" unique_id=882104567]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2

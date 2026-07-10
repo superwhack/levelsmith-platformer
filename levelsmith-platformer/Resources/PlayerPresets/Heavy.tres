@@ -6,6 +6,8 @@
 script = ExtResource("1_shj4n")
 health = 5
 groundSpeed = 0.85
+acceleration = 0.5
+deceleration = 1.0
 jumpHeight = 1.5
 airControl = 0.3
 fallSpeed = 1.5

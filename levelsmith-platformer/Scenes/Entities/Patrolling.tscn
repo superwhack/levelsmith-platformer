@@ -2,10 +2,25 @@
 
 [ext_resource type="Script" uid="uid://cv0ngpnmx6kwj" path="res://Scripts/Game/EnemyPatrol.gd" id="1_ecr3g"]
 [ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="2_n0k27"]
-[ext_resource type="Texture2D" uid="uid://cwsprqtu1ar6d" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_0s3yh"]
-[ext_resource type="Texture2D" uid="uid://qyptq3doausu" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="3_igrap"]
-[ext_resource type="Texture2D" uid="uid://8mtvtp3y4dr7" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="4_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://dmhtyfp778j2i" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://dk8dlkaq68dlx" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="3_igrap"]
+[ext_resource type="Texture2D" uid="uid://d38uml03v3u3d" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="4_0s3yh"]
 [ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_3diox"]
+[ext_resource type="Texture2D" uid="uid://le6bt1c8l8l6" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/2.png" id="4_rdoky"]
+[ext_resource type="Texture2D" uid="uid://ccj0cxbhh02pl" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/3.png" id="5_y22b6"]
+[ext_resource type="Texture2D" uid="uid://vneo6j5yi63e" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/4.png" id="6_3lda6"]
+[ext_resource type="Texture2D" uid="uid://6e083d8he6gl" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/5.png" id="7_chm63"]
+[ext_resource type="Texture2D" uid="uid://rd5hwimxr8aw" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/6.png" id="8_4hhgn"]
+[ext_resource type="Texture2D" uid="uid://dw5b2r1h8nwtc" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/7.png" id="9_q727w"]
+[ext_resource type="Texture2D" uid="uid://x8t4rdl3eklo" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/8.png" id="10_ovcs0"]
+[ext_resource type="Texture2D" uid="uid://fexdfc4cf2bs" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/9.png" id="11_rhab1"]
+[ext_resource type="Texture2D" uid="uid://bih0uy8404dvj" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/10.png" id="12_if7rd"]
+[ext_resource type="Texture2D" uid="uid://c0ljspwmu7vau" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/11.png" id="13_hvgid"]
+[ext_resource type="Texture2D" uid="uid://bg6n10fsqabrq" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/12.png" id="14_uocbj"]
+[ext_resource type="Texture2D" uid="uid://s01fqrq4xiwj" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/3.png" id="17_dbwhe"]
+[ext_resource type="Texture2D" uid="uid://c6r6yxp0uwna6" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/4.png" id="18_0rysc"]
+[ext_resource type="Texture2D" uid="uid://dxhxcp2oomkcn" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/5.png" id="19_avxxe"]
+[ext_resource type="Texture2D" uid="uid://bprw6awcygd47" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/6.png" id="20_pdqeo"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
@@ -14,6 +29,39 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_0s3yh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rdoky")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_y22b6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_3lda6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_chm63")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_4hhgn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_q727w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ovcs0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_rhab1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_if7rd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_hvgid")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_uocbj")
 }],
 "loop": 0,
 "name": &"PatrolDeath",
@@ -25,6 +73,18 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("4_0s3yh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_dbwhe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_0rysc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_avxxe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_pdqeo")
 }],
 "loop": 1,
 "name": &"PatrolWalk",

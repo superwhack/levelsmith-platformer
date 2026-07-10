@@ -274,7 +274,9 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 		return false;
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
-	velocity = direction * (1000 + higherBounce * 500);
+	velocity = direction * (1000 + higherBounce * 500)
+	if is_on_floor():
+		velocity *= pow(groundSpeed, .9);
 	health -= amount;
 	if (health <= 0):
 		die();

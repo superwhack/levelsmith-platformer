@@ -132,7 +132,9 @@ func _physics_process(delta: float) -> void:
 		currentWalkingEffect = Global.WalkingEffect.NONE;
 		if (coyoteTimeLeft > 0):
 			coyoteTimeLeft -= delta;
-		velocity += get_gravity() * delta * fallSpeed;
+		velocity += get_gravity() * delta;
+		if velocity.y > 1300 * fallSpeed:
+			velocity.y = 1300 * fallSpeed;
 	else:
 		isJumping = false;
 		jumpAnimStarted = false;

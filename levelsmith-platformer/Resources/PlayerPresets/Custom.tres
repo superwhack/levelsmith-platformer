@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_22dwl")
 health = 3
-groundSpeed = 1.0
+groundSpeed = 4.0
 acceleration = 1.0
 deceleration = 1.0
 jumpHeight = 2.0

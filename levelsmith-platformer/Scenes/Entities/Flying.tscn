@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dbyqq48s1okmk"]
 
 [ext_resource type="Script" uid="uid://bb8bufpti3oma" path="res://Scripts/Game/EnemyFlyer.gd" id="1_e2l54"]
-[ext_resource type="Texture2D" uid="uid://cyqun6r7bs6q4" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/1.png" id="2_djprm"]
-[ext_resource type="Texture2D" uid="uid://bwgal07mqllor" path="res://Assets/Sprites/UI/Grab.png" id="2_lq205"]
-[ext_resource type="Texture2D" uid="uid://cng10y1l7xl62" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/1.png" id="3_xxngd"]
-[ext_resource type="Texture2D" uid="uid://bpyudm6olskqn" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/2.png" id="4_4kx8d"]
+[ext_resource type="Texture2D" uid="uid://d1dc1ij8dof3t" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/1.png" id="2_djprm"]
+[ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="2_lq205"]
+[ext_resource type="Texture2D" uid="uid://d14bgdlim7pqm" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/1.png" id="3_xxngd"]
+[ext_resource type="Texture2D" uid="uid://ewc8n1l71dq4" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/2.png" id="4_4kx8d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
@@ -46,6 +46,11 @@ animatedSprites = NodePath("AnimatedSprite2D")
 scale = Vector2(6.3, 6.3)
 shape = SubResource("CircleShape2D_lurgl")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1379822224]
+z_index = -1
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+animation = &"FlyMove"
+
 [node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
 default_color = Color(0.04557035, 0.048425518, 0.046807036, 0.8352941)
 
@@ -53,8 +58,3 @@ default_color = Color(0.04557035, 0.048425518, 0.046807036, 0.8352941)
 texture = ExtResource("2_lq205")
 
 [node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1562874782]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1379822224]
-z_index = -1
-sprite_frames = SubResource("SpriteFrames_g4v7s")
-animation = &"FlyMove"

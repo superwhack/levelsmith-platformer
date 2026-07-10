@@ -35,7 +35,7 @@ var loadedMap : TileMapLayer;
 
 @export var propertyMenu : Panel;
 
-var loadedLevelPath: String = "";
+var loadedLevelPath : String = "";
 
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
@@ -54,10 +54,13 @@ func _ready() -> void:
 	returnToEditorButton.pressed.connect(edit);
 	WinReturnToEditorButton.pressed.connect(edit);
 	
-	# NOTE: This probably shouldn't be here for the final build
-	# Create the Enemies folder, github can't push empty folders
-	if (!DirAccess.dir_exists_absolute("res://Resources/Enemies/")):
-		DirAccess.make_dir_absolute("res://Resources/Enemies/");
+	# Create the enemy resource folder and custom player preset.
+	if (!DirAccess.dir_exists_absolute("user://Resources/")):
+		DirAccess.make_dir_absolute("user://Resources/");
+		DirAccess.make_dir_absolute("user://Resources/Enemies/");
+		DirAccess.copy_absolute("res://Resources/PlayerPresets/Default.tres", "user://Resources/Custom.tres");
+		
+	main_menu(false);
 	
 	await screen_static();
 	await main_menu(false, true);

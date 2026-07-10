@@ -168,14 +168,14 @@ func animate() -> void:
 	elif (invulnerabilityCurrent > 0):
 		animatedSprites.animation = "PlayerHurt";
 		fallAnimStarted = false;
-	elif (isJumping):
+	elif (!is_on_floor() && velocity.y < 0):
 		animatedSprites.animation = "PlayerJump";
 		fallAnimStarted = false;
 		if (!jumpAnimStarted):
 			jumpAnimStarted = true;
 		else:
 			return;
-	elif (!is_on_floor()):
+	elif (!is_on_floor() && velocity.y > 0):
 		animatedSprites.animation = "PlayerFall";
 		if (!fallAnimStarted):
 			fallAnimStarted = true;

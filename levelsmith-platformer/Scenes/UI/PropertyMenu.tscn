@@ -173,7 +173,7 @@ custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Fall Speed"
 propertyUnit = "m/s"
-minMax = Vector2(0, 5)
+minMax = Vector2(0.1, 5)
 sliderStep = 0.1
 
 [node name="PlayerCoyoteTime" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=2022302843 instance=ExtResource("2_w5eld")]

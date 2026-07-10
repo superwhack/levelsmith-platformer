@@ -3,10 +3,13 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_02c1u"]
 [ext_resource type="Script" uid="uid://no4fqovbkfha" path="res://Scripts/SettingsManager.gd" id="2_5bsrg"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_w0xpy"]
+[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_bpp5a"]
 [ext_resource type="Texture2D" uid="uid://b8wetv4xd30wg" path="res://Assets/Sprites/UI/BlankArrowUpSmall.png" id="4_w0xpy"]
 [ext_resource type="PackedScene" uid="uid://d4nqq7rlhq0q8" path="res://Scenes/UI/SettingsMenuSlider.tscn" id="5_aixuf"]
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="6_5bsrg"]
 [ext_resource type="FontFile" uid="uid://dbkfb2swhokjo" path="res://Assets/Fonts/JetBrainsMono-Regular.ttf" id="6_xkvg5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5bsrg"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_wdd1s"]
 
@@ -21,15 +24,15 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_02c1u")
 script = ExtResource("2_5bsrg")
-closeButton = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/FooterMargin/FooterRow/CloseButton")
+closeButton = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer/CloseButton")
 resetButton = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/FooterMargin/FooterRow/CloseButtonMargin/ResetButton")
-masterVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MasterVolume")
-SFXVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/SFXVolume")
-musicVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MusicVolume")
-gameplayZoom = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/GameplayZoom")
-followSpeed = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/FollowSpeed")
-cameraDeadzone = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraDeadzone")
-cameraClamp = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraClamp")
+masterVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn/MasterVolume")
+SFXVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn/SFXVolume")
+musicVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn/MusicVolume")
+gameplayZoom = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn/GameplayZoom")
+followSpeed = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn/FollowSpeed")
+cameraDeadzone = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn/CameraDeadzone")
+cameraClamp = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn/CameraClamp")
 
 [node name="MainMargin" type="MarginContainer" parent="." unique_id=136846140]
 self_modulate = Color(1, 1, 1, 0.7882353)
@@ -59,44 +62,67 @@ theme_override_constants/margin_bottom = 20
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MainMargin/SettingsPanel/BorderMargin" unique_id=410016208]
 layout_mode = 2
+theme_override_constants/scrollbar_h_separation = 15
 
 [node name="SettingsBox" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer" unique_id=488931375]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="GlobalSettings" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox" unique_id=2084784965]
-layout_mode = 2
-
-[node name="HeaderBlock" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings" unique_id=1184907257]
+[node name="HeaderBlock" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox" unique_id=1184907257]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/HeaderBlock" unique_id=232142632]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock" unique_id=232142632]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="TitleLable" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/HeaderBlock/HBoxContainer" unique_id=1004938737]
+[node name="TitleLable" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1004938737]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 32
 text = "Global Settings"
 
-[node name="Gap" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/HeaderBlock/HBoxContainer" unique_id=1684684629]
-visible = false
-custom_minimum_size = Vector2(300, 15)
+[node name="Gap" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1684684629]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=2123512347]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5bsrg")
+icon_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer/CloseButton" unique_id=791797228]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer/CloseButton/MarginContainer" unique_id=490516318]
+layout_mode = 2
+texture = ExtResource("4_bpp5a")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="CloseSizer" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=658418041]
+custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
 
-[node name="GlobalButton" type="Button" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/HeaderBlock/HBoxContainer" unique_id=1151013725]
-visible = false
-custom_maximum_size = Vector2(50, 50)
-layout_mode = 2
-size_flags_horizontal = 10
-icon = ExtResource("4_w0xpy")
-
-[node name="HeaderLine" type="HSeparator" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/HeaderBlock" unique_id=251268854]
+[node name="HeaderLine" type="HSeparator" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock" unique_id=251268854]
 layout_mode = 2
 
-[node name="HeaderSpacer" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/HeaderBlock" unique_id=1843349757]
+[node name="HeaderSpacer" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock" unique_id=1843349757]
 custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="GlobalSettings" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox" unique_id=2084784965]
 layout_mode = 2
 
 [node name="VolumeHeaderContainer" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings" unique_id=1110324375]
@@ -110,7 +136,11 @@ text = "Volume"
 [node name="HSeparator" type="HSeparator" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer" unique_id=78955692]
 layout_mode = 2
 
-[node name="MasterVolume" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer" unique_id=391164847 instance=ExtResource("5_aixuf")]
+[node name="VolumeSliderColumn" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer" unique_id=1428168113]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="MasterVolume" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn" unique_id=391164847 instance=ExtResource("5_aixuf")]
 layout_mode = 2
 propertyName = "Master Volume"
 propertyUnit = "%"
@@ -118,7 +148,7 @@ minMax = Vector2(0, 100)
 sliderStep = 1.0
 valueAppend = "%"
 
-[node name="SFXVolume" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer" unique_id=799832130 instance=ExtResource("5_aixuf")]
+[node name="SFXVolume" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn" unique_id=799832130 instance=ExtResource("5_aixuf")]
 layout_mode = 2
 propertyName = "SFX Volume"
 propertyUnit = "%"
@@ -126,115 +156,13 @@ minMax = Vector2(0, 100)
 sliderStep = 1.0
 valueAppend = "%"
 
-[node name="MusicVolume" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer" unique_id=1122227651 instance=ExtResource("5_aixuf")]
+[node name="MusicVolume" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn" unique_id=1122227651 instance=ExtResource("5_aixuf")]
 layout_mode = 2
 propertyName = "Music Volume"
 propertyUnit = "%"
 minMax = Vector2(0, 100)
 sliderStep = 1.0
 valueAppend = "%"
-
-[node name="MasterVolumeRow" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer" unique_id=1618336828]
-visible = false
-layout_mode = 2
-
-[node name="MasterVolumeLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MasterVolumeRow" unique_id=858390600]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Master Volume (%)"
-
-[node name="MasterVolumeControl" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MasterVolumeRow" unique_id=2082245281]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MasterVolumeRow/MasterVolumeControl" unique_id=1430027859]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="MasterVolumeMinLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MasterVolumeRow/MasterVolumeControl" unique_id=101404137]
-layout_mode = 2
-text = "0"
-
-[node name="MasterVolumeSlider" type="HSlider" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MasterVolumeRow/MasterVolumeControl" unique_id=2128740885]
-custom_minimum_size = Vector2(650, 0)
-layout_mode = 2
-size_flags_vertical = 4
-value = 20.0
-scrollable = false
-
-[node name="MasterVolumeMaxLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MasterVolumeRow/MasterVolumeControl" unique_id=171556356]
-layout_mode = 2
-text = "100 "
-
-[node name="MasterVolumeValueBox" type="LineEdit" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MasterVolumeRow/MasterVolumeControl" unique_id=1954763477]
-layout_mode = 2
-
-[node name="SFXVolumeRow" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer" unique_id=784451035]
-visible = false
-layout_mode = 2
-
-[node name="SFXVolumeLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/SFXVolumeRow" unique_id=1498747323]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "SFX Volume (%)"
-
-[node name="SFXVolumeControl" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/SFXVolumeRow" unique_id=877711391]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/SFXVolumeRow/SFXVolumeControl" unique_id=1510698373]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="SFXVolumeMinLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/SFXVolumeRow/SFXVolumeControl" unique_id=176511012]
-layout_mode = 2
-text = "0"
-
-[node name="SFXVolumeSlider" type="HSlider" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/SFXVolumeRow/SFXVolumeControl" unique_id=110950535]
-custom_minimum_size = Vector2(650, 0)
-layout_mode = 2
-size_flags_vertical = 4
-value = 20.0
-scrollable = false
-
-[node name="SFXVolumeMaxLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/SFXVolumeRow/SFXVolumeControl" unique_id=436158366]
-layout_mode = 2
-text = "100 "
-
-[node name="SFXVolumeValueBox" type="LineEdit" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/SFXVolumeRow/SFXVolumeControl" unique_id=474676460]
-layout_mode = 2
-
-[node name="MusicVolumeRow" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer" unique_id=340376176]
-visible = false
-layout_mode = 2
-
-[node name="MusicVolumeLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MusicVolumeRow" unique_id=894894534]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Music Volume (%)"
-
-[node name="MusicVolumeControl" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MusicVolumeRow" unique_id=1570123843]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MusicVolumeRow/MusicVolumeControl" unique_id=1128927310]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="MusicVolumeMinLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MusicVolumeRow/MusicVolumeControl" unique_id=902330774]
-layout_mode = 2
-text = "0"
-
-[node name="MusicVolumeSlider" type="HSlider" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MusicVolumeRow/MusicVolumeControl" unique_id=371470706]
-custom_minimum_size = Vector2(650, 0)
-layout_mode = 2
-size_flags_vertical = 4
-value = 20.0
-scrollable = false
-
-[node name="MusicVolumeMaxLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MusicVolumeRow/MusicVolumeControl" unique_id=809385102]
-layout_mode = 2
-text = "100 "
-
-[node name="MusicVolumeValueBox" type="LineEdit" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/MusicVolumeRow/MusicVolumeControl" unique_id=1037392022]
-layout_mode = 2
 
 [node name="TypeSpacer" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox" unique_id=1416700405]
 custom_minimum_size = Vector2(0, 40)
@@ -249,12 +177,11 @@ layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/ProjectHeader" unique_id=1929522386]
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 0
 
 [node name="TitleLable" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/ProjectHeader/HBoxContainer" unique_id=545242788]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 32
 text = "Level Settings"
 
 [node name="Gap" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/ProjectHeader/HBoxContainer" unique_id=1152160164]
@@ -286,7 +213,11 @@ text = "Camera"
 [node name="HSeparator" type="HSeparator" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer" unique_id=1347950556]
 layout_mode = 2
 
-[node name="GameplayZoom" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer" unique_id=305056832 instance=ExtResource("5_aixuf")]
+[node name="CameraSliderColumn" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer" unique_id=2098462679]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="GameplayZoom" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn" unique_id=305056832 instance=ExtResource("5_aixuf")]
 layout_mode = 2
 propertyName = "Gameplay Zoom Level"
 propertyUnit = "%"
@@ -294,7 +225,7 @@ minMax = Vector2(20, 200)
 sliderStep = 1.0
 valueAppend = "%"
 
-[node name="FollowSpeed" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer" unique_id=609962401 instance=ExtResource("5_aixuf")]
+[node name="FollowSpeed" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn" unique_id=609962401 instance=ExtResource("5_aixuf")]
 layout_mode = 2
 propertyName = "Camera Follow Speed"
 propertyUnit = "%"
@@ -302,14 +233,14 @@ minMax = Vector2(25, 100)
 sliderStep = 1.0
 valueAppend = "%"
 
-[node name="CameraDeadzone" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer" unique_id=1372853753 instance=ExtResource("5_aixuf")]
+[node name="CameraDeadzone" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn" unique_id=1372853753 instance=ExtResource("5_aixuf")]
 layout_mode = 2
 propertyName = "Camera Deadzone"
 propertyUnit = "m"
 minMax = Vector2(0, 2)
 sliderStep = 0.1
 
-[node name="CameraClamp" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer" unique_id=798063561 instance=ExtResource("6_5bsrg")]
+[node name="CameraClamp" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn" unique_id=798063561 instance=ExtResource("6_5bsrg")]
 layout_mode = 2
 propertyName = "Camera Clamping"
 
@@ -553,12 +484,6 @@ theme_override_constants/margin_bottom = 0
 [node name="FooterRow" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/FooterMargin" unique_id=953290543]
 layout_mode = 2
 layout_direction = 3
-
-[node name="CloseButton" type="Button" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/FooterMargin/FooterRow" unique_id=2123512347]
-custom_minimum_size = Vector2(100, 40)
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Close"
 
 [node name="CloseButtonMargin" type="MarginContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/FooterMargin/FooterRow" unique_id=1642465915]
 layout_mode = 2

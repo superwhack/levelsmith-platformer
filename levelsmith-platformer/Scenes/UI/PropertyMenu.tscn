@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c7oqohjjp760u" path="res://Scripts/Editor/Properties/PropertyMenu.gd" id="1_tnep3"]
 [ext_resource type="PackedScene" uid="uid://c3ype5vn62yxp" path="res://Scenes/UI/PropertySlider.tscn" id="2_w5eld"]
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="3_1mv14"]
-[ext_resource type="Texture2D" uid="uid://c2hxp20apd4na" path="res://Assets/UserInterface/Buttons/CloseX.png" id="3_ehgsd"]
+[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="3_ehgsd"]
 [ext_resource type="PackedScene" uid="uid://d33iu75vytjse" path="res://Scenes/UI/PropertyDropdown.tscn" id="5_ehgsd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
@@ -97,11 +97,32 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="CloseButton" type="Button" parent="ScrollContainer/MainMargin/RootVBox/HeaderVBox/HeaderHbox" unique_id=463893950]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_styles/normal = SubResource("StyleBoxEmpty_g4v7s")
-icon = ExtResource("3_ehgsd")
 icon_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/MainMargin/RootVBox/HeaderVBox/HeaderHbox/CloseButton" unique_id=1223764422]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/MainMargin/RootVBox/HeaderVBox/HeaderHbox/CloseButton/MarginContainer" unique_id=1045718816]
+layout_mode = 2
+texture = ExtResource("3_ehgsd")
+expand_mode = 3
+
+[node name="CloseButtonSizr" type="Control" parent="ScrollContainer/MainMargin/RootVBox/HeaderVBox/HeaderHbox" unique_id=1001746785]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/MainMargin/RootVBox/HeaderVBox" unique_id=490860200]
 layout_mode = 2

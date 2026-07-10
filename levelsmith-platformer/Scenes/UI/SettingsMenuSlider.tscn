@@ -6,6 +6,7 @@
 offset_right = 107.0
 offset_bottom = 89.0
 size_flags_horizontal = 3
+theme_override_constants/separation = -3
 script = ExtResource("1_j2xmv")
 propertyName = "Name"
 nameLabel = NodePath("NameContainer/Name")
@@ -37,9 +38,11 @@ text = "Name"
 
 [node name="SliderValuesVbox" type="VBoxContainer" parent="." unique_id=815945846]
 layout_mode = 2
+theme_override_constants/separation = -10
 
 [node name="SliderHBox" type="HBoxContainer" parent="SliderValuesVbox" unique_id=1927265922]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="Slider" type="HSlider" parent="SliderValuesVbox/SliderHBox" unique_id=1360091613]
 layout_mode = 2
@@ -47,6 +50,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 max_value = 5.0
 step = 0.1
+rounded = true
+scrollable = false
 
 [node name="Value" type="TextEdit" parent="SliderValuesVbox/SliderHBox" unique_id=281473897]
 custom_minimum_size = Vector2(64, 20)

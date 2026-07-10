@@ -157,6 +157,8 @@ func create_template_sprites() -> void:
 	playerTemplateSprite.animation = "PlayerIdle";
 	playerTemplateSprite.sprite_frames.remove_animation("default");
 	
+	# TODO: Add player wallsliding frames
+	
 	patrollingEnemyTemplateSprite = AnimatedSprite2D.new();
 	patrollingEnemyTemplateSprite.sprite_frames = SpriteFrames.new();
 	

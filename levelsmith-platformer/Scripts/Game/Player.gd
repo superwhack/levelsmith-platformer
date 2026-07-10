@@ -173,6 +173,9 @@ func animate() -> void:
 	elif (invulnerabilityCurrent > 0):
 		animatedSprites.animation = "PlayerHurt";
 		fallAnimStarted = false;
+	
+	# TODO: Add condition for wall sliding animation
+		
 	elif (!is_on_floor() && velocity.y < 0):
 		animatedSprites.animation = "PlayerJump";
 		fallAnimStarted = false;

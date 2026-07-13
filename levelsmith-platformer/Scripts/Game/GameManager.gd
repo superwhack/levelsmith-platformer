@@ -143,7 +143,6 @@ func start() -> void:
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:
 	Global.death.connect(reset);
-	Global.complete.connect(print_level_completion_time);
 	Global.complete.connect(level_complete);
 	Global.onCoinCollected.connect(_on_coin_collected);
 	resetButton.pressed.connect(reset);
@@ -171,7 +170,6 @@ func update_coin_counter(label: RichTextLabel) -> void:
 
 ## Prints the final completion time and stops the level timer
 func print_level_completion_time() -> void:
-	goalReached = true;
 	timerRunning = false;
 	var minutes := int(testingTime) / 60;
 	var seconds := int(testingTime) % 60;
@@ -187,7 +185,12 @@ func update_timer(label: RichTextLabel) -> void:
 
 ## Pauses gameplay, displays the win screen, and updates the completion statistics
 func level_complete() -> void:
+	# If the goal's already been reached, don't run this again
+	if goalReached:
+		return;
+	AudioManager.play_effect("Victory");
 	goalReached = true;
+	print_level_completion_time();
 	pauseButton.hide();
 	get_tree().paused = true;
 	update_coin_counter(winCoinLabel);

@@ -132,9 +132,9 @@ func _physics_process(delta: float) -> void:
 		currentWalkingEffect = Global.WalkingEffect.NONE;
 		if (coyoteTimeLeft > 0):
 			coyoteTimeLeft -= delta;
-		velocity += get_gravity() * delta;
-		if velocity.y > 1300 * fallSpeed:
-			velocity.y = 1300 * fallSpeed;
+		velocity += get_gravity() * delta * fallSpeed;
+		#if velocity.y > 1300 * fallSpeed:
+		#	velocity.y = 1300 * fallSpeed;
 	else:
 		isJumping = false;
 		jumpAnimStarted = false;
@@ -204,7 +204,7 @@ func on_animation_finished() -> void:
 ## Make the player jump
 func jump() -> void:
 	AudioManager.play_effect("PlayerJump");
-	velocity.y = -jumpHeight * 360 * currentSlowdown;
+	velocity.y = -jumpHeight * 360 * currentSlowdown * sqrt(fallSpeed);
 	isJumping = true;
 	jumpTimer.start();
 

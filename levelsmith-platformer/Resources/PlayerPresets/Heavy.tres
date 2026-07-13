@@ -12,4 +12,5 @@ jumpHeight = 1.5
 airControl = 0.3
 fallSpeed = 1.5
 coyoteTime = 0.25
+slopeSlowdown = true
 metadata/_custom_type_script = "uid://bp8erofrb01fc"

@@ -522,6 +522,7 @@ func apply_preset(preset: PlayerMovementPreset) -> void:
 	airControl = preset.airControl / 100.0;
 	fallSpeed = preset.fallSpeed;
 	coyoteTime = preset.coyoteTime;
+	floor_constant_speed = !preset.slopeSlowdown;
 	oneways = preset.oneways;
 	doubleJump = preset.doubleJump;
 	wallJump = preset.wallJump;

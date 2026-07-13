@@ -19,7 +19,7 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var editorHomeButton : Button;
 @export var editorPlayButton : Button;
 @export var returnToEditorButton : Button;
-@export var WinReturnToEditorButton : Button;
+@export var winReturnToEditorButton : Button;
 @export var playPopUp : HBoxContainer;
 
 # Reference to tile maps
@@ -59,7 +59,7 @@ func _ready() -> void:
 	editorPlayButton.mouse_entered.connect(mouse_entered_play_button);
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
-	WinReturnToEditorButton.pressed.connect(edit);
+	winReturnToEditorButton.pressed.connect(edit);
 	
 	# Create the enemy resource folder and custom player preset.
 	if (!DirAccess.dir_exists_absolute("user://Resources/")):
@@ -126,6 +126,7 @@ func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) ->
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	#print("NEW LEVEL SET UP");
+	AnimationManager.set_all_fps_to_json(loadedLevelPath + "Settings.JSON");
 	Global.levelCreated.emit();
 	editorManager.returnClick = false;
 

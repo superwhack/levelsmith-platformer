@@ -72,6 +72,7 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"airControl": playerDefault.airControl,
 			"fallSpeed": playerDefault.fallSpeed,
 			"coyoteTime": playerDefault.coyoteTime,
+			"oneways": playerDefault.oneways,
 			"doubleJump": playerDefault.doubleJump,
 			"wallJump": playerDefault.wallJump,
 			"wallJumpDecay": playerDefault.wallJumpDecay
@@ -192,8 +193,9 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		"deceleration": playerData.playerDeceleration,
 		"jump": playerData.playerJumpHeight,
 		"airControl": playerData.playerAirControl,
-		"fallSpeed": playerData.playerFallSpeed,
+		"fallSpeed": playerData.playerGravity,
 		"coyoteTime": playerData.playerCoyoteTime,
+		"oneways": playerData.playerOneways,
 		"doubleJump": playerData.playerDoubleJump,
 		"wallJump": playerData.playerWallJump,
 		"wallJumpDecay": playerData.playerWallJumpDecay
@@ -417,8 +419,9 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	playerData.playerDeceleration = player.get("deceleration", playerData.playerDeceleration);
 	playerData.playerJumpHeight = player.get("jump", playerData.playerJumpHeight);
 	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
-	playerData.playerFallSpeed = player.get("fallSpeed", playerData.playerFallSpeed);
+	playerData.playerGravity = player.get("fallSpeed", playerData.playerGravity);
 	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
+	playerData.playerOneways = player.get("oneways", playerData.playerOneways);
 	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
 	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);
 	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);

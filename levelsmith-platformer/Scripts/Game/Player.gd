@@ -221,6 +221,8 @@ func walk() -> void:
 			accelerationX = direction * pow(abs(accelerationX), pow(baseAcceleration, 2));
 		# Deceleration if moving in opposite direction
 		elif baseDeceleration != 1.0 && sign(velocity.x) != sign(direction):
+			if baseDeceleration + currentFriction < 1.5:
+				currentFriction = 1.5 - baseDeceleration
 			accelerationX *= pow(baseDeceleration, 5);
 	# Acceleration
 	else:

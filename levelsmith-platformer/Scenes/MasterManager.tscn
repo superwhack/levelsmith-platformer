@@ -87,9 +87,10 @@ script = ExtResource("4_mg0h4")
 masterManager = NodePath("..")
 gridLines = NodePath("../EditorManager/GridLines")
 
-[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera") instance=ExtResource("2_430ed")]
+[node name="EditorManager" parent="." unique_id=2045534837 node_paths=PackedStringArray("masterManager", "mainCamera", "closeAssetManagerButton") instance=ExtResource("2_430ed")]
 masterManager = NodePath("..")
 mainCamera = NodePath("../Camera2D")
+closeAssetManagerButton = NodePath("CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/HBoxContainer/CloseButton")
 
 [node name="GridLines" parent="EditorManager" index="0" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
 z_index = 0
@@ -144,8 +145,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("12_8fjml")
-
-[connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
 
 [editable path="EditorManager"]
 [editable path="EditorManager/CanvasLayer/AssetManager"]

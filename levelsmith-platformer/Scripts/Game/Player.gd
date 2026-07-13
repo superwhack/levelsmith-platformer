@@ -216,16 +216,18 @@ func walk() -> void:
 	# Acceration in the X direction for the player
 	var accelerationX : float;
 	direction = Input.get_axis("left", "right");
-	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
+	# If a direct is pressed, move in the direction, otherwise decelerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;
 		# Acceleration if moving in direction of current movement
 		if baseAcceleration != 1.0 && (sign(velocity.x) == sign(direction) || velocity.x == 0):
 			accelerationX = direction * pow(abs(accelerationX), pow(baseAcceleration, 2));
+			if baseAcceleration + currentFriction < 1.25:
+				currentFriction = 1.25 - baseAcceleration
 		# Deceleration if moving in opposite direction
 		elif baseDeceleration != 1.0 && sign(velocity.x) != sign(direction):
-			if baseDeceleration + currentFriction < 1.5:
-				currentFriction = 1.5 - baseDeceleration
+			if baseDeceleration + currentFriction < 1.25:
+				currentFriction = 1.25 - baseDeceleration
 			accelerationX *= pow(baseDeceleration, 5);
 	# Acceleration
 	else:

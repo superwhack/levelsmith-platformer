@@ -141,14 +141,9 @@ func delete_entity (clickPosition: Vector2) -> void:
 ## Open the property menu and set the selected entity
 ## clickPosition: position that the mouse has clicked at
 func edit_properties(clickPosition: Vector2) -> void:
-	editorManager.unsavedChanges = true;
-	editorManager.isValidated = false;
-	
 	var clickedEntity : Node2D = get_scene_at_cell(clickPosition);
 	propertyMenu.selectedEntity = clickedEntity;
 	if clickedEntity is Enemy || clickedEntity is MovingPlatform:
-		propertyMenu.show_menu(clickedEntity.propertyFile);
-	elif clickedEntity is MovingPlatform:
 		propertyMenu.show_menu(clickedEntity.propertyFile);
 	elif clickedEntity is Player:
 		propertyMenu.show_menu();

@@ -233,12 +233,10 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 		await screen_wipe_out();
 	loadedLevelPath = "";
 	# Removes alt+f4 override
-	print("hi removing override")
 	get_tree().set_auto_accept_quit(true);
 
 ## Swap to edit state
 func edit() -> void:
-	print("hello setting up override")
 	get_tree().set_auto_accept_quit(false);
 	await get_tree().process_frame;
 	await screen_wipe_in();

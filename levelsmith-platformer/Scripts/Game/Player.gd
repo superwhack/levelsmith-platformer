@@ -204,7 +204,7 @@ func on_animation_finished() -> void:
 ## Make the player jump
 func jump() -> void:
 	AudioManager.play_effect("PlayerJump");
-	velocity.y = -sqrt(jumpHeight) * 500 * currentSlowdown * sqrt(fallSpeed);
+	velocity.y = -sqrt(jumpHeight) * 496 * currentSlowdown * sqrt(fallSpeed);
 	isJumping = true;
 	jumpTimer.start();
 

@@ -11,7 +11,7 @@ script = ExtResource("1_j2xmv")
 propertyName = "Name"
 nameLabel = NodePath("NameContainer/Name")
 unit = NodePath("NameContainer/Unit")
-slider = NodePath("SliderValuesVbox/SliderHBox/Slider")
+slider = NodePath("SliderValuesVbox/SliderHBox/MarginContainer/Slider")
 textField = NodePath("SliderValuesVbox/SliderHBox/Value")
 minLabel = NodePath("SliderValuesVbox/MinMaxHbox/Minimum")
 maxLabel = NodePath("SliderValuesVbox/MinMaxHbox/Maximum")
@@ -42,9 +42,14 @@ theme_override_constants/separation = -10
 
 [node name="SliderHBox" type="HBoxContainer" parent="SliderValuesVbox" unique_id=1927265922]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 20
 
-[node name="Slider" type="HSlider" parent="SliderValuesVbox/SliderHBox" unique_id=1360091613]
+[node name="MarginContainer" type="MarginContainer" parent="SliderValuesVbox/SliderHBox" unique_id=635533172]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 3
+
+[node name="Slider" type="HSlider" parent="SliderValuesVbox/SliderHBox/MarginContainer" unique_id=1360091613]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -60,7 +65,6 @@ layout_mode = 2
 text = "0.00"
 emoji_menu_enabled = false
 scroll_fit_content_height = true
-scroll_fit_content_width = true
 
 [node name="MinMaxHbox" type="HBoxContainer" parent="SliderValuesVbox" unique_id=1601587]
 layout_mode = 2
@@ -70,6 +74,7 @@ layout_mode = 2
 text = "Name"
 
 [node name="MinMaxSpacer" type="Control" parent="SliderValuesVbox/MinMaxHbox" unique_id=613611067]
+custom_minimum_size = Vector2(-5, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -79,5 +84,5 @@ text = "Name"
 horizontal_alignment = 2
 
 [node name="ValueBoxSizer" type="Control" parent="SliderValuesVbox/MinMaxHbox" unique_id=882104567]
-custom_minimum_size = Vector2(64, 0)
+custom_minimum_size = Vector2(78, 0)
 layout_mode = 2

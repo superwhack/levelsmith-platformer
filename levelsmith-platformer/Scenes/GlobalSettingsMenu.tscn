@@ -3,11 +3,14 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_02c1u"]
 [ext_resource type="Script" uid="uid://no4fqovbkfha" path="res://Scripts/SettingsManager.gd" id="2_5bsrg"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_w0xpy"]
+[ext_resource type="Texture2D" uid="uid://rxu4qri7k0n8" path="res://Assets/UserInterface/Buttons/ButtonIcons/ResetIcon.png" id="4_aixuf"]
 [ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_bpp5a"]
 [ext_resource type="Texture2D" uid="uid://b8wetv4xd30wg" path="res://Assets/Sprites/UI/BlankArrowUpSmall.png" id="4_w0xpy"]
 [ext_resource type="PackedScene" uid="uid://d4nqq7rlhq0q8" path="res://Scenes/UI/SettingsMenuSlider.tscn" id="5_aixuf"]
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="6_5bsrg"]
 [ext_resource type="FontFile" uid="uid://dbkfb2swhokjo" path="res://Assets/Fonts/JetBrainsMono-Regular.ttf" id="6_xkvg5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5bsrg"]
 
@@ -25,7 +28,7 @@ grow_vertical = 2
 theme = ExtResource("1_02c1u")
 script = ExtResource("2_5bsrg")
 closeButton = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer/CloseButton")
-resetButton = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/FooterMargin/FooterRow/CloseButtonMargin/ResetButton")
+resetButton = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer/ResetButton")
 masterVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn/MasterVolume")
 SFXVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn/SFXVolume")
 musicVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn/MusicVolume")
@@ -42,15 +45,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -250.0
+offset_left = -325.0
 offset_top = -394.0
-offset_right = 250.0
+offset_right = 325.0
 offset_bottom = 394.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SettingsPanel" type="PanelContainer" parent="MainMargin" unique_id=1872042643]
-custom_maximum_size = Vector2(500, -1)
+custom_minimum_size = Vector2(650, 0)
+custom_maximum_size = Vector2(650, -1)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("3_w0xpy")
 
@@ -77,12 +81,32 @@ layout_mode = 2
 
 [node name="TitleLable" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1004938737]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 38
 text = "Global Settings"
 
 [node name="Gap" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1684684629]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="ResetButton" type="Button" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=2534971]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_g4v7s")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer/ResetButton" unique_id=419965447]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 6
+
+[node name="TextureRect" type="TextureRect" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer/ResetButton/MarginContainer" unique_id=1814626391]
+layout_mode = 2
+texture = ExtResource("4_aixuf")
+expand_mode = 3
 
 [node name="CloseButton" type="Button" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=2123512347]
 custom_minimum_size = Vector2(40, 40)
@@ -130,7 +154,7 @@ layout_mode = 2
 
 [node name="VolumeLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer" unique_id=530424072]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 28
 text = "Volume"
 
 [node name="HSeparator" type="HSeparator" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer" unique_id=78955692]
@@ -181,7 +205,7 @@ size_flags_vertical = 0
 
 [node name="TitleLable" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/ProjectHeader/HBoxContainer" unique_id=545242788]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 38
 text = "Level Settings"
 
 [node name="Gap" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/ProjectHeader/HBoxContainer" unique_id=1152160164]
@@ -207,7 +231,7 @@ layout_mode = 2
 
 [node name="CameraLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer" unique_id=932387995]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 28
 text = "Camera"
 
 [node name="HSeparator" type="HSeparator" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer" unique_id=1347950556]
@@ -242,6 +266,7 @@ sliderStep = 0.1
 
 [node name="CameraClamp" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn" unique_id=798063561 instance=ExtResource("6_5bsrg")]
 layout_mode = 2
+size_flags_horizontal = 0
 propertyName = "Camera Clamping"
 
 [node name="Spacer" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings" unique_id=1178883804]
@@ -488,9 +513,3 @@ layout_direction = 3
 [node name="CloseButtonMargin" type="MarginContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/FooterMargin/FooterRow" unique_id=1642465915]
 layout_mode = 2
 theme_override_constants/margin_right = 10
-
-[node name="ResetButton" type="Button" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/FooterMargin/FooterRow/CloseButtonMargin" unique_id=2534971]
-custom_minimum_size = Vector2(100, 40)
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Reset"

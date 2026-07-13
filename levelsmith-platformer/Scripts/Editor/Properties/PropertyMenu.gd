@@ -22,6 +22,7 @@ var playerJumpHeight : float;
 var playerAirControl : float;
 var playerGravity : float;
 var playerCoyoteTime : float;
+var playerSlopeSlowdown : bool;
 var playerOneways : bool;
 var playerDoubleJump : bool;
 var playerWallJump : bool;
@@ -36,6 +37,7 @@ var playerWallJumpDecay : bool;
 @export var playerAirControlSlider: VBoxContainer;
 @export var playerGravitySlider: VBoxContainer;
 @export var playerCoyoteTimeSlider: VBoxContainer;
+@export var playerSlopeSlowdownCheckbox : VBoxContainer;
 @export var playerOnewaysCheckbox : VBoxContainer;
 @export var playerDoubleJumpCheckbox: VBoxContainer;
 @export var playerWallJumpCheckbox: VBoxContainer;
@@ -94,6 +96,7 @@ func _ready() -> void:
 	playerGravitySlider.drag_ended.connect(_on_drag_ended);
 	playerCoyoteTimeSlider.drag_ended.connect(_on_drag_ended);
 	playerOnewaysCheckbox.check_changed.connect(_on_drag_ended);
+	playerSlopeSlowdownCheckbox.check_changed.connect(_on_drag_ended);
 	playerDoubleJumpCheckbox.check_changed.connect(_on_drag_ended);
 	playerWallJumpCheckbox.check_changed.connect(_on_drag_ended);
 	playerWallJumpDecayCheckbox.check_changed.connect(_on_drag_ended);
@@ -181,6 +184,7 @@ func _on_preset_options_item_selected(index: int) -> void:
 	playerAirControl = selectedPlayerPreset.airControl;
 	playerGravity = selectedPlayerPreset.fallSpeed;
 	playerCoyoteTime = selectedPlayerPreset.coyoteTime;
+	playerSlopeSlowdown = selectedPlayerPreset.slopeSlowdown;
 	playerOneways = selectedPlayerPreset.oneways;
 	playerDoubleJump = selectedPlayerPreset.doubleJump;
 	playerWallJump = selectedPlayerPreset.wallJump;
@@ -206,6 +210,7 @@ func update_custom() -> void:
 	customPreset.airControl = playerAirControl;
 	customPreset.fallSpeed = playerGravity;
 	customPreset.coyoteTime = playerCoyoteTime;
+	customPreset.slopeSlowdown = playerSlopeSlowdown;
 	customPreset.oneways = playerOneways;
 	customPreset.doubleJump = playerDoubleJump;
 	customPreset.wallJump = playerWallJump;
@@ -235,6 +240,8 @@ func update_sliders() -> void:
 	playerGravitySlider.update_slider();
 	playerCoyoteTimeSlider.value = playerCoyoteTime;
 	playerCoyoteTimeSlider.update_slider();
+	playerSlopeSlowdownCheckbox.value = playerSlopeSlowdown;
+	playerSlopeSlowdownCheckbox.update_checkbox();
 	playerOnewaysCheckbox.value = playerOneways;
 	playerOnewaysCheckbox.update_checkbox();
 	playerDoubleJumpCheckbox.value = playerDoubleJump;
@@ -311,6 +318,7 @@ func update_values() -> void:
 	playerAirControl = playerAirControlSlider.value;
 	playerGravity = playerGravitySlider.value;
 	playerCoyoteTime = playerCoyoteTimeSlider.value;
+	playerSlopeSlowdown = playerSlopeSlowdownCheckbox.value;
 	playerOneways = playerOnewaysCheckbox.value;
 	playerDoubleJump = playerDoubleJumpCheckbox.value;
 	playerWallJump = playerWallJumpCheckbox.value;

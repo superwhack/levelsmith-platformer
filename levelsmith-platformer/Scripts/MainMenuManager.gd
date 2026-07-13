@@ -31,8 +31,8 @@ extends Control
 @export var emptyWarning : MarginContainer;
 
 # Import level overlay children
-@export var buttonImportLevelCancel : Button;
 @export var buttonImportLevelOpen : Button;
+@export var buttonImportLevelCancel : Button;
 @export var buttonImportLevelBrowse : TextureButton;
 @export var fieldImportLevelPath : LineEdit;
 @export var badImportWarning : PanelContainer;
@@ -576,16 +576,16 @@ func sort_levels_by_favorite(levelPaths: Array) -> Array:
 		
 		var aModified = {
 			"year": int(aDate[2]),
-			"month": int(aDate[1]),
-			"day": int(aDate[0]),
+			"month": int(aDate[0]),
+			"day": int(aDate[1]),
 			"hour": int(aTime[0]),
 			"minute": int(aTime[1])
 		};
 		
 		var bModified = {
 			"year": int(bDate[2]),
-			"month": int(bDate[1]),
-			"day": int(bDate[0]),
+			"month": int(bDate[0]),
+			"day": int(bDate[1]),
 			"hour": int(bTime[0]),
 			"minute": int(bTime[1])
 		};

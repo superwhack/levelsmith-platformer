@@ -155,7 +155,7 @@ func anim_change(next : bool):
 		currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 	FPSSpinbox.value_changed.disconnect(fps_updated.bind(true));
 	FPSSpinbox.value_changed.connect(fps_updated)
-	FPSSpinbox.value = AnimationManager.get_template_sprite(selectedEntityType).sprite_frames.get_animation_speed(animationPreviewNameToReplace);
+	FPSSpinbox.value = AnimationManager.get_animation_fps(animationPreviewNameToReplace);
 	FPSSpinbox.value_changed.disconnect(fps_updated)
 	FPSSpinbox.value_changed.connect(fps_updated.bind(true));
 	update_animation_preview();

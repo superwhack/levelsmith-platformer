@@ -18,6 +18,7 @@ extends Control
 # Overlays
 @export var overlayNewLevel : ColorRect;
 @export var overlayImportLevel : ColorRect;
+@export var overlayDuplicateLevel : ColorRect;
 
 # New level overlay children
 @export var buttonNewLevelCreate : Button;
@@ -30,15 +31,24 @@ extends Control
 @export var emptyWarning : MarginContainer;
 
 # Import level overlay children
-@export var buttonImportLevelCancel : Button;
 @export var buttonImportLevelOpen : Button;
+@export var buttonImportLevelCancel : Button;
 @export var buttonImportLevelBrowse : TextureButton;
 @export var fieldImportLevelPath : LineEdit;
-@export var badImportWarning : MarginContainer;
+@export var badImportWarning : PanelContainer;
 @export var badImportBody : RichTextLabel;
 
+# Duplicate Level Overlay Children <3
+@export var buttonDuplicateLevelCancel : Button;
+@export var buttonDuplicateLevelConfirm : Button;
+@export var duplicateName : LineEdit;
+@export var spinBoxDuplicateLevelX : SpinBox;
+@export var spinBoxDuplicateLevelY : SpinBox;
+@export var duplicateErrorBanner : PanelContainer;
+@export var duplicateEmptyBanner : PanelContainer;
+@export var duplicateExistsBanner : PanelContainer;
+
 @export var fileExplorer : FileDialog;
-var importedLevelPath : String;
 
 ## A reference to the Level List for loading levels.
 @export var levelList : VBoxContainer;
@@ -55,6 +65,8 @@ var importedLevelPath : String;
 @export var version : Label;
 @export var preview : TextureRect;
 @export var previewDefault : Texture2D;
+@export var favoriteEmpty : Texture2D;
+@export var favoriteFilled : Texture2D;
 
 # The currently selected level item.
 var selectedItem : Control = null;
@@ -66,6 +78,7 @@ func _ready() -> void:
 	# Hides other screens
 	overlayImportLevel.hide();
 	overlayNewLevel.hide();
+	overlayDuplicateLevel.hide();
 
 	# Connect signals
 	buttonNewLevel.pressed.connect(overlay_new_level_show);
@@ -74,6 +87,9 @@ func _ready() -> void:
 	buttonPlayLevel.pressed.connect(play_current_level);
 	buttonEditLevel.pressed.connect(edit_current_level);
 	buttonDeleteLevel.pressed.connect(delete_current_level);
+	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
+	buttonFavoriteLevel.pressed.connect(favorite_current_level);
+	get_window().focus_entered.connect(fill_level_list);
 	
 	# Hiding appropriate UI when cancelling level creation
 	buttonNewLevelCancel.pressed.connect(overlay_new_level_hide);
@@ -86,12 +102,17 @@ func _ready() -> void:
 	buttonImportLevelCancel.pressed.connect(badImportWarning.hide);
 	buttonImportLevelBrowse.pressed.connect(fileExplorer.popup_file_dialog);
 	
+	# Duplicate buttons
+	buttonDuplicateLevelConfirm.pressed.connect(duplicate_current_level);
+	buttonDuplicateLevelCancel.pressed.connect(overlay_duplicate_level_hide);
+
+
+	
 	buttonQuit.pressed.connect(exit_program);
 
 
 	var set_directory = func (directory: String) -> void:
-		importedLevelPath = directory + "/";
-		fieldImportLevelPath.text = importedLevelPath;
+		fieldImportLevelPath.text = directory + "/";
 	
 	fileExplorer.dir_selected.connect(set_directory);
 	
@@ -108,24 +129,30 @@ func overlay_import_level_show() -> void:
 func popup_file_dialog() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	fileExplorer.popup_file_dialog();
+func overlay_duplicate_level_show() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
+	overlayDuplicateLevel.show();
+func overlay_duplicate_level_hide() -> void:
+	AudioManager.play_UI_effect("UI_Selection");
+	overlayDuplicateLevel.hide();
 
 ## Called when import level button is pressed
 func import_level() -> void:
 	AudioManager.play_UI_effect("UISelection");
-	if (!ImportExportManager.validate_import(importedLevelPath)): 
+	if (!ImportExportManager.validate_import(fieldImportLevelPath.text)): 
 		badImportWarning.show();
-		badImportBody.text = "Level Import Failed from directory \"" + importedLevelPath + "\"!";
+		badImportBody.text = "Level Import Failed from directory \"" + fieldImportLevelPath.text + "\"!";
 		return;
 	
 	# Extract the name of the folder from the file path
-	var importedLevelArray : Array = importedLevelPath.split("/");
+	var importedLevelArray : Array = fieldImportLevelPath.text.rstrip("/").split("/");
 	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
 	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
-	masterManager.loadedLevelPath = importedLevelPath;
-	
-	if !DirAccess.dir_exists_absolute(importDirectory):
+	masterManager.loadedLevelPath = fieldImportLevelPath.text;
+
+	if (!DirAccess.dir_exists_absolute(importDirectory)):
 		DirAccess.make_dir_absolute(importDirectory);
-		ImportExportManager.clone_data(importedLevelPath + "/", importDirectory);
+		ImportExportManager.clone_data(fieldImportLevelPath.text + "/", importDirectory);
 	masterManager.import_level_and_edit();
 	
 	# Resets the ui overlay
@@ -169,6 +196,7 @@ func create_new_level() -> void:
 	fieldNewLevelName.text = "";
 	spinBoxNewLevelX.value = 20;
 	spinBoxNewLevelY.value = 20;
+	
 
 ## Exits the program
 func exit_program() -> void:
@@ -213,7 +241,10 @@ func fill_level_list() -> void:
 			item.queue_free();
 			levelItems.erase(levelPath);
 	
-	for levelPath in levelFolders.keys():
+	# Get an array of levels sorted by favorite
+	var sortedPaths: Array = sort_levels_by_favorite(levelFolders.keys());
+	
+	for levelPath in sortedPaths:
 		if (!levelItems.has(levelPath)):
 			setup_level_item(levelFolders[levelPath], levelPath);
 		else:
@@ -222,6 +253,9 @@ func fill_level_list() -> void:
 				levelFolders[levelPath],
 				levelPath
 			);
+
+		# Move the item into the correct order
+		levelList.move_child(levelItems[levelPath], sortedPaths.find(levelPath));
 
 ## Setups each level item in the list.
 ## folderName: the folder of the level. Used for level title.
@@ -245,18 +279,21 @@ func _on_level_hovered(item) -> void:
 	if (!selectedItem):
 		update_metadata(item);
 	
-func _on_level_toggled(item, toggled: bool) -> void:
-	if (!toggled):
+func _on_level_pressed(item) -> void:
+	if (selectedItem == item):
 		return;
 		
-	# Deselect the previous item if its not the same
-	if (selectedItem && selectedItem != item):
-		selectedItem.levelButton.button_pressed = false;
-	if (!selectedItem):
-		toggle_level_buttons();
+	if (selectedItem):
+		selectedItem.levelButton.button_pressed = false
+	else:
+		toggle_level_buttons()
 
 	selectedItem = item;
 	update_metadata(item);
+	if (selectedItem.favorited):
+		buttonFavoriteLevel.icon = favoriteFilled;
+	else:
+		buttonFavoriteLevel.icon = favoriteEmpty;
 	
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
@@ -287,8 +324,8 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 		item.level_double_clicked.connect(_on_level_double_clicked);	# Hovering an item populates the metadata field.
 	#item.level_hovered.connect(_on_level_hovered);
 	# Selecting an item toggles.
-	if (!item.level_toggled.is_connected(_on_level_toggled)):
-		item.level_toggled.connect(_on_level_toggled);
+	if (!item.level_pressed.is_connected(_on_level_pressed)):
+		item.level_pressed.connect(_on_level_pressed);
 
 	if (!item.level_deselected.is_connected(_on_level_deselected)):
 		item.level_deselected.connect(_on_level_deselected);
@@ -315,6 +352,11 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 	item.dimensions = str(metadata.get("dimensions", str([20, 20])));
 	item.objectCount = str(int(metadata.get("objects", str(0))));
 	item.version = str(metadata.get("version", Global.VERSION));
+	item.favorited = metadata.get("favorited", false);
+	if (item.favorited):
+		item.levelFavoriteIcon.show();
+	else:
+		item.levelFavoriteIcon.hide();
 	
 	# If the the thumbnail exists, add it to the 
 	if (FileAccess.file_exists(levelThumbnailPath)):
@@ -335,11 +377,17 @@ func update_metadata(item) -> void:
 	dimensions.text = item.dimensions;
 	objectCount.text = item.objectCount;
 	version.text = item.version;
+	
 	if (item.thumbnail):
 		preview.texture = item.thumbnail;
 	else:
 		preview.texture = previewDefault;
-		
+	if (item.favorited):
+		buttonFavoriteLevel.icon = favoriteFilled;
+	else:
+		buttonFavoriteLevel.icon = favoriteEmpty;
+
+
 ## Clears the metadata selection.
 func clear_selection() -> void:
 		selectedItem = null;
@@ -351,6 +399,7 @@ func clear_selection() -> void:
 		objectCount.text = "";
 		version.text = "";
 		preview.texture = previewDefault;
+		buttonFavoriteLevel.icon = favoriteEmpty;
 
 ## Opens OS file explorer to the users Level folder.
 func open_level_folder() -> void:
@@ -375,6 +424,7 @@ func edit_current_level() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	masterManager.load_level(selectedItem.levelPath);
 
+## Deletes the currently selected level.
 func delete_current_level() -> void:
 	if (!selectedItem):
 		return;
@@ -385,9 +435,7 @@ func delete_current_level() -> void:
 
 	# Delete all files and folders inside the level directory
 	# Thank you: https://tinyurl.com/ak58bfvd
-	var dir = DirAccess.open(selectedItem.levelPath);
-	for file in dir.get_files():
-		dir.remove(file);
+	remove_recursively(selectedItem.levelPath);
 
 	var item = levelItems[levelPath];
 	item.queue_free();
@@ -396,7 +444,99 @@ func delete_current_level() -> void:
 	clear_selection();
 	toggle_level_buttons();
 
+## Duplicates the currently selected level.
+func duplicate_current_level() -> void:
+	var newLevelName : String = duplicateName.text.strip_edges()
+
+	# If the given level name is empty, return early.
+	if (newLevelName.strip_edges().is_empty()):
+		duplicateEmptyBanner.show();
+		duplicateErrorBanner.hide();
+		duplicateExistsBanner.hide();
+		return;
+		
+	# If the given level name is invalid, return early.
+	if (!newLevelName.strip_edges().is_valid_filename() || newLevelName[-1] == "."  || newLevelName.length() > 255):
+		duplicateErrorBanner.show();
+		duplicateEmptyBanner.hide();
+		duplicateExistsBanner.hide();
+		return;
+
+	var itemLevelPath : String = selectedItem.levelPath;
+	var destination : String = "user://Levels/" + newLevelName + "/";
+
+	# Don't overwrite an existing level!!!
+	if DirAccess.dir_exists_absolute(destination):
+		duplicateExistsBanner.show();
+		duplicateErrorBanner.hide();
+		duplicateEmptyBanner.hide();
+		return;
+
+	# Create the directory and clone our data right there
+	DirAccess.make_dir_absolute(destination);
+	ImportExportManager.clone_data(itemLevelPath, destination);
+
+	# Reset duplicate metadata
+	var now : Dictionary = Time.get_datetime_dict_from_system()
+	var meridiem : String = "AM";
+	if (now.hour >= 12):
+		meridiem = "PM";
+		
+	# So that time cannot equal 0:15 AM
+	now.hour %= 12;
+	if (now.hour == 0):
+		now.hour = 12;
+
+	var date := "%02d.%02d.%04d" % [now.month, now.day, now.year];
+	var time := "%02d:%02d %s" % [now.hour, now.minute, meridiem];
+
+	# set all metadata when duplicating appropriately
+	ImportExportManager.set_metadata(destination.rstrip("/"), "favorited", false);
+	ImportExportManager.set_metadata(destination.rstrip("/"), "dateCreated", date);
+	ImportExportManager.set_metadata(destination.rstrip("/"), "timeCreated", time);
+	ImportExportManager.set_metadata(destination.rstrip("/"), "dateModified", date);
+	ImportExportManager.set_metadata(destination.rstrip("/"), "timeModified", time);
+
+	overlayDuplicateLevel.hide();
+	duplicateName.clear();
+	fill_level_list();
 	
+	# Select the new level automatically
+	var newLevelPath: String = destination.rstrip("/");
+	if (levelItems.has(newLevelPath)):
+		var newItem = levelItems[newLevelPath];
+		newItem.levelButton.button_pressed = true;
+		_on_level_pressed(newItem);
+
+
+## Sets whether the currently selected level is favorited or not.
+func favorite_current_level() -> void:
+	if (!selectedItem):
+		return;
+
+	selectedItem.favorited = !selectedItem.favorited;
+
+	# Set the metadata value for favorited in the file
+	ImportExportManager.set_metadata(
+		selectedItem.levelPath.rstrip("/"),
+		"favorited",
+		selectedItem.favorited
+	);
+	
+	if (selectedItem.favorited):
+		buttonFavoriteLevel.icon = favoriteFilled;
+	else:
+		buttonFavoriteLevel.icon = favoriteEmpty;
+		
+	if (selectedItem.favorited):
+		selectedItem.levelFavoriteIcon.show();
+	else:
+		selectedItem.levelFavoriteIcon.hide();
+	
+	update_metadata(selectedItem);
+	fill_level_list();
+
+
 ## Checks if a level folder is valid with the correct files.
 ## filePath: The file path of the folder.
 ## Returns a bool based on the folder being valid.
@@ -410,3 +550,59 @@ func get_level_valid(filePath : String) -> bool:
 		if (!FileAccess.file_exists(filePath + "/Tiles.CSV")):
 			return false;
 	return true;
+
+## Sorts the levels by favorites first.
+## levelPaths: An array of every level path.
+func sort_levels_by_favorite(levelPaths: Array) -> Array:
+	# Custom callable built-in to arrays
+	levelPaths.sort_custom(func(a, b):
+		var aMetadata = ImportExportManager.get_metadata(a);
+		var bMetadata = ImportExportManager.get_metadata(b);
+
+		# get favorite state from metadata
+		var aFavorite: bool = aMetadata.get("favorited", false);
+		var bFavorite: bool = bMetadata.get("favorited", false);
+
+		# Favorites first
+		if (aFavorite != bFavorite):
+			return aFavorite;
+			
+		# Since we do date american way, need to rearrange for easy comparison
+		var aDate = str(aMetadata.get("dateModified", "01.01.1970")).split(".");
+		var aTime = str(aMetadata.get("timeModified", "00:00")).split(":");
+		
+		var bDate = str(bMetadata.get("dateModified", "01.01.1970")).split(".");
+		var bTime = str(bMetadata.get("timeModified", "00:00")).split(":");
+		
+		var aModified = {
+			"year": int(aDate[2]),
+			"month": int(aDate[0]),
+			"day": int(aDate[1]),
+			"hour": int(aTime[0]),
+			"minute": int(aTime[1])
+		};
+		
+		var bModified = {
+			"year": int(bDate[2]),
+			"month": int(bDate[0]),
+			"day": int(bDate[1]),
+			"hour": int(bTime[0]),
+			"minute": int(bTime[1])
+		};
+		
+		# convenient function for time comparison :D
+		return Time.get_unix_time_from_datetime_dict(aModified) > Time.get_unix_time_from_datetime_dict(bModified);;
+	);
+	# return sorted array
+	return levelPaths;
+
+## Removes all files in a directory, recursively.
+## Credit: https://github.com/godotengine/godot-proposals/issues/11598
+## directory: The directory to delete all files within.
+func remove_recursively(directory: String) -> void:
+	for directoryName in DirAccess.get_directories_at(directory):
+		remove_recursively(directory.path_join(directoryName));
+	for file in DirAccess.get_files_at(directory):
+		DirAccess.remove_absolute(directory.path_join(file));
+
+	DirAccess.remove_absolute(directory)

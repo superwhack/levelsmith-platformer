@@ -1,11 +1,11 @@
 extends Node
 
+# Path for default assets. Unused.
+const DEFAULT_PATH : String = "res://Assets/Defaults/";
+
 # Paths to the level and assets for the level
 var levelPath : String;
 var levelAssetPath : String;
-
-# Path for default assets
-const defaultPath : String = "res://Assets/Defaults/";
 
 # A signal for when a level has been imported
 signal levelImported;
@@ -14,7 +14,7 @@ signal levelImported;
 var levelName : String;
 
 # Stores size of an imported level
-var importedLevelSize : Vector2;
+var importedLevelSize : Vector2i;
 
 # Default player stats for a new level
 var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tres");
@@ -61,7 +61,8 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"dimensions": levelSize,
 			"objects": 0,
 			"version": Global.VERSION,
-			"favorited": false
+			"favorited": false,
+			"validated": false
 		},
 		"enemies": [],
 		"player": {
@@ -71,6 +72,7 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"airControl": playerDefault.airControl,
 			"fallSpeed": playerDefault.fallSpeed,
 			"coyoteTime": playerDefault.coyoteTime,
+			"oneways": playerDefault.oneways,
 			"doubleJump": playerDefault.doubleJump,
 			"wallJump": playerDefault.wallJump,
 			"wallJumpDecay": playerDefault.wallJumpDecay
@@ -80,6 +82,26 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"followSpeed": 100.0,
 			"deadzone": 0.0,
 			"cameraPlayClamp": false
+		},
+		"animations": {
+			"PlayerDeath": 8.0,
+			"PlayerFall": 8.0,
+			"PlayerHurt": 8.0,
+			"PlayerIdle": 8.0,
+			"PlayerJump": 8.0,
+			"PlayerRun": 8.0,
+			"StationaryDeath": 8.0,
+			"StationaryIdle": 8.0,
+			"EnemyShoot": 8.0,
+			"ShootDeath": 8.0,
+			"ShootIdle": 8.0,
+			"PatrolDeath": 8.0,
+			"PatrolWalk": 8.0,
+			"FlyDeath": 8.0,
+			"FlyMove": 8.0,
+			"PlatformAnimation": 8.0,
+			"GoalAnimation": 8.0,
+			"CoinAnimation": 8.0
 		}
 	};
 	
@@ -107,7 +129,7 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
 ## settings: The settings menu to export the configurations from
-func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, settings: SettingsMenu) -> void:
+func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i, settings: SettingsMenu, isValidated : bool = false) -> void:
 	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
@@ -157,6 +179,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 	metadata["dimensions"] = worldSize;
 	metadata["version"] = Global.VERSION;
 	metadata["objects"] = objects;
+	metadata["validated"] = isValidated;
 
 	json["metadata"] = metadata;
 	
@@ -170,8 +193,9 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 		"deceleration": playerData.playerDeceleration,
 		"jump": playerData.playerJumpHeight,
 		"airControl": playerData.playerAirControl,
-		"fallSpeed": playerData.playerFallSpeed,
+		"fallSpeed": playerData.playerGravity,
 		"coyoteTime": playerData.playerCoyoteTime,
+		"oneways": playerData.playerOneways,
 		"doubleJump": playerData.playerDoubleJump,
 		"wallJump": playerData.playerWallJump,
 		"wallJumpDecay": playerData.playerWallJumpDecay
@@ -252,6 +276,27 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 			enemies.append(enemy);
 
 	json["enemies"] = enemies;
+	
+	json["animations"] = {
+		"PlayerDeath": AnimationManager.get_animation_fps("PlayerDeath"),
+		"PlayerFall": AnimationManager.get_animation_fps("PlayerFall"),
+		"PlayerHurt": AnimationManager.get_animation_fps("PlayerHurt"),
+		"PlayerIdle": AnimationManager.get_animation_fps("PlayerIdle"),
+		"PlayerJump": AnimationManager.get_animation_fps("PlayerJump"),
+		"PlayerRun": AnimationManager.get_animation_fps("PlayerRun"),
+		"StationaryDeath": AnimationManager.get_animation_fps("StationaryDeath"),
+		"StationaryIdle": AnimationManager.get_animation_fps("StationaryIdle"),
+		"EnemyShoot": AnimationManager.get_animation_fps("EnemyShoot"),
+		"ShootDeath": AnimationManager.get_animation_fps("ShootDeath"),
+		"ShootIdle": AnimationManager.get_animation_fps("ShootIdle"),
+		"PatrolDeath": AnimationManager.get_animation_fps("PatrolDeath"),
+		"PatrolWalk": AnimationManager.get_animation_fps("PatrolWalk"),
+		"FlyDeath": AnimationManager.get_animation_fps("FlyDeath"),
+		"FlyMove": AnimationManager.get_animation_fps("FlyMove"),
+		"PlatformAnimation": AnimationManager.get_animation_fps("PlatformAnimation"),
+		"GoalAnimation": AnimationManager.get_animation_fps("GoalAnimation"),
+		"CoinAnimation": AnimationManager.get_animation_fps("CoinAnimation")
+	}
 	
 	
 	## NOTE: THIS IS TEMPORARY CODE TO TURN ON WHEN JSON FILE NEEDS TO BE VALIDATED
@@ -374,8 +419,9 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	playerData.playerDeceleration = player.get("deceleration", playerData.playerDeceleration);
 	playerData.playerJumpHeight = player.get("jump", playerData.playerJumpHeight);
 	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
-	playerData.playerFallSpeed = player.get("fallSpeed", playerData.playerFallSpeed);
+	playerData.playerGravity = player.get("fallSpeed", playerData.playerGravity);
 	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
+	playerData.playerOneways = player.get("oneways", playerData.playerOneways);
 	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
 	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);
 	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);
@@ -389,6 +435,8 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	settings.cameraDeadzone.value = settingsConfig.get("deadzone", settings.cameraDeadzone.value);
 	settings.cameraClamp.value = settingsConfig.get("cameraPlayClamp", settings.cameraClamp.value);
 	settings.update_sliders();
+	
+	AnimationManager.set_all_fps_to_json(levelPath + "Settings.JSON");
 
 	# Enemy information read, no enemies if from older version
 	var enemies : Array = json_as_dict.get("enemies", []);
@@ -407,6 +455,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	JSONFile.close();
 	
 ## Reads the metadata section from the Settings JSON
+## levelPath: The given path to the level directory.
 ## Returns either a full or empty dictionary.
 func get_metadata(levelPath : String) -> Dictionary:
 	# If no settings JSON, return empty
@@ -418,6 +467,32 @@ func get_metadata(levelPath : String) -> Dictionary:
 	jsonFile.close();
 	# Return metadata
 	return jsonDict.get("metadata", {});
+
+
+## Sets a specific metadata value.
+## levelPath: The given path to the level directory.
+## key: The name of the metadata value to be changed.
+## value: The new value of the metadata being changed.
+func set_metadata(levelPath: String, key: String, value: Variant) -> void:
+	if (!FileAccess.file_exists(levelPath + "/Settings.JSON")):
+		return;
+		
+	# Read file
+	var file : FileAccess = FileAccess.open(levelPath + "/Settings.JSON", FileAccess.READ);
+	var json : Dictionary = JSON.parse_string(file.get_as_text());
+	file.close();
+
+	# Not all files have metadata, so lets check first
+	if !json.has("metadata"):
+		json["metadata"] = {};
+
+	# Change the given key to the value in the metadata.
+	json["metadata"][key] = value;
+
+	# Write it to the file and close again.
+	file = FileAccess.open(levelPath + "/Settings.JSON", FileAccess.WRITE);
+	file.store_string(JSON.stringify(json, "\t"));
+	file.close();
 
 ## Clone all of the data from the user asset folder 
 ## from: the source directory
@@ -487,7 +562,8 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 	ResourceSaver.save(newResource, "user://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();
-			
+
+
 ## If any enemy data is corrupted, we can repair it by giving it default values.
 ## tileMap: the main tile map layer.
 func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:

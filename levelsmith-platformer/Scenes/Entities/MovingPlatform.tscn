@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://b6axoaekmjyr4"]
 
 [ext_resource type="Script" uid="uid://dvbnlxepvikk0" path="res://Scripts/Game/MovingPlatform.gd" id="1_it7tw"]
-[ext_resource type="Texture2D" uid="uid://bok26w2mmdg74" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
+[ext_resource type="Texture2D" uid="uid://d1oebx8abt0n" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
 [ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="2_na4dm"]
-[ext_resource type="Texture2D" uid="uid://1g1ju544ffy1" path="res://Assets/Sprites/Entities/MovingPlatform/PlatformAnimation/1.png" id="3_v67sg"]
+[ext_resource type="Texture2D" uid="uid://br66drsgr4ajb" path="res://Assets/Sprites/Entities/MovingPlatform/PlatformAnimation/1.png" id="3_v67sg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hvxo"]
 
@@ -35,6 +35,7 @@ one_way_collision = true
 
 [node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
 visible = false
+z_index = -2
 default_color = Color(0, 0, 0.05490196, 0.8352941)
 joint_mode = 2
 begin_cap_mode = 2

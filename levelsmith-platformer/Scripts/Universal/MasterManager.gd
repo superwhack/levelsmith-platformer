@@ -19,7 +19,7 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var editorHomeButton : Button;
 @export var editorPlayButton : Button;
 @export var returnToEditorButton : Button;
-@export var WinReturnToEditorButton : Button;
+@export var winReturnToEditorButton : Button;
 @export var playPopUp : HBoxContainer;
 
 # Reference to tile maps
@@ -59,7 +59,7 @@ func _ready() -> void:
 	editorPlayButton.mouse_entered.connect(mouse_entered_play_button);
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
-	WinReturnToEditorButton.pressed.connect(edit);
+	winReturnToEditorButton.pressed.connect(edit);
 	
 	# Create the enemy resource folder and custom player preset.
 	if (!DirAccess.dir_exists_absolute("user://Resources/")):
@@ -79,7 +79,7 @@ func _ready() -> void:
 ## event: The user input
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu, editorManager.isValidated);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
@@ -126,6 +126,7 @@ func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) ->
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	#print("NEW LEVEL SET UP");
+	AnimationManager.set_all_fps_to_json(loadedLevelPath + "Settings.JSON");
 	Global.levelCreated.emit();
 	editorManager.returnClick = false;
 
@@ -250,7 +251,6 @@ func play() -> void:
 	# Change scene to play 
 	gameManager.show();
 	gameManager.playerPreset = propertyMenu.selectedPlayerPreset;
-	gameManager.start();
 	gameManagerCanvas.show();
 	editorManager.hide();
 	editorManagerCanvas.hide();
@@ -259,9 +259,11 @@ func play() -> void:
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
-	gameManager.reset();
+	gameManager.freeze(true);
+	await gameManager.reset();
 	await get_tree().process_frame
 	await screen_wipe_out();
+	gameManager.freeze(false);
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:

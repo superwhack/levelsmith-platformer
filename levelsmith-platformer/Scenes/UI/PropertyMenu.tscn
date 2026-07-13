@@ -12,7 +12,7 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "presetOptions", "closeButton")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "presetOptions", "closeButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -38,8 +38,9 @@ playerAccelerationSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerP
 playerDecelerationSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerDeceleration")
 playerJumpSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerJump")
 playerAirControlSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerAirControl")
-playerFallSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerFallSpeed")
+playerGravitySlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerGravity")
 playerCoyoteTimeSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime")
+playerOnewaysCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerOneWays")
 playerDoubleJumpCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerDoubleJump")
 playerWallJumpCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerWallJump")
 playerWallJumpDecayCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerWallJumpDecay")
@@ -190,10 +191,10 @@ minMax = Vector2(20, 100)
 sliderStep = 1.0
 valueAppend = "%"
 
-[node name="PlayerFallSpeed" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
+[node name="PlayerGravity" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
-propertyName = "Fall Speed"
+propertyName = "Gravity"
 propertyUnit = "m/s"
 minMax = Vector2(0.1, 5)
 sliderStep = 0.1
@@ -205,6 +206,11 @@ propertyName = "Coyote Time"
 propertyUnit = "Seconds"
 minMax = Vector2(0, 1)
 sliderStep = 0.1
+
+[node name="PlayerOneWays" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=403589801 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Drop Through One-Ways"
 
 [node name="PlayerDoubleJump" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=767046943 instance=ExtResource("3_1mv14")]
 layout_mode = 2

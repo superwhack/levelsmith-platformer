@@ -60,7 +60,7 @@ func _ready() -> void:
 		var levelScreenshot : Image = await screenshot_level();
 		
 		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu);
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu, isValidated);
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
 	settingsButton.pressed.connect(open_settings_menu);
@@ -96,7 +96,7 @@ func _input(event: InputEvent) -> void:
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
 		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu);
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu, isValidated);
 
 
 ## Takes a screenshot of the level by hiding the UI and disabling the main camera

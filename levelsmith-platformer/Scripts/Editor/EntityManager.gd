@@ -154,8 +154,11 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 			return node;
 	return null;
 
+## Stores the selected entity for copying
+## clickPos: Where the mouse clicked
 func duplicate_entity(clickPos: Vector2) -> void:
 	var entity = get_scene_at_cell(clickPos);
+	editorManager.customCursorManager.highlight_selected_entity(clickPos);
 	toolManager.update_brush_object(tileMap.get_cell_source_id(clickPos));
 	propertyMenu.close();
 	duplicatingResource = entity.propertyFile.duplicate(true);

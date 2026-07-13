@@ -109,6 +109,9 @@ func _process(_delta: float) -> void:
 					Input.set_custom_mouse_cursor(cursorEdit if editorManager.isPlaceable else cursorEditInvalid);
 				else:
 					Input.set_custom_mouse_cursor(cursorIcon if editorManager.isPlaceable else cursorInvalid);
+	
+	if (selectorState == SelectorState.COPYING):
+		entityHighlight.show();
 
 ## Updates the state of the selector frame in accordance with other actions.
 func update_selector_state() -> void:

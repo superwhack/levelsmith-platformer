@@ -16,6 +16,9 @@ enum WallDirection {
 @export var doubleJump : bool = false;
 var doubleJumpAvailable : bool = doubleJump;
 
+# If the player can drop through oneways
+@export var oneways : bool = true;
+
 @export var wallJump : bool = false;
 var wallJumpCount : int = 0;
 var wallJumpDirection : WallDirection = WallDirection.NONE;
@@ -485,7 +488,7 @@ func detect_tiles() -> void:
 			
 			match tileName:
 				"oneway":
-					if Input.is_action_just_pressed("down"):
+					if Input.is_action_just_pressed("down") && oneways:
 						position += Vector2(0, 1);
 				"ice":
 					currentWalkingEffect = Global.WalkingEffect.ICE;
@@ -519,6 +522,7 @@ func apply_preset(preset: PlayerMovementPreset) -> void:
 	airControl = preset.airControl / 100.0;
 	fallSpeed = preset.fallSpeed;
 	coyoteTime = preset.coyoteTime;
+	oneways = preset.oneways;
 	doubleJump = preset.doubleJump;
 	wallJump = preset.wallJump;
 	wallJumpDecay = preset.wallJumpDecay;

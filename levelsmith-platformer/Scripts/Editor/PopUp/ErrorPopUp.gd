@@ -40,6 +40,16 @@ func set_title(text: String) -> void:
 ## text: The replacement text
 func set_body_text(text: String) -> void:
 	bodyText.text = text;
+	
+## Sets the text of the save and quit button.
+## text: The replacement text.
+func set_save_quit_text(text: String) -> void:
+	saveQuitButton.text = text;
+	
+## Sets the text of the no save and quit button.
+## text: The replacement text.
+func set_no_save_quit_text(text: String) -> void:
+	noSaveQuitButton.text = text;
 
 ## Closes popup/clears from stack
 func close_popup() -> void:

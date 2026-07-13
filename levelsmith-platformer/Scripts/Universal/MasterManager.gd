@@ -44,6 +44,12 @@ var loadingTweenTime : float = 0.35
 #The time that the full screen holds
 var loadingHold : float = 0.30
 
+# An enum for determining if we are going to the main menu or desktop.
+enum ExitAction {
+	MAIN_MENU,
+	QUIT
+}
+
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
@@ -60,6 +66,7 @@ func _ready() -> void:
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
 	winReturnToEditorButton.pressed.connect(edit);
+	get_window().close_requested.connect(check_unsaved_changes.bind(Callable(get_tree(), "quit"), ExitAction.QUIT));
 	
 	# Create the enemy resource folder and custom player preset.
 	if (!DirAccess.dir_exists_absolute("user://Resources/")):
@@ -67,10 +74,7 @@ func _ready() -> void:
 		DirAccess.make_dir_absolute("user://Resources/Enemies/");
 		DirAccess.copy_absolute("res://Resources/PlayerPresets/Default.tres", "user://Resources/Custom.tres");
 		
-	main_menu(false);
-	
 	await screen_static();
-	await main_menu(false, true);
 
 
 ## When the level is completed, validate it and automatically return to editor
@@ -110,6 +114,8 @@ func screen_static() -> void:
 ## levelAuthor: Author of the level
 ## newSize: The width and height of the level
 func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) -> void:
+	# Overrides alt+f4 for saving
+	
 	worldSize = newSize;
 	cameraManager.initialize_camera();
 	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.settingsMenu);
@@ -167,28 +173,39 @@ func load_level(levelPath: String, play: bool = false) -> void:
 			
 
 ## Checks if the level has unsaved changes, and creates a popup with appropriate functions.
-func check_unsaved_changes() -> void:
+## on_continue: A callable function, for going to main menu or force quitting app.
+func check_unsaved_changes(on_continue: Callable, exit: ExitAction) -> void:
+	# No unsaved changes, do regular action.
+	if (!editorManager.unsavedChanges):
+		on_continue.call();
+		return;
+	
 	# Saves and brings the user to the main menu. First callable.
-	var save_and_quit = func() -> void:
+	var save = func() -> void:
 		editorManager.unsavedChanges = false;
 		AudioManager.play_UI_effect("UISelection");
 		var levelScreenshot : Image = await editorManager.screenshot_level();
 		ImportExportManager.save_level_screenshot(levelScreenshot);
 		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu, editorManager.isValidated);
-		main_menu();
+		on_continue.call();
 	
 	# No save, brings user to main menu
-	var no_save_and_quit = func() -> void:
+	var no_save = func() -> void:
 		editorManager.unsavedChanges = false;
-		main_menu();
+		on_continue.call();
 	
 	if (editorManager.unsavedChanges):
-		PopUpManager.create_unsaved_changes_popup(save_and_quit, no_save_and_quit);
+		PopUpManager.create_unsaved_changes_popup(save, no_save);
+		
+	if (exit == ExitAction.QUIT):
+		PopUpManager.currentPopUp.set_save_quit_text("Save & Quit to Desktop");
+		PopUpManager.currentPopUp.set_no_save_quit_text("Quit to Desktop");
+
 
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	if (editorManager.unsavedChanges):
-		check_unsaved_changes();
+		check_unsaved_changes(main_menu, ExitAction.MAIN_MENU);
 		return;
 	
 	mainMenuControl.fill_level_list();
@@ -215,9 +232,14 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	if !onStart:
 		await screen_wipe_out();
 	loadedLevelPath = "";
+	# Removes alt+f4 override
+	print("hi removing override")
+	get_tree().set_auto_accept_quit(true);
 
 ## Swap to edit state
 func edit() -> void:
+	print("hello setting up override")
+	get_tree().set_auto_accept_quit(false);
 	await get_tree().process_frame;
 	await screen_wipe_in();
 	AudioManager.reset_audio();

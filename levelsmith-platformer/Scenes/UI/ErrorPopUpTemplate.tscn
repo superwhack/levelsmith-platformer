@@ -143,14 +143,14 @@ visible = false
 custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 size_flags_horizontal = 6
-text = "Save & Go To Menu"
+text = "Save & Return to Menu"
 
 [node name="NoSaveButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer" unique_id=851965436]
 visible = false
 custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 size_flags_horizontal = 6
-text = "Don't Save & Go To Menu"
+text = "Don't Save & Return to Menu"
 
 [node name="CloseButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer" unique_id=1027214704]
 custom_minimum_size = Vector2(75, 0)

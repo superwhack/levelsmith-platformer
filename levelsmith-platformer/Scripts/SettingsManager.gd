@@ -7,6 +7,7 @@ class_name SettingsMenu;
 @export var resetButton : Button;
 
 @export var cameraManager : Node2D;
+var settingsPath = "user://settings.cfg";
 
 # Volume
 @export var masterVolume : VBoxContainer;
@@ -57,11 +58,15 @@ func _ready() -> void:
 	followSpeed.drag_ended.connect(_on_drag);
 	cameraDeadzone.drag_ended.connect(_on_drag);
 	cameraClamp.check_changed.connect(_on_drag);
+	
+	load_settings();
 
 ## When dragging, adjust the values in real time
 func _on_drag() -> void:
 	# Await needed for values to update from drag_ended
 	await get_tree().process_frame;
+	
+	save_settings();
 	# Audio
 	AudioManager.masterVolume = masterVolume.value / 100;
 	AudioManager.SFXVolume = SFXVolume.value / 100;
@@ -100,6 +105,7 @@ func update_sliders() -> void:
 	followSpeed.update_slider();
 	cameraDeadzone.update_slider();
 	cameraClamp.update_checkbox();
+	
 	_on_drag();
 
 ## Reset the settings
@@ -113,3 +119,28 @@ func reset_settings() -> void:
 	SFXVolume.value = 70.0;
 	musicVolume.value = 70.0;
 	update_sliders();
+
+## Load the settings from a config file, create the file if needed
+func load_settings() -> void:
+	if !FileAccess.file_exists(settingsPath):
+		var settingsDefault = load("res://Resources/SettingsDefault.tres");
+		var newSettings = ConfigFile.new();
+		newSettings.set_value("Audio", "master_volume", settingsDefault.masterVolume);
+		newSettings.set_value("Audio", "sfx_volume", settingsDefault.SFXVolume);
+		newSettings.set_value("Audio", "music_volume", settingsDefault.musicVolume);
+		newSettings.save(settingsPath);
+	
+	var configFile = ConfigFile.new();
+	configFile.load(settingsPath);
+	masterVolume.value = configFile.get_value("Audio", "master_volume");
+	SFXVolume.value = configFile.get_value("Audio", "sfx_volume");
+	musicVolume.value = configFile.get_value("Audio", "music_volume");
+	_on_drag();
+
+## Save current settings in the config file
+func save_settings() -> void:
+	var configFile = ConfigFile.new();
+	configFile.set_value("Audio", "master_volume", masterVolume.value);
+	configFile.set_value("Audio", "sfx_volume", SFXVolume.value);
+	configFile.set_value("Audio", "music_volume", musicVolume.value);
+	configFile.save(settingsPath);

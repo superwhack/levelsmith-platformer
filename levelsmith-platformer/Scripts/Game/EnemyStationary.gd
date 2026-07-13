@@ -28,7 +28,7 @@ func update_flipped(facingRight: bool = isFacingRight) -> void:
 	animatedSprites.flip_h = !facingRight;
 
 func assign_script(id: String, assignPosition: Vector2i) -> void:
-	propertyFile = ResourceLoader.load("res://Resources/Enemies/Stationary" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
+	propertyFile = ResourceLoader.load("user://Resources/Enemies/Stationary" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	name = "Stationary" + id;
 	propertyFile.position = assignPosition;
 	isFacingRight = propertyFile.isFacingRight;

@@ -61,7 +61,8 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"dimensions": levelSize,
 			"objects": 0,
 			"version": Global.VERSION,
-			"favorited": false
+			"favorited": false,
+			"validated": false
 		},
 		"enemies": [],
 		"player": {
@@ -107,7 +108,7 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
 ## settings: The settings menu to export the configurations from
-func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, settings: SettingsMenu) -> void:
+func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i, settings: SettingsMenu, isValidated : bool = false) -> void:
 	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
@@ -157,6 +158,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 	metadata["dimensions"] = worldSize;
 	metadata["version"] = Global.VERSION;
 	metadata["objects"] = objects;
+	metadata["validated"] = isValidated;
 
 	json["metadata"] = metadata;
 	
@@ -191,10 +193,10 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2, 
 	## Enemy JSON Creation ##
 	##                     ##
 	var enemies : Array = [];
-	var enemyProperties : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
+	var enemyProperties : PackedStringArray = DirAccess.get_files_at("user://Resources/Enemies/");
 
 	for enemyProperty in enemyProperties:
-		var propertyFile : Resource = load("res://Resources/Enemies/" + enemyProperty);
+		var propertyFile : Resource = load("user://Resources/Enemies/" + enemyProperty);
 		
 		# Shared enemy properties, like the position.
 		var enemy : Dictionary = {
@@ -407,6 +409,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	JSONFile.close();
 	
 ## Reads the metadata section from the Settings JSON
+## levelPath: The given path to the level directory.
 ## Returns either a full or empty dictionary.
 func get_metadata(levelPath : String) -> Dictionary:
 	# If no settings JSON, return empty
@@ -418,6 +421,32 @@ func get_metadata(levelPath : String) -> Dictionary:
 	jsonFile.close();
 	# Return metadata
 	return jsonDict.get("metadata", {});
+
+
+## Sets a specific metadata value.
+## levelPath: The given path to the level directory.
+## key: The name of the metadata value to be changed.
+## value: The new value of the metadata being changed.
+func set_metadata(levelPath: String, key: String, value: Variant) -> void:
+	if (!FileAccess.file_exists(levelPath + "/Settings.JSON")):
+		return;
+		
+	# Read file
+	var file : FileAccess = FileAccess.open(levelPath + "/Settings.JSON", FileAccess.READ);
+	var json : Dictionary = JSON.parse_string(file.get_as_text());
+	file.close();
+
+	# Not all files have metadata, so lets check first
+	if !json.has("metadata"):
+		json["metadata"] = {};
+
+	# Change the given key to the value in the metadata.
+	json["metadata"][key] = value;
+
+	# Write it to the file and close again.
+	file = FileAccess.open(levelPath + "/Settings.JSON", FileAccess.WRITE);
+	file.store_string(JSON.stringify(json, "\t"));
+	file.close();
 
 ## Clone all of the data from the user asset folder 
 ## from: the source directory
@@ -448,10 +477,10 @@ func clone_data(from: String, to: String, directory: String = ""):
 
 ## Gets files in the enemies folder and delete every single file.
 func clear_enemies_folder() -> void:
-	var files : PackedStringArray = DirAccess.get_files_at("res://Resources/Enemies/");
+	var files : PackedStringArray = DirAccess.get_files_at("user://Resources/Enemies/");
 	
 	for file in files:
-		DirAccess.remove_absolute("res://Resources/Enemies/" + file);
+		DirAccess.remove_absolute("user://Resources/Enemies/" + file);
 
 ## Matches the enemy type with the correct data, used when importing data
 ## type: The type of enemy, stored as an Enum.
@@ -484,10 +513,11 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.pointBOffset.x = enemy.stats.endpoint.x;
 			newResource.pointBOffset.y = enemy.stats.endpoint.y;
 			newResource.progress = enemy.stats.progress;
-	ResourceSaver.save(newResource, "res://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
+	ResourceSaver.save(newResource, "user://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();
-			
+
+
 ## If any enemy data is corrupted, we can repair it by giving it default values.
 ## tileMap: the main tile map layer.
 func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
@@ -496,25 +526,25 @@ func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
 			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultPatrolling : Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
 			var newPatrolling : Resource = defaultPatrolling.duplicate(true);
-			ResourceSaver.save(newPatrolling, "res://Resources/Enemies/Patrolling-" + nodePos + ".tres");
+			ResourceSaver.save(newPatrolling, "user://Resources/Enemies/Patrolling-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
 		elif node is EnemyShooting && node.propertyFile == null:
 			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultShooting : Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
 			var newShooting : Resource = defaultShooting.duplicate(true);
-			ResourceSaver.save(newShooting, "res://Resources/Enemies/Shooting-" + nodePos + ".tres");
+			ResourceSaver.save(newShooting, "user://Resources/Enemies/Shooting-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
 		elif node is EnemyFlyer && node.propertyFile == null:
 			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
 			var newFlying : Resource = defaultFlying.duplicate(true);
-			ResourceSaver.save(newFlying, "res://Resources/Enemies/Flying-" + nodePos + ".tres");
+			ResourceSaver.save(newFlying, "user://Resources/Enemies/Flying-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
 		elif node is EnemyStationary && node.propertyFile == null:
 			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
 			var defaultStationary : Resource = load("res://Resources/PlayerPresets/StationaryDefault.tres");
 			var newStationary : Resource = defaultStationary.duplicate(true);
-			ResourceSaver.save(newStationary, "res://Resources/Enemies/Stationary-" + nodePos + ".tres");
+			ResourceSaver.save(newStationary, "user://Resources/Enemies/Stationary-" + nodePos + ".tres");
 			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
 			
 ## Gets the object count of the given tile map and worldsize.

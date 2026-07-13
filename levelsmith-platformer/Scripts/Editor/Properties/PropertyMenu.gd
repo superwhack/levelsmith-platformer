@@ -3,6 +3,9 @@ extends Panel
 # Entity currently selected for editing
 var selectedEntity : Node2D;
 
+# Need an editor manager export to set unsavedChanges
+@export var editorManager : Node2D;
+
 # Name displayed on property menu
 @export var entityName : Label;
 
@@ -289,12 +292,12 @@ func update_sliders() -> void:
 		movingPlatformOffsetXSlider.update_slider();
 		movingPlatformOffsetYSlider.update_slider();
 		movingPlatformProgressSlider.update_slider();
-	
+
 
 ## Alternate the ability for a property to be selected
 ## property: The property to change
 ## selectable: If it can be selected
-func make_selectable(property : VBoxContainer, selectable : bool) -> void:
+func make_selectable(property: VBoxContainer, selectable: bool) -> void:
 	property.enabled = selectable;
 	if !selectable:
 		property.modulate = Color(1, 1, 1, 0.5);
@@ -348,10 +351,11 @@ func update_values() -> void:
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
 	# Processframe is needed here so that when using the text input on the player, it actually correctly updates, add more if this becomes a problem again.
-	await get_tree().process_frame
+	await get_tree().process_frame;
 	update_values();
 	if selectedEntity is Player:
 		update_custom();
+	editorManager.unsavedChanges = true;
 
 ## Show the property menu, different sections pop up depending on the currently selected entity type
 ## resource: The resource file to load with properties

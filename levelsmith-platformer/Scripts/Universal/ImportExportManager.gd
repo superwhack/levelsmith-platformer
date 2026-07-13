@@ -1,11 +1,11 @@
 extends Node
 
+# Path for default assets. Unused.
+const DEFAULT_PATH : String = "res://Assets/Defaults/";
+
 # Paths to the level and assets for the level
 var levelPath : String;
 var levelAssetPath : String;
-
-# Path for default assets
-const defaultPath : String = "res://Assets/Defaults/";
 
 # A signal for when a level has been imported
 signal levelImported;
@@ -14,7 +14,7 @@ signal levelImported;
 var levelName : String;
 
 # Stores size of an imported level
-var importedLevelSize : Vector2;
+var importedLevelSize : Vector2i;
 
 # Default player stats for a new level
 var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tres");
@@ -81,6 +81,26 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"followSpeed": 100.0,
 			"deadzone": 0.0,
 			"cameraPlayClamp": false
+		},
+		"animations": {
+			"PlayerDeath": 8.0,
+			"PlayerFall": 8.0,
+			"PlayerHurt": 8.0,
+			"PlayerIdle": 8.0,
+			"PlayerJump": 8.0,
+			"PlayerRun": 8.0,
+			"StationaryDeath": 8.0,
+			"StationaryIdle": 8.0,
+			"EnemyShoot": 8.0,
+			"ShootDeath": 8.0,
+			"ShootIdle": 8.0,
+			"PatrolDeath": 8.0,
+			"PatrolWalk": 8.0,
+			"FlyDeath": 8.0,
+			"FlyMove": 8.0,
+			"PlatformAnimation": 8.0,
+			"GoalAnimation": 8.0,
+			"CoinAnimation": 8.0
 		}
 	};
 	
@@ -255,6 +275,27 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 
 	json["enemies"] = enemies;
 	
+	json["animations"] = {
+		"PlayerDeath": AnimationManager.get_animation_fps("PlayerDeath"),
+		"PlayerFall": AnimationManager.get_animation_fps("PlayerFall"),
+		"PlayerHurt": AnimationManager.get_animation_fps("PlayerHurt"),
+		"PlayerIdle": AnimationManager.get_animation_fps("PlayerIdle"),
+		"PlayerJump": AnimationManager.get_animation_fps("PlayerJump"),
+		"PlayerRun": AnimationManager.get_animation_fps("PlayerRun"),
+		"StationaryDeath": AnimationManager.get_animation_fps("StationaryDeath"),
+		"StationaryIdle": AnimationManager.get_animation_fps("StationaryIdle"),
+		"EnemyShoot": AnimationManager.get_animation_fps("EnemyShoot"),
+		"ShootDeath": AnimationManager.get_animation_fps("ShootDeath"),
+		"ShootIdle": AnimationManager.get_animation_fps("ShootIdle"),
+		"PatrolDeath": AnimationManager.get_animation_fps("PatrolDeath"),
+		"PatrolWalk": AnimationManager.get_animation_fps("PatrolWalk"),
+		"FlyDeath": AnimationManager.get_animation_fps("FlyDeath"),
+		"FlyMove": AnimationManager.get_animation_fps("FlyMove"),
+		"PlatformAnimation": AnimationManager.get_animation_fps("PlatformAnimation"),
+		"GoalAnimation": AnimationManager.get_animation_fps("GoalAnimation"),
+		"CoinAnimation": AnimationManager.get_animation_fps("CoinAnimation")
+	}
+	
 	
 	## NOTE: THIS IS TEMPORARY CODE TO TURN ON WHEN JSON FILE NEEDS TO BE VALIDATED
 	#var tmpFile : FileAccess = FileAccess.open(levelPath + "Temp.txt", FileAccess.WRITE);
@@ -391,6 +432,8 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	settings.cameraDeadzone.value = settingsConfig.get("deadzone", settings.cameraDeadzone.value);
 	settings.cameraClamp.value = settingsConfig.get("cameraPlayClamp", settings.cameraClamp.value);
 	settings.update_sliders();
+	
+	AnimationManager.set_all_fps_to_json(levelPath + "Settings.JSON");
 
 	# Enemy information read, no enemies if from older version
 	var enemies : Array = json_as_dict.get("enemies", []);

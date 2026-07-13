@@ -94,7 +94,11 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 				firstAnimationSelected = newButton;
 
 func clear_buttons(container : VBoxContainer):
-	for button in container.get_children() :
+	for button : AssetItem in container.get_children() :
+		if (button.type == AssetItem.AssetType.IMAGE && firstImageSelected):
+			firstImageSelected = null;
+		if (button.type == AssetItem.AssetType.ANIMATION && firstAnimationSelected):
+			firstAnimationSelected = null;
 		button.queue_free();
 
 ## Finds an image by its name

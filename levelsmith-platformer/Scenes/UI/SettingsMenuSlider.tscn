@@ -59,8 +59,8 @@ rounded = true
 scrollable = false
 
 [node name="Value" type="TextEdit" parent="SliderValuesVbox/SliderHBox" unique_id=281473897]
-custom_minimum_size = Vector2(64, 20)
-custom_maximum_size = Vector2(64, 35)
+custom_minimum_size = Vector2(70, 20)
+custom_maximum_size = Vector2(70, 35)
 layout_mode = 2
 text = "0.00"
 emoji_menu_enabled = false

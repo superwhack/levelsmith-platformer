@@ -68,6 +68,9 @@ var direction : float;
 # Speed with constant multiplier and slowdown appended in
 var trueSpeed : float;
 
+var bounceTileHeight : float = 1.0;
+var iceFriction : float = 0.5;
+
 # The selected movement preset
 # TODO: Make it so that it selects the DefaultMovement preset automatically 
 @export var playerMovementPreset : PlayerMovementPreset;
@@ -436,17 +439,17 @@ func detect_tiles() -> void:
 			# Horizontal bounces
 			if (abs(rayDirection.x) > abs(rayDirection.y)):
 				if rayDirection.x < 0:
-					velocity.x = 3000 * tileData.get_custom_data("bounce");
+					velocity.x = 3000 * bounceTileHeight;
 				else:
-					velocity.x = -3000 * tileData.get_custom_data("bounce");
+					velocity.x = -3000 * bounceTileHeight;
 				if Input.is_action_pressed("jump"):
-					velocity.y = -500 * tileData.get_custom_data("bounce");
+					velocity.y = -500 * bounceTileHeight;
 				# Vertical bounces
 			else:
 				if (rayDirection.y < 0):
-					velocity.y = 1000 * tileData.get_custom_data("bounce");
+					velocity.y = 1000 * bounceTileHeight;
 				else:
-					velocity.y = -1000 * sqrt(fallSpeed) * tileData.get_custom_data("bounce");
+					velocity.y = -1000 * sqrt(fallSpeed) * bounceTileHeight;
 					if velocity.x > 0 && Input.is_action_pressed("left"):
 						velocity.x /= 2;
 					elif velocity.x < 0 && Input.is_action_pressed("right"):
@@ -494,7 +497,7 @@ func detect_tiles() -> void:
 						position += Vector2(0, 1);
 				"ice":
 					currentWalkingEffect = Global.WalkingEffect.ICE;
-					currentFriction = .5;
+					currentFriction = iceFriction;
 
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> bool:

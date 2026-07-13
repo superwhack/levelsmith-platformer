@@ -91,7 +91,10 @@ func place_entity(clickPosition: Vector2) -> void:
 				file = "user://Resources/Enemies/Flying" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.STATIONARY):
 				var defaultStationary : Resource = load("res://Resources/PlayerPresets/StationaryDefault.tres");
-				newEntity = defaultStationary.duplicate(true);
+				if duplicatingResource:
+					newEntity = duplicatingResource.duplicate(true);
+				else:
+					newEntity = defaultStationary.duplicate(true);
 				file = "user://Resources/Enemies/Stationary" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.MOVING_PLATFORM):
 				var defaultMoving : Resource = load("res://Resources/PlayerPresets/MovingPlatformDefault.tres");

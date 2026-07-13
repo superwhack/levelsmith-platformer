@@ -275,11 +275,11 @@ func _on_level_double_clicked(path: String) -> void:
 	
 ## Fills in metadata labels with appropriate data when hovered.
 ## item: the level list button item.
-func _on_level_hovered(item) -> void:
+func _on_level_hovered(item: Node) -> void:
 	if (!selectedItem):
 		update_metadata(item);
 	
-func _on_level_pressed(item) -> void:
+func _on_level_pressed(item: Node) -> void:
 	if (selectedItem == item):
 		return;
 		
@@ -297,7 +297,7 @@ func _on_level_pressed(item) -> void:
 	
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
-func _on_level_deselected(item) -> void:
+func _on_level_deselected(item: Node) -> void:
 	if (selectedItem == item):
 		item.levelButton.button_pressed = false;
 		toggle_level_buttons();
@@ -369,7 +369,7 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 
 ## Reusable function for updating metadata based on given item.
 ## item: Level item to be used for updating metadata.
-func update_metadata(item) -> void:
+func update_metadata(item: Node) -> void:
 	levelName.text = item.levelTitle.text;
 	author.text = item.author;
 	dateCreated.text = item.dateCreated;

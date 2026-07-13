@@ -27,7 +27,6 @@
 [ext_resource type="Texture2D" uid="uid://cva75o4gsrwxo" path="res://Assets/Sprites/UI/Iconoir/iconoir--list.png" id="17_3sr2t"]
 [ext_resource type="StyleBox" uid="uid://d0dnc4expn1x0" path="res://Assets/UserInterface/SliderStyleBox.tres" id="17_5jgur"]
 [ext_resource type="Texture2D" uid="uid://cf7pf114qyr23" path="res://Assets/Sprites/UI/folder-large.png" id="17_xat3a"]
-[ext_resource type="StyleBox" uid="uid://kpc3pw6w1747" path="res://Assets/UserInterface/TextEntryFocusStyleBox.tres" id="18_4tmrm"]
 [ext_resource type="Texture2D" uid="uid://crqy8g2inn3mf" path="res://Assets/Sprites/UI/Iconoir/iconoir--arrow-up.png" id="18_nva8e"]
 [ext_resource type="StyleBox" uid="uid://nqweanxgm6cj" path="res://Assets/UserInterface/TextEntryStyleBox.tres" id="19_5devf"]
 [ext_resource type="Texture2D" uid="uid://b6dpmapeh16as" path="res://Assets/Sprites/UI/Iconoir/iconoir--refresh.png" id="19_k74kl"]
@@ -336,7 +335,7 @@ TabContainer/styles/tab_selected = ExtResource("29_p7whp")
 TabContainer/styles/tab_unselected = ExtResource("32_3sr2t")
 TabContainer/styles/tabbar_background = SubResource("StyleBoxEmpty_wg48r")
 TextEdit/colors/font_color = Color(1, 1, 1, 1)
-TextEdit/styles/focus = ExtResource("18_4tmrm")
+TextEdit/styles/focus = ExtResource("19_5devf")
 TextEdit/styles/normal = ExtResource("19_5devf")
 TextListButton/base_type = &"Button"
 TextListButton/colors/font_color = Color(0.8, 0.8, 0.8, 1)

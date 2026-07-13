@@ -1,11 +1,11 @@
 extends Node
 
+# Path for default assets. Unused.
+const DEFAULT_PATH : String = "res://Assets/Defaults/";
+
 # Paths to the level and assets for the level
 var levelPath : String;
 var levelAssetPath : String;
-
-# Path for default assets
-const defaultPath : String = "res://Assets/Defaults/";
 
 # A signal for when a level has been imported
 signal levelImported;
@@ -14,7 +14,7 @@ signal levelImported;
 var levelName : String;
 
 # Stores size of an imported level
-var importedLevelSize : Vector2;
+var importedLevelSize : Vector2i;
 
 # Default player stats for a new level
 var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tres");

@@ -12,7 +12,7 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var editorManagerCanvas : CanvasLayer;
 @export var gameManagerCanvas : CanvasLayer;
 @export var loadingScreen : CanvasLayer;
-@export var loadingAnimation : AnimationPlayer;
+@export var loadingImage : TextureRect;
 @export var mainMenuControl : Control;
 
 # References to relevant buttons
@@ -35,7 +35,14 @@ var loadedMap : TileMapLayer;
 
 @export var propertyMenu : Panel;
 
-var loadedLevelPath: String = "";
+var loadedLevelPath : String = "";
+
+# Tween information
+var loadingTween : Tween
+# The time that the screen wipe takes
+var loadingTweenTime : float = 0.35
+#The time that the full screen holds
+var loadingHold : float = 0.30
 
 func _ready() -> void:
 	Global.reload.connect(load_tilemap);
@@ -54,10 +61,16 @@ func _ready() -> void:
 	returnToEditorButton.pressed.connect(edit);
 	WinReturnToEditorButton.pressed.connect(edit);
 	
-	# NOTE: This probably shouldn't be here for the final build
-	# Create the Enemies folder, github can't push empty folders
-	if (!DirAccess.dir_exists_absolute("res://Resources/Enemies/")):
-		DirAccess.make_dir_absolute("res://Resources/Enemies/");
+	# Create the enemy resource folder and custom player preset.
+	if (!DirAccess.dir_exists_absolute("user://Resources/")):
+		DirAccess.make_dir_absolute("user://Resources/");
+		DirAccess.make_dir_absolute("user://Resources/Enemies/");
+		DirAccess.copy_absolute("res://Resources/PlayerPresets/Default.tres", "user://Resources/Custom.tres");
+		
+	main_menu(false);
+	
+	
+	
 	
 	await screen_static();
 	await main_menu(false, true);
@@ -66,7 +79,7 @@ func _ready() -> void:
 ## event: The user input
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu, editorManager.isValidated);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
@@ -78,20 +91,27 @@ func _input(event: InputEvent) -> void:
 ## Plays the screen wipe animation that covers the screen before a state transition.
 func screen_wipe_in() -> void:
 	loadingScreen.show();
-	loadingAnimation.play("WipeIn");
-	await loadingAnimation.animation_finished;
+	# Create the loading animation tween
+	loadingTween = create_tween()
+	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 1.0, loadingTweenTime)
+	await loadingTween.finished;
+	await get_tree().create_timer(loadingHold).timeout
 
 ## Plays the screen wipe animation that reveals the destination state after loading.
 func screen_wipe_out() -> void:
-	loadingAnimation.play("WipeOut");
-	await loadingAnimation.animation_finished;
+	# Create the loading animation tween
+	loadingTween = create_tween()
+	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 0.0, loadingTweenTime)
+	await loadingTween.finished;
 	loadingScreen.hide();
 
 ## special loading screen specific for main menu
 func screen_static() -> void:
-	loadingAnimation.play("WipeOut2");
-	await loadingAnimation.animation_finished;
-	loadingScreen.hide();
+	await get_tree().create_timer(loadingHold).timeout
+	screen_wipe_out()
+	#loadingAnimation.play("WipeOut2");
+	#await loadingAnimation.animation_finished;
+	#loadingScreen.hide();
 
 ## Set up a new level
 ## levelName: Name of the level
@@ -155,6 +175,7 @@ func load_level(levelPath: String, play: bool = false) -> void:
 
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
+	mainMenuControl.fill_level_list();
 	if !onStart:
 		await screen_wipe_in();
 	if menuClickSound:
@@ -170,7 +191,6 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	mainMenuControl.show();
 	ImportExportManager.clear_enemies_folder();
 	AudioManager.reset_audio();
-	mainMenuControl.fill_level_list();
 	if (mainMenuControl.selectedItem):
 		mainMenuControl.update_metadata(mainMenuControl.selectedItem);
 	# Set the state to the Main Menu
@@ -217,10 +237,10 @@ func edit() -> void:
 
 ## Swap to play state
 func play() -> void:
-	await screen_wipe_in();
 	# Check that the game can be run
 	if (!get_play_errors().is_empty()):
 		return;
+	await screen_wipe_in();
 	propertyMenu.close();
 	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");

@@ -59,7 +59,7 @@ func _ready() -> void:
 		var levelScreenshot : Image = await screenshot_level();
 		
 		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu);
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu, isValidated);
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
 	settingsButton.pressed.connect(open_settings_menu);
@@ -94,7 +94,7 @@ func _input(event: InputEvent) -> void:
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
 		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu);
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu, isValidated);
 
 
 ## Takes a screenshot of the level by hiding the UI and disabling the main camera
@@ -146,10 +146,10 @@ func reset_enemy_positions() -> void:
 	for moving in get_tree().get_nodes_in_group("Moving"):
 		if (moving is Enemy || moving is MovingPlatform) && moving.propertyFile:
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
-#			if moving is EnemyPatrol:
-#				moving.directionArrow.show();
-#			elif moving is EnemyShooting:
-#				moving.directionArrow.show();
+			if moving is EnemyPatrol:
+				moving.directionArrow.show();
+			elif moving is EnemyShooting:
+				moving.directionArrow.show();
 			if moving is EnemyFlyer:
 				moving.previewLine.show();
 		if moving is MovingPlatform && moving.propertyFile:

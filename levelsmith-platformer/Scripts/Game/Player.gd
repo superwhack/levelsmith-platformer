@@ -132,9 +132,9 @@ func _physics_process(delta: float) -> void:
 		currentWalkingEffect = Global.WalkingEffect.NONE;
 		if (coyoteTimeLeft > 0):
 			coyoteTimeLeft -= delta;
-		velocity += get_gravity() * delta;
-		if velocity.y > 1300 * fallSpeed:
-			velocity.y = 1300 * fallSpeed;
+		velocity += get_gravity() * delta * fallSpeed;
+		#if velocity.y > 1300 * fallSpeed:
+		#	velocity.y = 1300 * fallSpeed;
 	else:
 		isJumping = false;
 		jumpAnimStarted = false;
@@ -183,7 +183,7 @@ func animate() -> void:
 			jumpAnimStarted = true;
 		else:
 			return;
-	elif (!is_on_floor() && velocity.y > 0):
+	elif (!is_on_floor() && velocity.y >= 0):
 		animatedSprites.animation = "PlayerFall";
 		if (!fallAnimStarted):
 			fallAnimStarted = true;
@@ -204,7 +204,7 @@ func on_animation_finished() -> void:
 ## Make the player jump
 func jump() -> void:
 	AudioManager.play_effect("PlayerJump");
-	velocity.y = -jumpHeight * 360 * currentSlowdown;
+	velocity.y = -sqrt(jumpHeight) * 496 * currentSlowdown * sqrt(fallSpeed);
 	isJumping = true;
 	jumpTimer.start();
 
@@ -221,6 +221,8 @@ func walk() -> void:
 			accelerationX = direction * pow(abs(accelerationX), pow(baseAcceleration, 2));
 		# Deceleration if moving in opposite direction
 		elif baseDeceleration != 1.0 && sign(velocity.x) != sign(direction):
+			if baseDeceleration + currentFriction < 1.5:
+				currentFriction = 1.5 - baseDeceleration
 			accelerationX *= pow(baseDeceleration, 5);
 	# Acceleration
 	else:
@@ -229,7 +231,7 @@ func walk() -> void:
 		if (currentFriction != 1.0):
 			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 		else:
-			accelerationX = clamp(-velocity.x, -trueSpeed * .75, trueSpeed * .75);
+			accelerationX = clamp(-velocity.x, -max(trueSpeed, 400) * .75, max(trueSpeed, 400) * .75);
 		# Deceleration if not moving
 		if baseDeceleration != 1.0:
 			accelerationX *= pow(baseDeceleration, 5);
@@ -259,7 +261,7 @@ func walk() -> void:
 				accelerationX *= .05;
 		
 	# Velocity gets capped so you can't accelerate faster
-	elif (abs(velocity.x + accelerationX) > trueSpeed):
+	elif (abs(velocity.x + accelerationX) > trueSpeed && groundSpeed != 0):
 		if (abs(velocity.x) > trueSpeed):
 			var ratio = pow(trueSpeed / abs(velocity.x), .07);
 			velocity.x *= ratio;
@@ -282,7 +284,7 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 	direction.y /= 2;
 	velocity = direction * (1000 + higherBounce * 500)
 	if is_on_floor():
-		velocity *= pow(groundSpeed, .9);
+		velocity *= pow(max(3, groundSpeed), .9);
 	health -= amount;
 	if (health <= 0):
 		die();

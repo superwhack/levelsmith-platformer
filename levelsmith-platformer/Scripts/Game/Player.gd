@@ -183,7 +183,7 @@ func animate() -> void:
 			jumpAnimStarted = true;
 		else:
 			return;
-	elif (!is_on_floor() && velocity.y > 0):
+	elif (!is_on_floor() && velocity.y >= 0):
 		animatedSprites.animation = "PlayerFall";
 		if (!fallAnimStarted):
 			fallAnimStarted = true;
@@ -204,7 +204,7 @@ func on_animation_finished() -> void:
 ## Make the player jump
 func jump() -> void:
 	AudioManager.play_effect("PlayerJump");
-	velocity.y = -jumpHeight * 360 * currentSlowdown * sqrt(fallSpeed);
+	velocity.y = -sqrt(jumpHeight) * 500 * currentSlowdown * sqrt(fallSpeed);
 	isJumping = true;
 	jumpTimer.start();
 

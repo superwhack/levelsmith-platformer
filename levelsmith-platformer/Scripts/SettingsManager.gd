@@ -7,7 +7,7 @@ class_name SettingsMenu;
 @export var resetButton : Button;
 
 @export var cameraManager : Node2D;
-var settingsPath = "user://settings.cfg";
+var settingsPath := "user://settings.cfg";
 
 # Volume
 @export var masterVolume : VBoxContainer;
@@ -20,7 +20,7 @@ var settingsPath = "user://settings.cfg";
 @export var cameraDeadzone : VBoxContainer;
 @export var cameraClamp : VBoxContainer;
 
-var musicPreviewing = false;
+var musicPreviewing := false;
 
 func _ready() -> void:
 	closeButton.pressed.connect(editorManager.close_settings_menu);

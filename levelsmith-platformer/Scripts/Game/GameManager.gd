@@ -76,6 +76,12 @@ func reset() -> void:
 	Global.reload.emit();
 	start();
 
+
+func freeze(locked: bool) -> void:
+	if locked:
+		process_mode = Node.PROCESS_MODE_DISABLED;
+	else:
+		process_mode = Node.PROCESS_MODE_INHERIT;
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
 	pauseButton.show();
@@ -96,11 +102,12 @@ func start() -> void:
 		winCoinHBox.hide();
 	
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
-	for frame in range(1, 5):
+	while (get_tree().get_node_count_in_group("Player") == 1):
 		await get_tree().process_frame;
 
 	# Get a reference to the player and apply its preset
 	player = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1];
+	
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
@@ -207,7 +214,6 @@ func level_complete() -> void:
 func return_to_editor() -> void:
 	get_tree().paused = false;
 	winScreen.hide();
-	goalReached = false;
 	timerRunning = false;
 	masterManager.edit();
 	
@@ -216,5 +222,4 @@ func return_to_editor() -> void:
 func replay_level() -> void:
 	get_tree().paused = false;
 	winScreen.hide();
-	goalReached = false;
 	reset();

@@ -229,7 +229,7 @@ func walk() -> void:
 		if (currentFriction != 1.0):
 			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
 		else:
-			accelerationX = clamp(-velocity.x, -trueSpeed * .75, trueSpeed * .75);
+			accelerationX = clamp(-velocity.x, -max(trueSpeed, 400) * .75, max(trueSpeed, 400) * .75);
 		# Deceleration if not moving
 		if baseDeceleration != 1.0:
 			accelerationX *= pow(baseDeceleration, 5);
@@ -259,7 +259,7 @@ func walk() -> void:
 				accelerationX *= .05;
 		
 	# Velocity gets capped so you can't accelerate faster
-	elif (abs(velocity.x + accelerationX) > trueSpeed):
+	elif (abs(velocity.x + accelerationX) > trueSpeed && groundSpeed != 0):
 		if (abs(velocity.x) > trueSpeed):
 			var ratio = pow(trueSpeed / abs(velocity.x), .07);
 			velocity.x *= ratio;
@@ -282,7 +282,7 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 	direction.y /= 2;
 	velocity = direction * (1000 + higherBounce * 500)
 	if is_on_floor():
-		velocity *= pow(groundSpeed, .9);
+		velocity *= pow(max(3, groundSpeed), .9);
 	health -= amount;
 	if (health <= 0):
 		die();

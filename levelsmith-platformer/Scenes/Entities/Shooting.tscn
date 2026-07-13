@@ -1,17 +1,18 @@
 [gd_scene format=3 uid="uid://bf3q4v3br7j4o"]
 
 [ext_resource type="Script" uid="uid://cxud880na6ixc" path="res://Scripts/Game/EnemyShooting.gd" id="1_0p30m"]
-[ext_resource type="Texture2D" uid="uid://b5hb8p70258h" path="res://Assets/Defaults/Assets/Sprites/ProjectileDanger.png" id="2_vgv1q"]
-[ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="3_3c58l"]
+[ext_resource type="Texture2D" uid="uid://wgdtlonbavh4" path="res://Assets/Defaults/Assets/Sprites/ProjectileDanger.png" id="2_vgv1q"]
+[ext_resource type="Texture2D" uid="uid://btwee51autoih" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="3_3c58l"]
 [ext_resource type="Texture2D" uid="uid://c23s130t4exym" path="res://Assets/Defaults/Assets/Sprites/ProjectileBounce.png" id="3_fax0h"]
 [ext_resource type="Texture2D" uid="uid://cv2lf8pc8doyc" path="res://Assets/Sprites/UI/question.png" id="3_waxnm"]
 [ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_571pn"]
-[ext_resource type="Texture2D" uid="uid://0tjelo7d1g6q" path="res://Assets/Sprites/Entities/ShootingEnemy/EnemyShoot/1.png" id="5_dvo3g"]
-[ext_resource type="Texture2D" uid="uid://bfbrsvv44qln1" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootDeath/1.png" id="5_qlrn8"]
-[ext_resource type="Texture2D" uid="uid://bm4klfnp3qj85" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/1.png" id="6_dvo3g"]
-[ext_resource type="Texture2D" uid="uid://dckpbo7pdkpt" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/2.png" id="7_roj87"]
+[ext_resource type="Texture2D" uid="uid://3rf3m8vs1scy" path="res://Assets/Sprites/Entities/ShootingEnemy/EnemyShoot/1.png" id="5_dvo3g"]
+[ext_resource type="Texture2D" uid="uid://byku4xhrgtitc" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootDeath/1.png" id="5_qlrn8"]
+[ext_resource type="Texture2D" uid="uid://duaw2u7811gve" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/1.png" id="6_dvo3g"]
+[ext_resource type="Texture2D" uid="uid://c6qd6x5f3b6qr" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/2.png" id="7_roj87"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rdoky"]
+size = Vector2(17.460316, 13.1746025)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ogq8d"]
 animations = [{
@@ -60,8 +61,9 @@ hitbox = NodePath("CollisionShape2D")
 animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
+position = Vector2(0, 22.499998)
 scale = Vector2(6.3, 6.3)
-shape = SubResource("CircleShape2D_lurgl")
+shape = SubResource("RectangleShape2D_rdoky")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=33200389]
 z_index = -1

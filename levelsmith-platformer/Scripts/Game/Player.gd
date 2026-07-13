@@ -68,6 +68,9 @@ var direction : float;
 # Speed with constant multiplier and slowdown appended in
 var trueSpeed : float;
 
+var bounceTileHeight : float = 1.0;
+var iceFriction : float = 0.5;
+
 # The selected movement preset
 # TODO: Make it so that it selects the DefaultMovement preset automatically 
 @export var playerMovementPreset : PlayerMovementPreset;
@@ -216,16 +219,18 @@ func walk() -> void:
 	# Acceration in the X direction for the player
 	var accelerationX : float;
 	direction = Input.get_axis("left", "right");
-	# If a direct is pressed, move in the direction, otherwise decellerate towards a 0 velocity 
+	# If a direct is pressed, move in the direction, otherwise decelerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;
 		# Acceleration if moving in direction of current movement
 		if baseAcceleration != 1.0 && (sign(velocity.x) == sign(direction) || velocity.x == 0):
 			accelerationX = direction * pow(abs(accelerationX), pow(baseAcceleration, 2));
+			if baseAcceleration + currentFriction < 1.25:
+				currentFriction = 1.25 - baseAcceleration
 		# Deceleration if moving in opposite direction
 		elif baseDeceleration != 1.0 && sign(velocity.x) != sign(direction):
-			if baseDeceleration + currentFriction < 1.5:
-				currentFriction = 1.5 - baseDeceleration
+			if baseDeceleration + currentFriction < 1.25:
+				currentFriction = 1.25 - baseDeceleration
 			accelerationX *= pow(baseDeceleration, 5);
 	# Acceleration
 	else:
@@ -285,7 +290,7 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 		return false;
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
-	velocity = direction * (1000 + higherBounce * 500)
+	velocity = direction * (1000 + higherBounce * 500);
 	if is_on_floor():
 		velocity *= pow(max(3, groundSpeed), .9);
 	health -= amount;
@@ -348,9 +353,9 @@ func detect_projectile_bounce(area: Area2D) -> void:
 ## Bounce the player up
 func bounce() -> void:
 	if (Input.is_action_pressed("jump")):
-		velocity.y = -jumpHeight * 360;
+		velocity.y = -jumpHeight * 360 * sqrt(fallSpeed);
 	else:
-		velocity.y = -jumpHeight * 240;
+		velocity.y = -jumpHeight * 240 * sqrt(fallSpeed);
 	coyoteTimeLeft = 0;
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
@@ -434,17 +439,17 @@ func detect_tiles() -> void:
 			# Horizontal bounces
 			if (abs(rayDirection.x) > abs(rayDirection.y)):
 				if rayDirection.x < 0:
-					velocity.x = 3000 * tileData.get_custom_data("bounce");
+					velocity.x = 3000 * bounceTileHeight;
 				else:
-					velocity.x = -3000 * tileData.get_custom_data("bounce");
+					velocity.x = -3000 * bounceTileHeight;
 				if Input.is_action_pressed("jump"):
-					velocity.y = -500 * tileData.get_custom_data("bounce");
+					velocity.y = -500 * bounceTileHeight;
 				# Vertical bounces
 			else:
 				if (rayDirection.y < 0):
-					velocity.y = 1000 * tileData.get_custom_data("bounce");
+					velocity.y = 1000 * bounceTileHeight;
 				else:
-					velocity.y = -1000 * tileData.get_custom_data("bounce");
+					velocity.y = -1000 * sqrt(fallSpeed) * bounceTileHeight;
 					if velocity.x > 0 && Input.is_action_pressed("left"):
 						velocity.x /= 2;
 					elif velocity.x < 0 && Input.is_action_pressed("right"):
@@ -492,7 +497,7 @@ func detect_tiles() -> void:
 						position += Vector2(0, 1);
 				"ice":
 					currentWalkingEffect = Global.WalkingEffect.ICE;
-					currentFriction = .5;
+					currentFriction = iceFriction;
 
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> bool:
@@ -516,12 +521,13 @@ func apply_preset(preset: PlayerMovementPreset) -> void:
 	maxHealth = preset.health;
 	health = maxHealth
 	groundSpeed = preset.groundSpeed;
-	baseAcceleration = preset.acceleration;
-	baseDeceleration = preset.deceleration;
+	baseAcceleration = preset.acceleration / 100.0;
+	baseDeceleration = preset.deceleration / 100.0;
 	jumpHeight = preset.jumpHeight;
 	airControl = preset.airControl / 100.0;
 	fallSpeed = preset.fallSpeed;
 	coyoteTime = preset.coyoteTime;
+	floor_constant_speed = !preset.slopeSlowdown;
 	oneways = preset.oneways;
 	doubleJump = preset.doubleJump;
 	wallJump = preset.wallJump;

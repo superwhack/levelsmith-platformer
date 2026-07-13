@@ -12,7 +12,7 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "presetOptions", "closeButton")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerSlopeSlowdownCheckbox", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "presetOptions", "closeButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -40,6 +40,7 @@ playerJumpSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerPropertie
 playerAirControlSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerAirControl")
 playerGravitySlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerGravity")
 playerCoyoteTimeSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime")
+playerSlopeSlowdownCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerSlopeSlowdown")
 playerOnewaysCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerOneWays")
 playerDoubleJumpCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerDoubleJump")
 playerWallJumpCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerWallJump")
@@ -162,17 +163,19 @@ sliderStep = 0.1
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Acceleration"
-propertyUnit = "m/s/s"
-minMax = Vector2(0.5, 1)
-sliderStep = 0.05
+propertyUnit = "%"
+minMax = Vector2(50, 100)
+sliderStep = 5.0
+valueAppend = "%"
 
 [node name="PlayerDeceleration" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=2070335992 instance=ExtResource("2_w5eld")]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Deceleration"
-propertyUnit = "m/s/s"
-minMax = Vector2(0.5, 1)
-sliderStep = 0.05
+propertyUnit = "%"
+minMax = Vector2(50, 100)
+sliderStep = 5.0
+valueAppend = "%"
 
 [node name="PlayerJump" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=1835714671 instance=ExtResource("2_w5eld")]
 custom_minimum_size = Vector2(0, 80)
@@ -206,6 +209,11 @@ propertyName = "Coyote Time"
 propertyUnit = "Seconds"
 minMax = Vector2(0, 1)
 sliderStep = 0.1
+
+[node name="PlayerSlopeSlowdown" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=1979292155 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Slowdown on Slopes"
 
 [node name="PlayerOneWays" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=403589801 instance=ExtResource("3_1mv14")]
 layout_mode = 2

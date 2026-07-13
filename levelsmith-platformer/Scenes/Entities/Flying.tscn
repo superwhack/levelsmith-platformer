@@ -1,17 +1,17 @@
 [gd_scene format=3 uid="uid://dbyqq48s1okmk"]
 
 [ext_resource type="Script" uid="uid://bb8bufpti3oma" path="res://Scripts/Game/EnemyFlyer.gd" id="1_e2l54"]
-[ext_resource type="Texture2D" uid="uid://d1dc1ij8dof3t" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/1.png" id="2_djprm"]
-[ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="2_lq205"]
-[ext_resource type="Texture2D" uid="uid://d14bgdlim7pqm" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/1.png" id="3_xxngd"]
-[ext_resource type="Texture2D" uid="uid://ewc8n1l71dq4" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/2.png" id="4_4kx8d"]
-[ext_resource type="Texture2D" uid="uid://dbm0n1ppi2opt" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/2.png" id="4_7mmpi"]
-[ext_resource type="Texture2D" uid="uid://citf3xbwuepjf" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/3.png" id="5_inj0a"]
-[ext_resource type="Texture2D" uid="uid://ce08ts4qisawe" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/4.png" id="6_gw50a"]
-[ext_resource type="Texture2D" uid="uid://cn3jsh4osnd5a" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/5.png" id="7_0brl8"]
-[ext_resource type="Texture2D" uid="uid://2jlrkipdpe4n" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/6.png" id="8_fmrgj"]
-[ext_resource type="Texture2D" uid="uid://b7sd01exyccvl" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/3.png" id="11_frso4"]
-[ext_resource type="Texture2D" uid="uid://b4yqe8fsprkd1" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/4.png" id="12_fquc3"]
+[ext_resource type="Texture2D" uid="uid://6la6cd7ako7l" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/1.png" id="2_djprm"]
+[ext_resource type="Texture2D" uid="uid://5i1l3iaetgil" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/1.png" id="3_xxngd"]
+[ext_resource type="Texture2D" uid="uid://dj8tb3ohsskdi" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/2.png" id="4_4kx8d"]
+[ext_resource type="Texture2D" uid="uid://cp4wy2n5od6wy" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/2.png" id="4_7mmpi"]
+[ext_resource type="Texture2D" uid="uid://brvqohr5nhyrj" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/3.png" id="5_inj0a"]
+[ext_resource type="Texture2D" uid="uid://1e31r11x3nte" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/4.png" id="6_gw50a"]
+[ext_resource type="Texture2D" uid="uid://bk4aafonqymy8" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/5.png" id="7_0brl8"]
+[ext_resource type="Texture2D" uid="uid://v1t6o8qalr04" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/6.png" id="8_fmrgj"]
+[ext_resource type="Texture2D" uid="uid://g1tch0wmpeg5" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/3.png" id="11_frso4"]
+[ext_resource type="PackedScene" uid="uid://bpq5curyo7xhv" path="res://Scenes/Preview/PreviewLine.tscn" id="12_7mmpi"]
+[ext_resource type="Texture2D" uid="uid://g4iflc53v2ba" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/4.png" id="12_fquc3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
@@ -58,14 +58,13 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="FlyingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("previewLine", "previewLineEndpoint", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
+[node name="FlyingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("previewLine", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
 collision_layer = 6
 collision_mask = 6
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_e2l54")
 previewLine = NodePath("Line2D")
-previewLineEndpoint = NodePath("Line2D/LineEndpoint")
 onScreen = NodePath("OnScreen")
 hitbox = NodePath("CollisionShape2D")
 animatedSprites = NodePath("AnimatedSprite2D")
@@ -79,10 +78,7 @@ z_index = -1
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"FlyMove"
 
-[node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
-default_color = Color(0.04557035, 0.048425518, 0.046807036, 0.8352941)
-
-[node name="LineEndpoint" type="Sprite2D" parent="Line2D" unique_id=1864633844]
-texture = ExtResource("2_lq205")
+[node name="Line2D" parent="." unique_id=1504030647 node_paths=PackedStringArray("parent") instance=ExtResource("12_7mmpi")]
+parent = NodePath("..")
 
 [node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1562874782]

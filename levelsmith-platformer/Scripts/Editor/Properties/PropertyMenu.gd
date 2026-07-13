@@ -147,7 +147,7 @@ func _process(_delta: float) -> void:
 		selectedEntity.adjust_arrow(-shootingDirectionSlider.value, shootingRandomDirection.value);
 	elif selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
-		selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+		selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
 		selectedEntity.previewLine.modulate.a = 1;
 	elif selectedEntity is EnemyStationary:
 		entityName.text = "Stationary Enemy";
@@ -155,7 +155,7 @@ func _process(_delta: float) -> void:
 	elif selectedEntity is MovingPlatform:
 		entityName.text = "Moving Platform";
 		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
-		selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
+		selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
 		selectedEntity.previewLine.modulate.a = 1;
 	elif selectedEntity is Player:
 		entityName.text = "Player";
@@ -377,7 +377,7 @@ func show_menu(resource: Resource = null) -> void:
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
 				previewLine.modulate.a = 1;
-				selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+				selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
 		elif selectedEntity is EnemyStationary:
 			stationaryMenu.show();
 		elif selectedEntity is MovingPlatform:
@@ -385,7 +385,7 @@ func show_menu(resource: Resource = null) -> void:
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
 				previewLine.modulate.a = 1;
-				selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
+				selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
 		
 		
 	else:

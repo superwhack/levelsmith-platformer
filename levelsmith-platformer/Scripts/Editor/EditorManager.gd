@@ -38,6 +38,7 @@ var currentHotbarState : Global.HotbarState;
 
 # Flags
 var isValidated : bool = false;
+var unsavedChanges : bool = false;
 var isPlaceable : bool = true;
 var playerExists : bool = false;
 var goalExists : bool = false;
@@ -54,7 +55,8 @@ func _ready() -> void:
 		goalExists = false;
 	
 	var export_level = func() -> void:
-		AudioManager.play_UI_effect("UISelection")
+		unsavedChanges = true;
+		AudioManager.play_UI_effect("UISelection");
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
 		
@@ -91,6 +93,7 @@ func _process(_delta: float) -> void:
 ## event: The user input
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("level_save")):
+		unsavedChanges = false;
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
 		ImportExportManager.save_level_screenshot(levelScreenshot);

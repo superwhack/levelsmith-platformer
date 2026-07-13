@@ -69,17 +69,9 @@ func _ready() -> void:
 		
 	main_menu(false);
 	
-	
-	
-	
 	await screen_static();
 	await main_menu(false, true);
 
-## When the user does a save level input, save the level.
-## event: The user input
-func _input(event: InputEvent) -> void:
-	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu, editorManager.isValidated);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
@@ -172,9 +164,33 @@ func load_level(levelPath: String, play: bool = false) -> void:
 		await import_level_and_edit();
 		if (play):
 			play();
+			
+
+## Checks if the level has unsaved changes, and creates a popup with appropriate functions.
+func check_unsaved_changes() -> void:
+	# Saves and brings the user to the main menu. First callable.
+	var save_and_quit = func() -> void:
+		editorManager.unsavedChanges = false;
+		AudioManager.play_UI_effect("UISelection");
+		var levelScreenshot : Image = await editorManager.screenshot_level();
+		ImportExportManager.save_level_screenshot(levelScreenshot);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu, editorManager.isValidated);
+		main_menu();
+	
+	# No save, brings user to main menu
+	var no_save_and_quit = func() -> void:
+		editorManager.unsavedChanges = false;
+		main_menu();
+	
+	if (editorManager.unsavedChanges):
+		PopUpManager.create_unsaved_changes_popup(save_and_quit, no_save_and_quit);
 
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
+	if (editorManager.unsavedChanges):
+		check_unsaved_changes();
+		return;
+	
 	mainMenuControl.fill_level_list();
 	if !onStart:
 		await screen_wipe_in();

@@ -30,7 +30,9 @@ func _process(_delta: float) -> void:
 ## Places down the current brush entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_entity(clickPosition: Vector2) -> void:
+	editorManager.unsavedChanges = true;
 	editorManager.isValidated = false;
+	
 	if (!editorManager.isPlaceable):
 		AudioManager.play_UI_effect("TilePlaceError");
 		return;
@@ -117,6 +119,7 @@ func place_entity(clickPosition: Vector2) -> void:
 ## Deletes an entity at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_entity (clickPosition: Vector2) -> void:
+	editorManager.unsavedChanges = true;
 	editorManager.isValidated = false;
 	
 	var clickedObjectId : int = tileMap.get_cell_source_id(clickPosition);
@@ -135,6 +138,9 @@ func delete_entity (clickPosition: Vector2) -> void:
 ## Open the property menu and set the selected entity
 ## clickPosition: position that the mouse has clicked at
 func edit_properties(clickPosition: Vector2) -> void:
+	editorManager.unsavedChanges = true;
+	editorManager.isValidated = false;
+	
 	var clickedEntity : Node2D = get_scene_at_cell(clickPosition);
 	propertyMenu.selectedEntity = clickedEntity;
 	if clickedEntity is Enemy || clickedEntity is MovingPlatform:
@@ -247,6 +253,9 @@ func drop_entity(reset: bool = false) -> void:
 	ResourceSaver.save(newResource, "user://Resources/Enemies/" + droppedEntity.name + ".tres");
 	newResource = null;
 	editorManager.reset_enemy_positions();
+	
+	editorManager.unsavedChanges = true;
+	editorManager.isValidated = false;
 
 ## Scan through the grid to see how many goals have been placed.
 ## xSize: the x dimension on the level

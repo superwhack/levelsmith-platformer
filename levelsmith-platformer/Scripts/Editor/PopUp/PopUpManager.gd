@@ -111,6 +111,21 @@ func create_save_complete_popup() -> void:
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
 
+## If there are unsaved changes, create a popup for user convenience.
+##
+func create_unsaved_changes_popup(saveQuitCallback: Callable, noSaveQuitCallback: Callable) -> void:
+	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
+	
+	newPopUp.set_title("Unsaved Changes!");
+	newPopUp.set_body_text("You have unsaved changes. Are you sure you want to return to the main menu without saving?");
+	newPopUp.set_save_to_menu_callback(saveQuitCallback);
+	newPopUp.no_save_to_menu_callback(noSaveQuitCallback);
+	newPopUp.saveQuitButton.show();
+	newPopUp.noSaveQuitButton.show();
+	newPopUp.closeButton.text = "Cancel";
+	add_child(newPopUp);
+	currentPopUp = newPopUp;
+
 
 ## Simply kills all its children
 func clear_all_popups() -> void:

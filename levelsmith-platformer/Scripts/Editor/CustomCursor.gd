@@ -58,6 +58,7 @@ func _ready() -> void:
 	add_child(selectorFrame);
 	
 	entityHighlight = Sprite2D.new();
+	entityHighlight.modulate = Color.YELLOW;
 	entityHighlight.texture = selectorFrameDashed;
 	add_child(entityHighlight);
 	entityHighlight.hide();

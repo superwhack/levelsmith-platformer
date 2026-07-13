@@ -282,7 +282,7 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 		return false;
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
-	velocity = direction * (1000 + higherBounce * 500)
+	velocity = direction * (1000 + higherBounce * 500);
 	if is_on_floor():
 		velocity *= pow(max(3, groundSpeed), .9);
 	health -= amount;
@@ -345,9 +345,9 @@ func detect_projectile_bounce(area: Area2D) -> void:
 ## Bounce the player up
 func bounce() -> void:
 	if (Input.is_action_pressed("jump")):
-		velocity.y = -jumpHeight * 360;
+		velocity.y = -jumpHeight * 360 * sqrt(fallSpeed);
 	else:
-		velocity.y = -jumpHeight * 240;
+		velocity.y = -jumpHeight * 240 * sqrt(fallSpeed);
 	coyoteTimeLeft = 0;
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
@@ -441,7 +441,7 @@ func detect_tiles() -> void:
 				if (rayDirection.y < 0):
 					velocity.y = 1000 * tileData.get_custom_data("bounce");
 				else:
-					velocity.y = -1000 * tileData.get_custom_data("bounce");
+					velocity.y = -1000 * sqrt(fallSpeed) * tileData.get_custom_data("bounce");
 					if velocity.x > 0 && Input.is_action_pressed("left"):
 						velocity.x /= 2;
 					elif velocity.x < 0 && Input.is_action_pressed("right"):
@@ -513,8 +513,8 @@ func apply_preset(preset: PlayerMovementPreset) -> void:
 	maxHealth = preset.health;
 	health = maxHealth
 	groundSpeed = preset.groundSpeed;
-	baseAcceleration = preset.acceleration;
-	baseDeceleration = preset.deceleration;
+	baseAcceleration = preset.acceleration / 100.0;
+	baseDeceleration = preset.deceleration / 100.0;
 	jumpHeight = preset.jumpHeight;
 	airControl = preset.airControl / 100.0;
 	fallSpeed = preset.fallSpeed;

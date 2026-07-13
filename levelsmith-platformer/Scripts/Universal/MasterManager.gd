@@ -68,10 +68,7 @@ func _ready() -> void:
 		DirAccess.copy_absolute("res://Resources/PlayerPresets/Default.tres", "user://Resources/Custom.tres");
 		
 	main_menu(false);
-	
-	
-	
-	
+
 	await screen_static();
 	await main_menu(false, true);
 

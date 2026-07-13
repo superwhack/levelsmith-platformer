@@ -2,26 +2,25 @@
 
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_rshqi"]
-[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
-[ext_resource type="Texture2D" uid="uid://d21j834524jcc" path="res://icon.svg" id="3_rshqi"]
-[ext_resource type="Texture2D" uid="uid://b265lhxnenhhc" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
-[ext_resource type="FontFile" uid="uid://ibgv3ey3taus" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="6_rrs8o"]
-[ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
-[ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
-[ext_resource type="Texture2D" uid="uid://cq6ndlm5t7xwj" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
+[ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="3_rshqi"]
+[ext_resource type="Texture2D" uid="uid://dxag1j2w8yhjg" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
+[ext_resource type="Texture2D" uid="uid://ctkp25yl7wov4" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="6_ssly3"]
+[ext_resource type="Texture2D" uid="uid://g86q3u73bvbb" path="res://Assets/UserInterface/Buttons/ButtonIcons/PlayIcon.png" id="7_o8nck"]
+[ext_resource type="Texture2D" uid="uid://b5f7fj8dwgcbn" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-right.png" id="7_qbbei"]
+[ext_resource type="Texture2D" uid="uid://cfnhge1514wea" path="res://Assets/UserInterface/material-symbols-light--stop-outline.png" id="8_7puos"]
+[ext_resource type="Texture2D" uid="uid://dvs3jqnfvwc0y" path="res://Assets/Sprites/UI/solar--restart-broken.png" id="9_o8nck"]
+[ext_resource type="Texture2D" uid="uid://iyxcim187e44" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
+[ext_resource type="Texture2D" uid="uid://dusre0h2m2g6t" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Folder.png" id="10_7puos"]
 [ext_resource type="Script" uid="uid://cy0omeeqj1evc" path="res://Scripts/Universal/ImageSwapping.gd" id="10_clgtw"]
 [ext_resource type="Script" uid="uid://pgp1usxbcoyf" path="res://Scripts/Universal/AnimationSwapping.gd" id="11_ukhnw"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbbei"]
-content_margin_left = 12.0
-content_margin_right = 12.0
-bg_color = Color(0.03137255, 0.11764706, 0.27058825, 0.49803922)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
-expand_margin_top = 2.0
-expand_margin_bottom = 3.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1i6c8"]
+bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.42745098, 0.42745098, 0.42745098, 1)
 
 [node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imageSwapping", "animationSwapping", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "refreshAllButton")]
 process_mode = 2
@@ -40,8 +39,8 @@ animationsTab = NodePath("ContentContainer/MainContentContainer/RightColumnConta
 currentAssetLabel = NodePath("ContentContainer/MainContentContainer/LeftColumnContainer/CurrentAssetLabel")
 loadFileButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton")
 resetButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/ResetButton")
-resetAllButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer/ResetAllButton")
-refreshAllButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer/RefreshAllButton")
+resetAllButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/ResetAllButton")
+refreshAllButton = NodePath("ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/RefreshAllButton")
 
 [node name="ContentContainer" type="VBoxContainer" parent="." unique_id=1686367830]
 layout_mode = 1
@@ -58,8 +57,7 @@ theme_override_constants/separation = 8
 
 [node name="Title" type="Label" parent="ContentContainer" unique_id=1534252912]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_mhodq")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 30
 text = "Custom Asset Manager"
 
 [node name="HSeparator" type="HSeparator" parent="ContentContainer" unique_id=457032284]
@@ -143,17 +141,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -72.0
-offset_top = -41.0
-offset_right = 72.0
-offset_bottom = -8.0
+offset_left = -71.0
+offset_top = -37.0
+offset_right = 73.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0.03137255, 0.11764706, 0.27058825, 1)
-theme_override_constants/outline_size = 12
-theme_override_fonts/font = ExtResource("6_rrs8o")
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 12
 text = "Frame 1/12"
 horizontal_alignment = 1
 vertical_alignment = 2
@@ -165,46 +159,50 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -76.0
-offset_top = -40.0
-offset_right = -8.0
-offset_bottom = -8.0
+offset_left = -70.0
+offset_top = -33.0
+offset_right = -14.0
+offset_bottom = -3.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_constants/separation = -4
 
 [node name="PrevFrameButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer" unique_id=51178185]
+custom_maximum_size = Vector2(30, 30)
 layout_mode = 2
 theme_type_variation = &"ToolButton"
-icon = ExtResource("7_clgtw")
+icon = ExtResource("6_ssly3")
+icon_alignment = 1
 
 [node name="NextFrameButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer" unique_id=2054824461]
+custom_maximum_size = Vector2(30, 30)
 layout_mode = 2
 theme_type_variation = &"ToolButton"
-icon = ExtResource("8_ukhnw")
+icon = ExtResource("7_qbbei")
+icon_alignment = 1
 
 [node name="AnimButtonContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview" unique_id=311396109]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -120.0
-offset_top = 8.0
-offset_right = 120.0
+offset_left = -66.5
+offset_right = 66.5
 offset_bottom = 40.0
 grow_horizontal = 2
 alignment = 1
 
 [node name="PrevAnimButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=1355417284]
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 theme_type_variation = &"ToolButton"
-icon = ExtResource("7_clgtw")
+icon = ExtResource("6_ssly3")
 
 [node name="AnimNameLabel" type="Label" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=803745770]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("3_mhodq")
-theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxFlat_qbbei")
+theme = ExtResource("1_rshqi")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_1i6c8")
 text = "NAME"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -212,42 +210,55 @@ vertical_alignment = 1
 [node name="NextAnimButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=71301328]
 layout_mode = 2
 theme_type_variation = &"ToolButton"
-icon = ExtResource("8_ukhnw")
+icon = ExtResource("7_qbbei")
 
-[node name="BottomButtonContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview" unique_id=91646301]
+[node name="VBoxContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview" unique_id=751227507]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 8.0
-offset_bottom = 56.0
+offset_top = 20.0
+offset_bottom = 84.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/separation = 14
+
+[node name="BottomButtonContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/VBoxContainer" unique_id=91646301]
+layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="Label" type="Label" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1125494010]
+[node name="PlayPauseButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/VBoxContainer/BottomButtonContainer" unique_id=1544968013]
 layout_mode = 2
+theme_override_constants/icon_max_width = 25
+text = "
+"
+icon = ExtResource("7_o8nck")
+icon_alignment = 1
+
+[node name="StopButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/VBoxContainer/BottomButtonContainer" unique_id=284005067]
+layout_mode = 2
+theme_override_constants/icon_max_width = 25
+icon = ExtResource("8_7puos")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/VBoxContainer" unique_id=1066038483]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/VBoxContainer/HBoxContainer" unique_id=1125494010]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("1_rshqi")
 text = "FPS:"
 
-[node name="FPSValue" type="SpinBox" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1524841534]
+[node name="FPSValue" type="SpinBox" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/VBoxContainer/HBoxContainer" unique_id=1524841534]
 layout_mode = 2
+size_flags_horizontal = 0
 min_value = 1.0
 max_value = 60.0
 value = 12.0
 rounded = true
 alignment = 1
-
-[node name="PlayPauseButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1544968013]
-layout_mode = 2
-text = "Play/Pause
-"
-
-[node name="StopButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=284005067]
-layout_mode = 2
-text = "Stop
-"
 
 [node name="AudioPreview" type="Panel" parent="ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=1493625619]
 visible = false
@@ -317,21 +328,14 @@ layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 2
 
-[node name="RefreshAllButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer" unique_id=1493047528]
-layout_mode = 2
-text = "Refresh All"
-
-[node name="ResetAllButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/TopButtonContainer" unique_id=1076102221]
-layout_mode = 2
-text = "Reset All"
-
 [node name="AssetTabs" type="TabContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer" unique_id=1214091300]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 2
 
 [node name="Images" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs" unique_id=40713710]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -349,7 +353,6 @@ layout_mode = 2
 size_flags_horizontal = 0
 
 [node name="Audio" type="ScrollContainer" parent="ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs" unique_id=912303560]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -362,9 +365,13 @@ layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 2
 
+[node name="RefreshAllButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=1493047528]
+layout_mode = 2
+icon = ExtResource("9_o8nck")
+
 [node name="LoadFileButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=857868498]
 layout_mode = 2
-text = "Load"
+icon = ExtResource("10_7puos")
 
 [node name="FileDialog" type="FileDialog" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton" unique_id=267413043]
 oversampling_override = 1.0
@@ -374,13 +381,17 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.png")
 
-[node name="ResetButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=2035131409]
-layout_mode = 2
-text = "Reset"
-
 [node name="Spacer" type="Control" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=1680277936]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="ResetButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=2035131409]
+layout_mode = 2
+text = "Reset Selected"
+
+[node name="ResetAllButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=1076102221]
+layout_mode = 2
+text = "Reset All"
 
 [node name="CloseButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=334412884]
 layout_mode = 2
@@ -409,6 +420,6 @@ animationName = NodePath("../ContentContainer/MainContentContainer/LeftColumnCon
 frameRightButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer/NextFrameButton")
 frameLeftButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer/PrevFrameButton")
 frameCountLabel = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameCountLabel")
-playButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/PlayPauseButton")
-stopButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/StopButton")
-FPSSpinbox = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/FPSValue")
+playButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/VBoxContainer/BottomButtonContainer/PlayPauseButton")
+stopButton = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/VBoxContainer/BottomButtonContainer/StopButton")
+FPSSpinbox = NodePath("../ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/VBoxContainer/HBoxContainer/FPSValue")

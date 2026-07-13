@@ -59,6 +59,8 @@ func patrol_behavior() -> void:
 		direction = -1;
 	if (rayCastLeft.is_colliding() || rayCastLeftTop.is_colliding()):
 		direction = 1;
+		
+	animatedSprites.flip_h = direction < 0;
 	
 	# Check for running off of a tile with restricted on
 	if (restricted && ((rayCastDownL.is_colliding() && !rayCastDownR.is_colliding()) || (!rayCastDownL.is_colliding() && rayCastDownR.is_colliding()))):

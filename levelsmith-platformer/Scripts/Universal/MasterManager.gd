@@ -79,7 +79,7 @@ func _ready() -> void:
 ## event: The user input
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu, editorManager.isValidated);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.

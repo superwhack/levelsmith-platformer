@@ -5,6 +5,13 @@
 [ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="2_lq205"]
 [ext_resource type="Texture2D" uid="uid://d14bgdlim7pqm" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/1.png" id="3_xxngd"]
 [ext_resource type="Texture2D" uid="uid://ewc8n1l71dq4" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/2.png" id="4_4kx8d"]
+[ext_resource type="Texture2D" uid="uid://dbm0n1ppi2opt" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/2.png" id="4_7mmpi"]
+[ext_resource type="Texture2D" uid="uid://citf3xbwuepjf" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/3.png" id="5_inj0a"]
+[ext_resource type="Texture2D" uid="uid://ce08ts4qisawe" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/4.png" id="6_gw50a"]
+[ext_resource type="Texture2D" uid="uid://cn3jsh4osnd5a" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/5.png" id="7_0brl8"]
+[ext_resource type="Texture2D" uid="uid://2jlrkipdpe4n" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/6.png" id="8_fmrgj"]
+[ext_resource type="Texture2D" uid="uid://b7sd01exyccvl" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/3.png" id="11_frso4"]
+[ext_resource type="Texture2D" uid="uid://b4yqe8fsprkd1" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/4.png" id="12_fquc3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
@@ -13,6 +20,21 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_djprm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_7mmpi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_inj0a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gw50a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_0brl8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fmrgj")
 }],
 "loop": 1,
 "name": &"FlyDeath",
@@ -24,6 +46,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("4_4kx8d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_frso4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_fquc3")
 }],
 "loop": 1,
 "name": &"FlyMove",

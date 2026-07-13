@@ -1,9 +1,0 @@
-[gd_resource type="Resource" format=3 uid="uid://c06j5y2wxvwo3"]
-
-[ext_resource type="Script" uid="uid://qf3caikalv6e" path="res://Scripts/Editor/Properties/Settings.gd" id="1_yi2qx"]
-
-[resource]
-script = ExtResource("1_yi2qx")
-masterVolume = 70.0
-SFXVolume = 70.0
-musicVolume = 70.0

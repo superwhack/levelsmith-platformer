@@ -122,20 +122,13 @@ func reset_settings() -> void:
 
 ## Load the settings from a config file, create the file if needed
 func load_settings() -> void:
-	if !FileAccess.file_exists(settingsPath):
-		var settingsDefault = load("res://Resources/SettingsDefault.tres");
-		var newSettings = ConfigFile.new();
-		newSettings.set_value("Audio", "master_volume", settingsDefault.masterVolume);
-		newSettings.set_value("Audio", "sfx_volume", settingsDefault.SFXVolume);
-		newSettings.set_value("Audio", "music_volume", settingsDefault.musicVolume);
-		newSettings.save(settingsPath);
-	
-	var configFile = ConfigFile.new();
-	configFile.load(settingsPath);
-	masterVolume.value = configFile.get_value("Audio", "master_volume");
-	SFXVolume.value = configFile.get_value("Audio", "sfx_volume");
-	musicVolume.value = configFile.get_value("Audio", "music_volume");
-	_on_drag();
+	if FileAccess.file_exists(settingsPath):
+		var configFile = ConfigFile.new();
+		configFile.load(settingsPath);
+		masterVolume.value = configFile.get_value("Audio", "master_volume");
+		SFXVolume.value = configFile.get_value("Audio", "sfx_volume");
+		musicVolume.value = configFile.get_value("Audio", "music_volume");
+		_on_drag();
 
 ## Save current settings in the config file
 func save_settings() -> void:

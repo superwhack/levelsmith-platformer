@@ -1,23 +1,16 @@
 extends Line2D
 
+# Necessary references
 @export var endpoint : Sprite2D;
 @export var parent : Node2D;
 
-@onready var pointA : Vector2 = parent.pointA;
-@onready var pointB : Vector2 = parent.pointB;
-
+## Updates when this node first generates.
 func _ready():
 	update();
 
-## Runs every frame and ensures point A and B are synchronized with the parent
-func _process(_delta : float) -> void:
-	pointA = parent.pointA;
-	pointB = parent.pointB;
-
-## Update the preview for the flying enemy
-## x: The x to update with
-## y: The y to update with
-func update(offset : Vector2 = Vector2((pointB.x - pointA.x) / Global.TILE_SIZE, (pointB.y - pointA.y) / Global.TILE_SIZE)) -> void:
+## Updates the preview line and its endpoints.
+## offset: The position of the line's ending.
+func update(offset : Vector2 = Vector2((parent.pointB.x - parent.pointA.x) / Global.TILE_SIZE, (parent.pointB.y - parent.pointA.y) / Global.TILE_SIZE)) -> void:
 	modulate.a = .5;
 	global_position = parent.global_position;
 	clear_points();

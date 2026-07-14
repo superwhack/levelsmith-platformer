@@ -2,16 +2,16 @@
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_ym18m"]
-[ext_resource type="Texture2D" uid="uid://cvme7suepttij" path="res://Assets/Sprites/UI/material-symbols-light--pause-rounded.png" id="3_4pdbi"]
+[ext_resource type="Texture2D" uid="uid://bnfiheh16k4s3" path="res://Assets/Sprites/UI/material-symbols-light--pause-rounded.png" id="3_4pdbi"]
 [ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="6_x53pn"]
 [ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
 [ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
-[ext_resource type="Texture2D" uid="uid://qf7uq7d7mpai" path="res://Assets/UserInterface/line-md--heart-filled.png" id="7_j23bb"]
+[ext_resource type="Texture2D" uid="uid://decd4pjwh3b03" path="res://Assets/UserInterface/line-md--heart-filled.png" id="7_j23bb"]
 [ext_resource type="PackedScene" uid="uid://cmpj0a4yqf4gu" path="res://Scenes/UI/WinScreen.tscn" id="8_4i4ea"]
-[ext_resource type="Texture2D" uid="uid://cerg25kv03gd3" path="res://Assets/UserInterface/tabler--heart.png" id="8_qxglv"]
-[ext_resource type="Texture2D" uid="uid://dvs3jqnfvwc0y" path="res://Assets/Sprites/UI/solar--restart-broken.png" id="10_2riqt"]
-[ext_resource type="Texture2D" uid="uid://btuksk07vr1o3" path="res://Assets/UserInterface/material-symbols--resume-rounded.png" id="10_4pdbi"]
-[ext_resource type="Texture2D" uid="uid://dkvjfsrhqtfgp" path="res://Assets/Sprites/UI/mdi--pencil.png" id="11_j23bb"]
+[ext_resource type="Texture2D" uid="uid://bb5hatqm6o3r4" path="res://Assets/UserInterface/tabler--heart.png" id="8_qxglv"]
+[ext_resource type="Texture2D" uid="uid://dhrirgt4atogi" path="res://Assets/Sprites/UI/solar--restart-broken.png" id="10_2riqt"]
+[ext_resource type="Texture2D" uid="uid://f658q0pbpk2t" path="res://Assets/UserInterface/material-symbols--resume-rounded.png" id="10_4pdbi"]
+[ext_resource type="Texture2D" uid="uid://dsmxy70x0ofx5" path="res://Assets/Sprites/UI/mdi--pencil.png" id="11_j23bb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2riqt"]
 
@@ -82,7 +82,7 @@ size_flags_horizontal = 3
 custom_minimum_size = Vector2(200, 0)
 custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
-tooltip_text = "Edit Mode"
+tooltip_text = "Return to Editor"
 focus_behavior_recursive = 1
 theme = ExtResource("2_ym18m")
 action_mode = 0
@@ -139,6 +139,7 @@ custom_maximum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+tooltip_text = "Pause [Esc]"
 theme = ExtResource("2_ym18m")
 icon = ExtResource("3_4pdbi")
 icon_alignment = 1
@@ -278,7 +279,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(60, 60)
 layout_mode = 2
-tooltip_text = "Resume"
+tooltip_text = "Resume [Esc]"
 theme = ExtResource("2_ym18m")
 icon = ExtResource("10_4pdbi")
 icon_alignment = 1
@@ -320,5 +321,8 @@ size_flags_horizontal = 3
 
 [node name="WinScreen" parent="CanvasLayer" unique_id=1204440589 instance=ExtResource("8_4i4ea")]
 visible = false
+
+[node name="ReturnEditorWinButton" parent="CanvasLayer/WinScreen/Panel/TopRightMargin/Container" parent_id_path=PackedInt32Array(1204440589, 1054305318) index="2" unique_id=1148860713]
+tooltip_text = "Return to Editor"
 
 [editable path="CanvasLayer/WinScreen"]

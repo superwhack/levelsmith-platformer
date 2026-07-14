@@ -80,6 +80,7 @@ sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"FlyMove"
 
 [node name="Line2D" parent="." unique_id=1504030647 node_paths=PackedStringArray("parent") instance=ExtResource("12_7mmpi")]
+position = Vector2(0, -20)
 scale = Vector2(1.5, 1.5)
 parent = NodePath("..")
 

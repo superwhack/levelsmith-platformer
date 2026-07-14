@@ -117,3 +117,5 @@ func apply_script(file: Resource) -> void:
 	adjust_preview(file.pointBOffset, progress);
 	targetPoint = pointB;
 	previewLine.update((pointB - pointA) / Global.TILE_SIZE);
+	z_index += 2;
+	previewLine.z_index = z_index - 4;

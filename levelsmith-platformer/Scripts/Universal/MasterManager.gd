@@ -68,10 +68,7 @@ func _ready() -> void:
 		DirAccess.copy_absolute("res://Resources/PlayerPresets/Default.tres", "user://Resources/Custom.tres");
 		
 	main_menu(false);
-	
-	
-	
-	
+
 	await screen_static();
 	await main_menu(false, true);
 
@@ -251,7 +248,6 @@ func play() -> void:
 	# Change scene to play 
 	gameManager.show();
 	gameManager.playerPreset = propertyMenu.selectedPlayerPreset;
-	gameManager.start();
 	gameManagerCanvas.show();
 	editorManager.hide();
 	editorManagerCanvas.hide();
@@ -260,9 +256,11 @@ func play() -> void:
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
-	gameManager.reset();
+	gameManager.freeze(true);
+	await gameManager.reset();
 	await get_tree().process_frame
 	await screen_wipe_out();
+	gameManager.freeze(false);
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:

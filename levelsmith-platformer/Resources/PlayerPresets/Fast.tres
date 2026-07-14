@@ -6,12 +6,13 @@
 script = ExtResource("1_1pkmx")
 health = 2
 groundSpeed = 3.5
-acceleration = 1.0
-deceleration = 0.5
+acceleration = 100.0
+deceleration = 50.0
 jumpHeight = 1.5
 airControl = 0.75
 fallSpeed = 1.5
 coyoteTime = 0.2
+oneways = true
 doubleJump = true
 wallJump = true
 metadata/_custom_type_script = "uid://bp8erofrb01fc"

@@ -74,7 +74,10 @@ func _ready() -> void:
 		DirAccess.make_dir_absolute("user://Resources/Enemies/");
 		DirAccess.copy_absolute("res://Resources/PlayerPresets/Default.tres", "user://Resources/Custom.tres");
 		
+	main_menu(false);
+	
 	await screen_static();
+	await main_menu(false, true);
 
 
 ## When the level is completed, validate it and automatically return to editor

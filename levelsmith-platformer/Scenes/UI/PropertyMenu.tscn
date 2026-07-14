@@ -148,7 +148,7 @@ custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Health"
 propertyUnit = "HP"
-minMax = Vector2(1, 4)
+minMax = Vector2(1, 5)
 sliderStep = 1.0
 
 [node name="PlayerSpeed" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=2049970631 instance=ExtResource("2_w5eld")]

@@ -21,6 +21,7 @@ extends Node2D
 # Asset Manager and Button
 @export var assetManager : AssetManager;
 @export var assetManagerButton : Button;
+@export var closeAssetManagerButton : Button;
 
 # Settings Menu and button
 @export var settingsMenu : SettingsMenu;
@@ -65,6 +66,7 @@ func _ready() -> void:
 	settingsButton.pressed.connect(open_settings_menu);
 	Global.levelCreated.connect(reset_player_and_goal);
 	exportButton.pressed.connect(export_level);
+	closeAssetManagerButton.pressed.connect(close_asset_manager);
 
 ## Runs every frame during the editing state
 ## _delta: how much time has passed since the last frame

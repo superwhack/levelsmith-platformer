@@ -19,7 +19,6 @@ const OBSTACLE_COOLDOWN_DURATION : float = 0.25;
 const SPEED_MODIFIER : float = 100.0;
 
 @export var previewLine : Line2D;
-@export var previewLineEndpoint : Sprite2D;
 
 ## Adds enemy to group and sets up initial points
 func _ready() -> void:
@@ -100,23 +99,7 @@ func handle_obstacles() -> void:
 			obstacleCooldown = OBSTACLE_COOLDOWN_DURATION;
 			break;
 
-## Update the preview for the flying enemy
-## x: The x to update with
-## y: The y to update with
-func update_line_preview(x : int = int((pointB.x - pointA.x) / Global.TILE_SIZE) , y : int = int((pointB.y - pointA.y) / Global.TILE_SIZE)) -> void:
-	var offset : Vector2 = Vector2(x * Global.TILE_SIZE, y * Global.TILE_SIZE);
-	previewLine.modulate.a = .5;
-	previewLine.global_position = global_position;
-	previewLine.clear_points();
-	previewLine.add_point(Vector2.ZERO);
-	previewLine.add_point(offset);
-	if previewLine.get_point_count() > 0:
-		var last_point_index: int = previewLine.get_point_count() - 1;
-		if previewLine.get_point_position(last_point_index) == previewLine.get_point_position(0):
-			previewLineEndpoint.hide();
-		else:
-			previewLineEndpoint.show();
-			previewLineEndpoint.position = previewLine.get_point_position(last_point_index);
+
 
 ## Assigns a resource file to the enemy.
 ## id is the unique identifier of the preset.
@@ -130,7 +113,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	pointA = global_position;
 	pointB = pointA + propertyFile.pointBOffset;
 	targetPoint = pointB;
-	update_line_preview();
+	previewLine.update();
 	ResourceSaver.save(propertyFile);
 
 	apply_script(propertyFile);
@@ -148,4 +131,4 @@ func apply_script(file: Resource) -> void:
 		pointB = pointA + file.pointBOffset;
 
 		targetPoint = pointB;
-		update_line_preview();
+		previewLine.update((pointB - pointA) / Global.TILE_SIZE);

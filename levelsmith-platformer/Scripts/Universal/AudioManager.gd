@@ -193,7 +193,7 @@ func play_effect_walking(walkingEffect: Global.WalkingEffect) -> void:
 			effectName = "WalkingIce";
 		Global.WalkingEffect.SLIME:
 			effectName = "WalkingSlime";
-	var fullPath : String = audioLibraryPath + effectName;
+	var fullPath : String = audioLibraryPath + effectName + "/" + effectName;
 	# If the path points to a folder, then one random file from the folder needs to be selected instead.
 	# NOTE : This code is used for choosing a random sound effect from a folder of multiple sound effects. This is currently not implemented.
 	#if (DirAccess.dir_exists_absolute(fullPath + "/") && FileSearch.file_count_in_folder(effectName) > 0):
@@ -214,7 +214,7 @@ func play_effect_walking(walkingEffect: Global.WalkingEffect) -> void:
 	else:
 		print(effectName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .wav for effects
-		walkingPlayer.stream = load(BACKUP_AUDIO_LIBRARY_PATH + effectName + ".wav")
+		walkingPlayer.stream = load(BACKUP_AUDIO_LIBRARY_PATH + effectName + "/" + effectName + ".wav")
 	walkingPlayer.play();
 
 ## Reset and stop all audio

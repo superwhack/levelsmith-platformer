@@ -130,7 +130,8 @@ func play_UI_effect(effectName: String) -> void:
 ## musicName: name of the sound effect
 func play_music(musicName: String) -> void:
 	musicPlayer.stop();
-	var fullPath : String = audioLibraryPath + musicName;
+	var fullPath : String = audioLibraryPath + musicName + "/" + musicName;
+	print(fullPath);
 	if (FileAccess.file_exists(fullPath + ".mp3")):
 		musicPlayer.stream = AudioStreamMP3.load_from_file(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
@@ -138,7 +139,7 @@ func play_music(musicName: String) -> void:
 	else:
 		print(musicName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .mp3 for music
-		musicPlayer.stream = AudioStreamMP3.load_from_file(BACKUP_AUDIO_LIBRARY_PATH + musicName + ".mp3");
+		musicPlayer.stream = AudioStreamMP3.load_from_file(BACKUP_AUDIO_LIBRARY_PATH + "LevelMusic/LevelMusic.mp3");
 	musicPlayer.play();
 
 ## Add specified SFX to the queue
@@ -148,6 +149,7 @@ func play_effect(effectName: String) -> void:
 		return;
 	var fullPath : String = audioLibraryPath + effectName;
 	# If the path points to a folder, then one random file from the folder needs to be selected instead.
+	# NOTE : This code is used for choosing a random sound effect from a folder of multiple sound effects. This is currently not implemented.
 	#if DirAccess.dir_exists_absolute(fullPath + "/"):
 		#var validFiles : PackedStringArray;
 		#var files = DirAccess.get_files_at(fullPath);
@@ -167,7 +169,7 @@ func play_effect(effectName: String) -> void:
 	else:
 		print(effectName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .wav for effects
-		queue.append(BACKUP_AUDIO_LIBRARY_PATH + effectName + ".wav")
+		queue.append(BACKUP_AUDIO_LIBRARY_PATH + effectName + "/" + effectName + ".wav")
 	# Iterate through each in use audio player, if any are playing the current audio, stop the other one.
 	for player in inusePlayers:
 		if (player.stream.has_meta("audioName")):
@@ -193,18 +195,19 @@ func play_effect_walking(walkingEffect: Global.WalkingEffect) -> void:
 			effectName = "WalkingSlime";
 	var fullPath : String = audioLibraryPath + effectName;
 	# If the path points to a folder, then one random file from the folder needs to be selected instead.
-	if (DirAccess.dir_exists_absolute(fullPath + "/") && FileSearch.file_count_in_folder(effectName) > 0):
-		var validFiles : PackedStringArray;
-		var files = DirAccess.get_files_at(fullPath);
-		# Only non .imports are accepted
-		for file in files:
-			if !file.ends_with(".import"):
-				validFiles.append(file);
-		var randomFileIndex = randi() % validFiles.size();
-		fullPath += "/" + (validFiles[randomFileIndex]);
-		walkingPlayer.stream = load(fullPath);
+	# NOTE : This code is used for choosing a random sound effect from a folder of multiple sound effects. This is currently not implemented.
+	#if (DirAccess.dir_exists_absolute(fullPath + "/") && FileSearch.file_count_in_folder(effectName) > 0):
+		#var validFiles : PackedStringArray;
+		#var files = DirAccess.get_files_at(fullPath);
+		## Only non .imports are accepted
+		#for file in files:
+			#if !file.ends_with(".import"):
+				#validFiles.append(file);
+		#var randomFileIndex = randi() % validFiles.size();
+		#fullPath += "/" + (validFiles[randomFileIndex]);
+		#walkingPlayer.stream = load(fullPath);
 	# Else just see if it's a .mp3 or .wav
-	elif (FileAccess.file_exists(fullPath + ".mp3")):
+	if (FileAccess.file_exists(fullPath + ".mp3")):
 		walkingPlayer.stream = load(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		walkingPlayer.stream = load(fullPath + ".wav");

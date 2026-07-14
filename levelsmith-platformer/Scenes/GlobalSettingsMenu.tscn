@@ -59,6 +59,7 @@ layout_mode = 2
 theme_override_constants/scrollbar_h_separation = 15
 
 [node name="SettingsBox" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer" unique_id=488931375]
+custom_maximum_size = Vector2(610, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 

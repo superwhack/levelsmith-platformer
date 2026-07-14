@@ -207,7 +207,6 @@ layout_mode = 2
 [node name="PlayLevelButton" type="Button" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=960511629]
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
-tooltip_text = "Play Level"
 theme_override_font_sizes/font_size = 16
 
 [node name="ContentMargin" type="MarginContainer" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton" unique_id=1175052129]

@@ -263,7 +263,6 @@ layout_mode = 2
 [node name="NewLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=361130273]
 custom_minimum_size = Vector2(190, 75)
 layout_mode = 2
-tooltip_text = "New Level"
 theme_override_font_sizes/font_size = 16
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/NewLevelButton" unique_id=1311426592]
@@ -308,7 +307,6 @@ size_flags_horizontal = 3
 [node name="ImportLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=1849129557]
 custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
-tooltip_text = "Import Level"
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/ImportLevelButton" unique_id=1909908390]
 layout_mode = 1
@@ -352,7 +350,6 @@ size_flags_horizontal = 3
 [node name="OpenFolderButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=1916229944]
 custom_minimum_size = Vector2(230, 75)
 layout_mode = 2
-tooltip_text = "Open Level Folder"
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton" unique_id=328390251]
 layout_mode = 1
@@ -414,7 +411,6 @@ theme_override_constants/margin_top = 35
 [node name="ExitButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin" unique_id=1356679422]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
-tooltip_text = "Exit Editor"
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton" unique_id=570388100]
 layout_mode = 1
@@ -614,7 +610,6 @@ layout_mode = 2
 [node name="PlayButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn" unique_id=1108696886]
 custom_minimum_size = Vector2(250, 65)
 layout_mode = 2
-tooltip_text = "Play Level"
 disabled = true
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton" unique_id=1784265768]
@@ -657,7 +652,6 @@ layout_mode = 2
 [node name="EditButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn" unique_id=1777678716]
 custom_minimum_size = Vector2(250, 65)
 layout_mode = 2
-tooltip_text = "Edit Level"
 disabled = true
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton" unique_id=1122992598]

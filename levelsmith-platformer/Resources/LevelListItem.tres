@@ -31,7 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://bmb2tygklbuf6" path="res://Assets/Sprites/UI/FilterMedium.PNG" id="29_hnbli"]
 [ext_resource type="Texture2D" uid="uid://br5r7c7w8jie5" path="res://Assets/Sprites/UI/ToggleHiddenMedium.PNG" id="30_yuo03"]
 [ext_resource type="StyleBox" uid="uid://bjfoydscacqbd" path="res://Assets/UserInterface/WindowBorderStyleBox.tres" id="31_kduco"]
-[ext_resource type="StyleBox" path="res://Assets/UserInterface/ScrollGrabStyleBox.tres" id="32_qtni8"]
+[ext_resource type="StyleBox" uid="uid://cixip2eyb83r1" path="res://Assets/UserInterface/ScrollGrabStyleBox.tres" id="32_qtni8"]
 [ext_resource type="StyleBox" uid="uid://cwo782d4sgcr7" path="res://Assets/UserInterface/ScrollAreaStyleBox.tres" id="33_pjbvv"]
 [ext_resource type="StyleBox" uid="uid://d0dnc4expn1x0" path="res://Assets/UserInterface/SliderStyleBox.tres" id="36_hkmms"]
 [ext_resource type="StyleBox" uid="uid://kpc3pw6w1747" path="res://Assets/UserInterface/TextEntryFocusStyleBox.tres" id="37_4gjgn"]
@@ -48,7 +48,7 @@
 [ext_resource type="StyleBox" uid="uid://0p7omelnc5u2" path="res://Assets/UserInterface/ToolButtonSelectStyleBox.tres" id="68_yc7jw"]
 [ext_resource type="StyleBox" uid="uid://bcx2ixaf8mxjd" path="res://Assets/UserInterface/ToolButtonNormalStyleBox.tres" id="69_67vac"]
 [ext_resource type="StyleBox" uid="uid://b1tpgrjp8xpbj" path="res://Assets/UserInterface/TooltipStyleBox.tres" id="70_8qaa0"]
-[ext_resource type="StyleBox" path="res://Assets/UserInterface/HScrollGrabStyleBox.tres" id="71_wlj8r"]
+[ext_resource type="StyleBox" uid="uid://du2kuqvwpo5j0" path="res://Assets/UserInterface/HScrollGrabStyleBox.tres" id="71_wlj8r"]
 [ext_resource type="StyleBox" uid="uid://bryfqoermm7f4" path="res://Assets/UserInterface/HScrollAreaStyleBox.tres" id="72_8woi7"]
 [ext_resource type="StyleBox" uid="uid://bwclbl24ey6hw" path="res://Assets/UserInterface/VSeparatorLine.tres" id="73_hvxol"]
 

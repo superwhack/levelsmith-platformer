@@ -324,4 +324,7 @@ size_flags_horizontal = 3
 [node name="WinScreen" parent="CanvasLayer" unique_id=1204440589 instance=ExtResource("8_4i4ea")]
 visible = false
 
+[node name="ReturnEditorWinButton" parent="CanvasLayer/WinScreen/Panel/TopRightMargin/Container" parent_id_path=PackedInt32Array(1204440589, 1054305318) index="2" unique_id=1148860713]
+tooltip_text = ""
+
 [editable path="CanvasLayer/WinScreen"]

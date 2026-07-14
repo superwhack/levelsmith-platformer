@@ -6,7 +6,7 @@ extends Node
 var audioNameToReplace : String;
 
 # All types of aduio
-var audioTypes : Array[String] = ["BounceTile", "CoinPickup", "EnemyDeath", "EnemyShoot", "HazardTile", "PlayerDeath", "PlayerJump", "Victory", "WalkingGeneral", "WalkingIce", "WalkingSlime", "LevelMusic"];
+var audioTypes : Array[String] = ["BounceTile", "CoinPickup", "EnemyDie", "Shoot", "HazardTile", "PlayerDie", "Jump", "Victory", "WalkingGeneral", "WalkingIce", "WalkingSlime", "LevelMusic"];
 
 
 # Called when the node enters the scene tree for the first time.
@@ -33,8 +33,8 @@ func replace_audio(newAudioPath: String) -> void:
 	
 ## Clears the audio in a given folder and replaces it with a default
 func reset_audio() -> void:
-	pass;
-	
+	AudioManager.play_UI_effect("UISelection");
+	assetManager.clear_files(audioNameToReplace);
 
 func save_mp3_stream(stream : AudioStreamMP3, filePath : String) -> void:
 	var bytes : PackedByteArray = stream.data;

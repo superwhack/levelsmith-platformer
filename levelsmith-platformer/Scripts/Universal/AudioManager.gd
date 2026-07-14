@@ -129,7 +129,7 @@ func play_music(musicName: String) -> void:
 	else:
 		print(musicName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .mp3 for music
-		musicPlayer.stream = load(BACKUP_AUDIO_LIBRARY_PATH + musicName + ".mp3");
+		musicPlayer.stream = AudioStreamMP3.load_from_file(BACKUP_AUDIO_LIBRARY_PATH + musicName + ".mp3");
 	musicPlayer.play();
 
 ## Add specified SFX to the queue
@@ -139,21 +139,22 @@ func play_effect(effectName: String) -> void:
 		return;
 	var fullPath : String = audioLibraryPath + effectName;
 	# If the path points to a folder, then one random file from the folder needs to be selected instead.
-	if DirAccess.dir_exists_absolute(fullPath + "/"):
-		var validFiles : PackedStringArray;
-		var files = DirAccess.get_files_at(fullPath);
-		# Only non .imports are accepted
-		for file in files:
-			if !file.ends_with(".import"):
-				validFiles.append(file);
-		var randomFileIndex = randi() % validFiles.size();
-		fullPath += "/" + (validFiles[randomFileIndex]);
-		queue.append(fullPath);
+	#if DirAccess.dir_exists_absolute(fullPath + "/"):
+		#var validFiles : PackedStringArray;
+		#var files = DirAccess.get_files_at(fullPath);
+		## Only non .imports are accepted
+		#for file in files:
+			#if !file.ends_with(".import"):
+				#validFiles.append(file);
+		#var randomFileIndex = randi() % validFiles.size();
+		#fullPath += "/" + (validFiles[randomFileIndex]);
+		#queue.append(fullPath);
 	# Else just see if it's a .mp3 or .wav
-	elif (FileAccess.file_exists(fullPath + ".mp3")):
-		queue.append(fullPath + ".mp3");
-	elif (FileAccess.file_exists(fullPath + ".wav")):
-		queue.append(fullPath + ".wav");
+	if (FileAccess.file_exists(fullPath + "/" + effectName + ".mp3")):
+		queue.append(fullPath + "/" + effectName + ".mp3");
+		print(queue);
+	elif (FileAccess.file_exists(fullPath + "/" + effectName + ".wav")):
+		queue.append(fullPath + "/" + effectName + ".wav");
 	else:
 		print(effectName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .wav for effects
@@ -178,7 +179,7 @@ func play_effect_walking(walkingEffect: Global.WalkingEffect) -> void:
 			effectName = "WalkingSlime";
 	var fullPath : String = audioLibraryPath + effectName;
 	# If the path points to a folder, then one random file from the folder needs to be selected instead.
-	if DirAccess.dir_exists_absolute(fullPath + "/"):
+	if (DirAccess.dir_exists_absolute(fullPath + "/") && FileSearch.file_count_in_folder(effectName) > 0):
 		var validFiles : PackedStringArray;
 		var files = DirAccess.get_files_at(fullPath);
 		# Only non .imports are accepted

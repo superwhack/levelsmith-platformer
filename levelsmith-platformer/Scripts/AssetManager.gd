@@ -371,6 +371,7 @@ func setup() -> void:
 	print("Setup");
 	filePath = masterManager.loadedLevelPath + "Assets";
 	FileSearch.filePath = filePath;
+	AudioManager.audioLibraryPath = filePath + "/Audio/";
 	# Checks if the user has an assets root folder, creates one if not
 	var dir : DirAccess = DirAccess.open(filePath);
 	if (!dir || dir.get_directories().is_empty()):

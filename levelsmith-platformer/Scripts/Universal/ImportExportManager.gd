@@ -32,8 +32,6 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 	DirAccess.make_dir_absolute("user://Levels/");
 	levelPath = "user://Levels/" + levelName + "/";
 	levelAssetPath = levelPath + "Assets/";
-	# NOTE: In the future we might want to assign this elsewhere 
-	AudioManager.audioLibraryPath = levelPath + "Assets/Audio/";
 	
 	# Create the directories for the level and asset path.
 	DirAccess.make_dir_absolute(levelPath);

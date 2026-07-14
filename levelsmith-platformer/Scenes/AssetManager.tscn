@@ -2,17 +2,29 @@
 
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_rshqi"]
+[ext_resource type="Texture2D" uid="uid://do1aligfv3wmg" path="res://Assets/UserInterface/Buttons/CloseX.png" id="3_7puos"]
 [ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="3_rshqi"]
 [ext_resource type="Texture2D" uid="uid://dxag1j2w8yhjg" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
 [ext_resource type="Texture2D" uid="uid://ctkp25yl7wov4" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="6_ssly3"]
 [ext_resource type="Texture2D" uid="uid://g86q3u73bvbb" path="res://Assets/UserInterface/Buttons/ButtonIcons/PlayIcon.png" id="7_o8nck"]
 [ext_resource type="Texture2D" uid="uid://b5f7fj8dwgcbn" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-right.png" id="7_qbbei"]
 [ext_resource type="Texture2D" uid="uid://cfnhge1514wea" path="res://Assets/UserInterface/material-symbols-light--stop-outline.png" id="8_7puos"]
+[ext_resource type="Texture2D" uid="uid://bcxig5hp2d48q" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-down.png" id="8_x8uhr"]
 [ext_resource type="Texture2D" uid="uid://dvs3jqnfvwc0y" path="res://Assets/Sprites/UI/solar--restart-broken.png" id="9_o8nck"]
 [ext_resource type="Texture2D" uid="uid://iyxcim187e44" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
 [ext_resource type="Texture2D" uid="uid://dusre0h2m2g6t" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Folder.png" id="10_7puos"]
 [ext_resource type="Script" uid="uid://cy0omeeqj1evc" path="res://Scripts/Universal/ImageSwapping.gd" id="10_clgtw"]
 [ext_resource type="Script" uid="uid://pgp1usxbcoyf" path="res://Scripts/Universal/AnimationSwapping.gd" id="11_ukhnw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gn8f6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fnjh2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vrcqo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_racgb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hh704"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1i6c8"]
 bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
@@ -21,6 +33,11 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.42745098, 0.42745098, 0.42745098, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 10
 
 [node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imageSwapping", "animationSwapping", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "refreshAllButton")]
 process_mode = 2
@@ -55,10 +72,28 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
 
-[node name="Title" type="Label" parent="ContentContainer" unique_id=1534252912]
+[node name="HBoxContainer" type="HBoxContainer" parent="ContentContainer" unique_id=726089248]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="ContentContainer/HBoxContainer" unique_id=1534252912]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Custom Asset Manager"
+
+[node name="spacer" type="Control" parent="ContentContainer/HBoxContainer" unique_id=1547786861]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="ContentContainer/HBoxContainer" unique_id=334412884]
+custom_minimum_size = Vector2(38, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gn8f6")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fnjh2")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vrcqo")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_racgb")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hh704")
+icon = ExtResource("3_7puos")
+icon_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="ContentContainer" unique_id=457032284]
 layout_mode = 2
@@ -186,20 +221,23 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -66.5
-offset_right = 66.5
-offset_bottom = 40.0
+offset_left = -60.0
+offset_right = 60.0
+offset_bottom = 23.0
 grow_horizontal = 2
+theme = ExtResource("1_rshqi")
 alignment = 1
 
 [node name="PrevAnimButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=1355417284]
-custom_minimum_size = Vector2(30, 30)
+visible = false
 layout_mode = 2
 theme_type_variation = &"ToolButton"
 icon = ExtResource("6_ssly3")
 
 [node name="AnimNameLabel" type="Label" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=803745770]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+size_flags_vertical = 1
 theme = ExtResource("1_rshqi")
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_1i6c8")
@@ -207,7 +245,16 @@ text = "NAME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="TextureRect" type="TextureRect" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer/AnimNameLabel" unique_id=1358737385]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 25.0
+offset_bottom = 22.0
+texture = ExtResource("8_x8uhr")
+
 [node name="NextAnimButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=71301328]
+visible = false
 layout_mode = 2
 theme_type_variation = &"ToolButton"
 icon = ExtResource("7_qbbei")
@@ -309,14 +356,20 @@ theme_override_constants/separation = 8
 alignment = 1
 
 [node name="PlayPauseButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" unique_id=1125072521]
+custom_minimum_size = Vector2(35, 0)
+custom_maximum_size = Vector2(35, 35)
 layout_mode = 2
-text = "Play/Pause
+text = "
 "
+icon = ExtResource("7_o8nck")
+icon_alignment = 1
 
 [node name="StopButton" type="Button" parent="ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" unique_id=780017080]
+custom_minimum_size = Vector2(35, 0)
+custom_maximum_size = Vector2(35, 35)
 layout_mode = 2
-text = "Stop
-"
+icon = ExtResource("8_7puos")
+icon_alignment = 1
 
 [node name="RightColumnContainer" type="VBoxContainer" parent="ContentContainer/MainContentContainer" unique_id=761220124]
 layout_mode = 2
@@ -392,10 +445,6 @@ text = "Reset Selected"
 [node name="ResetAllButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=1076102221]
 layout_mode = 2
 text = "Reset All"
-
-[node name="CloseButton" type="Button" parent="ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer" unique_id=334412884]
-layout_mode = 2
-text = "Close"
 
 [node name="ImageSwapping" type="Control" parent="." unique_id=1565850134 node_paths=PackedStringArray("assetManager", "imagePreview", "imagePreviewTexture")]
 anchors_preset = 0

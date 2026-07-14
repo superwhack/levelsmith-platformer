@@ -129,20 +129,23 @@ func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) ->
 	Global.levelCreated.emit();
 	editorManager.returnClick = false;
 
+## Draws the border around the level grid.
 func create_bedrock_border() -> void:
-	for x in range(-1, worldSize.x + 1):
-		tileMap.set_cell(Vector2i(x, -1), Global.BEDROCK_TILE, Vector2i.ZERO);
-		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
-		tileMap.set_cell( Vector2i(x, worldSize.y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
-
+	# Draw 4 corners first
+	tileMap.set_cell(Vector2i(-1, -1), Global.BEDROCK_CORNER, Vector2i.ZERO);
+	tileMap.set_cell(Vector2i(worldSize.x, -1), Global.BEDROCK_CORNER, Vector2i.ZERO, 1);
+	tileMap.set_cell(Vector2i(-1, worldSize.y), Global.BEDROCK_CORNER, Vector2i.ZERO, 2);
+	tileMap.set_cell(Vector2i(worldSize.x, worldSize.y), Global.BEDROCK_CORNER, Vector2i.ZERO, 3);
+	
+	# Top/Bottom Walls
+	for x in range(0, worldSize.x):
+		tileMap.set_cell(Vector2i(x, -1), Global.BEDROCK_WALL, Vector2i.ZERO);
+		tileMap.set_cell( Vector2i(x, worldSize.y), Global.BEDROCK_WALL, Vector2i.ZERO, 1);
+	
+	# Left/Right Walls
 	for y in range(0, worldSize.y):
-		tileMap.set_cell(Vector2i(-1, y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
-		tileMap.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
-
-	#print("Bedrock border created: ", tileMap.get_used_rect());
+		tileMap.set_cell(Vector2i(-1, y), Global.BEDROCK_WALL, Vector2i.ZERO, 2);
+		tileMap.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_WALL, Vector2i.ZERO, 3);
 
 ## Imports a level 
 func import_level_and_edit() -> void:

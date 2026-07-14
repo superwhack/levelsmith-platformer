@@ -38,6 +38,9 @@ func _ready() -> void:
 	
 	load_settings();
 
+func _process(_delta: float) -> void:
+	pass;
+
 ## When dragging, adjust the values in real time
 func _on_drag() -> void:
 	# Await needed for values to update from drag_ended

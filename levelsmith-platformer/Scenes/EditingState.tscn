@@ -381,11 +381,8 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Pan [WASD / MMB]"
 
-[node name="HoverPopUpContainer" parent="ScreenUI/MainColumn/ContentRow" unique_id=1808818748 instance=ExtResource("16_rdu5w")]
-visible = false
-layout_mode = 2
-
 [node name="PropertiesPanel" type="PanelContainer" parent="ScreenUI/MainColumn/ContentRow" unique_id=949999272]
+visible = false
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 mouse_filter = 2
@@ -406,6 +403,20 @@ metadata/_edit_use_anchors_ = true
 
 [node name="ErrorPopUpLayer" type="CanvasLayer" parent="ScreenUI/OverlayLayer" unique_id=302907189]
 visible = false
+
+[node name="HoverPopUpContainer" parent="ScreenUI" unique_id=1808818748 instance=ExtResource("16_rdu5w")]
+visible = false
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1474.0
+offset_top = 80.0
+offset_right = 1920.0
+offset_bottom = 179.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 

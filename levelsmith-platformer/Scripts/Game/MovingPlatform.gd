@@ -21,6 +21,7 @@ var easing : bool;
 
 # Current destination point.
 var targetPoint : Vector2;
+var movementDistance : float;
 
 const SPEED_MODIFIER : float = 100.0;
 
@@ -57,9 +58,6 @@ func move_behavior(delta: float) -> void:
 	var directionVector : Vector2 = targetPoint - global_position;
 	var move_distance : float = speed * SPEED_MODIFIER * delta;
 
-	if easing:
-		if (directionVector.length() <= move_distance * 4):
-			velocity *= directionVector.length() / (move_distance * 4);
 
 	# If the enemy is close enough to the point, change direction
 	if (directionVector.length() <= move_distance):
@@ -69,6 +67,10 @@ func move_behavior(delta: float) -> void:
 		return;
 
 	velocity = directionVector.normalized() * speed * SPEED_MODIFIER;
+	
+	if easing:
+		velocity *= (directionVector.length() + movementDistance / 4) / movementDistance;
+			
 	position += velocity * delta;
 
 
@@ -120,6 +122,7 @@ func apply_script(file: Resource) -> void:
 
 	pointA = global_position;
 	pointB = pointA + file.pointBOffset;
+	movementDistance = pointA.distance_to(pointB)
 	progress = file.progress;
 	easing = file.easing;
 	adjust_preview(file.pointBOffset, progress);

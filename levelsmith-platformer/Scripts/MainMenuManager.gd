@@ -75,6 +75,8 @@ var levelItems: Dictionary = {} # path -> item
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	buttonNewLevel.grab_focus();
+	
 	# Hides other screens
 	overlayImportLevel.hide();
 	overlayNewLevel.hide();
@@ -120,21 +122,28 @@ func _ready() -> void:
 func overlay_new_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.show();
+	fieldNewLevelName.grab_focus();
 func overlay_new_level_hide() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.hide();
+	buttonNewLevel.grab_focus();
 func overlay_import_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayImportLevel.show();
+	fieldImportLevelPath.grab_focus();
 func popup_file_dialog() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	fileExplorer.popup_file_dialog();
+	buttonNewLevel.grab_focus();
 func overlay_duplicate_level_show() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	overlayDuplicateLevel.show();
+	duplicateName.grab_focus();
+	
 func overlay_duplicate_level_hide() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	overlayDuplicateLevel.hide();
+	buttonNewLevel.grab_focus();
 
 ## Called when import level button is pressed
 func import_level() -> void:

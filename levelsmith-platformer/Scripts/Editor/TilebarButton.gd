@@ -16,6 +16,7 @@ extends Button
 @export var image : TextureRect;
 
 func _ready() -> void:
+	focus_entered.connect(change_brush_object);
 	pressed.connect(change_brush_object)
 
 func _process(_delta: float) -> void:

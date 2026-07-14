@@ -17,6 +17,16 @@ extends HBoxContainer
 # Misc object references
 @export var entityPropDropdown : OptionButton;
 
+# Last tile, entity, and prop buttons.
+var lastTileButton: Button
+var lastEntityButton: Button
+var lastPropButton: Button
+
+# Buttons will save themselves into these arrays on creation.
+var tileButtons: Array[Button] = []
+var entityButtons: Array[Button] = []
+var propButtons: Array[Button] = []
+
 ## References to the tile button exports.
 @export_group("Tile Button Exports")
 @export var firstTileButton : Button;
@@ -56,11 +66,36 @@ func _ready() -> void:
 ## visibility: desired visibility
 func display_tiles(visibility: bool):
 	tiles.visible = visibility;
+	
+	# If visible, select button if last applicable, otherwise the first.
+	if (visibility):
+		if (lastTileButton):
+			lastTileButton.select();
+		else:
+			firstTileButton.select();
+			
+	if visibility:
+		await get_tree().process_frame
+		firstTileButton.grab_focus()
+		print(get_viewport().gui_get_focus_owner())
 
 ## Toggles visibility of entity selection bar
 ## visibility: desired visibility
 func display_entities(visibility: bool):
 	entities.visible = visibility;
+	
+	if (visibility):
+		match (editorManager.currentHotbarState):
+			Global.HotbarState.ENTITIES:
+				if (lastEntityButton):
+					lastEntityButton.select()
+				else:
+					firstEntityButton.select()
+			Global.HotbarState.PROPS:
+				if (lastPropButton):
+					lastPropButton.select()
+				else:
+					firstPropButton.select()
 
 ## Toggles visibility of tabs
 ## index: index of tab selected
@@ -78,3 +113,13 @@ func entity_dropdown_select(index: int):
 			toolManager.update_brush_object(Global.EntityType.PROP1);
 			entityTab.visible = false;
 			propTab.visible = true;
+
+## Sets the last selected button, so that it remains selected
+func remember_selected_button(button: Button):
+	match (button.buttonType):
+		button.ButtonType.TILE:
+			lastTileButton = button;
+		button.ButtonType.ENTITY:
+			lastEntityButton = button;
+		button.ButtonType.PROP:
+			lastPropButton = button;

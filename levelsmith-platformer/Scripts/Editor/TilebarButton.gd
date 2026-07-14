@@ -13,11 +13,29 @@ extends Button
 
 @export var entityName : String = "";
 
+enum ButtonType {
+	TILE,
+	ENTITY,
+	PROP
+}
+
+## The type of object this button selects.
+@export var buttonType: ButtonType
+
 @export var image : TextureRect;
 
 func _ready() -> void:
 	focus_entered.connect(select);
 	pressed.connect(select);
+	
+	# If an entity, prop, or tile, add to appropriate array.
+	match buttonType:
+		ButtonType.TILE:
+			tilebar.tileButtons.append(self);
+		ButtonType.ENTITY:
+			tilebar.entityButtons.append(self);
+		ButtonType.PROP:
+			tilebar.propButtons.append(self);
 
 func _process(_delta: float) -> void:
 	# Change the texture to the texture currently set in the tile set
@@ -34,7 +52,10 @@ func select() -> void:
 		button_pressed = true;
 	if (!has_focus()):
 		grab_focus();
-		
+	
+	# Remembers the last button selected, for focus purposes
+	tilebar.remember_selected_button(self);
+	
 	AudioManager.play_UI_effect("UISelection");
 	tilebar.toolManager.update_brush_object(thisItemID);
 	

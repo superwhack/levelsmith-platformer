@@ -23,7 +23,7 @@ var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tr
 ## levelName: Name of the new level, indicates where it'll go in the folder
 ## levelSize: The size of the level
 ## settings: The settings menu for the level
-func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i, settings: SettingsMenu) -> void:
+func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i, settings: Panel) -> void:
 	# When making an enemy we need to set the path name and clear all enemies
 	levelName = levelName;
 	clear_enemies_folder();
@@ -130,7 +130,7 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
 ## settings: The settings menu to export the configurations from
-func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i, settings: SettingsMenu, isValidated : bool = false) -> void:
+func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i, settings: Panel, isValidated : bool = false) -> void:
 	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
@@ -408,7 +408,7 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 ## tileMap: Tile map for searching for enemies
 ## playerData: The panel that contains player data to adjust it
 ## settings: Settings to import saved configurations to
-func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMenu) -> void:
+func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: Panel) -> void:
 	# Read JSON to file and close it
 	var JSONFile : FileAccess= FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
 	var json_as_dict : Variant = JSON.parse_string(JSONFile.get_as_text());

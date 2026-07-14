@@ -24,8 +24,9 @@ extends Node2D
 @export var closeAssetManagerButton : Button;
 
 # Settings Menu and button
-@export var settingsMenu : SettingsMenu;
-@export var settingsButton : Button;
+@export var levelSettingsMenu : LevelSettingsMenu;
+@export var levelSettingsButton : Button;
+@export var globalSettingsButton : Button;
 
 # Cursor Manager
 @export var customCursorManager : Node2D;
@@ -60,10 +61,11 @@ func _ready() -> void:
 		var levelScreenshot : Image = await screenshot_level();
 		
 		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu, isValidated);
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated);
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
-	settingsButton.pressed.connect(open_settings_menu);
+	levelSettingsButton.pressed.connect(open_level_settings_menu);
+	globalSettingsButton.pressed.connect(masterManager.open_global_settings_menu);
 	Global.levelCreated.connect(reset_player_and_goal);
 	exportButton.pressed.connect(export_level);
 	closeAssetManagerButton.pressed.connect(close_asset_manager);
@@ -96,7 +98,7 @@ func _input(event: InputEvent) -> void:
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
 		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu, isValidated);
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated);
 
 
 ## Takes a screenshot of the level by hiding the UI and disabling the main camera
@@ -169,13 +171,13 @@ func open_asset_manager() -> void:
 	assetManager.show();
 
 ## Opens the settings menu
-func open_settings_menu() -> void:
+func open_level_settings_menu() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
 	iconManager.previewIcon.hide();
-	settingsMenu.show();
+	levelSettingsMenu.show();
 
 ## Closes the asset manager
 func close_asset_manager() -> void:
@@ -188,9 +190,9 @@ func close_asset_manager() -> void:
 	AnimationManager.refresh_animations();
 
 ## Closes the settings menu
-func close_settings_menu() -> void:
+func close_level_settings_menu() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
 	AudioManager.play_UI_effect("UISelection");
 	previewTileMap.show();
-	settingsMenu.hide();
+	levelSettingsMenu.hide();

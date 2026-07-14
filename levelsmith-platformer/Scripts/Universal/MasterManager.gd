@@ -15,6 +15,8 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var loadingImage : TextureRect;
 @export var mainMenuControl : Control;
 
+@export var globalSettingsMenu : GlobalSettingsMenu;
+
 # References to relevant buttons
 @export var editorHomeButton : Button;
 @export var editorPlayButton : Button;
@@ -76,7 +78,7 @@ func _ready() -> void:
 ## event: The user input
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu, editorManager.isValidated);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
@@ -117,7 +119,7 @@ func screen_static() -> void:
 func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) -> void:
 	worldSize = newSize;
 	cameraManager.initialize_camera();
-	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.settingsMenu);
+	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.levelSettingsMenu);
 	propertyMenu.reset_custom();
 	loadedLevelPath = "user://Levels/" + levelName + "/";
 	#AudioManager.masterVolume = 0;
@@ -154,7 +156,7 @@ func import_level_and_edit() -> void:
 	editorManager.reset_enemy_positions();
 	await get_tree().process_frame;
 	cameraManager.initialize_camera();
-	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.settingsMenu);
+	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.levelSettingsMenu);
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
 	await get_tree().process_frame
@@ -324,3 +326,16 @@ func get_play_errors() -> Array[String]:
 		errors.append("End Goal");
 		
 	return errors;
+
+func open_global_settings_menu() -> void:
+	get_tree().paused = true;
+	AudioManager.play_UI_effect("UISelection")
+	previewTileMap.hide();
+	globalSettingsMenu.show();
+
+## Closes the settings menu
+func close_global_settings_menu() -> void:
+	get_tree().paused = false;
+	AudioManager.play_UI_effect("UISelection");
+	previewTileMap.show();
+	globalSettingsMenu.hide();

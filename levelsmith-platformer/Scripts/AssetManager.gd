@@ -53,11 +53,11 @@ var currentSelectedItem : AssetItem;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Connect signals
-	loadFileButton.pressed.connect(open_image_selector);
+	loadFileButton.pressed.connect(open_file_selector);
 	refreshAllButton.pressed.connect(refresh_all);
 	resetButton.pressed.connect(reset_image_popup);
 	resetAllButton.pressed.connect(reset_all_popup);
-	fileSelect.file_selected.connect(imageSwapping.replace_image);
+	fileSelect.file_selected.connect(file_selected);
 	fileSelect.dir_selected.connect(animationSwapping.replace_animation);
 	
 	assetTabs.tab_changed.connect(on_asset_tab_changed);
@@ -281,6 +281,7 @@ func item_selected(selectedItem: AssetItem) -> void:
 			animationSwapping.currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 		animationSwapping.update_animation_preview();
 	elif (selectedItem.type == AssetItem.AssetType.AUDIO):
+		audioSwapping.audioNameToReplace = selectedItem.assetName;
 		print("Audio Selected")
 
 	currentAssetLabel.text = selectedItem.displayName;
@@ -316,15 +317,29 @@ func create_file_tree() -> void:
 	for audio: String in audioSwapping.audioTypes:
 		dir.make_dir_recursive(filePath + "/Audio/" + audio);
 
-func open_image_selector() -> void:
+func open_file_selector() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
 		fileSelect.title = "Replace " + imageSwapping.imageNameToReplace;
 		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_FILE;
+		fileSelect.clear_filters();
+		fileSelect.add_filter("*.png");
 	elif (currentSelectedItem.type == AssetItem.AssetType.ANIMATION):
 		fileSelect.title = "Replace " + animationSwapping.animationPreviewNameToReplace;
 		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_DIR;
+	elif (currentSelectedItem.type == AssetItem.AssetType.AUDIO):
+		fileSelect.title = "Replace " + audioSwapping.audioNameToReplace;
+		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_FILE;
+		fileSelect.clear_filters();
+		fileSelect.add_filter("*.mp3");
+		fileSelect.add_filter("*.wav");
 	fileSelect.popup_file_dialog();
+
+func file_selected(filePath : String) -> void:
+	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
+		imageSwapping.replace_image(filePath);
+	elif (currentSelectedItem.type == AssetItem.AssetType.AUDIO):
+		audioSwapping.replace_audio(filePath);
 
 ## Creates a new missing texture for use when a texture is... missing.
 func get_missing_image() -> Image:
@@ -335,7 +350,7 @@ func get_missing_image() -> Image:
 	
 ## Clears any images in the replacement directory
 ## returns: The replacement directory
-func clear_image(nameToClear : String) -> DirAccess:
+func clear_files(nameToClear : String) -> DirAccess:
 	var targetFilePath : String = FileSearch.find_directory_by_name(nameToClear);
 	var targetDirectory : DirAccess  = DirAccess.open(targetFilePath);
 	

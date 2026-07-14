@@ -80,7 +80,6 @@ func update_sliders() -> void:
 
 ## Reset the settings
 func reset_settings() -> void:
-	
 	masterVolume.value = 70.0;
 	SFXVolume.value = 70.0;
 	musicVolume.value = 70.0;
@@ -94,7 +93,7 @@ func load_settings() -> void:
 		masterVolume.value = configFile.get_value("Audio", "master_volume");
 		SFXVolume.value = configFile.get_value("Audio", "sfx_volume");
 		musicVolume.value = configFile.get_value("Audio", "music_volume");
-		_on_drag();
+		update_sliders();
 
 ## Save current settings in the config file
 func save_settings() -> void:

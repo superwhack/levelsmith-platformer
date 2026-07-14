@@ -152,7 +152,6 @@ func _physics_process(delta: float) -> void:
 	
 	# Detect tiles before jumping and running so slow and ice tiles apply affects before inputs
 	detect_tiles();
-
 	# Jumping with W or Space
 	if (Input.is_action_just_pressed("jump") && !justWallJumped):
 		if (is_on_floor() || coyoteTimeLeft > 0.0 || doubleJumpAvailable):
@@ -287,13 +286,15 @@ func walk() -> void:
 ## direction: direction to deal damage in
 ## higherBounce: if the player should bounce higher
 ## returns: true is damage applied
-func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce : int = 0) -> bool:
+## onFloorBypass: If true, the player is NOT on the floor for knockback
+func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce : int = 0, onFloorBypass : bool = false) -> bool:
 	if invulnerabilityCurrent > 0:
 		return false;
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
 	velocity = direction * (1000 + higherBounce * 500);
-	if is_on_floor():
+	
+	if is_on_floor() && !onFloorBypass:
 		velocity *= pow(max(3, groundSpeed), .9);
 	health -= amount;
 	if (health <= 0):
@@ -479,7 +480,7 @@ func detect_tiles() -> void:
 				currentSlowdown = .5;
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
-			if take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump")):
+			if take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"), true):
 				AudioManager.play_effect("HazardTile");
 		elif tileName == "death":
 			take_damage(maxHealth);

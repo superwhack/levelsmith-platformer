@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_ym18m"]
-[ext_resource type="Texture2D" uid="uid://bnfiheh16k4s3" path="res://Assets/Sprites/UI/material-symbols-light--pause-rounded.png" id="3_4pdbi"]
+[ext_resource type="Texture2D" uid="uid://c12cbch40smo4" path="res://Assets/UserInterface/material-symbols--pause-rounded 64x64.png" id="5_2riqt"]
 [ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="6_x53pn"]
 [ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
 [ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
@@ -69,6 +69,7 @@ size_flags_vertical = 0
 tooltip_text = "Reset"
 focus_behavior_recursive = 1
 theme = ExtResource("2_ym18m")
+theme_override_constants/icon_max_width = 50
 action_mode = 0
 icon = ExtResource("10_2riqt")
 icon_alignment = 1
@@ -140,7 +141,8 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 tooltip_text = "Pause [Esc]"
 theme = ExtResource("2_ym18m")
-icon = ExtResource("3_4pdbi")
+theme_override_constants/icon_max_width = 50
+icon = ExtResource("5_2riqt")
 icon_alignment = 1
 
 [node name="PlayUISpacer5" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=1478978677]
@@ -280,6 +282,7 @@ custom_maximum_size = Vector2(60, 60)
 layout_mode = 2
 tooltip_text = "Resume [Esc]"
 theme = ExtResource("2_ym18m")
+theme_override_constants/icon_max_width = 50
 icon = ExtResource("10_4pdbi")
 icon_alignment = 1
 

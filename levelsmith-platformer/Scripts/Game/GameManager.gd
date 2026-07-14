@@ -125,6 +125,7 @@ func start() -> void:
 		for node in tileMap.get_children():
 			if tileMap.local_to_map(node.global_position) == propertyFile.position:
 				node.apply_script(propertyFile);
+				node.position += Vector2(0, 20)
 				node.active = false;
 				break;
 	for moving in get_tree().get_nodes_in_group("Moving"):

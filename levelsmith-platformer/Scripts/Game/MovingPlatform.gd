@@ -69,7 +69,7 @@ func move_behavior(delta: float) -> void:
 	velocity = directionVector.normalized() * speed * SPEED_MODIFIER;
 	
 	if easing:
-		velocity = (velocity / 2) + (velocity * min((pointA-position).length(), (pointB-position).length()) / movementDistance * 2);
+		velocity = (velocity / 1.5) + (velocity * min((pointA-position).length(), (pointB-position).length()) / movementDistance * 2);
 	
 	position += velocity * delta;
 

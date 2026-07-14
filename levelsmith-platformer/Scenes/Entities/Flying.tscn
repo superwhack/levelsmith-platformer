@@ -59,6 +59,7 @@ animations = [{
 }]
 
 [node name="FlyingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("previewLine", "previewLineEndpoint", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
+scale = Vector2(0.66, 0.66)
 collision_layer = 6
 collision_mask = 6
 motion_mode = 1

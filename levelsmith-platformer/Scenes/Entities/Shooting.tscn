@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://bf3q4v3br7j4o"]
 
 [ext_resource type="Script" uid="uid://cxud880na6ixc" path="res://Scripts/Game/EnemyShooting.gd" id="1_0p30m"]
-[ext_resource type="Texture2D" uid="uid://b5hb8p70258h" path="res://Assets/Defaults/Assets/Sprites/ProjectileDanger.png" id="2_vgv1q"]
+[ext_resource type="Texture2D" uid="uid://wgdtlonbavh4" path="res://Assets/Defaults/Assets/Sprites/ProjectileDanger.png" id="2_vgv1q"]
 [ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="3_3c58l"]
 [ext_resource type="Texture2D" uid="uid://c23s130t4exym" path="res://Assets/Defaults/Assets/Sprites/ProjectileBounce.png" id="3_fax0h"]
-[ext_resource type="Texture2D" uid="uid://cv2lf8pc8doyc" path="res://Assets/Sprites/UI/question.png" id="3_waxnm"]
+[ext_resource type="Texture2D" uid="uid://3gy2b3ctcxe5" path="res://Assets/Sprites/UI/question.png" id="3_waxnm"]
 [ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_571pn"]
 [ext_resource type="Texture2D" uid="uid://0tjelo7d1g6q" path="res://Assets/Sprites/Entities/ShootingEnemy/EnemyShoot/1.png" id="5_dvo3g"]
 [ext_resource type="Texture2D" uid="uid://bfbrsvv44qln1" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootDeath/1.png" id="5_qlrn8"]
@@ -44,6 +44,7 @@ animations = [{
 }]
 
 [node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow", "questionMark", "downRaycast", "upRaycast", "raycastHelper", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
+scale = Vector2(0.66, 0.66)
 collision_layer = 6
 collision_mask = 6
 platform_floor_layers = 4294967294

@@ -9,6 +9,7 @@ extends Node2D
 # Icon textures
 var propBackgroundIcon : Texture2D = preload("res://Assets/Sprites/UI/Icons/PropBackground.png");
 var propForegroundIcon : Texture2D = preload("res://Assets/Sprites/UI/Icons/PropForeground.png");
+var copyIcon : Texture2D = preload("res://Assets/Sprites/UI/Icons/Copy.png");
 var defaultIcon : Texture2D = preload("res://Assets/Sprites/UI/triangle.png");
 
 #Offset for the icon appearing in the top left of each cell
@@ -36,7 +37,9 @@ func _process(_delta: float) -> void:
 	previewIcon.global_position = editorManager.currentMousePosition * Global.TILE_SIZE + ICON_OFFSET;
 	previewIcon.show();
 	
-	if (toolManager.brushObject >= Global.EntityType.PROP1 && toolManager.brushObject <= Global.EntityType.PROP6):
+	if (toolManager.entityManager.duplicatingResource):
+		previewIcon.texture = copyIcon;
+	elif (toolManager.brushObject >= Global.EntityType.PROP1 && toolManager.brushObject <= Global.EntityType.PROP6):
 		previewIcon.texture = propBackgroundIcon if toolManager.isBackground else propForegroundIcon;
 		if (tileMap.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL): 
 			previewIcon.hide();

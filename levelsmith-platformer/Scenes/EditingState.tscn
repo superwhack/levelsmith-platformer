@@ -406,11 +406,12 @@ editorManager = NodePath("..")
 toolManager = NodePath("../ToolManager")
 entityManager = NodePath("../ToolManager/EntityManager")
 
-[node name="ToolManager" type="Node2D" parent="." unique_id=2103609005 node_paths=PackedStringArray("editorManager", "entityManager", "tileManager", "tileSwitch", "propertyMenu", "previewTile")]
+[node name="ToolManager" type="Node2D" parent="." unique_id=2103609005 node_paths=PackedStringArray("editorManager", "entityManager", "tileManager", "customCursorManager", "tileSwitch", "propertyMenu", "previewTile")]
 script = ExtResource("12_20xd7")
 editorManager = NodePath("..")
 entityManager = NodePath("EntityManager")
 tileManager = NodePath("TileManager")
+customCursorManager = NodePath("../CustomCursorManager")
 tileSwitch = NodePath("../ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TileSwitch")
 propertyMenu = NodePath("../ScreenUI/MainColumn/ContentRow/PropertiesPanel/PropertyMenu")
 previewTile = NodePath("../PreviewTile")

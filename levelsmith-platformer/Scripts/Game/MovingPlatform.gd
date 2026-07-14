@@ -23,7 +23,6 @@ var targetPoint : Vector2;
 const SPEED_MODIFIER : float = 100.0;
 
 @export var previewLine : Line2D;
-@export var previewLineEndpoint : Sprite2D;
 @export var previewPlatform : Sprite2D;
 
 # Mutes movement after spawning so it can teleport to it's initial position
@@ -89,7 +88,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	progress = propertyFile.progress;
 	
 	adjust_preview();
-	update_line_preview();
+	previewLine.update();
 	
 	ResourceSaver.save(propertyFile);
 
@@ -100,29 +99,10 @@ func adjust_preview(pointTo : Vector2 = pointB, selectedProgress : float = progr
 	previewPlatform.show();
 	previewPlatform.global_position = lerp(global_position, global_position + pointTo, float(selectedProgress) / 100);
 
-## Update the preview for the moving platform
-## x: The x to update with
-## y: The y to update with
-func update_line_preview(x : int = int((pointB.x - pointA.x) / Global.TILE_SIZE) , y : int = int((pointB.y - pointA.y) / Global.TILE_SIZE)) -> void:
-	var offset : Vector2 = Vector2(x * Global.TILE_SIZE, y * Global.TILE_SIZE);
-	previewLine.modulate.a = .5;
-	previewLine.global_position = global_position;
-	previewLine.clear_points();
-	previewLine.add_point(Vector2.ZERO);
-	previewLine.add_point(offset);
-	if previewLine.get_point_count() > 0:
-		var last_point_index: int = previewLine.get_point_count() - 1;
-		if previewLine.get_point_position(last_point_index) == previewLine.get_point_position(0):
-			previewLineEndpoint.hide();
-		else:
-			previewLineEndpoint.show();
-			previewLineEndpoint.position = previewLine.get_point_position(last_point_index);
-
 ## Apply the progress variable into starting global position
 func apply_progress() -> void:
 	position = lerp(pointA, pointB, float(progress) / 100.0);
 	muteMove = false;
-	
 
 ## Applies the values stored in a FlyingPreset.
 ## file: Resource containing enemy properties.
@@ -136,4 +116,4 @@ func apply_script(file: Resource) -> void:
 	progress = file.progress;
 	adjust_preview(file.pointBOffset, progress);
 	targetPoint = pointB;
-	update_line_preview();
+	previewLine.update((pointB - pointA) / Global.TILE_SIZE);

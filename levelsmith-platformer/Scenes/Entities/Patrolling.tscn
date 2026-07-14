@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://b3k624sctovph"]
 
 [ext_resource type="Script" uid="uid://cv0ngpnmx6kwj" path="res://Scripts/Game/EnemyPatrol.gd" id="1_ecr3g"]
-[ext_resource type="Texture2D" uid="uid://cfa20wjd3y3in" path="res://Assets/Sprites/UI/BlankArrowUpMedium.png" id="2_n0k27"]
-[ext_resource type="Texture2D" uid="uid://d33pgq7ibjssv" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_0s3yh"]
-[ext_resource type="Texture2D" uid="uid://yfpy7vgkmhuo" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="3_igrap"]
-[ext_resource type="Texture2D" uid="uid://33tku5on1i8a" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="4_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://fjtjb06rhbgs" path="res://Assets/Sprites/UI/ArrowUpMedium.PNG" id="2_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://cwsprqtu1ar6d" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://qyptq3doausu" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="3_igrap"]
+[ext_resource type="Texture2D" uid="uid://8mtvtp3y4dr7" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="4_0s3yh"]
 [ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_3diox"]
 [ext_resource type="Texture2D" uid="uid://ts0f7r4aehhl" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/2.png" id="4_rdoky"]
 [ext_resource type="Texture2D" uid="uid://duel7xt7cijhy" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/3.png" id="5_y22b6"]
@@ -115,11 +115,9 @@ hitbox = NodePath("CollisionShape2D")
 animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=320029135]
-visible = false
 z_index = 4
-position = Vector2(0, -90)
-rotation = 1.5707964
-texture = ExtResource("2_n0k27")
+texture = ExtResource("2_0s3yh")
+offset = Vector2(0, -9)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
 scale = Vector2(6.3, 6.3)

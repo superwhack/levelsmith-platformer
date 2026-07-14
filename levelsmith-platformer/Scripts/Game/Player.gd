@@ -71,6 +71,8 @@ var trueSpeed : float;
 var bounceTileHeight : float = 1.0;
 var iceFriction : float = 0.5;
 
+var iceAccelerationFactor : float = .1;
+
 # The selected movement preset
 # TODO: Make it so that it selects the DefaultMovement preset automatically 
 @export var playerMovementPreset : PlayerMovementPreset;
@@ -257,7 +259,7 @@ func walk() -> void:
 			velocity.x *= .9;
 		elif (abs(velocity.x) > trueSpeed):
 			if (velocity.x < 0 && accelerationX < 0) || (velocity.x > 0 && accelerationX > 0):
-				accelerationX *= .1;
+				accelerationX *= iceAccelerationFactor;
 	elif (currentFriction != 1.0 && !is_on_floor()):
 		if direction / velocity.x > 0 && abs(velocity.x + accelerationX * .1) > trueSpeed:
 			accelerationX = 0;

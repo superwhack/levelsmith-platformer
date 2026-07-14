@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bfbrsvv44qln1" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootDeath/1.png" id="5_qlrn8"]
 [ext_resource type="Texture2D" uid="uid://bm4klfnp3qj85" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/1.png" id="6_dvo3g"]
 [ext_resource type="Texture2D" uid="uid://dckpbo7pdkpt" path="res://Assets/Sprites/Entities/ShootingEnemy/ShootIdle/2.png" id="7_roj87"]
+[ext_resource type="Texture2D" uid="uid://dxxbuqp1ngjwj" path="res://Assets/Sprites/UI/ShootDirection.png" id="9_vgv1q"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lurgl"]
 
@@ -77,9 +78,9 @@ scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_waxnm")
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=1346299203]
-visible = false
 z_index = 4
-texture = ExtResource("3_3c58l")
+texture = ExtResource("9_vgv1q")
+offset = Vector2(24, 0)
 
 [node name="RayCastUp" type="RayCast2D" parent="." unique_id=852169096]
 target_position = Vector2(0, -66)

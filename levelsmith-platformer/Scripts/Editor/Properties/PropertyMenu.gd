@@ -151,14 +151,14 @@ func _process(_delta: float) -> void:
 		selectedEntity.adjust_arrow(-shootingDirectionSlider.value, shootingRandomDirection.value);
 	elif selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
-		selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
+		selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, -flyingOffsetYSlider.value));
 	elif selectedEntity is EnemyStationary:
 		entityName.text = "Stationary Enemy";
 		selectedEntity.update_flipped(!stationaryDirectionDropdown.value);
 	elif selectedEntity is MovingPlatform:
 		entityName.text = "Moving Platform";
-		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
-		selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
+		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, -movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
+		selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, -movingPlatformOffsetYSlider.value));
 	elif selectedEntity is Player:
 		entityName.text = "Player";
 
@@ -208,7 +208,7 @@ func update_custom() -> void:
 	customPreset.coyoteTime = playerCoyoteTime;
 	customPreset.slopeSlowdown = playerSlopeSlowdown;
 	customPreset.oneways = playerOneways;
-	customPreset.doubleJump = playerDoubleJump;
+	customPreset.doubleJump = playerDoubleJump;	
 	customPreset.wallJump = playerWallJump;
 	customPreset.wallJumpDecay = playerWallJumpDecay;
 	ResourceSaver.save(customPreset, "user://Resources/Custom.tres");
@@ -274,7 +274,7 @@ func update_sliders() -> void:
 	elif selectedEntity is EnemyFlyer:
 		flyingSpeedSlider.value = selectedPreset.speed;
 		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.TILE_SIZE;
-		flyingOffsetYSlider.value = selectedPreset.pointBOffset.y / Global.TILE_SIZE;
+		flyingOffsetYSlider.value = -selectedPreset.pointBOffset.y / Global.TILE_SIZE;
 		flyingSpeedSlider.update_slider();
 		flyingOffsetXSlider.update_slider();
 		flyingOffsetYSlider.update_slider();
@@ -286,7 +286,7 @@ func update_sliders() -> void:
 	elif selectedEntity is MovingPlatform:
 		movingPlatformSpeedSlider.value = selectedPreset.speed;
 		movingPlatformOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.TILE_SIZE;
-		movingPlatformOffsetYSlider.value = selectedPreset.pointBOffset.y / Global.TILE_SIZE;
+		movingPlatformOffsetYSlider.value = -selectedPreset.pointBOffset.y / Global.TILE_SIZE;
 		movingPlatformProgressSlider.value = selectedPreset.progress;
 		movingPlatformSpeedSlider.update_slider();
 		movingPlatformOffsetXSlider.update_slider();
@@ -336,7 +336,7 @@ func update_values() -> void:
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyFlyer:
 		selectedPreset.speed = flyingSpeedSlider.value;
-		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.TILE_SIZE, flyingOffsetYSlider.value * Global.TILE_SIZE);
+		selectedPreset.pointBOffset = Vector2(flyingOffsetXSlider.value * Global.TILE_SIZE, -flyingOffsetYSlider.value * Global.TILE_SIZE);
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyStationary:
 		selectedPreset.isFacingRight = !stationaryDirectionDropdown.value;
@@ -344,7 +344,7 @@ func update_values() -> void:
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is MovingPlatform:
 		selectedPreset.speed = movingPlatformSpeedSlider.value;
-		selectedPreset.pointBOffset = Vector2(movingPlatformOffsetXSlider.value * Global.TILE_SIZE, movingPlatformOffsetYSlider.value * Global.TILE_SIZE);
+		selectedPreset.pointBOffset = Vector2(movingPlatformOffsetXSlider.value * Global.TILE_SIZE, -movingPlatformOffsetYSlider.value * Global.TILE_SIZE);
 		selectedPreset.progress = movingPlatformProgressSlider.value;
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	

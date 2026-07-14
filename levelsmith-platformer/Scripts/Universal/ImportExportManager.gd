@@ -72,6 +72,7 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"airControl": playerDefault.airControl,
 			"fallSpeed": playerDefault.fallSpeed,
 			"coyoteTime": playerDefault.coyoteTime,
+			"slopeSlowdown": playerDefault.slopeSlowdown,
 			"oneways": playerDefault.oneways,
 			"doubleJump": playerDefault.doubleJump,
 			"wallJump": playerDefault.wallJump,
@@ -195,6 +196,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		"airControl": playerData.playerAirControl,
 		"fallSpeed": playerData.playerGravity,
 		"coyoteTime": playerData.playerCoyoteTime,
+		"slopeSlowdown": playerData.playerSlopeSlowdown,
 		"oneways": playerData.playerOneways,
 		"doubleJump": playerData.playerDoubleJump,
 		"wallJump": playerData.playerWallJump,
@@ -421,6 +423,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
 	playerData.playerGravity = player.get("fallSpeed", playerData.playerGravity);
 	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
+	playerData.playerSlopeSlowdown = player.get("slopeSlowdown", playerData.playerSlopeSlowdown);
 	playerData.playerOneways = player.get("oneways", playerData.playerOneways);
 	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
 	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);

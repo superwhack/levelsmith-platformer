@@ -30,8 +30,8 @@
 [ext_resource type="Texture2D" uid="uid://bkquthck5o5sq" path="res://Assets/Sprites/Entities/Props/Prop6.png" id="22_hkman"]
 [ext_resource type="PackedScene" uid="uid://nquey6f2ob44" path="res://Scenes/Preview/CoinPreview.tscn" id="23_hkman"]
 [ext_resource type="Texture2D" uid="uid://bfihlk8cogb0q" path="res://Assets/Sprites/Tiles/death.png" id="24_hkman"]
-[ext_resource type="Texture2D" uid="uid://bveernyi2djb4" path="res://Assets/Sprites/UI/Bedrock.png" id="31_ldrp4"]
-[ext_resource type="Texture2D" uid="uid://bvd45i6vvn4da" path="res://Assets/Sprites/UI/Delete.png" id="32_ldrp4"]
+[ext_resource type="Texture2D" uid="uid://cvf8gycyhndv4" path="res://Assets/Sprites/UI/Bedrock.png" id="31_ldrp4"]
+[ext_resource type="Texture2D" uid="uid://66t5crfub0ll" path="res://Assets/Sprites/UI/Delete.png" id="32_ldrp4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rjqkl"]
 texture = ExtResource("1_00q1o")

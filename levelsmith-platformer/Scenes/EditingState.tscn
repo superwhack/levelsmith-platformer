@@ -384,17 +384,6 @@ visible = false
 
 [node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("editorManager", "mainTileMap") instance=ExtResource("11_bpoex")]
 visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -450.0
-offset_top = -300.0
-offset_right = 450.0
-offset_bottom = 300.0
-grow_horizontal = 2
-grow_vertical = 2
 editorManager = NodePath("../..")
 mainTileMap = NodePath("../../Tiles")
 
@@ -416,11 +405,12 @@ editorManager = NodePath("..")
 toolManager = NodePath("../ToolManager")
 entityManager = NodePath("../ToolManager/EntityManager")
 
-[node name="ToolManager" type="Node2D" parent="." unique_id=2103609005 node_paths=PackedStringArray("editorManager", "entityManager", "tileManager", "tileSwitch", "propertyMenu", "previewTile")]
+[node name="ToolManager" type="Node2D" parent="." unique_id=2103609005 node_paths=PackedStringArray("editorManager", "entityManager", "tileManager", "customCursorManager", "tileSwitch", "propertyMenu", "previewTile")]
 script = ExtResource("12_20xd7")
 editorManager = NodePath("..")
 entityManager = NodePath("EntityManager")
 tileManager = NodePath("TileManager")
+customCursorManager = NodePath("../CustomCursorManager")
 tileSwitch = NodePath("../ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TileSwitch")
 propertyMenu = NodePath("../ScreenUI/MainColumn/ContentRow/PropertiesPanel/PropertyMenu")
 previewTile = NodePath("../PreviewTile")

@@ -86,7 +86,7 @@ func create_save_popup() -> void:
 	newPopUp.set_title("Saving...");
 	newPopUp.set_panel_color(Color.YELLOW, Color.DARK_GOLDENROD)
 	newPopUp.separator2.hide();
-	newPopUp.bodyText.hide();
+	newPopUp.set_body_text("[color=black]Do not close while Saving.[/color]");
 	newPopUp.resetButton.hide();
 	newPopUp.closeButton.hide();
 	newPopUp.self_modulate = Color(1, 1, 1, 0);
@@ -102,7 +102,7 @@ func create_save_complete_popup() -> void:
 	newPopUp.set_title("Save Complete!");
 	newPopUp.set_panel_color(Color.GREEN, Color.DARK_GREEN)
 	newPopUp.separator2.hide();
-	newPopUp.bodyText.hide();
+	newPopUp.set_body_text("[color=black]Saving Complete.[/color]");
 	newPopUp.resetButton.hide();
 	newPopUp.closeButton.hide();
 	newPopUp.self_modulate = Color(1, 1, 1, 0);

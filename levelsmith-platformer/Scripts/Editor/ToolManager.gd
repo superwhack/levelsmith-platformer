@@ -4,6 +4,7 @@ extends Node2D
 @export var editorManager : Node2D;
 @export var entityManager : Node2D;
 @export var tileManager : Node2D;
+@export var customCursorManager : Node2D;
 
 # references to UI elements
 @export var tileSwitch : HBoxContainer;
@@ -146,6 +147,7 @@ func _unhandled_input(event: InputEvent) -> void:
 						entityManager.duplicate_entity(editorManager.currentMousePosition);
 					else:
 						entityManager.duplicatingResource = null;
+						customCursorManager.highlight_selected_entity(editorManager.currentMousePosition);
 						entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:

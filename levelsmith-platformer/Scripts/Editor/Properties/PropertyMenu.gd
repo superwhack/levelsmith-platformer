@@ -3,6 +3,9 @@ extends Panel
 # Entity currently selected for editing
 var selectedEntity : Node2D;
 
+# Need an editor manager export to set unsavedChanges
+@export var editorManager : Node2D;
+
 # Name displayed on property menu
 @export var entityName : Label;
 
@@ -129,8 +132,6 @@ func _ready() -> void:
 
 ## Close the property menu and set the selected entity to null
 func close() -> void:
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
@@ -150,19 +151,17 @@ func _process(_delta: float) -> void:
 		selectedEntity.adjust_arrow(int(patrollingDirectionDropdown.value) * 180 + 90);
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
-		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90, shootingRandomDirection.value);
+		selectedEntity.adjust_arrow(-shootingDirectionSlider.value, shootingRandomDirection.value);
 	elif selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
-		selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
-		selectedEntity.previewLine.modulate.a = 1;
+		selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
 	elif selectedEntity is EnemyStationary:
 		entityName.text = "Stationary Enemy";
 		selectedEntity.update_flipped(!stationaryDirectionDropdown.value);
 	elif selectedEntity is MovingPlatform:
 		entityName.text = "Moving Platform";
 		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
-		selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
-		selectedEntity.previewLine.modulate.a = 1;
+		selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
 	elif selectedEntity is Player:
 		entityName.text = "Player";
 
@@ -296,12 +295,12 @@ func update_sliders() -> void:
 		movingPlatformOffsetXSlider.update_slider();
 		movingPlatformOffsetYSlider.update_slider();
 		movingPlatformProgressSlider.update_slider();
-	
+
 
 ## Alternate the ability for a property to be selected
 ## property: The property to change
 ## selectable: If it can be selected
-func make_selectable(property : VBoxContainer, selectable : bool) -> void:
+func make_selectable(property: VBoxContainer, selectable: bool) -> void:
 	property.enabled = selectable;
 	if !selectable:
 		property.modulate = Color(1, 1, 1, 0.5);
@@ -356,17 +355,16 @@ func update_values() -> void:
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
 	# Processframe is needed here so that when using the text input on the player, it actually correctly updates, add more if this becomes a problem again.
-	await get_tree().process_frame
+	await get_tree().process_frame;
 	update_values();
 	if selectedEntity is Player:
 		update_custom();
+	editorManager.unsavedChanges = true;
 
 ## Show the property menu, different sections pop up depending on the currently selected entity type
 ## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
 	show();
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
@@ -381,6 +379,7 @@ func show_menu(resource: Resource = null) -> void:
 		update_sliders();
 		if selectedEntity is EnemyPatrol:
 			directionArrow = selectedEntity.directionArrow;
+			directionArrow.scale = Vector2(2,2);
 			patrollingMenu.show();
 		elif selectedEntity is EnemyShooting:
 			directionArrow = selectedEntity.directionArrow;
@@ -391,16 +390,14 @@ func show_menu(resource: Resource = null) -> void:
 			flyingMenu.show()
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate.a = 1;
-				selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+				selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
 		elif selectedEntity is EnemyStationary:
 			stationaryMenu.show();
 		elif selectedEntity is MovingPlatform:
 			movingPlatformMenu.show();
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate.a = 1;
-				selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
+				selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
 		
 		
 	else:

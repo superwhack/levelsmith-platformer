@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/Editor/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
 [ext_resource type="Texture2D" uid="uid://cicj1jmudfxxy" path="res://Assets/UserInterface/Buttons/ButtonIcons/Home.png" id="7_20xd7"]
@@ -363,8 +363,10 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0vixy")
 
-[node name="PropertyMenu" parent="ScreenUI/MainColumn/ContentRow/PropertiesPanel" unique_id=1686733993 instance=ExtResource("7_gc37a")]
+[node name="PropertyMenu" parent="ScreenUI/MainColumn/ContentRow/PropertiesPanel" unique_id=1686733993 node_paths=PackedStringArray("previewManager", "cursorManager") instance=ExtResource("7_gc37a")]
 layout_mode = 2
+previewManager = NodePath("../../../../../PreviewTile")
+cursorManager = NodePath("../../../../../CustomCursorManager")
 
 [node name="OverlayLayer" type="Control" parent="ScreenUI" unique_id=1751323313]
 visible = false

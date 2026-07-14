@@ -149,7 +149,10 @@ func _unhandled_input(event: InputEvent) -> void:
 						entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:
-					entityManager.place_entity(editorManager.currentMousePosition);
+					if propertyMenu.visible:
+						propertyMenu.close();
+					else:
+						entityManager.place_entity(editorManager.currentMousePosition);
 			elif (event.is_action_pressed("right-click")):
 				entityManager.delete_entity(editorManager.currentMousePosition);
 			

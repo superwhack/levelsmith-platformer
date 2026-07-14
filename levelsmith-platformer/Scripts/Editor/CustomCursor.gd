@@ -103,6 +103,14 @@ func _process(_delta: float) -> void:
 				else:
 					Input.set_custom_mouse_cursor(cursorIcon if editorManager.isPlaceable else cursorInvalid);
 	pass
+	
+## Shows the selector frame.
+func show_selector_frame() -> void:
+	selectorFrame.show();
+
+## Hides the selector frame.
+func hide_selector_frame() -> void:
+	selectorFrame.hide();
 
 ## Updates the state of the selector frame in accordance with other actions.
 func update_selector_state() -> void:

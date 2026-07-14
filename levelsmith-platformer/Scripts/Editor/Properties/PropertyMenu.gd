@@ -126,8 +126,6 @@ func _ready() -> void:
 
 ## Close the property menu and set the selected entity to null
 func close() -> void:
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
@@ -151,7 +149,6 @@ func _process(_delta: float) -> void:
 	elif selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
 		selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
-		selectedEntity.previewLine.modulate.a = 1;
 	elif selectedEntity is EnemyStationary:
 		entityName.text = "Stationary Enemy";
 		selectedEntity.update_flipped(!stationaryDirectionDropdown.value);
@@ -159,7 +156,6 @@ func _process(_delta: float) -> void:
 		entityName.text = "Moving Platform";
 		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
 		selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
-		selectedEntity.previewLine.modulate.a = 1;
 	elif selectedEntity is Player:
 		entityName.text = "Player";
 
@@ -357,8 +353,6 @@ func _on_drag_ended() -> void:
 ## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
 	show();
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
@@ -384,7 +378,6 @@ func show_menu(resource: Resource = null) -> void:
 			flyingMenu.show()
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate.a = 1;
 				selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
 		elif selectedEntity is EnemyStationary:
 			stationaryMenu.show();
@@ -392,7 +385,6 @@ func show_menu(resource: Resource = null) -> void:
 			movingPlatformMenu.show();
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate.a = 1;
 				selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
 		
 		

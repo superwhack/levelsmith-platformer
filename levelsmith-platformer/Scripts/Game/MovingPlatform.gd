@@ -17,6 +17,8 @@ var pointB : Vector2;
 var progress : float;
 var velocity : Vector2;
 
+var easing : bool;
+
 # Current destination point.
 var targetPoint : Vector2;
 
@@ -55,6 +57,10 @@ func move_behavior(delta: float) -> void:
 	var directionVector : Vector2 = targetPoint - global_position;
 	var move_distance : float = speed * SPEED_MODIFIER * delta;
 
+	if easing:
+		if (directionVector.length() <= move_distance * 4):
+			velocity *= directionVector.length() / (move_distance * 4);
+
 	# If the enemy is close enough to the point, change direction
 	if (directionVector.length() <= move_distance):
 		global_position = targetPoint;
@@ -86,6 +92,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	pointB = pointA + propertyFile.pointBOffset;
 	targetPoint = pointB;
 	progress = propertyFile.progress;
+	easing = propertyFile.easing;
 	
 	adjust_preview();
 	previewLine.update();
@@ -114,6 +121,7 @@ func apply_script(file: Resource) -> void:
 	pointA = global_position;
 	pointB = pointA + file.pointBOffset;
 	progress = file.progress;
+	easing = file.easing;
 	adjust_preview(file.pointBOffset, progress);
 	targetPoint = pointB;
 	previewLine.update((pointB - pointA) / Global.TILE_SIZE);

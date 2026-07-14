@@ -6,6 +6,15 @@ var selectedEntity : Node2D;
 # Name displayed on property menu
 @export var entityName : Label;
 
+# Preset Options
+@export var presetOptions : OptionButton;
+var selectedPreset : Resource;
+
+var selectedPlayerPreset : Resource;
+
+@export var closeButton : Button;
+
+@export_group("Menu Containers")
 @export var playerMenu : VBoxContainer;
 @export var patrollingMenu : MarginContainer;
 @export var shootingMenu : MarginContainer;
@@ -28,6 +37,7 @@ var playerDoubleJump : bool;
 var playerWallJump : bool;
 var playerWallJumpDecay : bool;
 
+@export_group("Player Properties")
 # Player value sliders
 @export var playerHealthSlider: VBoxContainer;
 @export var playerSpeedSlider: VBoxContainer;
@@ -43,11 +53,13 @@ var playerWallJumpDecay : bool;
 @export var playerWallJumpCheckbox: VBoxContainer;
 @export var playerWallJumpDecayCheckbox : VBoxContainer;
 
+@export_group("Patrolling Properties")
 # Patrolling inputs
 @export var patrollingSpeedSlider : VBoxContainer;
 @export var patrollingDirectionDropdown : VBoxContainer;
 @export var patrollingRestrictedCheckbox : VBoxContainer;
 
+@export_group("Shooting Properties")
 # Shooting inputs
 @export var shootingDirectionSlider : VBoxContainer;
 @export var shootingRandomDirection : VBoxContainer;
@@ -56,32 +68,28 @@ var playerWallJumpDecay : bool;
 @export var shootingProjectileBounce : VBoxContainer;
 @export var shootingGravity : VBoxContainer;
 
+@export_group("Flying Properties")
 # Flying inputs
 @export var flyingSpeedSlider : VBoxContainer;
 @export var flyingOffsetXSlider : VBoxContainer;
 @export var flyingOffsetYSlider : VBoxContainer;
 var previewLine: Line2D;
 
+@export_group("Stationary Properties")
 # Stationary inputs
 @export var stationaryDirectionDropdown : VBoxContainer;
 @export var stationaryGravity : VBoxContainer;
 
+@export_group("Moving Platform Properties")
 # Moving platform inputs
 @export var movingPlatformSpeedSlider : VBoxContainer;
 @export var movingPlatformOffsetXSlider : VBoxContainer;
 @export var movingPlatformOffsetYSlider : VBoxContainer;
 @export var movingPlatformProgressSlider : VBoxContainer;
-
-# Preset Options
-@export var presetOptions : OptionButton;
-var selectedPreset : Resource;
-
-var selectedPlayerPreset : Resource;
+@export var movingPlatformEasingCheckbox : VBoxContainer;
 
 # Direction arrow for shooting and patrolling enemies
 var directionArrow : Sprite2D;
-
-@export var closeButton : Button;
 
 ## When this starts, select the default option
 func _ready() -> void:
@@ -124,6 +132,7 @@ func _ready() -> void:
 	movingPlatformOffsetXSlider.drag_ended.connect(_on_drag_ended);
 	movingPlatformOffsetYSlider.drag_ended.connect(_on_drag_ended);
 	movingPlatformProgressSlider.drag_ended.connect(_on_drag_ended);
+	movingPlatformEasingCheckbox.check_changed.connect(_on_drag_ended);
 	
 	closeButton.pressed.connect(close);
 
@@ -288,10 +297,12 @@ func update_sliders() -> void:
 		movingPlatformOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.TILE_SIZE;
 		movingPlatformOffsetYSlider.value = -selectedPreset.pointBOffset.y / Global.TILE_SIZE;
 		movingPlatformProgressSlider.value = selectedPreset.progress;
+		movingPlatformEasingCheckbox.value = selectedPreset.easing;
 		movingPlatformSpeedSlider.update_slider();
 		movingPlatformOffsetXSlider.update_slider();
 		movingPlatformOffsetYSlider.update_slider();
 		movingPlatformProgressSlider.update_slider();
+		movingPlatformEasingCheckbox.update_checkbox();
 	
 
 ## Alternate the ability for a property to be selected
@@ -346,6 +357,7 @@ func update_values() -> void:
 		selectedPreset.speed = movingPlatformSpeedSlider.value;
 		selectedPreset.pointBOffset = Vector2(movingPlatformOffsetXSlider.value * Global.TILE_SIZE, -movingPlatformOffsetYSlider.value * Global.TILE_SIZE);
 		selectedPreset.progress = movingPlatformProgressSlider.value;
+		selectedPreset.easing = movingPlatformEasingCheckbox.value;
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	
 

@@ -89,7 +89,10 @@ func place_entity(clickPosition: Vector2) -> void:
 				file = "user://Resources/Enemies/Flying" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.STATIONARY):
 				var defaultStationary : Resource = load("res://Resources/PlayerPresets/StationaryDefault.tres");
-				newEntity = defaultStationary.duplicate(true);
+				if duplicatingResource:
+					newEntity = duplicatingResource.duplicate(true);
+				else:
+					newEntity = defaultStationary.duplicate(true);
 				file = "user://Resources/Enemies/Stationary" + str(time) + ".tres";
 			elif (brushObject == Global.EntityType.MOVING_PLATFORM):
 				var defaultMoving : Resource = load("res://Resources/PlayerPresets/MovingPlatformDefault.tres");
@@ -154,8 +157,11 @@ func get_scene_at_cell(gridPosition: Vector2i) -> Node2D:
 			return node;
 	return null;
 
+## Stores the selected entity for copying
+## clickPos: Where the mouse clicked
 func duplicate_entity(clickPos: Vector2) -> void:
 	var entity = get_scene_at_cell(clickPos);
+	editorManager.customCursorManager.highlight_selected_entity(clickPos);
 	toolManager.update_brush_object(tileMap.get_cell_source_id(clickPos));
 	propertyMenu.close();
 	duplicatingResource = entity.propertyFile.duplicate(true);
@@ -223,6 +229,7 @@ func drop_entity(reset: bool = false) -> void:
 			await get_tree().process_frame;
 		if (toolManager.prevBrushObject != -2):
 			toolManager.brushObject = toolManager.prevBrushObject;
+			toolManager.brushObject = toolManager.prevBrushObject;
 		toolManager.prevBrushObject = -1;
 		toolManager.prevPosition = Vector2(0,0);
 		toolManager.currentObjectRotation = toolManager.prevRotation;
@@ -237,7 +244,7 @@ func drop_entity(reset: bool = false) -> void:
 	
 	# Reset direciton arrows
 	if droppedEntity is EnemyShooting:
-		droppedEntity.adjust_arrow(droppedEntity.fireDirection + 90, droppedEntity.randomDirection);
+		droppedEntity.adjust_arrow(droppedEntity.fireDirection, droppedEntity.randomDirection);
 		droppedEntity.directionArrow.scale = Vector2(1, 1);
 	elif droppedEntity is EnemyPatrol:
 		droppedEntity.adjust_arrow(int(newResource.direction) * 180 + 90);

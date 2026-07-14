@@ -20,8 +20,10 @@ var playerAcceleration: float;
 var playerDeceleration: float;
 var playerJumpHeight : float;
 var playerAirControl : float;
-var playerFallSpeed : float;
+var playerGravity : float;
 var playerCoyoteTime : float;
+var playerSlopeSlowdown : bool;
+var playerOneways : bool;
 var playerDoubleJump : bool;
 var playerWallJump : bool;
 var playerWallJumpDecay : bool;
@@ -33,8 +35,10 @@ var playerWallJumpDecay : bool;
 @export var playerDecelerationSlider : VBoxContainer;
 @export var playerJumpSlider: VBoxContainer;
 @export var playerAirControlSlider: VBoxContainer;
-@export var playerFallSpeedSlider: VBoxContainer;
+@export var playerGravitySlider: VBoxContainer;
 @export var playerCoyoteTimeSlider: VBoxContainer;
+@export var playerSlopeSlowdownCheckbox : VBoxContainer;
+@export var playerOnewaysCheckbox : VBoxContainer;
 @export var playerDoubleJumpCheckbox: VBoxContainer;
 @export var playerWallJumpCheckbox: VBoxContainer;
 @export var playerWallJumpDecayCheckbox : VBoxContainer;
@@ -89,8 +93,10 @@ func _ready() -> void:
 	playerDecelerationSlider.drag_ended.connect(_on_drag_ended);
 	playerJumpSlider.drag_ended.connect(_on_drag_ended);
 	playerAirControlSlider.drag_ended.connect(_on_drag_ended);
-	playerFallSpeedSlider.drag_ended.connect(_on_drag_ended);
+	playerGravitySlider.drag_ended.connect(_on_drag_ended);
 	playerCoyoteTimeSlider.drag_ended.connect(_on_drag_ended);
+	playerOnewaysCheckbox.check_changed.connect(_on_drag_ended);
+	playerSlopeSlowdownCheckbox.check_changed.connect(_on_drag_ended);
 	playerDoubleJumpCheckbox.check_changed.connect(_on_drag_ended);
 	playerWallJumpCheckbox.check_changed.connect(_on_drag_ended);
 	playerWallJumpDecayCheckbox.check_changed.connect(_on_drag_ended);
@@ -123,8 +129,6 @@ func _ready() -> void:
 
 ## Close the property menu and set the selected entity to null
 func close() -> void:
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
@@ -144,19 +148,17 @@ func _process(_delta: float) -> void:
 		selectedEntity.adjust_arrow(int(patrollingDirectionDropdown.value) * 180 + 90);
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
-		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90, shootingRandomDirection.value);
+		selectedEntity.adjust_arrow(-shootingDirectionSlider.value, shootingRandomDirection.value);
 	elif selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
-		selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
-		selectedEntity.previewLine.modulate.a = 1;
+		selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
 	elif selectedEntity is EnemyStationary:
 		entityName.text = "Stationary Enemy";
 		selectedEntity.update_flipped(!stationaryDirectionDropdown.value);
 	elif selectedEntity is MovingPlatform:
 		entityName.text = "Moving Platform";
 		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
-		selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
-		selectedEntity.previewLine.modulate.a = 1;
+		selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
 	elif selectedEntity is Player:
 		entityName.text = "Player";
 
@@ -176,8 +178,10 @@ func _on_preset_options_item_selected(index: int) -> void:
 	playerDeceleration = selectedPlayerPreset.deceleration;
 	playerJumpHeight = selectedPlayerPreset.jumpHeight;
 	playerAirControl = selectedPlayerPreset.airControl;
-	playerFallSpeed = selectedPlayerPreset.fallSpeed;
+	playerGravity = selectedPlayerPreset.fallSpeed;
 	playerCoyoteTime = selectedPlayerPreset.coyoteTime;
+	playerSlopeSlowdown = selectedPlayerPreset.slopeSlowdown;
+	playerOneways = selectedPlayerPreset.oneways;
 	playerDoubleJump = selectedPlayerPreset.doubleJump;
 	playerWallJump = selectedPlayerPreset.wallJump;
 	playerWallJumpDecay = selectedPlayerPreset.wallJumpDecay;
@@ -200,8 +204,10 @@ func update_custom() -> void:
 	customPreset.deceleration = playerDeceleration;
 	customPreset.jumpHeight = playerJumpHeight;
 	customPreset.airControl = playerAirControl;
-	customPreset.fallSpeed = playerFallSpeed;
+	customPreset.fallSpeed = playerGravity;
 	customPreset.coyoteTime = playerCoyoteTime;
+	customPreset.slopeSlowdown = playerSlopeSlowdown;
+	customPreset.oneways = playerOneways;
 	customPreset.doubleJump = playerDoubleJump;
 	customPreset.wallJump = playerWallJump;
 	customPreset.wallJumpDecay = playerWallJumpDecay;
@@ -226,10 +232,14 @@ func update_sliders() -> void:
 	playerJumpSlider.update_slider();
 	playerAirControlSlider.value = playerAirControl;
 	playerAirControlSlider.update_slider();
-	playerFallSpeedSlider.value = playerFallSpeed;
-	playerFallSpeedSlider.update_slider();
+	playerGravitySlider.value = playerGravity;
+	playerGravitySlider.update_slider();
 	playerCoyoteTimeSlider.value = playerCoyoteTime;
 	playerCoyoteTimeSlider.update_slider();
+	playerSlopeSlowdownCheckbox.value = playerSlopeSlowdown;
+	playerSlopeSlowdownCheckbox.update_checkbox();
+	playerOnewaysCheckbox.value = playerOneways;
+	playerOnewaysCheckbox.update_checkbox();
 	playerDoubleJumpCheckbox.value = playerDoubleJump;
 	playerDoubleJumpCheckbox.update_checkbox();
 	playerWallJumpCheckbox.value = playerWallJump;
@@ -302,8 +312,10 @@ func update_values() -> void:
 	playerDeceleration = playerDecelerationSlider.value;
 	playerJumpHeight = playerJumpSlider.value;
 	playerAirControl = playerAirControlSlider.value;
-	playerFallSpeed = playerFallSpeedSlider.value;
+	playerGravity = playerGravitySlider.value;
 	playerCoyoteTime = playerCoyoteTimeSlider.value;
+	playerSlopeSlowdown = playerSlopeSlowdownCheckbox.value;
+	playerOneways = playerOnewaysCheckbox.value;
 	playerDoubleJump = playerDoubleJumpCheckbox.value;
 	playerWallJump = playerWallJumpCheckbox.value;
 	playerWallJumpDecay = playerWallJumpDecayCheckbox.value;
@@ -349,8 +361,6 @@ func _on_drag_ended() -> void:
 ## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
 	show();
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
@@ -365,6 +375,7 @@ func show_menu(resource: Resource = null) -> void:
 		update_sliders();
 		if selectedEntity is EnemyPatrol:
 			directionArrow = selectedEntity.directionArrow;
+			directionArrow.scale = Vector2(2,2);
 			patrollingMenu.show();
 		elif selectedEntity is EnemyShooting:
 			directionArrow = selectedEntity.directionArrow;
@@ -375,16 +386,14 @@ func show_menu(resource: Resource = null) -> void:
 			flyingMenu.show()
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate.a = 1;
-				selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+				selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
 		elif selectedEntity is EnemyStationary:
 			stationaryMenu.show();
 		elif selectedEntity is MovingPlatform:
 			movingPlatformMenu.show();
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate.a = 1;
-				selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
+				selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
 		
 		
 	else:

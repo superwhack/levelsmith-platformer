@@ -16,7 +16,7 @@ extends Button
 @export var image : TextureRect;
 
 func _ready() -> void:
-	focus_entered.connect(change_brush_object);
+	focus_entered.connect(_on_focus_entered);
 	pressed.connect(change_brush_object)
 
 func _process(_delta: float) -> void:
@@ -32,3 +32,8 @@ func _process(_delta: float) -> void:
 func change_brush_object() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	tilebar.toolManager.update_brush_object(thisItemID);
+	
+## Marks button as pressed, so that it is officially selected.
+func _on_focus_entered() -> void:
+	button_pressed = true;
+	change_brush_object();

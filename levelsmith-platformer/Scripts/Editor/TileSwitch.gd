@@ -17,6 +17,38 @@ extends HBoxContainer
 # Misc object references
 @export var entityPropDropdown : OptionButton;
 
+## References to the tile button exports.
+@export_group("Tile Button Exports")
+@export var solidButton : Button;
+@export var slopeButton : Button;
+@export var oneWayButton : Button;
+@export var bounceButton : Button;
+@export var iceButton : Button;
+@export var stickyButton : Button;
+@export var hazardButton : Button;
+@export var deathButton : Button;
+
+## References to the entity button exports.
+@export_group("Entity Button Exports")
+@export var playerEntityButton : Button;
+@export var coinEntityButton : Button;
+@export var patrollingEntityButton : Button;
+@export var stationaryEntityButton : Button;
+@export var shootingEntityButton : Button;
+@export var flyingEntityButton : Button;
+@export var movingPlatformEntityButton : Button;
+@export var goalEntityButton : Button;
+
+## References to the prop button exports.
+@export_group("Prop Button Exports")
+@export var propOneButton : Button;
+@export var propTwoButton : Button;
+@export var propThreeButton : Button;
+@export var propFourButton : Button;
+@export var propFiveButton : Button;
+@export var propSixButton : Button;
+
+
 func _ready() -> void:
 	entityPropDropdown.item_selected.connect(entity_dropdown_select);
 

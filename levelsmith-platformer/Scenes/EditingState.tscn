@@ -134,6 +134,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_vertical = 4
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -179,6 +180,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_vertical = 4
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -204,6 +206,7 @@ layout_mode = 2
 [node name="PlayLevelButton" type="Button" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=960511629]
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 16
 
 [node name="ContentMargin" type="MarginContainer" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton" unique_id=1175052129]
@@ -285,6 +288,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -309,6 +313,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 

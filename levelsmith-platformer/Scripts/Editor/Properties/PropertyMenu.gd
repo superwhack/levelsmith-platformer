@@ -132,8 +132,6 @@ func _ready() -> void:
 
 ## Close the property menu and set the selected entity to null
 func close() -> void:
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
@@ -153,19 +151,17 @@ func _process(_delta: float) -> void:
 		selectedEntity.adjust_arrow(int(patrollingDirectionDropdown.value) * 180 + 90);
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
-		selectedEntity.adjust_arrow(-shootingDirectionSlider.value + 90, shootingRandomDirection.value);
+		selectedEntity.adjust_arrow(-shootingDirectionSlider.value, shootingRandomDirection.value);
 	elif selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
-		selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
-		selectedEntity.previewLine.modulate.a = 1;
+		selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
 	elif selectedEntity is EnemyStationary:
 		entityName.text = "Stationary Enemy";
 		selectedEntity.update_flipped(!stationaryDirectionDropdown.value);
 	elif selectedEntity is MovingPlatform:
 		entityName.text = "Moving Platform";
 		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
-		selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
-		selectedEntity.previewLine.modulate.a = 1;
+		selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
 	elif selectedEntity is Player:
 		entityName.text = "Player";
 
@@ -369,8 +365,6 @@ func _on_drag_ended() -> void:
 ## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
 	show();
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
@@ -385,6 +379,7 @@ func show_menu(resource: Resource = null) -> void:
 		update_sliders();
 		if selectedEntity is EnemyPatrol:
 			directionArrow = selectedEntity.directionArrow;
+			directionArrow.scale = Vector2(2,2);
 			patrollingMenu.show();
 		elif selectedEntity is EnemyShooting:
 			directionArrow = selectedEntity.directionArrow;
@@ -395,16 +390,14 @@ func show_menu(resource: Resource = null) -> void:
 			flyingMenu.show()
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate.a = 1;
-				selectedEntity.update_line_preview(flyingOffsetXSlider.value, flyingOffsetYSlider.value);
+				selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
 		elif selectedEntity is EnemyStationary:
 			stationaryMenu.show();
 		elif selectedEntity is MovingPlatform:
 			movingPlatformMenu.show();
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate.a = 1;
-				selectedEntity.update_line_preview(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value);
+				selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
 		
 		
 	else:

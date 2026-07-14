@@ -11,6 +11,7 @@ var audioToReplace : AudioStream;
 
 @export var imageSwapping : Control;
 @export var animationSwapping : Control;
+@export var audioSwapping : Control;
 
 # References to preview and file dialog
 @export var audioPreview : Panel;
@@ -20,6 +21,7 @@ var audioToReplace : AudioStream;
 # References to different elements of the menu
 @export var imagesTab : VBoxContainer;
 @export var animationsTab : VBoxContainer;
+@export var audioTab : VBoxContainer;
 @export var currentAssetLabel : Label;
 
 # Button references for connecting signals
@@ -34,6 +36,7 @@ var audioToReplace : AudioStream;
 # Keep track of the first selected item
 var firstAnimationSelected : AssetItem = null;
 var firstImageSelected : AssetItem = null;
+var firstAudioSelected : AssetItem = null;
 
 # Reference to the asset button scene for instantiating
 const ASSET_BUTTON : PackedScene = preload("res://Scenes/UI/AssetItem.tscn");
@@ -92,6 +95,8 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 				firstImageSelected = newButton;
 			if (type == AssetItem.AssetType.ANIMATION && !firstAnimationSelected):
 				firstAnimationSelected = newButton;
+			if (type == AssetItem.AssetType.AUDIO && !firstAudioSelected):
+				firstAudioSelected = newButton;
 
 func clear_buttons(container : VBoxContainer):
 	for button : AssetItem in container.get_children() :
@@ -99,6 +104,8 @@ func clear_buttons(container : VBoxContainer):
 			firstImageSelected = null;
 		if (button.type == AssetItem.AssetType.ANIMATION && firstAnimationSelected):
 			firstAnimationSelected = null;
+		if (button.type == AssetItem.AssetType.AUDIO && firstAudioSelected):
+			firstAudioSelected = null;
 		button.queue_free();
 
 ## Finds an image by its name
@@ -186,6 +193,7 @@ func on_asset_tab_changed(tabIndex: int) -> void:
 		item_selected(firstAnimationSelected);
 	elif tabIndex == 2:
 		audioPreview.show();
+		item_selected(firstAudioSelected);
 
 #func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 #	pass;
@@ -218,11 +226,15 @@ func reset_menu() -> void:
 		button.queue_free();
 	for button: Button in animationsTab.get_children():
 		button.queue_free();
+	for button: Button in audioTab.get_children():
+		button.queue_free();
 	firstImageSelected = null;
 	firstAnimationSelected = null;
+	firstAudioSelected = null;
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
+	generate_buttons("Audio", audioTab, AssetItem.AssetType.AUDIO);
 	on_asset_tab_changed(assetTabs.current_tab);
 
 #func reset_audio(audioName: String) -> void:
@@ -268,6 +280,9 @@ func item_selected(selectedItem: AssetItem) -> void:
 		for image in animation:
 			animationSwapping.currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 		animationSwapping.update_animation_preview();
+	elif (selectedItem.type == AssetItem.AssetType.AUDIO):
+		print("Audio Selected")
+
 	currentAssetLabel.text = selectedItem.displayName;
 	currentSelectedItem = selectedItem;
 
@@ -298,6 +313,8 @@ func create_file_tree() -> void:
 	for animation: String in animationSwapping.flyingEnemyAnimations:
 		dir.make_dir_recursive(filePath + "/Animations/FlyingEnemy/" + animation);
 	# TODO: Add folders for audio
+	for audio: String in audioSwapping.audioTypes:
+		dir.make_dir_recursive(filePath + "/Audio/" + audio);
 
 func open_image_selector() -> void:
 	AudioManager.play_UI_effect("UISelection");
@@ -350,5 +367,6 @@ func setup() -> void:
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
+	generate_buttons("Audio", audioTab, AssetItem.AssetType.AUDIO);
 	on_asset_tab_changed(assetTabs.current_tab);
 	refresh_all();

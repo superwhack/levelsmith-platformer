@@ -3,15 +3,16 @@
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_rshqi"]
 [ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
-[ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="3_rshqi"]
-[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
-[ext_resource type="Texture2D" uid="uid://b265lhxnenhhc" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
+[ext_resource type="Texture2D" uid="uid://da4v1xhytrdda" path="res://icon.svg" id="3_rshqi"]
+[ext_resource type="Texture2D" uid="uid://uboggbk6slsr" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
+[ext_resource type="Texture2D" uid="uid://dxag1j2w8yhjg" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
 [ext_resource type="FontFile" uid="uid://ibgv3ey3taus" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="6_rrs8o"]
 [ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
 [ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
-[ext_resource type="Texture2D" uid="uid://cq6ndlm5t7xwj" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
+[ext_resource type="Texture2D" uid="uid://iyxcim187e44" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
 [ext_resource type="Script" uid="uid://cy0omeeqj1evc" path="res://Scripts/Universal/ImageSwapping.gd" id="10_clgtw"]
 [ext_resource type="Script" uid="uid://pgp1usxbcoyf" path="res://Scripts/Universal/AnimationSwapping.gd" id="11_ukhnw"]
+[ext_resource type="Script" uid="uid://cd1ukd2otaojf" path="res://Scripts/Universal/AudioSwapping.gd" id="12_qbbei"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
@@ -26,7 +27,7 @@ corner_radius_bottom_left = 12
 expand_margin_top = 2.0
 expand_margin_bottom = 3.0
 
-[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imageSwapping", "animationSwapping", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "refreshAllButton")]
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imageSwapping", "animationSwapping", "audioSwapping", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "audioTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "refreshAllButton")]
 process_mode = 2
 self_modulate = Color(1, 1, 1, 0.60784316)
 anchors_preset = 15
@@ -38,11 +39,13 @@ theme = ExtResource("1_rshqi")
 script = ExtResource("1_2va5h")
 imageSwapping = NodePath("ImageSwapping")
 animationSwapping = NodePath("AnimationSwapping")
+audioSwapping = NodePath("AudioSwapping")
 audioPreview = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview")
 assetTabs = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs")
 fileSelect = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton/FileDialog")
 imagesTab = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs/Images/ImagesTabContainer")
 animationsTab = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs/Animations/AnimationsTabContainer")
+audioTab = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs/Audio/AudioTabContainer")
 currentAssetLabel = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/CurrentAssetLabel")
 loadFileButton = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton")
 resetButton = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/ResetButton")
@@ -443,6 +446,13 @@ script = ExtResource("10_clgtw")
 assetManager = NodePath("..")
 imagePreview = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview")
 imagePreviewTexture = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview/ImageAsset")
+
+[node name="AudioSwapping" type="Control" parent="." unique_id=425029358 node_paths=PackedStringArray("assetManager")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("12_qbbei")
+assetManager = NodePath("..")
 
 [node name="AnimationSwapping" type="Control" parent="." unique_id=1958050613 node_paths=PackedStringArray("assetManager", "animationPreview", "animationPreviewTexture", "animationPreviewRightButton", "animationPreviewLeftButton", "animationName", "frameRightButton", "frameLeftButton", "frameCountLabel", "playButton", "stopButton", "FPSSpinbox")]
 anchors_preset = 0

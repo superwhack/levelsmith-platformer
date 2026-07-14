@@ -21,7 +21,7 @@ corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 corner_detail = 10
 
-[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "separator", "separator2", "closeButton", "resetButton", "panelContainer2")]
+[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "separator", "separator2", "closeButton", "resetButton", "saveQuitButton", "noSaveQuitButton", "panelContainer2")]
 process_mode = 3
 self_modulate = Color(0.3764706, 0.3764706, 0.3764706, 0.4862745)
 anchors_preset = 15
@@ -40,6 +40,8 @@ separator = NodePath("PanelContainer/MarginContainer/VBoxContainer/HSeparator")
 separator2 = NodePath("PanelContainer/MarginContainer/VBoxContainer/HSeparator2")
 closeButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer/CloseButton")
 resetButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer/ResetButton")
+saveQuitButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer/SaveQuitButton")
+noSaveQuitButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer/NoSaveButton")
 panelContainer2 = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer2")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
@@ -135,6 +137,20 @@ custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 text = "Reset"
+
+[node name="SaveQuitButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer" unique_id=982530806]
+visible = false
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Save & Return to Menu"
+
+[node name="NoSaveButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer" unique_id=851965436]
+visible = false
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Don't Save & Return to Menu"
 
 [node name="CloseButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer" unique_id=1027214704]
 custom_minimum_size = Vector2(75, 0)

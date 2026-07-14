@@ -108,6 +108,9 @@ modulate = Color(1, 1, 1, 1)
 position = Vector2(0, -1)
 collision_enabled = true
 
+[node name="PropertiesPanel" parent="EditorManager/ScreenUI/MainColumn/ContentRow" parent_id_path=PackedInt32Array(2045534837, 367135701) index="2" unique_id=949999272]
+visible = true
+
 [node name="HoverPopUpContainer" parent="EditorManager/ScreenUI" parent_id_path=PackedInt32Array(2045534837, 189680016) index="2" unique_id=1808818748]
 anchors_preset = -1
 

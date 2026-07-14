@@ -381,18 +381,16 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Pan [WASD / MMB]"
 
-[node name="HoverPopUpContainer" parent="ScreenUI/MainColumn/ContentRow" unique_id=1808818748 instance=ExtResource("16_rdu5w")]
-visible = false
-layout_mode = 2
-
 [node name="PropertiesPanel" type="PanelContainer" parent="ScreenUI/MainColumn/ContentRow" unique_id=949999272]
+visible = false
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0vixy")
 
-[node name="PropertyMenu" parent="ScreenUI/MainColumn/ContentRow/PropertiesPanel" unique_id=1686733993 instance=ExtResource("7_gc37a")]
+[node name="PropertyMenu" parent="ScreenUI/MainColumn/ContentRow/PropertiesPanel" unique_id=1686733993 node_paths=PackedStringArray("editorManager") instance=ExtResource("7_gc37a")]
 layout_mode = 2
+editorManager = NodePath("../../../../..")
 
 [node name="OverlayLayer" type="Control" parent="ScreenUI" unique_id=1751323313]
 visible = false
@@ -406,6 +404,15 @@ metadata/_edit_use_anchors_ = true
 
 [node name="ErrorPopUpLayer" type="CanvasLayer" parent="ScreenUI/OverlayLayer" unique_id=302907189]
 visible = false
+
+[node name="HoverPopUpContainer" parent="ScreenUI" unique_id=1808818748 instance=ExtResource("16_rdu5w")]
+visible = false
+offset_left = 1474.0
+offset_top = 80.0
+offset_right = 1920.0
+offset_bottom = 179.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 

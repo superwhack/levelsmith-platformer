@@ -53,6 +53,7 @@ enum ExitAction {
 }
 
 func _ready() -> void:
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
 	Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
 	Global.levelCreated.connect(tileMap.clear);
@@ -86,6 +87,11 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("level_save")):
 		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated);
+	if event.is_action_pressed("toggle-fullscreen"):
+		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.

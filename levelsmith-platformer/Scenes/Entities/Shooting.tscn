@@ -47,6 +47,7 @@ animations = [{
 }]
 
 [node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow", "questionMark", "downRaycast", "upRaycast", "raycastHelper", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
+scale = Vector2(0.66, 0.66)
 collision_layer = 6
 collision_mask = 6
 platform_floor_layers = 4294967294

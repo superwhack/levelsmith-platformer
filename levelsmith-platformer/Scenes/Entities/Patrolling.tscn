@@ -95,6 +95,7 @@ animations = [{
 }]
 
 [node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft", "rayCastRight", "rayCastLeftTop", "rayCastRightTop", "rayCastDownL", "rayCastDownR", "directionArrow", "leftRaycast", "rightRaycast", "downRaycast", "upRaycast", "raycastHelper", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
+scale = Vector2(0.66, 0.66)
 collision_layer = 6
 collision_mask = 6
 floor_snap_length = 128.0

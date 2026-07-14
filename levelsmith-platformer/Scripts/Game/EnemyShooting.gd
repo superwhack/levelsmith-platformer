@@ -70,12 +70,14 @@ func adjust_arrow(angle: float = fireDirection, random: bool = randomDirection) 
 	if random:
 		questionMark.show();
 		directionArrow.hide();
+		animatedSprites.flip_h = false;
 		return;
 	questionMark.hide();
 	directionArrow.show();
 	directionArrow.rotation_degrees = angle;
 	directionArrow.position.x = cos(deg_to_rad(directionArrow.rotation_degrees)) * 60;
 	directionArrow.position.y = sin(deg_to_rad(directionArrow.rotation_degrees)) * 60;
+	animatedSprites.flip_h = (angle <= -90 && angle > -270);
 
 
 ## Shoots in the determined direction

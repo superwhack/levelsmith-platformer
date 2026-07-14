@@ -32,7 +32,6 @@ func update(offset : Vector2 = Vector2((parent.pointB.x - parent.pointA.x) / Glo
 	var arrowDisplacement : Vector2 = offset.normalized() * displacementSize;
 	var endPosition : Vector2 = offset * Global.TILE_SIZE;
 	
-	modulate.a = .5;
 	global_position = parent.global_position;
 	clear_points();
 	add_point(Vector2.ZERO + arrowDisplacement / 2);

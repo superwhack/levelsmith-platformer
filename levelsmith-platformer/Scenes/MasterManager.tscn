@@ -7,11 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://do2buhww044b1" path="res://Scenes/MainMenu.tscn" id="9_4q5nt"]
 [ext_resource type="Shader" uid="uid://cdtehxsgxkdly" path="res://Assets/Shaders/ditherfadesquare.gdshader" id="11_iwvbt"]
 [ext_resource type="Texture2D" uid="uid://daeif0gohnc4o" path="res://Assets/Sprites/UI/LoadingScreen.png" id="12_8fjml"]
+[ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="13_8fjml"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -52,7 +53,7 @@ shader_parameter/edge_softness = 0.70000003255148
 shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/item_size = Vector2(1, 1)
 
-[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "loadingScreen", "loadingImage", "mainMenuControl", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "winReturnToEditorButton", "playPopUp", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
+[node name="MasterManager" type="Node2D" unique_id=629421629 node_paths=PackedStringArray("editorManager", "toolManager", "gameManager", "entityManager", "cameraManager", "editorManagerCanvas", "gameManagerCanvas", "loadingScreen", "loadingImage", "mainMenuControl", "globalSettingsMenu", "editorHomeButton", "editorPlayButton", "returnToEditorButton", "winReturnToEditorButton", "playPopUp", "tileMap", "previewTileMap", "gridLines", "propertyMenu")]
 script = ExtResource("1_3ngsi")
 editorManager = NodePath("EditorManager")
 toolManager = NodePath("EditorManager/ToolManager")
@@ -64,6 +65,7 @@ gameManagerCanvas = NodePath("GameManager/CanvasLayer")
 loadingScreen = NodePath("LoadingScreen")
 loadingImage = NodePath("LoadingScreen/LoadingImage")
 mainMenuControl = NodePath("MainMenuCanvasLayer/MainMenu")
+globalSettingsMenu = NodePath("Settings/GlobalSettingsMenu")
 editorHomeButton = NodePath("EditorManager/ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/HomeButton")
 editorPlayButton = NodePath("EditorManager/ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton")
 returnToEditorButton = NodePath("GameManager/CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ReturnEditorButton")
@@ -109,7 +111,7 @@ collision_enabled = true
 [node name="AssetManager" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="0" unique_id=468653693 node_paths=PackedStringArray("masterManager")]
 masterManager = NodePath("../../..")
 
-[node name="SettingsMenu" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=79213823 node_paths=PackedStringArray("cameraManager")]
+[node name="LevelSettingsMenu" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=79213823 node_paths=PackedStringArray("cameraManager")]
 cameraManager = NodePath("../../../Camera2D")
 
 [node name="CustomCursorManager" parent="EditorManager" index="6" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
@@ -145,6 +147,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("12_8fjml")
+
+[node name="Settings" type="CanvasLayer" parent="." unique_id=385853240]
+
+[node name="GlobalSettingsMenu" parent="Settings" unique_id=873912658 node_paths=PackedStringArray("masterManager") instance=ExtResource("13_8fjml")]
+visible = false
+masterManager = NodePath("../..")
 
 [editable path="EditorManager"]
 [editable path="EditorManager/CanvasLayer/AssetManager"]

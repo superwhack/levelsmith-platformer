@@ -5,24 +5,25 @@
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
-[ext_resource type="Texture2D" uid="uid://cicj1jmudfxxy" path="res://Assets/UserInterface/Buttons/ButtonIcons/Home.png" id="7_20xd7"]
+[ext_resource type="Texture2D" uid="uid://dicj6blbbf2dt" path="res://Assets/UserInterface/Buttons/ButtonIcons/Home.png" id="7_20xd7"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="9_7flhh"]
-[ext_resource type="Texture2D" uid="uid://c03ijfg5hio0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Save.png" id="10_2406q"]
+[ext_resource type="Texture2D" uid="uid://cpch5upyug7n1" path="res://Assets/UserInterface/Buttons/ButtonIcons/Save.png" id="10_2406q"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Texture2D" uid="uid://e2cnr04fpgrl" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
+[ext_resource type="Texture2D" uid="uid://dt54gtcqj4y6n" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="Texture2D" uid="uid://8pwuej3wvl0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
+[ext_resource type="Texture2D" uid="uid://dymygj183wflb" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
+[ext_resource type="Texture2D" uid="uid://kedeb3vd63r6" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_vrcqo"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
-[ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
+[ext_resource type="PackedScene" uid="uid://cusuiuccep2n3" path="res://Scenes/LevelSettingsMenu.tscn" id="17_fnjh2"]
 [ext_resource type="Script" uid="uid://dennrhd1fmssd" path="res://Scripts/Universal/LevelScreenshot.gd" id="25_fnjh2"]
 [ext_resource type="Script" uid="uid://demhkcrctsljf" path="res://Scripts/Editor/IconManager.gd" id="26_vrcqo"]
 
@@ -64,7 +65,7 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0vixy"]
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "iconManager", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "settingsMenu", "settingsButton", "customCursorManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "iconManager", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "levelSettingsMenu", "levelSettingsButton", "globalSettingsButton", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
 iconManager = NodePath("IconManager")
@@ -76,8 +77,9 @@ playButton = NodePath("ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTop
 exportButton = NodePath("ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/SaveButton")
 assetManager = NodePath("CanvasLayer/AssetManager")
 assetManagerButton = NodePath("ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/AssetManagerButton")
-settingsMenu = NodePath("CanvasLayer/SettingsMenu")
-settingsButton = NodePath("ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/SettingsButton")
+levelSettingsMenu = NodePath("CanvasLayer/LevelSettingsMenu")
+levelSettingsButton = NodePath("ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/LevelSettingsButton")
+globalSettingsButton = NodePath("ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/GlobalSettingsButton")
 customCursorManager = NodePath("CustomCursorManager")
 
 [node name="GridLines" type="TileMapLayer" parent="." unique_id=669187714]
@@ -88,6 +90,7 @@ script = ExtResource("5_2h6au")
 [node name="Tiles" type="TileMapLayer" parent="." unique_id=1452837543]
 tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAAAAAADAAcAAwAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAKAAYABAAAAAAAAAALAAYABAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAANAAUAAQAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAADAAkAAAAAAAAAAAACAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAD//wkAAAAAAAAAAAAJAAYABgAAAAAAAGAMAAUABgAAAAAAAGACAAUABQAAAAAAAAAGAAUABQAAAAAAAAAAAAAAAAAAAAAAAAA=")
 tile_set = ExtResource("2_8t3j3")
+physics_quadrant_size = 1
 
 [node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485 node_paths=PackedStringArray("editorManager", "toolManager", "tileMap")]
 modulate = Color(1, 1, 1, 0.5058824)
@@ -308,7 +311,7 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 texture = ExtResource("13_ditat")
 
-[node name="SettingsButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=330056258]
+[node name="LevelSettingsButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=330056258]
 custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
@@ -317,7 +320,7 @@ focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
-[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/SettingsButton" unique_id=1907737059]
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/LevelSettingsButton" unique_id=1907737059]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -329,7 +332,32 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/SettingsButton/MarginContainer" unique_id=1811417484]
+[node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/LevelSettingsButton/MarginContainer" unique_id=1811417484]
+layout_mode = 2
+texture = ExtResource("14_vrcqo")
+expand_mode = 1
+
+[node name="GlobalSettingsButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=1145625221]
+custom_minimum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(65, 65)
+layout_mode = 2
+size_flags_horizontal = 4
+icon_alignment = 1
+expand_icon = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/GlobalSettingsButton" unique_id=1272596027]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/GlobalSettingsButton/MarginContainer" unique_id=1158301421]
 layout_mode = 2
 texture = ExtResource("14_rdu5w")
 
@@ -393,8 +421,7 @@ visible = false
 editorManager = NodePath("../..")
 mainTileMap = NodePath("../../Tiles")
 
-[node name="SettingsMenu" parent="CanvasLayer" unique_id=79213823 node_paths=PackedStringArray("editorManager") instance=ExtResource("20_fnjh2")]
-process_mode = 2
+[node name="LevelSettingsMenu" parent="CanvasLayer" unique_id=79213823 node_paths=PackedStringArray("editorManager") instance=ExtResource("17_fnjh2")]
 visible = false
 editorManager = NodePath("../..")
 

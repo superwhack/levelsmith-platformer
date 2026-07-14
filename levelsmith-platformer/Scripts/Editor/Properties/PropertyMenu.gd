@@ -162,7 +162,6 @@ func _process(_delta: float) -> void:
 	elif selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
 		selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
-		selectedEntity.previewLine.modulate.a = 1;
 	elif selectedEntity is EnemyStationary:
 		entityName.text = "Stationary Enemy";
 		selectedEntity.update_flipped(!stationaryDirectionDropdown.value);
@@ -170,7 +169,6 @@ func _process(_delta: float) -> void:
 		entityName.text = "Moving Platform";
 		selectedEntity.adjust_preview(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value) * Global.TILE_SIZE, movingPlatformProgressSlider.value);
 		selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
-		selectedEntity.previewLine.modulate.a = 1;
 	elif selectedEntity is Player:
 		entityName.text = "Player";
 
@@ -382,6 +380,7 @@ func show_menu(resource: Resource = null) -> void:
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
+		
 	playerMenu.hide();
 	patrollingMenu.hide();
 	shootingMenu.hide();
@@ -404,7 +403,6 @@ func show_menu(resource: Resource = null) -> void:
 			flyingMenu.show()
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate.a = 1;
 				selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, flyingOffsetYSlider.value));
 		elif selectedEntity is EnemyStationary:
 			stationaryMenu.show();
@@ -412,7 +410,6 @@ func show_menu(resource: Resource = null) -> void:
 			movingPlatformMenu.show();
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
-				previewLine.modulate.a = 1;
 				selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
 		
 		

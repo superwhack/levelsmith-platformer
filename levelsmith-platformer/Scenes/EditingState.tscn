@@ -88,6 +88,7 @@ script = ExtResource("5_2h6au")
 [node name="Tiles" type="TileMapLayer" parent="." unique_id=1452837543]
 tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAAAAAADAAcAAwAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAKAAYABAAAAAAAAAALAAYABAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAANAAUAAQAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAADAAkAAAAAAAAAAAACAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAD//wkAAAAAAAAAAAAJAAYABgAAAAAAAGAMAAUABgAAAAAAAGACAAUABQAAAAAAAAAGAAUABQAAAAAAAAAAAAAAAAAAAAAAAAA=")
 tile_set = ExtResource("2_8t3j3")
+physics_quadrant_size = 1
 
 [node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485 node_paths=PackedStringArray("editorManager", "toolManager", "tileMap")]
 modulate = Color(1, 1, 1, 0.5058824)
@@ -394,17 +395,6 @@ grow_vertical = 1
 
 [node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("editorManager", "mainTileMap") instance=ExtResource("11_bpoex")]
 visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -450.0
-offset_top = -300.0
-offset_right = 450.0
-offset_bottom = 300.0
-grow_horizontal = 2
-grow_vertical = 2
 editorManager = NodePath("../..")
 mainTileMap = NodePath("../../Tiles")
 
@@ -426,11 +416,12 @@ editorManager = NodePath("..")
 toolManager = NodePath("../ToolManager")
 entityManager = NodePath("../ToolManager/EntityManager")
 
-[node name="ToolManager" type="Node2D" parent="." unique_id=2103609005 node_paths=PackedStringArray("editorManager", "entityManager", "tileManager", "tileSwitch", "propertyMenu", "previewTile")]
+[node name="ToolManager" type="Node2D" parent="." unique_id=2103609005 node_paths=PackedStringArray("editorManager", "entityManager", "tileManager", "customCursorManager", "tileSwitch", "propertyMenu", "previewTile")]
 script = ExtResource("12_20xd7")
 editorManager = NodePath("..")
 entityManager = NodePath("EntityManager")
 tileManager = NodePath("TileManager")
+customCursorManager = NodePath("../CustomCursorManager")
 tileSwitch = NodePath("../ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TileSwitch")
 propertyMenu = NodePath("../ScreenUI/MainColumn/ContentRow/PropertiesPanel/PropertyMenu")
 previewTile = NodePath("../PreviewTile")

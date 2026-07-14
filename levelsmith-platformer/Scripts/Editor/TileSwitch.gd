@@ -19,34 +19,34 @@ extends HBoxContainer
 
 ## References to the tile button exports.
 @export_group("Tile Button Exports")
-@export var solidButton : Button;
-@export var slopeButton : Button;
-@export var oneWayButton : Button;
-@export var bounceButton : Button;
-@export var iceButton : Button;
-@export var stickyButton : Button;
-@export var hazardButton : Button;
-@export var deathButton : Button;
+@export var firstTileButton : Button;
+@export var secondTileButton : Button;
+@export var thirdTileButton : Button;
+@export var fourthTileButton : Button;
+@export var fifthTileButton : Button;
+@export var sixthTileButton : Button;
+@export var seventhTileButton : Button;
+@export var eighthTileButton : Button;
 
 ## References to the entity button exports.
 @export_group("Entity Button Exports")
-@export var playerEntityButton : Button;
-@export var coinEntityButton : Button;
-@export var patrollingEntityButton : Button;
-@export var stationaryEntityButton : Button;
-@export var shootingEntityButton : Button;
-@export var flyingEntityButton : Button;
-@export var movingPlatformEntityButton : Button;
-@export var goalEntityButton : Button;
+@export var firstEntityButton : Button;
+@export var secondEntityButton : Button;
+@export var thirdEntityButton : Button;
+@export var fourthEntityButton : Button;
+@export var fifthEntityButton : Button;
+@export var sixthEntityButton : Button;
+@export var seventhEntityButton : Button;
+@export var eighthEntityButton : Button;
 
 ## References to the prop button exports.
 @export_group("Prop Button Exports")
-@export var propOneButton : Button;
-@export var propTwoButton : Button;
-@export var propThreeButton : Button;
-@export var propFourButton : Button;
-@export var propFiveButton : Button;
-@export var propSixButton : Button;
+@export var firstPropButton : Button;
+@export var secondPropButton : Button;
+@export var thirdPropButton : Button;
+@export var fourthPropButton : Button;
+@export var fifthPropButton : Button;
+@export var sixthPropButton : Button;
 
 
 func _ready() -> void:

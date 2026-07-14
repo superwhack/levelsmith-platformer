@@ -16,8 +16,8 @@ extends Button
 @export var image : TextureRect;
 
 func _ready() -> void:
-	focus_entered.connect(_on_focus_entered);
-	pressed.connect(change_brush_object)
+	focus_entered.connect(select);
+	pressed.connect(select);
 
 func _process(_delta: float) -> void:
 	# Change the texture to the texture currently set in the tile set
@@ -27,13 +27,18 @@ func _process(_delta: float) -> void:
 			image.texture = templateAnimation.sprite_frames.get_frame_texture(templateAnimation.animation, 0);
 		else:
 			image.texture = tileSet.get_source(thisItemID).texture;
-	
 
-func change_brush_object() -> void:
+## Select this button.
+func select() -> void:
+	if (!button_pressed):
+		button_pressed = true;
+	if (!has_focus()):
+		grab_focus();
+		
 	AudioManager.play_UI_effect("UISelection");
 	tilebar.toolManager.update_brush_object(thisItemID);
 	
-## Marks button as pressed, so that it is officially selected.
-func _on_focus_entered() -> void:
-	button_pressed = true;
-	change_brush_object();
+	
+#func change_brush_object() -> void:
+	#AudioManager.play_UI_effect("UISelection");
+	#tilebar.toolManager.update_brush_object(thisItemID);

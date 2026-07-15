@@ -9,18 +9,18 @@
 [ext_resource type="Texture2D" uid="uid://b5lpkvodh8h1v" path="res://Assets/Sprites/UI/FavoriteMedium.PNG" id="6_pjscj"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
 [ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
-[ext_resource type="Texture2D" uid="uid://lpdgu5348gr3" path="res://Assets/UserInterface/UpdatedIcons/mingcute--file-new-line.png" id="11_m7n2d"]
-[ext_resource type="Texture2D" uid="uid://ihfc61dfv4tu" path="res://Assets/UserInterface/UpdatedIcons/lucide--import.png" id="12_65hh5"]
-[ext_resource type="Texture2D" uid="uid://yxm2yjaw2e4n" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--folder-open-outline-rounded.png" id="13_6byu3"]
+[ext_resource type="Texture2D" uid="uid://bhujf223823vx" path="res://Assets/UserInterface/UpdatedIcons/mingcute--file-new-line.png" id="11_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://cf37oejfyphqh" path="res://Assets/UserInterface/UpdatedIcons/lucide--import.png" id="12_65hh5"]
+[ext_resource type="Texture2D" uid="uid://c3bcgvvldi8h8" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--folder-open-outline-rounded.png" id="13_6byu3"]
 [ext_resource type="Texture2D" uid="uid://dr1smfcdfn46v" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Favorite.png" id="13_gcoc3"]
-[ext_resource type="Texture2D" uid="uid://ryk4jo0iy3qt" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-bold.png" id="14_leunp"]
-[ext_resource type="Texture2D" uid="uid://buv4gfuc3o66v" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
-[ext_resource type="Texture2D" uid="uid://bjh8vyfhcdjw7" path="res://Assets/UserInterface/UpdatedIcons/octicon--duplicate-16.png" id="16_5hdia"]
-[ext_resource type="Texture2D" uid="uid://d2hic6cvgsomb" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--delete-outline-rounded.png" id="17_iqn0u"]
+[ext_resource type="Texture2D" uid="uid://brfpfahi53kdw" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-bold.png" id="14_leunp"]
+[ext_resource type="Texture2D" uid="uid://c0lyraj4k064w" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
+[ext_resource type="Texture2D" uid="uid://d0e528mstmpef" path="res://Assets/UserInterface/UpdatedIcons/octicon--duplicate-16.png" id="16_5hdia"]
+[ext_resource type="Texture2D" uid="uid://b38fqjg35v114" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--delete-outline-rounded.png" id="17_iqn0u"]
 [ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
-[ext_resource type="Texture2D" uid="uid://c2nl0sr5deq4g" path="res://Assets/UserInterface/UpdatedIcons/streamline--controller-remix.png" id="18_3u44c"]
+[ext_resource type="Texture2D" uid="uid://ltm18xoqmr0d" path="res://Assets/UserInterface/UpdatedIcons/streamline--controller-remix.png" id="18_3u44c"]
 [ext_resource type="Texture2D" uid="uid://bbn361u6ti6j8" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
-[ext_resource type="Texture2D" uid="uid://b511kuqxstmsl" path="res://Assets/UserInterface/UpdatedIcons/boxicons--edit.png" id="19_bxv1r"]
+[ext_resource type="Texture2D" uid="uid://bvpg5blwmmpkk" path="res://Assets/UserInterface/UpdatedIcons/boxicons--edit.png" id="19_bxv1r"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -516,18 +516,54 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="DuplicateLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=980103507]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
 layout_mode = 2
 disabled = true
-icon = ExtResource("16_5hdia")
+
+[node name="MarginContainer" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn/DuplicateLevelButton" unique_id=1007011594]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn/DuplicateLevelButton/MarginContainer" unique_id=861156596]
+layout_mode = 2
+texture = ExtResource("16_5hdia")
+expand_mode = 3
 
 [node name="DuplicateDeleteSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=2113419149]
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
 [node name="DeleteLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=873845671]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
 layout_mode = 2
 disabled = true
-icon = ExtResource("17_iqn0u")
+
+[node name="MarginContainer" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn/DeleteLevelButton" unique_id=1687241335]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="TextureRect" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn/DeleteLevelButton/MarginContainer" unique_id=1545549430]
+layout_mode = 2
+texture = ExtResource("17_iqn0u")
+expand_mode = 3
 
 [node name="MetadataMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow" unique_id=18846420]
 layout_mode = 2

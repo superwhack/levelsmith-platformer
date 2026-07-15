@@ -21,12 +21,10 @@ extends Node2D
 # Asset Manager and Button
 @export var assetManager : AssetManager;
 @export var assetManagerButton : Button;
-@export var closeAssetManagerButton : Button;
 
 # Settings Menu and button
-@export var levelSettingsMenu : LevelSettingsMenu;
-@export var levelSettingsButton : Button;
-@export var globalSettingsButton : Button;
+@export var settingsMenu : SettingsMenu;
+@export var settingsButton : Button;
 
 # Cursor Manager
 @export var customCursorManager : Node2D;
@@ -40,7 +38,6 @@ var currentHotbarState : Global.HotbarState;
 
 # Flags
 var isValidated : bool = false;
-var unsavedChanges : bool = false;
 var isPlaceable : bool = true;
 var playerExists : bool = false;
 var goalExists : bool = false;
@@ -57,20 +54,17 @@ func _ready() -> void:
 		goalExists = false;
 	
 	var export_level = func() -> void:
-		unsavedChanges = true;
-		AudioManager.play_UI_effect("UISelection");
+		AudioManager.play_UI_effect("UISelection")
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
 		
 		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated);
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu, isValidated);
 	
 	assetManagerButton.pressed.connect(open_asset_manager);
-	levelSettingsButton.pressed.connect(open_level_settings_menu);
-	globalSettingsButton.pressed.connect(masterManager.open_global_settings_menu);
+	settingsButton.pressed.connect(open_settings_menu);
 	Global.levelCreated.connect(reset_player_and_goal);
 	exportButton.pressed.connect(export_level);
-	closeAssetManagerButton.pressed.connect(close_asset_manager);
 
 ## Runs every frame during the editing state
 ## _delta: how much time has passed since the last frame
@@ -97,11 +91,10 @@ func _process(_delta: float) -> void:
 ## event: The user input
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("level_save")):
-		unsavedChanges = false;
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
 		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated);
+		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, settingsMenu, isValidated);
 
 
 ## Takes a screenshot of the level by hiding the UI and disabling the main camera
@@ -153,13 +146,11 @@ func reset_enemy_positions() -> void:
 	for moving in get_tree().get_nodes_in_group("Moving"):
 		if (moving is Enemy || moving is MovingPlatform) && moving.propertyFile:
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
-			if !moving is EnemyFlyer:
-				moving.global_position += Vector2(0, 20);
 			if moving is EnemyPatrol:
 				moving.directionArrow.show();
 			elif moving is EnemyShooting:
 				moving.directionArrow.show();
-			elif moving is EnemyFlyer:
+			if moving is EnemyFlyer:
 				moving.previewLine.show();
 		if moving is MovingPlatform && moving.propertyFile:
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
@@ -176,13 +167,13 @@ func open_asset_manager() -> void:
 	assetManager.show();
 
 ## Opens the settings menu
-func open_level_settings_menu() -> void:
+func open_settings_menu() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
 	iconManager.previewIcon.hide();
-	levelSettingsMenu.show();
+	settingsMenu.show();
 
 ## Closes the asset manager
 func close_asset_manager() -> void:
@@ -195,9 +186,9 @@ func close_asset_manager() -> void:
 	AnimationManager.refresh_animations();
 
 ## Closes the settings menu
-func close_level_settings_menu() -> void:
+func close_settings_menu() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
 	get_tree().paused = false;
 	AudioManager.play_UI_effect("UISelection");
 	previewTileMap.show();
-	levelSettingsMenu.hide();
+	settingsMenu.hide();

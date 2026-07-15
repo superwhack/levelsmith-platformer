@@ -84,9 +84,8 @@ func patrol_behavior() -> void:
 func adjust_arrow(angle: float) -> void:
 	directionArrow.show();
 	directionArrow.rotation_degrees = angle;
-	directionArrow.position.x = sin(deg_to_rad(directionArrow.rotation_degrees)) * 65;
-	directionArrow.position.y = -cos(deg_to_rad(directionArrow.rotation_degrees)) * 65;
-	animatedSprites.flip_h = (angle == 270);
+	directionArrow.position.x = sin(deg_to_rad(directionArrow.rotation_degrees)) * 90;
+	directionArrow.position.y = -cos(deg_to_rad(directionArrow.rotation_degrees)) * 90;
 
 func assign_script(id: String, assignPosition: Vector2i) -> void:
 	propertyFile = ResourceLoader.load("user://Resources/Enemies/Patrolling" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)

@@ -2,56 +2,43 @@
 
 [ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/Editor/PopUp/ErrorPopUp.gd" id="1_vk40p"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_kt1np"]
+[ext_resource type="Texture2D" uid="uid://da0gjbpe87rk5" path="res://Assets/Sprites/Entities/Coin.png" id="3_c30co"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ai07j"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fj8s5"]
+bg_color = Color(0.99215686, 0.7921569, 0.36078432, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+corner_detail = 9
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1i6c8"]
-bg_color = Color(0.1254902, 0.12941177, 0.14509805, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gn8f6"]
-bg_color = Color(0.22352941, 0.08627451, 0.047058824, 0.5921569)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.5874098, 0.27984193, 0.1886749, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-corner_detail = 10
-
-[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "separator", "closeButton", "resetButton")]
+[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "closeButton")]
 process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_ai07j")
 script = ExtResource("1_vk40p")
 title = NodePath("PanelContainer/MarginContainer/VBoxContainer/TitleHbox/Title")
-bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/Body")
-separator = NodePath("PanelContainer/MarginContainer/VBoxContainer/HSeparator")
-closeButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ResetAssetButtonsContainer/CloseButton")
-resetButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ResetAssetButtonsContainer/ResetButton")
+bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/Body")
+closeButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/ResetAssetButtonsContainer/CloseButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
-custom_minimum_size = Vector2(350, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -223.0
-offset_top = -88.5
-offset_right = 223.0
-offset_bottom = 88.5
+offset_left = -150.0
+offset_top = -98.5
+offset_right = 150.0
+offset_bottom = -16.5
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_kt1np")
-theme_override_styles/panel = SubResource("StyleBoxFlat_1i6c8")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fj8s5")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=266539190]
 layout_mode = 2
@@ -65,10 +52,15 @@ layout_mode = 2
 
 [node name="TitleHbox" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1747497031]
 layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Logo" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/TitleHbox" unique_id=452964338]
+layout_mode = 2
+texture = ExtResource("3_c30co")
+expand_mode = 2
 
 [node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/TitleHbox" unique_id=1675355400]
 layout_mode = 2
-theme = ExtResource("2_kt1np")
 theme_override_font_sizes/font_size = 24
 text = "Reset All Assets"
 horizontal_alignment = 1
@@ -76,53 +68,27 @@ horizontal_alignment = 1
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=973337792]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=2044455978]
+[node name="Body" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=908015837]
 layout_mode = 2
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=214502963]
-layout_mode = 2
-theme = ExtResource("2_kt1np")
-theme_override_styles/panel = SubResource("StyleBoxFlat_gn8f6")
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer" unique_id=1279630168]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="Body" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer" unique_id=908015837]
-layout_mode = 2
-theme = ExtResource("2_kt1np")
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 18
 bbcode_enabled = true
-text = "This will reset all assets to default. All Custom assets will be lost."
+text = "This will [color=red]RESET[/color] [b]ALL ASSETS[/b] to default. All Custom assets will be lost."
 fit_content = true
 
-[node name="HSeparator2" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1925823589]
+[node name="ResetAssetButtonsContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=172246450]
 layout_mode = 2
+size_flags_horizontal = 4
 
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=771814005]
+[node name="ResetButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ResetAssetButtonsContainer" unique_id=1607265230]
 layout_mode = 2
-theme_override_constants/margin_top = 5
-
-[node name="ResetAssetButtonsContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2" unique_id=172246450]
-layout_mode = 2
-size_flags_horizontal = 8
-
-[node name="ResetButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ResetAssetButtonsContainer" unique_id=1607265230]
-custom_minimum_size = Vector2(75, 0)
-layout_mode = 2
-theme = ExtResource("2_kt1np")
+theme_override_colors/font_color = Color(1, 0.20784314, 0.21960784, 1)
 text = "Reset"
 
-[node name="Spacer" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ResetAssetButtonsContainer" unique_id=170094419]
-custom_minimum_size = Vector2(20, 0)
+[node name="Spacer" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/ResetAssetButtonsContainer" unique_id=170094419]
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 
-[node name="CloseButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ResetAssetButtonsContainer" unique_id=1027214704]
-custom_minimum_size = Vector2(75, 0)
+[node name="CloseButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ResetAssetButtonsContainer" unique_id=1027214704]
 layout_mode = 2
-theme = ExtResource("2_kt1np")
 text = "Close"

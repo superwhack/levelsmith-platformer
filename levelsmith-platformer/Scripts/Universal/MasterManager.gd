@@ -15,8 +15,6 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var loadingImage : TextureRect;
 @export var mainMenuControl : Control;
 
-@export var globalSettingsMenu : GlobalSettingsMenu;
-
 # References to relevant buttons
 @export var editorHomeButton : Button;
 @export var editorPlayButton : Button;
@@ -46,14 +44,7 @@ var loadingTweenTime : float = 0.35
 #The time that the full screen holds
 var loadingHold : float = 0.30
 
-# An enum for determining if we are going to the main menu or desktop.
-enum ExitAction {
-	MAIN_MENU,
-	QUIT
-}
-
 func _ready() -> void:
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
 	Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
 	Global.levelCreated.connect(tileMap.clear);
@@ -69,7 +60,6 @@ func _ready() -> void:
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
 	winReturnToEditorButton.pressed.connect(edit);
-	get_window().close_requested.connect(check_unsaved_changes.bind(Callable(get_tree(), "quit"), ExitAction.QUIT));
 	
 	# Create the enemy resource folder and custom player preset.
 	if (!DirAccess.dir_exists_absolute("user://Resources/")):
@@ -79,6 +69,9 @@ func _ready() -> void:
 		
 	main_menu(false);
 	
+	
+	
+	
 	await screen_static();
 	await main_menu(false, true);
 
@@ -86,12 +79,7 @@ func _ready() -> void:
 ## event: The user input
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated);
-	if event.is_action_pressed("toggle-fullscreen"):
-		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
-		else:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu, editorManager.isValidated);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
@@ -130,11 +118,9 @@ func screen_static() -> void:
 ## levelAuthor: Author of the level
 ## newSize: The width and height of the level
 func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) -> void:
-	# Overrides alt+f4 for saving
-	
 	worldSize = newSize;
 	cameraManager.initialize_camera();
-	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.levelSettingsMenu);
+	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.settingsMenu);
 	propertyMenu.reset_custom();
 	loadedLevelPath = "user://Levels/" + levelName + "/";
 	#AudioManager.masterVolume = 0;
@@ -171,7 +157,7 @@ func import_level_and_edit() -> void:
 	editorManager.reset_enemy_positions();
 	await get_tree().process_frame;
 	cameraManager.initialize_camera();
-	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.levelSettingsMenu);
+	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.settingsMenu);
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
 	await get_tree().process_frame
@@ -186,44 +172,9 @@ func load_level(levelPath: String, play: bool = false) -> void:
 		await import_level_and_edit();
 		if (play):
 			play();
-			
-
-## Checks if the level has unsaved changes, and creates a popup with appropriate functions.
-## on_continue: A callable function, for going to main menu or force quitting app.
-func check_unsaved_changes(on_continue: Callable, exit: ExitAction) -> void:
-	# No unsaved changes, do regular action.
-	if (!editorManager.unsavedChanges):
-		on_continue.call();
-		return;
-	
-	# Saves and brings the user to the main menu. First callable.
-	var save = func() -> void:
-		editorManager.unsavedChanges = false;
-		AudioManager.play_UI_effect("UISelection");
-		var levelScreenshot : Image = await editorManager.screenshot_level();
-		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated);
-		on_continue.call();
-	
-	# No save, brings user to main menu
-	var no_save = func() -> void:
-		editorManager.unsavedChanges = false;
-		on_continue.call();
-	
-	if (editorManager.unsavedChanges):
-		PopUpManager.create_unsaved_changes_popup(save, no_save);
-		
-	if (exit == ExitAction.QUIT):
-		PopUpManager.currentPopUp.set_save_quit_text("Save & Quit to Desktop");
-		PopUpManager.currentPopUp.set_no_save_quit_text("Quit to Desktop");
-
 
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
-	if (editorManager.unsavedChanges):
-		check_unsaved_changes(main_menu, ExitAction.MAIN_MENU);
-		return;
-	
 	mainMenuControl.fill_level_list();
 	if !onStart:
 		await screen_wipe_in();
@@ -248,12 +199,9 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	if !onStart:
 		await screen_wipe_out();
 	loadedLevelPath = "";
-	# Removes alt+f4 override
-	get_tree().set_auto_accept_quit(true);
 
 ## Swap to edit state
 func edit() -> void:
-	get_tree().set_auto_accept_quit(false);
 	await get_tree().process_frame;
 	await screen_wipe_in();
 	AudioManager.reset_audio();
@@ -303,6 +251,7 @@ func play() -> void:
 	# Change scene to play 
 	gameManager.show();
 	gameManager.playerPreset = propertyMenu.selectedPlayerPreset;
+	gameManager.start();
 	gameManagerCanvas.show();
 	editorManager.hide();
 	editorManagerCanvas.hide();
@@ -311,11 +260,9 @@ func play() -> void:
 	# Pause the editor manager
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
-	gameManager.freeze(true);
-	await gameManager.reset();
+	gameManager.reset();
 	await get_tree().process_frame
 	await screen_wipe_out();
-	gameManager.freeze(false);
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
@@ -379,16 +326,3 @@ func get_play_errors() -> Array[String]:
 		errors.append("End Goal");
 		
 	return errors;
-
-func open_global_settings_menu() -> void:
-	get_tree().paused = true;
-	AudioManager.play_UI_effect("UISelection")
-	previewTileMap.hide();
-	globalSettingsMenu.show();
-
-## Closes the settings menu
-func close_global_settings_menu() -> void:
-	get_tree().paused = false;
-	AudioManager.play_UI_effect("UISelection");
-	previewTileMap.show();
-	globalSettingsMenu.hide();

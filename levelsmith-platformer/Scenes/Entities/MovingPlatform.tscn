@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://b6axoaekmjyr4"]
 
 [ext_resource type="Script" uid="uid://dvbnlxepvikk0" path="res://Scripts/Game/MovingPlatform.gd" id="1_it7tw"]
-[ext_resource type="Texture2D" uid="uid://0o8pa72fgxqb" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
-[ext_resource type="PackedScene" uid="uid://bpq5curyo7xhv" path="res://Scenes/Preview/PreviewLine.tscn" id="2_v67sg"]
-[ext_resource type="Texture2D" uid="uid://dy7tdy3mjcigo" path="res://Assets/Sprites/Entities/MovingPlatform/PlatformAnimation/1.png" id="3_v67sg"]
+[ext_resource type="Texture2D" uid="uid://d1oebx8abt0n" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
+[ext_resource type="Texture2D" uid="uid://bcvqyloafr7xv" path="res://Assets/Sprites/UI/Grab.png" id="2_na4dm"]
+[ext_resource type="Texture2D" uid="uid://br66drsgr4ajb" path="res://Assets/Sprites/Entities/MovingPlatform/PlatformAnimation/1.png" id="3_v67sg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hvxo"]
 
@@ -18,13 +18,14 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="MovingPlatform" type="AnimatableBody2D" unique_id=1993058236 node_paths=PackedStringArray("onScreen", "animatedSprite", "previewLine", "previewPlatform") groups=["Moving", "Platform"]]
+[node name="MovingPlatform" type="AnimatableBody2D" unique_id=1993058236 node_paths=PackedStringArray("onScreen", "animatedSprite", "previewLine", "previewLineEndpoint", "previewPlatform") groups=["Moving", "Platform"]]
 collision_layer = 3
 collision_mask = 0
 script = ExtResource("1_it7tw")
 onScreen = NodePath("OnScreen")
 animatedSprite = NodePath("AnimatedSprite2D")
-previewLine = NodePath("PreviewLine")
+previewLine = NodePath("Line2D")
+previewLineEndpoint = NodePath("Line2D/LineEndpoint")
 previewPlatform = NodePath("PreviewPlatform")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
@@ -32,8 +33,15 @@ scale = Vector2(6.4, 6.4)
 shape = SubResource("RectangleShape2D_5hvxo")
 one_way_collision = true
 
-[node name="PreviewLine" parent="." unique_id=1504030647 node_paths=PackedStringArray("parent") instance=ExtResource("2_v67sg")]
-parent = NodePath("..")
+[node name="Line2D" type="Line2D" parent="." unique_id=1331604601]
+visible = false
+z_index = -2
+default_color = Color(0, 0, 0.05490196, 0.8352941)
+joint_mode = 2
+begin_cap_mode = 2
+
+[node name="LineEndpoint" type="Sprite2D" parent="Line2D" unique_id=1023530108]
+texture = ExtResource("2_na4dm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1882252462]
 z_index = -1

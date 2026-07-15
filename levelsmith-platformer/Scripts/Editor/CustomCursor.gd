@@ -19,7 +19,6 @@ var selectorState : SelectorState = SelectorState.DEFAULT;
 
 # instantiated sprites
 var selectorFrame : Sprite2D;
-var entityHighlight : Sprite2D;
 
 # Default cursor
 var uiCursor : Texture2D = preload("res://Assets/Sprites/UI/Cursors/CursorDefault.PNG");
@@ -42,7 +41,7 @@ var cursorEditInvalid : Texture2D = preload("res://Assets/Sprites/UI/Cursors/Cur
 
 # Selector Frame
 var selectorFrameSprite : Texture2D = preload("res://Assets/Sprites/UI/SelectorFrame.png");
-var selectorFrameDashed : Texture2D = preload("res://Assets/Sprites/UI/SelectorFrameDashed.png");
+
 
 # mouse position reference  (always updated)
 var currentMousePosition : Vector2;
@@ -57,15 +56,8 @@ func _ready() -> void:
 	selectorFrame.texture = selectorFrameSprite;
 	add_child(selectorFrame);
 	
-	entityHighlight = Sprite2D.new();
-	entityHighlight.modulate = Color.YELLOW;
-	entityHighlight.texture = selectorFrameDashed;
-	add_child(entityHighlight);
-	entityHighlight.hide();
-	
 	# Set the custom mouse cursor
 	Input.set_custom_mouse_cursor(uiCursor);
-	entityManager.propertyMenu.hidden.connect(entityHighlight.hide);
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -110,9 +102,7 @@ func _process(_delta: float) -> void:
 					Input.set_custom_mouse_cursor(cursorEdit if editorManager.isPlaceable else cursorEditInvalid);
 				else:
 					Input.set_custom_mouse_cursor(cursorIcon if editorManager.isPlaceable else cursorInvalid);
-	
-	if (selectorState == SelectorState.COPYING):
-		entityHighlight.show();
+	pass
 
 ## Updates the state of the selector frame in accordance with other actions.
 func update_selector_state() -> void:
@@ -122,9 +112,3 @@ func update_selector_state() -> void:
 	elif (isEditing): selectorState = SelectorState.EDITING; 
 	elif (toolManager.isMoving && toolManager.prevBrushObject >= 0): selectorState = SelectorState.MOVING;
 	else: selectorState = SelectorState.DEFAULT;
-
-## Moves the entity highlighter to the selected entity and displays it
-## entityPosition: Where the selected entity is
-func highlight_selected_entity(entityPosition: Vector2) -> void:
-	entityHighlight.position = entityPosition * Global.TILE_SIZE + Vector2(Global.TILE_SIZE / 2.0, Global.TILE_SIZE / 2.0);
-	entityHighlight.show();

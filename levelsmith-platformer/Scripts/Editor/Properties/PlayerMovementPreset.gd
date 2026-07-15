@@ -13,8 +13,6 @@ class_name PlayerMovementPreset
 @export var fallSpeed : float;
 @export var coyoteTime : float;
 
-@export var slopeSlowdown : bool;
-@export var oneways : bool;
 @export var doubleJump : bool;
 @export var wallJump : bool;
 @export var wallJumpDecay : bool;

@@ -41,8 +41,6 @@ func _ready() -> void:
 ## delta: Time since previous frame.
 func _physics_process(delta: float) -> void:
 	if (health <= 0):
-		super._physics_process(delta);
-		move_and_slide();
 		return;
 	
 	if !active:
@@ -114,6 +112,8 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	pointB = pointA + propertyFile.pointBOffset;
 	targetPoint = pointB;
 	previewLine.update();
+	z_index += 2;
+	previewLine.z_index = z_index - 4;
 	ResourceSaver.save(propertyFile);
 
 	apply_script(propertyFile);

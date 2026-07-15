@@ -153,11 +153,13 @@ func reset_enemy_positions() -> void:
 	for moving in get_tree().get_nodes_in_group("Moving"):
 		if (moving is Enemy || moving is MovingPlatform) && moving.propertyFile:
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
+			if !moving is EnemyFlyer:
+				moving.global_position += Vector2(0, 20);
 			if moving is EnemyPatrol:
 				moving.directionArrow.show();
 			elif moving is EnemyShooting:
 				moving.directionArrow.show();
-			if moving is EnemyFlyer:
+			elif moving is EnemyFlyer:
 				moving.previewLine.show();
 		if moving is MovingPlatform && moving.propertyFile:
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);

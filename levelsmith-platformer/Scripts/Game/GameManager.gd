@@ -149,6 +149,9 @@ func start() -> void:
 	
 	# Set player position to the checkpoint
 	if playerCheckpointPosition != Vector2(-1, -1):
+		for node in tileMap.get_children():
+			if (node.global_position - Vector2(1, 0)) == playerCheckpointPosition:
+				node.animatedSprite.play("CheckpointActive");
 		player.global_position = playerCheckpointPosition;
 	else:
 		testingTime = 0.0;

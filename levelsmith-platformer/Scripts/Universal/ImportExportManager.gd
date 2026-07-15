@@ -271,7 +271,9 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 					"y": propertyFile.pointBOffset.y
 				},
 				"progress": propertyFile.progress,
-				"easing": propertyFile.easing
+				"easing": propertyFile.easing,
+				"momentum": propertyFile.momentum,
+				"visible": propertyFile.visible
 			};
 		
 		# If enemy has a type, append it. Otherwise, we have no compatibility for the enemy.
@@ -564,6 +566,8 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.pointBOffset.y = enemy.stats.endpoint.y;
 			newResource.progress = enemy.stats.progress;
 			newResource.easing = enemy.stats.easing;
+			newResource.momentum = enemy.stats.momentum;
+			newResource.visible = enemy.stats.visible;
 	ResourceSaver.save(newResource, "user://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();

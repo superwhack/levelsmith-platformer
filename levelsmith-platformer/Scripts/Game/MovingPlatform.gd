@@ -31,6 +31,9 @@ const SPEED_MODIFIER : float = 100.0;
 # Mutes movement after spawning so it can teleport to it's initial position
 var muteMove = true;
 
+var visiblePath = false;
+var momentumShare = false;
+
 ## Sets up initial points
 func _ready() -> void:
 	# Set all points to its current position
@@ -43,6 +46,10 @@ func _ready() -> void:
 ## Processes flying movement and collision handling.
 ## delta: Time since previous frame.
 func _physics_process(delta: float) -> void:
+	if visiblePath:
+		previewLine.show();
+		previewLine.global_position = pointA;
+		
 	if !active:
 		if !onScreen.is_on_screen():
 			return;
@@ -95,6 +102,8 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	targetPoint = pointB;
 	progress = propertyFile.progress;
 	easing = propertyFile.easing;
+	visiblePath = propertyFile.visible;
+	momentumShare = propertyFile.momentum;
 	
 	adjust_preview();
 	previewLine.update();
@@ -130,3 +139,5 @@ func apply_script(file: Resource) -> void:
 	previewLine.update((pointB - pointA) / Global.TILE_SIZE);
 	z_index += 2;
 	previewLine.z_index = z_index - 4;
+	visiblePath = propertyFile.visible;
+	momentumShare = propertyFile.momentum;

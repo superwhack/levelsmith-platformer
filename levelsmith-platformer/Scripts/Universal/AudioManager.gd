@@ -131,13 +131,11 @@ func play_UI_effect(effectName: String) -> void:
 func play_music(musicName: String) -> void:
 	musicPlayer.stop();
 	var fullPath : String = audioLibraryPath + musicName + "/" + musicName;
-	print(fullPath);
 	if (FileAccess.file_exists(fullPath + ".mp3")):
 		musicPlayer.stream = AudioStreamMP3.load_from_file(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		musicPlayer.stream = AudioStreamWAV.load_from_file(fullPath + ".wav");
 	else:
-		print(musicName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .mp3 for music
 		musicPlayer.stream = AudioStreamMP3.load_from_file(BACKUP_AUDIO_LIBRARY_PATH + "LevelMusic/LevelMusic.mp3");
 	musicPlayer.play();
@@ -147,7 +145,7 @@ func play_music(musicName: String) -> void:
 func play_effect(effectName: String) -> void:
 	if queue.size() >= AUDIO_QUEUE_LIMIT:
 		return;
-	var fullPath : String = audioLibraryPath + effectName;
+	var fullPath : String = audioLibraryPath + effectName + "/" + effectName;
 	# If the path points to a folder, then one random file from the folder needs to be selected instead.
 	# NOTE : This code is used for choosing a random sound effect from a folder of multiple sound effects. This is currently not implemented.
 	#if DirAccess.dir_exists_absolute(fullPath + "/"):
@@ -161,20 +159,19 @@ func play_effect(effectName: String) -> void:
 		#fullPath += "/" + (validFiles[randomFileIndex]);
 		#queue.append(fullPath);
 	# Else just see if it's a .mp3 or .wav
-	if (FileAccess.file_exists(fullPath + "/" + effectName + ".mp3")):
-		queue.append(fullPath + "/" + effectName + ".mp3");
-		print(queue);
-	elif (FileAccess.file_exists(fullPath + "/" + effectName + ".wav")):
-		queue.append(fullPath + "/" + effectName + ".wav");
+	if (FileAccess.file_exists(fullPath + ".mp3")):
+		queue.append(fullPath + ".mp3");
+	elif (FileAccess.file_exists(fullPath + ".wav")):
+		queue.append(fullPath + ".wav");
 	else:
-		print(effectName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .wav for effects
 		queue.append(BACKUP_AUDIO_LIBRARY_PATH + effectName + "/" + effectName + ".wav")
 	# Iterate through each in use audio player, if any are playing the current audio, stop the other one.
 	for player in inusePlayers:
-		if (player.stream.has_meta("audioName")):
-			if (player.stream.get_meta("audioName") == effectName):
-				player.stop();
+		if (player.stream != null):
+			if (player.stream.has_meta("audioName")):
+				if (player.stream.get_meta("audioName") == effectName):
+					player.stop();
 
 ## Add and play a new walking effect, only one at a time
 ## effectName: name of the walking effect
@@ -212,7 +209,6 @@ func play_effect_walking(walkingEffect: Global.WalkingEffect) -> void:
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		walkingPlayer.stream = load(fullPath + ".wav");
 	else:
-		print(effectName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .wav for effects
 		walkingPlayer.stream = load(BACKUP_AUDIO_LIBRARY_PATH + effectName + "/" + effectName + ".wav")
 	walkingPlayer.play();
@@ -269,4 +265,32 @@ func _process(delta: float) -> void:
 		inusePlayers.append(availablePlayers[0]);
 		availablePlayers.pop_front();
 
+func find_audio_in_folder(folderPath : String) -> AudioStream:
+# Opens the folder at the given folderName path
+	var dir : DirAccess = DirAccess.open(folderPath);
+	# If a folder was sucessfully opened
+	if (dir):
+		# Initialize file stream
+		dir.list_dir_begin();
+		# Get the image name in the folder
+		var audioName : String = dir.get_next();
+		# If there is no image in the folder, return null
+		if (audioName == ""):
+			return null;
+		else:
+			var audio : AudioStream;
+			if (audioName.get_extension().to_lower() == "mp3"):
+				audio = AudioStreamMP3.new();
+				audio = AudioStreamMP3.load_from_file(folderPath + "/" + audioName);
+			elif (audioName.get_extension().to_lower() == "wav"):
+				audio = AudioStreamWAV.new();
+				audio = AudioStreamWAV.load_from_file(folderPath + "/" + audioName);
+			else:
+				PopUpManager.create_error_popup("File not valid", "Non mp3/wav file in audio folder");
+			if (audio != null):
+				return audio;
+			return null;
+	else:
+		PopUpManager.create_error_popup("Could not open file path", "Could not open file at " + folderPath + ".");
+		return null;
 #func find_effect_name(path: String) -> String:

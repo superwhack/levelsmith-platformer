@@ -93,7 +93,6 @@ func die() -> void:
 	remove_from_group("enemy");
 
 func on_animation_finished() -> void:
-	print("animation finished")
 	if (animatedSprites.animation == deathAnim):
 		queue_free();
 

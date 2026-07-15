@@ -5,7 +5,7 @@ extends Node
 
 var audioNameToReplace : String;
 
-# All types of aduio
+# All types of audio
 var audioTypes : Array[String] = ["BounceTile", "CoinPickup", "EnemyDie", "Shoot", "HazardTile", "PlayerDie", "Jump", "Victory", "WalkingGeneral", "WalkingIce", "WalkingSlime", "LevelMusic"];
 
 

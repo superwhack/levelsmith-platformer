@@ -11,7 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://qf7uq7d7mpai" path="res://Assets/UserInterface/line-md--heart-filled.png" id="7_j23bb"]
 [ext_resource type="PackedScene" uid="uid://cmpj0a4yqf4gu" path="res://Scenes/UI/WinScreen.tscn" id="8_4i4ea"]
 [ext_resource type="Texture2D" uid="uid://cerg25kv03gd3" path="res://Assets/UserInterface/tabler--heart.png" id="8_qxglv"]
+[ext_resource type="Texture2D" uid="uid://dvs3jqnfvwc0y" path="res://Assets/Sprites/UI/solar--restart-broken.png" id="10_2riqt"]
 [ext_resource type="Texture2D" uid="uid://dbi7jwb54bdi5" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--resume-rounded.png" id="11_bwgen"]
+[ext_resource type="Texture2D" uid="uid://dkvjfsrhqtfgp" path="res://Assets/Sprites/UI/mdi--pencil.png" id="11_j23bb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2riqt"]
 
@@ -270,6 +272,7 @@ text = "Move [WASD / Arrow Keys]	     Jump [Space]"
 
 [node name="PausedScreenContainer" type="PanelContainer" parent="CanvasLayer" unique_id=610850262 node_paths=PackedStringArray("gameManager")]
 process_mode = 3
+visible = false
 custom_maximum_size = Vector2(-1, 100)
 anchors_preset = 10
 anchor_right = 1.0
@@ -338,7 +341,26 @@ size_flags_horizontal = 3
 [node name="WinScreen" parent="CanvasLayer" unique_id=1204440589 instance=ExtResource("8_4i4ea")]
 visible = false
 
+[node name="TopRightMargin" parent="CanvasLayer/WinScreen/Panel" parent_id_path=PackedInt32Array(1204440589, 1175347454) index="0" unique_id=1230632928]
+anchors_preset = 10
+anchor_left = 0.0
+offset_left = 0.0
+offset_bottom = 30.0
+grow_horizontal = 2
+
+[node name="ReplayButton" parent="CanvasLayer/WinScreen/Panel/TopRightMargin/Container" parent_id_path=PackedInt32Array(1204440589, 1054305318) index="0" unique_id=1310979275]
+custom_minimum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(60, 60)
+size_flags_vertical = 0
+icon = ExtResource("10_2riqt")
+
+[node name="Spacer" parent="CanvasLayer/WinScreen/Panel/TopRightMargin/Container" parent_id_path=PackedInt32Array(1204440589, 1054305318) index="1" unique_id=185393761]
+custom_minimum_size = Vector2(20, 0)
+
 [node name="ReturnEditorWinButton" parent="CanvasLayer/WinScreen/Panel/TopRightMargin/Container" parent_id_path=PackedInt32Array(1204440589, 1054305318) index="2" unique_id=1148860713]
 tooltip_text = ""
+
+[node name="Icon" parent="CanvasLayer/WinScreen/Panel/TopRightMargin/Container/ReturnEditorWinButton/ContentMargin/ContentRow" parent_id_path=PackedInt32Array(1204440589, 1292625286) index="0" unique_id=1699532654]
+texture = ExtResource("11_j23bb")
 
 [editable path="CanvasLayer/WinScreen"]

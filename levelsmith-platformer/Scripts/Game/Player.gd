@@ -71,7 +71,7 @@ var trueSpeed : float;
 var bounceTileHeight : float = 1.0;
 var iceFriction : float = 0.5;
 
-var iceAccelerationFactor : float = .1;
+var iceAccelerationFactor : float = .25;
 
 # The selected movement preset
 # TODO: Make it so that it selects the DefaultMovement preset automatically 

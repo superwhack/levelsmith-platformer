@@ -49,12 +49,14 @@ func replace_audio(newAudioPath: String) -> void:
 		audio.save_to_wav(targetFilePath + "/" + audioNameToReplace + ".wav")
 	else:
 		PopUpManager.create_error_popup("File type incorrect", "File must be .mp3 or .wav format.");
+	load_preview_audio();
 
 	
 ## Clears the audio in a given folder and replaces it with a default
 func reset_audio() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	assetManager.clear_files(audioNameToReplace);
+	load_preview_audio();
 
 func save_mp3_stream(stream : AudioStreamMP3, filePath : String) -> void:
 	var bytes : PackedByteArray = stream.data;
@@ -84,7 +86,7 @@ func load_preview_audio() -> void:
 		loadedPreviewAudio = AudioStreamMP3.load_from_file(audioPath + ".mp3");
 	elif (FileAccess.file_exists(audioPath + ".wav")):
 		loadedPreviewAudio = AudioStreamWAV.new();
-		loadedPreviewAudio = AudioStreamWAV.load_from_file(audioPath + ".mp3");
+		loadedPreviewAudio = AudioStreamWAV.load_from_file(audioPath + ".wav");
 	else:
 		loadedPreviewAudio = AudioStreamWAV.new()
 		loadedPreviewAudio = AudioStreamWAV.load_from_file(AudioManager.BACKUP_AUDIO_LIBRARY_PATH + audioNameToReplace + "/" + audioNameToReplace + ".wav");

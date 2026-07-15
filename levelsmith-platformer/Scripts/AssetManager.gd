@@ -203,6 +203,8 @@ func reset() -> void:
 		imageSwapping.reset_image();
 	elif (currentSelectedItem.type == AssetItem.AssetType.ANIMATION):
 		animationSwapping.reset_animation();
+	elif (currentSelectedItem.type == AssetItem.AssetType.AUDIO):
+		audioSwapping.reset_audio();
 ## Creates the refresh asset popup.
 func reset_image_popup() -> void:
 	PopUpManager.create_reset_image_popup(Callable(self, "reset"), currentSelectedItem.displayName);

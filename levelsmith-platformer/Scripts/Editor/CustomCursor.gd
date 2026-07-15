@@ -110,17 +110,18 @@ func _process(_delta: float) -> void:
 					Input.set_custom_mouse_cursor(cursorEdit if editorManager.isPlaceable else cursorEditInvalid);
 				else:
 					Input.set_custom_mouse_cursor(cursorIcon if editorManager.isPlaceable else cursorInvalid);
-	
-	if (selectorState == SelectorState.COPYING):
-		entityHighlight.show();
 
 ## Updates the state of the selector frame in accordance with other actions.
 func update_selector_state() -> void:
 	if (!editorManager.isPlaceable): selectorState = SelectorState.INVALID;
 	elif (toolManager.isErasing): selectorState = SelectorState.ERASING;
-	elif (entityManager.duplicatingResource): selectorState = SelectorState.COPYING;
+	elif (entityManager.duplicatingResource): 
+		selectorState = SelectorState.COPYING;
+		entityHighlight.show();
 	elif (isEditing): selectorState = SelectorState.EDITING; 
-	elif (toolManager.isMoving && toolManager.prevBrushObject >= 0): selectorState = SelectorState.MOVING;
+	elif (toolManager.isMoving && toolManager.prevBrushObject >= 0): 
+		selectorState = SelectorState.MOVING;
+		entityHighlight.hide();
 	else: selectorState = SelectorState.DEFAULT;
 
 ## Moves the entity highlighter to the selected entity and displays it

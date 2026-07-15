@@ -5,7 +5,7 @@
 [ext_resource type="StyleBox" uid="uid://73sk20dbjygq" path="res://Assets/UserInterface/FocusStyleBox.tres" id="3_3vm5f"]
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_us2oy"]
 [ext_resource type="StyleBox" uid="uid://c77hfkgnkauj3" path="res://Assets/UserInterface/ButtonNormalStyleBox.tres" id="5_cb87k"]
-[ext_resource type="Texture2D" uid="uid://b8xa7ju22bqo4" path="res://Assets/Sprites/UI/ButtonRadioSelected16px.png" id="6_a0yo8"]
+[ext_resource type="Texture2D" uid="uid://05kws516p2q8" path="res://Assets/Sprites/UI/ButtonRadioSelected16px.png" id="6_a0yo8"]
 [ext_resource type="Texture2D" uid="uid://duy2r0hf6kfjm" path="res://Assets/Sprites/UI/CheckBoxOn.png" id="6_p7whp"]
 [ext_resource type="Texture2D" uid="uid://dsacdvr0wwdow" path="res://Assets/Sprites/UI/ButtonRadioNormal16px.png" id="7_ofwiu"]
 [ext_resource type="Texture2D" uid="uid://ctkp25yl7wov4" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="8_2y7gw"]
@@ -27,7 +27,6 @@
 [ext_resource type="Texture2D" uid="uid://cva75o4gsrwxo" path="res://Assets/Sprites/UI/Iconoir/iconoir--list.png" id="17_3sr2t"]
 [ext_resource type="StyleBox" uid="uid://d0dnc4expn1x0" path="res://Assets/UserInterface/SliderStyleBox.tres" id="17_5jgur"]
 [ext_resource type="Texture2D" uid="uid://cf7pf114qyr23" path="res://Assets/Sprites/UI/folder-large.png" id="17_xat3a"]
-[ext_resource type="StyleBox" uid="uid://kpc3pw6w1747" path="res://Assets/UserInterface/TextEntryFocusStyleBox.tres" id="18_4tmrm"]
 [ext_resource type="Texture2D" uid="uid://crqy8g2inn3mf" path="res://Assets/Sprites/UI/Iconoir/iconoir--arrow-up.png" id="18_nva8e"]
 [ext_resource type="StyleBox" uid="uid://nqweanxgm6cj" path="res://Assets/UserInterface/TextEntryStyleBox.tres" id="19_5devf"]
 [ext_resource type="Texture2D" uid="uid://b6dpmapeh16as" path="res://Assets/Sprites/UI/Iconoir/iconoir--refresh.png" id="19_k74kl"]
@@ -336,7 +335,7 @@ TabContainer/styles/tab_selected = ExtResource("29_p7whp")
 TabContainer/styles/tab_unselected = ExtResource("32_3sr2t")
 TabContainer/styles/tabbar_background = SubResource("StyleBoxEmpty_wg48r")
 TextEdit/colors/font_color = Color(1, 1, 1, 1)
-TextEdit/styles/focus = ExtResource("18_4tmrm")
+TextEdit/styles/focus = ExtResource("19_5devf")
 TextEdit/styles/normal = ExtResource("19_5devf")
 TextListButton/base_type = &"Button"
 TextListButton/colors/font_color = Color(0.8, 0.8, 0.8, 1)

@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 	if gravityOn:
 		super._physics_process(delta);
 	directionArrow.hide();
-	if onScreen:
+	if onScreen.is_on_screen():
 		if (!randomDirection):
 			update_flipped(!(fireDirection <= -90 && fireDirection > -270));
 		# Decrease time left
@@ -66,16 +66,18 @@ func _physics_process(delta: float) -> void:
 
 ## Adjust the direction of the indicator arrow
 ## angle: the angle that the arrow should be pointing at.
-func adjust_arrow(angle: float = fireDirection + 90, random: bool = randomDirection) -> void:
+func adjust_arrow(angle: float = fireDirection, random: bool = randomDirection) -> void:
 	if random:
 		questionMark.show();
 		directionArrow.hide();
+		animatedSprites.flip_h = false;
 		return;
 	questionMark.hide();
 	directionArrow.show();
 	directionArrow.rotation_degrees = angle;
-	directionArrow.position.x = sin(deg_to_rad(directionArrow.rotation_degrees)) * 90;
-	directionArrow.position.y = -cos(deg_to_rad(directionArrow.rotation_degrees)) * 90;
+	directionArrow.position.x = cos(deg_to_rad(directionArrow.rotation_degrees)) * 60;
+	directionArrow.position.y = sin(deg_to_rad(directionArrow.rotation_degrees)) * 60;
+	animatedSprites.flip_h = (angle <= -90 && angle > -270);
 
 
 ## Shoots in the determined direction
@@ -117,7 +119,8 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	projBounce = propertyFile.projBounce;
 	gravityOn = propertyFile.gravity;
 	ResourceSaver.save(propertyFile);
-	adjust_arrow(fireDirection + 90, randomDirection);
+	adjust_arrow(fireDirection, randomDirection);
+	adjust_arrow(fireDirection, randomDirection);
 
 func apply_script(file: Resource) -> void:
 	propertyFile = file;

@@ -23,7 +23,7 @@ var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tr
 ## levelName: Name of the new level, indicates where it'll go in the folder
 ## levelSize: The size of the level
 ## settings: The settings menu for the level
-func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i, settings: SettingsMenu) -> void:
+func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i, settings: Panel) -> void:
 	# When making an enemy we need to set the path name and clear all enemies
 	levelName = levelName;
 	clear_enemies_folder();
@@ -33,7 +33,7 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 	levelPath = "user://Levels/" + levelName + "/";
 	levelAssetPath = levelPath + "Assets/";
 	# NOTE: In the future we might want to assign this elsewhere 
-	AudioManager.audioLibraryPath = levelPath + "Assets/Audio/";
+	#AudioManager.audioLibraryPath = levelPath + "Assets/Audio/";
 	
 	# Create the directories for the level and asset path.
 	DirAccess.make_dir_absolute(levelPath);
@@ -72,6 +72,8 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"airControl": playerDefault.airControl,
 			"fallSpeed": playerDefault.fallSpeed,
 			"coyoteTime": playerDefault.coyoteTime,
+			"slopeSlowdown": playerDefault.slopeSlowdown,
+			"oneways": playerDefault.oneways,
 			"doubleJump": playerDefault.doubleJump,
 			"wallJump": playerDefault.wallJump,
 			"wallJumpDecay": playerDefault.wallJumpDecay
@@ -128,7 +130,7 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 ## playerData: All of the player's special information
 ## worldSize: Size of the world (x, y) for creating the csv file.
 ## settings: The settings menu to export the configurations from
-func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i, settings: SettingsMenu, isValidated : bool = false) -> void:
+func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i, settings: Panel, isValidated : bool = false) -> void:
 	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
@@ -192,8 +194,10 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		"deceleration": playerData.playerDeceleration,
 		"jump": playerData.playerJumpHeight,
 		"airControl": playerData.playerAirControl,
-		"fallSpeed": playerData.playerFallSpeed,
+		"fallSpeed": playerData.playerGravity,
 		"coyoteTime": playerData.playerCoyoteTime,
+		"slopeSlowdown": playerData.playerSlopeSlowdown,
+		"oneways": playerData.playerOneways,
 		"doubleJump": playerData.playerDoubleJump,
 		"wallJump": playerData.playerWallJump,
 		"wallJumpDecay": playerData.playerWallJumpDecay
@@ -266,7 +270,8 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 					"x": propertyFile.pointBOffset.x,
 					"y": propertyFile.pointBOffset.y
 				},
-				"progress": propertyFile.progress
+				"progress": propertyFile.progress,
+				"easing": propertyFile.easing
 			};
 		
 		# If enemy has a type, append it. Otherwise, we have no compatibility for the enemy.
@@ -404,7 +409,7 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 ## tileMap: Tile map for searching for enemies
 ## playerData: The panel that contains player data to adjust it
 ## settings: Settings to import saved configurations to
-func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMenu) -> void:
+func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: Panel) -> void:
 	# Read JSON to file and close it
 	var JSONFile : FileAccess= FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
 	var json_as_dict : Variant = JSON.parse_string(JSONFile.get_as_text());
@@ -417,8 +422,10 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: SettingsMen
 	playerData.playerDeceleration = player.get("deceleration", playerData.playerDeceleration);
 	playerData.playerJumpHeight = player.get("jump", playerData.playerJumpHeight);
 	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
-	playerData.playerFallSpeed = player.get("fallSpeed", playerData.playerFallSpeed);
+	playerData.playerGravity = player.get("fallSpeed", playerData.playerGravity);
 	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
+	playerData.playerSlopeSlowdown = player.get("slopeSlowdown", playerData.playerSlopeSlowdown);
+	playerData.playerOneways = player.get("oneways", playerData.playerOneways);
 	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
 	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);
 	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);
@@ -556,6 +563,7 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.pointBOffset.x = enemy.stats.endpoint.x;
 			newResource.pointBOffset.y = enemy.stats.endpoint.y;
 			newResource.progress = enemy.stats.progress;
+			newResource.easing = enemy.stats.easing;
 	ResourceSaver.save(newResource, "user://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();

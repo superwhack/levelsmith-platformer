@@ -68,6 +68,9 @@ extends Control
 @export var favoriteEmpty : Texture2D;
 @export var favoriteFilled : Texture2D;
 
+# Global Settings Button
+@export var globalSettingsButton : Button;
+
 # The currently selected level item.
 var selectedItem : Control = null;
 # Dictionary of all level items. For level list filling.
@@ -106,7 +109,7 @@ func _ready() -> void:
 	buttonDuplicateLevelConfirm.pressed.connect(duplicate_current_level);
 	buttonDuplicateLevelCancel.pressed.connect(overlay_duplicate_level_hide);
 
-
+	globalSettingsButton.pressed.connect(masterManager.open_global_settings_menu);
 	
 	buttonQuit.pressed.connect(exit_program);
 

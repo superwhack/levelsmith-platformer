@@ -26,6 +26,8 @@ func _ready() -> void:
 	playButton.pressed.connect(play_preview_audio);
 	stopButton.pressed.connect(preview_audio_finished);
 	previewAudioPlayer.finished.connect(preview_audio_finished);
+	audioTimeline.drag_started.connect(drag_started);
+	audioTimeline.drag_ended.connect(drag_ended);
 
 func _process(delta: float) -> void:
 	if (previewAudioPlayer.playing):
@@ -90,3 +92,11 @@ func load_preview_audio() -> void:
 	preview_audio_finished();
 	audioLength = loadedPreviewAudio.get_length()
 	audioTimeline.max_value = audioLength;
+
+func drag_started():
+	previewAudioPlayer.stream_paused = true;
+
+func drag_ended(value_changed : bool):
+	if (value_changed):
+		previewAudioPlayer.play(audioTimeline.value);
+		previewAudioPlayer.stream_paused = true;

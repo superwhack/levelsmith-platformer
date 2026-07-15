@@ -35,10 +35,10 @@
 [ext_resource type="Texture2D" uid="uid://c3p3ts7hk0cyd" path="res://Assets/Sprites/Entities/Player/PlayerRun/8.png" id="33_4k050"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
-size = Vector2(12.525253, 16.335987)
+size = Vector2(14.909091, 16.654598)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2o5fe"]
-size = Vector2(11.4814825, 17.037037)
+size = Vector2(13.666666, 17.037037)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
 animations = [{
@@ -192,21 +192,23 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyCollision" unique_id=255986313]
-position = Vector2(-1.0596382e-06, 5.119994)
+position = Vector2(-2.1457672e-06, 5.999998)
 scale = Vector2(5.5, 5.524)
 shape = SubResource("RectangleShape2D_agccv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]
-position = Vector2(1.5894573e-06, 8.888885)
+position = Vector2(2.3841858e-07, 8.8888855)
 scale = Vector2(6, 6)
 shape = SubResource("RectangleShape2D_2o5fe")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1554690714]
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"PlayerJump"
+frame = 3
+frame_progress = 1.0
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=116409988]
-position = Vector2(-34.444447, 7.777778)
+position = Vector2(-41, 7.9999995)
 scale = Vector2(1.15, 1.15)
 target_position = Vector2(0, 60)
 
@@ -216,36 +218,42 @@ scale = Vector2(1.15, 1.15)
 target_position = Vector2(0, 60)
 
 [node name="RayCastDown3" type="RayCast2D" parent="." unique_id=1487377010]
-position = Vector2(34.44444, 7.777778)
+position = Vector2(41, 7.9999995)
 scale = Vector2(1.15, 1.15)
 target_position = Vector2(0, 60)
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1414877206]
 position = Vector2(0, -42.222225)
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(-45, 0)
 
 [node name="RayCastLeft2" type="RayCast2D" parent="." unique_id=225528529]
 position = Vector2(0, 8.888888)
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(-45, 0)
 
 [node name="RayCastLeft3" type="RayCast2D" parent="." unique_id=1158609575]
 position = Vector2(0, 60.000004)
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(-45, 0)
 
 [node name="RayCastRight" type="RayCast2D" parent="." unique_id=464775608]
 position = Vector2(0, -42.222225)
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(45, 0)
 
 [node name="RayCastRight2" type="RayCast2D" parent="." unique_id=1096570450]
 position = Vector2(0, 8.888888)
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(45, 0)
 
 [node name="RayCastRight3" type="RayCast2D" parent="." unique_id=1866021346]
 position = Vector2(0, 60.000004)
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(45, 0)
 
 [node name="RayCastUp" type="RayCast2D" parent="." unique_id=365446800]
-position = Vector2(-34.444447, 7.777778)
+position = Vector2(-41, 7.9999995)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -58)
 
@@ -255,6 +263,6 @@ scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -58)
 
 [node name="RayCastUp3" type="RayCast2D" parent="." unique_id=596214337]
-position = Vector2(34.44444, 7.777778)
+position = Vector2(41, 7.9999995)
 scale = Vector2(1.1, 1.1)
 target_position = Vector2(0, -58)

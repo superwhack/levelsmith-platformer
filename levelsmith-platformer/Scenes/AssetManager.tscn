@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ctkp25yl7wov4" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="6_ssly3"]
 [ext_resource type="Texture2D" uid="uid://g86q3u73bvbb" path="res://Assets/UserInterface/Buttons/ButtonIcons/PlayIcon.png" id="7_o8nck"]
 [ext_resource type="Texture2D" uid="uid://b5f7fj8dwgcbn" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-right.png" id="7_qbbei"]
-[ext_resource type="Texture2D" uid="uid://cfnhge1514wea" path="res://Assets/UserInterface/material-symbols-light--stop-outline.png" id="8_7puos"]
+[ext_resource type="Texture2D" uid="uid://2x8jkogiolji" path="res://Assets/UserInterface/material-symbols-light--stop-outline.png" id="8_7puos"]
 [ext_resource type="Texture2D" uid="uid://bcxig5hp2d48q" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-down.png" id="8_x8uhr"]
 [ext_resource type="Texture2D" uid="uid://dvs3jqnfvwc0y" path="res://Assets/Sprites/UI/solar--restart-broken.png" id="9_o8nck"]
 [ext_resource type="Texture2D" uid="uid://iyxcim187e44" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
@@ -17,14 +17,6 @@
 [ext_resource type="Script" uid="uid://pgp1usxbcoyf" path="res://Scripts/Universal/AnimationSwapping.gd" id="11_ukhnw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gn8f6"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fnjh2"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vrcqo"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_racgb"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hh704"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1i6c8"]
 bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
@@ -88,10 +80,6 @@ size_flags_horizontal = 3
 custom_minimum_size = Vector2(38, 0)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_gn8f6")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_fnjh2")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_vrcqo")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_racgb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_hh704")
 icon = ExtResource("3_7puos")
 icon_alignment = 1
 

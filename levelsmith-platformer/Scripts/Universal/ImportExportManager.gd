@@ -611,9 +611,9 @@ func get_object_count(tileMap: TileMapLayer, worldSize : Vector2i) -> int:
 
 	for y in worldSize.y:
 		for x in worldSize.x:
-			var tile_id := tileMap.get_cell_source_id(Vector2i(x, y));
+			var tileId : int = tileMap.get_cell_source_id(Vector2i(x, y));
 
-			if (tile_id != Global.EMPTY_TILE && tile_id != Global.BEDROCK_TILE):
+			if (tileId != Global.EMPTY_TILE && tileId < Global.BEDROCK_CORNER):
 				count += 1;
 
 	return count;

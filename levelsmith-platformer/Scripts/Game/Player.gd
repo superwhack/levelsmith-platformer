@@ -159,6 +159,7 @@ func _physics_process(delta: float) -> void:
 				currentSlowdown = 1.0;
 				doubleJumpAvailable = false;
 			coyoteTimeLeft = 0;
+			jumpAnimStarted = false;
 			jump();
 	# Handle A and D inputs, as well as lack of directional input
 	walk();

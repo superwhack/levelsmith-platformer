@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://cnfuaus2llt0d" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/6.png" id="20_pdqeo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_okpjm"]
-size = Vector2(16.984127, 13.253967)
+size = Vector2(16.984127, 13.809523)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ogq8d"]
 animations = [{
@@ -123,7 +123,7 @@ texture = ExtResource("2_0s3yh")
 offset = Vector2(0, -9)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
-position = Vector2(0, 2.25)
+position = Vector2(0, 0.49999917)
 scale = Vector2(6.3, 6.3)
 shape = SubResource("RectangleShape2D_okpjm")
 

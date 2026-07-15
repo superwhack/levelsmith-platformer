@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://b4yqe8fsprkd1" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/4.png" id="12_fquc3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iqs3o"]
-size = Vector2(18.412697, 12.539682)
+size = Vector2(18.095238, 13.333332)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
 animations = [{
@@ -71,7 +71,7 @@ hitbox = NodePath("CollisionShape2D")
 animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
-position = Vector2(0, 4)
+position = Vector2(0, 2)
 scale = Vector2(6.3, 6.3)
 shape = SubResource("RectangleShape2D_iqs3o")
 

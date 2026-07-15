@@ -10,6 +10,8 @@ extends Camera2D
 func _ready() -> void:
 	Global.levelCreated.connect(zoom_out);
 	ImportExportManager.levelImported.connect(zoom_out);
+	screenshotViewport.world_2d = get_viewport().world_2d;
+	enabled = true;
 
 ## Zooms out this camera to cover the entire level.
 func zoom_out() -> void:

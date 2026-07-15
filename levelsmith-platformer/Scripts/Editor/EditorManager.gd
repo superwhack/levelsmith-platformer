@@ -108,8 +108,6 @@ func _input(event: InputEvent) -> void:
 ## Takes a screenshot of the level by hiding the UI and disabling the main camera
 ## returns; The image of the level
 func screenshot_level() -> Image:
-	mainCamera.enabled = false;
-	levelScreenshotCamera.enabled = true;
 	screenUI.hide();
 	previewTileMap.hide();
 	await RenderingServer.frame_post_draw;
@@ -118,8 +116,6 @@ func screenshot_level() -> Image:
 	
 	screenUI.show();
 	previewTileMap.show();
-	mainCamera.enabled = true;
-	levelScreenshotCamera.enabled = false;
 	await RenderingServer.frame_post_draw; 
 	
 	return screenshotImage;

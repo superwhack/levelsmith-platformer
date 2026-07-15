@@ -114,10 +114,11 @@ func play_UI_effect(effectName: String) -> void:
 		return;
 	# Check all players in use, if any are playing the same audio, check if the cooldown is up, return if not
 	for player in inusePlayers:
-		if (player.stream.has_meta("audioName")):
-			if (player.stream.get_meta("audioName") == effectName):
-				if (player.get_playback_position() + AudioServer.get_time_since_last_mix() <= uiEffectCooldown):
-					return;
+		if (player.stream != null):
+			if (player.stream.has_meta("audioName")):
+				if (player.stream.get_meta("audioName") == effectName):
+					if (player.get_playback_position() + AudioServer.get_time_since_last_mix() <= uiEffectCooldown):
+						return;
 	var fullPath : String = UI_AUDIO_LIBRARY_PATH + effectName;
 	if (FileAccess.file_exists(fullPath + ".mp3")):
 		queue.append(fullPath + ".mp3");

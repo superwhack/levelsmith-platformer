@@ -82,7 +82,7 @@ func adjust_arrow(angle: float = fireDirection, random: bool = randomDirection) 
 
 ## Shoots in the determined direction
 func shooting_behavior() -> void:
-	AudioManager.play_effect("EnemyShoot");
+	AudioManager.play_effect("Shoot");
 	var projectileFired = PROJECTILE.instantiate();
 	projectileFired.speed = shotSpeed;
 	projectileFired.global_position = position;

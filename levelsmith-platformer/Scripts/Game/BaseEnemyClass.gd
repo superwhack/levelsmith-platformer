@@ -86,7 +86,7 @@ func take_damage(amount: int = 1) -> void:
 func die() -> void:
 	# If this is uncommented, then the enemies will also fall through collision while dying
 	#hitbox.queue_free();
-	AudioManager.play_effect("EnemyDeath");
+	AudioManager.play_effect("EnemyDie");
 	self.set_collision_layer_value(3, false);
 	if (animatedSprites):
 		animatedSprites.play(deathAnim);

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cv3y1gdfsbknd" path="res://Scenes/UI/LevelListItem.tscn" id="3_07k0b"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="5_h35r6"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
-[ext_resource type="Texture2D" uid="uid://b5lpkvodh8h1v" path="res://Assets/Sprites/UI/FavoriteMedium.PNG" id="6_pjscj"]
+[ext_resource type="Texture2D" uid="uid://2j2py7hm4a7o" path="res://Assets/Sprites/UI/FavoriteMedium.PNG" id="6_pjscj"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
 [ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
 [ext_resource type="Texture2D" uid="uid://cuqx70ij8cotk" path="res://Assets/UserInterface/Buttons/ButtonIcons/PlaceholderButtonAsset.png" id="9_a2vo5"]
@@ -16,11 +16,11 @@
 [ext_resource type="Texture2D" uid="uid://dr1smfcdfn46v" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Favorite.png" id="13_gcoc3"]
 [ext_resource type="Texture2D" uid="uid://stx0om0pqx4u" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Duplicate.png" id="14_1uc6u"]
 [ext_resource type="Texture2D" uid="uid://c0phqqwjx130p" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Delete.png" id="15_0ffkm"]
-[ext_resource type="Texture2D" uid="uid://b3oxkl2gtf3lw" path="res://Assets/Sprites/UI/PreviewDefault.png" id="15_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://c4qid2y3143as" path="res://Assets/Sprites/UI/PreviewDefault.png" id="15_m7n2d"]
 [ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="16_w5rev"]
 [ext_resource type="Texture2D" uid="uid://dd3080y6r8vxe" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Edit.png" id="17_34n7o"]
-[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
-[ext_resource type="Texture2D" uid="uid://bbn361u6ti6j8" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
+[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
+[ext_resource type="Texture2D" uid="uid://bo1m348j85vww" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -363,6 +363,8 @@ size_flags_horizontal = 3
 [node name="OpenFolderButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=1916229944]
 custom_minimum_size = Vector2(230, 75)
 layout_mode = 2
+focus_next = NodePath("../../ExitRow/ExitButtonMargin/ExitButton")
+focus_previous = NodePath("../ImportLevelButton")
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton" unique_id=328390251]
 layout_mode = 1
@@ -408,6 +410,7 @@ size_flags_vertical = 3
 
 [node name="LevelListScroll" type="ScrollContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel" unique_id=1583564096]
 layout_mode = 2
+focus_behavior_recursive = 1
 
 [node name="LevelList" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll" unique_id=1376289096]
 layout_mode = 2
@@ -806,6 +809,7 @@ size_flags_horizontal = 3
 
 [node name="LevelNameInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=236825485]
 layout_mode = 2
+focus_previous = NodePath("../../../ButtonMargin/ButtonRow/CancelButton")
 placeholder_text = "My Level"
 
 [node name="AuthorInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=1716910298]
@@ -950,6 +954,7 @@ size_flags_horizontal = 3
 
 [node name="CancelButton" type="Button" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow" unique_id=572292976]
 layout_mode = 2
+focus_next = NodePath("../../../LevelNameAuthorRow/InputsColumn/LevelNameInput")
 text = "Cancel
 "
 
@@ -1026,6 +1031,7 @@ size_flags_horizontal = 3
 
 [node name="RenameLevelInput" type="LineEdit" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=240684583]
 layout_mode = 2
+focus_previous = NodePath("../../../ButtonMargin/ButtonRow/DuplicateCancelButton")
 placeholder_text = "My Duplicate Level"
 
 [node name="ErrorBanner" type="PanelContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=418759891]
@@ -1153,6 +1159,7 @@ size_flags_horizontal = 3
 
 [node name="DuplicateCancelButton" type="Button" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow" unique_id=913452034]
 layout_mode = 2
+focus_next = NodePath("../../../LevelNameAuthorRow/InputsColumn/RenameLevelInput")
 text = "Cancel
 "
 
@@ -1227,6 +1234,7 @@ theme_override_constants/margin_right = 20
 
 [node name="FilePathInput" type="LineEdit" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/FilePathMargin/FilePathRow/MarginContainer" unique_id=1258214146]
 layout_mode = 2
+focus_previous = NodePath("../../../../ButtonsMargin/ButtonsRow/CancelButton")
 theme_override_styles/normal = SubResource("StyleBoxFlat_pjscj")
 placeholder_text = "Type here..."
 
@@ -1276,6 +1284,7 @@ layout_mode = 2
 
 [node name="CancelButton" type="Button" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonsMargin/ButtonsRow" unique_id=1954812556]
 layout_mode = 2
+focus_next = NodePath("../../../FilePathMargin/FilePathRow/MarginContainer/FilePathInput")
 text = "Cancel"
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1758093936]

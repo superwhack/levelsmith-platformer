@@ -6,12 +6,30 @@ extends Node
 var audioNameToReplace : String;
 
 # All types of audio
-var audioTypes : Array[String] = ["BounceTile", "CoinPickup", "EnemyDie", "Shoot", "HazardTile", "PlayerDie", "Jump", "Victory", "WalkingGeneral", "WalkingIce", "WalkingSlime", "LevelMusic"];
+var audioTypes : Array[String] = ["BounceTile", "CoinPickup", "EnemyDie", "Shoot", "Hurt", "PlayerDie", "Jump", "Victory", "WalkingGeneral", "WalkingIce", "WalkingSlime", "LevelMusic"];
 
+var loadedPreviewAudio : AudioStream;
+var previewAudioPlayer : AudioStreamPlayer;
+
+@export var playButton : Button;
+@export var stopButton : Button;
+var isPlayingPreview : bool = false;
+
+@export var audioTimeline : HSlider;
+
+var audioLength : float;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass;
+	previewAudioPlayer = AudioStreamPlayer.new();
+	add_child(previewAudioPlayer);
+	playButton.pressed.connect(play_preview_audio);
+	stopButton.pressed.connect(preview_audio_finished);
+	previewAudioPlayer.finished.connect(preview_audio_finished);
+
+func _process(delta: float) -> void:
+	if (previewAudioPlayer.playing):
+		audioTimeline.value = previewAudioPlayer.get_playback_position();
 
 ## Replaces the currently previewed audio  with one chosen via file dialog.
 ## newAudioPath: The file path of the new audio replacing the old one.x 
@@ -48,3 +66,27 @@ func save_mp3_stream(stream : AudioStreamMP3, filePath : String) -> void:
 	if (file):
 		file.store_buffer(bytes);
 		file.close();
+
+func preview_audio_finished() -> void:
+	previewAudioPlayer.play()
+	previewAudioPlayer.stream_paused = true;
+	audioTimeline.value = 0;
+
+func play_preview_audio() -> void:
+	previewAudioPlayer.stream_paused = !previewAudioPlayer.stream_paused;
+
+func load_preview_audio() -> void:
+	var audioPath = AudioManager.audioLibraryPath + audioNameToReplace + "/" + audioNameToReplace;
+	if (FileAccess.file_exists(audioPath + ".mp3")):
+		loadedPreviewAudio = AudioStreamMP3.new();
+		loadedPreviewAudio = AudioStreamMP3.load_from_file(audioPath + ".mp3");
+	elif (FileAccess.file_exists(audioPath + ".wav")):
+		loadedPreviewAudio = AudioStreamWAV.new();
+		loadedPreviewAudio = AudioStreamWAV.load_from_file(audioPath + ".mp3");
+	else:
+		loadedPreviewAudio = AudioStreamWAV.new()
+		loadedPreviewAudio = AudioStreamWAV.load_from_file(AudioManager.BACKUP_AUDIO_LIBRARY_PATH + audioNameToReplace + "/" + audioNameToReplace + ".wav");
+	previewAudioPlayer.stream = loadedPreviewAudio;
+	preview_audio_finished();
+	audioLength = loadedPreviewAudio.get_length()
+	audioTimeline.max_value = audioLength;

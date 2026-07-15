@@ -165,6 +165,7 @@ grow_vertical = 2
 texture = ExtResource("3_rshqi")
 
 [node name="AnimationPreview" type="Panel" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=126647044]
+visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 
@@ -306,7 +307,6 @@ text = "Stop
 "
 
 [node name="AudioPreview" type="Panel" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=1493625619]
-visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 
@@ -339,6 +339,7 @@ stretch_mode = 4
 
 [node name="AudioTimeline" type="HSlider" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer" unique_id=428290432]
 layout_mode = 2
+step = 0.01
 
 [node name="BottomButtonContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=1727755463]
 layout_mode = 1
@@ -447,12 +448,15 @@ assetManager = NodePath("..")
 imagePreview = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview")
 imagePreviewTexture = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview/ImageAsset")
 
-[node name="AudioSwapping" type="Control" parent="." unique_id=425029358 node_paths=PackedStringArray("assetManager")]
+[node name="AudioSwapping" type="Control" parent="." unique_id=425029358 node_paths=PackedStringArray("assetManager", "playButton", "stopButton", "audioTimeline")]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("12_qbbei")
 assetManager = NodePath("..")
+playButton = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/PlayPauseButton")
+stopButton = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/StopButton")
+audioTimeline = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer/AudioTimeline")
 
 [node name="AnimationSwapping" type="Control" parent="." unique_id=1958050613 node_paths=PackedStringArray("assetManager", "animationPreview", "animationPreviewTexture", "animationPreviewRightButton", "animationPreviewLeftButton", "animationName", "frameRightButton", "frameLeftButton", "frameCountLabel", "playButton", "stopButton", "FPSSpinbox")]
 anchors_preset = 0

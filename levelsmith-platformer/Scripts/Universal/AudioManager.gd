@@ -125,8 +125,6 @@ func play_UI_effect(effectName: String) -> void:
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		queue.append(fullPath + ".wav");
 
-
-
 ## Play the music track
 ## musicName: name of the sound effect
 func play_music(musicName: String) -> void:
@@ -137,8 +135,8 @@ func play_music(musicName: String) -> void:
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		musicPlayer.stream = AudioStreamWAV.load_from_file(fullPath + ".wav");
 	else:
-		# Under the assumption all backups will be .mp3 for music
-		musicPlayer.stream = AudioStreamMP3.load_from_file(BACKUP_AUDIO_LIBRARY_PATH + "LevelMusic/LevelMusic.mp3");
+		# Under the assumption all backups will be .wav for music
+		musicPlayer.stream = AudioStreamMP3.load_from_file(BACKUP_AUDIO_LIBRARY_PATH + "LevelMusic/LevelMusic.wav");
 	musicPlayer.play();
 
 ## Add specified SFX to the queue

@@ -282,6 +282,7 @@ func item_selected(selectedItem: AssetItem) -> void:
 		animationSwapping.update_animation_preview();
 	elif (selectedItem.type == AssetItem.AssetType.AUDIO):
 		audioSwapping.audioNameToReplace = selectedItem.assetName;
+		audioSwapping.load_preview_audio();
 		print("Audio Selected")
 
 	currentAssetLabel.text = selectedItem.displayName;

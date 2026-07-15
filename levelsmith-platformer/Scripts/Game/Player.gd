@@ -481,7 +481,7 @@ func detect_tiles() -> void:
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
 			if take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"), true):
-				AudioManager.play_effect("HazardTile");
+				AudioManager.play_effect("Hurt");
 		elif tileName == "death":
 			take_damage(maxHealth);
 		# Only downward rays should drive floor tile effects (except hazard)

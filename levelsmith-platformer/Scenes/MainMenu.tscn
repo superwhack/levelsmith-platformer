@@ -530,7 +530,8 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="DuplicateLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=980103507]
-custom_minimum_size = Vector2(69, 69)
+custom_minimum_size = Vector2(40, 40)
+custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
 tooltip_text = "Duplicate Level"
 disabled = true

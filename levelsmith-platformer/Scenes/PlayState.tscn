@@ -2,16 +2,16 @@
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_ym18m"]
-[ext_resource type="Texture2D" uid="uid://c12cbch40smo4" path="res://Assets/UserInterface/material-symbols--pause-rounded 64x64.png" id="5_2riqt"]
+[ext_resource type="Texture2D" uid="uid://bjy6wvka1neg8" path="res://Assets/UserInterface/UpdatedIcons/solar--restart-broken.png" id="3_2riqt"]
+[ext_resource type="Texture2D" uid="uid://b511kuqxstmsl" path="res://Assets/UserInterface/UpdatedIcons/boxicons--edit.png" id="4_j23bb"]
+[ext_resource type="Texture2D" uid="uid://c2adwfbfumvof" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--pause-rounded.png" id="5_qxglv"]
 [ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="6_x53pn"]
 [ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
 [ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
-[ext_resource type="Texture2D" uid="uid://decd4pjwh3b03" path="res://Assets/UserInterface/line-md--heart-filled.png" id="7_j23bb"]
+[ext_resource type="Texture2D" uid="uid://qf7uq7d7mpai" path="res://Assets/UserInterface/line-md--heart-filled.png" id="7_j23bb"]
 [ext_resource type="PackedScene" uid="uid://cmpj0a4yqf4gu" path="res://Scenes/UI/WinScreen.tscn" id="8_4i4ea"]
-[ext_resource type="Texture2D" uid="uid://bb5hatqm6o3r4" path="res://Assets/UserInterface/tabler--heart.png" id="8_qxglv"]
-[ext_resource type="Texture2D" uid="uid://dhrirgt4atogi" path="res://Assets/Sprites/UI/solar--restart-broken.png" id="10_2riqt"]
-[ext_resource type="Texture2D" uid="uid://f658q0pbpk2t" path="res://Assets/UserInterface/material-symbols--resume-rounded.png" id="10_4pdbi"]
-[ext_resource type="Texture2D" uid="uid://dsmxy70x0ofx5" path="res://Assets/Sprites/UI/mdi--pencil.png" id="11_j23bb"]
+[ext_resource type="Texture2D" uid="uid://cerg25kv03gd3" path="res://Assets/UserInterface/tabler--heart.png" id="8_qxglv"]
+[ext_resource type="Texture2D" uid="uid://dbi7jwb54bdi5" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--resume-rounded.png" id="11_bwgen"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2riqt"]
 
@@ -54,28 +54,43 @@ anchor_right = 1.0
 offset_left = -382.0
 offset_bottom = 104.0
 grow_horizontal = 0
+theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 24
 
 [node name="Container" type="HBoxContainer" parent="CanvasLayer/BottomScreenGroup/TopRightMargin" unique_id=1808122079]
 layout_mode = 2
 size_flags_horizontal = 8
 
 [node name="ResetButton" type="Button" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container" unique_id=1815887631]
-custom_minimum_size = Vector2(60, 60)
-custom_maximum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 8
 tooltip_text = "Reset"
 focus_behavior_recursive = 1
 theme = ExtResource("2_ym18m")
 theme_override_constants/icon_max_width = 50
 action_mode = 0
-icon = ExtResource("10_2riqt")
 icon_alignment = 1
 
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ResetButton" unique_id=1351322610]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ResetButton/MarginContainer" unique_id=1207677497]
+layout_mode = 2
+texture = ExtResource("3_2riqt")
+expand_mode = 3
+
 [node name="Spacer" type="Control" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container" unique_id=964069108]
-custom_minimum_size = Vector2(20, 0)
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -105,7 +120,7 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ReturnEditorButton/ContentMargin/ContentRow" unique_id=521754472]
 layout_mode = 2
-texture = ExtResource("11_j23bb")
+texture = ExtResource("4_j23bb")
 expand_mode = 2
 stretch_mode = 5
 
@@ -142,7 +157,7 @@ size_flags_vertical = 0
 tooltip_text = "Pause [Esc]"
 theme = ExtResource("2_ym18m")
 theme_override_constants/icon_max_width = 50
-icon = ExtResource("5_2riqt")
+icon = ExtResource("5_qxglv")
 icon_alignment = 1
 
 [node name="PlayUISpacer5" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=1478978677]
@@ -255,7 +270,6 @@ text = "Move [WASD / Arrow Keys]	     Jump [Space]"
 
 [node name="PausedScreenContainer" type="PanelContainer" parent="CanvasLayer" unique_id=610850262 node_paths=PackedStringArray("gameManager")]
 process_mode = 3
-visible = false
 custom_maximum_size = Vector2(-1, 100)
 anchors_preset = 10
 anchor_right = 1.0
@@ -283,7 +297,7 @@ layout_mode = 2
 tooltip_text = "Resume [Esc]"
 theme = ExtResource("2_ym18m")
 theme_override_constants/icon_max_width = 50
-icon = ExtResource("10_4pdbi")
+icon = ExtResource("11_bwgen")
 icon_alignment = 1
 
 [node name="GamePausedSpacer" type="Control" parent="CanvasLayer/PausedScreenContainer/PauseMargin/PauseContainer" unique_id=1760806949]

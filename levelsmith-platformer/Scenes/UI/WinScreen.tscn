@@ -2,9 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_pj8m8"]
 [ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="2_femvg"]
+[ext_resource type="Texture2D" uid="uid://bjy6wvka1neg8" path="res://Assets/UserInterface/UpdatedIcons/solar--restart-broken.png" id="2_nxle1"]
+[ext_resource type="Texture2D" uid="uid://b511kuqxstmsl" path="res://Assets/UserInterface/UpdatedIcons/boxicons--edit.png" id="3_i78rd"]
 [ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="3_pj8m8"]
-[ext_resource type="Texture2D" uid="uid://dvs3jqnfvwc0y" path="res://Assets/Sprites/UI/solar--restart-broken.png" id="4_3i2rc"]
-[ext_resource type="Texture2D" uid="uid://dkvjfsrhqtfgp" path="res://Assets/Sprites/UI/mdi--pencil.png" id="5_dhi7o"]
 [ext_resource type="Texture2D" uid="uid://qf7uq7d7mpai" path="res://Assets/UserInterface/line-md--heart-filled.png" id="5_nxle1"]
 [ext_resource type="Texture2D" uid="uid://cerg25kv03gd3" path="res://Assets/UserInterface/tabler--heart.png" id="6_i78rd"]
 
@@ -24,11 +24,16 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_ixtdl")
 layout_mode = 2
 
 [node name="TopRightMargin" type="MarginContainer" parent="Panel" unique_id=1230632928]
-layout_mode = 0
-offset_right = 1920.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1920.0
 offset_bottom = 1080.0
+grow_horizontal = 0
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 1000
 
 [node name="Container" type="HBoxContainer" parent="Panel/TopRightMargin" unique_id=1054305318]
 layout_mode = 2
@@ -36,19 +41,32 @@ size_flags_horizontal = 8
 
 [node name="ReplayButton" type="Button" parent="Panel/TopRightMargin/Container" unique_id=1310979275]
 process_mode = 3
-custom_minimum_size = Vector2(60, 60)
-custom_maximum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 8
 tooltip_text = "Reset"
 focus_behavior_recursive = 1
 theme = ExtResource("1_pj8m8")
 action_mode = 0
-icon = ExtResource("4_3i2rc")
 icon_alignment = 1
 
+[node name="MarginContainer" type="MarginContainer" parent="Panel/TopRightMargin/Container/ReplayButton" unique_id=2046309010]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/TopRightMargin/Container/ReplayButton/MarginContainer" unique_id=1277355010]
+layout_mode = 2
+texture = ExtResource("2_nxle1")
+expand_mode = 3
+
 [node name="Spacer" type="Control" parent="Panel/TopRightMargin/Container" unique_id=185393761]
-custom_minimum_size = Vector2(20, 0)
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -80,7 +98,7 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="Panel/TopRightMargin/Container/ReturnEditorWinButton/ContentMargin/ContentRow" unique_id=1699532654]
 layout_mode = 2
-texture = ExtResource("5_dhi7o")
+texture = ExtResource("3_i78rd")
 expand_mode = 2
 stretch_mode = 5
 

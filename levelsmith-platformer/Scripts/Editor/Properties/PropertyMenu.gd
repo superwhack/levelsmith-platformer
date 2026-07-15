@@ -94,6 +94,8 @@ var previewLine: Line2D;
 @export var movingPlatformOffsetYSlider : VBoxContainer;
 @export var movingPlatformProgressSlider : VBoxContainer;
 @export var movingPlatformEasingCheckbox : VBoxContainer;
+@export var movingPlatformMomentumCheckbox : VBoxContainer;
+@export var movingPlatformVisibilityCheckbox : VBoxContainer;
 
 # Direction arrow for shooting and patrolling enemies
 var directionArrow : Sprite2D;
@@ -140,6 +142,8 @@ func _ready() -> void:
 	movingPlatformOffsetYSlider.drag_ended.connect(_on_drag_ended);
 	movingPlatformProgressSlider.drag_ended.connect(_on_drag_ended);
 	movingPlatformEasingCheckbox.check_changed.connect(_on_drag_ended);
+	movingPlatformMomentumCheckbox.check_changed.connect(_on_drag_ended);
+	movingPlatformVisibilityCheckbox.check_changed.connect(_on_drag_ended);
 	
 	closeButton.pressed.connect(close);
 
@@ -311,11 +315,15 @@ func update_sliders() -> void:
 		movingPlatformOffsetYSlider.value = -selectedPreset.pointBOffset.y / Global.TILE_SIZE;
 		movingPlatformProgressSlider.value = selectedPreset.progress;
 		movingPlatformEasingCheckbox.value = selectedPreset.easing;
+		movingPlatformMomentumCheckbox.value = selectedPreset.momentum;
+		movingPlatformVisibilityCheckbox.value = selectedPreset.visible;
 		movingPlatformSpeedSlider.update_slider();
 		movingPlatformOffsetXSlider.update_slider();
 		movingPlatformOffsetYSlider.update_slider();
 		movingPlatformProgressSlider.update_slider();
 		movingPlatformEasingCheckbox.update_checkbox();
+		movingPlatformMomentumCheckbox.update_checkbox();
+		movingPlatformVisibilityCheckbox.update_checkbox();
 	
 
 ## Alternate the ability for a property to be selected
@@ -371,6 +379,8 @@ func update_values() -> void:
 		selectedPreset.pointBOffset = Vector2(movingPlatformOffsetXSlider.value * Global.TILE_SIZE, -movingPlatformOffsetYSlider.value * Global.TILE_SIZE);
 		selectedPreset.progress = movingPlatformProgressSlider.value;
 		selectedPreset.easing = movingPlatformEasingCheckbox.value;
+		selectedPreset.momentum = movingPlatformMomentumCheckbox.value;
+		selectedPreset.visible = movingPlatformVisibilityCheckbox.value;
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	
 

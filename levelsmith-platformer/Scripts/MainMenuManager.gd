@@ -55,6 +55,9 @@ extends Control
 ## A reference to a packed scene of a clickable Level List Item.
 @export var levelListItem : PackedScene;
 
+## Reference to current software version
+@export var softwareVersion : Label;
+
 ## References to meta data values.
 @export var levelName : Label;
 @export var author : Label;
@@ -80,6 +83,7 @@ var levelItems: Dictionary = {} # path -> item
 func _ready() -> void:
 	buttonNewLevel.grab_focus();
 	
+	softwareVersion.text = str(Global.VERSION);
 	# Hides other screens
 	overlayImportLevel.hide();
 	overlayNewLevel.hide();

@@ -271,7 +271,9 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 					"y": propertyFile.pointBOffset.y
 				},
 				"progress": propertyFile.progress,
-				"easing": propertyFile.easing
+				"easing": propertyFile.easing,
+				"momentum": propertyFile.momentum,
+				"visible": propertyFile.visible
 			};
 		
 		# If enemy has a type, append it. Otherwise, we have no compatibility for the enemy.
@@ -564,6 +566,8 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.pointBOffset.y = enemy.stats.endpoint.y;
 			newResource.progress = enemy.stats.progress;
 			newResource.easing = enemy.stats.easing;
+			newResource.momentum = enemy.stats.momentum;
+			newResource.visible = enemy.stats.visible;
 	ResourceSaver.save(newResource, "user://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();
@@ -607,9 +611,9 @@ func get_object_count(tileMap: TileMapLayer, worldSize : Vector2i) -> int:
 
 	for y in worldSize.y:
 		for x in worldSize.x:
-			var tile_id := tileMap.get_cell_source_id(Vector2i(x, y));
+			var tileId : int = tileMap.get_cell_source_id(Vector2i(x, y));
 
-			if (tile_id != Global.EMPTY_TILE && tile_id != Global.BEDROCK_TILE):
+			if (tileId != Global.EMPTY_TILE && tileId < Global.BEDROCK_CORNER):
 				count += 1;
 
 	return count;

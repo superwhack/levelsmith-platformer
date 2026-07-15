@@ -187,7 +187,6 @@ func process_edge_scrolling(delta: float) -> void:
 ## Snap the camera
 ## snapTo: the positon to snap to
 func snap_camera(snapTo: Vector2) -> void:
-	zoom = Vector2.ONE * playZoom;
 	global_position = snapTo;
 	if cameraPlayClamp:
 		clamp_camera(levelBounds);

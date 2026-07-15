@@ -1,18 +1,24 @@
 [gd_scene format=3 uid="uid://bj3ux7rusonfj"]
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_02c1u"]
-[ext_resource type="Script" uid="uid://no4fqovbkfha" path="res://Scripts/GlobalSettingsManager.gd" id="2_5bsrg"]
+[ext_resource type="Script" uid="uid://no4fqovbkfha" path="res://Scripts/SettingsManager.gd" id="2_5bsrg"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_w0xpy"]
-[ext_resource type="Texture2D" uid="uid://dcqejjlkpcphp" path="res://Assets/UserInterface/Buttons/ButtonIcons/ResetIcon.png" id="4_aixuf"]
-[ext_resource type="Texture2D" uid="uid://uboggbk6slsr" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_bpp5a"]
+[ext_resource type="Texture2D" uid="uid://rxu4qri7k0n8" path="res://Assets/UserInterface/Buttons/ButtonIcons/ResetIcon.png" id="4_aixuf"]
+[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_bpp5a"]
+[ext_resource type="Texture2D" uid="uid://b8wetv4xd30wg" path="res://Assets/Sprites/UI/BlankArrowUpSmall.png" id="4_w0xpy"]
 [ext_resource type="PackedScene" uid="uid://d4nqq7rlhq0q8" path="res://Scenes/UI/SettingsMenuSlider.tscn" id="5_aixuf"]
+[ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="6_5bsrg"]
+[ext_resource type="FontFile" uid="uid://dbkfb2swhokjo" path="res://Assets/Fonts/JetBrainsMono-Regular.ttf" id="6_xkvg5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5bsrg"]
 
-[node name="GlobalSettingsMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "resetButton", "masterVolume", "SFXVolume", "musicVolume")]
-process_mode = 2
+[sub_resource type="ButtonGroup" id="ButtonGroup_wdd1s"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_1i6c8"]
+
+[node name="SettingsMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "resetButton", "masterVolume", "SFXVolume", "musicVolume", "gameplayZoom", "followSpeed", "cameraDeadzone", "cameraClamp")]
 self_modulate = Color(0, 0, 0, 0.3764706)
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +32,10 @@ resetButton = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/Se
 masterVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn/MasterVolume")
 SFXVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn/SFXVolume")
 musicVolume = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/VolumeHeaderContainer/VolumeSliderColumn/MusicVolume")
+gameplayZoom = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn/GameplayZoom")
+followSpeed = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn/FollowSpeed")
+cameraDeadzone = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn/CameraDeadzone")
+cameraClamp = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn/CameraClamp")
 
 [node name="MainMargin" type="MarginContainer" parent="." unique_id=136846140]
 self_modulate = Color(1, 1, 1, 0.7882353)
@@ -59,7 +69,6 @@ layout_mode = 2
 theme_override_constants/scrollbar_h_separation = 15
 
 [node name="SettingsBox" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer" unique_id=488931375]
-custom_maximum_size = Vector2(610, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -178,6 +187,319 @@ propertyUnit = "%"
 minMax = Vector2(0, 100)
 sliderStep = 1.0
 valueAppend = "%"
+
+[node name="TypeSpacer" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox" unique_id=1416700405]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="LevelSettings" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox" unique_id=1450652153]
+layout_mode = 2
+
+[node name="ProjectHeader" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings" unique_id=1803170885]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/ProjectHeader" unique_id=1929522386]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="TitleLable" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/ProjectHeader/HBoxContainer" unique_id=545242788]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Level Settings"
+
+[node name="Gap" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/ProjectHeader/HBoxContainer" unique_id=1152160164]
+visible = false
+custom_minimum_size = Vector2(324, 15)
+layout_mode = 2
+
+[node name="GlobalButton" type="Button" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/ProjectHeader/HBoxContainer" unique_id=367658248]
+visible = false
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+icon = ExtResource("4_w0xpy")
+
+[node name="HeaderLine" type="HSeparator" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/ProjectHeader" unique_id=277764918]
+layout_mode = 2
+
+[node name="HeaderSpacer" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings" unique_id=145924532]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="CameraHeaderContainer" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings" unique_id=246064918]
+layout_mode = 2
+
+[node name="CameraLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer" unique_id=932387995]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Camera"
+
+[node name="HSeparator" type="HSeparator" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer" unique_id=1347950556]
+layout_mode = 2
+
+[node name="CameraSliderColumn" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer" unique_id=2098462679]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="GameplayZoom" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn" unique_id=305056832 instance=ExtResource("5_aixuf")]
+layout_mode = 2
+propertyName = "Gameplay Zoom Level"
+propertyUnit = "%"
+minMax = Vector2(20, 200)
+sliderStep = 1.0
+valueAppend = "%"
+
+[node name="FollowSpeed" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn" unique_id=609962401 instance=ExtResource("5_aixuf")]
+layout_mode = 2
+propertyName = "Camera Follow Speed"
+propertyUnit = "%"
+minMax = Vector2(25, 100)
+sliderStep = 1.0
+valueAppend = "%"
+
+[node name="CameraDeadzone" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn" unique_id=1372853753 instance=ExtResource("5_aixuf")]
+layout_mode = 2
+propertyName = "Camera Deadzone"
+propertyUnit = "m"
+minMax = Vector2(0, 2)
+sliderStep = 0.1
+
+[node name="CameraClamp" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn" unique_id=798063561 instance=ExtResource("6_5bsrg")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Camera Clamping"
+
+[node name="Spacer" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings" unique_id=1178883804]
+visible = false
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="TilePropertiesHeader" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings" unique_id=886595738]
+visible = false
+layout_mode = 2
+
+[node name="TilePropertiesLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=566304013]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Tile Properties"
+
+[node name="HSeparator" type="HSeparator" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=2122254642]
+layout_mode = 2
+
+[node name="IcePropertiesRow" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=1588034836]
+layout_mode = 2
+
+[node name="IcePropertiesLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow" unique_id=1416600788]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Ice Friction (%)"
+
+[node name="IcePropertiesContainter" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow" unique_id=1399333220]
+layout_mode = 2
+
+[node name="IceMinLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow/IcePropertiesContainter" unique_id=1931296868]
+layout_mode = 2
+text = "  0"
+
+[node name="IceSlider" type="HSlider" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow/IcePropertiesContainter" unique_id=1970644512]
+custom_minimum_size = Vector2(650, 0)
+layout_mode = 2
+size_flags_vertical = 4
+value = 20.0
+scrollable = false
+
+[node name="IceMaxLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow/IcePropertiesContainter" unique_id=1453352174]
+layout_mode = 2
+text = "100 "
+
+[node name="IceValueBox" type="LineEdit" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow/IcePropertiesContainter" unique_id=14419256]
+layout_mode = 2
+
+[node name="BouncePropertiesRow" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=1128868432]
+layout_mode = 2
+
+[node name="BouncePropertiesLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow" unique_id=132668215]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Bounce Height (%)"
+
+[node name="BouncePropertiesContainter" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow" unique_id=161603155]
+layout_mode = 2
+
+[node name="BounceMinLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow/BouncePropertiesContainter" unique_id=1581387945]
+layout_mode = 2
+text = "  0"
+
+[node name="BounceSlider" type="HSlider" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow/BouncePropertiesContainter" unique_id=489205867]
+custom_minimum_size = Vector2(650, 0)
+layout_mode = 2
+size_flags_vertical = 4
+value = 20.0
+scrollable = false
+
+[node name="BounceMaxLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow/BouncePropertiesContainter" unique_id=1576758679]
+layout_mode = 2
+text = "100 "
+
+[node name="BounceValueBox" type="LineEdit" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow/BouncePropertiesContainter" unique_id=1717190517]
+layout_mode = 2
+
+[node name="StickyPropertiesRow" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=1302052432]
+layout_mode = 2
+
+[node name="StickyPropertiesLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow" unique_id=2112821159]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Sticky Slowness (%)"
+
+[node name="StickyPropertiesContainter" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow" unique_id=189842619]
+layout_mode = 2
+
+[node name="StickyMinLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow/StickyPropertiesContainter" unique_id=884426765]
+layout_mode = 2
+text = "  0"
+
+[node name="StickySlider" type="HSlider" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow/StickyPropertiesContainter" unique_id=1826924350]
+custom_minimum_size = Vector2(650, 0)
+layout_mode = 2
+size_flags_vertical = 4
+value = 20.0
+scrollable = false
+
+[node name="StickyMaxLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow/StickyPropertiesContainter" unique_id=1013097049]
+layout_mode = 2
+text = "100 "
+
+[node name="StickyValueBox" type="LineEdit" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow/StickyPropertiesContainter" unique_id=1556550783]
+layout_mode = 2
+
+[node name="DamagePropertiesRow2" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=1095014651]
+layout_mode = 2
+
+[node name="DamagePropertiesLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2" unique_id=797972094]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Damage Strength"
+
+[node name="DamagePropertiesContainter" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2" unique_id=1986244313]
+layout_mode = 2
+
+[node name="DamageMinLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2/DamagePropertiesContainter" unique_id=28328955]
+layout_mode = 2
+text = "  1"
+
+[node name="DamageSlider" type="HSlider" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2/DamagePropertiesContainter" unique_id=193232824]
+custom_minimum_size = Vector2(650, 0)
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 5.0
+value = 5.0
+scrollable = false
+
+[node name="DamageMaxLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2/DamagePropertiesContainter" unique_id=154635976]
+layout_mode = 2
+text = "5"
+
+[node name="Control" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2/DamagePropertiesContainter" unique_id=113797729]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DamageValueBox" type="LineEdit" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2/DamagePropertiesContainter" unique_id=1839721900]
+layout_mode = 2
+
+[node name="Spacer2" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings" unique_id=406343043]
+visible = false
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="GlobalEnemyHeaderContainer2" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings" unique_id=2128896592]
+visible = false
+layout_mode = 2
+
+[node name="CameraLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2" unique_id=1610551543]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Global Enemy Properties"
+
+[node name="HSeparator" type="HSeparator" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2" unique_id=493403301]
+layout_mode = 2
+
+[node name="ActivationContainer" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2" unique_id=249100979]
+layout_mode = 2
+
+[node name="ActivationLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/ActivationContainer" unique_id=1117495110]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Activation"
+
+[node name="ActivationContainer" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/ActivationContainer" unique_id=557452489]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 64
+
+[node name="Control" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/ActivationContainer/ActivationContainer" unique_id=1242721695]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="OnScreenCheckBox" type="CheckBox" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/ActivationContainer/ActivationContainer" unique_id=2008719884]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_xkvg5")
+button_pressed = true
+button_group = SubResource("ButtonGroup_wdd1s")
+text = "On Screen"
+
+[node name="Control2" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/ActivationContainer/ActivationContainer" unique_id=1853393521]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="OnStartCheckBox" type="CheckBox" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/ActivationContainer/ActivationContainer" unique_id=249970826]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_xkvg5")
+button_group = SubResource("ButtonGroup_wdd1s")
+text = "On Level Start"
+
+[node name="Spacer5" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2" unique_id=592564871]
+visible = false
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="TileInteractionContainer" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2" unique_id=1222681861]
+layout_mode = 2
+
+[node name="TileInteractionLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/TileInteractionContainer" unique_id=20859028]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Interact With Tiles"
+
+[node name="TileInteractionContainer" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/TileInteractionContainer" unique_id=1106986125]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/TileInteractionContainer/TileInteractionContainer" unique_id=1154126902]
+custom_minimum_size = Vector2(225, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="OnCheckBox" type="CheckBox" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/TileInteractionContainer/TileInteractionContainer" unique_id=1156920337]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_xkvg5")
+button_group = SubResource("ButtonGroup_1i6c8")
+text = "On"
+
+[node name="Control2" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/TileInteractionContainer/TileInteractionContainer" unique_id=910043316]
+custom_minimum_size = Vector2(155, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="OffCheckBox" type="CheckBox" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/GlobalEnemyHeaderContainer2/TileInteractionContainer/TileInteractionContainer" unique_id=500349193]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_xkvg5")
+button_pressed = true
+button_group = SubResource("ButtonGroup_1i6c8")
+text = "Off"
 
 [node name="FooterMargin" type="MarginContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox" unique_id=504633844]
 layout_mode = 2

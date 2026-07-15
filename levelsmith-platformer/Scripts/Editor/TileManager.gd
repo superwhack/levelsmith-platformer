@@ -14,7 +14,6 @@ func _process(_delta: float) -> void:
 ## Places down the current brush tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func place_tile(clickPosition: Vector2) -> void:
-	editorManager.unsavedChanges = true;
 	editorManager.isValidated = false;
 	if (editorManager.check_out_of_bounds(clickPosition)): 
 		#AudioManager.play_UI_effect("TilePlaceError");
@@ -40,9 +39,7 @@ func place_tile(clickPosition: Vector2) -> void:
 ## Deletes a tile at the clicked position.
 ## clickPosition: Where the mouse is during the click.
 func delete_tile (clickPosition: Vector2) -> void:
-	editorManager.unsavedChanges = true;
 	editorManager.isValidated = false;
-	
 	if (tileMap.get_cell_source_id(clickPosition) >= editorManager.tileCount 
 	|| editorManager.check_out_of_bounds(clickPosition)):
 		return;
@@ -53,9 +50,6 @@ func delete_tile (clickPosition: Vector2) -> void:
 ## firstCorner: The corner where the mouse was clicked
 ## secondCorner: The corner where the mouse was released
 func box_place(firstCorner: Vector2, secondCorner: Vector2) -> void:
-	editorManager.unsavedChanges = true;
-	editorManager.isValidated = false;
-	
 	# Find the coordinate of the top left corner of the box.
 	var topLeft : Vector2 = Vector2(
 		min(firstCorner.x, secondCorner.x), 
@@ -74,9 +68,6 @@ func box_place(firstCorner: Vector2, secondCorner: Vector2) -> void:
 ## firstCorner: The corner where the mouse was clicked
 ## secondCorner: The corner where the mouse was released
 func box_delete(firstCorner: Vector2, secondCorner: Vector2) -> void:
-	editorManager.unsavedChanges = true;
-	editorManager.isValidated = false;
-	
 	# Find the coordinate of the top left corner of the box.
 	var topLeft : Vector2 = Vector2(
 		min(firstCorner.x, secondCorner.x), 

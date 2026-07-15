@@ -2,34 +2,21 @@
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_eaumf"]
 [ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/Editor/PopUp/ErrorPopUp.gd" id="2_yapt7"]
+[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_yapt7"]
 [ext_resource type="Texture2D" uid="uid://deh8gunioyvao" path="res://Assets/UserInterface/Buttons/triangle.svg" id="4_rps3c"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wdd1s"]
-bg_color = Color(0.1254902, 0.12941177, 0.14509805, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yapt7"]
-bg_color = Color(0.22352941, 0.08627451, 0.047058824, 0.5921569)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.5874098, 0.27984193, 0.1886749, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idm4w"]
+bg_color = Color(0.95686275, 0.79607844, 0.43529412, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 corner_detail = 10
 
 [node name="HoverPopUpContainer" type="HBoxContainer" unique_id=1808818748 node_paths=PackedStringArray("title", "bodyText")]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -199.0
-offset_top = -88.0
-offset_right = 199.0
-offset_bottom = 88.0
+anchors_preset = -1
+offset_right = 398.0
+offset_bottom = 176.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -39,14 +26,14 @@ theme = ExtResource("1_eaumf")
 theme_override_constants/separation = -13
 script = ExtResource("2_yapt7")
 title = NodePath("PanelContainer/MarginContainer/VBoxContainer/Title")
-bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer2/MarginContainer/Body")
+bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/Body")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
-custom_minimum_size = Vector2(446, 0)
+custom_minimum_size = Vector2(300, 176)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_wdd1s")
+theme_override_styles/panel = SubResource("StyleBoxFlat_idm4w")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=266539190]
 layout_mode = 2
@@ -60,32 +47,17 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1675355400]
 layout_mode = 2
-theme = ExtResource("1_eaumf")
+theme_override_fonts/font = ExtResource("3_yapt7")
 theme_override_font_sizes/font_size = 24
 text = "Error"
+horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=983078058]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1413927328]
+[node name="Body" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=908015837]
 layout_mode = 2
-theme_override_constants/margin_top = 5
-
-[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=1785292085]
-layout_mode = 2
-theme = ExtResource("1_eaumf")
-theme_override_styles/panel = SubResource("StyleBoxFlat_yapt7")
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer2" unique_id=2054801656]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="Body" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer2/MarginContainer" unique_id=908015837]
-layout_mode = 2
-theme = ExtResource("1_eaumf")
+theme_override_fonts/normal_font = ExtResource("3_yapt7")
 text = "An error has occurred."
 fit_content = true
 

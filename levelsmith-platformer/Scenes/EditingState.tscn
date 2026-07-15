@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
-[ext_resource type="PackedScene" uid="uid://cusuiuccep2n3" path="res://Scenes/LevelSettingsMenu.tscn" id="17_fnjh2"]
+[ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
 [ext_resource type="Script" uid="uid://dennrhd1fmssd" path="res://Scripts/Universal/LevelScreenshot.gd" id="25_fnjh2"]
 [ext_resource type="Script" uid="uid://demhkcrctsljf" path="res://Scripts/Editor/IconManager.gd" id="26_vrcqo"]
 
@@ -64,7 +64,7 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0vixy"]
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "iconManager", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "levelSettingsMenu", "levelSettingsButton", "globalSettingsButton", "customCursorManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "iconManager", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "settingsMenu", "settingsButton", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
 iconManager = NodePath("IconManager")
@@ -76,9 +76,8 @@ playButton = NodePath("ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTop
 exportButton = NodePath("ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/SaveButton")
 assetManager = NodePath("CanvasLayer/AssetManager")
 assetManagerButton = NodePath("ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/AssetManagerButton")
-levelSettingsMenu = NodePath("CanvasLayer/LevelSettingsMenu")
-levelSettingsButton = NodePath("ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/LevelSettingsButton")
-globalSettingsButton = NodePath("ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/GlobalSettingsButton")
+settingsMenu = NodePath("CanvasLayer/SettingsMenu")
+settingsButton = NodePath("ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/SettingsButton")
 customCursorManager = NodePath("CustomCursorManager")
 
 [node name="GridLines" type="TileMapLayer" parent="." unique_id=669187714]
@@ -309,7 +308,7 @@ layout_mode = 2
 texture = ExtResource("13_hh704")
 expand_mode = 3
 
-[node name="LevelSettingsButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=330056258]
+[node name="SettingsButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=330056258]
 custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
@@ -317,7 +316,7 @@ size_flags_horizontal = 4
 icon_alignment = 1
 expand_icon = true
 
-[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/LevelSettingsButton" unique_id=1907737059]
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/SettingsButton" unique_id=1907737059]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -329,32 +328,7 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/LevelSettingsButton/MarginContainer" unique_id=1811417484]
-layout_mode = 2
-texture = ExtResource("14_vrcqo")
-expand_mode = 1
-
-[node name="GlobalSettingsButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=1145625221]
-custom_minimum_size = Vector2(60, 60)
-custom_maximum_size = Vector2(65, 65)
-layout_mode = 2
-size_flags_horizontal = 4
-icon_alignment = 1
-expand_icon = true
-
-[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/GlobalSettingsButton" unique_id=1272596027]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/GlobalSettingsButton/MarginContainer" unique_id=1158301421]
+[node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/SettingsButton/MarginContainer" unique_id=1811417484]
 layout_mode = 2
 texture = ExtResource("14_k6ut3")
 expand_mode = 3
@@ -384,16 +358,18 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Pan [WASD / MMB]"
 
-[node name="PropertiesPanel" type="PanelContainer" parent="ScreenUI/MainColumn/ContentRow" unique_id=949999272]
+[node name="HoverPopUpContainer" parent="ScreenUI/MainColumn/ContentRow" unique_id=1808818748 instance=ExtResource("16_rdu5w")]
 visible = false
+layout_mode = 2
+
+[node name="PropertiesPanel" type="PanelContainer" parent="ScreenUI/MainColumn/ContentRow" unique_id=949999272]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0vixy")
 
-[node name="PropertyMenu" parent="ScreenUI/MainColumn/ContentRow/PropertiesPanel" unique_id=1686733993 node_paths=PackedStringArray("editorManager") instance=ExtResource("7_gc37a")]
+[node name="PropertyMenu" parent="ScreenUI/MainColumn/ContentRow/PropertiesPanel" unique_id=1686733993 instance=ExtResource("7_gc37a")]
 layout_mode = 2
-editorManager = NodePath("../../../../..")
 
 [node name="OverlayLayer" type="Control" parent="ScreenUI" unique_id=1751323313]
 visible = false
@@ -408,15 +384,6 @@ metadata/_edit_use_anchors_ = true
 [node name="ErrorPopUpLayer" type="CanvasLayer" parent="ScreenUI/OverlayLayer" unique_id=302907189]
 visible = false
 
-[node name="HoverPopUpContainer" parent="ScreenUI" unique_id=1808818748 instance=ExtResource("16_rdu5w")]
-visible = false
-offset_left = 1474.0
-offset_top = 80.0
-offset_right = 1920.0
-offset_bottom = 179.0
-grow_horizontal = 1
-grow_vertical = 1
-
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 
 [node name="AssetManager" parent="CanvasLayer" unique_id=468653693 node_paths=PackedStringArray("editorManager", "mainTileMap") instance=ExtResource("11_bpoex")]
@@ -424,7 +391,8 @@ visible = false
 editorManager = NodePath("../..")
 mainTileMap = NodePath("../../Tiles")
 
-[node name="LevelSettingsMenu" parent="CanvasLayer" unique_id=79213823 node_paths=PackedStringArray("editorManager") instance=ExtResource("17_fnjh2")]
+[node name="SettingsMenu" parent="CanvasLayer" unique_id=79213823 node_paths=PackedStringArray("editorManager") instance=ExtResource("20_fnjh2")]
+process_mode = 2
 visible = false
 editorManager = NodePath("../..")
 

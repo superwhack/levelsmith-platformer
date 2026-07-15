@@ -32,9 +32,6 @@ var assetManagerPlayer : AudioStreamPlayer
 # Preview music timer for the settings menu
 var previewMusicTimer : float = -1.0;
 
-# The amount of time in seconds between each ui sound effect
-var uiEffectCooldown : float = 0.035;
-
 ## Create all players and connect them properly
 func _ready() -> void:
 	
@@ -112,12 +109,6 @@ func update_volume() -> void:
 func play_UI_effect(effectName: String) -> void:
 	if queue.size() >= AUDIO_QUEUE_LIMIT:
 		return;
-	# Check all players in use, if any are playing the same audio, check if the cooldown is up, return if not
-	for player in inusePlayers:
-		if (player.stream.has_meta("audioName")):
-			if (player.stream.get_meta("audioName") == effectName):
-				if (player.get_playback_position() + AudioServer.get_time_since_last_mix() <= uiEffectCooldown):
-					return;
 	var fullPath : String = UI_AUDIO_LIBRARY_PATH + effectName;
 	if (FileAccess.file_exists(fullPath + ".mp3")):
 		queue.append(fullPath + ".mp3");
@@ -167,11 +158,6 @@ func play_effect(effectName: String) -> void:
 		print(effectName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .wav for effects
 		queue.append(BACKUP_AUDIO_LIBRARY_PATH + effectName + ".wav")
-	# Iterate through each in use audio player, if any are playing the current audio, stop the other one.
-	for player in inusePlayers:
-		if (player.stream.has_meta("audioName")):
-			if (player.stream.get_meta("audioName") == effectName):
-				player.stop();
 
 ## Add and play a new walking effect, only one at a time
 ## effectName: name of the walking effect
@@ -259,8 +245,6 @@ func _process(delta: float) -> void:
 			availablePlayers[0].stream = AudioStreamWAV.load_from_file(path);
 		else:
 			print("Error, somehow a different extention made it into here!")
-		if (availablePlayers[0].stream):
-			availablePlayers[0].stream.set_meta("audioName", audioName);
 		availablePlayers[0].play();
 		inusePlayers.append(availablePlayers[0]);
 		availablePlayers.pop_front();

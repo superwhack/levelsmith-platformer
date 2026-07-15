@@ -1,11 +1,12 @@
 extends Panel
-class_name GlobalSettingsMenu;
+class_name SettingsMenu;
 
 # General
-@export var masterManager : Node2D;
+@export var editorManager : Node2D;
 @export var closeButton : Button;
 @export var resetButton : Button;
 
+@export var cameraManager : Node2D;
 var settingsPath := "user://settings.cfg";
 
 # Volume
@@ -13,10 +14,16 @@ var settingsPath := "user://settings.cfg";
 @export var SFXVolume : VBoxContainer;
 @export var musicVolume : VBoxContainer;
 
+# Camera
+@export var gameplayZoom : VBoxContainer;
+@export var followSpeed : VBoxContainer;
+@export var cameraDeadzone : VBoxContainer;
+@export var cameraClamp : VBoxContainer;
+
 var musicPreviewing := false;
 
 func _ready() -> void:
-	closeButton.pressed.connect(masterManager.close_global_settings_menu);
+	closeButton.pressed.connect(editorManager.close_settings_menu);
 	resetButton.pressed.connect(reset_settings);
 	
 	# AUDIO ---
@@ -36,10 +43,23 @@ func _ready() -> void:
 	SFXVolume.drag_ended.connect(_on_dragging_SFX);
 	musicVolume.drag_ended.connect(_on_drag_end_music);
 	
+	# CAMERA ---
+	# Set current default values
+	gameplayZoom.value = cameraManager.playZoom * 100;
+	followSpeed.value = cameraManager.followSpeed * 100;
+	cameraDeadzone.value = cameraManager.deadzone;
+	cameraClamp.value = cameraManager.cameraPlayClamp;
+	gameplayZoom.update_slider();
+	followSpeed.update_slider();
+	cameraDeadzone.update_slider();
+	cameraClamp.update_checkbox();
+	# Sliders connection
+	gameplayZoom.drag_ended.connect(_on_drag);
+	followSpeed.drag_ended.connect(_on_drag);
+	cameraDeadzone.drag_ended.connect(_on_drag);
+	cameraClamp.check_changed.connect(_on_drag);
+	
 	load_settings();
-
-func _process(_delta: float) -> void:
-	pass;
 
 ## When dragging, adjust the values in real time
 func _on_drag() -> void:
@@ -52,6 +72,11 @@ func _on_drag() -> void:
 	AudioManager.SFXVolume = SFXVolume.value / 100;
 	AudioManager.musicVolume = musicVolume.value / 100;
 	AudioManager.update_volume();
+	# Camera
+	cameraManager.playZoom = gameplayZoom.value / 100;
+	cameraManager.followSpeed = followSpeed.value / 100;
+	cameraManager.deadzone = cameraDeadzone.value;
+	cameraManager.cameraPlayClamp = cameraClamp.value;
 
 func _on_dragging_SFX() -> void:
 	_on_drag();
@@ -76,10 +101,20 @@ func update_sliders() -> void:
 	SFXVolume.update_slider();
 	musicVolume.update_slider();
 	
+	gameplayZoom.update_slider();
+	followSpeed.update_slider();
+	cameraDeadzone.update_slider();
+	cameraClamp.update_checkbox();
+	
 	_on_drag();
 
 ## Reset the settings
 func reset_settings() -> void:
+	gameplayZoom.value = 100.0;
+	followSpeed.value = 100.0;
+	cameraDeadzone.value = 0.0;
+	cameraClamp.value = false;
+	
 	masterVolume.value = 70.0;
 	SFXVolume.value = 70.0;
 	musicVolume.value = 70.0;
@@ -93,7 +128,7 @@ func load_settings() -> void:
 		masterVolume.value = configFile.get_value("Audio", "master_volume");
 		SFXVolume.value = configFile.get_value("Audio", "sfx_volume");
 		musicVolume.value = configFile.get_value("Audio", "music_volume");
-		update_sliders();
+		_on_drag();
 
 ## Save current settings in the config file
 func save_settings() -> void:

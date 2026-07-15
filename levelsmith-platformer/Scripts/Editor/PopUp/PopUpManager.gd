@@ -4,8 +4,7 @@ extends CanvasLayer
 
 # Popup templates
 const ERROR_TEMPLATE : PackedScene = preload("res://Scenes/UI/ErrorPopUpTemplate.tscn");
-const HOVER_TEMPLATE : PackedScene = preload("res://Scenes/UI/HoverPopUpTemplate.tscn");
-const SAVE_TEMPLATE : PackedScene = preload("res://Scenes/UI/SavingPopUpTemplate.tscn")
+const HOVER_TEMPLATE : PackedScene = preload("res://Scenes/UI/HoverPopUpTemplate.tscn")
 
 var currentPopUp : Panel;
 
@@ -21,7 +20,7 @@ func _ready() -> void:
 ## body: Body content of error
 func create_error_popup(title : String = "Error", body : String = "An error has occurred") -> void:
 	if (currentPopUp != null):
-		currentPopUp.set_body_text(" - " + body) ;
+		currentPopUp.set_body_text("\n - " + body) ;
 		return;
 	var newPopUp: Panel = ERROR_TEMPLATE.instantiate();
 	
@@ -59,8 +58,8 @@ func create_multi_error_popup(title : String = "Error", body : Array[String] = [
 func create_reset_asset_popup(callback : Callable) -> void:
 	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
 	
-	newPopUp.set_title("Reset All Assets");
-	newPopUp.set_body_text("This will reset all assets to default. All custom assets will be lost.");
+	newPopUp.set_title("RESET ALL ASSETS");
+	newPopUp.set_body_text("This will RESET ALL ASSETS to default. All custom assets will be lost.");
 	newPopUp.set_reset_callback(callback);
 	newPopUp.resetButton.show();
 	newPopUp.closeButton.text = "Cancel";
@@ -71,8 +70,8 @@ func create_reset_asset_popup(callback : Callable) -> void:
 func create_reset_image_popup(callback : Callable, asset : String = "asset") -> void:
 	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
 	
-	newPopUp.set_title("Reset Selected Asset");
-	newPopUp.set_body_text("This will reset your custom " + asset + " asset to its default. The current asset will be lost.");
+	newPopUp.set_title("RESET SELECTED ASSET");
+	newPopUp.set_body_text("This will [color=#e74937]RESET[/color] your custom " + asset + " asset to its default. The current asset will be lost.");
 	newPopUp.set_reset_callback(callback);
 	newPopUp.resetButton.show();
 	newPopUp.closeButton.text = "Cancel";
@@ -82,14 +81,13 @@ func create_reset_image_popup(callback : Callable, asset : String = "asset") -> 
 	
 ## When saving a level, create the initial popup
 func create_save_popup() -> void:
-	var newPopUp : Panel = SAVE_TEMPLATE.instantiate();
+	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
 	
 	newPopUp.set_title("Saving...");
-	newPopUp.set_panel_color(Color(1.00, 0.97, 0.67), Color.YELLOW)
-	##newPopUp.separator2.hide();
-	newPopUp.set_body_text("[color=black]Do not close while Saving.[/color]");
-	##newPopUp.resetButton.hide();
-	##newPopUp.closeButton.hide();
+	newPopUp.separator.hide();
+	newPopUp.bodyText.hide();
+	newPopUp.resetButton.hide();
+	newPopUp.closeButton.hide();
 	newPopUp.self_modulate = Color(1, 1, 1, 0);
 	
 	add_child(newPopUp);
@@ -98,31 +96,15 @@ func create_save_popup() -> void:
 
 ## When a save has been completed, create a save complete popup
 func create_save_complete_popup() -> void:
-	var newPopUp : Panel = SAVE_TEMPLATE.instantiate();
-	
-	newPopUp.set_title("Save Complete!");
-	newPopUp.set_panel_color(Color(0.68, 0.93, 0.68), Color.GREEN);
-	##newPopUp.separator2.hide();
-	newPopUp.set_body_text("[color=black]Saving Complete.[/color]");
-	##newPopUp.resetButton.hide();
-	##newPopUp.closeButton.hide();
-	newPopUp.self_modulate = Color(1, 1, 1, 0);
-	
-	add_child(newPopUp);
-	currentPopUp = newPopUp;
-
-## If there are unsaved changes, create a popup for user convenience.
-##
-func create_unsaved_changes_popup(saveQuitCallback: Callable, noSaveQuitCallback: Callable) -> void:
 	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
 	
-	newPopUp.set_title("Unsaved Changes!");
-	newPopUp.set_body_text("You have unsaved changes. Are you sure you want to return to the main menu without saving?");
-	newPopUp.set_save_to_menu_callback(saveQuitCallback);
-	newPopUp.no_save_to_menu_callback(noSaveQuitCallback);
-	newPopUp.saveQuitButton.show();
-	newPopUp.noSaveQuitButton.show();
-	newPopUp.closeButton.text = "Cancel";
+	newPopUp.set_title("Save Complete!");
+	newPopUp.separator.hide();
+	newPopUp.bodyText.hide();
+	newPopUp.resetButton.hide();
+	newPopUp.closeButton.hide();
+	newPopUp.self_modulate = Color(1, 1, 1, 0);
+	
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
 
@@ -131,6 +113,7 @@ func create_unsaved_changes_popup(saveQuitCallback: Callable, noSaveQuitCallback
 func clear_all_popups() -> void:
 	for child in get_children():
 		child.queue_free();
+
 	
 ## Removes specific popup from popup stack
 ## item: Panel being removed from stack

@@ -6,6 +6,7 @@ signal reload;
 signal complete;
 signal levelCreated;
 signal onCoinCollected;
+signal checkpointCollected;
 
 # Tile size
 const TILE_SIZE : int = 128;

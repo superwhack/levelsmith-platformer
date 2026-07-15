@@ -29,6 +29,8 @@
 [ext_resource type="PackedScene" uid="uid://b1he4q1q33j0e" path="res://Scenes/Entities/Coin.tscn" id="22_38lp2"]
 [ext_resource type="Texture2D" uid="uid://bkquthck5o5sq" path="res://Assets/Sprites/Entities/Props/Prop6.png" id="22_hkman"]
 [ext_resource type="PackedScene" uid="uid://nquey6f2ob44" path="res://Scenes/Preview/CoinPreview.tscn" id="23_hkman"]
+[ext_resource type="PackedScene" uid="uid://bgy7bisua1v0q" path="res://Scenes/Entities/Checkpoint.tscn" id="23_kwx3m"]
+[ext_resource type="PackedScene" uid="uid://bfjbmr71i67hr" path="res://Scenes/Preview/CheckpointPreview.tscn" id="24_gauhj"]
 [ext_resource type="Texture2D" uid="uid://bfihlk8cogb0q" path="res://Assets/Sprites/Tiles/death.png" id="24_hkman"]
 [ext_resource type="Texture2D" uid="uid://cvf8gycyhndv4" path="res://Assets/Sprites/UI/Bedrock.png" id="31_ldrp4"]
 [ext_resource type="Texture2D" uid="uid://66t5crfub0ll" path="res://Assets/Sprites/UI/Delete.png" id="32_ldrp4"]
@@ -137,6 +139,11 @@ scenes/2/scene = ExtResource("23_hkman")
 resource_name = "MovingPlatform"
 scenes/1/scene = ExtResource("19_yoa8o")
 scenes/2/scene = ExtResource("20_4pytx")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_sty8l"]
+resource_name = "Checkpoint"
+scenes/1/scene = ExtResource("23_kwx3m")
+scenes/2/scene = ExtResource("24_gauhj")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_38lp2"]
 texture = ExtResource("24_hkman")
@@ -430,3 +437,4 @@ sources/604 = SubResource("TileSetAtlasSource_eqdrb")
 sources/507 = SubResource("TileSetScenesCollectionSource_6ti6x")
 sources/505 = SubResource("TileSetScenesCollectionSource_flggt")
 sources/605 = SubResource("TileSetAtlasSource_yoa8o")
+sources/508 = SubResource("TileSetScenesCollectionSource_sty8l")

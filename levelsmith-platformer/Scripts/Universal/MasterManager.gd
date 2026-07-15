@@ -312,7 +312,7 @@ func play() -> void:
 	editorManager.process_mode = Node.PROCESS_MODE_DISABLED;
 	# Reset the play scene and load the map
 	gameManager.freeze(true);
-	await gameManager.reset();
+	await gameManager.full_restart();
 	await get_tree().process_frame
 	await screen_wipe_out();
 	gameManager.freeze(false);

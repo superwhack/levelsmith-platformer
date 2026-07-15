@@ -335,14 +335,14 @@ sliderStep = 0.1
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Fire Rate"
-propertyUnit = "RPM"
+propertyUnit = "Shots Per Second"
 minMax = Vector2(0.2, 5)
 sliderStep = 0.1
 
 [node name="ShootingBounce" parent="ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=1978534166 instance=ExtResource("3_1mv14")]
 layout_mode = 2
 size_flags_horizontal = 0
-propertyName = "Projectile Bounce"
+propertyName = "Bounce on Projectiles"
 
 [node name="ShootingGravity" parent="ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=708611749 instance=ExtResource("3_1mv14")]
 layout_mode = 2

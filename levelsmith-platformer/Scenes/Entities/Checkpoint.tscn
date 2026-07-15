@@ -10,7 +10,26 @@ animations = [{
 "texture": ExtResource("1_uoa2o")
 }],
 "loop": 1,
-"name": &"default",
+"name": &"CheckpointActive",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_uoa2o")
+}],
+"loop": 1,
+"name": &"CheckpointCollected",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_uoa2o")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"CheckpointInactive",
 "speed": 5.0
 }]
 
@@ -21,7 +40,9 @@ script = ExtResource("1_r2h6u")
 animatedSprite = NodePath("AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1306995960]
+z_index = -1
 sprite_frames = SubResource("SpriteFrames_km8ha")
+animation = &"CheckpointInactive"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1447870866]
 scale = Vector2(6.4, 6.4)

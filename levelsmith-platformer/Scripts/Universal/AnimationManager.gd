@@ -266,6 +266,7 @@ func create_template_sprites() -> void:
 	
 	checkpointTemplateSprite.sprite_frames.add_animation("CheckpointInactive");
 	checkpointTemplateSprite.sprite_frames.add_animation("CheckpointActive");
+	checkpointTemplateSprite.sprite_frames.add_animation("CheckpointCollected");
 	checkpointTemplateSprite.sprite_frames.set_animation_loop_mode("CheckpointCollected", SpriteFrames.LoopMode.LOOP_NONE);
 	checkpointTemplateSprite.animation = "CheckpointInactive";
 	checkpointTemplateSprite.sprite_frames.remove_animation("default");

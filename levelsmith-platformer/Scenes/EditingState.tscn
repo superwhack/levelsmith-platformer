@@ -20,7 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://dt54gtcqj4y6n" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
 [ext_resource type="Texture2D" uid="uid://dymygj183wflb" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
-[ext_resource type="Texture2D" uid="uid://kedeb3vd63r6" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://dlhtm5hs5c3m0" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_vrcqo"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://cusuiuccep2n3" path="res://Scenes/LevelSettingsMenu.tscn" id="17_fnjh2"]
@@ -137,6 +137,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_vertical = 4
+tooltip_text = "Exit to Home"
 icon_alignment = 1
 expand_icon = true
 
@@ -182,6 +183,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_vertical = 4
+tooltip_text = "Save [Ctrl+S]"
 icon_alignment = 1
 expand_icon = true
 
@@ -288,6 +290,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
+tooltip_text = "Asset Manager"
 icon_alignment = 1
 expand_icon = true
 
@@ -312,6 +315,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
+tooltip_text = "Level Settings"
 icon_alignment = 1
 expand_icon = true
 
@@ -337,6 +341,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
+tooltip_text = "Global Settings"
 icon_alignment = 1
 expand_icon = true
 

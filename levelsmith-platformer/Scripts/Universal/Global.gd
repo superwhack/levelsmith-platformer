@@ -82,6 +82,7 @@ enum EntityType {
 	PROP6 = 605,
 }
 
-const EMPTY_TILE: int = -1
-const BEDROCK_TILE: int = 9998;
+const EMPTY_TILE: int = -1;
+const BEDROCK_CORNER: int = 9997;
+const BEDROCK_WALL: int = 9998;
 const ERASING_TILE: int = 9999;

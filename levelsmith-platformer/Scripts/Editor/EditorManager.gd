@@ -7,6 +7,7 @@ extends Node2D
 
 # Camera reference
 @export var mainCamera : Camera2D;
+@export var screenshotViewport : SubViewport;
 @export var levelScreenshotCamera : Camera2D;
 @export var screenUI : CanvasLayer;
 

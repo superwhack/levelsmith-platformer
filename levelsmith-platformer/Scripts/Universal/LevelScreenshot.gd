@@ -3,6 +3,8 @@ extends Camera2D
 # References to necessary nodes
 @export var masterManager : Node2D;
 @export var baseCamera : Camera2D;
+@export var screenshotViewport : SubViewport;
+
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,5 +19,4 @@ func zoom_out() -> void:
 ## Takes a screenshot of the entire level
 ## returns: An image file containing the level screenshot.
 func get_level_screenshot() -> Image:
-	var screenshot : Image = get_viewport().get_texture().get_image();
-	return screenshot;
+	return screenshotViewport.get_texture().get_image();

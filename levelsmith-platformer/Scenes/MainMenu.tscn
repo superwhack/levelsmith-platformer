@@ -4,19 +4,20 @@
 [ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_ygkdq"]
 [ext_resource type="PackedScene" uid="uid://cv3y1gdfsbknd" path="res://Scenes/UI/LevelListItem.tscn" id="3_07k0b"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="5_h35r6"]
-[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
+[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
 [ext_resource type="Texture2D" uid="uid://2j2py7hm4a7o" path="res://Assets/Sprites/UI/FavoriteMedium.PNG" id="6_pjscj"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
 [ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
 [ext_resource type="Texture2D" uid="uid://cuqx70ij8cotk" path="res://Assets/UserInterface/Buttons/ButtonIcons/PlaceholderButtonAsset.png" id="9_a2vo5"]
 [ext_resource type="Texture2D" uid="uid://uffs400qxw2q" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Import.png" id="10_w5qnt"]
 [ext_resource type="Texture2D" uid="uid://dusre0h2m2g6t" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Folder.png" id="11_83bof"]
-[ext_resource type="Texture2D" uid="uid://8pwuej3wvl0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="11_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://dymygj183wflb" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="11_m7n2d"]
 [ext_resource type="Texture2D" uid="uid://cb35440stu18e" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Exit.png" id="12_k5kei"]
 [ext_resource type="Texture2D" uid="uid://dr1smfcdfn46v" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Favorite.png" id="13_gcoc3"]
 [ext_resource type="Texture2D" uid="uid://stx0om0pqx4u" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Duplicate.png" id="14_1uc6u"]
 [ext_resource type="Texture2D" uid="uid://c0phqqwjx130p" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Delete.png" id="15_0ffkm"]
-[ext_resource type="Texture2D" uid="uid://c4qid2y3143as" path="res://Assets/Sprites/UI/PreviewDefault.png" id="15_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://b3oxkl2gtf3lw" path="res://Assets/Sprites/UI/PreviewDefault.png" id="15_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://c3vn5tymkipfl" path="res://Assets/UserInterface/previewImageWithLogo.png" id="16_65hh5"]
 [ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="16_w5rev"]
 [ext_resource type="Texture2D" uid="uid://dd3080y6r8vxe" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Edit.png" id="17_34n7o"]
 [ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
@@ -489,7 +490,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_57qmd")
 custom_minimum_size = Vector2(927, 521)
 custom_maximum_size = Vector2(927, 521)
 layout_mode = 2
-texture = ExtResource("15_m7n2d")
+texture = ExtResource("16_65hh5")
 
 [node name="DetailsCard" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox" unique_id=1782890286]
 custom_maximum_size = Vector2(-1, 300)

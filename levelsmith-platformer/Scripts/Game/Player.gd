@@ -381,6 +381,10 @@ func detect_tiles() -> void:
 			currentFriction = 1.0;
 			currentSlowdown = 1.0;
 			currentWalkingEffect = Global.WalkingEffect.GENERAL;
+			if collider.momentumShare:
+				platform_on_leave = CharacterBody2D.PLATFORM_ON_LEAVE_ADD_VELOCITY;
+			else:
+				platform_on_leave = CharacterBody2D.PLATFORM_ON_LEAVE_DO_NOTHING;
 		if (collider is not TileMapLayer): continue;
 		
 		var tileLayer : TileMapLayer = collider;

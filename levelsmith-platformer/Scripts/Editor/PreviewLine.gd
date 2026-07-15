@@ -41,7 +41,8 @@ func update(offset : Vector2 = Vector2((parent.pointB.x - parent.pointA.x) / Glo
 	arrow.position = endPosition - arrowDisplacement;
 	arrow.rotation = offset.angle();
 	
-	parent.animatedSprites.flip_h = -offset.x > 0
+	if parent is EnemyFlyer:
+		parent.animatedSprites.flip_h = -offset.x > 0
 
 	if endPosition == Vector2.ZERO:
 		endPoint.hide();

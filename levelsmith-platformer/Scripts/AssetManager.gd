@@ -336,6 +336,7 @@ func open_file_selector() -> void:
 		fileSelect.clear_filters();
 		fileSelect.add_filter("*.mp3");
 		fileSelect.add_filter("*.wav");
+		fileSelect.add_filter("*.ogg");
 	fileSelect.popup_file_dialog();
 
 func file_selected(filePath : String) -> void:

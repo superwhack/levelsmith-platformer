@@ -19,6 +19,8 @@ var isPlayingPreview : bool = false;
 
 var audioLength : float;
 
+var isPlaying : bool = false;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	previewAudioPlayer = AudioStreamPlayer.new();
@@ -43,15 +45,17 @@ func replace_audio(newAudioPath: String) -> void:
 		var audio = AudioStreamMP3.new();
 		audio = AudioStreamMP3.load_from_file(newAudioPath);
 		if (!audio):
-			audio = load_mp3_manually(newAudioPath);
-			PopUpManager.create_error_popup("Manually Loading", "Attempting to manually load a file");
-			if (!audio):
-				PopUpManager.create_error_popup("Manual Loading Failed", "Failed to manually load file, reverting to default");
+			PopUpManager.create_error_popup("Failure to load file", "This file could not be loaded.");
+			return;
 		save_mp3_stream(audio, targetFilePath + "/" + audioNameToReplace + ".mp3");
 	elif (newAudioPath.get_extension().to_lower() == "wav"):
 		var audio = AudioStreamWAV.new();
 		audio = AudioStreamWAV.load_from_file(newAudioPath);
 		audio.save_to_wav(targetFilePath + "/" + audioNameToReplace + ".wav")
+	elif (newAudioPath.get_extension().to_lower() == "ogg"):
+		#var audio = AudioStreamOggVorbis.new();
+		#audio = AudioStreamOggVorbis.load_from_file(newAudioPath);
+		save_ogg_stream(newAudioPath, targetFilePath + "/" + audioNameToReplace + ".ogg");
 	else:
 		PopUpManager.create_error_popup("File type incorrect", "File must be .mp3 or .wav format.");
 	load_preview_audio();
@@ -76,40 +80,8 @@ func save_mp3_stream(stream : AudioStreamMP3, filePath : String) -> void:
 		file.store_buffer(bytes);
 		file.close();
 
-func load_mp3_manually(filePath : String) -> AudioStreamMP3:
-	var file = FileAccess.open(filePath, FileAccess.READ)
-	if (!file):
-		print("Failed to open file: ", filePath);
-		return null
-		
-	var buffer := file.get_buffer(file.get_length())
-	file.close()
-	
-	# Check if the file starts with the ID3v2 tag identifier "ID3"
-	if (buffer.size() > 10 && buffer[0] == 0x49 && buffer[1] == 0x44 && buffer[2] == 0x33):
-		
-		# ID3v2 headers store the tag size in bytes 6, 7, 8, and 9 
-		# using a 7-bit syncsafe integer format.
-		var b1 = buffer[6] & 0x7F
-		var b2 = buffer[7] & 0x7F
-		var b3 = buffer[8] & 0x7F
-		var b4 = buffer[9] & 0x7F
-		
-		# Calculate total metadata size (plus 10 bytes for the header itself)
-		var tag_size = (b1 << 21) | (b2 << 14) | (b3 << 7) | b4
-		var audio_start_index = tag_size + 10
-		
-		if audio_start_index < buffer.size():
-			# Slice away the metadata, leaving only clean audio data
-			buffer = buffer.slice(audio_start_index)
-		else:
-			print("Error: Metadata tag size exceeds file size.")
-			return null
-
-	# Feed the cleaned buffer straight into Godot's MP3 stream
-	var new_stream := AudioStreamMP3.new()
-	new_stream.data = buffer
-	return new_stream
+func save_ogg_stream(sourcePath : String, filePath : String) -> void:
+	DirAccess.copy_absolute(sourcePath, filePath);
 
 func preview_audio_finished() -> void:
 	if (loadedPreviewAudio):
@@ -128,6 +100,9 @@ func load_preview_audio() -> void:
 	elif (FileAccess.file_exists(audioPath + ".wav")):
 		loadedPreviewAudio = AudioStreamWAV.new();
 		loadedPreviewAudio = AudioStreamWAV.load_from_file(audioPath + ".wav");
+	elif (FileAccess.file_exists(audioPath + ".ogg")):
+		loadedPreviewAudio = AudioStreamOggVorbis.new();
+		loadedPreviewAudio = AudioStreamOggVorbis.load_from_file(audioPath + ".ogg");
 	else:
 		loadedPreviewAudio = AudioStreamWAV.new()
 		loadedPreviewAudio = AudioStreamWAV.load_from_file(AudioManager.BACKUP_AUDIO_LIBRARY_PATH + audioNameToReplace + "/" + audioNameToReplace + ".wav");

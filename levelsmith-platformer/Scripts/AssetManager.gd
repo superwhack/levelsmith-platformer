@@ -156,7 +156,7 @@ func find_image_in_folder(folderPath: String) -> Image:
 			var image : Image = Image.new();
 			# Load the image based on it's file path
 			image.load(folderPath + "/" + imageName);
-			# Close file stream
+			# CloseClose file stream
 			dir.list_dir_end();
 			if (imageName.get_extension().to_lower() == "png"):
 				if (validate_image(image)):
@@ -251,6 +251,7 @@ func item_selected(selectedItem: AssetItem) -> void:
 	AudioManager.play_UI_effect("UISelection");
 	# Pause the animation
 	animationSwapping.playingAnimation = false;
+	audioSwapping.preview_audio_finished();
 	# If the selected item is an image, replace its preview
 	if (selectedItem.type == AssetItem.AssetType.IMAGE):
 		imageSwapping.imageNameToReplace = selectedItem.assetName;
@@ -285,7 +286,6 @@ func item_selected(selectedItem: AssetItem) -> void:
 	elif (selectedItem.type == AssetItem.AssetType.AUDIO):
 		audioSwapping.audioNameToReplace = selectedItem.assetName;
 		audioSwapping.load_preview_audio();
-		print("Audio Selected")
 
 	currentAssetLabel.text = selectedItem.displayName;
 	currentSelectedItem = selectedItem;

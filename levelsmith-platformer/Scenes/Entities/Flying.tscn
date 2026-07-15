@@ -84,7 +84,6 @@ frame_progress = 0.21568225
 
 [node name="Line2D" parent="." unique_id=1504030647 node_paths=PackedStringArray("parent") instance=ExtResource("12_7mmpi")]
 position = Vector2(0, -23)
-scale = Vector2(1.5, 1.5)
 parent = NodePath("..")
 
 [node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1562874782]

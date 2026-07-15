@@ -35,7 +35,7 @@
 [ext_resource type="Texture2D" uid="uid://c3p3ts7hk0cyd" path="res://Assets/Sprites/Entities/Player/PlayerRun/8.png" id="33_4k050"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
-size = Vector2(14.909091, 17.016655)
+size = Vector2(14.90909, 17.016655)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2o5fe"]
 size = Vector2(13.666666, 17.703705)
@@ -183,7 +183,7 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBounceCollision" unique_id=1814510334]
-position = Vector2(0, 60.5)
+position = Vector2(-1.4210855e-14, 66.5)
 scale = Vector2(5.5, 0.367)
 shape = SubResource("RectangleShape2D_agccv")
 

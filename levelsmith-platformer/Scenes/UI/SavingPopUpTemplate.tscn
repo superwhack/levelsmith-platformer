@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://6vhh2keedl4q"]
+[gd_scene format=3 uid="uid://rxrfdntd2fs0"]
 
-[ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/Editor/PopUp/ErrorPopUp.gd" id="1_i0gwu"]
-[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_idm4w"]
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_kqj55"]
+[ext_resource type="Script" uid="uid://bsdamcneo02h8" path="res://Scripts/Editor/PopUp/ErrorPopUp.gd" id="2_p2b5i"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_igut2"]
 
@@ -21,7 +21,7 @@ corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 corner_detail = 10
 
-[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "separator", "separator2", "closeButton", "resetButton", "saveQuitButton", "noSaveQuitButton", "panelContainer2")]
+[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "separator", "separator2", "closeButton", "resetButton", "panelContainer2")]
 process_mode = 3
 self_modulate = Color(0.3764706, 0.3764706, 0.3764706, 0.4862745)
 anchors_preset = 15
@@ -31,17 +31,15 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = ExtResource("1_idm4w")
+theme = ExtResource("1_kqj55")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_igut2")
-script = ExtResource("1_i0gwu")
+script = ExtResource("2_p2b5i")
 title = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Title")
 bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer2/MarginContainer/Body")
 separator = NodePath("PanelContainer/MarginContainer/VBoxContainer/HSeparator")
 separator2 = NodePath("PanelContainer/MarginContainer/VBoxContainer/HSeparator2")
-closeButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer/CloseButton")
-resetButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer/ResetButton")
-saveQuitButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer/SaveQuitButton")
-noSaveQuitButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer/NoSaveButton")
+closeButton = NodePath("")
+resetButton = NodePath("")
 panelContainer2 = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer2")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]
@@ -55,12 +53,12 @@ anchor_bottom = 0.5
 offset_left = -223.0
 offset_top = -87.0
 offset_right = 223.0
-offset_bottom = 64.0
+offset_bottom = 17.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
-theme = ExtResource("1_idm4w")
+theme = ExtResource("1_kqj55")
 theme_override_styles/panel = SubResource("StyleBoxFlat_tu84m")
 metadata/_edit_use_anchors_ = true
 
@@ -99,7 +97,7 @@ theme_override_constants/margin_bottom = 5
 
 [node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=761048285]
 layout_mode = 2
-theme = ExtResource("1_idm4w")
+theme = ExtResource("1_kqj55")
 theme_override_styles/panel = SubResource("StyleBoxFlat_fj8s5")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer2" unique_id=1335598524]
@@ -114,46 +112,11 @@ custom_minimum_size = Vector2(403.175, 0)
 clip_contents = false
 layout_mode = 2
 size_flags_horizontal = 4
-theme = ExtResource("1_idm4w")
+theme = ExtResource("1_kqj55")
 bbcode_enabled = true
 text = "Error Pop-Up"
 fit_content = true
 
 [node name="HSeparator2" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=841966173]
-layout_mode = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1955069971]
-layout_mode = 2
-theme_override_constants/margin_top = 5
-
-[node name="ButtonContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2" unique_id=775138771]
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_constants/separation = 20
-
-[node name="ResetButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer" unique_id=192765027]
 visible = false
-custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
-size_flags_horizontal = 6
-text = "Reset"
-
-[node name="SaveQuitButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer" unique_id=982530806]
-visible = false
-custom_minimum_size = Vector2(75, 0)
-layout_mode = 2
-size_flags_horizontal = 6
-text = "Save & Return to Menu"
-
-[node name="NoSaveButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer" unique_id=851965436]
-visible = false
-custom_minimum_size = Vector2(75, 0)
-layout_mode = 2
-size_flags_horizontal = 6
-text = "Don't Save & Return to Menu"
-
-[node name="CloseButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/ButtonContainer" unique_id=1027214704]
-custom_minimum_size = Vector2(75, 0)
-layout_mode = 2
-size_flags_horizontal = 6
-text = "Close"

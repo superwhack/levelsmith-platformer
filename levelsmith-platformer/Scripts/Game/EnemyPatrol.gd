@@ -10,8 +10,10 @@ var bounceBoost := 1.0;
 var restricted : bool;
 
 # Detection variables for directional change
-@export var rayCastLeft : RayCast2D;
-@export var rayCastRight : RayCast2D;
+@export var rayCastLeft1 : RayCast2D;
+@export var rayCastRight1 : RayCast2D;
+@export var rayCastLeft2 : RayCast2D;
+@export var rayCastRight2 : RayCast2D;
 @export var rayCastLeftTop : RayCast2D;
 @export var rayCastRightTop : RayCast2D;
 @export var rayCastDownL : RayCast2D;
@@ -55,9 +57,9 @@ func _physics_process(delta: float) -> void:
 ## Applies horizontal movements and directional changes triggered by raycasts
 func patrol_behavior() -> void:
 	# If either side raycast is colliding, switch direction.
-	if (rayCastRight.is_colliding() || rayCastRightTop.is_colliding()):
+	if (rayCastRight1.is_colliding() || rayCastRight2.is_colliding() || rayCastRightTop.is_colliding()):
 		direction = -1;
-	if (rayCastLeft.is_colliding() || rayCastLeftTop.is_colliding()):
+	if (rayCastLeft1.is_colliding() || rayCastLeft2.is_colliding() || rayCastLeftTop.is_colliding()):
 		direction = 1;
 		
 	animatedSprites.flip_h = direction < 0;

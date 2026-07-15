@@ -17,15 +17,15 @@ extends HBoxContainer
 # Misc object references
 @export var entityPropDropdown : OptionButton;
 
-# Last tile, entity, and prop buttons.
-var lastTileButton: Button
-var lastEntityButton: Button
-var lastPropButton: Button
-
 # Buttons will save themselves into these arrays on creation.
-var tileButtons: Array[Button] = []
-var entityButtons: Array[Button] = []
-var propButtons: Array[Button] = []
+var tileButtons: Array[Button] = [];
+var entityButtons: Array[Button] = [];
+var propButtons: Array[Button] = [];
+
+# Last tile, entity, and prop buttons.
+@onready var lastTileButton: Button = tileButtons[0];
+@onready var lastEntityButton: Button = entityButtons[0];
+@onready var lastPropButton: Button = propButtons[0];
 
 ## References to the tile button exports.
 @export_group("Tile Button Exports")
@@ -71,31 +71,18 @@ func display_tiles(visibility: bool):
 	if (visibility):
 		if (lastTileButton):
 			lastTileButton.select();
-		else:
-			firstTileButton.select();
-			
-	if visibility:
-		await get_tree().process_frame
-		firstTileButton.grab_focus()
-		print(get_viewport().gui_get_focus_owner())
 
 ## Toggles visibility of entity selection bar
 ## visibility: desired visibility
 func display_entities(visibility: bool):
 	entities.visible = visibility;
-	
 	if (visibility):
 		match (editorManager.currentHotbarState):
 			Global.HotbarState.ENTITIES:
-				if (lastEntityButton):
-					lastEntityButton.select()
-				else:
-					firstEntityButton.select()
+				lastEntityButton.select();
 			Global.HotbarState.PROPS:
-				if (lastPropButton):
-					lastPropButton.select()
-				else:
-					firstPropButton.select()
+				lastPropButton.select();
+
 
 ## Toggles visibility of tabs
 ## index: index of tab selected
@@ -104,15 +91,18 @@ func entity_dropdown_select(index: int):
 	match index:
 		0:
 			editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);
-			toolManager.update_brush_object(Global.EntityType.PLAYER);
+			#toolManager.update_brush_object(Global.EntityType.PLAYER);
 			toolManager.currentObjectRotation = 0;
 			entityTab.visible = true;
 			propTab.visible = false;
+			print(lastEntityButton)
+			lastEntityButton.select();
 		1:
 			editorManager.change_current_hotbar(Global.HotbarState.PROPS);
-			toolManager.update_brush_object(Global.EntityType.PROP1);
+			#toolManager.update_brush_object(Global.EntityType.PROP1);
 			entityTab.visible = false;
 			propTab.visible = true;
+			lastPropButton.select();
 
 ## Sets the last selected button, so that it remains selected
 func remember_selected_button(button: Button):

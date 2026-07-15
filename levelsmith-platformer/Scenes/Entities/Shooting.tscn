@@ -45,7 +45,7 @@ animations = [{
 }]
 
 [node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow", "questionMark", "downRaycast", "upRaycast", "raycastHelper", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
-scale = Vector2(0.66, 0.66)
+position = Vector2(0, -1)
 collision_layer = 6
 collision_mask = 6
 platform_floor_layers = 4294967294
@@ -62,12 +62,13 @@ hitbox = NodePath("CollisionShape2D")
 animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
-position = Vector2(0, 16.848478)
+position = Vector2(0, -4.1515217)
 scale = Vector2(6.3, 6.3)
 shape = SubResource("RectangleShape2D_rdoky")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=33200389]
 z_index = -1
+position = Vector2(0, -21)
 sprite_frames = SubResource("SpriteFrames_ogq8d")
 animation = &"EnemyShoot"
 
@@ -80,14 +81,17 @@ texture = ExtResource("3_waxnm")
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=1346299203]
 z_index = 4
+position = Vector2(0, -21)
 texture = ExtResource("9_vgv1q")
 offset = Vector2(24, 0)
 
 [node name="RayCastUp" type="RayCast2D" parent="." unique_id=852169096]
+position = Vector2(0, -21)
 target_position = Vector2(0, -66)
 collision_mask = 10
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=1646481138]
+position = Vector2(0, -21)
 target_position = Vector2(0, 66)
 collision_mask = 10
 
@@ -95,3 +99,4 @@ collision_mask = 10
 script = ExtResource("4_571pn")
 
 [node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1423825967]
+position = Vector2(0, -21)

@@ -35,10 +35,10 @@
 [ext_resource type="Texture2D" uid="uid://c3p3ts7hk0cyd" path="res://Assets/Sprites/Entities/Player/PlayerRun/8.png" id="33_4k050"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agccv"]
-size = Vector2(14.909091, 16.654598)
+size = Vector2(14.909091, 17.016655)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2o5fe"]
-size = Vector2(13.666666, 17.037037)
+size = Vector2(13.666666, 17.703705)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
 animations = [{
@@ -167,7 +167,6 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=1372711448 node_paths=PackedStringArray("raycasts", "downwardsRaycasts", "enemyBounceCollision", "enemyCollision", "animatedSprites") groups=["Player"]]
-position = Vector2(0, 10)
 floor_block_on_wall = false
 floor_snap_length = 32.0
 script = ExtResource("1_kyqiw")
@@ -179,6 +178,7 @@ enemyCollision = NodePath("EnemyCollision")
 animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="EnemyBounceCollision" type="Area2D" parent="." unique_id=164049749]
+position = Vector2(0, 3.5)
 collision_layer = 4
 collision_mask = 4
 
@@ -192,20 +192,20 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyCollision" unique_id=255986313]
-position = Vector2(-2.1457672e-06, 5.999998)
+position = Vector2(-2.1457672e-06, 6.999998)
 scale = Vector2(5.5, 5.524)
 shape = SubResource("RectangleShape2D_agccv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924420572]
-position = Vector2(2.3841858e-07, 8.8888855)
+position = Vector2(2.3841858e-07, 10.888889)
 scale = Vector2(6, 6)
 shape = SubResource("RectangleShape2D_2o5fe")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1554690714]
 sprite_frames = SubResource("SpriteFrames_g4v7s")
-animation = &"PlayerJump"
-frame = 3
-frame_progress = 1.0
+animation = &"PlayerIdle"
+frame = 6
+frame_progress = 0.7084115
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=116409988]
 position = Vector2(-41, 7.9999995)

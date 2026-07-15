@@ -1,14 +1,12 @@
 [gd_scene format=3 uid="uid://c8bs7d04fl2yn"]
 
 [ext_resource type="Script" uid="uid://c28y2d2t7ueqp" path="res://Scripts/Game/EnemyStationary.gd" id="1_jtxg7"]
-
-[ext_resource type="Texture2D" uid="uid://c8pue5ii0pg5m" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryDeath/1.png" id="2_iqs3o"]
-[ext_resource type="Texture2D" uid="uid://dsdwsi084txg" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/1.png" id="3_7j8u7"]
+[ext_resource type="Texture2D" uid="uid://bse8e78a7tg86" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryDeath/1.png" id="2_iqs3o"]
+[ext_resource type="Texture2D" uid="uid://btwjnw3uhgpo7" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/1.png" id="3_7j8u7"]
 [ext_resource type="Texture2D" uid="uid://c4g2xfu0fsjll" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryDeath/2.png" id="3_vvd2i"]
 [ext_resource type="Texture2D" uid="uid://bib61x15rseem" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/3.png" id="4_7j8u7"]
 [ext_resource type="Texture2D" uid="uid://phwn1lbxt4dd" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryDeath/3.png" id="4_d3nai"]
-[ext_resource type="Texture2D" uid="uid://buwpfa5ri2262" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/2.png" id="4_im557"]
-
+[ext_resource type="Texture2D" uid="uid://bet02nam6viac" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/2.png" id="4_im557"]
 [ext_resource type="Texture2D" uid="uid://de8rl67c7ryio" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryIdle/4.png" id="5_im557"]
 [ext_resource type="Texture2D" uid="uid://daflnurcrft7h" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryDeath/4.png" id="5_uem8b"]
 [ext_resource type="Texture2D" uid="uid://beod5of35rl0h" path="res://Assets/Sprites/Entities/StationaryEnemy/StationaryDeath/5.png" id="6_ok8xq"]
@@ -85,7 +83,6 @@ animations = [{
 }]
 
 [node name="EnemyStationary" type="CharacterBody2D" unique_id=279826983 node_paths=PackedStringArray("hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
-scale = Vector2(0.66, 0.66)
 collision_layer = 6
 collision_mask = 6
 floor_snap_length = 128.0
@@ -94,12 +91,13 @@ hitbox = NodePath("CollisionShape2D")
 animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1568457659]
-position = Vector2(0, 23)
+position = Vector2(0, 2)
 scale = Vector2(6.3, 6.3)
 shape = SubResource("RectangleShape2D_vgv1q")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2014910646]
 z_index = -1
+position = Vector2(0, -21)
 sprite_frames = SubResource("SpriteFrames_ogq8d")
 animation = &"StationaryIdle"
 frame = 3

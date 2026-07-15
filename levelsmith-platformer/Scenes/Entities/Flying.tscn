@@ -1,17 +1,15 @@
 [gd_scene format=3 uid="uid://dbyqq48s1okmk"]
 
 [ext_resource type="Script" uid="uid://bb8bufpti3oma" path="res://Scripts/Game/EnemyFlyer.gd" id="1_e2l54"]
-
-[ext_resource type="Texture2D" uid="uid://d1dc1ij8dof3t" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/1.png" id="2_djprm"]
-[ext_resource type="Texture2D" uid="uid://d14bgdlim7pqm" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/1.png" id="3_xxngd"]
-[ext_resource type="Texture2D" uid="uid://ewc8n1l71dq4" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/2.png" id="4_4kx8d"]
+[ext_resource type="Texture2D" uid="uid://6la6cd7ako7l" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/1.png" id="2_djprm"]
+[ext_resource type="Texture2D" uid="uid://5i1l3iaetgil" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/1.png" id="3_xxngd"]
+[ext_resource type="Texture2D" uid="uid://dj8tb3ohsskdi" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/2.png" id="4_4kx8d"]
 [ext_resource type="Texture2D" uid="uid://dbm0n1ppi2opt" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/2.png" id="4_7mmpi"]
 [ext_resource type="Texture2D" uid="uid://citf3xbwuepjf" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/3.png" id="5_inj0a"]
 [ext_resource type="Texture2D" uid="uid://ce08ts4qisawe" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/4.png" id="6_gw50a"]
 [ext_resource type="Texture2D" uid="uid://cn3jsh4osnd5a" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/5.png" id="7_0brl8"]
 [ext_resource type="Texture2D" uid="uid://2jlrkipdpe4n" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyDeath/6.png" id="8_fmrgj"]
 [ext_resource type="Texture2D" uid="uid://b7sd01exyccvl" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/3.png" id="11_frso4"]
-
 [ext_resource type="PackedScene" uid="uid://bpq5curyo7xhv" path="res://Scenes/Preview/PreviewLine.tscn" id="12_7mmpi"]
 [ext_resource type="Texture2D" uid="uid://b4yqe8fsprkd1" path="res://Assets/Sprites/Entities/FlyingEnemy/FlyMove/4.png" id="12_fquc3"]
 
@@ -62,7 +60,6 @@ animations = [{
 }]
 
 [node name="FlyingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("previewLine", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
-scale = Vector2(0.66, 0.66)
 collision_layer = 6
 collision_mask = 6
 motion_mode = 1
@@ -74,19 +71,21 @@ hitbox = NodePath("CollisionShape2D")
 animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
-position = Vector2(0, 7)
+position = Vector2(0, 4)
 scale = Vector2(6.3, 6.3)
 shape = SubResource("RectangleShape2D_iqs3o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1379822224]
 z_index = -1
+position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"FlyMove"
 frame_progress = 0.21568225
 
 [node name="Line2D" parent="." unique_id=1504030647 node_paths=PackedStringArray("parent") instance=ExtResource("12_7mmpi")]
-position = Vector2(0, -20)
+position = Vector2(0, -23)
 scale = Vector2(1.5, 1.5)
 parent = NodePath("..")
 
 [node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1562874782]
+position = Vector2(0, -3)

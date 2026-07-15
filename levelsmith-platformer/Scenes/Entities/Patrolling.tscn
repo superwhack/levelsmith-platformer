@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://b3k624sctovph"]
 
 [ext_resource type="Script" uid="uid://cv0ngpnmx6kwj" path="res://Scripts/Game/EnemyPatrol.gd" id="1_ecr3g"]
-
-[ext_resource type="Texture2D" uid="uid://fjtjb06rhbgs" path="res://Assets/Sprites/UI/ArrowUpMedium.PNG" id="2_0s3yh"]
-[ext_resource type="Texture2D" uid="uid://cwsprqtu1ar6d" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_0s3yh"]
-[ext_resource type="Texture2D" uid="uid://qyptq3doausu" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="3_igrap"]
-[ext_resource type="Texture2D" uid="uid://8mtvtp3y4dr7" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="4_0s3yh"]
-
+[ext_resource type="Texture2D" uid="uid://djsoyp2lawtlv" path="res://Assets/Sprites/UI/ArrowUpMedium.PNG" id="2_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://bxl30omegyov3" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://d1byp2s8w01lm" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="3_igrap"]
+[ext_resource type="Texture2D" uid="uid://by6l0lrfyotn3" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="4_0s3yh"]
 [ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_3diox"]
 [ext_resource type="Texture2D" uid="uid://ts0f7r4aehhl" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/2.png" id="4_rdoky"]
 [ext_resource type="Texture2D" uid="uid://duel7xt7cijhy" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/3.png" id="5_y22b6"]
@@ -94,22 +92,23 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft", "rayCastRight", "rayCastLeftTop", "rayCastRightTop", "rayCastDownL", "rayCastDownR", "directionArrow", "leftRaycast", "rightRaycast", "downRaycast", "upRaycast", "raycastHelper", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
-scale = Vector2(0.66, 0.66)
+[node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft1", "rayCastRight1", "rayCastLeft2", "rayCastRight2", "rayCastLeftTop", "rayCastRightTop", "rayCastDownL", "rayCastDownR", "directionArrow", "leftRaycast", "rightRaycast", "downRaycast", "upRaycast", "raycastHelper", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
 collision_layer = 6
 collision_mask = 6
-floor_snap_length = 128.0
+floor_snap_length = 32.0
 platform_floor_layers = 4294967294
 script = ExtResource("1_ecr3g")
-rayCastLeft = NodePath("RayCastLeftC")
-rayCastRight = NodePath("RayCastRightC")
+rayCastLeft1 = NodePath("RayCastLeftC1")
+rayCastRight1 = NodePath("RayCastRightC1")
+rayCastLeft2 = NodePath("RayCastLeftC2")
+rayCastRight2 = NodePath("RayCastRightC2")
 rayCastLeftTop = NodePath("RayCastLeft")
 rayCastRightTop = NodePath("RayCastRight")
 rayCastDownL = NodePath("RayCastDownL")
 rayCastDownR = NodePath("RayCastDownR")
 directionArrow = NodePath("DirectionArrow")
-leftRaycast = NodePath("RayCastLeftC")
-rightRaycast = NodePath("RayCastRightC")
+leftRaycast = NodePath("RayCastLeftC1")
+rightRaycast = NodePath("RayCastRightC1")
 downRaycast = NodePath("RayCastDown")
 upRaycast = NodePath("RayCastUp")
 raycastHelper = NodePath("RaycastHelper")
@@ -119,62 +118,82 @@ animatedSprites = NodePath("AnimatedSprite2D")
 
 [node name="DirectionArrow" type="Sprite2D" parent="." unique_id=320029135]
 z_index = 4
+position = Vector2(0, -20)
 texture = ExtResource("2_0s3yh")
 offset = Vector2(0, -9)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063908575]
-position = Vector2(0, 22.25)
+position = Vector2(0, 2.25)
 scale = Vector2(6.3, 6.3)
 shape = SubResource("RectangleShape2D_okpjm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=384867185]
 z_index = -1
+position = Vector2(0, -20)
 sprite_frames = SubResource("SpriteFrames_ogq8d")
 animation = &"PatrolWalk"
 frame = 5
 frame_progress = 0.72922105
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=121573990]
+position = Vector2(0, -20.000002)
 rotation = 1.5707964
-scale = Vector2(1.355, 1.355)
+scale = Vector2(1.05, 1.05)
 target_position = Vector2(-30, 55)
 collision_mask = 2
 
-[node name="RayCastRightC" type="RayCast2D" parent="." unique_id=1219131414]
+[node name="RayCastRightC1" type="RayCast2D" parent="." unique_id=1219131414]
+position = Vector2(0, -20.000002)
 rotation = -3.1415925
-scale = Vector2(1.355, 1.355)
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(-55, 0)
 collision_mask = 2
 
-[node name="RayCastLeftC" type="RayCast2D" parent="." unique_id=2139336797]
+[node name="RayCastLeftC1" type="RayCast2D" parent="." unique_id=2139336797]
+position = Vector2(0, -20.000002)
 rotation = 3.1415925
-scale = Vector2(1.355, 1.355)
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(55, 0)
+collision_mask = 2
+
+[node name="RayCastLeftC2" type="RayCast2D" parent="." unique_id=1643304681]
+position = Vector2(0, 23)
+scale = Vector2(1.1, 1.1)
+target_position = Vector2(-55, 0)
+collision_mask = 2
+
+[node name="RayCastRightC2" type="RayCast2D" parent="." unique_id=1325514090]
+position = Vector2(0, 23)
+scale = Vector2(1.1, 1.1)
 target_position = Vector2(55, 0)
 collision_mask = 2
 
 [node name="RayCastRight" type="RayCast2D" parent="." unique_id=1274388389]
+position = Vector2(0, -20.000002)
 rotation = -1.5707964
-scale = Vector2(1.355, 1.355)
+scale = Vector2(1.05, 1.05)
 target_position = Vector2(30, 55)
 collision_mask = 2
 
 [node name="RayCastUp" type="RayCast2D" parent="." unique_id=2081100977]
+position = Vector2(0, -20)
 target_position = Vector2(0, -66)
 collision_mask = 10
 
 [node name="RayCastDown" type="RayCast2D" parent="." unique_id=917500616]
+position = Vector2(0, -20)
 target_position = Vector2(0, 66)
 collision_mask = 10
 
 [node name="RayCastDownL" type="RayCast2D" parent="." unique_id=991043695]
-position = Vector2(-10, 0)
+position = Vector2(-10, -20.000002)
 rotation = -6.2831855
 scale = Vector2(1.355, 1.355)
 target_position = Vector2(0, 125)
 collision_mask = 10
 
 [node name="RayCastDownR" type="RayCast2D" parent="." unique_id=15048655]
-position = Vector2(10, 0)
+position = Vector2(10, -20.000002)
 rotation = -6.2831855
 scale = Vector2(1.355, 1.355)
 target_position = Vector2(0, 125)
@@ -184,3 +203,4 @@ collision_mask = 10
 script = ExtResource("4_3diox")
 
 [node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=996930723]
+position = Vector2(0, -20)

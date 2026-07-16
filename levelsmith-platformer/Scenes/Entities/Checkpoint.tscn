@@ -45,7 +45,7 @@ animatedSprite = NodePath("AnimatedSprite2D")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1306995960]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_km8ha")
-animation = &"CheckpointActive"
+animation = &"CheckpointInactive"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1447870866]
 scale = Vector2(6.4, 6.4)

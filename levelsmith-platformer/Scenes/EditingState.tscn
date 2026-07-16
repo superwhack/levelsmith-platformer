@@ -8,19 +8,19 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
-[ext_resource type="Texture2D" uid="uid://bc6j6jlyhlvja" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--home-outline-rounded.png" id="8_fnjh2"]
+[ext_resource type="Texture2D" uid="uid://cmh6m8bok14oi" path="res://Assets/UserInterface/UpdatedIcons/material-symbols-light--home-outline.png" id="8_vrcqo"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
-[ext_resource type="Texture2D" uid="uid://bv3yncwcfw1de" path="res://Assets/UserInterface/UpdatedIcons/mi--save.png" id="10_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://chqycgpbvi2s5" path="res://Assets/UserInterface/UpdatedIcons/carbon--save.png" id="10_racgb"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
 [ext_resource type="Texture2D" uid="uid://bjepls0slldfm" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="11_vrcqo"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Texture2D" uid="uid://b2l6gbl3pkaon" path="res://Assets/UserInterface/UpdatedIcons/tdesign--image-add.png" id="13_hh704"]
-[ext_resource type="Texture2D" uid="uid://c1cysexhvqc8c" path="res://Assets/UserInterface/UpdatedIcons/mdi-light--settings.png" id="14_k6ut3"]
+[ext_resource type="Texture2D" uid="uid://cir38m5oo2h1t" path="res://Assets/UserInterface/UpdatedIcons/wordpress--image.png" id="13_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="Texture2D" uid="uid://b33e6qvnntmh2" path="res://Assets/UserInterface/UpdatedIcons/tabler--video.png" id="14_racgb"]
+[ext_resource type="Texture2D" uid="uid://d3twybevvpjqn" path="res://Assets/UserInterface/UpdatedIcons/LevelSettings.png" id="14_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://db10ps4ripfsu" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_racgb"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://cusuiuccep2n3" path="res://Scenes/LevelSettingsMenu.tscn" id="17_fnjh2"]
@@ -148,14 +148,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
 
 [node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/HomeButton/MarginContainer" unique_id=688770950]
 layout_mode = 2
-texture = ExtResource("8_fnjh2")
+texture = ExtResource("8_vrcqo")
 expand_mode = 3
 
 [node name="TopbarSepMargin" type="MarginContainer" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=1831943124]
@@ -202,7 +198,7 @@ theme_override_constants/margin_bottom = 5
 
 [node name="SaveIcon" type="TextureRect" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/SaveButton/SaveMargin" unique_id=1265270296]
 layout_mode = 2
-texture = ExtResource("10_vrcqo")
+texture = ExtResource("10_racgb")
 expand_mode = 3
 
 [node name="SavePlaySeparator" type="VSeparator" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=245140535]
@@ -303,10 +299,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
 [node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/AssetManagerButton/MarginContainer" unique_id=1493892958]
 layout_mode = 2
@@ -336,7 +332,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/LevelSettingsButton/MarginContainer" unique_id=1811417484]
 layout_mode = 2
-texture = ExtResource("14_racgb")
+texture = ExtResource("14_vrcqo")
 expand_mode = 1
 
 [node name="GlobalSettingsButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=1145625221]
@@ -362,7 +358,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/GlobalSettingsButton/MarginContainer" unique_id=1158301421]
 layout_mode = 2
-texture = ExtResource("14_k6ut3")
+texture = ExtResource("15_racgb")
 expand_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/ContentRow" unique_id=2146154728]

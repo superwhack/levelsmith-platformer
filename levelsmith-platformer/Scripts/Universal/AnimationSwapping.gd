@@ -87,7 +87,7 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 ## newAnimationPath: The path to the folder selected
 func replace_animation(newAnimationPath : String) -> void:
 	var targetFilePath : String = FileSearch.find_directory_by_name(animationPreviewNameToReplace);
-	var targetDirectory : DirAccess = assetManager.clear_image(animationPreviewNameToReplace);
+	var targetDirectory : DirAccess = assetManager.clear_files(animationPreviewNameToReplace);
 	# Count for which file is being iterated at for naming purposes
 	var fileCount : int = 0;
 	# Loop through every file at the path
@@ -119,7 +119,7 @@ func replace_animation(newAnimationPath : String) -> void:
 		PopUpManager.create_error_popup("No Defaults", "No default images yet, update this when there are default animations");
 
 func reset_animation() -> void:
-	assetManager.clear_image(animationPreviewNameToReplace);
+	assetManager.clear_files(animationPreviewNameToReplace);
 	animationFrameIndex = 0;
 	currentLoadedAnimation.clear()
 	for frame in AnimationManager.get_default_animation_by_name(animationPreviewNameToReplace):

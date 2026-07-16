@@ -166,14 +166,6 @@ func reset_enemy_positions() -> void:
 			moving.previewPlatform.show();
 			moving.previewLine.show();
 
-## Opens the asset manager
-func open_asset_manager() -> void:
-	# WARNING: get_tree().paused has the potential to cause issues
-	get_tree().paused = true;
-	AudioManager.play_UI_effect("UISelection")
-	previewTileMap.hide();
-	iconManager.previewIcon.hide();
-	assetManager.show();
 
 ## Opens the settings menu
 func open_level_settings_menu() -> void:
@@ -184,6 +176,16 @@ func open_level_settings_menu() -> void:
 	iconManager.previewIcon.hide();
 	levelSettingsMenu.show();
 
+## Opens the asset manager
+func open_asset_manager() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = true;
+	AudioManager.play_UI_effect("UISelection")
+	previewTileMap.hide();
+	iconManager.previewIcon.hide();
+	assetManager.audioSwapping.preview_audio_finished();
+	assetManager.show();
+
 ## Closes the asset manager
 func close_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
@@ -192,6 +194,7 @@ func close_asset_manager() -> void:
 	previewTileMap.show();
 	assetManager.hide();
 	assetManager.animationSwapping.playingAnimation = false;
+	assetManager.audioSwapping.previewAudioPlayer.stop()
 	AnimationManager.refresh_animations();
 
 ## Closes the settings menu

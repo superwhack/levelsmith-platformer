@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://c0phqqwjx130p" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Delete.png" id="15_0ffkm"]
 [ext_resource type="Texture2D" uid="uid://b3oxkl2gtf3lw" path="res://Assets/Sprites/UI/PreviewDefault.png" id="15_m7n2d"]
 [ext_resource type="Texture2D" uid="uid://c3vn5tymkipfl" path="res://Assets/UserInterface/previewImageWithLogo.png" id="16_65hh5"]
+[ext_resource type="Texture2D" uid="uid://besdaccmbqkls" path="res://Assets/UserInterface/Buttons/ButtonIcons/checkMark.png" id="16_65hh5"]
 [ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="16_w5rev"]
 [ext_resource type="Texture2D" uid="uid://dd3080y6r8vxe" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Edit.png" id="17_34n7o"]
 [ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
@@ -106,7 +107,7 @@ corner_radius_bottom_left = 15
 corner_detail = 17
 expand_margin_left = 5.0
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "fileExplorer", "levelList", "softwareVersion", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "globalSettingsButton")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "globalSettingsButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,6 +155,7 @@ fileExplorer = NodePath("FileDialog")
 levelList = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll/LevelList")
 levelListItem = ExtResource("3_07k0b")
 softwareVersion = NodePath("SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox/VersionLabel")
+validatedCheckmark = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/CheckMarkTexture")
 levelName = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/SelectedLevelName")
 author = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Author")
 dateCreated = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/DateCreated")
@@ -491,6 +493,13 @@ custom_minimum_size = Vector2(927, 521)
 custom_maximum_size = Vector2(927, 521)
 layout_mode = 2
 texture = ExtResource("16_65hh5")
+
+[node name="CheckMarkTexture" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel" unique_id=684619433]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(750, 50)
+texture = ExtResource("16_65hh5")
+stretch_mode = 2
 
 [node name="DetailsCard" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox" unique_id=1782890286]
 custom_maximum_size = Vector2(-1, 300)

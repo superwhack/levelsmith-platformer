@@ -58,6 +58,9 @@ extends Control
 ## Reference to current software version
 @export var softwareVersion : Label;
 
+## reference to level check mark
+@export var validatedCheckmark : TextureRect;
+
 ## References to meta data values.
 @export var levelName : Label;
 @export var author : Label;
@@ -369,6 +372,7 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 	item.objectCount = str(int(metadata.get("objects", str(0))));
 	item.version = str(metadata.get("version", Global.VERSION));
 	item.favorited = metadata.get("favorited", false);
+	item.validated = metadata.get("validated", false);
 	if (item.favorited):
 		item.levelFavoriteIcon.show();
 	else:
@@ -402,7 +406,10 @@ func update_metadata(item: Node) -> void:
 		buttonFavoriteLevel.icon = favoriteFilled;
 	else:
 		buttonFavoriteLevel.icon = favoriteEmpty;
-
+	if (item.validated):
+		validatedCheckmark.show();
+	else:
+		validatedCheckmark.hide();
 
 ## Clears the metadata selection.
 func clear_selection() -> void:
@@ -416,6 +423,7 @@ func clear_selection() -> void:
 		version.text = "";
 		preview.texture = previewDefault;
 		buttonFavoriteLevel.icon = favoriteEmpty;
+		validatedCheckmark.hide();
 
 ## Opens OS file explorer to the users Level folder.
 func open_level_folder() -> void:

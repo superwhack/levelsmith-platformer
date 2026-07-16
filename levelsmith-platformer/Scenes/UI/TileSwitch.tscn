@@ -311,6 +311,15 @@ isEntity = true
 entityName = "goal"
 buttonType = 1
 
+[node name="CheckpointButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=922654245 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
+layout_mode = 2
+tooltip_text = "Slope [8]"
+thisItemID = 508
+tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "checkpoint"
+
 [node name="Props" type="HBoxContainer" parent="EntityPickerUI/MarginContainer/Tabs" unique_id=1986159458]
 visible = false
 layout_mode = 2

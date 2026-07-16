@@ -25,6 +25,10 @@ var coinTemplateSprite : AnimatedSprite2D;
 var movingPlatformSprites : Array[AnimatedSprite2D];
 var movingPlatformTemplateSprite : AnimatedSprite2D;
 
+var checkpointSprites : Array[AnimatedSprite2D];
+var checkpointTemplateSprite : AnimatedSprite2D;
+
+
 # Path for default animations
 var defaultAnimationsRootPath : String = "res://Assets/Sprites/Entities/";
 
@@ -37,7 +41,8 @@ shootingEnemySprites,
 stationaryEnemySprites,
 goalSprites,
 coinSprites,
-movingPlatformSprites];
+movingPlatformSprites,
+checkpointSprites];
 
 # Reference to the asset manager
 var assetManager : AssetManager;
@@ -95,6 +100,8 @@ func get_default_animation_by_name(animationName : String) -> Array[Image]:
 		entityName = "Goal";
 	elif "Platform" in animationName:
 		entityName = "MovingPlatform";
+	elif "Checkpoint" in animationName:
+		entityName = "Checkpoint";
 	# Get the path of the animation based on the entity and animation name
 	var animationPath = defaultAnimationsRootPath + entityName + "/" + animationName + "/";
 	# Create and return an array of all images within the default folder
@@ -123,6 +130,8 @@ func refresh_animations() -> void:
 		sprite.sprite_frames = coinTemplateSprite.sprite_frames;
 	for sprite in movingPlatformSprites:
 		sprite.sprite_frames = movingPlatformTemplateSprite.sprite_frames;
+	for sprite in checkpointSprites:
+		sprite.sprite_frames = checkpointTemplateSprite.sprite_frames;
 
 ## Gets the animation frames of a specified animation from the assets folder
 ## animationName: Name of the animation being retrieved
@@ -162,6 +171,8 @@ func update_template_sprites() -> void:
 		replace_animation_by_name(goalTemplateSprite, anim);
 	for anim in movingPlatformTemplateSprite.sprite_frames.get_animation_names():
 		replace_animation_by_name(movingPlatformTemplateSprite, anim);
+	for anim in checkpointTemplateSprite.sprite_frames.get_animation_names():
+		replace_animation_by_name(checkpointTemplateSprite, anim);
 
 ## Updates an individual template sprite to match its animations within the assets folder
 ## spriteName : The name of the sprite being updated
@@ -250,6 +261,16 @@ func create_template_sprites() -> void:
 	movingPlatformTemplateSprite.animation = "PlatformAnimation";
 	movingPlatformTemplateSprite.sprite_frames.remove_animation("default");
 	
+	checkpointTemplateSprite = AnimatedSprite2D.new();
+	checkpointTemplateSprite.sprite_frames = SpriteFrames.new();
+	
+	checkpointTemplateSprite.sprite_frames.add_animation("CheckpointInactive");
+	checkpointTemplateSprite.sprite_frames.add_animation("CheckpointActive");
+	checkpointTemplateSprite.sprite_frames.add_animation("CheckpointCollected");
+	checkpointTemplateSprite.sprite_frames.set_animation_loop_mode("CheckpointCollected", SpriteFrames.LoopMode.LOOP_NONE);
+	checkpointTemplateSprite.animation = "CheckpointInactive";
+	checkpointTemplateSprite.sprite_frames.remove_animation("default");
+	
 
 ## Finds all sprites within the project, adds them to their corresponding array
 func get_all_sprites() -> void:
@@ -273,6 +294,8 @@ func get_all_sprites() -> void:
 		goalSprites.append(goal.find_child("AnimatedSprite2D"));
 	for platform in get_tree().get_nodes_in_group("Platform"):
 		movingPlatformSprites.append(platform.find_child("AnimatedSprite2D"));
+	for checkpoint in get_tree().get_nodes_in_group("Checkpoint"):
+		checkpointSprites.append(checkpoint.find_child("AnimatedSprite2D"));
 
 ## Updates a given animation's fps to a given fps
 ## animationName : The name of the animation being updated
@@ -296,6 +319,8 @@ func update_animation_fps(animationName : String, newFPS : float):
 		goalTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
 	elif "Platform" in animationName:
 		movingPlatformTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
+	elif "Checkpoint" in animationName:
+		checkpointTemplateSprite.sprite_frames.set_animation_speed(animationName, newFPS);
 
 ## Gets a reference to a template sprite
 ## spriteName : The name of the sprite being referenced
@@ -326,6 +351,8 @@ func get_animation_fps(animationName : String) -> float:
 		fps = goalTemplateSprite.sprite_frames.get_animation_speed(animationName);
 	elif "Platform" in animationName:
 		fps = movingPlatformTemplateSprite.sprite_frames.get_animation_speed(animationName);
+	elif "Checkpoint" in animationName:
+		fps = checkpointTemplateSprite.sprite_frames.get_animation_speed(animationName);
 	return fps
 
 ## Sets all the fps values to their corresponding values within the JSON

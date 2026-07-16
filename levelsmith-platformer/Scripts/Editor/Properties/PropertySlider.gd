@@ -26,6 +26,7 @@ var enabled : bool = true;
 
 ## When started, set the text of the name label to the name of the property
 func _ready() -> void:
+	slider.rounded = false;
 	nameLabel.text = propertyName;
 	unit.text = "(" + propertyUnit + ")";
 	slider.min_value = snapped(minMax.x, 0.01);

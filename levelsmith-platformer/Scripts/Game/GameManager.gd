@@ -243,4 +243,4 @@ func return_to_editor() -> void:
 func replay_level() -> void:
 	get_tree().paused = false;
 	winScreen.hide();
-	reset();
+	full_restart();

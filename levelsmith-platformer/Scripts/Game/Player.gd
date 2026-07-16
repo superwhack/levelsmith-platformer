@@ -294,7 +294,8 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
 	velocity = direction * (1000 + higherBounce * 500);
-	
+	velocity.y *= sqrt(fallSpeed);
+	coyoteTimeLeft = 0.0;
 	if is_on_floor() && !onFloorBypass:
 		velocity *= pow(max(3, groundSpeed), .9);
 	health -= amount;

@@ -115,11 +115,11 @@ func load_preview_audio() -> void:
 		loadedPreviewAudio = AudioStreamOggVorbis.load_from_file(audioPath + ".ogg");
 	if (loadedPreviewAudio == null):
 		loadedPreviewAudio = AudioStreamWAV.new()
-		loadedPreviewAudio = AudioStreamWAV.load_from_file(AudioManager.BACKUP_AUDIO_LIBRARY_PATH + audioNameToReplace + "/" + audioNameToReplace + ".wav");
+		loadedPreviewAudio = load(AudioManager.BACKUP_AUDIO_LIBRARY_PATH + audioNameToReplace + "/" + audioNameToReplace + ".wav");
 	elif (loadedPreviewAudio.get_length() <= 0):
 		PopUpManager.create_error_popup("Audio length is 0", "Currently loaded audio for " + audioNameToReplace + " has a length of zero. Using default instead.")
 		loadedPreviewAudio = AudioStreamWAV.new()
-		loadedPreviewAudio = AudioStreamWAV.load_from_file(AudioManager.BACKUP_AUDIO_LIBRARY_PATH + audioNameToReplace + "/" + audioNameToReplace + ".wav");
+		loadedPreviewAudio = load(AudioManager.BACKUP_AUDIO_LIBRARY_PATH + audioNameToReplace + "/" + audioNameToReplace + ".wav");
 	previewAudioPlayer.stream = loadedPreviewAudio;
 	preview_audio_finished();
 	audioLength = loadedPreviewAudio.get_length()

@@ -69,6 +69,11 @@ func _ready() -> void:
 func pause_music(pause : bool) -> void:
 	musicPlayer.stream_paused = pause;
 
+func pause_effects(pause : bool) -> void:
+	for player in inusePlayers:
+		player.stream_paused = pause;
+
+
 ## Play the music to preview sound levels
 ## musicName: music to play
 func play_music_preview(musicName:  String) -> void:
@@ -140,7 +145,7 @@ func play_music(musicName: String) -> void:
 		musicPlayer.stream = AudioStreamOggVorbis.load_from_file(fullPath + ".ogg");
 	else:
 		# Under the assumption all backups will be .wav for music
-		musicPlayer.stream = AudioStreamWAV.load_from_file(BACKUP_AUDIO_LIBRARY_PATH + "LevelMusic/LevelMusic.wav");
+		musicPlayer.stream = load(BACKUP_AUDIO_LIBRARY_PATH + "LevelMusic/LevelMusic.wav");
 	musicPlayer.play();
 
 
@@ -262,8 +267,9 @@ func _process(delta: float) -> void:
 		audioName = audioName.erase(audioName.rfind("."), 4);
 		if soundLevels.has(audioName):
 			availablePlayers[0].volume_db = linear_to_db(masterVolume * SFXVolume * soundLevels[audioName]);
-		
-		if (path.ends_with(".mp3")):
+		if (path.begins_with("res://")):
+			availablePlayers[0].stream = load(path);
+		elif (path.ends_with(".mp3")):
 			availablePlayers[0].stream = AudioStreamMP3.load_from_file(path);
 		elif (path.ends_with(".wav")):
 			availablePlayers[0].stream = AudioStreamWAV.load_from_file(path);
@@ -291,6 +297,7 @@ func find_audio_in_folder(folderPath : String) -> AudioStream:
 			return null;
 		else:
 			var audio : AudioStream;
+			
 			if (audioName.get_extension().to_lower() == "mp3"):
 				audio = AudioStreamMP3.new();
 				audio = AudioStreamMP3.load_from_file(folderPath + "/" + audioName);

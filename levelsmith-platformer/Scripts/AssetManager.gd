@@ -383,6 +383,7 @@ func setup() -> void:
 	# Clear all buttons;
 	clear_buttons(imagesTab);
 	clear_buttons(animationsTab);
+	clear_buttons(audioTab);
 	# Generate all buttons under their tabs
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);

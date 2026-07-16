@@ -61,15 +61,18 @@ func pause() -> void:
 		bottomScreenGroup.show();
 		playState = PlayState.PLAY;
 		AudioManager.pause_music(false);
+		AudioManager.pause_effects(false);
 	else:
 		get_tree().paused = true;
 		pauseScreen.show();
 		bottomScreenGroup.hide();
 		playState = PlayState.PAUSE;
 		AudioManager.pause_music(true);
+		AudioManager.pause_effects(true);
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
+	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");
 	pauseButton.show();
@@ -201,6 +204,7 @@ func level_complete() -> void:
 	if goalReached:
 		return;
 	AudioManager.pause_music(true);
+	AudioManager.reset_audio();
 	AudioManager.play_effect("Victory");
 	goalReached = true;
 	print_level_completion_time();

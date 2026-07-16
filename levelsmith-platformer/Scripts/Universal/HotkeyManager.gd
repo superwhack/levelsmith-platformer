@@ -68,6 +68,8 @@ func _unhandled_key_input(event : InputEvent) -> void:
 				toolManager.update_brush_object(Global.EntityType.STATIONARY);
 			elif event.is_action_pressed("eighth-select"):
 				toolManager.update_brush_object(Global.EntityType.MOVING_PLATFORM);
+			elif event.is_action_pressed("ninth-select"):
+				toolManager.update_brush_object(Global.EntityType.CHECKPOINT);
 		Global.HotbarState.PROPS:
 			if event.is_action_pressed("first-select"):
 				toolManager.update_brush_object(Global.EntityType.PROP1);

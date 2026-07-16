@@ -143,6 +143,7 @@ func play_music(musicName: String) -> void:
 		musicPlayer.stream = AudioStreamWAV.load_from_file(BACKUP_AUDIO_LIBRARY_PATH + "LevelMusic/LevelMusic.wav");
 	musicPlayer.play();
 
+
 ## Add specified SFX to the queue
 ## effectName: name of the sound effect
 func play_effect(effectName: String) -> void:

@@ -9,25 +9,15 @@
 [ext_resource type="Texture2D" uid="uid://b2cq1omppx5oc" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
 [ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
-[ext_resource type="Texture2D" uid="uid://bwp7ms2ro7qbc" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://bwp7ms2ro7qbc" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
 [ext_resource type="Texture2D" uid="uid://dxd7oevrv4e7c" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
 [ext_resource type="Texture2D" uid="uid://dryfk84nu1yv1" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
 [ext_resource type="Texture2D" uid="uid://dodrkydpe4b04" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
 [ext_resource type="Texture2D" uid="uid://c0lyraj4k064w" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
 [ext_resource type="Texture2D" uid="uid://db10ps4ripfsu" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://tp6ayq3tryx8" path="res://Assets/UserInterface/Buttons/ButtonIcons/checkMark.png" id="16_65hh5"]
 [ext_resource type="Texture2D" uid="uid://qlne6c3yxaff" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
 [ext_resource type="Texture2D" uid="uid://1glcsot8n2b" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
-[ext_resource type="Texture2D" uid="uid://cuqx70ij8cotk" path="res://Assets/UserInterface/Buttons/ButtonIcons/PlaceholderButtonAsset.png" id="9_a2vo5"]
-[ext_resource type="Texture2D" uid="uid://uffs400qxw2q" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Import.png" id="10_w5qnt"]
-[ext_resource type="Texture2D" uid="uid://dusre0h2m2g6t" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Folder.png" id="11_83bof"]
-[ext_resource type="Texture2D" uid="uid://8pwuej3wvl0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="11_m7n2d"]
-[ext_resource type="Texture2D" uid="uid://cb35440stu18e" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Exit.png" id="12_k5kei"]
-[ext_resource type="Texture2D" uid="uid://dr1smfcdfn46v" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Favorite.png" id="13_gcoc3"]
-[ext_resource type="Texture2D" uid="uid://stx0om0pqx4u" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Duplicate.png" id="14_1uc6u"]
-[ext_resource type="Texture2D" uid="uid://c0phqqwjx130p" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Delete.png" id="15_0ffkm"]
-[ext_resource type="Texture2D" uid="uid://besdaccmbqkls" path="res://Assets/UserInterface/Buttons/ButtonIcons/checkMark.png" id="16_65hh5"]
-[ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="16_w5rev"]
-[ext_resource type="Texture2D" uid="uid://dd3080y6r8vxe" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Edit.png" id="17_34n7o"]
 [ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
 [ext_resource type="Texture2D" uid="uid://bjepls0slldfm" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
 [ext_resource type="Texture2D" uid="uid://bbn361u6ti6j8" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
@@ -303,7 +293,7 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/NewLevelButton/ContentMargin/ContentRow" unique_id=1801192315]
 layout_mode = 2
-texture = ExtResource("11_m7n2d")
+texture = ExtResource("11_65hh5")
 expand_mode = 2
 stretch_mode = 5
 

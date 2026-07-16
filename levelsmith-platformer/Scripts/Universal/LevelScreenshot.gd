@@ -50,7 +50,7 @@ func get_level_screenshot() -> Image:
 	masterManager.previewTileMap.hide();
 	#masterManager.editorManager.customCursorManager.hide_selector_frame();
 	await RenderingServer.frame_post_draw;
-	return screenshotViewport.get_texture().get_image();
 	enabled = false;
-	masterManager.previewTileMape.show();
+	masterManager.previewTileMap.show();
 	#masterManager.editorManager.customCursorManager.show_selector_frame();
+	return screenshotViewport.get_texture().get_image();

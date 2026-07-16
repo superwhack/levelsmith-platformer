@@ -162,6 +162,7 @@ func close() -> void:
 		directionArrow = null;
 	hide();
 	selectedEntity = null;
+	
 
 ## Runs every frame. Sets the text and arrows when an entity is selected
 ## _delta: Time passed since the last frame

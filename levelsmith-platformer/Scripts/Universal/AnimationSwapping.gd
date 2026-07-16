@@ -80,7 +80,10 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 			allImages.append(assetManager.find_image(imageName));
 		return allImages;
 	else:
-		PopUpManager.create_error_popup("Could not find folder","Could not find folder with name " + folderName + ".");
+		# If a folder is missing, create entire tree.
+		# NOTE: Could be made to more efficient.
+		assetManager.create_file_tree();
+		return [];
 	return [];
 
 ## Replaces the currently previewed animation with one chosen via file dialog.

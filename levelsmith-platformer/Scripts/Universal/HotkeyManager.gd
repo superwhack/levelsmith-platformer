@@ -36,48 +36,58 @@ func _unhandled_key_input(event : InputEvent) -> void:
 	match(editorManager.currentHotbarState):
 		Global.HotbarState.TILES:
 			if event.is_action_pressed("first-select"):
-				tileSwitch.firstTileButton.select();
+				tileSwitch.tileButtons[0].select();
 			elif event.is_action_pressed("second-select"):
-				tileSwitch.secondTileButton.select();
+				tileSwitch.tileButtons[1].select();
 			elif event.is_action_pressed("third-select"):
-				tileSwitch.thirdTileButton.select();
+				tileSwitch.tileButtons[2].select();
 			elif event.is_action_pressed("fourth-select"):
-				tileSwitch.fourthTileButton.select();
+				tileSwitch.tileButtons[3].select();
 			elif event.is_action_pressed("fifth-select"):
-				tileSwitch.fifthTileButton.select();
+				tileSwitch.tileButtons[4].select();
 			elif event.is_action_pressed("sixth-select"):
-				tileSwitch.sixthTileButton.select();
+				tileSwitch.tileButtons[5].select();
 			elif event.is_action_pressed("seventh-select"):
-				tileSwitch.seventhTileButton.select();
+				tileSwitch.tileButtons[6].select();
 			elif event.is_action_pressed("eighth-select"):
-				tileSwitch.eighthTileButton.select();
+				tileSwitch.tileButtons[7].select();
 		Global.HotbarState.ENTITIES:
+			# Switch dropdown
+			if (event.is_action_pressed("switch-entity-prop-dropdown")):
+				tileSwitch.entity_dropdown_select(1);
+			# Switch selected entity
 			if event.is_action_pressed("first-select"):
-				tileSwitch.firstEntityButton.select();
+				tileSwitch.entityButtons[0].select();
 			elif event.is_action_pressed("second-select"):
-				tileSwitch.secondEntityButton.select();
+				tileSwitch.entityButtons[1].select();
 			elif event.is_action_pressed("third-select"):
-				tileSwitch.thirdEntityButton.select();
+				tileSwitch.entityButtons[2].select();
 			elif event.is_action_pressed("fourth-select"):
-				tileSwitch.fourthEntityButton.select();
+				tileSwitch.entityButtons[3].select();
 			elif event.is_action_pressed("fifth-select"):
-				tileSwitch.fifthEntityButton.select();
+				tileSwitch.entityButtons[4].select();
 			elif event.is_action_pressed("sixth-select"):
-				tileSwitch.sixthEntityButton.select();
+				tileSwitch.entityButtons[5].select();
 			elif event.is_action_pressed("seventh-select"):
-				tileSwitch.seventhEntityButton.select();
+				tileSwitch.entityButtons[6].select();
 			elif event.is_action_pressed("eighth-select"):
-				tileSwitch.eighthEntityButton.select();
+				tileSwitch.entityButtons[7].select();
+			elif event.is_action_pressed("ninth-select"):
+				tileSwitch.entityButtons[8].select();
 		Global.HotbarState.PROPS:
+			# Switch dropdown
+			if (event.is_action_pressed("switch-entity-prop-dropdown")):
+				tileSwitch.entity_dropdown_select(0);
+			# Switch current selected prop
 			if event.is_action_pressed("first-select"):
-				tileSwitch.firstPropButton.select();
+				tileSwitch.propButtons[0].select();
 			elif event.is_action_pressed("second-select"):
-				tileSwitch.secondPropButton.select();
+				tileSwitch.propButtons[1].select();
 			elif event.is_action_pressed("third-select"):
-				tileSwitch.thirdPropButton.select();
+				tileSwitch.propButtons[2].select();
 			elif event.is_action_pressed("fourth-select"):
-				tileSwitch.fourthPropButton.select();
+				tileSwitch.propButtons[3].select();
 			elif event.is_action_pressed("fifth-select"):
-				tileSwitch.fifthPropButton.select();
+				tileSwitch.propButtons[4].select();
 			elif event.is_action_pressed("sixth-select"):
-				tileSwitch.sixthPropButton.select();
+				tileSwitch.propButtons[5].select();

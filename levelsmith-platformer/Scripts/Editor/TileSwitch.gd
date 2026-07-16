@@ -66,7 +66,7 @@ func _ready() -> void:
 ## visibility: desired visibility
 func display_tiles(visibility: bool):
 	tiles.visible = visibility;
-	
+	print(entityButtons)
 	# If visible, select button if last applicable, otherwise the first.
 	if (visibility):
 		if (lastTileButton):
@@ -90,14 +90,15 @@ func entity_dropdown_select(index: int):
 	AudioManager.play_UI_effect("UISelection");
 	match index:
 		0:
+			entityPropDropdown.select(index);
 			editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);
 			#toolManager.update_brush_object(Global.EntityType.PLAYER);
 			toolManager.currentObjectRotation = 0;
 			entityTab.visible = true;
 			propTab.visible = false;
-			print(lastEntityButton)
 			lastEntityButton.select();
 		1:
+			entityPropDropdown.select(index);
 			editorManager.change_current_hotbar(Global.HotbarState.PROPS);
 			#toolManager.update_brush_object(Global.EntityType.PROP1);
 			entityTab.visible = false;

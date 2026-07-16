@@ -348,6 +348,7 @@ custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "Global Settings"
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 

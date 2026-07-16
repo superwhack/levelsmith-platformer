@@ -70,7 +70,7 @@ func _ready() -> void:
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	# If global state is not in edit, set to cursor icon and bail out
-	if (masterManager.state != Global.State.EDIT):
+	if (masterManager.state != Global.State.EDIT || editorManager.masterManager.propertyMenu.visible):
 		Input.set_custom_mouse_cursor(uiCursor);
 		return;
 	# Set the current mouse position and place the selector frame and invalid sprite to the correct locations
@@ -95,7 +95,11 @@ func _process(_delta: float) -> void:
 		SelectorState.INVALID:
 			selectorFrame.modulate = Color(1, 1, 1, 0);
 	
-	if (get_viewport().gui_get_hovered_control()):
+	var hoveredControl = get_viewport().gui_get_hovered_control();
+	# For the entity-prop dropdown, it is a window, not a gui control.
+	var popup = editorManager.toolManager.tileSwitch.entityPropDropdown.get_popup().visible;
+	print(popup)
+	if (hoveredControl != null || popup):
 		Input.set_custom_mouse_cursor(uiCursor);
 	else:
 		match (toolManager.currentTool):

@@ -447,17 +447,17 @@ func detect_tiles() -> void:
 			# Horizontal bounces
 			if (abs(rayDirection.x) > abs(rayDirection.y)):
 				if rayDirection.x < 0:
-					velocity.x = 3000 * bounceTileHeight;
+					velocity.x = 3000 * tileLayer.bounceHeight;
 				else:
-					velocity.x = -3000 * bounceTileHeight;
+					velocity.x = -3000 * tileLayer.bounceHeight;
 				if Input.is_action_pressed("jump"):
-					velocity.y = -500 * bounceTileHeight;
+					velocity.y = -500 * tileLayer.bounceHeight;
 				# Vertical bounces
 			else:
 				if (rayDirection.y < 0):
-					velocity.y = 1000 * bounceTileHeight;
+					velocity.y = 1000 * tileLayer.bounceHeight;
 				else:
-					velocity.y = -1000 * sqrt(fallSpeed) * bounceTileHeight;
+					velocity.y = -1000 * sqrt(fallSpeed) * tileLayer.bounceHeight;
 					if velocity.x > 0 && Input.is_action_pressed("left"):
 						velocity.x /= 2;
 					elif velocity.x < 0 && Input.is_action_pressed("right"):

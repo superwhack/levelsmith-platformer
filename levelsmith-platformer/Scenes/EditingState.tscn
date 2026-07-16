@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
+[ext_resource type="Script" uid="uid://b2p2bscm2qgte" path="res://Scenes/TileProperties.gd" id="6_racgb"]
 [ext_resource type="Texture2D" uid="uid://dicj6blbbf2dt" path="res://Assets/UserInterface/Buttons/ButtonIcons/Home.png" id="7_20xd7"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
@@ -20,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dt54gtcqj4y6n" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
 [ext_resource type="Texture2D" uid="uid://dymygj183wflb" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
-[ext_resource type="Texture2D" uid="uid://dlhtm5hs5c3m0" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://kedeb3vd63r6" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_vrcqo"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://cusuiuccep2n3" path="res://Scenes/LevelSettingsMenu.tscn" id="17_fnjh2"]
@@ -91,6 +92,7 @@ script = ExtResource("5_2h6au")
 tile_map_data = PackedByteArray("AAAAAAcABQAAAAAAAAABAAcAAwAAAAAAAAACAAcAAwAAAAAAAAADAAcAAwAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAAKAAYABAAAAAAAAAALAAYABAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAANAAUAAQAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAADAAkAAAAAAAAAAAACAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAD//wkAAAAAAAAAAAAJAAYABgAAAAAAAGAMAAUABgAAAAAAAGACAAUABQAAAAAAAAAGAAUABQAAAAAAAAAAAAAAAAAAAAAAAAA=")
 tile_set = ExtResource("2_8t3j3")
 physics_quadrant_size = 1
+script = ExtResource("6_racgb")
 
 [node name="PreviewTile" type="TileMapLayer" parent="." unique_id=1302011485 node_paths=PackedStringArray("editorManager", "toolManager", "tileMap")]
 modulate = Color(1, 1, 1, 0.5058824)

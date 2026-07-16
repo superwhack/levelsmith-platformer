@@ -17,7 +17,7 @@
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_1i6c8"]
 
-[node name="LevelSettingsMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "resetButton", "gameplayZoom", "followSpeed", "cameraDeadzone", "cameraClamp")]
+[node name="LevelSettingsMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "resetButton", "gameplayZoom", "followSpeed", "cameraDeadzone", "cameraClamp", "iceFriction", "bounceHeight", "stickySlowdown", "hazardDamage")]
 process_mode = 2
 self_modulate = Color(0, 0, 0, 0.3764706)
 anchors_preset = 15
@@ -33,6 +33,10 @@ gameplayZoom = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/S
 followSpeed = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn/FollowSpeed")
 cameraDeadzone = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn/CameraDeadzone")
 cameraClamp = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/CameraHeaderContainer/CameraSliderColumn/CameraClamp")
+iceFriction = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IceFriction")
+bounceHeight = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BounceHeight")
+stickySlowdown = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickySlowdown")
+hazardDamage = NodePath("MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/Damage")
 
 [node name="MainMargin" type="MarginContainer" parent="." unique_id=136846140]
 self_modulate = Color(1, 1, 1, 0.7882353)
@@ -196,7 +200,6 @@ custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
 [node name="TilePropertiesHeader" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings" unique_id=886595738]
-visible = false
 layout_mode = 2
 
 [node name="TilePropertiesLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=566304013]
@@ -207,127 +210,35 @@ text = "Tile Properties"
 [node name="HSeparator" type="HSeparator" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=2122254642]
 layout_mode = 2
 
-[node name="IcePropertiesRow" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=1588034836]
+[node name="IceFriction" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=120766630 instance=ExtResource("6_msgve")]
 layout_mode = 2
+propertyName = "Ice Friction"
+propertyUnit = "%"
+minMax = Vector2(10, 100)
+sliderStep = 1.0
+valueAppend = "%"
 
-[node name="IcePropertiesLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow" unique_id=1416600788]
+[node name="BounceHeight" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=22389737 instance=ExtResource("6_msgve")]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Ice Friction (%)"
+propertyName = "Bounce Height"
+propertyUnit = "Tiles"
+minMax = Vector2(0.5, 3)
+sliderStep = 0.1
 
-[node name="IcePropertiesContainter" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow" unique_id=1399333220]
+[node name="StickySlowdown" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=2054429238 instance=ExtResource("6_msgve")]
 layout_mode = 2
+propertyName = "Sticky Slowdown"
+propertyUnit = "%"
+minMax = Vector2(10, 100)
+sliderStep = 1.0
+valueAppend = "%"
 
-[node name="IceMinLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow/IcePropertiesContainter" unique_id=1931296868]
+[node name="Damage" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=1236767381 instance=ExtResource("6_msgve")]
 layout_mode = 2
-text = "  0"
-
-[node name="IceSlider" type="HSlider" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow/IcePropertiesContainter" unique_id=1970644512]
-custom_minimum_size = Vector2(650, 0)
-layout_mode = 2
-size_flags_vertical = 4
-value = 20.0
-scrollable = false
-
-[node name="IceMaxLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow/IcePropertiesContainter" unique_id=1453352174]
-layout_mode = 2
-text = "100 "
-
-[node name="IceValueBox" type="LineEdit" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/IcePropertiesRow/IcePropertiesContainter" unique_id=14419256]
-layout_mode = 2
-
-[node name="BouncePropertiesRow" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=1128868432]
-layout_mode = 2
-
-[node name="BouncePropertiesLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow" unique_id=132668215]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Bounce Height (%)"
-
-[node name="BouncePropertiesContainter" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow" unique_id=161603155]
-layout_mode = 2
-
-[node name="BounceMinLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow/BouncePropertiesContainter" unique_id=1581387945]
-layout_mode = 2
-text = "  0"
-
-[node name="BounceSlider" type="HSlider" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow/BouncePropertiesContainter" unique_id=489205867]
-custom_minimum_size = Vector2(650, 0)
-layout_mode = 2
-size_flags_vertical = 4
-value = 20.0
-scrollable = false
-
-[node name="BounceMaxLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow/BouncePropertiesContainter" unique_id=1576758679]
-layout_mode = 2
-text = "100 "
-
-[node name="BounceValueBox" type="LineEdit" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/BouncePropertiesRow/BouncePropertiesContainter" unique_id=1717190517]
-layout_mode = 2
-
-[node name="StickyPropertiesRow" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=1302052432]
-layout_mode = 2
-
-[node name="StickyPropertiesLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow" unique_id=2112821159]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Sticky Slowness (%)"
-
-[node name="StickyPropertiesContainter" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow" unique_id=189842619]
-layout_mode = 2
-
-[node name="StickyMinLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow/StickyPropertiesContainter" unique_id=884426765]
-layout_mode = 2
-text = "  0"
-
-[node name="StickySlider" type="HSlider" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow/StickyPropertiesContainter" unique_id=1826924350]
-custom_minimum_size = Vector2(650, 0)
-layout_mode = 2
-size_flags_vertical = 4
-value = 20.0
-scrollable = false
-
-[node name="StickyMaxLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow/StickyPropertiesContainter" unique_id=1013097049]
-layout_mode = 2
-text = "100 "
-
-[node name="StickyValueBox" type="LineEdit" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/StickyPropertiesRow/StickyPropertiesContainter" unique_id=1556550783]
-layout_mode = 2
-
-[node name="DamagePropertiesRow2" type="VBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader" unique_id=1095014651]
-layout_mode = 2
-
-[node name="DamagePropertiesLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2" unique_id=797972094]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Damage Strength"
-
-[node name="DamagePropertiesContainter" type="HBoxContainer" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2" unique_id=1986244313]
-layout_mode = 2
-
-[node name="DamageMinLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2/DamagePropertiesContainter" unique_id=28328955]
-layout_mode = 2
-text = "  1"
-
-[node name="DamageSlider" type="HSlider" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2/DamagePropertiesContainter" unique_id=193232824]
-custom_minimum_size = Vector2(650, 0)
-layout_mode = 2
-size_flags_vertical = 4
-min_value = 1.0
-max_value = 5.0
-value = 5.0
-scrollable = false
-
-[node name="DamageMaxLabel" type="Label" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2/DamagePropertiesContainter" unique_id=154635976]
-layout_mode = 2
-text = "5"
-
-[node name="Control" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2/DamagePropertiesContainter" unique_id=113797729]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="DamageValueBox" type="LineEdit" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings/TilePropertiesHeader/DamagePropertiesRow2/DamagePropertiesContainter" unique_id=1839721900]
-layout_mode = 2
+propertyName = "Hazard Damage"
+propertyUnit = "Health"
+minMax = Vector2(1, 3)
+sliderStep = 1.0
 
 [node name="Spacer2" type="Control" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/LevelSettings" unique_id=406343043]
 visible = false

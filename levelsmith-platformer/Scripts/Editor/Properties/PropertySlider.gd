@@ -26,6 +26,7 @@ var enabled : bool = true;
 
 ## When started, set the text of the name label to the name of the property
 func _ready() -> void:
+	slider.rounded = false;
 	nameLabel.text = propertyName;
 	unit.text = "(" + propertyUnit + ")";
 	slider.min_value = snapped(minMax.x, 0.01);
@@ -54,6 +55,7 @@ func _process(_delta: float) -> void:
 
 ## When drag is finished, emit drag ended signal
 func _drag_ended(_value_changed: bool) -> void:
+	print(slider.step);
 	drag_ended.emit();
 
 ## When the text change beings, clear the text and make the placeholder text what was the text

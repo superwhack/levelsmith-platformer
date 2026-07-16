@@ -58,10 +58,10 @@ func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer) 
 ## newImagePath: The file path of the new image replacing the old one.x 
 func replace_image(newImagePath: String) -> void:
 	var targetFilePath : String = FileSearch.find_directory_by_name(imageNameToReplace);
-	var targetDirectory : DirAccess = assetManager.clear_image(imageNameToReplace);
+	var targetDirectory : DirAccess = assetManager.clear_files(imageNameToReplace);
 	# If the image is a png, create a copy
 	if (newImagePath.get_extension().to_lower() == "png"):
-		assetManager.clear_image(imageNameToReplace);
+		assetManager.clear_files(imageNameToReplace);
 		var image = Image.new();
 		image.load(newImagePath);
 		assetManager.validate_image(image);
@@ -80,7 +80,7 @@ func replace_image(newImagePath: String) -> void:
 ## Clears the image in a given folder and replaces it with a default
 func reset_image() -> void:
 	AudioManager.play_UI_effect("UISelection");
-	assetManager.clear_image(imageNameToReplace);
+	assetManager.clear_files(imageNameToReplace);
 	refresh_images();
 	imagePreviewTexture.texture = ImageTexture.create_from_image(get_default_image(imageNameToReplace));
 

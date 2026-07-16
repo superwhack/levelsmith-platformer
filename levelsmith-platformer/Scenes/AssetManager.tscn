@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://iyxcim187e44" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
 [ext_resource type="Script" uid="uid://cy0omeeqj1evc" path="res://Scripts/Universal/ImageSwapping.gd" id="10_clgtw"]
 [ext_resource type="Script" uid="uid://pgp1usxbcoyf" path="res://Scripts/Universal/AnimationSwapping.gd" id="11_ukhnw"]
+[ext_resource type="Script" uid="uid://cd1ukd2otaojf" path="res://Scripts/Universal/AudioSwapping.gd" id="12_qbbei"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
@@ -26,7 +27,7 @@ corner_radius_bottom_left = 12
 expand_margin_top = 2.0
 expand_margin_bottom = 3.0
 
-[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imageSwapping", "animationSwapping", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "refreshAllButton")]
+[node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imageSwapping", "animationSwapping", "audioSwapping", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "audioTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "refreshAllButton")]
 process_mode = 2
 self_modulate = Color(0, 0, 0, 0.3764706)
 anchors_preset = 15
@@ -38,11 +39,13 @@ theme = ExtResource("1_rshqi")
 script = ExtResource("1_2va5h")
 imageSwapping = NodePath("ImageSwapping")
 animationSwapping = NodePath("AnimationSwapping")
+audioSwapping = NodePath("AudioSwapping")
 audioPreview = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview")
 assetTabs = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs")
 fileSelect = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton/FileDialog")
 imagesTab = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs/Images/ImagesTabContainer")
 animationsTab = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs/Animations/AnimationsTabContainer")
+audioTab = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/AssetTabs/Audio/AudioTabContainer")
 currentAssetLabel = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/CurrentAssetLabel")
 loadFileButton = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/LoadFileButton")
 resetButton = NodePath("AssetManagerPanel/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/ResetButton")
@@ -162,6 +165,7 @@ grow_vertical = 2
 texture = ExtResource("3_rshqi")
 
 [node name="AnimationPreview" type="Panel" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=126647044]
+visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 
@@ -303,7 +307,6 @@ text = "Stop
 "
 
 [node name="AudioPreview" type="Panel" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=1493625619]
-visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 
@@ -334,8 +337,18 @@ size_flags_vertical = 4
 texture = ExtResource("9_ssly3")
 stretch_mode = 4
 
+[node name="Timestamp" type="Label" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer/MarginContainer" unique_id=1390566539]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme = ExtResource("1_rshqi")
+theme_type_variation = &"HeaderSmall"
+text = "0.0/0.0"
+horizontal_alignment = 1
+
 [node name="AudioTimeline" type="HSlider" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer" unique_id=428290432]
 layout_mode = 2
+step = 0.01
 
 [node name="BottomButtonContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=1727755463]
 layout_mode = 1
@@ -443,6 +456,17 @@ script = ExtResource("10_clgtw")
 assetManager = NodePath("..")
 imagePreview = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview")
 imagePreviewTexture = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/ImagePreview/ImageAsset")
+
+[node name="AudioSwapping" type="Control" parent="." unique_id=425029358 node_paths=PackedStringArray("assetManager", "playButton", "stopButton", "audioTimeline", "timeStampLabel")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("12_qbbei")
+assetManager = NodePath("..")
+playButton = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/PlayPauseButton")
+stopButton = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/StopButton")
+audioTimeline = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer/AudioTimeline")
+timeStampLabel = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer/MarginContainer/Timestamp")
 
 [node name="AnimationSwapping" type="Control" parent="." unique_id=1958050613 node_paths=PackedStringArray("assetManager", "animationPreview", "animationPreviewTexture", "animationPreviewRightButton", "animationPreviewLeftButton", "animationName", "frameRightButton", "frameLeftButton", "frameCountLabel", "playButton", "stopButton", "FPSSpinbox")]
 anchors_preset = 0

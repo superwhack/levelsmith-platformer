@@ -38,6 +38,8 @@ var delayLeft = 0.0;
 var visiblePath = false;
 var momentumShare = false;
 
+var alwaysActive = false;
+
 ## Sets up initial points
 func _ready() -> void:
 	# Set all points to its current position
@@ -54,7 +56,7 @@ func _physics_process(delta: float) -> void:
 		previewLine.show();
 		previewLine.global_position = pointA;
 		
-	if !active:
+	if !active && !alwaysActive:
 		if !onScreen.is_on_screen():
 			return;
 		active = true;
@@ -111,6 +113,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	progress = propertyFile.progress;
 	delay = propertyFile.delay;
 	easing = propertyFile.easing;
+	alwaysActive = propertyFile.active;
 	visiblePath = propertyFile.visible;
 	momentumShare = propertyFile.momentum;
 	
@@ -144,6 +147,7 @@ func apply_script(file: Resource) -> void:
 	progress = file.progress;
 	delay = file.delay;
 	easing = file.easing;
+	alwaysActive = file.active;
 	adjust_preview(file.pointBOffset, progress);
 	targetPoint = pointB;
 	previewLine.update((pointB - pointA) / Global.TILE_SIZE);

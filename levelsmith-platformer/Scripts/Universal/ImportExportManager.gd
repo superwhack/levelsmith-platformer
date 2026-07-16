@@ -102,7 +102,10 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"FlyMove": 8.0,
 			"PlatformAnimation": 8.0,
 			"GoalAnimation": 8.0,
-			"CoinAnimation": 8.0
+			"CoinAnimation": 8.0,
+			"CheckpointActive": 8.0,
+			"CheckpointInactive": 8.0,
+			"CheckpointCollected": 8.0
 		}
 	};
 	
@@ -300,7 +303,10 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		"FlyMove": AnimationManager.get_animation_fps("FlyMove"),
 		"PlatformAnimation": AnimationManager.get_animation_fps("PlatformAnimation"),
 		"GoalAnimation": AnimationManager.get_animation_fps("GoalAnimation"),
-		"CoinAnimation": AnimationManager.get_animation_fps("CoinAnimation")
+		"CoinAnimation": AnimationManager.get_animation_fps("CoinAnimation"),
+		"CheckpointActive": AnimationManager.get_animation_fps("CheckpointActive"),
+		"CheckpointInactive": AnimationManager.get_animation_fps("CheckpointInactive"),
+		"CheckpointCollected": AnimationManager.get_animation_fps("CheckpointCollected")
 	}
 	
 	

@@ -35,7 +35,6 @@ gdscript/warnings/unused_signal=0
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
 window/stretch/mode="viewport"
 window/main_scene="uid://bm5w14jlbl37k"
 
@@ -245,3 +244,4 @@ toggle-fullscreen={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+environment/defaults/default_clear_color=Color(0.105882354, 0.105882354, 0.105882354, 1)

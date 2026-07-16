@@ -71,7 +71,7 @@ var trueSpeed : float;
 var bounceTileHeight : float = 1.0;
 var iceFriction : float = 0.5;
 
-var iceAccelerationFactor : float = .1;
+var iceAccelerationFactor : float = .25;
 
 # The selected movement preset
 # TODO: Make it so that it selects the DefaultMovement preset automatically 
@@ -90,6 +90,7 @@ var jumpAnimStarted : bool = false;
 var fallAnimStarted : bool = false;
 
 var isDead : bool = false;
+var victoryReached : bool = false;
 
 ## Runs once on instantiation
 func _ready() -> void:
@@ -123,7 +124,7 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
-	if (check_out_of_bounds()):
+	if (check_out_of_bounds() || victoryReached):
 		return;
 	if isDead:
 		animate();
@@ -159,6 +160,7 @@ func _physics_process(delta: float) -> void:
 				currentSlowdown = 1.0;
 				doubleJumpAvailable = false;
 			coyoteTimeLeft = 0;
+			jumpAnimStarted = false;
 			jump();
 	# Handle A and D inputs, as well as lack of directional input
 	walk();
@@ -170,6 +172,7 @@ func _physics_process(delta: float) -> void:
 
 ## Animates the player while processing
 func animate() -> void:
+	if (victoryReached): return;
 	
 	if ( Input.is_action_pressed("right") ): animatedSprites.flip_h = false;
 	elif ( Input.is_action_pressed("left") ): animatedSprites.flip_h = true;
@@ -190,6 +193,9 @@ func animate() -> void:
 			jumpAnimStarted = true;
 		else:
 			return;
+	elif (!is_on_floor() && is_on_wall()):
+		animatedSprites.animation = "PlayerWallSlide";
+		fallAnimStarted = false;
 	elif (!is_on_floor() && velocity.y >= 0):
 		animatedSprites.animation = "PlayerFall";
 		if (!fallAnimStarted):
@@ -204,13 +210,17 @@ func animate() -> void:
 		fallAnimStarted = false;
 	animatedSprites.play();
 
+## Event for 
 func on_animation_finished() -> void:
 	if (animatedSprites.animation == "PlayerDeath"):
 		Global.death.emit();
+	elif (animatedSprites.animation == "PlayerVictory"):
+		await get_tree().create_timer(1.0).timeout;
+		Global.complete.emit();
 
 ## Make the player jump
 func jump() -> void:
-	AudioManager.play_effect("PlayerJump");
+	AudioManager.play_effect("Jump");
 	velocity.y = -sqrt(jumpHeight) * 496 * currentSlowdown * sqrt(fallSpeed);
 	isJumping = true;
 	jumpTimer.start();
@@ -293,7 +303,8 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 	invulnerabilityCurrent = invulnerabilityTimer;
 	direction.y /= 2;
 	velocity = direction * (1000 + higherBounce * 500);
-	
+	velocity.y *= sqrt(fallSpeed);
+	coyoteTimeLeft = 0.0;
 	if is_on_floor() && !onFloorBypass:
 		velocity *= pow(max(3, groundSpeed), .9);
 	health -= amount;
@@ -304,8 +315,15 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 ## Kill the player and send the global death signal
 func die() -> void:
 	health = 0;
-	AudioManager.play_effect("PlayerDeath");
+	AudioManager.play_effect("PlayerDie");
 	isDead = true;
+
+## Plays the victory animation and audio. Doesn't trigger repeatedly.
+func play_victory() -> void:
+	if (victoryReached): return;
+	victoryReached = true;
+	animatedSprites.play("PlayerVictory");
+	AudioManager.play_effect("Victory");
 
 ## Remove enemies or projectiles when no longer inside of them
 ## body: the body or area to remove from the array
@@ -314,10 +332,11 @@ func remove_enemy(body: Node2D):
 		enemiesInside.remove_at(enemiesInside.find(body));
 
 ## use raycast to detect enemy collision
-# Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
 func detect_enemies(body: Node2D) -> void:
 	# Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
 	await get_tree().process_frame;
+	if (victoryReached): return;
+	
 	if body && body.is_in_group("enemy"):
 		var direction : Vector2 = position - body.position;
 		if enemiesInside.find(body) == -1:
@@ -327,6 +346,8 @@ func detect_enemies(body: Node2D) -> void:
 ## Detect collisions between enemies and the bounce area
 ## body: the body being collided with
 func detect_enemy_bounce(body: Node2D) -> void:
+	if (victoryReached): return;
+	
 	if (body.is_in_group("enemy")):
 		if (velocity.y > 0 || body.velocity.y - velocity.y <= 0):
 			bounce();
@@ -355,6 +376,7 @@ func detect_projectile_bounce(area: Area2D) -> void:
 
 ## Bounce the player up
 func bounce() -> void:
+	jumpAnimStarted = false;
 	if (Input.is_action_pressed("jump")):
 		velocity.y = -jumpHeight * 360 * sqrt(fallSpeed);
 	else:
@@ -456,6 +478,7 @@ func detect_tiles() -> void:
 				if (rayDirection.y < 0):
 					velocity.y = 1000 * bounceTileHeight;
 				else:
+					jumpAnimStarted = false;
 					velocity.y = -1000 * sqrt(fallSpeed) * bounceTileHeight;
 					if velocity.x > 0 && Input.is_action_pressed("left"):
 						velocity.x /= 2;
@@ -485,7 +508,7 @@ func detect_tiles() -> void:
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
 			if take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"), true):
-				AudioManager.play_effect("HazardTile");
+				AudioManager.play_effect("Hurt");
 		elif tileName == "death":
 			take_damage(maxHealth);
 		# Only downward rays should drive floor tile effects (except hazard)

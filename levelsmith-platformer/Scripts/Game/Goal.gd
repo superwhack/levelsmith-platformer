@@ -12,4 +12,4 @@ func _ready() -> void:
 ## body: the body entering to check if it's the player
 func complete_level(body: Node2D) -> void:
 	if body is Player:
-		Global.complete.emit();
+		body.play_victory();

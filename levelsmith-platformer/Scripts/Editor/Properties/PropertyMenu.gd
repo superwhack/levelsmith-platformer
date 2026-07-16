@@ -89,6 +89,7 @@ var previewLine: Line2D;
 @export var movingPlatformOffsetXSlider : VBoxContainer;
 @export var movingPlatformOffsetYSlider : VBoxContainer;
 @export var movingPlatformProgressSlider : VBoxContainer;
+@export var movingPlatformDelaySlider : VBoxContainer;
 @export var movingPlatformEasingCheckbox : VBoxContainer;
 @export var movingPlatformMomentumCheckbox : VBoxContainer;
 @export var movingPlatformVisibilityCheckbox : VBoxContainer;
@@ -137,6 +138,7 @@ func _ready() -> void:
 	movingPlatformOffsetXSlider.drag_ended.connect(_on_drag_ended);
 	movingPlatformOffsetYSlider.drag_ended.connect(_on_drag_ended);
 	movingPlatformProgressSlider.drag_ended.connect(_on_drag_ended);
+	movingPlatformDelaySlider.drag_ended.connect(_on_drag_ended);
 	movingPlatformEasingCheckbox.check_changed.connect(_on_drag_ended);
 	movingPlatformMomentumCheckbox.check_changed.connect(_on_drag_ended);
 	movingPlatformVisibilityCheckbox.check_changed.connect(_on_drag_ended);
@@ -304,6 +306,7 @@ func update_sliders() -> void:
 		movingPlatformOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.TILE_SIZE;
 		movingPlatformOffsetYSlider.value = -selectedPreset.pointBOffset.y / Global.TILE_SIZE;
 		movingPlatformProgressSlider.value = selectedPreset.progress;
+		movingPlatformDelaySlider.value = selectedPreset.delay;
 		movingPlatformEasingCheckbox.value = selectedPreset.easing;
 		movingPlatformMomentumCheckbox.value = selectedPreset.momentum;
 		movingPlatformVisibilityCheckbox.value = selectedPreset.visible;
@@ -311,6 +314,7 @@ func update_sliders() -> void:
 		movingPlatformOffsetXSlider.update_slider();
 		movingPlatformOffsetYSlider.update_slider();
 		movingPlatformProgressSlider.update_slider();
+		movingPlatformDelaySlider.update_slider();
 		movingPlatformEasingCheckbox.update_checkbox();
 		movingPlatformMomentumCheckbox.update_checkbox();
 		movingPlatformVisibilityCheckbox.update_checkbox();
@@ -368,6 +372,7 @@ func update_values() -> void:
 		selectedPreset.speed = movingPlatformSpeedSlider.value;
 		selectedPreset.pointBOffset = Vector2(movingPlatformOffsetXSlider.value * Global.TILE_SIZE, -movingPlatformOffsetYSlider.value * Global.TILE_SIZE);
 		selectedPreset.progress = movingPlatformProgressSlider.value;
+		selectedPreset.delay = movingPlatformDelaySlider.value;
 		selectedPreset.easing = movingPlatformEasingCheckbox.value;
 		selectedPreset.momentum = movingPlatformMomentumCheckbox.value;
 		selectedPreset.visible = movingPlatformVisibilityCheckbox.value;

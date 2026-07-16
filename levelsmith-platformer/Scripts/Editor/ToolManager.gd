@@ -142,7 +142,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				if (entityManager.duplicatingResource != null && Input.is_action_pressed("copy")):
 					entityManager.duplicatingResource = null;
 				# If the clicked cell is an entity and the click was short, edit its properties
-				elif (currentCell > Global.EntityType.GOAL && currentCell < Global.EntityType.PROP1 && !isMoving && currentCell != Global.EntityType.COIN):
+				elif (currentCell > Global.EntityType.GOAL && currentCell < Global.EntityType.PROP1 && !isMoving && currentCell != Global.EntityType.COIN && currentCell != Global.EntityType.CHECKPOINT):
 					if Input.is_action_pressed("copy") && previousCell != -1 && currentCell != Global.EntityType.PLAYER:
 						entityManager.duplicate_entity(editorManager.currentMousePosition);
 					else:

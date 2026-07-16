@@ -281,11 +281,11 @@ func clamp_camera(bounds: Rect2) -> void:
 	# visible world size
 	var visibleSize : Vector2 = viewportSize * 0.5 / zoom;
 	
-	var minX : float = bounds.position.x + visibleSize.x;
-	var maxX : float = bounds.end.x - visibleSize.x;
+	var minX : float = bounds.position.x + visibleSize.x + Global.TILE_SIZE / 2.0;
+	var maxX : float = bounds.end.x - visibleSize.x - Global.TILE_SIZE / 2.0;
 	
-	var minY : float = bounds.position.y + visibleSize.y;
-	var maxY : float = bounds.end.y - visibleSize.y;
+	var minY : float = bounds.position.y + visibleSize.y + Global.TILE_SIZE / 2.0;
+	var maxY : float = bounds.end.y - visibleSize.y - Global.TILE_SIZE / 2.0;
 	
 	# If zoom too far out, just center
 	if minX > maxX:

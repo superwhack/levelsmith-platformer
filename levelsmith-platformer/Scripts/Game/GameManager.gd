@@ -225,7 +225,6 @@ func level_complete() -> void:
 	player.victory();
 	AudioManager.pause_music(true);
 	AudioManager.reset_audio();
-	AudioManager.play_effect("Victory");
 	goalReached = true;
 	print_level_completion_time();
 	pauseButton.hide();

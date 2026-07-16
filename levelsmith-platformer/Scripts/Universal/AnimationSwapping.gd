@@ -33,7 +33,7 @@ var animTimer : float = 0;
 # All types of entities
 var animatedEntityTypes : Array[String] = ["Player", "StationaryEnemy", "ShootingEnemy", "PatrollingEnemy", "FlyingEnemy"];
 # Player Animations
-var playerAnimations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "PlayerFall", "PlayerHurt", "PlayerDeath"];
+var playerAnimations : Array[String] = ["PlayerRun", "PlayerJump", "PlayerIdle", "PlayerFall", "PlayerWallSlide", "PlayerHurt", "PlayerDeath", "PlayerVictory"];
 # All Enemy Animations
 var stationaryEnemyAnimations : Array[String] = ["StationaryIdle", "StationaryDeath"];
 var patrollingEnemyAnimations : Array[String] = ["PatrolWalk", "PatrolDeath"];

@@ -12,15 +12,15 @@
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="9_7flhh"]
-[ext_resource type="Texture2D" uid="uid://cpch5upyug7n1" path="res://Assets/UserInterface/Buttons/ButtonIcons/Save.png" id="10_2406q"]
+[ext_resource type="Texture2D" uid="uid://c03ijfg5hio0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Save.png" id="10_2406q"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Texture2D" uid="uid://dt54gtcqj4y6n" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
+[ext_resource type="Texture2D" uid="uid://e2cnr04fpgrl" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="Texture2D" uid="uid://dymygj183wflb" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
+[ext_resource type="Texture2D" uid="uid://8pwuej3wvl0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
 [ext_resource type="Texture2D" uid="uid://kedeb3vd63r6" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_vrcqo"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
@@ -414,11 +414,16 @@ visible = false
 
 [node name="HoverPopUpContainer" parent="ScreenUI" unique_id=1808818748 instance=ExtResource("16_rdu5w")]
 visible = false
-offset_left = 1474.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -446.0
 offset_top = 80.0
-offset_right = 1920.0
+offset_right = 0.0
 offset_bottom = 179.0
-grow_horizontal = 1
+grow_horizontal = 0
 grow_vertical = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]

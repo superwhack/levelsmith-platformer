@@ -11,6 +11,7 @@ enum WallDirection {
 enum PlayerState {
 	GROUNDED,
 	JUMPING,
+	FALLING,
 	SLIDING,
 	BOUNCING,
 	VICTORY,
@@ -137,6 +138,9 @@ func _physics_process(delta: float) -> void:
 	if currentState == PlayerState.DEAD || currentState == PlayerState.VICTORY:
 		animate();
 		return;
+	if (currentState == PlayerState.BOUNCING || PlayerState.JUMPING) && velocity.y > 0:
+		currentState = PlayerState.FALLING;
+	
 	justWallJumped = false;
 	for enemy in enemiesInside:
 		detect_enemies(enemy);
@@ -193,14 +197,14 @@ func animate() -> void:
 	
 	# TODO: Add condition for wall sliding animation
 		
-	elif (!is_on_floor() && velocity.y < 0):
+	elif (currentState == PlayerState.JUMPING || currentState == PlayerState.BOUNCING):
 		animatedSprites.animation = "PlayerJump";
 		fallAnimStarted = false;
 		if (!jumpAnimStarted):
 			jumpAnimStarted = true;
 		else:
 			return;
-	elif (!is_on_floor() && velocity.y >= 0):
+	elif (currentState == PlayerState.FALLING):
 		animatedSprites.animation = "PlayerFall";
 		if (!fallAnimStarted):
 			fallAnimStarted = true;

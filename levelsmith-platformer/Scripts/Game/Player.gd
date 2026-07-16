@@ -8,6 +8,7 @@ enum WallDirection {
 	NONE
 }
 
+# FSM that controls the player's state
 enum PlayerState {
 	GROUNDED,
 	JUMPING,
@@ -542,6 +543,10 @@ func check_out_of_bounds() -> bool:
 		die();
 		return true;
 	return false;
+
+## Change the player's state to victory 
+func victory() -> void:
+	currentState = PlayerState.VICTORY;
 
 ## Applies the player selected player movement preset to the player
 func apply_preset(preset: PlayerMovementPreset) -> void:

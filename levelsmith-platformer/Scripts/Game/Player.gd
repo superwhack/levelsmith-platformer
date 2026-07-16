@@ -11,6 +11,7 @@ enum WallDirection {
 # FSM that controls the player's state
 enum PlayerState {
 	GROUNDED,
+	RUNNING,
 	JUMPING,
 	FALLING,
 	SLIDING,
@@ -211,7 +212,7 @@ func animate() -> void:
 			fallAnimStarted = true;
 		else:
 			return;
-	elif (direction):
+	elif (currentState == PlayerState.RUNNING):
 		animatedSprites.animation = "PlayerRun";
 		fallAnimStarted = false;
 	else:
@@ -238,6 +239,8 @@ func walk() -> void:
 	direction = Input.get_axis("left", "right");
 	# If a direct is pressed, move in the direction, otherwise decelerate towards a 0 velocity 
 	if (direction):
+		if currentState == PlayerState.GROUNDED:
+			currentState = PlayerState.RUNNING;
 		accelerationX = direction * trueSpeed;
 		# Acceleration if moving in direction of current movement
 		if baseAcceleration != 1.0 && (sign(velocity.x) == sign(direction) || velocity.x == 0):

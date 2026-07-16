@@ -124,7 +124,7 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
-	if (check_out_of_bounds()):
+	if (check_out_of_bounds() || victoryReached):
 		return;
 	if isDead:
 		animate();
@@ -332,10 +332,11 @@ func remove_enemy(body: Node2D):
 		enemiesInside.remove_at(enemiesInside.find(body));
 
 ## use raycast to detect enemy collision
-# Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
 func detect_enemies(body: Node2D) -> void:
 	# Wait one frame to see if the enemy has been killed by getting landed on, if so then don't take damage
 	await get_tree().process_frame;
+	if (victoryReached): return;
+	
 	if body && body.is_in_group("enemy"):
 		var direction : Vector2 = position - body.position;
 		if enemiesInside.find(body) == -1:
@@ -345,6 +346,8 @@ func detect_enemies(body: Node2D) -> void:
 ## Detect collisions between enemies and the bounce area
 ## body: the body being collided with
 func detect_enemy_bounce(body: Node2D) -> void:
+	if (victoryReached): return;
+	
 	if (body.is_in_group("enemy")):
 		if (velocity.y > 0 || body.velocity.y - velocity.y <= 0):
 			bounce();

@@ -33,10 +33,13 @@
 [ext_resource type="Texture2D" uid="uid://bxsg04w1et0ob" path="res://Assets/Sprites/Entities/Player/PlayerRun/6.png" id="31_fnnns"]
 [ext_resource type="Texture2D" uid="uid://du2efq73pypvv" path="res://Assets/Sprites/Entities/Player/PlayerRun/7.png" id="32_tl5x1"]
 [ext_resource type="Texture2D" uid="uid://c3p3ts7hk0cyd" path="res://Assets/Sprites/Entities/Player/PlayerRun/8.png" id="33_4k050"]
-[ext_resource type="Texture2D" uid="uid://cj4jeepyu2n4o" path="res://Assets/Sprites/Entities/dude.png" id="34_sgkpy"]
+[ext_resource type="Texture2D" uid="uid://c4pj3p74xcymv" path="res://Assets/Sprites/Entities/Player/PlayerVictory/1.png" id="34_okpjm"]
+[ext_resource type="Texture2D" uid="uid://c3vgdd36ejdsi" path="res://Assets/Sprites/Entities/Player/PlayerVictory/2.png" id="35_lro1s"]
 [ext_resource type="Texture2D" uid="uid://diqapvbff8cj4" path="res://Assets/Sprites/Entities/Player/PlayerWallSlide/1.png" id="35_sgkpy"]
 [ext_resource type="Texture2D" uid="uid://ckjdj4o5gk0g6" path="res://Assets/Sprites/Entities/Player/PlayerWallSlide/2.png" id="36_jmt84"]
+[ext_resource type="Texture2D" uid="uid://c5gnwxob7asp1" path="res://Assets/Sprites/Entities/Player/PlayerVictory/3.png" id="36_m16cr"]
 [ext_resource type="Texture2D" uid="uid://bbuhxf5l0c73" path="res://Assets/Sprites/Entities/Player/PlayerWallSlide/3.png" id="37_55uah"]
+[ext_resource type="Texture2D" uid="uid://dylfflr5nbeiw" path="res://Assets/Sprites/Entities/Player/PlayerVictory/4.png" id="37_seo8a"]
 [ext_resource type="Texture2D" uid="uid://ytiofxccgio4" path="res://Assets/Sprites/Entities/Player/PlayerWallSlide/4.png" id="38_lro1s"]
 [ext_resource type="Texture2D" uid="uid://bd5gxutih27r4" path="res://Assets/Sprites/Entities/Player/PlayerWallSlide/5.png" id="39_m16cr"]
 [ext_resource type="Texture2D" uid="uid://cwlv80kiqcslf" path="res://Assets/Sprites/Entities/Player/PlayerWallSlide/6.png" id="40_seo8a"]
@@ -174,11 +177,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("34_sgkpy")
+"texture": ExtResource("34_okpjm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_lro1s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_m16cr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_seo8a")
 }],
 "loop": 1,
 "name": &"PlayerVictory",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,

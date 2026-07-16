@@ -98,7 +98,7 @@ func _process(_delta: float) -> void:
 	var hoveredControl = get_viewport().gui_get_hovered_control();
 	# For the entity-prop dropdown, it is a window, not a gui control.
 	var popup = editorManager.toolManager.tileSwitch.entityPropDropdown.get_popup().visible;
-	print(popup)
+	
 	if (hoveredControl != null || popup):
 		Input.set_custom_mouse_cursor(uiCursor);
 	else:

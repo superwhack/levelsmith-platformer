@@ -211,7 +211,7 @@ func on_animation_finished() -> void:
 
 ## Make the player jump
 func jump() -> void:
-	AudioManager.play_effect("PlayerJump");
+	AudioManager.play_effect("Jump");
 	velocity.y = -sqrt(jumpHeight) * 496 * currentSlowdown * sqrt(fallSpeed);
 	isJumping = true;
 	jumpTimer.start();
@@ -306,7 +306,7 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 ## Kill the player and send the global death signal
 func die() -> void:
 	health = 0;
-	AudioManager.play_effect("PlayerDeath");
+	AudioManager.play_effect("PlayerDie");
 	isDead = true;
 
 ## Remove enemies or projectiles when no longer inside of them
@@ -489,7 +489,7 @@ func detect_tiles() -> void:
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
 			if take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"), true):
-				AudioManager.play_effect("HazardTile");
+				AudioManager.play_effect("Hurt");
 		elif tileName == "death":
 			take_damage(maxHealth);
 		# Only downward rays should drive floor tile effects (except hazard)

@@ -90,6 +90,7 @@ var jumpAnimStarted : bool = false;
 var fallAnimStarted : bool = false;
 
 var isDead : bool = false;
+var victoryReached : bool = false;
 
 ## Runs once on instantiation
 func _ready() -> void:
@@ -171,6 +172,7 @@ func _physics_process(delta: float) -> void:
 
 ## Animates the player while processing
 func animate() -> void:
+	if (victoryReached): return;
 	
 	if ( Input.is_action_pressed("right") ): animatedSprites.flip_h = false;
 	elif ( Input.is_action_pressed("left") ): animatedSprites.flip_h = true;
@@ -191,6 +193,9 @@ func animate() -> void:
 			jumpAnimStarted = true;
 		else:
 			return;
+	elif (!is_on_floor() && is_on_wall()):
+		animatedSprites.animation = "PlayerWallSlide";
+		fallAnimStarted = false;
 	elif (!is_on_floor() && velocity.y >= 0):
 		animatedSprites.animation = "PlayerFall";
 		if (!fallAnimStarted):
@@ -205,9 +210,13 @@ func animate() -> void:
 		fallAnimStarted = false;
 	animatedSprites.play();
 
+## Event for 
 func on_animation_finished() -> void:
 	if (animatedSprites.animation == "PlayerDeath"):
 		Global.death.emit();
+	elif (animatedSprites.animation == "PlayerVictory"):
+		await get_tree().create_timer(1.0).timeout;
+		Global.complete.emit();
 
 ## Make the player jump
 func jump() -> void:
@@ -308,6 +317,13 @@ func die() -> void:
 	health = 0;
 	AudioManager.play_effect("PlayerDeath");
 	isDead = true;
+
+## Plays the victory animation and audio. Doesn't trigger repeatedly.
+func play_victory() -> void:
+	if (victoryReached): return;
+	victoryReached = true;
+	animatedSprites.play("PlayerVictory");
+	AudioManager.play_effect("Victory");
 
 ## Remove enemies or projectiles when no longer inside of them
 ## body: the body or area to remove from the array

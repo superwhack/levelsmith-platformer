@@ -15,6 +15,8 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var loadingImage : TextureRect;
 @export var mainMenuControl : Control;
 
+@export var globalSettingsMenu : GlobalSettingsMenu;
+
 # References to relevant buttons
 @export var editorHomeButton : Button;
 @export var editorPlayButton : Button;
@@ -44,7 +46,14 @@ var loadingTweenTime : float = 0.35
 #The time that the full screen holds
 var loadingHold : float = 0.30
 
+# An enum for determining if we are going to the main menu or desktop.
+enum ExitAction {
+	MAIN_MENU,
+	QUIT
+}
+
 func _ready() -> void:
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
 	Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
 	Global.levelCreated.connect(tileMap.clear);
@@ -60,6 +69,7 @@ func _ready() -> void:
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
 	winReturnToEditorButton.pressed.connect(edit);
+	get_window().close_requested.connect(check_unsaved_changes.bind(Callable(get_tree(), "quit"), ExitAction.QUIT));
 	
 	# Create the enemy resource folder and custom player preset.
 	if (!DirAccess.dir_exists_absolute("user://Resources/")):
@@ -68,7 +78,7 @@ func _ready() -> void:
 		DirAccess.copy_absolute("res://Resources/PlayerPresets/Default.tres", "user://Resources/Custom.tres");
 		
 	main_menu(false);
-
+	
 	await screen_static();
 	await main_menu(false, true);
 
@@ -76,7 +86,12 @@ func _ready() -> void:
 ## event: The user input
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.settingsMenu, editorManager.isValidated);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated);
+	if event.is_action_pressed("toggle-fullscreen"):
+		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN);
 
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
@@ -115,9 +130,11 @@ func screen_static() -> void:
 ## levelAuthor: Author of the level
 ## newSize: The width and height of the level
 func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) -> void:
+	# Overrides alt+f4 for saving
+	
 	worldSize = newSize;
 	cameraManager.initialize_camera();
-	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.settingsMenu);
+	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.levelSettingsMenu);
 	propertyMenu.reset_custom();
 	loadedLevelPath = "user://Levels/" + levelName + "/";
 	#AudioManager.masterVolume = 0;
@@ -127,20 +144,23 @@ func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) ->
 	Global.levelCreated.emit();
 	editorManager.returnClick = false;
 
+## Draws the border around the level grid.
 func create_bedrock_border() -> void:
-	for x in range(-1, worldSize.x + 1):
-		tileMap.set_cell(Vector2i(x, -1), Global.BEDROCK_TILE, Vector2i.ZERO);
-		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
-		tileMap.set_cell( Vector2i(x, worldSize.y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
-
+	# Draw 4 corners first
+	tileMap.set_cell(Vector2i(-1, -1), Global.BEDROCK_CORNER, Vector2i.ZERO);
+	tileMap.set_cell(Vector2i(worldSize.x, -1), Global.BEDROCK_CORNER, Vector2i.ZERO, 1);
+	tileMap.set_cell(Vector2i(-1, worldSize.y), Global.BEDROCK_CORNER, Vector2i.ZERO, 2);
+	tileMap.set_cell(Vector2i(worldSize.x, worldSize.y), Global.BEDROCK_CORNER, Vector2i.ZERO, 3);
+	
+	# Top/Bottom Walls
+	for x in range(0, worldSize.x):
+		tileMap.set_cell(Vector2i(x, -1), Global.BEDROCK_WALL, Vector2i.ZERO);
+		tileMap.set_cell( Vector2i(x, worldSize.y), Global.BEDROCK_WALL, Vector2i.ZERO, 1);
+	
+	# Left/Right Walls
 	for y in range(0, worldSize.y):
-		tileMap.set_cell(Vector2i(-1, y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
-		tileMap.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_TILE, Vector2i.ZERO);
-		#print(tileMap.get_cell_source_id(Vector2i(-1,0))," ",tileMap.get_cell_atlas_coords(Vector2i(-1,0)))
-
-	#print("Bedrock border created: ", tileMap.get_used_rect());
+		tileMap.set_cell(Vector2i(-1, y), Global.BEDROCK_WALL, Vector2i.ZERO, 2);
+		tileMap.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_WALL, Vector2i.ZERO, 3);
 
 ## Imports a level 
 func import_level_and_edit() -> void:
@@ -154,7 +174,7 @@ func import_level_and_edit() -> void:
 	editorManager.reset_enemy_positions();
 	await get_tree().process_frame;
 	cameraManager.initialize_camera();
-	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.settingsMenu);
+	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.levelSettingsMenu);
 	ImportExportManager.levelImported.emit();
 	#propertyMenu._on_preset_options_item_selected(4);
 	await get_tree().process_frame
@@ -169,9 +189,44 @@ func load_level(levelPath: String, play: bool = false) -> void:
 		await import_level_and_edit();
 		if (play):
 			play();
+			
+
+## Checks if the level has unsaved changes, and creates a popup with appropriate functions.
+## on_continue: A callable function, for going to main menu or force quitting app.
+func check_unsaved_changes(on_continue: Callable, exit: ExitAction) -> void:
+	# No unsaved changes, do regular action.
+	if (!editorManager.unsavedChanges):
+		on_continue.call();
+		return;
+	
+	# Saves and brings the user to the main menu. First callable.
+	var save = func() -> void:
+		editorManager.unsavedChanges = false;
+		AudioManager.play_UI_effect("UISelection");
+		var levelScreenshot : Image = await editorManager.screenshot_level();
+		ImportExportManager.save_level_screenshot(levelScreenshot);
+		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated);
+		on_continue.call();
+	
+	# No save, brings user to main menu
+	var no_save = func() -> void:
+		editorManager.unsavedChanges = false;
+		on_continue.call();
+	
+	if (editorManager.unsavedChanges):
+		PopUpManager.create_unsaved_changes_popup(save, no_save);
+		
+	if (exit == ExitAction.QUIT):
+		PopUpManager.currentPopUp.set_save_quit_text("Save & Quit to Desktop");
+		PopUpManager.currentPopUp.set_no_save_quit_text("Quit to Desktop");
+
 
 ## Swap to main menu state
 func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
+	if (editorManager.unsavedChanges):
+		check_unsaved_changes(main_menu, ExitAction.MAIN_MENU);
+		return;
+	
 	mainMenuControl.fill_level_list();
 	if !onStart:
 		await screen_wipe_in();
@@ -196,9 +251,12 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	if !onStart:
 		await screen_wipe_out();
 	loadedLevelPath = "";
+	# Removes alt+f4 override
+	get_tree().set_auto_accept_quit(true);
 
 ## Swap to edit state
 func edit() -> void:
+	get_tree().set_auto_accept_quit(false);
 	await get_tree().process_frame;
 	await screen_wipe_in();
 	AudioManager.reset_audio();
@@ -324,3 +382,16 @@ func get_play_errors() -> Array[String]:
 		errors.append("End Goal");
 		
 	return errors;
+
+func open_global_settings_menu() -> void:
+	get_tree().paused = true;
+	AudioManager.play_UI_effect("UISelection")
+	previewTileMap.hide();
+	globalSettingsMenu.show();
+
+## Closes the settings menu
+func close_global_settings_menu() -> void:
+	get_tree().paused = false;
+	AudioManager.play_UI_effect("UISelection");
+	previewTileMap.show();
+	globalSettingsMenu.hide();

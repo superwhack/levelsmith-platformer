@@ -12,3 +12,7 @@ extends Resource;
 
 # Initial progress along movement when beginning
 @export var progress : int;
+
+@export var easing : bool;
+@export var momentum : bool;
+@export var visible : bool;

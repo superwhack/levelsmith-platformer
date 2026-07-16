@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://kbh8ioojr3r4"]
 
-[ext_resource type="Texture2D" uid="uid://b8ss2paod0h8x" path="res://Assets/Defaults/Assets/Sprites/Entities/ShootingStill.png" id="1_0uiq4"]
+[ext_resource type="Texture2D" uid="uid://bdirtvl06c67h" path="res://Assets/Defaults/Assets/Sprites/Entities/ShootingStill.png" id="1_0uiq4"]
 
 [node name="Sprite2D" type="Sprite2D" unique_id=365024342]
+scale = Vector2(0.66, 0.66)
 texture = ExtResource("1_0uiq4")

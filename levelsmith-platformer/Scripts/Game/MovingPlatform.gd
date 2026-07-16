@@ -17,17 +17,22 @@ var pointB : Vector2;
 var progress : float;
 var velocity : Vector2;
 
+var easing : bool;
+
 # Current destination point.
 var targetPoint : Vector2;
+var movementDistance : float;
 
 const SPEED_MODIFIER : float = 100.0;
 
 @export var previewLine : Line2D;
-@export var previewLineEndpoint : Sprite2D;
 @export var previewPlatform : Sprite2D;
 
 # Mutes movement after spawning so it can teleport to it's initial position
 var muteMove = true;
+
+var visiblePath = false;
+var momentumShare = false;
 
 ## Sets up initial points
 func _ready() -> void:
@@ -41,6 +46,10 @@ func _ready() -> void:
 ## Processes flying movement and collision handling.
 ## delta: Time since previous frame.
 func _physics_process(delta: float) -> void:
+	if visiblePath:
+		previewLine.show();
+		previewLine.global_position = pointA;
+		
 	if !active:
 		if !onScreen.is_on_screen():
 			return;
@@ -56,6 +65,7 @@ func move_behavior(delta: float) -> void:
 	var directionVector : Vector2 = targetPoint - global_position;
 	var move_distance : float = speed * SPEED_MODIFIER * delta;
 
+
 	# If the enemy is close enough to the point, change direction
 	if (directionVector.length() <= move_distance):
 		global_position = targetPoint;
@@ -64,6 +74,10 @@ func move_behavior(delta: float) -> void:
 		return;
 
 	velocity = directionVector.normalized() * speed * SPEED_MODIFIER;
+	
+	if easing:
+		velocity = (velocity / 1.5) + (velocity * min((pointA-position).length(), (pointB-position).length()) / movementDistance * 2);
+	
 	position += velocity * delta;
 
 
@@ -87,9 +101,12 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	pointB = pointA + propertyFile.pointBOffset;
 	targetPoint = pointB;
 	progress = propertyFile.progress;
+	easing = propertyFile.easing;
+	visiblePath = propertyFile.visible;
+	momentumShare = propertyFile.momentum;
 	
 	adjust_preview();
-	update_line_preview();
+	previewLine.update();
 	
 	ResourceSaver.save(propertyFile);
 
@@ -100,29 +117,10 @@ func adjust_preview(pointTo : Vector2 = pointB, selectedProgress : float = progr
 	previewPlatform.show();
 	previewPlatform.global_position = lerp(global_position, global_position + pointTo, float(selectedProgress) / 100);
 
-## Update the preview for the moving platform
-## x: The x to update with
-## y: The y to update with
-func update_line_preview(x : int = int((pointB.x - pointA.x) / Global.TILE_SIZE) , y : int = int((pointB.y - pointA.y) / Global.TILE_SIZE)) -> void:
-	var offset : Vector2 = Vector2(x * Global.TILE_SIZE, y * Global.TILE_SIZE);
-	previewLine.modulate.a = .5;
-	previewLine.global_position = global_position;
-	previewLine.clear_points();
-	previewLine.add_point(Vector2.ZERO);
-	previewLine.add_point(offset);
-	if previewLine.get_point_count() > 0:
-		var last_point_index: int = previewLine.get_point_count() - 1;
-		if previewLine.get_point_position(last_point_index) == previewLine.get_point_position(0):
-			previewLineEndpoint.hide();
-		else:
-			previewLineEndpoint.show();
-			previewLineEndpoint.position = previewLine.get_point_position(last_point_index);
-
 ## Apply the progress variable into starting global position
 func apply_progress() -> void:
 	position = lerp(pointA, pointB, float(progress) / 100.0);
 	muteMove = false;
-	
 
 ## Applies the values stored in a FlyingPreset.
 ## file: Resource containing enemy properties.
@@ -133,7 +131,13 @@ func apply_script(file: Resource) -> void:
 
 	pointA = global_position;
 	pointB = pointA + file.pointBOffset;
+	movementDistance = pointA.distance_to(pointB)
 	progress = file.progress;
+	easing = file.easing;
 	adjust_preview(file.pointBOffset, progress);
 	targetPoint = pointB;
-	update_line_preview();
+	previewLine.update((pointB - pointA) / Global.TILE_SIZE);
+	z_index += 2;
+	previewLine.z_index = z_index - 4;
+	visiblePath = propertyFile.visible;
+	momentumShare = propertyFile.momentum;

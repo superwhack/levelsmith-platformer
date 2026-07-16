@@ -4,6 +4,7 @@ extends Node2D
 @export var editorManager : Node2D;
 @export var entityManager : Node2D;
 @export var tileManager : Node2D;
+@export var customCursorManager : Node2D;
 
 # references to UI elements
 @export var tileSwitch : HBoxContainer;
@@ -146,6 +147,7 @@ func _unhandled_input(event: InputEvent) -> void:
 						entityManager.duplicate_entity(editorManager.currentMousePosition);
 					else:
 						entityManager.duplicatingResource = null;
+						customCursorManager.highlight_selected_entity(editorManager.currentMousePosition);
 						entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:
@@ -154,7 +156,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				entityManager.delete_entity(editorManager.currentMousePosition);
 			
 			# If left click is being held, pick up the current tile unless it's empty air.
-			if (isMoving && prevBrushObject == -1 && previousCell != -1) && previousCell >= editorManager.tileCount && previousCell < Global.BEDROCK_TILE:
+			if (isMoving && prevBrushObject == -1 && previousCell != -1) && previousCell >= editorManager.tileCount && previousCell < Global.BEDROCK_CORNER:
 				entityManager.move_entity(previousClickPos);
 			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
 			elif (isMoving && prevBrushObject == -1):

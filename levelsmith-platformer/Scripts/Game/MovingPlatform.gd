@@ -31,6 +31,10 @@ const SPEED_MODIFIER : float = 100.0;
 # Mutes movement after spawning so it can teleport to it's initial position
 var muteMove = true;
 
+# Delay, in seconds, when reaching the current targetPoint before moving again
+var delay : float = 0.0;
+var delayLeft = 0.0;
+
 var visiblePath = false;
 var momentumShare = false;
 
@@ -61,6 +65,9 @@ func _physics_process(delta: float) -> void:
 	
 ## Moves the platform toward current destination.
 func move_behavior(delta: float) -> void:
+	if delayLeft > 0.0:
+		delayLeft -= delta;
+		return;
 	# Get the direction and distance of movement
 	var directionVector : Vector2 = targetPoint - global_position;
 	var move_distance : float = speed * SPEED_MODIFIER * delta;
@@ -83,6 +90,7 @@ func move_behavior(delta: float) -> void:
 
 ## Switches the active destination.
 func switch_target() -> void:
+	delayLeft = delay;
 	if targetPoint.distance_to(pointA) < 1.0:
 		targetPoint = pointB;
 	else:
@@ -101,6 +109,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	pointB = pointA + propertyFile.pointBOffset;
 	targetPoint = pointB;
 	progress = propertyFile.progress;
+	delay = propertyFile.delay;
 	easing = propertyFile.easing;
 	visiblePath = propertyFile.visible;
 	momentumShare = propertyFile.momentum;
@@ -133,6 +142,7 @@ func apply_script(file: Resource) -> void:
 	pointB = pointA + file.pointBOffset;
 	movementDistance = pointA.distance_to(pointB)
 	progress = file.progress;
+	delay = file.delay;
 	easing = file.easing;
 	adjust_preview(file.pointBOffset, progress);
 	targetPoint = pointB;

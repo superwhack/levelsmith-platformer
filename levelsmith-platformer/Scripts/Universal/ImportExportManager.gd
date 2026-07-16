@@ -274,6 +274,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 					"y": propertyFile.pointBOffset.y
 				},
 				"progress": propertyFile.progress,
+				"delay": propertyFile.delay,
 				"easing": propertyFile.easing,
 				"momentum": propertyFile.momentum,
 				"visible": propertyFile.visible
@@ -571,6 +572,7 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.pointBOffset.x = enemy.stats.endpoint.x;
 			newResource.pointBOffset.y = enemy.stats.endpoint.y;
 			newResource.progress = enemy.stats.progress;
+			newResource.delay = enemy.stats.delay;
 			newResource.easing = enemy.stats.easing;
 			newResource.momentum = enemy.stats.momentum;
 			newResource.visible = enemy.stats.visible;

@@ -159,6 +159,7 @@ func _physics_process(delta: float) -> void:
 				currentSlowdown = 1.0;
 				doubleJumpAvailable = false;
 			coyoteTimeLeft = 0;
+			jumpAnimStarted = false;
 			jump();
 	# Handle A and D inputs, as well as lack of directional input
 	walk();
@@ -356,6 +357,7 @@ func detect_projectile_bounce(area: Area2D) -> void:
 
 ## Bounce the player up
 func bounce() -> void:
+	jumpAnimStarted = false;
 	if (Input.is_action_pressed("jump")):
 		velocity.y = -jumpHeight * 360 * sqrt(fallSpeed);
 	else:
@@ -457,6 +459,7 @@ func detect_tiles() -> void:
 				if (rayDirection.y < 0):
 					velocity.y = 1000 * bounceTileHeight;
 				else:
+					jumpAnimStarted = false;
 					velocity.y = -1000 * sqrt(fallSpeed) * bounceTileHeight;
 					if velocity.x > 0 && Input.is_action_pressed("left"):
 						velocity.x /= 2;

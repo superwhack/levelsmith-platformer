@@ -210,11 +210,11 @@ func play_effect_walking(walkingEffect: Global.WalkingEffect) -> void:
 		#walkingPlayer.stream = load(fullPath);
 	# Else just see if it's a .mp3 or .wav
 	if (FileAccess.file_exists(fullPath + ".mp3")):
-		walkingPlayer.stream = load(fullPath + ".mp3");
+		walkingPlayer.stream = AudioStreamMP3.load_from_file(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
-		walkingPlayer.stream = load(fullPath + ".wav");
+		walkingPlayer.stream = AudioStreamWAV.load_from_file(fullPath + ".wav");
 	elif (FileAccess.file_exists(fullPath + ".ogg")):
-		walkingPlayer.stream = load(fullPath + ".ogg");
+		walkingPlayer.stream = AudioStreamOggVorbis.load_from_file(fullPath + ".ogg");
 	else:
 		# Under the assumption all backups will be .wav for effects
 		walkingPlayer.stream = load(BACKUP_AUDIO_LIBRARY_PATH + effectName + "/" + effectName + ".wav")

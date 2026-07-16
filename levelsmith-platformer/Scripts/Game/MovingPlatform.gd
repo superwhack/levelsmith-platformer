@@ -148,6 +148,6 @@ func apply_script(file: Resource) -> void:
 	targetPoint = pointB;
 	previewLine.update((pointB - pointA) / Global.TILE_SIZE);
 	z_index += 2;
-	previewLine.z_index = z_index - 4;
+	previewLine.z_index = z_index - 5;
 	visiblePath = propertyFile.visible;
 	momentumShare = propertyFile.momentum;

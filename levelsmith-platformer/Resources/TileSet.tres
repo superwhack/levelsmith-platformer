@@ -1,21 +1,21 @@
 [gd_resource type="TileSet" format=3 uid="uid://d1n0acfj67o7r"]
 
-[ext_resource type="Texture2D" uid="uid://dxvpo5itxion1" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
-[ext_resource type="Texture2D" uid="uid://d0p32jicqqs1w" path="res://Assets/Sprites/Tiles/Hazard.png" id="2_6pq3v"]
-[ext_resource type="Texture2D" uid="uid://c50jm0prdc6ii" path="res://Assets/Sprites/Tiles/oneway.png" id="3_alyph"]
+[ext_resource type="Texture2D" uid="uid://dgbrgmufcdnj0" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
+[ext_resource type="Texture2D" uid="uid://d2ws3du2q1wfc" path="res://Assets/Sprites/Tiles/Hazard.png" id="2_6pq3v"]
+[ext_resource type="Texture2D" uid="uid://crwfvhcm3n1nc" path="res://Assets/Sprites/Tiles/oneway.png" id="3_alyph"]
 [ext_resource type="PackedScene" uid="uid://bf3q4v3br7j4o" path="res://Scenes/Entities/Shooting.tscn" id="3_k4kw2"]
-[ext_resource type="Texture2D" uid="uid://blps015kdtqdd" path="res://Assets/Sprites/Entities/Props/Prop1.png" id="3_r4n42"]
+[ext_resource type="Texture2D" uid="uid://yosj58n3qm8i" path="res://Assets/Sprites/Entities/Props/Prop1.png" id="3_r4n42"]
 [ext_resource type="PackedScene" uid="uid://kbh8ioojr3r4" path="res://Scenes/Preview/ShootingPreview.tscn" id="4_3boqi"]
-[ext_resource type="Texture2D" uid="uid://kylq2ewrtct7" path="res://Assets/Sprites/Tiles/ice.png" id="4_6ba2f"]
-[ext_resource type="Texture2D" uid="uid://gp42xvpenlt7" path="res://Assets/Sprites/Entities/Props/Prop2.png" id="4_c2nft"]
+[ext_resource type="Texture2D" uid="uid://dvvkbjb1ejkoi" path="res://Assets/Sprites/Tiles/ice.png" id="4_6ba2f"]
+[ext_resource type="Texture2D" uid="uid://kektaa6ws5im" path="res://Assets/Sprites/Entities/Props/Prop2.png" id="4_c2nft"]
 [ext_resource type="PackedScene" uid="uid://dbyqq48s1okmk" path="res://Scenes/Entities/Flying.tscn" id="5_3boqi"]
-[ext_resource type="Texture2D" uid="uid://bq2d0svekibyp" path="res://Assets/Sprites/Tiles/Sticky.png" id="5_8sjof"]
-[ext_resource type="Texture2D" uid="uid://cxik6e5oy8wxe" path="res://Assets/Sprites/Entities/Props/Prop3.png" id="5_nbee4"]
-[ext_resource type="Texture2D" uid="uid://d1f8p3ph3vyj2" path="res://Assets/Sprites/Tiles/bounce.png" id="6_me1w5"]
-[ext_resource type="Texture2D" uid="uid://eirshpbhdpcx" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="6_nbee4"]
+[ext_resource type="Texture2D" uid="uid://3no57vbdqn51" path="res://Assets/Sprites/Tiles/Sticky.png" id="5_8sjof"]
+[ext_resource type="Texture2D" uid="uid://fvq7t3hrytr3" path="res://Assets/Sprites/Entities/Props/Prop3.png" id="5_nbee4"]
+[ext_resource type="Texture2D" uid="uid://cq8xpjeln1u8t" path="res://Assets/Sprites/Tiles/bounce.png" id="6_me1w5"]
+[ext_resource type="Texture2D" uid="uid://dpl3ctolmpbb" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="6_nbee4"]
 [ext_resource type="PackedScene" uid="uid://bl34k1jvcme78" path="res://Scenes/Preview/FlyingPreview.tscn" id="6_pqfav"]
-[ext_resource type="Texture2D" uid="uid://bmw7jphva44jr" path="res://Assets/Sprites/Entities/Props/Prop5.png" id="7_eksy4"]
-[ext_resource type="Texture2D" uid="uid://dvwhbam8uq0m4" path="res://Assets/Sprites/Tiles/slope.png" id="7_jbnof"]
+[ext_resource type="Texture2D" uid="uid://b1qp7tonvpsvk" path="res://Assets/Sprites/Entities/Props/Prop5.png" id="7_eksy4"]
+[ext_resource type="Texture2D" uid="uid://lh0kyct8ass4" path="res://Assets/Sprites/Tiles/slope.png" id="7_jbnof"]
 [ext_resource type="PackedScene" uid="uid://87eq7bxythec" path="res://Scenes/Entities/Player.tscn" id="8_alyph"]
 [ext_resource type="PackedScene" uid="uid://1wme1ton08gv" path="res://Scenes/Entities/Goal.tscn" id="8_jbnof"]
 [ext_resource type="PackedScene" uid="uid://c0lnvjeoj8xif" path="res://Scenes/Preview/GoalPreview.tscn" id="9_5jxy7"]
@@ -27,9 +27,11 @@
 [ext_resource type="PackedScene" uid="uid://b6axoaekmjyr4" path="res://Scenes/Entities/MovingPlatform.tscn" id="19_yoa8o"]
 [ext_resource type="PackedScene" uid="uid://bpnflie3xuof8" path="res://Scenes/Preview/MovingPlatformPreview.tscn" id="20_4pytx"]
 [ext_resource type="PackedScene" uid="uid://b1he4q1q33j0e" path="res://Scenes/Entities/Coin.tscn" id="22_38lp2"]
-[ext_resource type="Texture2D" uid="uid://bkquthck5o5sq" path="res://Assets/Sprites/Entities/Props/Prop6.png" id="22_hkman"]
+[ext_resource type="Texture2D" uid="uid://7w1us52d03lk" path="res://Assets/Sprites/Entities/Props/Prop6.png" id="22_hkman"]
 [ext_resource type="PackedScene" uid="uid://nquey6f2ob44" path="res://Scenes/Preview/CoinPreview.tscn" id="23_hkman"]
-[ext_resource type="Texture2D" uid="uid://c8qdejopayvw7" path="res://Assets/Sprites/Tiles/death.png" id="24_hkman"]
+[ext_resource type="PackedScene" uid="uid://bgy7bisua1v0q" path="res://Scenes/Entities/Checkpoint.tscn" id="23_kwx3m"]
+[ext_resource type="PackedScene" uid="uid://bfjbmr71i67hr" path="res://Scenes/Preview/CheckpointPreview.tscn" id="24_gauhj"]
+[ext_resource type="Texture2D" uid="uid://bfihlk8cogb0q" path="res://Assets/Sprites/Tiles/death.png" id="24_hkman"]
 [ext_resource type="Texture2D" uid="uid://b2vvvjppl2cs4" path="res://Assets/Sprites/Tiles/BedrockCorner.PNG" id="31_gx8tr"]
 [ext_resource type="Texture2D" uid="uid://ctyx5efbqexfy" path="res://Assets/Sprites/Tiles/BedrockWall.PNG" id="32_kwx3m"]
 [ext_resource type="Texture2D" uid="uid://66t5crfub0ll" path="res://Assets/Sprites/UI/Delete.png" id="32_ldrp4"]
@@ -138,6 +140,11 @@ scenes/2/scene = ExtResource("23_hkman")
 resource_name = "MovingPlatform"
 scenes/1/scene = ExtResource("19_yoa8o")
 scenes/2/scene = ExtResource("20_4pytx")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_sty8l"]
+resource_name = "Checkpoint"
+scenes/1/scene = ExtResource("23_kwx3m")
+scenes/2/scene = ExtResource("24_gauhj")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_38lp2"]
 texture = ExtResource("24_hkman")
@@ -466,4 +473,5 @@ sources/604 = SubResource("TileSetAtlasSource_eqdrb")
 sources/507 = SubResource("TileSetScenesCollectionSource_6ti6x")
 sources/505 = SubResource("TileSetScenesCollectionSource_flggt")
 sources/605 = SubResource("TileSetAtlasSource_yoa8o")
+sources/508 = SubResource("TileSetScenesCollectionSource_sty8l")
 sources/9997 = SubResource("TileSetAtlasSource_gauhj")

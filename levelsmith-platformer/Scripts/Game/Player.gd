@@ -8,6 +8,17 @@ enum WallDirection {
 	NONE
 }
 
+enum PlayerState {
+	GROUNDED,
+	JUMPING,
+	SLIDING,
+	BOUNCING,
+	VICTORY,
+	DEAD
+}
+
+var currentState : PlayerState = PlayerState.JUMPING;
+
 # The player settings that can be changed in editor
 @export var groundSpeed : float = 1.0;
 @export var baseAcceleration : float = 1.0;
@@ -89,8 +100,6 @@ var isJumping : bool = false;
 var jumpAnimStarted : bool = false;
 var fallAnimStarted : bool = false;
 
-var isDead : bool = false;
-
 ## Runs once on instantiation
 func _ready() -> void:
 	enemyBounceCollision.body_entered.connect(detect_enemy_bounce);
@@ -125,7 +134,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if (check_out_of_bounds()):
 		return;
-	if isDead:
+	if currentState == PlayerState.DEAD || currentState == PlayerState.VICTORY:
 		animate();
 		return;
 	justWallJumped = false;
@@ -154,8 +163,8 @@ func _physics_process(delta: float) -> void:
 	detect_tiles();
 	# Jumping with W or Space
 	if (Input.is_action_just_pressed("jump") && !justWallJumped):
-		if (is_on_floor() || coyoteTimeLeft > 0.0 || doubleJumpAvailable):
-			if !(is_on_floor() || coyoteTimeLeft > 0.0):
+		if (currentState == PlayerState.GROUNDED || coyoteTimeLeft > 0.0 || doubleJumpAvailable):
+			if !(currentState == PlayerState.GROUNDED || coyoteTimeLeft > 0.0):
 				currentSlowdown = 1.0;
 				doubleJumpAvailable = false;
 			coyoteTimeLeft = 0;
@@ -211,6 +220,7 @@ func on_animation_finished() -> void:
 
 ## Make the player jump
 func jump() -> void:
+	currentState = PlayerState.JUMPING;
 	AudioManager.play_effect("PlayerJump");
 	velocity.y = -sqrt(jumpHeight) * 496 * currentSlowdown * sqrt(fallSpeed);
 	isJumping = true;
@@ -307,7 +317,7 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 func die() -> void:
 	health = 0;
 	AudioManager.play_effect("PlayerDeath");
-	isDead = true;
+	currentState = PlayerState.DEAD;
 
 ## Remove enemies or projectiles when no longer inside of them
 ## body: the body or area to remove from the array
@@ -381,6 +391,7 @@ func detect_tiles() -> void:
 		var collider : Object = raycast.get_collider();
 		# Moving platform
 		if collider is MovingPlatform && is_on_floor():
+			currentState = PlayerState.GROUNDED;
 			currentFriction = 1.0;
 			currentSlowdown = 1.0;
 			currentWalkingEffect = Global.WalkingEffect.GENERAL;
@@ -412,6 +423,7 @@ func detect_tiles() -> void:
 				return;
 			# Wall Slide when not on ice
 			if (rayDirection.x < 0 && Input.is_action_pressed("left") || rayDirection.x > 0 && Input.is_action_pressed("right")):
+				currentState = PlayerState.SLIDING;
 				if tileName != "ice":
 					velocity.y *= .94;
 				if tileName != "slow":
@@ -460,6 +472,8 @@ func detect_tiles() -> void:
 					velocity.y = 1000 * bounceTileHeight;
 				else:
 					jumpAnimStarted = false;
+					coyoteTime = 0.0;
+					currentState = PlayerState.BOUNCING;
 					velocity.y = -1000 * sqrt(fallSpeed) * bounceTileHeight;
 					if velocity.x > 0 && Input.is_action_pressed("left"):
 						velocity.x /= 2;
@@ -467,7 +481,7 @@ func detect_tiles() -> void:
 						velocity.x /= 2;
 
 		# Sticky Tiles
-		if (tileData && (tileData.get_custom_data("name") == "slow")):
+		elif (tileData && (tileData.get_custom_data("name") == "slow")):
 			currentWalkingEffect = Global.WalkingEffect.SLIME;
 			currentFriction = 1;
 			# Horizontal Stick
@@ -486,14 +500,15 @@ func detect_tiles() -> void:
 			#				raycast.force_raycast_update();
 			#		velocity.x = clamp(velocity.x, -trueSpeed * .5, trueSpeed * .5);
 				currentSlowdown = .5;
-		if tileName == "hazard":
+		elif tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
 			if take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"), true):
 				AudioManager.play_effect("HazardTile");
 		elif tileName == "death":
 			take_damage(maxHealth);
 		# Only downward rays should drive floor tile effects (except hazard)
-		if tileName == "hazard" || tileName == "death" || downwardsRaycasts.has(raycast):
+		elif downwardsRaycasts.has(raycast):
+			currentState = PlayerState.GROUNDED;
 			if tileName != "ice" && tileName != "slow":
 				currentWalkingEffect = Global.WalkingEffect.GENERAL;
 			if (tileData.get_custom_data("name") != "bounce" && is_on_floor()):

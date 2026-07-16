@@ -106,7 +106,7 @@ corner_radius_bottom_left = 15
 corner_detail = 17
 expand_margin_left = 5.0
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "globalSettingsButton")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "globalSettingsButton", "areaWarning")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -167,6 +167,7 @@ previewDefault = ExtResource("4_k6vji")
 favoriteEmpty = ExtResource("13_gcoc3")
 favoriteFilled = ExtResource("6_pjscj")
 globalSettingsButton = NodePath("SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox/GlobalSettingsButton")
+areaWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/LevelSizeWarning")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1764313566]
 layout_mode = 1
@@ -932,8 +933,18 @@ min_value = 2.0
 max_value = 1000.0
 value = 20.0
 
-[node name="GridButtonsSeparator" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=83740415]
+[node name="GridButtonsSeparator2" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=190389457]
 layout_mode = 2
+
+[node name="GridSettingsRow2" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=716640564]
+layout_mode = 2
+
+[node name="LevelSizeWarning" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2" unique_id=1231681259]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9895659, 0, 0.24405494, 1)
+text = "WARNING: 
+Level size over 10,000 tiles may cause performance issues."
 
 [node name="ErrorBanner" type="PanelContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1564116025]
 visible = false

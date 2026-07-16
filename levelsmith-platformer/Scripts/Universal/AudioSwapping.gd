@@ -16,10 +16,9 @@ var previewAudioPlayer : AudioStreamPlayer;
 var isPlayingPreview : bool = false;
 
 @export var audioTimeline : HSlider;
+@export var timeStampLabel : Label;
 
 var audioLength : float;
-
-var isPlaying : bool = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,6 +31,7 @@ func _ready() -> void:
 	audioTimeline.drag_ended.connect(drag_ended);
 
 func _process(delta: float) -> void:
+	timeStampLabel.text = str("%.2f" % audioTimeline.value, "/", "%.2f" % audioLength);
 	if (previewAudioPlayer.playing):
 		audioTimeline.value = previewAudioPlayer.get_playback_position();
 
@@ -45,16 +45,22 @@ func replace_audio(newAudioPath: String) -> void:
 		var audio = AudioStreamMP3.new();
 		audio = AudioStreamMP3.load_from_file(newAudioPath);
 		if (!audio):
-			PopUpManager.create_error_popup("Failure to load file", "This file could not be loaded.");
+			PopUpManager.create_error_popup("Failure to load file", "The file at " + newAudioPath + " could not be loaded.");
 			return;
 		save_mp3_stream(audio, targetFilePath + "/" + audioNameToReplace + ".mp3");
 	elif (newAudioPath.get_extension().to_lower() == "wav"):
 		var audio = AudioStreamWAV.new();
 		audio = AudioStreamWAV.load_from_file(newAudioPath);
+		if (!audio):
+			PopUpManager.create_error_popup("Failure to load file", "The file at " + newAudioPath + " could not be loaded.");
+			return;
 		audio.save_to_wav(targetFilePath + "/" + audioNameToReplace + ".wav")
 	elif (newAudioPath.get_extension().to_lower() == "ogg"):
-		#var audio = AudioStreamOggVorbis.new();
-		#audio = AudioStreamOggVorbis.load_from_file(newAudioPath);
+		var audio = AudioStreamOggVorbis.new();
+		audio = AudioStreamOggVorbis.load_from_file(newAudioPath)
+		if (!audio):
+			PopUpManager.create_error_popup("Failure to load file", "The file at " + newAudioPath + " could not be loaded.");
+			return;
 		save_ogg_stream(newAudioPath, targetFilePath + "/" + audioNameToReplace + ".ogg");
 	else:
 		PopUpManager.create_error_popup("File type incorrect", "File must be .mp3 or .wav format.");
@@ -87,12 +93,15 @@ func preview_audio_finished() -> void:
 	if (loadedPreviewAudio):
 		previewAudioPlayer.play()
 		previewAudioPlayer.stream_paused = true;
+		isPlayingPreview = false;
 		audioTimeline.value = 0;
 
 func play_preview_audio() -> void:
-	previewAudioPlayer.stream_paused = !previewAudioPlayer.stream_paused;
+	isPlayingPreview = !isPlayingPreview
+	previewAudioPlayer.stream_paused = !isPlayingPreview;
 
 func load_preview_audio() -> void:
+	loadedPreviewAudio = null;
 	var audioPath = AudioManager.audioLibraryPath + audioNameToReplace + "/" + audioNameToReplace;
 	if (FileAccess.file_exists(audioPath + ".mp3")):
 		loadedPreviewAudio = AudioStreamMP3.new();
@@ -103,7 +112,11 @@ func load_preview_audio() -> void:
 	elif (FileAccess.file_exists(audioPath + ".ogg")):
 		loadedPreviewAudio = AudioStreamOggVorbis.new();
 		loadedPreviewAudio = AudioStreamOggVorbis.load_from_file(audioPath + ".ogg");
-	else:
+	if (loadedPreviewAudio == null):
+		loadedPreviewAudio = AudioStreamWAV.new()
+		loadedPreviewAudio = AudioStreamWAV.load_from_file(AudioManager.BACKUP_AUDIO_LIBRARY_PATH + audioNameToReplace + "/" + audioNameToReplace + ".wav");
+	elif (loadedPreviewAudio.get_length() <= 0):
+		PopUpManager.create_error_popup("Audio length is 0", "Currently loaded audio for " + audioNameToReplace + " has a length of zero. Using default instead.")
 		loadedPreviewAudio = AudioStreamWAV.new()
 		loadedPreviewAudio = AudioStreamWAV.load_from_file(AudioManager.BACKUP_AUDIO_LIBRARY_PATH + audioNameToReplace + "/" + audioNameToReplace + ".wav");
 	previewAudioPlayer.stream = loadedPreviewAudio;
@@ -117,4 +130,4 @@ func drag_started():
 func drag_ended(value_changed : bool):
 	if (value_changed):
 		previewAudioPlayer.play(audioTimeline.value);
-		previewAudioPlayer.stream_paused = true;
+		previewAudioPlayer.stream_paused = !isPlayingPreview;

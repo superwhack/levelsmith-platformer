@@ -1,13 +1,16 @@
 [gd_scene format=3 uid="uid://bgy7bisua1v0q"]
 
 [ext_resource type="Script" uid="uid://d4f5foch5t1wj" path="res://Scripts/Game/Checkpoint.gd" id="1_r2h6u"]
-[ext_resource type="Texture2D" uid="uid://cduiy45fjnhq7" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointInactive/1.png" id="1_uoa2o"]
+[ext_resource type="Texture2D" uid="uid://c0hd1afc8v8o7" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointInactive/1.png" id="1_uoa2o"]
+[ext_resource type="Texture2D" uid="uid://cbgaacvmg5f6g" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointActive/1.png" id="2_pxw8a"]
+[ext_resource type="Texture2D" uid="uid://ccn1f7wafks5i" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointCollected/1.png" id="3_eilgd"]
+[ext_resource type="Texture2D" uid="uid://bqpkghjd8okoy" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointCollected/2.png" id="4_2lwj2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_km8ha"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_uoa2o")
+"texture": ExtResource("2_pxw8a")
 }],
 "loop": 1,
 "name": &"CheckpointActive",
@@ -15,7 +18,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_uoa2o")
+"texture": ExtResource("3_eilgd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2lwj2")
 }],
 "loop": 1,
 "name": &"CheckpointCollected",
@@ -24,9 +30,6 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_uoa2o")
-}, {
-"duration": 1.0,
-"texture": null
 }],
 "loop": 1,
 "name": &"CheckpointInactive",
@@ -42,7 +45,7 @@ animatedSprite = NodePath("AnimatedSprite2D")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1306995960]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_km8ha")
-animation = &"CheckpointInactive"
+animation = &"CheckpointActive"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1447870866]
 scale = Vector2(6.4, 6.4)

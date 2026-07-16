@@ -39,6 +39,7 @@ var stationaryEnemyAnimations : Array[String] = ["StationaryIdle", "StationaryDe
 var patrollingEnemyAnimations : Array[String] = ["PatrolWalk", "PatrolDeath"];
 var flyingEnemyAnimations : Array[String] = ["FlyMove", "FlyDeath"];
 var shootingEnemyAnimations : Array[String] = ["EnemyShoot", "ShootIdle", "ShootDeath"];
+var checkpointAnimations : Array[String] = ["CheckpointInactive", "CheckpointCollected", "CheckpointActive"];
 
 const ANIMATION_LENGTH_LIMIT : int = 60;
 

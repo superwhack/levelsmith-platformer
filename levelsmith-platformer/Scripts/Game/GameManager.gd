@@ -44,6 +44,7 @@ var totalCoins : int = 0
 # Player and its position
 var player : CharacterBody2D;
 var playerStartingPosition : Vector2;
+var playerCheckpointPosition := Vector2(-1, -1);
 
 # Reference to the tile set
 var tileMap : TileMapLayer;
@@ -88,6 +89,11 @@ func freeze(locked: bool) -> void:
 		process_mode = Node.PROCESS_MODE_DISABLED;
 	else:
 		process_mode = Node.PROCESS_MODE_INHERIT;
+
+func full_restart() -> void:
+	playerCheckpointPosition = Vector2(-1, -1);
+	await reset();
+
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
 	pauseButton.show();
@@ -146,9 +152,17 @@ func start() -> void:
 	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+	
+	# Set player position to the checkpoint
+	if playerCheckpointPosition != Vector2(-1, -1):
+		for node in tileMap.get_children():
+			if (node.global_position - Vector2(1, 0)) == playerCheckpointPosition:
+				node.animatedSprite.play("CheckpointActive");
+		player.global_position = playerCheckpointPosition;
+	else:
+		testingTime = 0.0;
 
 	# Start level timer
-	testingTime = 0.0;
 	timerRunning = true;
 	timerLabel.show();
 	update_timer(timerLabel);
@@ -159,12 +173,14 @@ func start() -> void:
 func _ready() -> void:
 	Global.death.connect(reset);
 	Global.complete.connect(level_complete);
+	Global.checkpointCollected.connect(collect_checkpoint);
 	Global.onCoinCollected.connect(_on_coin_collected);
-	resetButton.pressed.connect(reset);
+	resetButton.pressed.connect(full_restart);
 	pauseButton.pressed.connect(pause);
 	resumeButton.pressed.connect(pause);
 	replayButton.pressed.connect(replay_level);
 	editorButton.pressed.connect(return_to_editor);
+
 
 func _process(delta: float) -> void:
 	if timerRunning:
@@ -183,6 +199,9 @@ func update_coin_counter(label: RichTextLabel) -> void:
 	if totalCoins > 0:
 		label.append_text("%02d" % [coinCount])
 
+func collect_checkpoint(newSpawn: Vector2) -> void:
+	playerCheckpointPosition = newSpawn;
+	
 ## Prints the final completion time and stops the level timer
 func print_level_completion_time() -> void:
 	timerRunning = false;
@@ -233,4 +252,4 @@ func replay_level() -> void:
 	AudioManager.play_music("LevelMusic");
 	get_tree().paused = false;
 	winScreen.hide();
-	reset();
+	full_restart();

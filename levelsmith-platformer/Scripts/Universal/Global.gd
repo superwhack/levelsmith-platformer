@@ -6,6 +6,7 @@ signal reload;
 signal complete;
 signal levelCreated;
 signal onCoinCollected;
+signal checkpointCollected;
 
 # Tile size
 const TILE_SIZE : int = 128;
@@ -73,6 +74,7 @@ enum EntityType {
 	STATIONARY = 505, 
 	COIN = 506,
 	MOVING_PLATFORM = 507,
+	CHECKPOINT = 508,
 	PROP1 = 600,
 	PROP2 = 601,
 	PROP3 = 602,

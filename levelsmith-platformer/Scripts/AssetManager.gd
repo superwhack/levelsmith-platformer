@@ -316,6 +316,8 @@ func create_file_tree() -> void:
 		dir.make_dir_recursive(filePath + "/Animations/ShootingEnemy/" + animation);
 	for animation: String in animationSwapping.flyingEnemyAnimations:
 		dir.make_dir_recursive(filePath + "/Animations/FlyingEnemy/" + animation);
+	for animation: String in animationSwapping.checkpointAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/Checkpoint/" + animation);
 	# TODO: Add folders for audio
 	for audio: String in audioSwapping.audioTypes:
 		dir.make_dir_recursive(filePath + "/Audio/" + audio);

@@ -13,6 +13,9 @@ extends Resource;
 # Initial progress along movement when beginning
 @export var progress : int;
 
+# Delay, in seconds, when the platform reaches the end of the path before turning back
+@export var delay : float;
+
 @export var easing : bool;
 @export var momentum : bool;
 @export var visible : bool;

@@ -23,6 +23,8 @@ func _process(_delta: float) -> void:
 	if (isTextureUpdating): 
 		if(isEntity && entityName != ""):
 			var templateAnimation : AnimatedSprite2D = AnimationManager.get(entityName + "TemplateSprite");
+			#if entityName == "checkpoint":
+			#	print(templateAnimation.animation);
 			image.texture = templateAnimation.sprite_frames.get_frame_texture(templateAnimation.animation, 0);
 		else:
 			image.texture = tileSet.get_source(thisItemID).texture;

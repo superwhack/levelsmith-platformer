@@ -31,7 +31,8 @@ func _ready() -> void:
 	audioTimeline.drag_ended.connect(drag_ended);
 
 func _process(delta: float) -> void:
-	timeStampLabel.text = str("%.2f" % audioTimeline.value, "/", "%.2f" % audioLength);
+	timeStampLabel.text = str(get_converted_time(audioTimeline.value), "/", get_converted_time(audioLength));
+	#timeStampLabel.text = str("%.2f" % audioTimeline.value, "/", "%.2f" % audioLength);
 	if (previewAudioPlayer.playing):
 		audioTimeline.value = previewAudioPlayer.get_playback_position();
 
@@ -131,3 +132,11 @@ func drag_ended(value_changed : bool):
 	if (value_changed):
 		previewAudioPlayer.play(audioTimeline.value);
 		previewAudioPlayer.stream_paused = !isPlayingPreview;
+
+func get_converted_time(time : float) -> String:
+	var minutes : int = floori(time / 60.0);
+	time -= (minutes * 60.0);
+	var seconds : int = floori(time);
+	time -= seconds;
+	var milliseconds = time*100;
+	return "%02d:%02d:%02d" % [minutes, seconds, milliseconds];

@@ -476,6 +476,10 @@ toolManager = NodePath("../ToolManager")
 editorManager = NodePath("..")
 
 [node name="ScreenshotViewport" type="SubViewport" parent="." unique_id=1948037548]
+disable_3d = true
+msaa_2d = 1
+size = Vector2i(1920, 1080)
+render_target_update_mode = 0
 
 [node name="LevelScreenshot" type="Camera2D" parent="ScreenshotViewport" unique_id=1423987778 node_paths=PackedStringArray("screenshotViewport")]
 enabled = false

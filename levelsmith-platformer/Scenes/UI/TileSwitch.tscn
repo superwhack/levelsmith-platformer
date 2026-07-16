@@ -166,6 +166,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 tooltip_text = "Entities/Props"
+focus_mode = 0
 selected = 0
 item_count = 2
 popup/item_0/text = "Entities"

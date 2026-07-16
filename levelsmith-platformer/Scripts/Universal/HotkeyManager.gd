@@ -27,7 +27,6 @@ func _unhandled_key_input(event : InputEvent) -> void:
 		editorManager.change_current_hotbar(Global.HotbarState.TILES);
 	elif event.is_action_pressed("cursor-tool"):
 		toolManager.change_tool(Global.Tool.CURSOR);
-		
 		# Selected id is 0 for entities and 1 for props;
 		var dropdownState = tileSwitch.entityPropDropdown.get_selected_id();
 		editorManager.change_current_hotbar(dropdownState + 1);

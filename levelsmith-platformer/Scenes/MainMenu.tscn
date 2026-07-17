@@ -5,23 +5,26 @@
 [ext_resource type="PackedScene" uid="uid://cv3y1gdfsbknd" path="res://Scenes/UI/LevelListItem.tscn" id="3_07k0b"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="5_h35r6"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
-[ext_resource type="Texture2D" uid="uid://b2cq1omppx5oc" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
+[ext_resource type="Texture2D" uid="uid://coe3rcn2twg1q" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
 [ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
-[ext_resource type="Texture2D" uid="uid://cfquh63xtefvq" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
-[ext_resource type="Texture2D" uid="uid://b8wom58cur7st" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
-[ext_resource type="Texture2D" uid="uid://bnmf8k55ql46e" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
-[ext_resource type="Texture2D" uid="uid://hom06f32fuun" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
+[ext_resource type="Texture2D" uid="uid://bwp7ms2ro7qbc" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
+[ext_resource type="Texture2D" uid="uid://dxd7oevrv4e7c" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
+[ext_resource type="Texture2D" uid="uid://dryfk84nu1yv1" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
+[ext_resource type="Texture2D" uid="uid://dodrkydpe4b04" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
+[ext_resource type="Texture2D" uid="uid://c1dmr6053ybf4" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--group.png" id="15_5hdia"]
 [ext_resource type="Texture2D" uid="uid://w64y47vwrufu" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
-[ext_resource type="Texture2D" uid="uid://c0lyraj4k064w" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
-[ext_resource type="Texture2D" uid="uid://db10ps4ripfsu" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
-[ext_resource type="Texture2D" uid="uid://vc233h53hug6" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check-circle.png" id="16_65hh5"]
-[ext_resource type="Texture2D" uid="uid://df52m82do02yp" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
-[ext_resource type="Texture2D" uid="uid://dakob0sebk5mo" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
-[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
-[ext_resource type="Texture2D" uid="uid://nwtxmk18ptg6" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
-[ext_resource type="Texture2D" uid="uid://bo1m348j85vww" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
-[ext_resource type="Texture2D" uid="uid://bitxf60q1d4sd" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
+[ext_resource type="Texture2D" uid="uid://buv4gfuc3o66v" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
+[ext_resource type="Texture2D" uid="uid://dnlgeapuusb7p" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://bru63ejw0q2j4" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check-circle.png" id="16_65hh5"]
+[ext_resource type="Texture2D" uid="uid://qlne6c3yxaff" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
+[ext_resource type="Texture2D" uid="uid://1glcsot8n2b" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
+[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
+[ext_resource type="Texture2D" uid="uid://bjepls0slldfm" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
+[ext_resource type="Texture2D" uid="uid://bbn361u6ti6j8" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
+[ext_resource type="Texture2D" uid="uid://b8oh8bg85bfsn" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
+[ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="21_leunp"]
+[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="22_h1v62"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -109,6 +112,11 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5bsrg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_leunp"]
+outline_size = 2
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pjscj"]
 bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
 border_width_left = 2
@@ -124,7 +132,7 @@ corner_radius_bottom_left = 15
 corner_detail = 17
 expand_margin_left = 5.0
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "globalSettingsButton", "areaWarning")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonCredits", "buttonCloseCredits", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "overlayCredits", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "globalSettingsButton", "areaWarning")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -137,6 +145,8 @@ buttonNewLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane
 buttonImportLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/ImportLevelButton")
 buttonLoadExample = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton")
 buttonQuit = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton")
+buttonCredits = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin/CreditsButton")
+buttonCloseCredits = NodePath("CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer/CloseButton")
 buttonOpenLevelFolder = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton")
 buttonPlayLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton")
 buttonEditLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton")
@@ -146,6 +156,7 @@ buttonFavoriteLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/Cen
 overlayNewLevel = NodePath("NewLevelOverlay")
 overlayImportLevel = NodePath("ImportLevelOverlay")
 overlayDuplicateLevel = NodePath("DuplicateLevelOverlay")
+overlayCredits = NodePath("CreditsScreen")
 buttonNewLevelCreate = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow/CreateLevelButton")
 buttonNewLevelCancel = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow/CancelButton")
 fieldNewLevelName = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn/LevelNameInput")
@@ -479,7 +490,53 @@ theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 theme_override_font_sizes/font_size = 12
 text = "Quit to desktop"
 
-[node name="Control" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow" unique_id=61286499]
+[node name="Spacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow" unique_id=1739506423]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CreditsButtonMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow" unique_id=1421721657]
+layout_mode = 2
+theme_override_constants/margin_top = 35
+
+[node name="CreditsButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin" unique_id=1685499929]
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+
+[node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin/CreditsButton" unique_id=1845059763]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ContentRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin/CreditsButton/ContentMargin" unique_id=1798955562]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin/CreditsButton/ContentMargin/ContentRow" unique_id=633321651]
+layout_mode = 2
+texture = ExtResource("15_5hdia")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextContainer" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin/CreditsButton/ContentMargin/ContentRow" unique_id=1660222775]
+layout_mode = 2
+
+[node name="ExitTile" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin/CreditsButton/ContentMargin/ContentRow/TextContainer" unique_id=2087222592]
+layout_mode = 2
+text = "Credits"
+
+[node name="ExitSubtext" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin/CreditsButton/ContentMargin/ContentRow/TextContainer" unique_id=739170675]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
+theme_override_font_sizes/font_size = 12
+text = "View Credits"
+
+[node name="Spacer2" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow" unique_id=61286499]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -1076,6 +1133,286 @@ layout_mode = 2
 focus_next = NodePath("../../../LevelNameAuthorRow/InputsColumn/LevelNameInput")
 text = "Cancel
 "
+
+[node name="CreditsScreen" type="ColorRect" parent="." unique_id=1498871446]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0885599, 0.0885599, 0.0885599, 0.6156863)
+
+[node name="MainMargin" type="MarginContainer" parent="CreditsScreen" unique_id=944043230]
+self_modulate = Color(1, 1, 1, 0.7882353)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -325.0
+offset_top = -394.0
+offset_right = 325.0
+offset_bottom = 394.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsPanel" type="PanelContainer" parent="CreditsScreen/MainMargin" unique_id=1418638778]
+custom_minimum_size = Vector2(650, 0)
+custom_maximum_size = Vector2(650, -1)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("21_leunp")
+
+[node name="BorderMargin" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel" unique_id=751412211]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="SettingsBox" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin" unique_id=1921331690]
+custom_maximum_size = Vector2(610, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HeaderBlock" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox" unique_id=1151281614]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock" unique_id=107860495]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1099196999]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Credits"
+
+[node name="Gap" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1357149252]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1630541076]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5bsrg")
+icon_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer/CloseButton" unique_id=152222314]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer/CloseButton/MarginContainer" unique_id=35835446]
+layout_mode = 2
+texture = ExtResource("22_h1v62")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="CloseSizer" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1181072508]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="HeaderLine" type="HSeparator" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock" unique_id=711346951]
+layout_mode = 2
+
+[node name="HeaderSpacer" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock" unique_id=1036316878]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox" unique_id=199504559]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/scrollbar_h_separation = 15
+
+[node name="LevelsmithLabsContainer" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer" unique_id=1990249419]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LevelsmithLabel" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer" unique_id=717012625]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Levelsmith Labs"
+
+[node name="HSeparator" type="HSeparator" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer" unique_id=770257698]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer" unique_id=624662533]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="LevelsmithCredits" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer" unique_id=756940201]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1685031288]
+layout_mode = 2
+
+[node name="FounderHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=666834071]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/FounderHBox" unique_id=41720738]
+layout_mode = 2
+text = "Founder"
+label_settings = SubResource("LabelSettings_leunp")
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/FounderHBox" unique_id=1116700557]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Sten" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/FounderHBox" unique_id=1231278089]
+layout_mode = 2
+text = "Sten McKinzie"
+
+[node name="ProdHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=93215346]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/ProdHBox" unique_id=394756048]
+layout_mode = 2
+text = "Producer"
+label_settings = SubResource("LabelSettings_leunp")
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/ProdHBox" unique_id=1005259792]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Bee" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/ProdHBox" unique_id=982494287]
+layout_mode = 2
+text = "Bee Morse"
+
+[node name="TLeadHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=883188484]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TLeadHBox" unique_id=1541750044]
+layout_mode = 2
+text = "Tech Lead"
+label_settings = SubResource("LabelSettings_leunp")
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TLeadHBox" unique_id=941000762]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Theo" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TLeadHBox" unique_id=1056216440]
+layout_mode = 2
+text = "Theo Ruefli"
+
+[node name="DLeadHbox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1036020980]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DLeadHbox" unique_id=997745436]
+layout_mode = 2
+text = "Design Lead"
+label_settings = SubResource("LabelSettings_leunp")
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DLeadHbox" unique_id=1533206148]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Chris" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DLeadHbox" unique_id=705288620]
+layout_mode = 2
+text = "Chris Hamam"
+
+[node name="TTeamHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1981939656]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox" unique_id=714566709]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Tech Team"
+label_settings = SubResource("LabelSettings_leunp")
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox" unique_id=100320397]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox" unique_id=1970861978]
+layout_mode = 2
+
+[node name="Zay" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox/VBoxContainer" unique_id=915437010]
+layout_mode = 2
+text = "Zay Arriaga"
+horizontal_alignment = 2
+
+[node name="Ben" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox/VBoxContainer" unique_id=422670717]
+layout_mode = 2
+text = "Ben Haines"
+horizontal_alignment = 2
+
+[node name="Andrew" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox/VBoxContainer" unique_id=902162387]
+layout_mode = 2
+text = "Andrew S. Hernandez"
+horizontal_alignment = 2
+
+[node name="Steven" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox/VBoxContainer" unique_id=1395310045]
+layout_mode = 2
+text = "Steven Poore"
+horizontal_alignment = 2
+
+[node name="Jack" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox/VBoxContainer" unique_id=1144607638]
+layout_mode = 2
+text = "Jack Xue"
+horizontal_alignment = 2
+
+[node name="DTeamHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=968538111]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox" unique_id=389352308]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Design Team"
+label_settings = SubResource("LabelSettings_leunp")
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox" unique_id=1426992507]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox" unique_id=414965327]
+layout_mode = 2
+
+[node name="Evan" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox/VBoxContainer" unique_id=1865913976]
+layout_mode = 2
+text = "Evan Calkins"
+horizontal_alignment = 2
+
+[node name="Tyler" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox/VBoxContainer" unique_id=1240641812]
+layout_mode = 2
+text = "Tyler Christ"
+horizontal_alignment = 2
+
+[node name="Ziad" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox/VBoxContainer" unique_id=1879614601]
+layout_mode = 2
+text = "Ziad Jaafar"
+horizontal_alignment = 2
+
+[node name="Deacon" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox/VBoxContainer" unique_id=588481653]
+layout_mode = 2
+text = "Deacon Mansfield"
+horizontal_alignment = 2
+
+[node name="FooterMargin" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox" unique_id=1609738927]
+layout_mode = 2
+theme_override_constants/margin_top = 90
+theme_override_constants/margin_bottom = 0
+
+[node name="FooterRow" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/FooterMargin" unique_id=218872340]
+layout_mode = 2
+layout_direction = 3
+
+[node name="CloseButtonMargin" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/FooterMargin/FooterRow" unique_id=357794795]
+layout_mode = 2
+theme_override_constants/margin_right = 10
 
 [node name="DuplicateLevelOverlay" type="ColorRect" parent="." unique_id=918952892]
 visible = false

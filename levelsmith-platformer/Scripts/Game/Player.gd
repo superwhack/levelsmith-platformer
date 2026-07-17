@@ -16,7 +16,6 @@ enum PlayerState {
 	FALLING,
 	SLIDING,
 	BOUNCING,
-	VICTORY,
 	DEAD
 }
 
@@ -143,8 +142,6 @@ func _physics_process(delta: float) -> void:
 	if currentState == PlayerState.DEAD:
 		animate();
 		return;
-	if currentState == PlayerState.VICTORY:
-		victory = true;
 	if (currentState == PlayerState.BOUNCING || PlayerState.JUMPING) && velocity.y > 0:
 		currentState = PlayerState.FALLING;
 	
@@ -185,10 +182,9 @@ func _physics_process(delta: float) -> void:
 	
 	if health > 0:
 		move_and_slide();
-	AudioManager.play_effect_walking(currentWalkingEffect);
-	if victory:
-		currentState = PlayerState.VICTORY;
-	animate();
+	if !victory:
+		AudioManager.play_effect_walking(currentWalkingEffect);
+		animate();
 
 ## Animates the player while processing
 func animate() -> void:
@@ -227,8 +223,6 @@ func animate() -> void:
 	elif (currentState == PlayerState.RUNNING):
 		animatedSprites.animation = "PlayerRun";
 		fallAnimStarted = false;
-	elif (currentState == PlayerState.VICTORY):
-		animatedSprites.animation = "PlayerVictory";
 	else:
 		animatedSprites.animation = "PlayerIdle";
 		fallAnimStarted = false;
@@ -575,8 +569,12 @@ func check_out_of_bounds() -> bool:
 	return false;
 
 ## Change the player's state to victory 
-func player_victory() -> void:
-	currentState = PlayerState.VICTORY;
+func play_victory() -> void:
+	if (victory): 
+		return;
+	victory = true;
+	AudioManager.play_effect("Victory");
+	animatedSprites.play("PlayerVictory");
 
 ## Applies the player selected player movement preset to the player
 func apply_preset(preset: PlayerMovementPreset) -> void:

@@ -222,14 +222,12 @@ func level_complete() -> void:
 	# If the goal's already been reached, don't run this again
 	if goalReached:
 		return;
-	player.player_victory();
 	AudioManager.pause_music(true);
 	AudioManager.reset_audio();
-	AudioManager.play_effect("Victory");
 	goalReached = true;
 	print_level_completion_time();
 	pauseButton.hide();
-	#get_tree().paused = true;
+	get_tree().paused = true;
 	update_coin_counter(winCoinLabel);
 	update_timer(winTimeLabel);
 	timerLabel.hide();

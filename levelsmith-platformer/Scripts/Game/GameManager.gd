@@ -229,7 +229,7 @@ func level_complete() -> void:
 	goalReached = true;
 	print_level_completion_time();
 	pauseButton.hide();
-	get_tree().paused = true;
+	#get_tree().paused = true;
 	update_coin_counter(winCoinLabel);
 	update_timer(winTimeLabel);
 	timerLabel.hide();

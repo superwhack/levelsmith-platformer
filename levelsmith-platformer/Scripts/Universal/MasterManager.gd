@@ -256,6 +256,7 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 ## Swap to edit state
 func edit() -> void:
 	get_tree().set_auto_accept_quit(false);
+	gameManager.pausable = false;
 	await get_tree().process_frame;
 	await screen_wipe_in();
 	AudioManager.reset_audio();

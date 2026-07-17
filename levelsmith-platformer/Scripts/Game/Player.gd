@@ -528,6 +528,8 @@ func detect_tiles() -> void:
 			#				position += Vector2(0, 1);
 			#				raycast.force_raycast_update();
 			#		velocity.x = clamp(velocity.x, -trueSpeed * .5, trueSpeed * .5);
+				if currentState != PlayerState.JUMPING && currentState != PlayerState.BOUNCING:
+					currentState = PlayerState.GROUNDED
 				currentSlowdown = .5;
 		elif tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;

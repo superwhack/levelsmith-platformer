@@ -389,6 +389,7 @@ func open_global_settings_menu() -> void:
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
+	globalSettingsMenu.process_mode = Node.PROCESS_MODE_WHEN_PAUSED;
 	globalSettingsMenu.show();
 
 ## Closes the settings menu
@@ -397,3 +398,4 @@ func close_global_settings_menu() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	previewTileMap.show();
 	globalSettingsMenu.hide();
+	globalSettingsMenu.process_mode = Node.PROCESS_MODE_DISABLED;

@@ -166,6 +166,7 @@ func open_level_settings_menu() -> void:
 	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
 	iconManager.previewIcon.hide();
+	levelSettingsMenu.process_mode = Node.PROCESS_MODE_WHEN_PAUSED;
 	levelSettingsMenu.show();
 
 ## Opens the asset manager
@@ -176,6 +177,7 @@ func open_asset_manager() -> void:
 	previewTileMap.hide();
 	iconManager.previewIcon.hide();
 	assetManager.audioSwapping.preview_audio_finished();
+	assetManager.process_mode = Node.PROCESS_MODE_WHEN_PAUSED;
 	assetManager.show();
 
 ## Closes the asset manager
@@ -188,6 +190,8 @@ func close_asset_manager() -> void:
 	assetManager.animationSwapping.playingAnimation = false;
 	assetManager.audioSwapping.previewAudioPlayer.stop()
 	AnimationManager.refresh_animations();
+	assetManager.process_mode = Node.PROCESS_MODE_DISABLED;
+
 
 ## Closes the settings menu
 func close_level_settings_menu() -> void:
@@ -196,3 +200,4 @@ func close_level_settings_menu() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	previewTileMap.show();
 	levelSettingsMenu.hide();
+	levelSettingsMenu.process_mode = Node.PROCESS_MODE_DISABLED;

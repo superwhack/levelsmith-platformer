@@ -34,7 +34,7 @@ expand_margin_top = 2.0
 expand_margin_bottom = 3.0
 
 [node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imageSwapping", "animationSwapping", "audioSwapping", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "audioTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "refreshAllButton")]
-process_mode = 2
+process_mode = 4
 self_modulate = Color(0, 0, 0, 0.3764706)
 anchors_preset = 15
 anchor_right = 1.0

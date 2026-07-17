@@ -44,9 +44,9 @@ func _on_drag() -> void:
 	cameraManager.deadzone = cameraDeadzone.value;
 	cameraManager.cameraPlayClamp = cameraClamp.value;
 
-#func _input( event: InputEvent ) -> void:
-	#if ( event.is_action_pressed("ui_close_dialog") ):
-		#editorManager.close_level_settings_menu();
+func _input( event: InputEvent ) -> void:
+	if ( event.is_action_pressed("ui_close_dialog") ):
+		editorManager.close_level_settings_menu();
 
 ## Update sliders visually
 func update_sliders() -> void:

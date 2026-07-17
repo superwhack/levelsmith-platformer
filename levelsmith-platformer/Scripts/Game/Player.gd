@@ -190,7 +190,7 @@ func _physics_process(delta: float) -> void:
 
 ## Animates the player while processing
 func animate() -> void:
-	if !is_on_floor():
+	if !is_on_floor() && currentState != PlayerState.SLIDING:
 		if Input.is_action_pressed("left") || Input.is_action_pressed("right"):
 			animatedSprites.flip_h = velocity.x < 0;
 	elif !inputDisabled:

@@ -35,6 +35,16 @@ func _process(delta: float) -> void:
 	#timeStampLabel.text = str("%.2f" % audioTimeline.value, "/", "%.2f" % audioLength);
 	if (previewAudioPlayer.playing):
 		audioTimeline.value = previewAudioPlayer.get_playback_position();
+	
+	# Hotkeys	
+	if ( Input.is_action_just_pressed( "UI-AssetMgr-accept" ) ):
+		play_preview_audio();
+	if ( Input.is_action_just_pressed( "UI-AssetMgr-deny" ) ):
+		preview_audio_finished();
+	if ( Input.is_action_just_pressed( "right" ) ):
+		audioTimeline.value += 0.02;
+	if ( Input.is_action_just_pressed( "left" ) ):
+		audioTimeline.value -= 0.02;
 
 ## Replaces the currently previewed audio  with one chosen via file dialog.
 ## newAudioPath: The file path of the new audio replacing the old one.x 

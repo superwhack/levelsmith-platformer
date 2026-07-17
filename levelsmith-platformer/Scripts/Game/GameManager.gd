@@ -258,3 +258,4 @@ func replay_level() -> void:
 
 func goal_reached() -> void:
 	bottomScreenGroup.hide();
+	timerRunning = false;

@@ -83,10 +83,10 @@ func create_delete_popup(callback: Callable, levelName : String = "LEVEL") -> vo
 	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
 	
 	newPopUp.set_title("Delete \"" + levelName + "\"?")
-	newPopUp.set_body_text("You are about to delete your \"" + levelName + "\". Are you sure you wish to proceed?");
+	newPopUp.set_body_text("You are about to delete your \"" + levelName + "\" level. Are you sure you wish to proceed?");
 	newPopUp.set_reset_callback(callback);
 	newPopUp.resetButton.show();
-	newPopUp.resetButton.text = "DELETE";
+	newPopUp.resetButton.text = "Delete";
 	newPopUp.closeButton.text = "Cancel";
 	add_child(newPopUp);
 	currentPopUp = newPopUp;

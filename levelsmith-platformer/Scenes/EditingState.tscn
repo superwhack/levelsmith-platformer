@@ -65,11 +65,12 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0vixy"]
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "iconManager", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "levelSettingsMenu", "levelSettingsButton", "globalSettingsButton", "customCursorManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "iconManager", "screenshotViewport", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "levelSettingsMenu", "levelSettingsButton", "globalSettingsButton", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
 iconManager = NodePath("IconManager")
-levelScreenshotCamera = NodePath("LevelScreenshot")
+screenshotViewport = NodePath("ScreenshotViewport")
+levelScreenshotCamera = NodePath("ScreenshotViewport/LevelScreenshot")
 screenUI = NodePath("ScreenUI")
 tileMap = NodePath("Tiles")
 previewTileMap = NodePath("PreviewTile")
@@ -488,8 +489,15 @@ tileMap = NodePath("../Tiles")
 toolManager = NodePath("../ToolManager")
 editorManager = NodePath("..")
 
-[node name="LevelScreenshot" type="Camera2D" parent="." unique_id=1423987778]
+[node name="ScreenshotViewport" type="SubViewport" parent="." unique_id=1948037548]
+disable_3d = true
+msaa_2d = 1
+size = Vector2i(1920, 1080)
+render_target_update_mode = 0
+
+[node name="LevelScreenshot" type="Camera2D" parent="ScreenshotViewport" unique_id=1423987778 node_paths=PackedStringArray("screenshotViewport")]
 enabled = false
 script = ExtResource("25_fnjh2")
+screenshotViewport = NodePath("..")
 
 [editable path="CanvasLayer/AssetManager"]

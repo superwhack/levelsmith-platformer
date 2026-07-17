@@ -450,7 +450,7 @@ func detect_tiles() -> void:
 			if tileName == "bedrock" || tileName == "oneway":
 				return;
 			# Wall Slide when not on ice
-			if (rayDirection.x < 0 && (Input.is_action_pressed("left") && !victory) || rayDirection.x > 0 && Input.is_action_pressed("right")):
+			if ((rayDirection.x < 0 && (Input.is_action_pressed("left") && !victory) || rayDirection.x > 0 && Input.is_action_pressed("right"))) && !is_on_floor():
 				currentState = PlayerState.SLIDING;
 				if tileName != "ice":
 					velocity.y *= .94;

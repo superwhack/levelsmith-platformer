@@ -332,15 +332,54 @@ value = 12.0
 rounded = true
 alignment = 1
 
-[node name="PlayPauseButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1544968013]
+[node name="PauseButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=530867289]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+custom_maximum_size = Vector2(48, 48)
 layout_mode = 2
-text = "Play/Pause
+
+[node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/PauseButton" unique_id=1061477833]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/PauseButton/MarginContainer" unique_id=648014023]
+custom_minimum_size = Vector2(48, 48)
+custom_maximum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("14_yswm7")
+
+[node name="PlayPauseButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1544968013]
+custom_minimum_size = Vector2(48, 48)
+custom_maximum_size = Vector2(48, 48)
+layout_mode = 2
+text = "
 "
 
-[node name="StopButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=284005067]
+[node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/PlayPauseButton" unique_id=2146475986]
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0
+
+[node name="TextureRect" type="TextureRect" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/PlayPauseButton/MarginContainer" unique_id=1231409106]
 layout_mode = 2
-text = "Stop
-"
+texture = ExtResource("13_x8uhr")
+
+[node name="StopButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=284005067]
+custom_minimum_size = Vector2(48, 48)
+custom_maximum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/StopButton" unique_id=1178652479]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/StopButton/MarginContainer" unique_id=1782418845]
+custom_minimum_size = Vector2(48, 48)
+custom_maximum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("15_l1dbf")
 
 [node name="AudioPreview" type="Panel" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=1493625619]
 visible = false

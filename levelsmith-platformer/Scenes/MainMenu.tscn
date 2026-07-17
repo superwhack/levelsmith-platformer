@@ -762,7 +762,6 @@ theme_override_font_sizes/font_size = 12
 text = "Enter editor mode"
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=2033598074]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -959,7 +958,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2" unique_id=1382634297]
-visible = false
 layout_mode = 2
 theme = ExtResource("1_cstcu")
 theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
@@ -967,7 +965,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
 [node name="LevelSizeWarning" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/PanelContainer" unique_id=1231681259]
 layout_mode = 2
 text = "WARNING: 
-Level size over 10,000 tiles may cause performance issues."
+Level sizes over 10,000 tiles may cause performance issues."
 horizontal_alignment = 1
 
 [node name="ErrorBanner" type="PanelContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1564116025]

@@ -75,9 +75,6 @@ func _ready() -> void:
 ## Runs every frame during the editing state
 ## _delta: how much time has passed since the last frame
 func _process(_delta: float) -> void:
-	var cell = Vector2i(0, 0)
-	print(previewTileMap.get_cell_source_id(cell))
-	print(previewTileMap.get_used_cells())
 	# Record the position of the mouse on this frame
 	currentMousePosition = get_grid_mouse_position(get_global_mouse_position());
 	# Check if the tile is placeable in this spot

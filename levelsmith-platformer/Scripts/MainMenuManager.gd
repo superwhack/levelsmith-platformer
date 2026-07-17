@@ -84,7 +84,7 @@ var levelItems: Dictionary = {} # path -> item
 
 # Level size warning variables
 const MAX_LEVEL_AREA := 10000;
-@export var areaWarning : Label;
+@export var areaWarning : PanelContainer;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

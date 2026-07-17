@@ -185,7 +185,7 @@ previewDefault = ExtResource("4_k6vji")
 favoriteEmpty = ExtResource("13_gcoc3")
 favoriteFilled = ExtResource("6_pjscj")
 globalSettingsButton = NodePath("SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox/GlobalSettingsButton")
-areaWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/PanelContainer/LevelSizeWarning")
+areaWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/PanelContainer")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1764313566]
 layout_mode = 1
@@ -762,6 +762,7 @@ theme_override_font_sizes/font_size = 12
 text = "Enter editor mode"
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=2033598074]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -117,7 +117,7 @@ func try_find_player() -> void:
 ## event: the captured input event that has occurred
 func _input(event: InputEvent) -> void:
 	# Start/stop middle-click panning
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton && !Global.State.PLAY:
 		if event.button_index == MOUSE_BUTTON_MIDDLE:
 			isPanning = event.pressed;
 
@@ -209,16 +209,23 @@ func process_player_camera(snap : bool = false) -> void:
 	if cameraPlayClamp:
 		clamp_camera(levelBounds);
 
-## Adjusts camera zoom
-## zoomAmount: Zoom change amount
-func process_zoom(zoomAmount: float) -> void:
+## Adjusts the camera zoom dependent on the direction. Zoom amount is multiplicative.
+## direction: Whether the zoom is going in or out.
+func process_zoom(direction: float) -> void:
 	# Mouse world position BEFORE zoom
 	var mouseWorldBefore : Vector2 = get_global_mouse_position();
-	
-	var newZoom : float = zoom.x + zoomAmount;
-	
+		
 	# Get the minimum zoom to fit the roaming bounds
 	var fitZoom : float = get_min_zoom_to_fit_roam();
+	
+	# Multiplies zoom by 10%
+	var mult : float = 1.1;
+	var newZoom : float = zoom.x;
+	
+	if direction > 0:
+		newZoom *= mult;
+	else:
+		newZoom /= mult;
 	
 	# clamp the zoom to either the roam bound limits (fitZoom) or the maxZoomIn
 	newZoom = clamp(newZoom, fitZoom, maxZoomIn);
@@ -248,10 +255,10 @@ func process_zoom_input() -> void:
 		return;
 	
 	if (Input.is_action_pressed("zoom_in")):
-		process_zoom(zoomSpeed / 8);
+		process_zoom(1);
 		
 	if (Input.is_action_pressed("zoom_out")):
-		process_zoom(-zoomSpeed / 8);
+		process_zoom(-1);
 	
 	if (Input.is_action_just_pressed("scroll_up")):
 		process_zoom(zoomSpeed);
@@ -262,9 +269,8 @@ func process_zoom_input() -> void:
 ## Determine the bounds of camera panning.
 ## Returns a rect of the limits of where the camera is able to go.
 func get_camera_bounds() -> Rect2:
-	# Roam marg
-	var roamMargin = roamCellCount * Global.TILE_SIZE;
-	var margin = Vector2.ONE * roamMargin;
+	# Use a third of the level bounds as the roaming margin.
+	var margin = levelBounds.size * 0.33;
 
 	# Returns roam bounds based on level bounds accurately
 	return Rect2(

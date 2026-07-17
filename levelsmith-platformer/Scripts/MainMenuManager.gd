@@ -14,6 +14,7 @@ extends Control
 @export var buttonDuplicateLevel : Button;
 @export var buttonDeleteLevel : Button;
 @export var buttonFavoriteLevel : Button;
+@onready var favoriteButtonIcon : TextureRect = buttonFavoriteLevel.get_node("MarginContainer/TextureRect");
 
 # Overlays
 @export var overlayNewLevel : ColorRect;
@@ -309,11 +310,8 @@ func _on_level_pressed(item: Node) -> void:
 
 	selectedItem = item;
 	update_metadata(item);
-	if (selectedItem.favorited):
-		buttonFavoriteLevel.icon = favoriteFilled;
-	else:
-		buttonFavoriteLevel.icon = favoriteEmpty;
-	
+
+
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
 func _on_level_deselected(item: Node) -> void:
@@ -329,6 +327,9 @@ func toggle_level_buttons() -> void:
 	buttonEditLevel.disabled = !buttonEditLevel.disabled;
 	buttonPlayLevel.disabled = !buttonPlayLevel.disabled;
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
+
+func set_favorite_button_icon(is_favorited: bool) -> void:
+	favoriteButtonIcon.texture = favoriteFilled if is_favorited else favoriteEmpty;
 
 func update_level_item(item: Node, folderName : String, levelPath : String) -> void:
 	item.levelPath = levelPath + "/";
@@ -402,10 +403,7 @@ func update_metadata(item: Node) -> void:
 		preview.texture = item.thumbnail;
 	else:
 		preview.texture = previewDefault;
-	if (item.favorited):
-		buttonFavoriteLevel.icon = favoriteFilled;
-	else:
-		buttonFavoriteLevel.icon = favoriteEmpty;
+	set_favorite_button_icon(item.favorited);
 	if (item.validated):
 		validatedCheckmark.show();
 	else:
@@ -422,7 +420,7 @@ func clear_selection() -> void:
 		objectCount.text = "";
 		version.text = "";
 		preview.texture = previewDefault;
-		buttonFavoriteLevel.icon = favoriteEmpty;
+		set_favorite_button_icon(false);
 		validatedCheckmark.hide();
 
 ## Opens OS file explorer to the users Level folder.
@@ -547,10 +545,7 @@ func favorite_current_level() -> void:
 		selectedItem.favorited
 	);
 	
-	if (selectedItem.favorited):
-		buttonFavoriteLevel.icon = favoriteFilled;
-	else:
-		buttonFavoriteLevel.icon = favoriteEmpty;
+	set_favorite_button_icon(selectedItem.favorited);
 		
 	if (selectedItem.favorited):
 		selectedItem.levelFavoriteIcon.show();

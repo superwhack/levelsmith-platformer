@@ -6,7 +6,7 @@ extends Node
 var audioNameToReplace : String;
 
 # All types of audio
-var audioTypes : Array[String] = ["BounceTile", "CoinPickup", "EnemyDie", "Shoot", "Hurt", "PlayerDie", "Jump", "Victory", "WalkingGeneral", "WalkingIce", "WalkingSlime", "LevelMusic"];
+var audioTypes : Array[String] = ["BounceTile", "CoinPickup", "EnemyDie", "Shoot", "Hurt", "PlayerDie", "Jump", "Victory", "WalkingGeneral", "WalkingIce", "WalkingSlime", "LevelMusic", "CheckpointReached"];
 
 var loadedPreviewAudio : AudioStream;
 var previewAudioPlayer : AudioStreamPlayer;
@@ -51,6 +51,8 @@ func _process(delta: float) -> void:
 func replace_audio(newAudioPath: String) -> void:
 	var targetFilePath : String = FileSearch.find_directory_by_name(audioNameToReplace);
 	var targetDirectory : DirAccess = assetManager.clear_files(audioNameToReplace);
+	print(newAudioPath);
+	print(targetFilePath);
 	# If the audio is mp3 or wav, create a copy
 	if (newAudioPath.get_extension().to_lower() == "mp3"):
 		var audio = AudioStreamMP3.new();
@@ -60,8 +62,10 @@ func replace_audio(newAudioPath: String) -> void:
 			return;
 		save_mp3_stream(audio, targetFilePath + "/" + audioNameToReplace + ".mp3");
 	elif (newAudioPath.get_extension().to_lower() == "wav"):
+		print("Wav file");
 		var audio = AudioStreamWAV.new();
 		audio = AudioStreamWAV.load_from_file(newAudioPath);
+		print(audio);
 		if (!audio):
 			PopUpManager.create_error_popup("Failure to load file", "The file at " + newAudioPath + " could not be loaded.");
 			return;

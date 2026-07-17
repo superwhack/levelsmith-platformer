@@ -61,6 +61,7 @@ func initialize_camera() -> void:
 	clamp_camera(roamBounds);
 	#print("center:", levelBounds.get_center());
 	#print("camera:", global_position);
+	#print("zoom:", zoom);
 
 ## Retrieve the level bounds and the camera roaming bounds.
 func refresh_bounds() -> void:

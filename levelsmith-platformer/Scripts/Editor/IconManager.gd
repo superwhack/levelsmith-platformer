@@ -35,7 +35,8 @@ func _ready() -> void:
 ## _delta: Time passed since last frame. Unused.
 func _process(_delta: float) -> void:
 	previewIcon.global_position = editorManager.currentMousePosition * Global.TILE_SIZE + ICON_OFFSET;
-	previewIcon.show();
+	if (!editorManager.isScreenshotting):
+		previewIcon.show();
 	
 	if (toolManager.entityManager.duplicatingResource):
 		previewIcon.texture = copyIcon;
@@ -89,6 +90,14 @@ func setup_icons() -> void:
 			# Background props are alternative indices 4 to 7.
 			var isBackground : bool = tileMap.get_cell_alternative_tile(currentPosition) > 3;
 			create_icon(currentPosition, "background" if isBackground else "foreground");
+
+## Shows the preview icon.
+func show_preview_icon() -> void:
+	previewIcon.show();
+
+## Hides the preview icon.
+func hide_preview_icon() -> void:
+	previewIcon.hide();
 
 ## Deletes all icons from the scene and clears the heap.
 func clear_icons() -> void:

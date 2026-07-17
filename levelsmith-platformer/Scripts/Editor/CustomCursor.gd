@@ -125,9 +125,20 @@ func hide_selector_frame() -> void:
 	
 	if (selectorState == SelectorState.COPYING):
 		entityHighlight.show();
+		
+## Shows the entity highlight.
+func show_entity_highlight() -> void:
+	entityHighlight.show();
+	
+## Hides the entity highlight.
+func hide_entity_highlight() -> void:
+	entityHighlight.hide();
 
 ## Updates the state of the selector frame in accordance with other actions.
 func update_selector_state() -> void:
+	if (editorManager.isScreenshotting):
+		return;
+		
 	if (!editorManager.isPlaceable): selectorState = SelectorState.INVALID;
 	elif (toolManager.isErasing): selectorState = SelectorState.ERASING;
 	elif (entityManager.duplicatingResource): 

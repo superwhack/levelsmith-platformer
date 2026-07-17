@@ -69,6 +69,8 @@ func _physics_process(delta: float) -> void:
 func move_behavior(delta: float) -> void:
 	if delayLeft > 0.0:
 		delayLeft -= delta;
+		if delayLeft <= 0.0:
+			animatedSprite.play();
 		return;
 	# Get the direction and distance of movement
 	var directionVector : Vector2 = targetPoint - global_position;
@@ -92,6 +94,8 @@ func move_behavior(delta: float) -> void:
 
 ## Switches the active destination.
 func switch_target() -> void:
+	if delay > 0:
+		animatedSprite.pause();
 	delayLeft = delay;
 	if targetPoint.distance_to(pointA) < 1.0:
 		targetPoint = pointB;

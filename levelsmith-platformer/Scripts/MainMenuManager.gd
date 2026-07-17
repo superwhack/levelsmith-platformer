@@ -106,7 +106,7 @@ func _ready() -> void:
 	buttonOpenLevelFolder.pressed.connect(open_level_folder);
 	buttonPlayLevel.pressed.connect(play_current_level);
 	buttonEditLevel.pressed.connect(edit_current_level);
-	buttonDeleteLevel.pressed.connect(delete_current_level);
+	buttonDeleteLevel.pressed.connect(open_delete_popup);
 	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
 	buttonFavoriteLevel.pressed.connect(favorite_current_level);
 	get_window().focus_entered.connect(fill_level_list);
@@ -462,6 +462,13 @@ func edit_current_level() -> void:
 
 	AudioManager.play_UI_effect("UI_Selection");
 	masterManager.load_level(selectedItem.levelPath);
+
+## Opens a delete popup when the delete button is pressed
+func open_delete_popup() -> void:
+	if (!selectedItem):
+		return;
+	
+	PopUpManager.create_delete_popup(delete_current_level, selectedItem.levelTitle.text);
 
 ## Deletes the currently selected level.
 func delete_current_level() -> void:

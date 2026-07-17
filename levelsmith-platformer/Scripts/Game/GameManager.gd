@@ -222,7 +222,6 @@ func level_complete() -> void:
 	# If the goal's already been reached, don't run this again
 	if goalReached:
 		return;
-	AudioManager.pause_music(true);
 	AudioManager.reset_audio();
 	goalReached = true;
 	print_level_completion_time();

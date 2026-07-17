@@ -26,3 +26,4 @@ func collect_checkpoint(body: Node2D) -> void:
 	if body is Player && animatedSprite.animation == "CheckpointInactive":
 		Global.checkpointCollected.emit(position);
 		animatedSprite.play("CheckpointCollected");
+		AudioManager.play_effect("Checkpoint");

@@ -83,6 +83,10 @@ var selectedItem : Control = null;
 # Dictionary of all level items. For level list filling.
 var levelItems: Dictionary = {} # path -> item
 
+# Level size warning variables
+const MAX_LEVEL_AREA := 10000;
+@export var areaWarning : PanelContainer;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	buttonNewLevel.grab_focus();
@@ -118,21 +122,22 @@ func _ready() -> void:
 	# Duplicate buttons
 	buttonDuplicateLevelConfirm.pressed.connect(duplicate_current_level);
 	buttonDuplicateLevelCancel.pressed.connect(overlay_duplicate_level_hide);
-
 	globalSettingsButton.pressed.connect(masterManager.open_global_settings_menu);
-	
 	buttonQuit.pressed.connect(exit_program);
 
+	spinBoxNewLevelX.value_changed.connect(update_level_size_warning);
+	spinBoxNewLevelY.value_changed.connect(update_level_size_warning);
 
 	var set_directory = func (directory: String) -> void:
 		fieldImportLevelPath.text = directory + "/";
 	
 	fileExplorer.dir_selected.connect(set_directory);
-	
+
 ## Functions that just make a menu appear/dissapear, used to attach the sound effects
 func overlay_new_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.show();
+	update_level_size_warning();
 	fieldNewLevelName.grab_focus();
 func overlay_new_level_hide() -> void:
 	AudioManager.play_UI_effect("UISelection");
@@ -184,6 +189,13 @@ func import_level() -> void:
 func import_cancel() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayImportLevel.hide();
+
+func update_level_size_warning(value = null) -> void:
+	var area := int(spinBoxNewLevelX.value) * int(spinBoxNewLevelY.value)
+	if area > MAX_LEVEL_AREA:
+		areaWarning.show()
+	else:
+		areaWarning.hide()
 
 ## Opens the menu for setting a name and size for the level
 func create_new_level() -> void:

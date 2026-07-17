@@ -102,6 +102,7 @@ func _input(event: InputEvent) -> void:
 
 ## Plays the screen wipe animation that covers the screen before a state transition.
 func screen_wipe_in() -> void:
+	if (loadingScreen.visible): return;
 	loadingScreen.show();
 	# Create the loading animation tween
 	loadingTween = create_tween()
@@ -111,6 +112,7 @@ func screen_wipe_in() -> void:
 
 ## Plays the screen wipe animation that reveals the destination state after loading.
 func screen_wipe_out() -> void:
+	if (!loadingScreen.visible): return;
 	# Create the loading animation tween
 	loadingTween = create_tween()
 	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 0.0, loadingTweenTime)

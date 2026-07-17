@@ -158,8 +158,8 @@ expand_mode = 3
 
 [node name="TopbarSepMargin" type="MarginContainer" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=1831943124]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_right = 10
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
 
 [node name="HomeTileSeparator" type="VSeparator" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopbarSepMargin" unique_id=1938918365]
 layout_mode = 2
@@ -204,7 +204,12 @@ layout_mode = 2
 texture = ExtResource("10_racgb")
 expand_mode = 3
 
-[node name="SavePlaySeparator" type="VSeparator" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=245140535]
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=760380530]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="SavePlaySeparator" type="VSeparator" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/MarginContainer" unique_id=245140535]
 layout_mode = 2
 
 [node name="PlayLevelButton" type="Button" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=960511629]
@@ -265,7 +270,6 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 0
 
 [node name="HomeToolSeparator" type="HSeparator" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/HomeToolSepMargin" unique_id=1868219100]
 layout_mode = 2
@@ -287,6 +291,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="SettingsGroupBottom" type="VBoxContainer" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer" unique_id=1710278780]
 layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="AssetManagerButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=293380868]
 custom_minimum_size = Vector2(60, 60)
@@ -314,6 +319,14 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 texture = ExtResource("13_hh704")
 expand_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=1266410473]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HSeparator" type="HSeparator" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/MarginContainer" unique_id=720670943]
+layout_mode = 2
 
 [node name="LevelSettingsButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=330056258]
 custom_minimum_size = Vector2(60, 60)

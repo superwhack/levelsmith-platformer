@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://dr1smfcdfn46v" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Favorite.png" id="13_gcoc3"]
 [ext_resource type="Texture2D" uid="uid://stx0om0pqx4u" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Duplicate.png" id="14_1uc6u"]
 [ext_resource type="Texture2D" uid="uid://c0phqqwjx130p" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Delete.png" id="15_0ffkm"]
-[ext_resource type="Texture2D" uid="uid://besdaccmbqkls" path="res://Assets/UserInterface/Buttons/ButtonIcons/checkMark.png" id="16_65hh5"]
+[ext_resource type="Texture2D" uid="uid://d2d5pvg1msawh" path="res://Assets/UserInterface/Buttons/ButtonIcons/checkMark.png" id="16_65hh5"]
 [ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="16_w5rev"]
 [ext_resource type="Texture2D" uid="uid://dd3080y6r8vxe" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Edit.png" id="17_34n7o"]
 [ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
@@ -67,12 +67,30 @@ thickness = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d0u6y"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yxkem"]
-bg_color = Color(0.95686275, 0.79607844, 0.43529412, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65hh5"]
+bg_color = Color(0.22352941, 0.08627451, 0.047058824, 0.5921569)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5874098, 0.27984193, 0.1886749, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+corner_detail = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6byu3"]
+bg_color = Color(0.22352941, 0.08627451, 0.047058824, 0.5921569)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5874098, 0.27984193, 0.1886749, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 corner_detail = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
@@ -167,7 +185,7 @@ previewDefault = ExtResource("4_k6vji")
 favoriteEmpty = ExtResource("13_gcoc3")
 favoriteFilled = ExtResource("6_pjscj")
 globalSettingsButton = NodePath("SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox/GlobalSettingsButton")
-areaWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/LevelSizeWarning")
+areaWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/PanelContainer/LevelSizeWarning")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1764313566]
 layout_mode = 1
@@ -744,7 +762,6 @@ theme_override_font_sizes/font_size = 12
 text = "Enter editor mode"
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=2033598074]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -842,18 +859,19 @@ propagate_maximum_size = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_yxkem")
+theme = ExtResource("1_cstcu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_65hh5")
 metadata/_edit_use_anchors_ = true
 
 [node name="Body" type="RichTextLabel" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/InvalidWarning/PanelContainer" unique_id=1331184181]
 custom_minimum_size = Vector2(403.175, 0)
 clip_contents = false
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("18_0g0bm")
 bbcode_enabled = true
-text = "The level name contains [color=#e74937]invalid[/color] characters. Please enter a valid file name."
+text = "The level name contains invalid characters. Please enter a valid file name."
 fit_content = true
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="EmptyWarning" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1433979894]
 visible = false
@@ -871,18 +889,18 @@ propagate_maximum_size = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_yxkem")
+theme_override_styles/panel = SubResource("StyleBoxFlat_6byu3")
 metadata/_edit_use_anchors_ = true
 
 [node name="Body" type="RichTextLabel" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/EmptyWarning/PanelContainer" unique_id=1479311449]
 custom_minimum_size = Vector2(403.175, 0)
 clip_contents = false
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("18_0g0bm")
 bbcode_enabled = true
-text = "The level name is [color=#e74937]empty[/color]! Please enter a valid file name."
+text = "The level name is empty! Please enter a valid file name."
 fit_content = true
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="NameGridSeparator" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=772753027]
 layout_mode = 2
@@ -939,12 +957,17 @@ layout_mode = 2
 [node name="GridSettingsRow2" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=716640564]
 layout_mode = 2
 
-[node name="LevelSizeWarning" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2" unique_id=1231681259]
+[node name="PanelContainer" type="PanelContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2" unique_id=1382634297]
 visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9895659, 0, 0.24405494, 1)
+theme = ExtResource("1_cstcu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="LevelSizeWarning" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/PanelContainer" unique_id=1231681259]
+layout_mode = 2
 text = "WARNING: 
 Level size over 10,000 tiles may cause performance issues."
+horizontal_alignment = 1
 
 [node name="ErrorBanner" type="PanelContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1564116025]
 visible = false
@@ -953,7 +976,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
 
 [node name="Label" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner" unique_id=1745841521]
 layout_mode = 2
-text = "Error: All Fields must be filled ou!"
+text = "Error: All Fields must be filled out!"
 
 [node name="ButtonMargin" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=679165822]
 layout_mode = 2

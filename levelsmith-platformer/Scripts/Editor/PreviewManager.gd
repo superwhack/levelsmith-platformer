@@ -53,7 +53,7 @@ func update_preview_object(mousePosition: Vector2, prevPosition: Vector2, previe
 		# Add 4 to the alternative ID to use red unplaceable slopes.
 		var alternativeId : int = toolManager.currentObjectRotation + (4 if isRed else 0);
 		set_cell(mousePosition, previewObject, Vector2i.ZERO, alternativeId);
-	elif (previewObject >= Global.EntityType.GOAL && previewObject <= Global.EntityType.MOVING_PLATFORM):
+	elif (previewObject >= Global.EntityType.GOAL && previewObject <= Global.EntityType.CHECKPOINT):
 		var templateSprite = AnimationManager.get_template_sprite(tileMap.tile_set.get_source(previewObject).resource_name);
 		entityPreviewSprite.texture = templateSprite.sprite_frames.get_frame_texture(templateSprite.animation, 0);
 		entityPreviewSprite.position = map_to_local(mousePosition);

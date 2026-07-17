@@ -61,22 +61,24 @@ func _process(delta: float) -> void:
 		if (animTimer >= 1/FPS):
 			frame_change();
 			animTimer = 0;
+			
+func _input( event: InputEvent ) -> void:
 	# Hotkeys
-	if ( Input.is_action_just_pressed( "up" ) ):
+	if ( event.is_action_pressed( "up" ) ):
 		FPSSpinbox.value += 1;
-	if ( Input.is_action_just_pressed( "down" ) ):
+	if ( event.is_action_pressed( "down" ) ):
 		FPSSpinbox.value -= 1;
-	if ( Input.is_action_just_pressed( "UI-AssetMgr-right" ) ):
+	if ( event.is_action_pressed( "UI-AssetMgr-right" ) ):
 		anim_change(true);
-	if ( Input.is_action_just_pressed( "UI-AssetMgr-left" ) ):
+	if ( event.is_action_pressed( "UI-AssetMgr-left" ) ):
 		anim_change(false);
-	if ( Input.is_action_just_pressed( "UI-AssetMgr-accept" ) ):
+	if ( event.is_action_pressed( "UI-AssetMgr-accept" ) ):
 		play_preview_animation();
-	if ( Input.is_action_just_pressed( "UI-AssetMgr-deny" ) ):
+	if ( event.is_action_pressed( "UI-AssetMgr-deny" ) ):
 		stop_preview_animation();
-	if ( Input.is_action_just_pressed( "UI-AssetMgr-frame-step-forward" ) ):
+	if ( event.is_action_pressed( "UI-AssetMgr-frame-step-forward" ) ):
 		frame_change(false);
-	if ( Input.is_action_just_pressed( "UI-AssetMgr-frame-step-backwards" ) ):
+	if ( event.is_action_pressed( "UI-AssetMgr-frame-step-backwards" ) ):
 		frame_change(false);
 
 ## Retrieve the frames for an animation from a given folder path

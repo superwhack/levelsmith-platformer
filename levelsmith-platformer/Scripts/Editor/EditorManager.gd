@@ -94,11 +94,7 @@ func _process(_delta: float) -> void:
 	
 	# Save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
-	
-	#Hotkey
-	if ( Input.is_action_just_pressed( "ui_close_dialog" ) ):
-		close_asset_manager();
-		print("hello");
+
 	
 ## When the user does a save level input, save the level.
 ## event: The user input

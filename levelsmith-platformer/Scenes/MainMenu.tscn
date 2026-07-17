@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://stx0om0pqx4u" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Duplicate.png" id="14_1uc6u"]
 [ext_resource type="Texture2D" uid="uid://c0phqqwjx130p" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Delete.png" id="15_0ffkm"]
 [ext_resource type="Texture2D" uid="uid://xgthwwmyn50c" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
-[ext_resource type="Texture2D" uid="uid://cbl3fx5ktkt3m" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check.png" id="16_65hh5"]
+[ext_resource type="Texture2D" uid="uid://bru63ejw0q2j4" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check-circle.png" id="16_65hh5"]
 [ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="16_w5rev"]
 [ext_resource type="Texture2D" uid="uid://dd3080y6r8vxe" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Edit.png" id="17_34n7o"]
 [ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
@@ -500,8 +500,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -927.0
-offset_bottom = 521.0
+offset_left = -107.0
+offset_top = 20.0
+offset_right = -27.0
+offset_bottom = 100.0
 grow_horizontal = 0
 texture = ExtResource("16_65hh5")
 stretch_mode = 4

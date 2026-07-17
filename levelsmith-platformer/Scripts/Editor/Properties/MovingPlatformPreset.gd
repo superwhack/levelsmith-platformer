@@ -19,3 +19,5 @@ extends Resource;
 @export var easing : bool;
 @export var momentum : bool;
 @export var visible : bool;
+
+@export var active : bool;

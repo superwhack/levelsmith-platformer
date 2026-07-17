@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://b3k624sctovph"]
 
 [ext_resource type="Script" uid="uid://cv0ngpnmx6kwj" path="res://Scripts/Game/EnemyPatrol.gd" id="1_ecr3g"]
-[ext_resource type="Texture2D" uid="uid://djsoyp2lawtlv" path="res://Assets/Sprites/UI/ArrowUpMedium.PNG" id="2_0s3yh"]
-[ext_resource type="Texture2D" uid="uid://bxl30omegyov3" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_0s3yh"]
-[ext_resource type="Texture2D" uid="uid://d1byp2s8w01lm" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="3_igrap"]
-[ext_resource type="Texture2D" uid="uid://by6l0lrfyotn3" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="4_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://fjtjb06rhbgs" path="res://Assets/Sprites/UI/ArrowUpMedium.PNG" id="2_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://d33pgq7ibjssv" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/1.png" id="3_0s3yh"]
+[ext_resource type="Texture2D" uid="uid://yfpy7vgkmhuo" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/1.png" id="3_igrap"]
+[ext_resource type="Texture2D" uid="uid://33tku5on1i8a" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolWalk/2.png" id="4_0s3yh"]
 [ext_resource type="Script" uid="uid://bys01phi48a3c" path="res://Scripts/Game/RaycastHelper.gd" id="4_3diox"]
 [ext_resource type="Texture2D" uid="uid://ts0f7r4aehhl" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/2.png" id="4_rdoky"]
 [ext_resource type="Texture2D" uid="uid://duel7xt7cijhy" path="res://Assets/Sprites/Entities/PatrollingEnemy/PatrolDeath/3.png" id="5_y22b6"]
@@ -93,8 +93,8 @@ animations = [{
 }]
 
 [node name="PatrollingEnemy" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("rayCastLeft1", "rayCastRight1", "rayCastLeft2", "rayCastRight2", "rayCastLeftTop", "rayCastRightTop", "rayCastDownL", "rayCastDownR", "directionArrow", "leftRaycast", "rightRaycast", "downRaycast", "upRaycast", "raycastHelper", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
-collision_layer = 6
-collision_mask = 6
+collision_layer = 14
+collision_mask = 14
 floor_snap_length = 32.0
 platform_floor_layers = 4294967294
 script = ExtResource("1_ecr3g")

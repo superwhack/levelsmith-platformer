@@ -117,7 +117,7 @@ func try_find_player() -> void:
 ## event: the captured input event that has occurred
 func _input(event: InputEvent) -> void:
 	# Start/stop middle-click panning
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton && !Global.State.PLAY:
 		if event.button_index == MOUSE_BUTTON_MIDDLE:
 			isPanning = event.pressed;
 

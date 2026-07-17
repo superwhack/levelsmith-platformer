@@ -191,9 +191,10 @@ func _physics_process(delta: float) -> void:
 
 ## Animates the player while processing
 func animate() -> void:
-	
-	if ( Input.is_action_pressed("right") ): animatedSprites.flip_h = false;
-	elif ( Input.is_action_pressed("left") ): animatedSprites.flip_h = true;
+	if !is_on_floor():
+		animatedSprites.flip_h = velocity.x < 0;
+	else:
+		animatedSprites.flip_h = Input.is_action_pressed("left");
 	if (health <= 0): 
 		animatedSprites.animation = "PlayerDeath";
 		animatedSprites.flip_h = false;

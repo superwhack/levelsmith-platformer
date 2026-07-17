@@ -45,6 +45,7 @@ var unsavedChanges : bool = false;
 var isPlaceable : bool = true;
 var playerExists : bool = false;
 var goalExists : bool = false;
+var isScreenshotting : bool = false;
 
 var returnClick : bool = false;
 

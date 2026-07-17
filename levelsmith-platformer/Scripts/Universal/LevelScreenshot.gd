@@ -48,9 +48,17 @@ func get_level_screenshot() -> Image:
 	make_current();
 	# Hide the preview and selector frame, then show post-screenshot.
 	masterManager.previewTileMap.hide();
-	#masterManager.editorManager.customCursorManager.hide_selector_frame();
+	masterManager.editorManager.customCursorManager.hide_selector_frame();
+	masterManager.editorManager.customCursorManager.hide_entity_highlight();
+	masterManager.editorManager.iconManager.hide_preview_icon();
+	masterManager.editorManager.isScreenshotting = true;
+	print("hiding")
 	await RenderingServer.frame_post_draw;
+	print("showing")
 	enabled = false;
 	masterManager.previewTileMap.show();
-	#masterManager.editorManager.customCursorManager.show_selector_frame();
+	masterManager.editorManager.customCursorManager.show_selector_frame();
+	masterManager.editorManager.customCursorManager.show_entity_highlight();
+	masterManager.editorManager.iconManager.show_preview_icon();
+	masterManager.editorManager.isScreenshotting = false;
 	return screenshotViewport.get_texture().get_image();

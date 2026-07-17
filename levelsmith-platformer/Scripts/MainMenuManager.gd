@@ -389,6 +389,11 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 	item.dimensions = str(metadata.get("dimensions", str([20, 20])));
 	item.objectCount = str(int(metadata.get("objects", str(0))));
 	item.version = str(metadata.get("version", Global.VERSION));
+	if (item.version != str(Global.VERSION)):
+		item.levelErrorIcon.show();
+		item.levelErrorIcon.tooltip_text = "This level's version is " + item.version + ". You are currently on version " + str(Global.VERSION) + ".";
+	else:
+		item.levelErrorIcon.hide();
 	item.favorited = metadata.get("favorited", false);
 	item.validated = metadata.get("validated", false);
 	if (item.favorited):

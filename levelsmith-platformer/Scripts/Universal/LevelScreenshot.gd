@@ -58,7 +58,6 @@ func get_level_screenshot() -> Image:
 	enabled = false;
 	masterManager.previewTileMap.show();
 	masterManager.editorManager.customCursorManager.show_selector_frame();
-	masterManager.editorManager.customCursorManager.show_entity_highlight();
 	masterManager.editorManager.iconManager.show_preview_icon();
 	masterManager.editorManager.isScreenshotting = false;
 	return screenshotViewport.get_texture().get_image();

@@ -560,10 +560,28 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="FavoriteButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow" unique_id=657863021]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 tooltip_text = "Add to Favorties"
 disabled = true
-icon = ExtResource("15_h1v62")
+icon_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/FavoriteButton" unique_id=1063241206]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/FavoriteButton/MarginContainer" unique_id=1733455010]
+layout_mode = 2
+texture = ExtResource("15_h1v62")
+expand_mode = 3
 
 [node name="TitleDetailsSeparator" type="HSeparator" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox" unique_id=1733107046]
 layout_mode = 2

@@ -80,7 +80,11 @@ func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i
 			"playZoom": 100.0,
 			"followSpeed": 100.0,
 			"deadzone": 0.0,
-			"cameraPlayClamp": false
+			"cameraPlayClamp": false,
+			"bounceHeight": 1.0,
+			"iceFriction": .5,
+			"hazardDamage": 1,
+			"stickySlowdown": .4
 		},
 		"animations": {
 			"PlayerDeath": 8.0,
@@ -211,7 +215,11 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		"playZoom": settings.gameplayZoom.value,
 		"followSpeed": settings.followSpeed.value,
 		"deadzone": settings.cameraDeadzone.value,
-		"cameraPlayClamp": settings.cameraClamp.value
+		"cameraPlayClamp": settings.cameraClamp.value,
+		"bounceHeight": settings.bounceHeight.value,
+		"iceFriction": settings.iceFriction.value,
+		"hazardDamage": settings.hazardDamage.value,
+		"stickySlowdown": settings.stickySlowdown.value
 	};
 	
 	##                     ##
@@ -446,6 +454,10 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: Panel) -> v
 	settings.followSpeed.value = settingsConfig.get("followSpeed", settings.followSpeed.value);
 	settings.cameraDeadzone.value = settingsConfig.get("deadzone", settings.cameraDeadzone.value);
 	settings.cameraClamp.value = settingsConfig.get("cameraPlayClamp", settings.cameraClamp.value);
+	settings.bounceHeight.value = settingsConfig.get("bounceHeight", settings.bounceHeight.value);
+	settings.iceFriction.value = settingsConfig.get("iceFriction", settings.iceFriction.value);
+	settings.hazardDamage.value = settingsConfig.get("hazardDamage", settings.hazardDamage.value);
+	settings.stickySlowdown.value = settingsConfig.get("stickySlowdown", settings.stickySlowdown.value);
 	settings.update_sliders();
 	
 	AnimationManager.set_all_fps_to_json(levelPath + "Settings.JSON");

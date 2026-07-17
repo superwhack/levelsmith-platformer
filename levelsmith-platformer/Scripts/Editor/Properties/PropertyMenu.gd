@@ -1,5 +1,9 @@
 extends Panel
 
+# A direct reference to the preview manager and cursor manager.
+@export var previewManager : TileMapLayer;
+@export var cursorManager : Node;
+
 # Entity currently selected for editing
 var selectedEntity : Node2D;
 
@@ -93,6 +97,7 @@ var previewLine: Line2D;
 @export var movingPlatformEasingCheckbox : VBoxContainer;
 @export var movingPlatformMomentumCheckbox : VBoxContainer;
 @export var movingPlatformVisibilityCheckbox : VBoxContainer;
+@export var movingPlatformAlwaysActiveCheckbox : VBoxContainer;
 
 # Direction arrow for shooting and patrolling enemies
 var directionArrow : Sprite2D;
@@ -142,16 +147,24 @@ func _ready() -> void:
 	movingPlatformEasingCheckbox.check_changed.connect(_on_drag_ended);
 	movingPlatformMomentumCheckbox.check_changed.connect(_on_drag_ended);
 	movingPlatformVisibilityCheckbox.check_changed.connect(_on_drag_ended);
+	movingPlatformAlwaysActiveCheckbox.check_changed.connect(_on_drag_ended);
 	
 	closeButton.pressed.connect(close);
 
 ## Close the property menu and set the selected entity to null
 func close() -> void:
+	# Show preview and selector frame.
+	previewManager.show();
+	cursorManager.show_selector_frame();
+	
+	if previewLine:
+		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
 	hide();
 	selectedEntity = null;
+	
 
 ## Runs every frame. Sets the text and arrows when an entity is selected
 ## _delta: Time passed since the last frame
@@ -310,6 +323,7 @@ func update_sliders() -> void:
 		movingPlatformEasingCheckbox.value = selectedPreset.easing;
 		movingPlatformMomentumCheckbox.value = selectedPreset.momentum;
 		movingPlatformVisibilityCheckbox.value = selectedPreset.visible;
+		movingPlatformAlwaysActiveCheckbox.value = selectedPreset.active;
 		movingPlatformSpeedSlider.update_slider();
 		movingPlatformOffsetXSlider.update_slider();
 		movingPlatformOffsetYSlider.update_slider();
@@ -318,6 +332,7 @@ func update_sliders() -> void:
 		movingPlatformEasingCheckbox.update_checkbox();
 		movingPlatformMomentumCheckbox.update_checkbox();
 		movingPlatformVisibilityCheckbox.update_checkbox();
+		movingPlatformAlwaysActiveCheckbox.update_checkbox();
 	
 
 ## Alternate the ability for a property to be selected
@@ -376,6 +391,7 @@ func update_values() -> void:
 		selectedPreset.easing = movingPlatformEasingCheckbox.value;
 		selectedPreset.momentum = movingPlatformMomentumCheckbox.value;
 		selectedPreset.visible = movingPlatformVisibilityCheckbox.value;
+		selectedPreset.active = movingPlatformAlwaysActiveCheckbox.value
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	
 
@@ -392,9 +408,16 @@ func _on_drag_ended() -> void:
 ## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
 	show();
+	# Hide preview and selector frame.
+	previewManager.hide();
+	cursorManager.hide_selector_frame();
+	
+	if previewLine:
+		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
+		
 	playerMenu.hide();
 	patrollingMenu.hide();
 	shootingMenu.hide();

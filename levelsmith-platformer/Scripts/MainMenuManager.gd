@@ -83,8 +83,14 @@ var selectedItem : Control = null;
 # Dictionary of all level items. For level list filling.
 var levelItems: Dictionary = {} # path -> item
 
+# Level size warning variables
+const MAX_LEVEL_AREA := 10000;
+@export var areaWarning : PanelContainer;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	buttonNewLevel.grab_focus();
+	
 	softwareVersion.text = str(Global.VERSION);
 	# Hides other screens
 	overlayImportLevel.hide();
@@ -116,36 +122,44 @@ func _ready() -> void:
 	# Duplicate buttons
 	buttonDuplicateLevelConfirm.pressed.connect(duplicate_current_level);
 	buttonDuplicateLevelCancel.pressed.connect(overlay_duplicate_level_hide);
-
 	globalSettingsButton.pressed.connect(masterManager.open_global_settings_menu);
-	
 	buttonQuit.pressed.connect(exit_program);
 
+	spinBoxNewLevelX.value_changed.connect(update_level_size_warning);
+	spinBoxNewLevelY.value_changed.connect(update_level_size_warning);
 
 	var set_directory = func (directory: String) -> void:
 		fieldImportLevelPath.text = directory + "/";
 	
 	fileExplorer.dir_selected.connect(set_directory);
-	
+
 ## Functions that just make a menu appear/dissapear, used to attach the sound effects
 func overlay_new_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.show();
+	update_level_size_warning();
+	fieldNewLevelName.grab_focus();
 func overlay_new_level_hide() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.hide();
+	buttonNewLevel.grab_focus();
 func overlay_import_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayImportLevel.show();
+	fieldImportLevelPath.grab_focus();
 func popup_file_dialog() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	fileExplorer.popup_file_dialog();
+	buttonNewLevel.grab_focus();
 func overlay_duplicate_level_show() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	overlayDuplicateLevel.show();
+	duplicateName.grab_focus();
+	
 func overlay_duplicate_level_hide() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	overlayDuplicateLevel.hide();
+	buttonNewLevel.grab_focus();
 
 ## Called when import level button is pressed
 func import_level() -> void:
@@ -175,6 +189,13 @@ func import_level() -> void:
 func import_cancel() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayImportLevel.hide();
+
+func update_level_size_warning(value = null) -> void:
+	var area := int(spinBoxNewLevelX.value) * int(spinBoxNewLevelY.value)
+	if area > MAX_LEVEL_AREA:
+		areaWarning.show()
+	else:
+		areaWarning.hide()
 
 ## Opens the menu for setting a name and size for the level
 func create_new_level() -> void:
@@ -286,11 +307,11 @@ func _on_level_double_clicked(path: String) -> void:
 	
 ## Fills in metadata labels with appropriate data when hovered.
 ## item: the level list button item.
-func _on_level_hovered(item) -> void:
+func _on_level_hovered(item: Node) -> void:
 	if (!selectedItem):
 		update_metadata(item);
 	
-func _on_level_pressed(item) -> void:
+func _on_level_pressed(item: Node) -> void:
 	if (selectedItem == item):
 		return;
 		
@@ -305,7 +326,7 @@ func _on_level_pressed(item) -> void:
 
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
-func _on_level_deselected(item) -> void:
+func _on_level_deselected(item: Node) -> void:
 	if (selectedItem == item):
 		item.levelButton.button_pressed = false;
 		toggle_level_buttons();
@@ -381,7 +402,7 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 
 ## Reusable function for updating metadata based on given item.
 ## item: Level item to be used for updating metadata.
-func update_metadata(item) -> void:
+func update_metadata(item: Node) -> void:
 	levelName.text = item.levelTitle.text;
 	author.text = item.author;
 	dateCreated.text = item.dateCreated;

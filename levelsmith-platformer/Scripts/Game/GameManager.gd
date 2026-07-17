@@ -184,7 +184,6 @@ func _ready() -> void:
 	replayButton.pressed.connect(replay_level);
 	editorButton.pressed.connect(return_to_editor);
 
-
 func _process(delta: float) -> void:
 	if timerRunning:
 		testingTime += delta;
@@ -225,7 +224,8 @@ func level_complete() -> void:
 	# If the goal's already been reached, don't run this again
 	if goalReached:
 		return;
-	AudioManager.reset_audio();
+	# AudioManager.reset_audio();
+	AudioManager.stop_music_preview();
 	goalReached = true;
 	print_level_completion_time();
 	pauseButton.hide();
@@ -243,6 +243,7 @@ func level_complete() -> void:
 ## Returns to the level editor and restores the editor state
 func return_to_editor() -> void:
 	get_tree().paused = false;
+	freeze(true);
 	winScreen.hide();
 	timerRunning = false;
 	masterManager.edit();

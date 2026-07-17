@@ -113,6 +113,9 @@ corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5bsrg"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_leunp"]
+outline_size = 2
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pjscj"]
 bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
 border_width_left = 2
@@ -142,7 +145,7 @@ buttonImportLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftP
 buttonLoadExample = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton")
 buttonQuit = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton")
 buttonCredits = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin/CreditsButton")
-buttonCloseCredits = NodePath("CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer/CloseButton")
+buttonCloseCredits = NodePath("CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer/CloseButton")
 buttonOpenLevelFolder = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton")
 buttonPlayLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton")
 buttonEditLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton")
@@ -1167,32 +1170,28 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin" unique_id=199504559]
-layout_mode = 2
-theme_override_constants/scrollbar_h_separation = 15
-
-[node name="SettingsBox" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer" unique_id=1921331690]
+[node name="SettingsBox" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin" unique_id=1921331690]
 custom_maximum_size = Vector2(610, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HeaderBlock" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox" unique_id=1151281614]
+[node name="HeaderBlock" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox" unique_id=1151281614]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock" unique_id=107860495]
+[node name="HBoxContainer" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock" unique_id=107860495]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1099196999]
+[node name="TitleLabel" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1099196999]
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
 text = "Credits"
 
-[node name="Gap" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1357149252]
+[node name="Gap" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1357149252]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CloseButton" type="Button" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1630541076]
+[node name="CloseButton" type="Button" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1630541076]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -1201,7 +1200,7 @@ theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = SubResource("StyleBoxEmpty_5bsrg")
 icon_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer/CloseButton" unique_id=152222314]
+[node name="MarginContainer" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer/CloseButton" unique_id=152222314]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1213,145 +1212,204 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="TextureRect" type="TextureRect" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer/CloseButton/MarginContainer" unique_id=35835446]
+[node name="TextureRect" type="TextureRect" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer/CloseButton/MarginContainer" unique_id=35835446]
 layout_mode = 2
 texture = ExtResource("22_h1v62")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="CloseSizer" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1181072508]
+[node name="CloseSizer" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock/HBoxContainer" unique_id=1181072508]
 custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
 
-[node name="HeaderLine" type="HSeparator" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock" unique_id=711346951]
+[node name="HeaderLine" type="HSeparator" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock" unique_id=711346951]
 layout_mode = 2
 
-[node name="HeaderSpacer" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock" unique_id=1036316878]
+[node name="HeaderSpacer" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/HeaderBlock" unique_id=1036316878]
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
-[node name="GlobalSettings" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox" unique_id=708088058]
+[node name="ScrollContainer" type="ScrollContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox" unique_id=199504559]
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/scrollbar_h_separation = 15
 
-[node name="LevelsmithLabsContainer" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings" unique_id=1990249419]
+[node name="LevelsmithLabsContainer" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer" unique_id=1990249419]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="LevelsmithLabel" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer" unique_id=717012625]
+[node name="LevelsmithLabel" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer" unique_id=717012625]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Levelsmith Labs"
 
-[node name="HSeparator" type="HSeparator" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer" unique_id=770257698]
+[node name="HSeparator" type="HSeparator" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer" unique_id=770257698]
 layout_mode = 2
 
-[node name="LevelsmithCredits" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer" unique_id=756940201]
+[node name="MarginContainer" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer" unique_id=624662533]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
 
-[node name="Founder" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits" unique_id=1549829847]
+[node name="LevelsmithCredits" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer" unique_id=756940201]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1685031288]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/Founder" unique_id=41720738]
+[node name="FounderHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=666834071]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/FounderHBox" unique_id=41720738]
 layout_mode = 2
 text = "Founder"
+label_settings = SubResource("LabelSettings_leunp")
 
-[node name="Sten" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/Founder" unique_id=1231278089]
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/FounderHBox" unique_id=1116700557]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Sten" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/FounderHBox" unique_id=1231278089]
 layout_mode = 2
 text = "Sten McKinzie"
 
-[node name="Producer" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits" unique_id=728898134]
+[node name="ProdHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=93215346]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/Producer" unique_id=394756048]
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/ProdHBox" unique_id=394756048]
 layout_mode = 2
 text = "Producer"
+label_settings = SubResource("LabelSettings_leunp")
 
-[node name="Bee" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/Producer" unique_id=982494287]
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/ProdHBox" unique_id=1005259792]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Bee" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/ProdHBox" unique_id=982494287]
 layout_mode = 2
 text = "Bee Morse"
 
-[node name="TLead" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits" unique_id=1485431955]
+[node name="TLeadHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=883188484]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/TLead" unique_id=1541750044]
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TLeadHBox" unique_id=1541750044]
 layout_mode = 2
 text = "Tech Lead"
+label_settings = SubResource("LabelSettings_leunp")
 
-[node name="Theo" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/TLead" unique_id=1056216440]
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TLeadHBox" unique_id=941000762]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Theo" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TLeadHBox" unique_id=1056216440]
 layout_mode = 2
 text = "Theo Ruefli"
 
-[node name="DLead" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits" unique_id=1771469202]
+[node name="DLeadHbox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1036020980]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/DLead" unique_id=997745436]
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DLeadHbox" unique_id=997745436]
 layout_mode = 2
 text = "Design Lead"
+label_settings = SubResource("LabelSettings_leunp")
 
-[node name="Chris" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/DLead" unique_id=705288620]
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DLeadHbox" unique_id=1533206148]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Chris" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DLeadHbox" unique_id=705288620]
 layout_mode = 2
 text = "Chris Hamam"
 
-[node name="TTeam" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits" unique_id=900937661]
+[node name="TTeamHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1981939656]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/TTeam" unique_id=714566709]
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox" unique_id=714566709]
 layout_mode = 2
+size_flags_vertical = 0
 text = "Tech Team"
+label_settings = SubResource("LabelSettings_leunp")
 
-[node name="Zay" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/TTeam" unique_id=915437010]
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox" unique_id=100320397]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox" unique_id=1970861978]
+layout_mode = 2
+
+[node name="Zay" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox/VBoxContainer" unique_id=915437010]
 layout_mode = 2
 text = "Zay Arriaga"
+horizontal_alignment = 2
 
-[node name="Ben" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/TTeam" unique_id=422670717]
+[node name="Ben" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox/VBoxContainer" unique_id=422670717]
 layout_mode = 2
 text = "Ben Haines"
+horizontal_alignment = 2
 
-[node name="Andrew" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/TTeam" unique_id=902162387]
+[node name="Andrew" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox/VBoxContainer" unique_id=902162387]
 layout_mode = 2
-text = "Andrew Hernandez"
+text = "Andrew S. Hernandez"
+horizontal_alignment = 2
 
-[node name="Steven" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/TTeam" unique_id=1395310045]
+[node name="Steven" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox/VBoxContainer" unique_id=1395310045]
 layout_mode = 2
 text = "Steven Poore"
+horizontal_alignment = 2
 
-[node name="Jack" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/TTeam" unique_id=1144607638]
+[node name="Jack" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/TTeamHBox/VBoxContainer" unique_id=1144607638]
 layout_mode = 2
 text = "Jack Xue"
+horizontal_alignment = 2
 
-[node name="DTeam" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits" unique_id=1338247030]
+[node name="DTeamHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=968538111]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/DTeam" unique_id=389352308]
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox" unique_id=389352308]
 layout_mode = 2
+size_flags_vertical = 0
 text = "Design Team"
+label_settings = SubResource("LabelSettings_leunp")
 
-[node name="Evan" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/DTeam" unique_id=1865913976]
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox" unique_id=1426992507]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox" unique_id=414965327]
+layout_mode = 2
+
+[node name="Evan" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox/VBoxContainer" unique_id=1865913976]
 layout_mode = 2
 text = "Evan Calkins"
+horizontal_alignment = 2
 
-[node name="Tyler" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/DTeam" unique_id=1240641812]
+[node name="Tyler" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox/VBoxContainer" unique_id=1240641812]
 layout_mode = 2
 text = "Tyler Christ"
+horizontal_alignment = 2
 
-[node name="Ziad" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/DTeam" unique_id=1879614601]
+[node name="Ziad" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox/VBoxContainer" unique_id=1879614601]
 layout_mode = 2
 text = "Ziad Jaafar"
+horizontal_alignment = 2
 
-[node name="Deacon" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/GlobalSettings/LevelsmithLabsContainer/LevelsmithCredits/DTeam" unique_id=588481653]
+[node name="Deacon" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/DTeamHBox/VBoxContainer" unique_id=588481653]
 layout_mode = 2
 text = "Deacon Mansfield"
+horizontal_alignment = 2
 
-[node name="FooterMargin" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox" unique_id=1609738927]
+[node name="FooterMargin" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox" unique_id=1609738927]
 layout_mode = 2
 theme_override_constants/margin_top = 90
 theme_override_constants/margin_bottom = 0
 
-[node name="FooterRow" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/FooterMargin" unique_id=218872340]
+[node name="FooterRow" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/FooterMargin" unique_id=218872340]
 layout_mode = 2
 layout_direction = 3
 
-[node name="CloseButtonMargin" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/FooterMargin/FooterRow" unique_id=357794795]
+[node name="CloseButtonMargin" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/FooterMargin/FooterRow" unique_id=357794795]
 layout_mode = 2
 theme_override_constants/margin_right = 10
 

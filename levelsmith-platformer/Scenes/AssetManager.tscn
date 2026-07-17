@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_rshqi"]
-[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
+[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
 [ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="3_rshqi"]
+[ext_resource type="Texture2D" uid="uid://bn7wtyfjyjxx8" path="res://Assets/UserInterface/Buttons/iconoir--question-mark.png" id="4_o8nck"]
 [ext_resource type="Texture2D" uid="uid://do1aligfv3wmg" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
 [ext_resource type="Texture2D" uid="uid://dxag1j2w8yhjg" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
-[ext_resource type="FontFile" uid="uid://ibgv3ey3taus" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="6_rrs8o"]
+[ext_resource type="FontFile" uid="uid://dp7iib08p6748" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="6_rrs8o"]
 [ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
 [ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
 [ext_resource type="Texture2D" uid="uid://iyxcim187e44" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
@@ -109,7 +110,15 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="TextureRect" type="TextureRect" parent="AssetManagerPanel/ContentContainer/HBoxContainer/CloseButton/MarginContainer" unique_id=694251583]
+[node name="HBoxContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer/HBoxContainer/CloseButton/MarginContainer" unique_id=764860596]
+layout_mode = 2
+
+[node name="QuestionMarkRect" type="TextureRect" parent="AssetManagerPanel/ContentContainer/HBoxContainer/CloseButton/MarginContainer/HBoxContainer" unique_id=625061648]
+layout_mode = 2
+texture = ExtResource("4_o8nck")
+expand_mode = 3
+
+[node name="XMarkRect" type="TextureRect" parent="AssetManagerPanel/ContentContainer/HBoxContainer/CloseButton/MarginContainer/HBoxContainer" unique_id=694251583]
 layout_mode = 2
 texture = ExtResource("4_ssly3")
 expand_mode = 3

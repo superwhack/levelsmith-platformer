@@ -67,9 +67,9 @@ func _on_drag() -> void:
 	cameraManager.cameraPlayClamp = cameraClamp.value;
 	
 	# Tile Properties
-	editorManager.tileMap.iceFriction = iceFriction.value;
+	editorManager.tileMap.iceFriction = iceFriction.value / 100;
 	editorManager.tileMap.bounceHeight = bounceHeight.value;
-	editorManager.tileMap.stickySlowdown = stickySlowdown.value;
+	editorManager.tileMap.stickySlowdown = stickySlowdown.value / 100;
 	editorManager.tileMap.hazardDamage = hazardDamage.value;
 
 ## Update sliders visually

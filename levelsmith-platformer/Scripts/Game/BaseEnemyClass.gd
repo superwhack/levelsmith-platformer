@@ -42,29 +42,33 @@ func detect_tiles(horizontal : bool) -> void:
 	var bounceSpeedBoost = 0;
 	# Horizontal Raycasts
 	if (horizontal && rightRaycast.is_colliding()):
+		var tileMap : TileMapLayer = rightRaycast.get_collider();
 		direction = -1;
 		var raycastTileData : TileData = raycastHelper.get_collision_data(rightRaycast);
 		if raycastTileData && raycastTileData.get_custom_data("name") == "bounce":
-			bounceMovementBoost = 2 * raycastTileData.get_custom_data("bounce");
-			velocity.y += -500 * raycastTileData.get_custom_data("bounce");
+			bounceMovementBoost = 2 * tileMap.bounceHeight;
+			velocity.y += -500 * tileMap.bounceHeight;
 	if (horizontal && leftRaycast.is_colliding()):
+		var tileMap : TileMapLayer = leftRaycast.get_collider();
 		direction = 1;
 		var raycastTileData : TileData = raycastHelper.get_collision_data(leftRaycast);
 		if raycastTileData && raycastTileData.get_custom_data("name") == "bounce":
-			bounceMovementBoost = 2 * raycastTileData.get_custom_data("bounce");
-			velocity.y += -500 * raycastTileData.get_custom_data("bounce");
+			bounceMovementBoost = 2 * tileMap.bounceHeight;
+			velocity.y += -500 * tileMap.bounceHeight;
 	# Vertical raycasts
 	if (downRaycast.is_colliding()):
+		var tileMap : TileMapLayer = downRaycast.get_collider();
 		var raycastTileData : TileData = raycastHelper.get_collision_data(downRaycast);
 		if raycastTileData:
 			if raycastTileData.get_custom_data("name") == "bounce":
-				velocity.y = -1000 * raycastTileData.get_custom_data("bounce");
+				velocity.y = -1000 * tileMap.bounceHeight;
 			elif raycastTileData.get_custom_data("name") == "slow":
-				velocity.x /= 2;
+				velocity.x *= 1 - tileMap.stickySlowdown;
 	if (upRaycast.is_colliding()):
+		var tileMap : TileMapLayer = upRaycast.get_collider();
 		var raycastTileData : TileData = raycastHelper.get_collision_data(upRaycast);
 		if raycastTileData && raycastTileData.get_custom_data("name") == "bounce":
-			velocity.y = 1000 * raycastTileData.get_custom_data("bounce");
+			velocity.y = 1000 * tileMap.bounceHeight;
 	# Decay the movement speed boost from bouncing
 	if bounceMovementBoost > 1.0:
 		bounceMovementBoost = pow(bounceMovementBoost, .97);

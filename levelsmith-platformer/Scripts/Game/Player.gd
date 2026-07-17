@@ -112,7 +112,6 @@ func _ready() -> void:
 	enemyCollision.area_entered.connect(detect_projectiles);
 	# Applies the preset on ready
 	if (playerMovementPreset):
-		#print("Applying ", playerMovementPreset, " player movement preset.");
 		apply_preset(playerMovementPreset);
 	
 	#for animationName in animatedSprites.sprite_frames.get_animation_names():
@@ -518,7 +517,7 @@ func detect_tiles() -> void:
 			#				position += Vector2(0, 1);
 			#				raycast.force_raycast_update();
 			#		velocity.x = clamp(velocity.x, -trueSpeed * .5, trueSpeed * .5);
-				currentSlowdown = .5;
+				currentSlowdown = 1 - tileLayer.stickySlowdown;
 		elif tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
 			if take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"), true):
@@ -543,7 +542,7 @@ func detect_tiles() -> void:
 						position += Vector2(0, 1);
 				"ice":
 					currentWalkingEffect = Global.WalkingEffect.ICE;
-					currentFriction = iceFriction;
+					currentFriction = 1 - tileLayer.iceFriction;
 
 ## When the player walks/falls out of bounds, force kill them
 func check_out_of_bounds() -> bool:
@@ -554,7 +553,6 @@ func check_out_of_bounds() -> bool:
 	|| self.global_position.x > (masterManager.worldSize.x + 2) * Global.TILE_SIZE
 	|| self.global_position.y < (-1) * Global.TILE_SIZE
 	|| self.global_position.y > (masterManager.worldSize.y + 2) * Global.TILE_SIZE):
-		#print("Player OOB: ", self.global_position)
 		die();
 		return true;
 	return false;

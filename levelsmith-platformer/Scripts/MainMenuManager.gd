@@ -8,6 +8,8 @@ extends Control
 @export var buttonImportLevel : Button;
 @export var buttonLoadExample : Button;
 @export var buttonQuit : Button;
+@export var buttonCredits : Button;
+@export var buttonCloseCredits : Button;
 @export var buttonOpenLevelFolder : Button;
 @export var buttonPlayLevel : Button;
 @export var buttonEditLevel : Button;
@@ -20,6 +22,7 @@ extends Control
 @export var overlayNewLevel : ColorRect;
 @export var overlayImportLevel : ColorRect;
 @export var overlayDuplicateLevel : ColorRect;
+@export var overlayCredits : ColorRect;
 
 # New level overlay children
 @export var buttonNewLevelCreate : Button;
@@ -124,6 +127,8 @@ func _ready() -> void:
 	buttonDuplicateLevelCancel.pressed.connect(overlay_duplicate_level_hide);
 	globalSettingsButton.pressed.connect(masterManager.open_global_settings_menu);
 	buttonQuit.pressed.connect(exit_program);
+	buttonCredits.pressed.connect(show_credits_screen);
+	buttonCloseCredits.pressed.connect(show_credits_screen.bind(false));
 
 	spinBoxNewLevelX.value_changed.connect(update_level_size_warning);
 	spinBoxNewLevelY.value_changed.connect(update_level_size_warning);
@@ -644,3 +649,11 @@ func remove_recursively(directory: String) -> void:
 		DirAccess.remove_absolute(directory.path_join(file));
 
 	DirAccess.remove_absolute(directory)
+
+func show_credits_screen(show : bool = true) -> void:
+	if (show):
+		AudioManager.play_UI_effect("UISelection")
+		overlayCredits.show();
+	else:
+		AudioManager.play_UI_effect("UISelection")
+		overlayCredits.hide();

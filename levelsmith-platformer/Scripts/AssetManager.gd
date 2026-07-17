@@ -11,6 +11,7 @@ var audioToReplace : AudioStream;
 
 @export var imageSwapping : Control;
 @export var animationSwapping : Control;
+@export var audioSwapping : Control;
 
 # References to preview and file dialog
 @export var audioPreview : Panel;
@@ -20,6 +21,7 @@ var audioToReplace : AudioStream;
 # References to different elements of the menu
 @export var imagesTab : VBoxContainer;
 @export var animationsTab : VBoxContainer;
+@export var audioTab : VBoxContainer;
 @export var currentAssetLabel : Label;
 
 # Button references for connecting signals
@@ -34,6 +36,7 @@ var audioToReplace : AudioStream;
 # Keep track of the first selected item
 var firstAnimationSelected : AssetItem = null;
 var firstImageSelected : AssetItem = null;
+var firstAudioSelected : AssetItem = null;
 
 # Reference to the asset button scene for instantiating
 const ASSET_BUTTON : PackedScene = preload("res://Scenes/UI/AssetItem.tscn");
@@ -50,11 +53,11 @@ var currentSelectedItem : AssetItem;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Connect signals
-	loadFileButton.pressed.connect(open_image_selector);
+	loadFileButton.pressed.connect(open_file_selector);
 	refreshAllButton.pressed.connect(refresh_all);
 	resetButton.pressed.connect(reset_image_popup);
 	resetAllButton.pressed.connect(reset_all_popup);
-	fileSelect.file_selected.connect(imageSwapping.replace_image);
+	fileSelect.file_selected.connect(file_selected);
 	fileSelect.dir_selected.connect(animationSwapping.replace_animation);
 	
 	assetTabs.tab_changed.connect(on_asset_tab_changed);
@@ -92,6 +95,8 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 				firstImageSelected = newButton;
 			if (type == AssetItem.AssetType.ANIMATION && !firstAnimationSelected):
 				firstAnimationSelected = newButton;
+			if (type == AssetItem.AssetType.AUDIO && !firstAudioSelected):
+				firstAudioSelected = newButton;
 
 func clear_buttons(container : VBoxContainer):
 	for button : AssetItem in container.get_children() :
@@ -99,6 +104,8 @@ func clear_buttons(container : VBoxContainer):
 			firstImageSelected = null;
 		if (button.type == AssetItem.AssetType.ANIMATION && firstAnimationSelected):
 			firstAnimationSelected = null;
+		if (button.type == AssetItem.AssetType.AUDIO && firstAudioSelected):
+			firstAudioSelected = null;
 		button.queue_free();
 
 ## Finds an image by its name
@@ -149,7 +156,7 @@ func find_image_in_folder(folderPath: String) -> Image:
 			var image : Image = Image.new();
 			# Load the image based on it's file path
 			image.load(folderPath + "/" + imageName);
-			# Close file stream
+			# CloseClose file stream
 			dir.list_dir_end();
 			if (imageName.get_extension().to_lower() == "png"):
 				if (validate_image(image)):
@@ -186,6 +193,7 @@ func on_asset_tab_changed(tabIndex: int) -> void:
 		item_selected(firstAnimationSelected);
 	elif tabIndex == 2:
 		audioPreview.show();
+		item_selected(firstAudioSelected);
 
 #func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
 #	pass;
@@ -195,6 +203,8 @@ func reset() -> void:
 		imageSwapping.reset_image();
 	elif (currentSelectedItem.type == AssetItem.AssetType.ANIMATION):
 		animationSwapping.reset_animation();
+	elif (currentSelectedItem.type == AssetItem.AssetType.AUDIO):
+		audioSwapping.reset_audio();
 ## Creates the refresh asset popup.
 func reset_image_popup() -> void:
 	PopUpManager.create_reset_image_popup(Callable(self, "reset"), currentSelectedItem.displayName);
@@ -218,11 +228,15 @@ func reset_menu() -> void:
 		button.queue_free();
 	for button: Button in animationsTab.get_children():
 		button.queue_free();
+	for button: Button in audioTab.get_children():
+		button.queue_free();
 	firstImageSelected = null;
 	firstAnimationSelected = null;
+	firstAudioSelected = null;
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
+	generate_buttons("Audio", audioTab, AssetItem.AssetType.AUDIO);
 	on_asset_tab_changed(assetTabs.current_tab);
 
 #func reset_audio(audioName: String) -> void:
@@ -237,6 +251,7 @@ func item_selected(selectedItem: AssetItem) -> void:
 	AudioManager.play_UI_effect("UISelection");
 	# Pause the animation
 	animationSwapping.playingAnimation = false;
+	audioSwapping.preview_audio_finished();
 	# If the selected item is an image, replace its preview
 	if (selectedItem.type == AssetItem.AssetType.IMAGE):
 		imageSwapping.imageNameToReplace = selectedItem.assetName;
@@ -268,6 +283,10 @@ func item_selected(selectedItem: AssetItem) -> void:
 		for image in animation:
 			animationSwapping.currentLoadedAnimation.append(ImageTexture.create_from_image(image));
 		animationSwapping.update_animation_preview();
+	elif (selectedItem.type == AssetItem.AssetType.AUDIO):
+		audioSwapping.audioNameToReplace = selectedItem.assetName;
+		audioSwapping.load_preview_audio();
+
 	currentAssetLabel.text = selectedItem.displayName;
 	currentSelectedItem = selectedItem;
 
@@ -297,17 +316,36 @@ func create_file_tree() -> void:
 		dir.make_dir_recursive(filePath + "/Animations/ShootingEnemy/" + animation);
 	for animation: String in animationSwapping.flyingEnemyAnimations:
 		dir.make_dir_recursive(filePath + "/Animations/FlyingEnemy/" + animation);
+	for animation: String in animationSwapping.checkpointAnimations:
+		dir.make_dir_recursive(filePath + "/Animations/Checkpoint/" + animation);
 	# TODO: Add folders for audio
+	for audio: String in audioSwapping.audioTypes:
+		dir.make_dir_recursive(filePath + "/Audio/" + audio);
 
-func open_image_selector() -> void:
+func open_file_selector() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
 		fileSelect.title = "Replace " + imageSwapping.imageNameToReplace;
 		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_FILE;
+		fileSelect.clear_filters();
+		fileSelect.add_filter("*.png");
 	elif (currentSelectedItem.type == AssetItem.AssetType.ANIMATION):
 		fileSelect.title = "Replace " + animationSwapping.animationPreviewNameToReplace;
 		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_DIR;
+	elif (currentSelectedItem.type == AssetItem.AssetType.AUDIO):
+		fileSelect.title = "Replace " + audioSwapping.audioNameToReplace;
+		fileSelect.file_mode = FileDialog.FILE_MODE_OPEN_FILE;
+		fileSelect.clear_filters();
+		fileSelect.add_filter("*.mp3");
+		fileSelect.add_filter("*.wav");
+		fileSelect.add_filter("*.ogg");
 	fileSelect.popup_file_dialog();
+
+func file_selected(filePath : String) -> void:
+	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
+		imageSwapping.replace_image(filePath);
+	elif (currentSelectedItem.type == AssetItem.AssetType.AUDIO):
+		audioSwapping.replace_audio(filePath);
 
 ## Creates a new missing texture for use when a texture is... missing.
 func get_missing_image() -> Image:
@@ -318,7 +356,7 @@ func get_missing_image() -> Image:
 	
 ## Clears any images in the replacement directory
 ## returns: The replacement directory
-func clear_image(nameToClear : String) -> DirAccess:
+func clear_files(nameToClear : String) -> DirAccess:
 	var targetFilePath : String = FileSearch.find_directory_by_name(nameToClear);
 	var targetDirectory : DirAccess  = DirAccess.open(targetFilePath);
 	
@@ -339,6 +377,7 @@ func setup() -> void:
 	print("Setup");
 	filePath = masterManager.loadedLevelPath + "Assets";
 	FileSearch.filePath = filePath;
+	AudioManager.audioLibraryPath = filePath + "/Audio/";
 	# Checks if the user has an assets root folder, creates one if not
 	var dir : DirAccess = DirAccess.open(filePath);
 	if (!dir || dir.get_directories().is_empty()):
@@ -346,9 +385,11 @@ func setup() -> void:
 	# Clear all buttons;
 	clear_buttons(imagesTab);
 	clear_buttons(animationsTab);
+	clear_buttons(audioTab);
 	# Generate all buttons under their tabs
 	generate_buttons("Tiles", imagesTab);
 	generate_buttons("Props", imagesTab);
 	generate_buttons("Animations", animationsTab, AssetItem.AssetType.ANIMATION);
+	generate_buttons("Audio", audioTab, AssetItem.AssetType.AUDIO);
 	on_asset_tab_changed(assetTabs.current_tab);
 	refresh_all();

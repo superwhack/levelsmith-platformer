@@ -66,6 +66,11 @@ func _ready() -> void:
 func pause_music(pause : bool) -> void:
 	musicPlayer.stream_paused = pause;
 
+func pause_effects(pause : bool) -> void:
+	for player in inusePlayers:
+		player.stream_paused = pause;
+
+
 ## Play the music to preview sound levels
 ## musicName: music to play
 func play_music_preview(musicName:  String) -> void:
@@ -109,55 +114,72 @@ func update_volume() -> void:
 func play_UI_effect(effectName: String) -> void:
 	if queue.size() >= AUDIO_QUEUE_LIMIT:
 		return;
+	# Check all players in use, if any are playing the same audio, check if the cooldown is up, return if not
+	for player in inusePlayers:
+		if (player.stream != null):
+			if (player.stream.has_meta("audioName")):
+				if (player.stream.get_meta("audioName") == effectName):
+					if (player.get_playback_position() + AudioServer.get_time_since_last_mix() <= uiEffectCooldown):
+						return;
 	var fullPath : String = UI_AUDIO_LIBRARY_PATH + effectName;
 	if (FileAccess.file_exists(fullPath + ".mp3")):
 		queue.append(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		queue.append(fullPath + ".wav");
-
-
+	elif (FileAccess.file_exists(fullPath + ".ogg")):
+		queue.append(fullPath + ".ogg");
 
 ## Play the music track
 ## musicName: name of the sound effect
 func play_music(musicName: String) -> void:
 	musicPlayer.stop();
-	var fullPath : String = audioLibraryPath + musicName;
+	var fullPath : String = audioLibraryPath + musicName + "/" + musicName;
 	if (FileAccess.file_exists(fullPath + ".mp3")):
 		musicPlayer.stream = AudioStreamMP3.load_from_file(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		musicPlayer.stream = AudioStreamWAV.load_from_file(fullPath + ".wav");
+	elif (FileAccess.file_exists(fullPath + ".ogg")):
+		musicPlayer.stream = AudioStreamOggVorbis.load_from_file(fullPath + ".ogg");
 	else:
-		print(musicName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
-		# Under the assumption all backups will be .mp3 for music
-		musicPlayer.stream = load(BACKUP_AUDIO_LIBRARY_PATH + musicName + ".mp3");
+		# Under the assumption all backups will be .wav for music
+		musicPlayer.stream = load(BACKUP_AUDIO_LIBRARY_PATH + "LevelMusic/LevelMusic.wav");
 	musicPlayer.play();
+
 
 ## Add specified SFX to the queue
 ## effectName: name of the sound effect
 func play_effect(effectName: String) -> void:
 	if queue.size() >= AUDIO_QUEUE_LIMIT:
 		return;
-	var fullPath : String = audioLibraryPath + effectName;
+	var fullPath : String = audioLibraryPath + effectName + "/" + effectName;
 	# If the path points to a folder, then one random file from the folder needs to be selected instead.
-	if DirAccess.dir_exists_absolute(fullPath + "/"):
-		var validFiles : PackedStringArray;
-		var files = DirAccess.get_files_at(fullPath);
-		# Only non .imports are accepted
-		for file in files:
-			if !file.ends_with(".import"):
-				validFiles.append(file);
-		var randomFileIndex = randi() % validFiles.size();
-		fullPath += "/" + (validFiles[randomFileIndex]);
-		queue.append(fullPath);
+	# NOTE : This code is used for choosing a random sound effect from a folder of multiple sound effects. This is currently not implemented.
+	#if DirAccess.dir_exists_absolute(fullPath + "/"):
+		#var validFiles : PackedStringArray;
+		#var files = DirAccess.get_files_at(fullPath);
+		## Only non .imports are accepted
+		#for file in files:
+			#if !file.ends_with(".import"):
+				#validFiles.append(file);
+		#var randomFileIndex = randi() % validFiles.size();
+		#fullPath += "/" + (validFiles[randomFileIndex]);
+		#queue.append(fullPath);
 	# Else just see if it's a .mp3 or .wav
-	elif (FileAccess.file_exists(fullPath + ".mp3")):
+	if (FileAccess.file_exists(fullPath + ".mp3")):
 		queue.append(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		queue.append(fullPath + ".wav");
+	elif (FileAccess.file_exists(fullPath + ".ogg")):
+		queue.append(fullPath + ".ogg");
 	else:
-		print(effectName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .wav for effects
-		queue.append(BACKUP_AUDIO_LIBRARY_PATH + effectName + ".wav")
+		queue.append(BACKUP_AUDIO_LIBRARY_PATH + effectName + "/" + effectName + ".wav")
+	# Iterate through each in use audio player, if any are playing the current audio, stop the other one.
+	for player in inusePlayers:
+		if (player.stream != null):
+			if (player.stream.has_meta("audioName")):
+				if (player.stream.get_meta("audioName") == effectName):
+					player.stop();
 
 ## Add and play a new walking effect, only one at a time
 ## effectName: name of the walking effect
@@ -176,27 +198,29 @@ func play_effect_walking(walkingEffect: Global.WalkingEffect) -> void:
 			effectName = "WalkingIce";
 		Global.WalkingEffect.SLIME:
 			effectName = "WalkingSlime";
-	var fullPath : String = audioLibraryPath + effectName;
+	var fullPath : String = audioLibraryPath + effectName + "/" + effectName;
 	# If the path points to a folder, then one random file from the folder needs to be selected instead.
-	if DirAccess.dir_exists_absolute(fullPath + "/"):
-		var validFiles : PackedStringArray;
-		var files = DirAccess.get_files_at(fullPath);
-		# Only non .imports are accepted
-		for file in files:
-			if !file.ends_with(".import"):
-				validFiles.append(file);
-		var randomFileIndex = randi() % validFiles.size();
-		fullPath += "/" + (validFiles[randomFileIndex]);
-		walkingPlayer.stream = load(fullPath);
+	# NOTE : This code is used for choosing a random sound effect from a folder of multiple sound effects. This is currently not implemented.
+	#if (DirAccess.dir_exists_absolute(fullPath + "/") && FileSearch.file_count_in_folder(effectName) > 0):
+		#var validFiles : PackedStringArray;
+		#var files = DirAccess.get_files_at(fullPath);
+		## Only non .imports are accepted
+		#for file in files:
+			#if !file.ends_with(".import"):
+				#validFiles.append(file);
+		#var randomFileIndex = randi() % validFiles.size();
+		#fullPath += "/" + (validFiles[randomFileIndex]);
+		#walkingPlayer.stream = load(fullPath);
 	# Else just see if it's a .mp3 or .wav
-	elif (FileAccess.file_exists(fullPath + ".mp3")):
-		walkingPlayer.stream = load(fullPath + ".mp3");
+	if (FileAccess.file_exists(fullPath + ".mp3")):
+		walkingPlayer.stream = AudioStreamMP3.load_from_file(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
-		walkingPlayer.stream = load(fullPath + ".wav");
+		walkingPlayer.stream = AudioStreamWAV.load_from_file(fullPath + ".wav");
+	elif (FileAccess.file_exists(fullPath + ".ogg")):
+		walkingPlayer.stream = AudioStreamOggVorbis.load_from_file(fullPath + ".ogg");
 	else:
-		print(effectName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
 		# Under the assumption all backups will be .wav for effects
-		walkingPlayer.stream = load(BACKUP_AUDIO_LIBRARY_PATH + effectName + ".wav")
+		walkingPlayer.stream = load(BACKUP_AUDIO_LIBRARY_PATH + effectName + "/" + effectName + ".wav")
 	walkingPlayer.play();
 
 ## Reset and stop all audio
@@ -217,8 +241,10 @@ func play_asset(assetName: String) -> void:
 		assetManagerPlayer.stream = AudioStreamMP3.load_from_file(fullPath + ".mp3");
 	elif (FileAccess.file_exists(fullPath + ".wav")):
 		assetManagerPlayer.stream = AudioStreamWAV.load_from_file(fullPath + ".wav");
+	elif (FileAccess.file_exists(fullPath + ".ogg")):
+		assetManagerPlayer.stream = AudioStreamOggVorbis.load_from_file(fullPath + ".ogg");
 	else:
-		print(assetName, " file not found or doesn't use .wav/.mp3! Reading backup instead.");
+		print(assetName, " file not found or doesn't use .wav/.mp3/.ogg! Reading backup instead.");
 	assetManagerPlayer.play();
 
 ## If there are any current sounds in the queue and any avaliable players, start playing the sound.
@@ -238,15 +264,50 @@ func _process(delta: float) -> void:
 		audioName = audioName.erase(audioName.rfind("."), 4);
 		if soundLevels.has(audioName):
 			availablePlayers[0].volume_db = linear_to_db(masterVolume * SFXVolume * soundLevels[audioName]);
-		
-		if (path.ends_with(".mp3")):
+		if (path.begins_with("res://")):
+			availablePlayers[0].stream = load(path);
+		elif (path.ends_with(".mp3")):
 			availablePlayers[0].stream = AudioStreamMP3.load_from_file(path);
 		elif (path.ends_with(".wav")):
 			availablePlayers[0].stream = AudioStreamWAV.load_from_file(path);
+		elif (path.ends_with(".ogg")):
+			availablePlayers[0].stream = AudioStreamOggVorbis.load_from_file(path);
 		else:
 			print("Error, somehow a different extention made it into here!")
 		availablePlayers[0].play();
 		inusePlayers.append(availablePlayers[0]);
 		availablePlayers.pop_front();
 
+func find_audio_in_folder(folderPath : String) -> AudioStream:
+# Opens the folder at the given folderName path
+	var dir : DirAccess = DirAccess.open(folderPath);
+	# If a folder was sucessfully opened
+	if (dir):
+		# Initialize file stream
+		dir.list_dir_begin();
+		# Get the image name in the folder
+		var audioName : String = dir.get_next();
+		# If there is no image in the folder, return null
+		if (audioName == ""):
+			return null;
+		else:
+			var audio : AudioStream;
+			
+			if (audioName.get_extension().to_lower() == "mp3"):
+				audio = AudioStreamMP3.new();
+				audio = AudioStreamMP3.load_from_file(folderPath + "/" + audioName);
+			elif (audioName.get_extension().to_lower() == "wav"):
+				audio = AudioStreamWAV.new();
+				audio = AudioStreamWAV.load_from_file(folderPath + "/" + audioName);
+			elif (audioName.get_extension().to_lower() == "ogg"):
+				audio = AudioStreamOggVorbis.new();
+				audio = AudioStreamOggVorbis.load_from_file(folderPath + "/" + audioName);
+			else:
+				PopUpManager.create_error_popup("File not valid", "Non mp3/wav file in audio folder");
+			if (audio != null):
+				return audio;
+			return null;
+	else:
+		PopUpManager.create_error_popup("Could not open file path", "Could not open file at " + folderPath + ".");
+		return null;
 #func find_effect_name(path: String) -> String:

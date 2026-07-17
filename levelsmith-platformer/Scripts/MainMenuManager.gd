@@ -55,6 +55,12 @@ extends Control
 ## A reference to a packed scene of a clickable Level List Item.
 @export var levelListItem : PackedScene;
 
+## Reference to current software version
+@export var softwareVersion : Label;
+
+## reference to level check mark
+@export var validatedCheckmark : TextureRect;
+
 ## References to meta data values.
 @export var levelName : Label;
 @export var author : Label;
@@ -75,6 +81,7 @@ var levelItems: Dictionary = {} # path -> item
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	softwareVersion.text = str(Global.VERSION);
 	# Hides other screens
 	overlayImportLevel.hide();
 	overlayNewLevel.hide();
@@ -353,6 +360,7 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 	item.objectCount = str(int(metadata.get("objects", str(0))));
 	item.version = str(metadata.get("version", Global.VERSION));
 	item.favorited = metadata.get("favorited", false);
+	item.validated = metadata.get("validated", false);
 	if (item.favorited):
 		item.levelFavoriteIcon.show();
 	else:
@@ -386,7 +394,10 @@ func update_metadata(item) -> void:
 		buttonFavoriteLevel.icon = favoriteFilled;
 	else:
 		buttonFavoriteLevel.icon = favoriteEmpty;
-
+	if (item.validated):
+		validatedCheckmark.show();
+	else:
+		validatedCheckmark.hide();
 
 ## Clears the metadata selection.
 func clear_selection() -> void:
@@ -400,6 +411,7 @@ func clear_selection() -> void:
 		version.text = "";
 		preview.texture = previewDefault;
 		buttonFavoriteLevel.icon = favoriteEmpty;
+		validatedCheckmark.hide();
 
 ## Opens OS file explorer to the users Level folder.
 func open_level_folder() -> void:

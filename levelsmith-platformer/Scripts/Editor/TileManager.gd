@@ -25,7 +25,7 @@ func place_tile(clickPosition: Vector2) -> void:
 	if (clickedTileId >= editorManager.tileCount): 
 		#AudioManager.play_UI_effect("TilePlaceError");
 		return;
-	if (clickedTileId == Global.BEDROCK_TILE || (clickedTileId != Global.TileType.SLOPE && clickedTileId == brushObject)): 
+	if (clickedTileId == Global.BEDROCK_CORNER || clickedTileId == Global.BEDROCK_WALL || (clickedTileId != Global.TileType.SLOPE && clickedTileId == brushObject)): 
 		return;
 	if clickedTileId == Global.TileType.SLOPE && tileMap.get_cell_alternative_tile(clickPosition) == toolManager.currentObjectRotation:
 		return;

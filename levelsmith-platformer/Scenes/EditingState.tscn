@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/Editor/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
-[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
+[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
 [ext_resource type="Texture2D" uid="uid://cicj1jmudfxxy" path="res://Assets/UserInterface/Buttons/ButtonIcons/Home.png" id="7_20xd7"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://e2cnr04fpgrl" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
 [ext_resource type="Texture2D" uid="uid://8pwuej3wvl0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
+[ext_resource type="Texture2D" uid="uid://kedeb3vd63r6" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_vrcqo"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="20_fnjh2"]
@@ -134,6 +135,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_vertical = 4
+tooltip_text = "Exit to Home"
 icon_alignment = 1
 expand_icon = true
 
@@ -179,6 +181,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_vertical = 4
+tooltip_text = "Save [Ctrl+S]"
 icon_alignment = 1
 expand_icon = true
 
@@ -285,6 +288,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
+tooltip_text = "Asset Manager"
 icon_alignment = 1
 expand_icon = true
 
@@ -309,6 +313,7 @@ custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
+tooltip_text = "Level Settings"
 icon_alignment = 1
 expand_icon = true
 
@@ -324,7 +329,33 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/SettingsButton/MarginContainer" unique_id=1811417484]
+[node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/LevelSettingsButton/MarginContainer" unique_id=1811417484]
+layout_mode = 2
+texture = ExtResource("14_vrcqo")
+expand_mode = 1
+
+[node name="GlobalSettingsButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=1145625221]
+custom_minimum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(65, 65)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Global Settings"
+icon_alignment = 1
+expand_icon = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/GlobalSettingsButton" unique_id=1272596027]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/GlobalSettingsButton/MarginContainer" unique_id=1158301421]
 layout_mode = 2
 texture = ExtResource("14_rdu5w")
 
@@ -378,6 +409,20 @@ metadata/_edit_use_anchors_ = true
 
 [node name="ErrorPopUpLayer" type="CanvasLayer" parent="ScreenUI/OverlayLayer" unique_id=302907189]
 visible = false
+
+[node name="HoverPopUpContainer" parent="ScreenUI" unique_id=1808818748 instance=ExtResource("16_rdu5w")]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -446.0
+offset_top = 80.0
+offset_right = 0.0
+offset_bottom = 179.0
+grow_horizontal = 0
+grow_vertical = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=738974318]
 

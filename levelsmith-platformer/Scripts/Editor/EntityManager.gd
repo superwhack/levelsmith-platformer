@@ -122,7 +122,7 @@ func delete_entity (clickPosition: Vector2) -> void:
 	var clickedObjectId : int = tileMap.get_cell_source_id(clickPosition);
 	var clickedEntity : Node2D = get_scene_at_cell(clickPosition);
 	
-	if (clickedObjectId < editorManager.tileCount || clickedObjectId >= Global.BEDROCK_TILE): return;
+	if (clickedObjectId < editorManager.tileCount || clickedObjectId >= Global.BEDROCK_CORNER): return;
 	elif (clickedObjectId == Global.EntityType.PLAYER): editorManager.playerExists = false;
 	elif (clickedObjectId == Global.EntityType.GOAL): goalCount -= 1;
 	elif (clickedEntity is Enemy || clickedEntity is MovingPlatform):

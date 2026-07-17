@@ -141,7 +141,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				if (entityManager.duplicatingResource != null && Input.is_action_pressed("copy")):
 					entityManager.duplicatingResource = null;
 				# If the clicked cell is an entity and the click was short, edit its properties
-				elif (currentCell > Global.EntityType.GOAL && currentCell < Global.EntityType.PROP1 && !isMoving && currentCell != Global.EntityType.COIN):
+				elif (currentCell > Global.EntityType.GOAL && currentCell < Global.EntityType.PROP1 && !isMoving && currentCell != Global.EntityType.COIN && currentCell != Global.EntityType.CHECKPOINT):
 					if Input.is_action_pressed("copy") && previousCell != -1 && currentCell != Global.EntityType.PLAYER:
 						entityManager.duplicate_entity(editorManager.currentMousePosition);
 					else:
@@ -154,7 +154,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				entityManager.delete_entity(editorManager.currentMousePosition);
 			
 			# If left click is being held, pick up the current tile unless it's empty air.
-			if (isMoving && prevBrushObject == -1 && previousCell != -1) && previousCell >= editorManager.tileCount && previousCell < Global.BEDROCK_TILE:
+			if (isMoving && prevBrushObject == -1 && previousCell != -1) && previousCell >= editorManager.tileCount && previousCell < Global.BEDROCK_CORNER:
 				entityManager.move_entity(previousClickPos);
 			# If the tile is empty, then treat click and drag like a normal place (once the drag is release)
 			elif (isMoving && prevBrushObject == -1):

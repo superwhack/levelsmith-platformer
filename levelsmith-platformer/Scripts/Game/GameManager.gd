@@ -44,6 +44,7 @@ var totalCoins : int = 0
 # Player and its position
 var player : CharacterBody2D;
 var playerStartingPosition : Vector2;
+var playerCheckpointPosition := Vector2(-1, -1);
 
 # Reference to the tile set
 var tileMap : TileMapLayer;
@@ -60,21 +61,38 @@ func pause() -> void:
 		pauseScreen.hide();
 		bottomScreenGroup.show();
 		playState = PlayState.PLAY;
+		AudioManager.pause_music(false);
+		AudioManager.pause_effects(false);
 	else:
 		get_tree().paused = true;
 		pauseScreen.show();
 		bottomScreenGroup.hide();
 		playState = PlayState.PAUSE;
+		AudioManager.pause_music(true);
+		AudioManager.pause_effects(true);
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
+	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UISelection");
+	AudioManager.play_music("LevelMusic");
 	pauseButton.show();
 	get_tree().paused = false;
 	winScreen.hide();
 	goalReached = false;
 	Global.reload.emit();
 	start();
+
+
+func freeze(locked: bool) -> void:
+	if locked:
+		process_mode = Node.PROCESS_MODE_DISABLED;
+	else:
+		process_mode = Node.PROCESS_MODE_INHERIT;
+
+func full_restart() -> void:
+	playerCheckpointPosition = Vector2(-1, -1);
+	await reset();
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
@@ -96,11 +114,12 @@ func start() -> void:
 		winCoinHBox.hide();
 	
 	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
-	for frame in range(1, 5):
+	while (get_tree().get_node_count_in_group("Player") == 1):
 		await get_tree().process_frame;
 
 	# Get a reference to the player and apply its preset
 	player = get_tree().get_nodes_in_group("Player")[get_tree().get_node_count_in_group("Player") - 1];
+	
 	player.playerMovementPreset = playerPreset;
 	player.apply_preset(playerPreset);
 	playerStartingPosition = player.position;
@@ -117,6 +136,8 @@ func start() -> void:
 		var propertyFile : Resource = load("user://Resources/Enemies/" + enemyProperty);
 		for node in tileMap.get_children():
 			if tileMap.local_to_map(node.global_position) == propertyFile.position:
+				if !node is EnemyFlyer:
+					node.position += Vector2(0, 20)
 				node.apply_script(propertyFile);
 				node.active = false;
 				break;
@@ -131,9 +152,17 @@ func start() -> void:
 	# Unpause player
 	player.process_mode = Node.PROCESS_MODE_INHERIT;
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+	
+	# Set player position to the checkpoint
+	if playerCheckpointPosition != Vector2(-1, -1):
+		for node in tileMap.get_children():
+			if (node.global_position - Vector2(1, 0)) == playerCheckpointPosition:
+				node.animatedSprite.play("CheckpointActive");
+		player.global_position = playerCheckpointPosition;
+	else:
+		testingTime = 0.0;
 
 	# Start level timer
-	testingTime = 0.0;
 	timerRunning = true;
 	timerLabel.show();
 	update_timer(timerLabel);
@@ -143,14 +172,15 @@ func start() -> void:
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:
 	Global.death.connect(reset);
-	Global.complete.connect(print_level_completion_time);
 	Global.complete.connect(level_complete);
+	Global.checkpointCollected.connect(collect_checkpoint);
 	Global.onCoinCollected.connect(_on_coin_collected);
-	resetButton.pressed.connect(reset);
+	resetButton.pressed.connect(full_restart);
 	pauseButton.pressed.connect(pause);
 	resumeButton.pressed.connect(pause);
 	replayButton.pressed.connect(replay_level);
 	editorButton.pressed.connect(return_to_editor);
+
 
 func _process(delta: float) -> void:
 	if timerRunning:
@@ -169,9 +199,11 @@ func update_coin_counter(label: RichTextLabel) -> void:
 	if totalCoins > 0:
 		label.append_text("%02d" % [coinCount])
 
+func collect_checkpoint(newSpawn: Vector2) -> void:
+	playerCheckpointPosition = newSpawn;
+	
 ## Prints the final completion time and stops the level timer
 func print_level_completion_time() -> void:
-	goalReached = true;
 	timerRunning = false;
 	var minutes := int(testingTime) / 60;
 	var seconds := int(testingTime) % 60;
@@ -187,7 +219,13 @@ func update_timer(label: RichTextLabel) -> void:
 
 ## Pauses gameplay, displays the win screen, and updates the completion statistics
 func level_complete() -> void:
+	# If the goal's already been reached, don't run this again
+	if goalReached:
+		return;
+	AudioManager.pause_music(true);
+	AudioManager.reset_audio();
 	goalReached = true;
+	print_level_completion_time();
 	pauseButton.hide();
 	get_tree().paused = true;
 	update_coin_counter(winCoinLabel);
@@ -204,14 +242,13 @@ func level_complete() -> void:
 func return_to_editor() -> void:
 	get_tree().paused = false;
 	winScreen.hide();
-	goalReached = false;
 	timerRunning = false;
 	masterManager.edit();
 	
 
 ## Restarts the current level from the beginning
 func replay_level() -> void:
+	AudioManager.play_music("LevelMusic");
 	get_tree().paused = false;
 	winScreen.hide();
-	goalReached = false;
-	reset();
+	full_restart();

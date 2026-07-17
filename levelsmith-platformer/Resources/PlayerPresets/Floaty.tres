@@ -5,12 +5,12 @@
 [resource]
 script = ExtResource("1_gtxmj")
 health = 3
-groundSpeed = 2.5
-acceleration = 0.8
-deceleration = 0.8
-jumpHeight = 3.0
-airControl = 0.4
+groundSpeed = 1.5
+acceleration = 90.0
+deceleration = 90.0
+jumpHeight = 4.0
+airControl = 60.0
 fallSpeed = 0.6
-coyoteTime = 0.25
-doubleJump = true
+coyoteTime = 0.3
+oneways = true
 metadata/_custom_type_script = "uid://bp8erofrb01fc"

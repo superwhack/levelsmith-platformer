@@ -2,8 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_v6rci"]
 [ext_resource type="Script" uid="uid://bwa6vqp2x282t" path="res://Scripts/LevelListItem.gd" id="2_3yt47"]
-[ext_resource type="Theme" uid="uid://dsbkv6718ooq1" path="res://Resources/LevelListItem.tres" id="3_3yt47"]
-[ext_resource type="Texture2D" uid="uid://vhfbfauqi788" path="res://Assets/Sprites/UI/Invalid.png" id="4_3yt47"]
+[ext_resource type="Texture2D" uid="uid://rolae2k5sktu" path="res://Assets/Sprites/UI/Invalid.png" id="4_3yt47"]
 [ext_resource type="Texture2D" uid="uid://2j2py7hm4a7o" path="res://Assets/Sprites/UI/FavoriteMedium.PNG" id="5_3yt47"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_ilhfk"]
@@ -40,13 +39,11 @@ layout_mode = 2
 
 [node name="LevelCard" type="Button" parent="HBoxContainer/LevelMarginContainer" unique_id=1645077814]
 layout_mode = 2
-theme = ExtResource("3_3yt47")
-theme_type_variation = &"LevelItemBlack"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_ilhfk")
 
 [node name="LevelHBoxContainer" type="HBoxContainer" parent="HBoxContainer/LevelMarginContainer/LevelCard" unique_id=1106093210]
-layout_mode = 0
+layout_mode = 1
 offset_left = 12.0
 offset_right = 655.0
 offset_bottom = 101.0

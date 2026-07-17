@@ -12,7 +12,7 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerFallSpeedSlider", "playerCoyoteTimeSlider", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "presetOptions", "closeButton")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "presetOptions", "closeButton", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerSlopeSlowdownCheckbox", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "movingPlatformDelaySlider", "movingPlatformEasingCheckbox", "movingPlatformMomentumCheckbox", "movingPlatformVisibilityCheckbox")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -26,6 +26,8 @@ theme = ExtResource("1_afykx")
 theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
 script = ExtResource("1_tnep3")
 entityName = NodePath("ScrollContainer/MainMargin/RootVBox/EntityNameVBox/EntityName")
+presetOptions = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions")
+closeButton = NodePath("ScrollContainer/MainMargin/RootVBox/HeaderVBox/HeaderHbox/CloseButton")
 playerMenu = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties")
 patrollingMenu = NodePath("ScrollContainer/MainMargin/RootVBox/PatrollingMargin")
 shootingMenu = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin")
@@ -38,8 +40,10 @@ playerAccelerationSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerP
 playerDecelerationSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerDeceleration")
 playerJumpSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerJump")
 playerAirControlSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerAirControl")
-playerFallSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerFallSpeed")
+playerGravitySlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerGravity")
 playerCoyoteTimeSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerCoyoteTime")
+playerSlopeSlowdownCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerSlopeSlowdown")
+playerOnewaysCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerOneWays")
 playerDoubleJumpCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerDoubleJump")
 playerWallJumpCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerWallJump")
 playerWallJumpDecayCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerWallJumpDecay")
@@ -61,8 +65,10 @@ movingPlatformSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/Moving
 movingPlatformOffsetXSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Xoffset")
 movingPlatformOffsetYSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Yoffset")
 movingPlatformProgressSlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/Progress")
-presetOptions = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PresetMargin/PresetHBox/PresetOptions")
-closeButton = NodePath("ScrollContainer/MainMargin/RootVBox/HeaderVBox/HeaderHbox/CloseButton")
+movingPlatformDelaySlider = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/MoveDelay")
+movingPlatformEasingCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/MoveEasing")
+movingPlatformMomentumCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/MoveMomentum")
+movingPlatformVisibilityCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/MoveVisibility")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1015369895]
 layout_mode = 1
@@ -99,11 +105,32 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="CloseButton" type="Button" parent="ScrollContainer/MainMargin/RootVBox/HeaderVBox/HeaderHbox" unique_id=463893950]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_styles/normal = SubResource("StyleBoxEmpty_g4v7s")
-icon = ExtResource("3_ehgsd")
 icon_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/MainMargin/RootVBox/HeaderVBox/HeaderHbox/CloseButton" unique_id=1223764422]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/MainMargin/RootVBox/HeaderVBox/HeaderHbox/CloseButton/MarginContainer" unique_id=1045718816]
+layout_mode = 2
+texture = ExtResource("3_ehgsd")
+expand_mode = 3
+
+[node name="CloseButtonSizr" type="Control" parent="ScrollContainer/MainMargin/RootVBox/HeaderVBox/HeaderHbox" unique_id=1001746785]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/MainMargin/RootVBox/HeaderVBox" unique_id=490860200]
 layout_mode = 2
@@ -118,13 +145,14 @@ text = "Name"
 
 [node name="PlayerProperties" type="VBoxContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1398037876]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="PlayerHealth" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=305056832 instance=ExtResource("2_w5eld")]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Health"
 propertyUnit = "HP"
-minMax = Vector2(1, 4)
+minMax = Vector2(1, 5)
 sliderStep = 1.0
 
 [node name="PlayerSpeed" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=2049970631 instance=ExtResource("2_w5eld")]
@@ -139,17 +167,19 @@ sliderStep = 0.1
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Acceleration"
-propertyUnit = "m/s/s"
-minMax = Vector2(0.5, 1)
-sliderStep = 0.05
+propertyUnit = "%"
+minMax = Vector2(50, 100)
+sliderStep = 5.0
+valueAppend = "%"
 
 [node name="PlayerDeceleration" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=2070335992 instance=ExtResource("2_w5eld")]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Deceleration"
-propertyUnit = "m/s/s"
-minMax = Vector2(0.5, 1)
-sliderStep = 0.05
+propertyUnit = "%"
+minMax = Vector2(50, 100)
+sliderStep = 5.0
+valueAppend = "%"
 
 [node name="PlayerJump" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=1835714671 instance=ExtResource("2_w5eld")]
 custom_minimum_size = Vector2(0, 80)
@@ -168,10 +198,10 @@ minMax = Vector2(20, 100)
 sliderStep = 1.0
 valueAppend = "%"
 
-[node name="PlayerFallSpeed" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
+[node name="PlayerGravity" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=400909686 instance=ExtResource("2_w5eld")]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
-propertyName = "Fall Speed"
+propertyName = "Gravity"
 propertyUnit = "m/s"
 minMax = Vector2(0.1, 5)
 sliderStep = 0.1
@@ -183,6 +213,16 @@ propertyName = "Coyote Time"
 propertyUnit = "Seconds"
 minMax = Vector2(0, 1)
 sliderStep = 0.1
+
+[node name="PlayerSlopeSlowdown" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=1979292155 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Slowdown on Slopes"
+
+[node name="PlayerOneWays" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=403589801 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Drop Through One-Ways"
 
 [node name="PlayerDoubleJump" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=767046943 instance=ExtResource("3_1mv14")]
 layout_mode = 2
@@ -295,14 +335,14 @@ sliderStep = 0.1
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Fire Rate"
-propertyUnit = "RPM"
+propertyUnit = "Shots Per Second"
 minMax = Vector2(0.2, 5)
 sliderStep = 0.1
 
 [node name="ShootingBounce" parent="ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=1978534166 instance=ExtResource("3_1mv14")]
 layout_mode = 2
 size_flags_horizontal = 0
-propertyName = "Projectile Bounce"
+propertyName = "Bounce on Projectiles"
 
 [node name="ShootingGravity" parent="ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=708611749 instance=ExtResource("3_1mv14")]
 layout_mode = 2
@@ -350,6 +390,30 @@ propertyUnit = "%"
 minMax = Vector2(0, 100)
 sliderStep = 1.0
 valueAppend = "%"
+
+[node name="MoveDelay" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=1261655111 instance=ExtResource("2_w5eld")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Delay"
+propertyUnit = "s"
+minMax = Vector2(0, 2)
+sliderStep = 0.1
+valueAppend = "s"
+
+[node name="MoveEasing" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=1394719923 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Move Easing"
+
+[node name="MoveMomentum" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=794690166 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Apply Momentum"
+
+[node name="MoveVisibility" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=669086122 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Show Line"
 
 [node name="FlyingProperties" type="VBoxContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1573236817]
 visible = false

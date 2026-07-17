@@ -72,6 +72,7 @@ playPopUp = NodePath("EditorManager/ScreenUI/MainColumn/ContentRow/HoverPopUpCon
 tileMap = NodePath("EditorManager/Tiles")
 previewTileMap = NodePath("EditorManager/PreviewTile")
 gridLines = NodePath("EditorManager/GridLines")
+worldSize = null
 propertyMenu = NodePath("EditorManager/ScreenUI/MainColumn/ContentRow/PropertiesPanel/PropertyMenu")
 
 [node name="AnimationManager" type="Node" parent="." unique_id=343134313]
@@ -145,9 +146,8 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("12_8fjml")
 
-[connection signal="pressed" from="EditorManager/CanvasLayer/AssetManager/ContentContainer/MainContentContainer/RightColumnContainer/BottomButtonContainer/CloseButton" to="EditorManager" method="close_asset_manager" flags=3]
-
 [editable path="EditorManager"]
+[editable path="EditorManager/ScreenUI/MainColumn/ContentRow/PropertiesPanel/PropertyMenu"]
 [editable path="EditorManager/CanvasLayer/AssetManager"]
 [editable path="GameManager"]
 [editable path="GameManager/CanvasLayer/WinScreen"]

@@ -51,6 +51,7 @@ Moving="Moving entities that need to have process turned off"
 Platform="Moving platforms"
 Coin="Coins"
 Goal="Goal objects"
+Checkpoint=""
 
 [input]
 
@@ -239,3 +240,4 @@ toggle-background={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+environment/defaults/default_clear_color=Color(0.105882354, 0.105882354, 0.105882354, 1)

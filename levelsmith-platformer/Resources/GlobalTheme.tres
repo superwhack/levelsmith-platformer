@@ -5,7 +5,7 @@
 [ext_resource type="StyleBox" uid="uid://73sk20dbjygq" path="res://Assets/UserInterface/FocusStyleBox.tres" id="3_3vm5f"]
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_us2oy"]
 [ext_resource type="StyleBox" uid="uid://c77hfkgnkauj3" path="res://Assets/UserInterface/ButtonNormalStyleBox.tres" id="5_cb87k"]
-[ext_resource type="Texture2D" uid="uid://b8xa7ju22bqo4" path="res://Assets/Sprites/UI/ButtonRadioSelected16px.png" id="6_a0yo8"]
+[ext_resource type="Texture2D" uid="uid://05kws516p2q8" path="res://Assets/Sprites/UI/ButtonRadioSelected16px.png" id="6_a0yo8"]
 [ext_resource type="Texture2D" uid="uid://duy2r0hf6kfjm" path="res://Assets/Sprites/UI/CheckBoxOn.png" id="6_p7whp"]
 [ext_resource type="Texture2D" uid="uid://dsacdvr0wwdow" path="res://Assets/Sprites/UI/ButtonRadioNormal16px.png" id="7_ofwiu"]
 [ext_resource type="Texture2D" uid="uid://ctkp25yl7wov4" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="8_2y7gw"]

@@ -74,6 +74,7 @@ func pause() -> void:
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
+	freeze(true);
 	await masterManager.screen_wipe_in();
 	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UISelection");
@@ -94,7 +95,6 @@ func freeze(locked: bool) -> void:
 		process_mode = Node.PROCESS_MODE_INHERIT;
 
 func full_restart() -> void:
-	freeze(true);
 	playerCheckpointPosition = Vector2(-1, -1);
 	pausable = false;
 	await reset();
@@ -252,7 +252,6 @@ func return_to_editor() -> void:
 	timerRunning = false;
 	masterManager.edit();
 	pausable = false;
-	
 
 ## Restarts the current level from the beginning
 func replay_level() -> void:

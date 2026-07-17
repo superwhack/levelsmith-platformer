@@ -450,10 +450,8 @@ func open_level_folder() -> void:
 func play_current_level() -> void:
 	if (!selectedItem):
 		return;
-
 	AudioManager.play_UI_effect("UI_Selection");
 	masterManager.load_level(selectedItem.levelPath, true);
-
 
 ## Edit the currently selected level.
 func edit_current_level() -> void:

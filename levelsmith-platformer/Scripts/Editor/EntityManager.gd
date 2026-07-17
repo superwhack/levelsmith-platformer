@@ -135,6 +135,7 @@ func delete_entity (clickPosition: Vector2) -> void:
 		DirAccess.remove_absolute("user://Resources/Enemies/" + clickedEntity.name + ".tres");
 		clickedEntity.queue_free();
 	
+	AudioManager.play_UI_effect("TileDelete");
 	tileMap.erase_cell(clickPosition);
 	iconManager.delete_icon(clickPosition);
 

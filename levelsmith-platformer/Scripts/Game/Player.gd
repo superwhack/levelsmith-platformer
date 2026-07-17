@@ -137,7 +137,7 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
-	if (check_out_of_bounds()):
+	if (check_out_of_bounds() || victory):
 		return;
 	if currentState == PlayerState.DEAD:
 		animate();

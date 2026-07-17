@@ -21,14 +21,20 @@ func swap_to_brush() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	toolManager.change_tool(Global.Tool.BRUSH);
 	editorManager.change_current_hotbar(Global.HotbarState.TILES);
-	brushButton.toggled;
+	if (!brushButton.button_pressed):
+		brushButton.button_pressed = true;
+	if (!brushButton.has_focus()):
+		brushButton.grab_focus();
 
 ## Swaps currently selected tool to the box brush
 func swap_to_box_brush() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	toolManager.change_tool(Global.Tool.BOX_BRUSH);
 	editorManager.change_current_hotbar(Global.HotbarState.TILES);
-	brushButton.toggled;
+	if (!boxBrushButton.button_pressed):
+		boxBrushButton.button_pressed = true;
+	if (!boxBrushButton.has_focus()):
+		boxBrushButton.grab_focus();
 	
 ## Swaps currently selected tool to the cursor
 func swap_to_cursor() -> void:
@@ -36,4 +42,7 @@ func swap_to_cursor() -> void:
 	toolManager.change_tool(Global.Tool.CURSOR);
 	var dropdownState = tileSwitch.entityPropDropdown.get_selected_id();
 	editorManager.change_current_hotbar(dropdownState + 1);
-	brushButton.toggled;
+	if (!cursorButton.button_pressed):
+		cursorButton.button_pressed = true;
+	if (!cursorButton.has_focus()):
+		cursorButton.grab_focus();

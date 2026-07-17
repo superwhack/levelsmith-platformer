@@ -310,6 +310,8 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 	health -= amount;
 	if (health <= 0):
 		die();
+	else:
+		AudioManager.play_effect("Hurt");
 	return true;
 	
 ## Kill the player and send the global death signal
@@ -507,8 +509,7 @@ func detect_tiles() -> void:
 				currentSlowdown = .5;
 		if tileName == "hazard":
 			var direction : Vector2 = -raycast.target_position;
-			if take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"), true):
-				AudioManager.play_effect("Hurt");
+			take_damage(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"), true);
 		elif tileName == "death":
 			take_damage(maxHealth);
 		# Only downward rays should drive floor tile effects (except hazard)

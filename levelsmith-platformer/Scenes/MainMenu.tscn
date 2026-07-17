@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dxd7oevrv4e7c" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
 [ext_resource type="Texture2D" uid="uid://dryfk84nu1yv1" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
 [ext_resource type="Texture2D" uid="uid://dodrkydpe4b04" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
+[ext_resource type="Texture2D" uid="uid://c1dmr6053ybf4" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--group.png" id="15_5hdia"]
 [ext_resource type="Texture2D" uid="uid://w64y47vwrufu" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
 [ext_resource type="Texture2D" uid="uid://buv4gfuc3o66v" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
 [ext_resource type="Texture2D" uid="uid://dnlgeapuusb7p" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
@@ -518,7 +519,7 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin/CreditsButton/ContentMargin/ContentRow" unique_id=633321651]
 layout_mode = 2
-texture = ExtResource("14_leunp")
+texture = ExtResource("15_5hdia")
 expand_mode = 2
 stretch_mode = 5
 

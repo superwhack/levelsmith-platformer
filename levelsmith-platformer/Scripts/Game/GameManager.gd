@@ -36,6 +36,7 @@ var timerRunning : bool = false;
 
 # Has the goal been reached
 var goalReached : bool = false;
+var pausable : bool = false;
 
 # Coin variables
 var coinCount : int = 0
@@ -54,7 +55,7 @@ var playerPreset : Resource;
 
 ## When pause is pressed, flip the current state
 func pause() -> void:
-	if goalReached:
+	if goalReached || !pausable:
 		return;
 	if playState == PlayState.PAUSE:
 		get_tree().paused = false;
@@ -95,11 +96,13 @@ func freeze(locked: bool) -> void:
 func full_restart() -> void:
 	freeze(true);
 	playerCheckpointPosition = Vector2(-1, -1);
+	pausable = false;
 	await reset();
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
 	pauseButton.show();
+	pausable = true;
 	bottomScreenGroup.show();
 	goalReached = false;
 	# Reset coin values for the new level
@@ -222,14 +225,14 @@ func update_timer(label: RichTextLabel) -> void:
 
 ## Pauses gameplay, displays the win screen, and updates the completion statistics
 func level_complete() -> void:
-	# If the goal's already been reached, don't run this again
-	if goalReached:
-		return;
+	## If the goal's already been reached, don't run this again
+	#if goalReached:
+		#return;
 	# AudioManager.reset_audio();
 	AudioManager.stop_music_preview();
-	goalReached = true;
 	print_level_completion_time();
 	pauseButton.hide();
+	pausable = false;
 	get_tree().paused = true;
 	update_coin_counter(winCoinLabel);
 	update_timer(winTimeLabel);
@@ -248,6 +251,7 @@ func return_to_editor() -> void:
 	winScreen.hide();
 	timerRunning = false;
 	masterManager.edit();
+	pausable = false;
 	
 
 ## Restarts the current level from the beginning
@@ -259,3 +263,4 @@ func replay_level() -> void:
 func goal_reached() -> void:
 	bottomScreenGroup.hide();
 	timerRunning = false;
+	goalReached = true;

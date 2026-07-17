@@ -57,7 +57,7 @@ func _ready() -> void:
 		goalExists = false;
 	
 	var export_level = func() -> void:
-		unsavedChanges = true;
+		unsavedChanges = false;
 		AudioManager.play_UI_effect("UISelection");
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
@@ -134,6 +134,8 @@ func clear_enemies(alwaysClear: bool = false) -> void:
 ## Changes current hotbar state (used for hotkeys)
 ## newState: Global.HotbarState
 func change_current_hotbar(newState: Global.HotbarState):
+	# Clearing here
+	previewTileMap.clear();
 	currentHotbarState = newState;
 
 ## Converts the mouse's position into grid coordinates.
@@ -166,14 +168,6 @@ func reset_enemy_positions() -> void:
 			moving.previewPlatform.show();
 			moving.previewLine.show();
 
-## Opens the asset manager
-func open_asset_manager() -> void:
-	# WARNING: get_tree().paused has the potential to cause issues
-	get_tree().paused = true;
-	AudioManager.play_UI_effect("UISelection")
-	previewTileMap.hide();
-	iconManager.previewIcon.hide();
-	assetManager.show();
 
 ## Opens the settings menu
 func open_level_settings_menu() -> void:
@@ -184,6 +178,16 @@ func open_level_settings_menu() -> void:
 	iconManager.previewIcon.hide();
 	levelSettingsMenu.show();
 
+## Opens the asset manager
+func open_asset_manager() -> void:
+	# WARNING: get_tree().paused has the potential to cause issues
+	get_tree().paused = true;
+	AudioManager.play_UI_effect("UISelection")
+	previewTileMap.hide();
+	iconManager.previewIcon.hide();
+	assetManager.audioSwapping.preview_audio_finished();
+	assetManager.show();
+
 ## Closes the asset manager
 func close_asset_manager() -> void:
 	# WARNING: get_tree().paused has the potential to cause issues
@@ -192,6 +196,7 @@ func close_asset_manager() -> void:
 	previewTileMap.show();
 	assetManager.hide();
 	assetManager.animationSwapping.playingAnimation = false;
+	assetManager.audioSwapping.previewAudioPlayer.stop()
 	AnimationManager.refresh_animations();
 
 ## Closes the settings menu

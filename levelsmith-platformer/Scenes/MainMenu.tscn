@@ -3,25 +3,25 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_cstcu"]
 [ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_ygkdq"]
 [ext_resource type="PackedScene" uid="uid://cv3y1gdfsbknd" path="res://Scenes/UI/LevelListItem.tscn" id="3_07k0b"]
-[ext_resource type="Texture2D" uid="uid://ylg2mfdy5c41" path="res://Assets/UserInterface/PreviewPlaceholder.png" id="4_k6vji"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="5_h35r6"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
-[ext_resource type="Texture2D" uid="uid://b5lpkvodh8h1v" path="res://Assets/Sprites/UI/FavoriteMedium.PNG" id="6_pjscj"]
+[ext_resource type="Texture2D" uid="uid://b2cq1omppx5oc" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
 [ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
-[ext_resource type="Texture2D" uid="uid://cuqx70ij8cotk" path="res://Assets/UserInterface/Buttons/ButtonIcons/PlaceholderButtonAsset.png" id="9_a2vo5"]
-[ext_resource type="Texture2D" uid="uid://uffs400qxw2q" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Import.png" id="10_w5qnt"]
-[ext_resource type="Texture2D" uid="uid://dusre0h2m2g6t" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Folder.png" id="11_83bof"]
-[ext_resource type="Texture2D" uid="uid://8pwuej3wvl0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="11_m7n2d"]
-[ext_resource type="Texture2D" uid="uid://cb35440stu18e" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Exit.png" id="12_k5kei"]
-[ext_resource type="Texture2D" uid="uid://dr1smfcdfn46v" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Favorite.png" id="13_gcoc3"]
-[ext_resource type="Texture2D" uid="uid://stx0om0pqx4u" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Duplicate.png" id="14_1uc6u"]
-[ext_resource type="Texture2D" uid="uid://c0phqqwjx130p" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Delete.png" id="15_0ffkm"]
-[ext_resource type="Texture2D" uid="uid://d2d5pvg1msawh" path="res://Assets/UserInterface/Buttons/ButtonIcons/checkMark.png" id="16_65hh5"]
-[ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="16_w5rev"]
-[ext_resource type="Texture2D" uid="uid://dd3080y6r8vxe" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Edit.png" id="17_34n7o"]
-[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
-[ext_resource type="Texture2D" uid="uid://bbn361u6ti6j8" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
+[ext_resource type="Texture2D" uid="uid://cfquh63xtefvq" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
+[ext_resource type="Texture2D" uid="uid://b8wom58cur7st" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
+[ext_resource type="Texture2D" uid="uid://bnmf8k55ql46e" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
+[ext_resource type="Texture2D" uid="uid://hom06f32fuun" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
+[ext_resource type="Texture2D" uid="uid://w64y47vwrufu" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
+[ext_resource type="Texture2D" uid="uid://c0lyraj4k064w" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
+[ext_resource type="Texture2D" uid="uid://db10ps4ripfsu" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://vc233h53hug6" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check-circle.png" id="16_65hh5"]
+[ext_resource type="Texture2D" uid="uid://df52m82do02yp" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
+[ext_resource type="Texture2D" uid="uid://dakob0sebk5mo" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
+[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
+[ext_resource type="Texture2D" uid="uid://nwtxmk18ptg6" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
+[ext_resource type="Texture2D" uid="uid://bo1m348j85vww" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
+[ext_resource type="Texture2D" uid="uid://bitxf60q1d4sd" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -172,7 +172,7 @@ fileExplorer = NodePath("FileDialog")
 levelList = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll/LevelList")
 levelListItem = ExtResource("3_07k0b")
 softwareVersion = NodePath("SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox/VersionLabel")
-validatedCheckmark = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/CheckMarkTexture")
+validatedCheckmark = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture/ValidatedTexture")
 levelName = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/SelectedLevelName")
 author = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Author")
 dateCreated = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/DateCreated")
@@ -181,10 +181,10 @@ dimensions = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/C
 objectCount = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Objects")
 version = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Version")
 preview = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture")
-previewDefault = ExtResource("4_k6vji")
-favoriteEmpty = ExtResource("13_gcoc3")
-favoriteFilled = ExtResource("6_pjscj")
-globalSettingsButton = NodePath("SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox/GlobalSettingsButton")
+previewDefault = ExtResource("15_65hh5")
+favoriteEmpty = ExtResource("15_h1v62")
+favoriteFilled = ExtResource("6_65hh5")
+globalSettingsButton = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton")
 areaWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/PanelContainer")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1764313566]
@@ -245,15 +245,10 @@ layout_mode = 2
 texture = ExtResource("8_sn0qe")
 
 [node name="SmallSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=1848163393]
+visible = false
 custom_maximum_size = Vector2(50, -1)
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="GlobalSettingsButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=896016428]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-text = "Settings"
-icon = ExtResource("11_m7n2d")
 
 [node name="TopBarSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=801058569]
 layout_mode = 2
@@ -317,7 +312,7 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/NewLevelButton/ContentMargin/ContentRow" unique_id=1801192315]
 layout_mode = 2
-texture = ExtResource("9_a2vo5")
+texture = ExtResource("11_65hh5")
 expand_mode = 2
 stretch_mode = 5
 
@@ -360,7 +355,7 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/ImportLevelButton/ContentMargin/ContentRow" unique_id=182928559]
 layout_mode = 2
-texture = ExtResource("10_w5qnt")
+texture = ExtResource("12_65hh5")
 expand_mode = 2
 stretch_mode = 5
 
@@ -385,6 +380,8 @@ size_flags_horizontal = 3
 [node name="OpenFolderButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=1916229944]
 custom_minimum_size = Vector2(230, 75)
 layout_mode = 2
+focus_next = NodePath("../../ExitRow/ExitButtonMargin/ExitButton")
+focus_previous = NodePath("../ImportLevelButton")
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton" unique_id=328390251]
 layout_mode = 1
@@ -403,7 +400,7 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton/ContentMargin/ContentRow" unique_id=1014028179]
 layout_mode = 2
-texture = ExtResource("11_83bof")
+texture = ExtResource("13_6byu3")
 expand_mode = 2
 stretch_mode = 5
 
@@ -430,6 +427,7 @@ size_flags_vertical = 3
 
 [node name="LevelListScroll" type="ScrollContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel" unique_id=1583564096]
 layout_mode = 2
+focus_behavior_recursive = 1
 
 [node name="LevelList" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll" unique_id=1376289096]
 layout_mode = 2
@@ -464,7 +462,7 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton/ContentMargin/ContentRow" unique_id=889240471]
 layout_mode = 2
-texture = ExtResource("12_k5kei")
+texture = ExtResource("14_leunp")
 expand_mode = 2
 stretch_mode = 5
 
@@ -480,6 +478,52 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 theme_override_font_sizes/font_size = 12
 text = "Quit to desktop"
+
+[node name="Control" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow" unique_id=61286499]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GlobalSettingsMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow" unique_id=1932057104]
+layout_mode = 2
+theme_override_constants/margin_top = 35
+
+[node name="GlobalSettingsButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin" unique_id=1678820747]
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+
+[node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton" unique_id=26762294]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ContentRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton/ContentMargin" unique_id=1547830288]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton/ContentMargin/ContentRow" unique_id=2078883990]
+layout_mode = 2
+texture = ExtResource("15_m7n2d")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextContainer" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton/ContentMargin/ContentRow" unique_id=1766642236]
+layout_mode = 2
+
+[node name="ImportLevelTitle" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton/ContentMargin/ContentRow/TextContainer" unique_id=860246842]
+layout_mode = 2
+text = "Global Settings"
+
+[node name="ImportLevelSubtext" type="Label" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton/ContentMargin/ContentRow/TextContainer" unique_id=708314408]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
+theme_override_font_sizes/font_size = 12
+text = "Affects editor settings"
 
 [node name="CenterPane" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent" unique_id=2099896116]
 layout_mode = 2
@@ -507,14 +551,22 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_57qmd")
 custom_minimum_size = Vector2(927, 521)
 custom_maximum_size = Vector2(927, 521)
 layout_mode = 2
-texture = ExtResource("4_k6vji")
+texture = ExtResource("15_65hh5")
 
-[node name="CheckMarkTexture" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel" unique_id=684619433]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_position = Vector2(750, 50)
+[node name="ValidatedTexture" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture" unique_id=1130374865]
+visible = false
+custom_maximum_size = Vector2(80, 80)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -107.0
+offset_top = 20.0
+offset_right = -27.0
+offset_bottom = 100.0
+grow_horizontal = 0
 texture = ExtResource("16_65hh5")
-stretch_mode = 2
+stretch_mode = 4
 
 [node name="DetailsCard" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox" unique_id=1782890286]
 custom_maximum_size = Vector2(-1, 300)
@@ -538,10 +590,28 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="FavoriteButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow" unique_id=657863021]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 tooltip_text = "Add to Favorties"
 disabled = true
-icon = ExtResource("13_gcoc3")
+icon_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/FavoriteButton" unique_id=1063241206]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/FavoriteButton/MarginContainer" unique_id=1733455010]
+layout_mode = 2
+texture = ExtResource("15_h1v62")
+expand_mode = 3
 
 [node name="TitleDetailsSeparator" type="HSeparator" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox" unique_id=1733107046]
 layout_mode = 2
@@ -556,9 +626,10 @@ layout_mode = 2
 
 [node name="ButtonColumn" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow" unique_id=64140966]
 layout_mode = 2
+size_flags_vertical = 4
 
 [node name="DuplicateLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=980103507]
-custom_minimum_size = Vector2(69, 69)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 tooltip_text = "Duplicate Level"
 disabled = true
@@ -577,13 +648,16 @@ offset_right = 16.0
 offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("14_1uc6u")
+texture = ExtResource("16_h1v62")
+expand_mode = 3
 
 [node name="CopyDeleteSeperator" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=1034853394]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="DeleteLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=873845671]
-custom_minimum_size = Vector2(69, 69)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 tooltip_text = "Delete Level"
 disabled = true
@@ -602,7 +676,8 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("15_0ffkm")
+texture = ExtResource("17_5hdia")
+expand_mode = 3
 
 [node name="MetadataMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow" unique_id=18846420]
 layout_mode = 2
@@ -702,7 +777,7 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/PlayButton/ContentMargin/ContentRow" unique_id=507306604]
 layout_mode = 2
-texture = ExtResource("16_w5rev")
+texture = ExtResource("18_65hh5")
 expand_mode = 2
 stretch_mode = 5
 
@@ -744,7 +819,7 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn/EditButton/ContentMargin/ContentRow" unique_id=829417104]
 layout_mode = 2
-texture = ExtResource("17_34n7o")
+texture = ExtResource("19_iqn0u")
 expand_mode = 2
 stretch_mode = 5
 
@@ -837,6 +912,7 @@ size_flags_horizontal = 3
 
 [node name="LevelNameInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=236825485]
 layout_mode = 2
+focus_previous = NodePath("../../../ButtonMargin/ButtonRow/CancelButton")
 placeholder_text = "My Level"
 
 [node name="AuthorInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=1716910298]
@@ -996,6 +1072,7 @@ size_flags_horizontal = 3
 
 [node name="CancelButton" type="Button" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow" unique_id=572292976]
 layout_mode = 2
+focus_next = NodePath("../../../LevelNameAuthorRow/InputsColumn/LevelNameInput")
 text = "Cancel
 "
 
@@ -1072,6 +1149,7 @@ size_flags_horizontal = 3
 
 [node name="RenameLevelInput" type="LineEdit" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=240684583]
 layout_mode = 2
+focus_previous = NodePath("../../../ButtonMargin/ButtonRow/DuplicateCancelButton")
 placeholder_text = "My Duplicate Level"
 
 [node name="ErrorBanner" type="PanelContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=418759891]
@@ -1199,6 +1277,7 @@ size_flags_horizontal = 3
 
 [node name="DuplicateCancelButton" type="Button" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow" unique_id=913452034]
 layout_mode = 2
+focus_next = NodePath("../../../LevelNameAuthorRow/InputsColumn/RenameLevelInput")
 text = "Cancel
 "
 
@@ -1273,6 +1352,7 @@ theme_override_constants/margin_right = 20
 
 [node name="FilePathInput" type="LineEdit" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/FilePathMargin/FilePathRow/MarginContainer" unique_id=1258214146]
 layout_mode = 2
+focus_previous = NodePath("../../../../ButtonsMargin/ButtonsRow/CancelButton")
 theme_override_styles/normal = SubResource("StyleBoxFlat_pjscj")
 placeholder_text = "Type here..."
 
@@ -1322,6 +1402,7 @@ layout_mode = 2
 
 [node name="CancelButton" type="Button" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonsMargin/ButtonsRow" unique_id=1954812556]
 layout_mode = 2
+focus_next = NodePath("../../../FilePathMargin/FilePathRow/MarginContainer/FilePathInput")
 text = "Cancel"
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1758093936]

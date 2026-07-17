@@ -1,13 +1,7 @@
 [gd_scene format=3 uid="uid://bpq5curyo7xhv"]
 
 [ext_resource type="Script" uid="uid://bdiotj46ihakc" path="res://Scripts/Editor/PreviewLine.gd" id="1_da1wv"]
-[ext_resource type="Texture2D" uid="uid://4k8sp2olvr6h" path="res://Assets/Sprites/UI/ArrowRightMedium.PNG" id="2_embj3"]
 
-[node name="PreviewLine" type="Line2D" unique_id=1504030647 node_paths=PackedStringArray("arrow")]
+[node name="PreviewLine" type="Line2D" unique_id=1504030647]
 width = 4.0
 script = ExtResource("1_da1wv")
-arrow = NodePath("ArrowPointer")
-
-[node name="ArrowPointer" type="Sprite2D" parent="." unique_id=708948279]
-z_index = 1
-texture = ExtResource("2_embj3")

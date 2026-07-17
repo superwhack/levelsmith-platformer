@@ -28,15 +28,6 @@ signal level_hovered(item: Control);
 signal level_pressed(item: Control);
 signal level_deselected(item: Control);
 
-
-# An enum for the base color of the button.
-enum ButtonColor {
-	WHITE = 0,
-	BLUE = 1
-}
-
-var buttonColor: ButtonColor = ButtonColor.WHITE;
-
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Signals

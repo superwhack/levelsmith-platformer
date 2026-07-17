@@ -12,7 +12,7 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "presetOptions", "closeButton", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerSlopeSlowdownCheckbox", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "movingPlatformDelaySlider", "movingPlatformEasingCheckbox", "movingPlatformMomentumCheckbox", "movingPlatformVisibilityCheckbox")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "presetOptions", "closeButton", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerSlopeSlowdownCheckbox", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "movingPlatformDelaySlider", "movingPlatformEasingCheckbox", "movingPlatformMomentumCheckbox", "movingPlatformVisibilityCheckbox", "movingPlatformAlwaysActiveCheckbox")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -69,6 +69,7 @@ movingPlatformDelaySlider = NodePath("ScrollContainer/MainMargin/RootVBox/Moving
 movingPlatformEasingCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/MoveEasing")
 movingPlatformMomentumCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/MoveMomentum")
 movingPlatformVisibilityCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/MoveVisibility")
+movingPlatformAlwaysActiveCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties/MoveAlwaysActive")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1015369895]
 layout_mode = 1
@@ -414,6 +415,11 @@ propertyName = "Apply Momentum"
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Show Line"
+
+[node name="MoveAlwaysActive" parent="ScrollContainer/MainMargin/RootVBox/MovingPlatformMargin/MovingPlatformProperties" unique_id=196311920 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Always Active"
 
 [node name="FlyingProperties" type="VBoxContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1573236817]
 visible = false

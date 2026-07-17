@@ -58,7 +58,7 @@ func _ready() -> void:
 		goalExists = false;
 	
 	var export_level = func() -> void:
-		unsavedChanges = true;
+		unsavedChanges = false;
 		AudioManager.play_UI_effect("UISelection");
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
@@ -122,6 +122,8 @@ func clear_enemies(alwaysClear: bool = false) -> void:
 ## Changes current hotbar state (used for hotkeys)
 ## newState: Global.HotbarState
 func change_current_hotbar(newState: Global.HotbarState):
+	# Clearing here
+	previewTileMap.clear();
 	currentHotbarState = newState;
 
 ## Converts the mouse's position into grid coordinates.

@@ -2,25 +2,25 @@
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/Editor/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
-[ext_resource type="Texture2D" uid="uid://cicj1jmudfxxy" path="res://Assets/UserInterface/Buttons/ButtonIcons/Home.png" id="7_20xd7"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
+[ext_resource type="Texture2D" uid="uid://cui13q7plxmpx" path="res://Assets/UserInterface/UpdatedIcons/material-symbols-light--home-outline.png" id="8_vrcqo"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
-[ext_resource type="Texture2D" uid="uid://bekuqbvlv8ysu" path="res://Assets/UserInterface/Buttons/ButtonIcons/NewMainMenuIcons/Play.png" id="9_7flhh"]
-[ext_resource type="Texture2D" uid="uid://c03ijfg5hio0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Save.png" id="10_2406q"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
+[ext_resource type="Texture2D" uid="uid://dh46m4u50qh7d" path="res://Assets/UserInterface/UpdatedIcons/carbon--save.png" id="10_racgb"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
+[ext_resource type="Texture2D" uid="uid://nwtxmk18ptg6" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="11_vrcqo"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Texture2D" uid="uid://e2cnr04fpgrl" path="res://Assets/UserInterface/Buttons/ButtonIcons/AssetManager.png" id="13_ditat"]
+[ext_resource type="Texture2D" uid="uid://bmc67g43xfyjv" path="res://Assets/UserInterface/UpdatedIcons/wordpress--image.png" id="13_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="Texture2D" uid="uid://8pwuej3wvl0" path="res://Assets/UserInterface/Buttons/ButtonIcons/Settings.png" id="14_rdu5w"]
-[ext_resource type="Texture2D" uid="uid://kedeb3vd63r6" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="14_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://d3twybevvpjqn" path="res://Assets/UserInterface/UpdatedIcons/LevelSettings.png" id="14_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://db10ps4ripfsu" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_racgb"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://cusuiuccep2n3" path="res://Scenes/LevelSettingsMenu.tscn" id="17_fnjh2"]
@@ -139,6 +139,7 @@ custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "Exit to Home"
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -149,14 +150,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
 [node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/HomeButton/MarginContainer" unique_id=688770950]
 layout_mode = 2
-texture = ExtResource("7_20xd7")
+texture = ExtResource("8_vrcqo")
+expand_mode = 3
 
 [node name="TopbarSepMargin" type="MarginContainer" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=1831943124]
 layout_mode = 2
@@ -185,6 +183,7 @@ custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "Save [Ctrl+S]"
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -202,7 +201,8 @@ theme_override_constants/margin_bottom = 5
 
 [node name="SaveIcon" type="TextureRect" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/SaveButton/SaveMargin" unique_id=1265270296]
 layout_mode = 2
-texture = ExtResource("10_2406q")
+texture = ExtResource("10_racgb")
+expand_mode = 3
 
 [node name="SavePlaySeparator" type="VSeparator" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=245140535]
 layout_mode = 2
@@ -210,6 +210,8 @@ layout_mode = 2
 [node name="PlayLevelButton" type="Button" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=960511629]
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
 theme_override_font_sizes/font_size = 16
 
 [node name="ContentMargin" type="MarginContainer" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton" unique_id=1175052129]
@@ -229,7 +231,7 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton/ContentMargin/ContentRow" unique_id=460491039]
 layout_mode = 2
-texture = ExtResource("9_7flhh")
+texture = ExtResource("11_vrcqo")
 expand_mode = 2
 stretch_mode = 5
 
@@ -292,6 +294,7 @@ custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "Asset Manager"
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -302,14 +305,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
 [node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/AssetManagerButton/MarginContainer" unique_id=1493892958]
 layout_mode = 2
-texture = ExtResource("13_ditat")
+texture = ExtResource("13_hh704")
+expand_mode = 3
 
 [node name="LevelSettingsButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=330056258]
 custom_minimum_size = Vector2(60, 60)
@@ -317,6 +321,7 @@ custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "Level Settings"
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -343,6 +348,7 @@ custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "Global Settings"
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -360,7 +366,8 @@ theme_override_constants/margin_bottom = 10
 
 [node name="TextureRect" type="TextureRect" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/GlobalSettingsButton/MarginContainer" unique_id=1158301421]
 layout_mode = 2
-texture = ExtResource("14_rdu5w")
+texture = ExtResource("15_racgb")
+expand_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/ContentRow" unique_id=2146154728]
 layout_mode = 2
@@ -394,8 +401,10 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0vixy")
 
-[node name="PropertyMenu" parent="ScreenUI/MainColumn/ContentRow/PropertiesPanel" unique_id=1686733993 node_paths=PackedStringArray("editorManager") instance=ExtResource("7_gc37a")]
+[node name="PropertyMenu" parent="ScreenUI/MainColumn/ContentRow/PropertiesPanel" unique_id=1686733993 node_paths=PackedStringArray("previewManager", "cursorManager", "editorManager") instance=ExtResource("7_gc37a")]
 layout_mode = 2
+previewManager = NodePath("../../../../../PreviewTile")
+cursorManager = NodePath("../../../../../CustomCursorManager")
 editorManager = NodePath("../../../../..")
 
 [node name="OverlayLayer" type="Control" parent="ScreenUI" unique_id=1751323313]

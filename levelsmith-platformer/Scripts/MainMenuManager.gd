@@ -14,6 +14,7 @@ extends Control
 @export var buttonDuplicateLevel : Button;
 @export var buttonDeleteLevel : Button;
 @export var buttonFavoriteLevel : Button;
+@onready var favoriteButtonIcon : TextureRect = buttonFavoriteLevel.get_node("MarginContainer/TextureRect");
 
 # Overlays
 @export var overlayNewLevel : ColorRect;
@@ -84,6 +85,8 @@ var levelItems: Dictionary = {} # path -> item
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	buttonNewLevel.grab_focus();
+	
 	softwareVersion.text = str(Global.VERSION);
 	# Hides other screens
 	overlayImportLevel.hide();
@@ -130,21 +133,28 @@ func _ready() -> void:
 func overlay_new_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.show();
+	fieldNewLevelName.grab_focus();
 func overlay_new_level_hide() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.hide();
+	buttonNewLevel.grab_focus();
 func overlay_import_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayImportLevel.show();
+	fieldImportLevelPath.grab_focus();
 func popup_file_dialog() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	fileExplorer.popup_file_dialog();
+	buttonNewLevel.grab_focus();
 func overlay_duplicate_level_show() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	overlayDuplicateLevel.show();
+	duplicateName.grab_focus();
+	
 func overlay_duplicate_level_hide() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	overlayDuplicateLevel.hide();
+	buttonNewLevel.grab_focus();
 
 ## Called when import level button is pressed
 func import_level() -> void:
@@ -285,11 +295,11 @@ func _on_level_double_clicked(path: String) -> void:
 	
 ## Fills in metadata labels with appropriate data when hovered.
 ## item: the level list button item.
-func _on_level_hovered(item) -> void:
+func _on_level_hovered(item: Node) -> void:
 	if (!selectedItem):
 		update_metadata(item);
 	
-func _on_level_pressed(item) -> void:
+func _on_level_pressed(item: Node) -> void:
 	if (selectedItem == item):
 		return;
 		
@@ -300,14 +310,11 @@ func _on_level_pressed(item) -> void:
 
 	selectedItem = item;
 	update_metadata(item);
-	if (selectedItem.favorited):
-		buttonFavoriteLevel.icon = favoriteFilled;
-	else:
-		buttonFavoriteLevel.icon = favoriteEmpty;
-	
+
+
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
-func _on_level_deselected(item) -> void:
+func _on_level_deselected(item: Node) -> void:
 	if (selectedItem == item):
 		item.levelButton.button_pressed = false;
 		toggle_level_buttons();
@@ -320,6 +327,9 @@ func toggle_level_buttons() -> void:
 	buttonEditLevel.disabled = !buttonEditLevel.disabled;
 	buttonPlayLevel.disabled = !buttonPlayLevel.disabled;
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
+
+func set_favorite_button_icon(is_favorited: bool) -> void:
+	favoriteButtonIcon.texture = favoriteFilled if is_favorited else favoriteEmpty;
 
 func update_level_item(item: Node, folderName : String, levelPath : String) -> void:
 	item.levelPath = levelPath + "/";
@@ -380,7 +390,7 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 
 ## Reusable function for updating metadata based on given item.
 ## item: Level item to be used for updating metadata.
-func update_metadata(item) -> void:
+func update_metadata(item: Node) -> void:
 	levelName.text = item.levelTitle.text;
 	author.text = item.author;
 	dateCreated.text = item.dateCreated;
@@ -393,10 +403,7 @@ func update_metadata(item) -> void:
 		preview.texture = item.thumbnail;
 	else:
 		preview.texture = previewDefault;
-	if (item.favorited):
-		buttonFavoriteLevel.icon = favoriteFilled;
-	else:
-		buttonFavoriteLevel.icon = favoriteEmpty;
+	set_favorite_button_icon(item.favorited);
 	if (item.validated):
 		validatedCheckmark.show();
 	else:
@@ -413,7 +420,7 @@ func clear_selection() -> void:
 		objectCount.text = "";
 		version.text = "";
 		preview.texture = previewDefault;
-		buttonFavoriteLevel.icon = favoriteEmpty;
+		set_favorite_button_icon(false);
 		validatedCheckmark.hide();
 
 ## Opens OS file explorer to the users Level folder.
@@ -538,10 +545,7 @@ func favorite_current_level() -> void:
 		selectedItem.favorited
 	);
 	
-	if (selectedItem.favorited):
-		buttonFavoriteLevel.icon = favoriteFilled;
-	else:
-		buttonFavoriteLevel.icon = favoriteEmpty;
+	set_favorite_button_icon(selectedItem.favorited);
 		
 	if (selectedItem.favorited):
 		selectedItem.levelFavoriteIcon.show();

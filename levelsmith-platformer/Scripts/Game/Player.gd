@@ -20,7 +20,7 @@ enum PlayerState {
 	DEAD
 }
 
-var currentState : PlayerState = PlayerState.JUMPING;
+var currentState : PlayerState = PlayerState.GROUNDED;
 
 # The player settings that can be changed in editor
 @export var groundSpeed : float = 1.0;
@@ -131,6 +131,7 @@ func _ready() -> void:
 	animatedSprites.play();
 	
 	animatedSprites.animation_finished.connect(on_animation_finished);
+	
 
 ## Runs every frame during the play state
 ## delta: How much time has passed
@@ -193,7 +194,6 @@ func animate() -> void:
 	
 	if ( Input.is_action_pressed("right") ): animatedSprites.flip_h = false;
 	elif ( Input.is_action_pressed("left") ): animatedSprites.flip_h = true;
-	print(currentState);
 	if (health <= 0): 
 		animatedSprites.animation = "PlayerDeath";
 		animatedSprites.flip_h = false;

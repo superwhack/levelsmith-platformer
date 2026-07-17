@@ -3,25 +3,25 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_cstcu"]
 [ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_ygkdq"]
 [ext_resource type="PackedScene" uid="uid://cv3y1gdfsbknd" path="res://Scenes/UI/LevelListItem.tscn" id="3_07k0b"]
-[ext_resource type="Texture2D" uid="uid://ylg2mfdy5c41" path="res://Assets/UserInterface/PreviewPlaceholder.png" id="4_k6vji"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="5_h35r6"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
 [ext_resource type="Texture2D" uid="uid://b2cq1omppx5oc" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
 [ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
-[ext_resource type="Texture2D" uid="uid://bwp7ms2ro7qbc" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
-[ext_resource type="Texture2D" uid="uid://dxd7oevrv4e7c" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
-[ext_resource type="Texture2D" uid="uid://dryfk84nu1yv1" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
-[ext_resource type="Texture2D" uid="uid://dodrkydpe4b04" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
+[ext_resource type="Texture2D" uid="uid://cfquh63xtefvq" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
+[ext_resource type="Texture2D" uid="uid://b8wom58cur7st" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
+[ext_resource type="Texture2D" uid="uid://bnmf8k55ql46e" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
+[ext_resource type="Texture2D" uid="uid://hom06f32fuun" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
+[ext_resource type="Texture2D" uid="uid://w64y47vwrufu" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
 [ext_resource type="Texture2D" uid="uid://c0lyraj4k064w" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
 [ext_resource type="Texture2D" uid="uid://db10ps4ripfsu" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
-[ext_resource type="Texture2D" uid="uid://tp6ayq3tryx8" path="res://Assets/UserInterface/Buttons/ButtonIcons/checkMark.png" id="16_65hh5"]
-[ext_resource type="Texture2D" uid="uid://qlne6c3yxaff" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
-[ext_resource type="Texture2D" uid="uid://1glcsot8n2b" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
-[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
-[ext_resource type="Texture2D" uid="uid://bjepls0slldfm" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
-[ext_resource type="Texture2D" uid="uid://bbn361u6ti6j8" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
-[ext_resource type="Texture2D" uid="uid://b8oh8bg85bfsn" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
+[ext_resource type="Texture2D" uid="uid://vc233h53hug6" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check-circle.png" id="16_65hh5"]
+[ext_resource type="Texture2D" uid="uid://df52m82do02yp" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
+[ext_resource type="Texture2D" uid="uid://dakob0sebk5mo" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
+[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
+[ext_resource type="Texture2D" uid="uid://nwtxmk18ptg6" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
+[ext_resource type="Texture2D" uid="uid://bo1m348j85vww" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
+[ext_resource type="Texture2D" uid="uid://bitxf60q1d4sd" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -67,12 +67,30 @@ thickness = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d0u6y"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yxkem"]
-bg_color = Color(0.95686275, 0.79607844, 0.43529412, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65hh5"]
+bg_color = Color(0.22352941, 0.08627451, 0.047058824, 0.5921569)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5874098, 0.27984193, 0.1886749, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+corner_detail = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6byu3"]
+bg_color = Color(0.22352941, 0.08627451, 0.047058824, 0.5921569)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5874098, 0.27984193, 0.1886749, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 corner_detail = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
@@ -106,7 +124,7 @@ corner_radius_bottom_left = 15
 corner_detail = 17
 expand_margin_left = 5.0
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "globalSettingsButton")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "globalSettingsButton", "areaWarning")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,7 +172,7 @@ fileExplorer = NodePath("FileDialog")
 levelList = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll/LevelList")
 levelListItem = ExtResource("3_07k0b")
 softwareVersion = NodePath("SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox/VersionLabel")
-validatedCheckmark = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/CheckMarkTexture")
+validatedCheckmark = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture/ValidatedTexture")
 levelName = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/SelectedLevelName")
 author = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Author")
 dateCreated = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/DateCreated")
@@ -163,10 +181,11 @@ dimensions = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/C
 objectCount = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Objects")
 version = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Version")
 preview = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture")
-previewDefault = ExtResource("4_k6vji")
+previewDefault = ExtResource("15_65hh5")
 favoriteEmpty = ExtResource("15_h1v62")
 favoriteFilled = ExtResource("6_65hh5")
 globalSettingsButton = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton")
+areaWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/PanelContainer")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1764313566]
 layout_mode = 1
@@ -361,6 +380,8 @@ size_flags_horizontal = 3
 [node name="OpenFolderButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=1916229944]
 custom_minimum_size = Vector2(230, 75)
 layout_mode = 2
+focus_next = NodePath("../../ExitRow/ExitButtonMargin/ExitButton")
+focus_previous = NodePath("../ImportLevelButton")
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/OpenFolderButton" unique_id=328390251]
 layout_mode = 1
@@ -406,6 +427,7 @@ size_flags_vertical = 3
 
 [node name="LevelListScroll" type="ScrollContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel" unique_id=1583564096]
 layout_mode = 2
+focus_behavior_recursive = 1
 
 [node name="LevelList" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll" unique_id=1376289096]
 layout_mode = 2
@@ -529,14 +551,22 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_57qmd")
 custom_minimum_size = Vector2(927, 521)
 custom_maximum_size = Vector2(927, 521)
 layout_mode = 2
-texture = ExtResource("4_k6vji")
+texture = ExtResource("15_65hh5")
 
-[node name="CheckMarkTexture" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel" unique_id=684619433]
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_position = Vector2(750, 50)
+[node name="ValidatedTexture" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture" unique_id=1130374865]
+visible = false
+custom_maximum_size = Vector2(80, 80)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -107.0
+offset_top = 20.0
+offset_right = -27.0
+offset_bottom = 100.0
+grow_horizontal = 0
 texture = ExtResource("16_65hh5")
-stretch_mode = 2
+stretch_mode = 4
 
 [node name="DetailsCard" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox" unique_id=1782890286]
 custom_maximum_size = Vector2(-1, 300)
@@ -807,7 +837,6 @@ theme_override_font_sizes/font_size = 12
 text = "Enter editor mode"
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=2033598074]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -883,6 +912,7 @@ size_flags_horizontal = 3
 
 [node name="LevelNameInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=236825485]
 layout_mode = 2
+focus_previous = NodePath("../../../ButtonMargin/ButtonRow/CancelButton")
 placeholder_text = "My Level"
 
 [node name="AuthorInput" type="LineEdit" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=1716910298]
@@ -905,18 +935,19 @@ propagate_maximum_size = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_yxkem")
+theme = ExtResource("1_cstcu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_65hh5")
 metadata/_edit_use_anchors_ = true
 
 [node name="Body" type="RichTextLabel" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/InvalidWarning/PanelContainer" unique_id=1331184181]
 custom_minimum_size = Vector2(403.175, 0)
 clip_contents = false
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("18_0g0bm")
 bbcode_enabled = true
-text = "The level name contains [color=#e74937]invalid[/color] characters. Please enter a valid file name."
+text = "The level name contains invalid characters. Please enter a valid file name."
 fit_content = true
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="EmptyWarning" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1433979894]
 visible = false
@@ -934,18 +965,18 @@ propagate_maximum_size = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_yxkem")
+theme_override_styles/panel = SubResource("StyleBoxFlat_6byu3")
 metadata/_edit_use_anchors_ = true
 
 [node name="Body" type="RichTextLabel" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/EmptyWarning/PanelContainer" unique_id=1479311449]
 custom_minimum_size = Vector2(403.175, 0)
 clip_contents = false
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("18_0g0bm")
 bbcode_enabled = true
-text = "The level name is [color=#e74937]empty[/color]! Please enter a valid file name."
+text = "The level name is empty! Please enter a valid file name."
 fit_content = true
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="NameGridSeparator" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=772753027]
 layout_mode = 2
@@ -996,8 +1027,22 @@ min_value = 2.0
 max_value = 1000.0
 value = 20.0
 
-[node name="GridButtonsSeparator" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=83740415]
+[node name="GridButtonsSeparator2" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=190389457]
 layout_mode = 2
+
+[node name="GridSettingsRow2" type="HBoxContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=716640564]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2" unique_id=1382634297]
+layout_mode = 2
+theme = ExtResource("1_cstcu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="LevelSizeWarning" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/PanelContainer" unique_id=1231681259]
+layout_mode = 2
+text = "WARNING: 
+Level sizes over 10,000 tiles may cause performance issues."
+horizontal_alignment = 1
 
 [node name="ErrorBanner" type="PanelContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=1564116025]
 visible = false
@@ -1006,7 +1051,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
 
 [node name="Label" type="Label" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner" unique_id=1745841521]
 layout_mode = 2
-text = "Error: All Fields must be filled ou!"
+text = "Error: All Fields must be filled out!"
 
 [node name="ButtonMargin" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=679165822]
 layout_mode = 2
@@ -1027,6 +1072,7 @@ size_flags_horizontal = 3
 
 [node name="CancelButton" type="Button" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow" unique_id=572292976]
 layout_mode = 2
+focus_next = NodePath("../../../LevelNameAuthorRow/InputsColumn/LevelNameInput")
 text = "Cancel
 "
 
@@ -1103,6 +1149,7 @@ size_flags_horizontal = 3
 
 [node name="RenameLevelInput" type="LineEdit" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/LevelNameAuthorRow/InputsColumn" unique_id=240684583]
 layout_mode = 2
+focus_previous = NodePath("../../../ButtonMargin/ButtonRow/DuplicateCancelButton")
 placeholder_text = "My Duplicate Level"
 
 [node name="ErrorBanner" type="PanelContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=418759891]
@@ -1230,6 +1277,7 @@ size_flags_horizontal = 3
 
 [node name="DuplicateCancelButton" type="Button" parent="DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonMargin/ButtonRow" unique_id=913452034]
 layout_mode = 2
+focus_next = NodePath("../../../LevelNameAuthorRow/InputsColumn/RenameLevelInput")
 text = "Cancel
 "
 
@@ -1304,6 +1352,7 @@ theme_override_constants/margin_right = 20
 
 [node name="FilePathInput" type="LineEdit" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/FilePathMargin/FilePathRow/MarginContainer" unique_id=1258214146]
 layout_mode = 2
+focus_previous = NodePath("../../../../ButtonsMargin/ButtonsRow/CancelButton")
 theme_override_styles/normal = SubResource("StyleBoxFlat_pjscj")
 placeholder_text = "Type here..."
 
@@ -1353,6 +1402,7 @@ layout_mode = 2
 
 [node name="CancelButton" type="Button" parent="ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ButtonsMargin/ButtonsRow" unique_id=1954812556]
 layout_mode = 2
+focus_next = NodePath("../../../FilePathMargin/FilePathRow/MarginContainer/FilePathInput")
 text = "Cancel"
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1758093936]

@@ -1,14 +1,17 @@
 [gd_scene format=3 uid="uid://cgqrior0thya8"]
 
 [ext_resource type="Script" uid="uid://e6pkeumdahqd" path="res://Scripts/Editor/TileSwitch.gd" id="1_aauec"]
+[ext_resource type="ButtonGroup" uid="uid://ca5qs83nhidyv" path="res://Resources/ButtonGroups/TileButtonGroup.tres" id="3_0aoee"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="3_pggt4"]
+[ext_resource type="ButtonGroup" uid="uid://bvqa53wp7c2qs" path="res://Resources/ButtonGroups/EntityButtonGroup.tres" id="5_fdk17"]
+[ext_resource type="ButtonGroup" uid="uid://chasm1llo1v1h" path="res://Resources/ButtonGroups/PropButtonGroup.tres" id="6_b1hq2"]
 [ext_resource type="PackedScene" uid="uid://dqlxqwdmgred1" path="res://Scenes/UI/TilebarButton.tscn" id="10_goodf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mlk5f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3obv"]
 
-[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "entityPropDropdown")]
+[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "entityPropDropdown", "firstTileButton", "secondTileButton", "thirdTileButton", "fourthTileButton", "fifthTileButton", "sixthTileButton", "seventhTileButton", "eighthTileButton", "firstEntityButton", "secondEntityButton", "thirdEntityButton", "fourthEntityButton", "fifthEntityButton", "sixthEntityButton", "seventhEntityButton", "eighthEntityButton", "firstPropButton", "secondPropButton", "thirdPropButton", "fourthPropButton", "fifthPropButton", "sixthPropButton")]
 offset_right = 669.0
 offset_bottom = 100.0
 theme_override_constants/separation = 4
@@ -18,6 +21,28 @@ entities = NodePath("EntityPickerUI")
 entityTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities")
 propTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Props")
 entityPropDropdown = NodePath("EntityPickerUI/MarginContainer/Tabs/EntityPropDropdown")
+firstTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SolidButton")
+secondTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SlopeButton")
+thirdTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/OneWayButton")
+fourthTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/BounceButton")
+fifthTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/IceButton")
+sixthTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/StickyButton")
+seventhTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/HazardButton")
+eighthTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/DeathButton")
+firstEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/PlayerEntityButton")
+secondEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/CoinEntityButton")
+thirdEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingEntityButton")
+fourthEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/StationaryEntityButton")
+fifthEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/ShootingEntityButton")
+sixthEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/FlyingEntityButton")
+seventhEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/MovingPlatformButton")
+eighthEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/GoalEntityButton")
+firstPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropOneButton")
+secondPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropTwoButton")
+thirdPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropThreeButton")
+fourthPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFourButton")
+fifthPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFiveButton")
+sixthPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropSixButton")
 
 [node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
 layout_mode = 2
@@ -37,55 +62,88 @@ alignment = 1
 [node name="SolidButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1067245290 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Solid Tile [1]"
+focus_next = NodePath("../SlopeButton")
+focus_previous = NodePath("../DeathButton")
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("3_0aoee")
+tilebar = NodePath("../../../..")
+isTextureUpdating = true
+
+[node name="SlopeButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=456412869 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
+layout_mode = 2
+tooltip_text = "Slope [2]"
+focus_next = NodePath("../OneWayButton")
+focus_previous = NodePath("../SolidButton")
+toggle_mode = true
+button_group = ExtResource("3_0aoee")
+thisItemID = 7
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
 
 [node name="OneWayButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=45805104 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "One-Way Tile [2]"
+tooltip_text = "One-Way Tile [3]"
+focus_next = NodePath("../BounceButton")
+focus_previous = NodePath("../SlopeButton")
+toggle_mode = true
+button_group = ExtResource("3_0aoee")
 thisItemID = 2
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
 
-[node name="HazardButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=810406606 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
+[node name="BounceButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=850045818 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Hazard Tile [3]"
-thisItemID = 1
+tooltip_text = "Bounce Tile [4]"
+focus_next = NodePath("../IceButton")
+focus_previous = NodePath("../OneWayButton")
+toggle_mode = true
+button_group = ExtResource("3_0aoee")
+thisItemID = 5
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
 
 [node name="IceButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1696596209 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Ice Tile [4]"
+tooltip_text = "Ice Tile [5]"
+focus_next = NodePath("../StickyButton")
+focus_previous = NodePath("../BounceButton")
+toggle_mode = true
+button_group = ExtResource("3_0aoee")
 thisItemID = 3
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
 
 [node name="StickyButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1990788713 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Slime Tile [5]"
+tooltip_text = "Slime Tile [6]"
+focus_next = NodePath("../HazardButton")
+focus_previous = NodePath("../IceButton")
+toggle_mode = true
+button_group = ExtResource("3_0aoee")
 thisItemID = 4
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
 
-[node name="BounceButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=850045818 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
+[node name="HazardButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=810406606 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Bounce Tile [6]"
-thisItemID = 5
+tooltip_text = "Hazard Tile [7]"
+focus_next = NodePath("../DeathButton")
+focus_previous = NodePath("../StickyButton")
+toggle_mode = true
+button_group = ExtResource("3_0aoee")
+thisItemID = 1
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
 
 [node name="DeathButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=1220324445 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Death Tile [7]"
+tooltip_text = "Death Tile [8]"
+focus_next = NodePath("../SolidButton")
+focus_previous = NodePath("../HazardButton")
+toggle_mode = true
+button_group = ExtResource("3_0aoee")
 thisItemID = 6
-tilebar = NodePath("../../../..")
-isTextureUpdating = true
-
-[node name="SlopeButton" parent="TilePickerUI/MarginContainer/Tiles" unique_id=456412869 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
-layout_mode = 2
-tooltip_text = "Slope [8]"
-thisItemID = 7
 tilebar = NodePath("../../../..")
 isTextureUpdating = true
 
@@ -108,6 +166,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 tooltip_text = "Entities/Props"
+focus_mode = 0
 selected = 0
 item_count = 2
 popup/item_0/text = "Entities"
@@ -124,86 +183,130 @@ size_flags_horizontal = 3
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="GoalEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1329828214 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
-layout_mode = 2
-tooltip_text = "Goal [1]"
-thisItemID = 500
-tilebar = NodePath("../../../../..")
-isTextureUpdating = true
-isEntity = true
-entityName = "goal"
-
 [node name="PlayerEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=568547811 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Player [2]"
+tooltip_text = "Player [1]"
+focus_next = NodePath("../CoinEntityButton")
+focus_previous = NodePath("../GoalEntityButton")
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("5_fdk17")
 thisItemID = 501
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
 isEntity = true
 entityName = "player"
+buttonType = 1
 
 [node name="CoinEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1741178858 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Coin [3]"
+tooltip_text = "Coin [2]"
+focus_next = NodePath("../PatrollingEntityButton")
+focus_previous = NodePath("../PlayerEntityButton")
+toggle_mode = true
+button_group = ExtResource("5_fdk17")
 thisItemID = 506
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
 isEntity = true
 entityName = "coin"
+buttonType = 1
 
 [node name="PatrollingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1549482696 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Patrolling Enemy [4]"
+tooltip_text = "Patrolling Enemy [3]"
+focus_next = NodePath("../StationaryEntityButton")
+focus_previous = NodePath("../CoinEntityButton")
+toggle_mode = true
+button_group = ExtResource("5_fdk17")
 thisItemID = 502
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
 isEntity = true
 entityName = "patrollingEnemy"
-
-[node name="ShootingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=97347578 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
-layout_mode = 2
-tooltip_text = "Shooting Enemy [5]"
-thisItemID = 503
-tilebar = NodePath("../../../../..")
-isTextureUpdating = true
-isEntity = true
-entityName = "shootingEnemy"
-
-[node name="FlyingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1159687364 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
-layout_mode = 2
-tooltip_text = "Flying Enemy [6]"
-thisItemID = 504
-tilebar = NodePath("../../../../..")
-isTextureUpdating = true
-isEntity = true
-entityName = "flyingEnemy"
+buttonType = 1
 
 [node name="StationaryEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1637250833 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Stationary Enemy [7]"
+tooltip_text = "Stationary Enemy [4]"
+focus_next = NodePath("../ShootingEntityButton")
+focus_previous = NodePath("../PatrollingEntityButton")
+toggle_mode = true
+button_group = ExtResource("5_fdk17")
 thisItemID = 505
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
 isEntity = true
 entityName = "stationaryEnemy"
+buttonType = 1
+
+[node name="ShootingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=97347578 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
+layout_mode = 2
+tooltip_text = "Shooting Enemy [5]"
+focus_next = NodePath("../FlyingEntityButton")
+focus_previous = NodePath("../StationaryEntityButton")
+toggle_mode = true
+button_group = ExtResource("5_fdk17")
+thisItemID = 503
+tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "shootingEnemy"
+buttonType = 1
+
+[node name="FlyingEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1159687364 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
+layout_mode = 2
+tooltip_text = "Flying Enemy [6]"
+focus_next = NodePath("../MovingPlatformButton")
+focus_previous = NodePath("../ShootingEntityButton")
+toggle_mode = true
+button_group = ExtResource("5_fdk17")
+thisItemID = 504
+tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "flyingEnemy"
+buttonType = 1
 
 [node name="MovingPlatformButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=622725076 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Moving Platform [8]"
+tooltip_text = "Moving Platform [7]"
+focus_next = NodePath("../GoalEntityButton")
+focus_previous = NodePath("../FlyingEntityButton")
+toggle_mode = true
+button_group = ExtResource("5_fdk17")
 thisItemID = 507
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
 isEntity = true
 entityName = "movingPlatform"
+buttonType = 1
+
+[node name="GoalEntityButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=1329828214 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
+layout_mode = 2
+tooltip_text = "Goal [8]"
+focus_next = NodePath("../PlayerEntityButton")
+focus_previous = NodePath("../MovingPlatformButton")
+toggle_mode = true
+button_group = ExtResource("5_fdk17")
+thisItemID = 500
+tilebar = NodePath("../../../../..")
+isTextureUpdating = true
+isEntity = true
+entityName = "goal"
+buttonType = 1
 
 [node name="CheckpointButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=922654245 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Slope [8]"
+toggle_mode = true
+button_group = ExtResource("5_fdk17")
 thisItemID = 508
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
 isEntity = true
 entityName = "checkpoint"
+buttonType = 1
 
 [node name="Props" type="HBoxContainer" parent="EntityPickerUI/MarginContainer/Tabs" unique_id=1986159458]
 visible = false
@@ -215,51 +318,88 @@ layout_mode = 2
 tooltip_text = "Prop [1] 
 Rotate [R]
 Swap Foreground/Background [F]"
+focus_next = NodePath("../PropTwoButton")
+focus_previous = NodePath("../PropSixButton")
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("6_b1hq2")
 thisItemID = 600
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
+entityName = "prop1"
+buttonType = 2
 
 [node name="PropTwoButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=425089871 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Prop [2]
 Rotate [R]
 Swap Foreground/Background [F]"
+focus_next = NodePath("../PropThreeButton")
+focus_previous = NodePath("../PropOneButton")
+toggle_mode = true
+button_group = ExtResource("6_b1hq2")
 thisItemID = 601
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
+entityName = "prop2"
+buttonType = 2
 
 [node name="PropThreeButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=766602216 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Prop [3]
 Rotate [R]
 Swap Foreground/Background [F]"
+focus_next = NodePath("../PropFourButton")
+focus_previous = NodePath("../PropTwoButton")
+toggle_mode = true
+button_group = ExtResource("6_b1hq2")
 thisItemID = 602
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
+entityName = "prop3"
+buttonType = 2
 
 [node name="PropFourButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=448831461 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Prop [4]
 Rotate [R]
 Swap Foreground/Background [F]"
+focus_next = NodePath("../PropFiveButton")
+focus_previous = NodePath("../PropThreeButton")
+toggle_mode = true
+button_group = ExtResource("6_b1hq2")
 thisItemID = 603
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
+entityName = "prop4"
+buttonType = 2
 
 [node name="PropFiveButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=1555120042 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Prop [5]
 Rotate [R]
 Swap Foreground/Background [F]"
+focus_next = NodePath("../PropSixButton")
+focus_previous = NodePath("../PropFourButton")
+toggle_mode = true
+button_group = ExtResource("6_b1hq2")
 thisItemID = 604
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
+entityName = "prop5"
+buttonType = 2
 
 [node name="PropSixButton" parent="EntityPickerUI/MarginContainer/Tabs/Props" unique_id=923450028 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
 tooltip_text = "Prop [6]
 Rotate [R]
 Swap Foreground/Background [F]"
+focus_next = NodePath("../PropOneButton")
+focus_previous = NodePath("../PropFiveButton")
+toggle_mode = true
+button_group = ExtResource("6_b1hq2")
 thisItemID = 605
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
+entityName = "prop6"
+buttonType = 2

@@ -1,5 +1,9 @@
 extends Panel
 
+# A direct reference to the preview manager and cursor manager.
+@export var previewManager : TileMapLayer;
+@export var cursorManager : Node;
+
 # Entity currently selected for editing
 var selectedEntity : Node2D;
 
@@ -149,11 +153,18 @@ func _ready() -> void:
 
 ## Close the property menu and set the selected entity to null
 func close() -> void:
+	# Show preview and selector frame.
+	previewManager.show();
+	cursorManager.show_selector_frame();
+	
+	if previewLine:
+		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
 	hide();
 	selectedEntity = null;
+	
 
 ## Runs every frame. Sets the text and arrows when an entity is selected
 ## _delta: Time passed since the last frame
@@ -397,9 +408,16 @@ func _on_drag_ended() -> void:
 ## resource: The resource file to load with properties
 func show_menu(resource: Resource = null) -> void:
 	show();
+	# Hide preview and selector frame.
+	previewManager.hide();
+	cursorManager.hide_selector_frame();
+	
+	if previewLine:
+		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
+		
 	playerMenu.hide();
 	patrollingMenu.hide();
 	shootingMenu.hide();

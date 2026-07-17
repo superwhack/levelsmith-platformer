@@ -8,16 +8,16 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
-[ext_resource type="Texture2D" uid="uid://cmh6m8bok14oi" path="res://Assets/UserInterface/UpdatedIcons/material-symbols-light--home-outline.png" id="8_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://cui13q7plxmpx" path="res://Assets/UserInterface/UpdatedIcons/material-symbols-light--home-outline.png" id="8_vrcqo"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
-[ext_resource type="Texture2D" uid="uid://chqycgpbvi2s5" path="res://Assets/UserInterface/UpdatedIcons/carbon--save.png" id="10_racgb"]
+[ext_resource type="Texture2D" uid="uid://dh46m4u50qh7d" path="res://Assets/UserInterface/UpdatedIcons/carbon--save.png" id="10_racgb"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
-[ext_resource type="Texture2D" uid="uid://bjepls0slldfm" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="11_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://nwtxmk18ptg6" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="11_vrcqo"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Texture2D" uid="uid://cir38m5oo2h1t" path="res://Assets/UserInterface/UpdatedIcons/wordpress--image.png" id="13_hh704"]
+[ext_resource type="Texture2D" uid="uid://bmc67g43xfyjv" path="res://Assets/UserInterface/UpdatedIcons/wordpress--image.png" id="13_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
 [ext_resource type="Texture2D" uid="uid://d3twybevvpjqn" path="res://Assets/UserInterface/UpdatedIcons/LevelSettings.png" id="14_vrcqo"]
 [ext_resource type="Texture2D" uid="uid://db10ps4ripfsu" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_racgb"]
@@ -138,6 +138,7 @@ custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "Exit to Home"
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -181,6 +182,7 @@ custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "Save [Ctrl+S]"
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -207,6 +209,8 @@ layout_mode = 2
 [node name="PlayLevelButton" type="Button" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=960511629]
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
 theme_override_font_sizes/font_size = 16
 
 [node name="ContentMargin" type="MarginContainer" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/PlayLevelButton" unique_id=1175052129]
@@ -289,6 +293,7 @@ custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "Asset Manager"
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -315,6 +320,7 @@ custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "Level Settings"
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -341,6 +347,7 @@ custom_maximum_size = Vector2(65, 65)
 layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "Global Settings"
+focus_mode = 0
 icon_alignment = 1
 expand_icon = true
 
@@ -393,8 +400,10 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0vixy")
 
-[node name="PropertyMenu" parent="ScreenUI/MainColumn/ContentRow/PropertiesPanel" unique_id=1686733993 node_paths=PackedStringArray("editorManager") instance=ExtResource("7_gc37a")]
+[node name="PropertyMenu" parent="ScreenUI/MainColumn/ContentRow/PropertiesPanel" unique_id=1686733993 node_paths=PackedStringArray("previewManager", "cursorManager", "editorManager") instance=ExtResource("7_gc37a")]
 layout_mode = 2
+previewManager = NodePath("../../../../../PreviewTile")
+cursorManager = NodePath("../../../../../CustomCursorManager")
 editorManager = NodePath("../../../../..")
 
 [node name="OverlayLayer" type="Control" parent="ScreenUI" unique_id=1751323313]

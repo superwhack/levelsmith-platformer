@@ -27,7 +27,6 @@ func _unhandled_key_input(event : InputEvent) -> void:
 		editorManager.change_current_hotbar(Global.HotbarState.TILES);
 	elif event.is_action_pressed("cursor-tool"):
 		toolManager.change_tool(Global.Tool.CURSOR);
-		
 		# Selected id is 0 for entities and 1 for props;
 		var dropdownState = tileSwitch.entityPropDropdown.get_selected_id();
 		editorManager.change_current_hotbar(dropdownState + 1);
@@ -36,50 +35,58 @@ func _unhandled_key_input(event : InputEvent) -> void:
 	match(editorManager.currentHotbarState):
 		Global.HotbarState.TILES:
 			if event.is_action_pressed("first-select"):
-				toolManager.update_brush_object(Global.TileType.SOLID);
+				tileSwitch.tileButtons[0].select();
 			elif event.is_action_pressed("second-select"):
-				toolManager.update_brush_object(Global.TileType.ONEWAY);
+				tileSwitch.tileButtons[1].select();
 			elif event.is_action_pressed("third-select"):
-				toolManager.update_brush_object(Global.TileType.HAZARD);
+				tileSwitch.tileButtons[2].select();
 			elif event.is_action_pressed("fourth-select"):
-				toolManager.update_brush_object(Global.TileType.ICE);
+				tileSwitch.tileButtons[3].select();
 			elif event.is_action_pressed("fifth-select"):
-				toolManager.update_brush_object(Global.TileType.STICKY);
+				tileSwitch.tileButtons[4].select();
 			elif event.is_action_pressed("sixth-select"):
-				toolManager.update_brush_object(Global.TileType.BOUNCE);
+				tileSwitch.tileButtons[5].select();
 			elif event.is_action_pressed("seventh-select"):
-				toolManager.update_brush_object(Global.TileType.DEATH);
+				tileSwitch.tileButtons[6].select();
 			elif event.is_action_pressed("eighth-select"):
-				toolManager.update_brush_object(Global.TileType.SLOPE);
+				tileSwitch.tileButtons[7].select();
 		Global.HotbarState.ENTITIES:
+			# Switch dropdown
+			if (event.is_action_pressed("switch-entity-prop-dropdown")):
+				tileSwitch.entity_dropdown_select(1);
+			# Switch selected entity
 			if event.is_action_pressed("first-select"):
-				toolManager.update_brush_object(Global.EntityType.GOAL);
+				tileSwitch.entityButtons[0].select();
 			elif event.is_action_pressed("second-select"):
-				toolManager.update_brush_object(Global.EntityType.PLAYER);
+				tileSwitch.entityButtons[1].select();
 			elif event.is_action_pressed("third-select"):
-				toolManager.update_brush_object(Global.EntityType.COIN);
+				tileSwitch.entityButtons[2].select();
 			elif event.is_action_pressed("fourth-select"):
-				toolManager.update_brush_object(Global.EntityType.PATROLLING);
+				tileSwitch.entityButtons[3].select();
 			elif event.is_action_pressed("fifth-select"):
-				toolManager.update_brush_object(Global.EntityType.SHOOTING);
+				tileSwitch.entityButtons[4].select();
 			elif event.is_action_pressed("sixth-select"):
-				toolManager.update_brush_object(Global.EntityType.FLYING);
+				tileSwitch.entityButtons[5].select();
 			elif event.is_action_pressed("seventh-select"):
-				toolManager.update_brush_object(Global.EntityType.STATIONARY);
+				tileSwitch.entityButtons[6].select();
 			elif event.is_action_pressed("eighth-select"):
-				toolManager.update_brush_object(Global.EntityType.MOVING_PLATFORM);
+				tileSwitch.entityButtons[7].select();
 			elif event.is_action_pressed("ninth-select"):
-				toolManager.update_brush_object(Global.EntityType.CHECKPOINT);
+				tileSwitch.entityButtons[8].select();
 		Global.HotbarState.PROPS:
+			# Switch dropdown
+			if (event.is_action_pressed("switch-entity-prop-dropdown")):
+				tileSwitch.entity_dropdown_select(0);
+			# Switch current selected prop
 			if event.is_action_pressed("first-select"):
-				toolManager.update_brush_object(Global.EntityType.PROP1);
+				tileSwitch.propButtons[0].select();
 			elif event.is_action_pressed("second-select"):
-				toolManager.update_brush_object(Global.EntityType.PROP2);
+				tileSwitch.propButtons[1].select();
 			elif event.is_action_pressed("third-select"):
-				toolManager.update_brush_object(Global.EntityType.PROP3);
+				tileSwitch.propButtons[2].select();
 			elif event.is_action_pressed("fourth-select"):
-				toolManager.update_brush_object(Global.EntityType.PROP4);
+				tileSwitch.propButtons[3].select();
 			elif event.is_action_pressed("fifth-select"):
-				toolManager.update_brush_object(Global.EntityType.PROP5);
+				tileSwitch.propButtons[4].select();
 			elif event.is_action_pressed("sixth-select"):
-				toolManager.update_brush_object(Global.EntityType.PROP6);
+				tileSwitch.propButtons[5].select();

@@ -64,7 +64,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 
 [node name="ResetButton" type="Button" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container" unique_id=1815887631]
-custom_minimum_size = Vector2(40, 40)
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 8
 tooltip_text = "Reset"
@@ -89,10 +89,14 @@ layout_mode = 2
 texture = ExtResource("3_2riqt")
 expand_mode = 3
 
-[node name="Spacer" type="Control" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container" unique_id=964069108]
-custom_minimum_size = Vector2(10, 0)
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container" unique_id=924831966]
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="VSeparator" type="VSeparator" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container/MarginContainer" unique_id=1213346371]
+layout_mode = 2
+theme = ExtResource("2_ym18m")
 
 [node name="ReturnEditorButton" type="Button" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container" unique_id=1339685622]
 custom_minimum_size = Vector2(200, 0)

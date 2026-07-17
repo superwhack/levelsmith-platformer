@@ -68,7 +68,6 @@ func _ready() -> void:
 	editorPlayButton.mouse_entered.connect(mouse_entered_play_button);
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
-	winReturnToEditorButton.pressed.connect(edit);
 	get_window().close_requested.connect(check_unsaved_changes.bind(Callable(get_tree(), "quit"), ExitAction.QUIT));
 	
 	# Create the enemy resource folder and custom player preset.

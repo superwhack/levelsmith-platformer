@@ -24,6 +24,7 @@ var currentLoadedAnimation : Array[Texture2D];
 @export var frameLeftButton : Button;
 @export var frameCountLabel : Label;
 @export var playButton : Button;
+@export var pauseButton : Button;
 @export var stopButton : Button;
 @export var FPSSpinbox : SpinBox;
 # Information about played animation
@@ -50,6 +51,7 @@ func _ready() -> void:
 	frameRightButton.pressed.connect(frame_change.bind(true));
 	frameLeftButton.pressed.connect(frame_change.bind(false));
 	playButton.pressed.connect(play_preview_animation);
+	pauseButton.pressed.connect(play_preview_animation.bind(false));
 	stopButton.pressed.connect(stop_preview_animation);
 	FPSSpinbox.value_changed.connect(fps_updated);
 
@@ -193,12 +195,18 @@ func update_animation_preview() -> void:
 			animationPreviewTexture.texture = animationPreviewToReplace;
 
 ## Play the animation in the preview
-func play_preview_animation() -> void:
-	playingAnimation = !playingAnimation;
+func play_preview_animation(play : bool = true) -> void:
+	playingAnimation = play;
+	if (playingAnimation):
+		pauseButton.show();
+		playButton.hide();
+	else:
+		pauseButton.hide();
+		playButton.show();
 
 ## Stop the animation and set it to its first frame
 func stop_preview_animation() -> void:
-	playingAnimation = false;
+	play_preview_animation(false);
 	animationFrameIndex = 0;
 	update_animation_preview();
 

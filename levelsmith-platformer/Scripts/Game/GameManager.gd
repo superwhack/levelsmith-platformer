@@ -222,7 +222,7 @@ func level_complete() -> void:
 	# If the goal's already been reached, don't run this again
 	if goalReached:
 		return;
-	player.victory();
+	player.player_victory();
 	AudioManager.pause_music(true);
 	AudioManager.reset_audio();
 	AudioManager.play_effect("Victory");

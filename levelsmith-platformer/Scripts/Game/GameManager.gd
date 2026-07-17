@@ -175,6 +175,7 @@ func start() -> void:
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:
 	Global.death.connect(reset);
+	Global.goalReached.connect(goal_reached);
 	Global.complete.connect(level_complete);
 	Global.checkpointCollected.connect(collect_checkpoint);
 	Global.onCoinCollected.connect(_on_coin_collected);
@@ -254,3 +255,6 @@ func replay_level() -> void:
 	get_tree().paused = false;
 	winScreen.hide();
 	full_restart();
+
+func goal_reached() -> void:
+	bottomScreenGroup.hide();

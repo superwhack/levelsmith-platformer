@@ -3,6 +3,7 @@ extends Node
 # Signals related to current gamestates
 signal death;
 signal reload;
+signal goalReached;
 signal complete;
 signal levelCreated;
 signal onCoinCollected;

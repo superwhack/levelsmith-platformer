@@ -14,3 +14,4 @@ func complete_level(body: Node2D) -> void:
 	if body is Player:
 		body.play_victory();
 		AudioManager.pause_music(true);
+		Global.goalReached.emit();

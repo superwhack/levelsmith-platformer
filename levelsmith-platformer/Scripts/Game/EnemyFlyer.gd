@@ -113,7 +113,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	targetPoint = pointB;
 	previewLine.update();
 	z_index += 2;
-	previewLine.z_index = z_index - 4;
+	previewLine.z_index = z_index - 5;
 	ResourceSaver.save(propertyFile);
 
 	apply_script(propertyFile);

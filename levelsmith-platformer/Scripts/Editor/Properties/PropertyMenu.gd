@@ -93,6 +93,7 @@ var previewLine: Line2D;
 @export var movingPlatformEasingCheckbox : VBoxContainer;
 @export var movingPlatformMomentumCheckbox : VBoxContainer;
 @export var movingPlatformVisibilityCheckbox : VBoxContainer;
+@export var movingPlatformAlwaysActiveCheckbox : VBoxContainer;
 
 # Direction arrow for shooting and patrolling enemies
 var directionArrow : Sprite2D;
@@ -142,6 +143,7 @@ func _ready() -> void:
 	movingPlatformEasingCheckbox.check_changed.connect(_on_drag_ended);
 	movingPlatformMomentumCheckbox.check_changed.connect(_on_drag_ended);
 	movingPlatformVisibilityCheckbox.check_changed.connect(_on_drag_ended);
+	movingPlatformAlwaysActiveCheckbox.check_changed.connect(_on_drag_ended);
 	
 	closeButton.pressed.connect(close);
 
@@ -310,6 +312,7 @@ func update_sliders() -> void:
 		movingPlatformEasingCheckbox.value = selectedPreset.easing;
 		movingPlatformMomentumCheckbox.value = selectedPreset.momentum;
 		movingPlatformVisibilityCheckbox.value = selectedPreset.visible;
+		movingPlatformAlwaysActiveCheckbox.value = selectedPreset.active;
 		movingPlatformSpeedSlider.update_slider();
 		movingPlatformOffsetXSlider.update_slider();
 		movingPlatformOffsetYSlider.update_slider();
@@ -318,6 +321,7 @@ func update_sliders() -> void:
 		movingPlatformEasingCheckbox.update_checkbox();
 		movingPlatformMomentumCheckbox.update_checkbox();
 		movingPlatformVisibilityCheckbox.update_checkbox();
+		movingPlatformAlwaysActiveCheckbox.update_checkbox();
 	
 
 ## Alternate the ability for a property to be selected
@@ -376,6 +380,7 @@ func update_values() -> void:
 		selectedPreset.easing = movingPlatformEasingCheckbox.value;
 		selectedPreset.momentum = movingPlatformMomentumCheckbox.value;
 		selectedPreset.visible = movingPlatformVisibilityCheckbox.value;
+		selectedPreset.active = movingPlatformAlwaysActiveCheckbox.value
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	
 

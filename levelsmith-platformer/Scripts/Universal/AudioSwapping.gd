@@ -105,9 +105,9 @@ func save_ogg_stream(sourcePath : String, filePath : String) -> void:
 	DirAccess.copy_absolute(sourcePath, filePath);
 	
 func stop_preview():
-	previewAudioPlayer.stop()
-	isPlayingPreview = false
-	audioTimeline.value = 0
+	previewAudioPlayer.stop();
+	isPlayingPreview = false;
+	audioTimeline.value = 0;
 	
 func preview_audio_finished() -> void:
 	if (loadedPreviewAudio):
@@ -116,6 +116,7 @@ func preview_audio_finished() -> void:
 		isPlayingPreview = false;
 		audioTimeline.value = 0;
 
+## Plays the preview audio. 
 func play_preview_audio() -> void:
 	if (!previewAudioPlayer.playing):
 		previewAudioPlayer.play(audioTimeline.value)

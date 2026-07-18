@@ -176,7 +176,7 @@ func open_asset_manager() -> void:
 	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
 	iconManager.previewIcon.hide();
-	assetManager.audioSwapping.preview_audio_finished();
+	assetManager.audioSwapping.stop_preview()
 	assetManager.process_mode = Node.PROCESS_MODE_WHEN_PAUSED;
 	assetManager.show();
 

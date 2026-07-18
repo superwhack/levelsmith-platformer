@@ -26,7 +26,7 @@ func _ready() -> void:
 	add_child(previewAudioPlayer);
 	playButton.pressed.connect(play_preview_audio);
 	stopButton.pressed.connect(preview_audio_finished);
-	previewAudioPlayer.finished.connect(preview_audio_finished);
+	previewAudioPlayer.finished.connect(stop_preview)
 	audioTimeline.drag_started.connect(drag_started);
 	audioTimeline.drag_ended.connect(drag_ended);
 
@@ -103,15 +103,22 @@ func save_mp3_stream(stream : AudioStreamMP3, filePath : String) -> void:
 
 func save_ogg_stream(sourcePath : String, filePath : String) -> void:
 	DirAccess.copy_absolute(sourcePath, filePath);
-
+	
+func stop_preview():
+	previewAudioPlayer.stop()
+	isPlayingPreview = false
+	audioTimeline.value = 0
+	
 func preview_audio_finished() -> void:
 	if (loadedPreviewAudio):
-		previewAudioPlayer.play()
+		previewAudioPlayer.play();
 		previewAudioPlayer.stream_paused = true;
 		isPlayingPreview = false;
 		audioTimeline.value = 0;
 
 func play_preview_audio() -> void:
+	if (!previewAudioPlayer.playing):
+		previewAudioPlayer.play(audioTimeline.value)
 	isPlayingPreview = !isPlayingPreview
 	previewAudioPlayer.stream_paused = !isPlayingPreview;
 

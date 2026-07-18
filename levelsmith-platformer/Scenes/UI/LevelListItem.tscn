@@ -55,7 +55,7 @@ size_flags_vertical = 4
 
 [node name="TitleHBox" type="HBoxContainer" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1097758974]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 3
 
 [node name="LevelError" type="TextureRect" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/TitleHBox" unique_id=1951360806]
 visible = false

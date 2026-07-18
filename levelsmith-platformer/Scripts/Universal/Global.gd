@@ -3,6 +3,7 @@ extends Node
 # Signals related to current gamestates
 signal death;
 signal reload;
+signal goalReached;
 signal complete;
 signal levelCreated;
 signal onCoinCollected;
@@ -12,7 +13,7 @@ signal checkpointCollected;
 const TILE_SIZE : int = 128;
 
 # Current version of Foundry 2D
-const VERSION = 0.0067;
+const VERSION = 0.5;
 
 # Application State
 enum State {

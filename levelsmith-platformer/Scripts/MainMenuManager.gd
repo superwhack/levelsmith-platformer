@@ -8,6 +8,8 @@ extends Control
 @export var buttonImportLevel : Button;
 @export var buttonLoadExample : Button;
 @export var buttonQuit : Button;
+@export var buttonCredits : Button;
+@export var buttonCloseCredits : Button;
 @export var buttonOpenLevelFolder : Button;
 @export var buttonPlayLevel : Button;
 @export var buttonEditLevel : Button;
@@ -20,6 +22,7 @@ extends Control
 @export var overlayNewLevel : ColorRect;
 @export var overlayImportLevel : ColorRect;
 @export var overlayDuplicateLevel : ColorRect;
+@export var overlayCredits : ColorRect;
 
 # New level overlay children
 @export var buttonNewLevelCreate : Button;
@@ -124,6 +127,8 @@ func _ready() -> void:
 	buttonDuplicateLevelCancel.pressed.connect(overlay_duplicate_level_hide);
 	globalSettingsButton.pressed.connect(masterManager.open_global_settings_menu);
 	buttonQuit.pressed.connect(exit_program);
+	buttonCredits.pressed.connect(show_credits_screen);
+	buttonCloseCredits.pressed.connect(show_credits_screen.bind(false));
 
 	spinBoxNewLevelX.value_changed.connect(update_level_size_warning);
 	spinBoxNewLevelY.value_changed.connect(update_level_size_warning);
@@ -384,6 +389,11 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 	item.dimensions = str(metadata.get("dimensions", str([20, 20])));
 	item.objectCount = str(int(metadata.get("objects", str(0))));
 	item.version = str(metadata.get("version", Global.VERSION));
+	if (item.version != str(Global.VERSION)):
+		item.levelErrorIcon.show();
+		item.levelErrorIcon.tooltip_text = "This level's version is " + item.version + ". You are currently on version " + str(Global.VERSION) + ".";
+	else:
+		item.levelErrorIcon.hide();
 	item.favorited = metadata.get("favorited", false);
 	item.validated = metadata.get("validated", false);
 	if (item.favorited):
@@ -445,10 +455,8 @@ func open_level_folder() -> void:
 func play_current_level() -> void:
 	if (!selectedItem):
 		return;
-
 	AudioManager.play_UI_effect("UI_Selection");
 	masterManager.load_level(selectedItem.levelPath, true);
-
 
 ## Edit the currently selected level.
 func edit_current_level() -> void:
@@ -644,3 +652,11 @@ func remove_recursively(directory: String) -> void:
 		DirAccess.remove_absolute(directory.path_join(file));
 
 	DirAccess.remove_absolute(directory)
+
+func show_credits_screen(show : bool = true) -> void:
+	if (show):
+		AudioManager.play_UI_effect("UISelection")
+		overlayCredits.show();
+	else:
+		AudioManager.play_UI_effect("UISelection")
+		overlayCredits.hide();

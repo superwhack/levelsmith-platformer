@@ -36,6 +36,7 @@ var timerRunning : bool = false;
 
 # Has the goal been reached
 var goalReached : bool = false;
+var pausable : bool = false;
 
 # Coin variables
 var coinCount : int = 0
@@ -54,7 +55,7 @@ var playerPreset : Resource;
 
 ## When pause is pressed, flip the current state
 func pause() -> void:
-	if goalReached:
+	if goalReached || !pausable:
 		return;
 	if playState == PlayState.PAUSE:
 		get_tree().paused = false;
@@ -73,6 +74,7 @@ func pause() -> void:
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
+	freeze(true);
 	await masterManager.screen_wipe_in();
 	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UISelection");
@@ -93,13 +95,14 @@ func freeze(locked: bool) -> void:
 		process_mode = Node.PROCESS_MODE_INHERIT;
 
 func full_restart() -> void:
-	freeze(true);
 	playerCheckpointPosition = Vector2(-1, -1);
+	pausable = false;
 	await reset();
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
 	pauseButton.show();
+	pausable = true;
 	bottomScreenGroup.show();
 	goalReached = false;
 	# Reset coin values for the new level
@@ -175,6 +178,7 @@ func start() -> void:
 ## Connects the death, reset, and pause signals to their respective functions.
 func _ready() -> void:
 	Global.death.connect(reset);
+	Global.goalReached.connect(goal_reached);
 	Global.complete.connect(level_complete);
 	Global.checkpointCollected.connect(collect_checkpoint);
 	Global.onCoinCollected.connect(_on_coin_collected);
@@ -183,7 +187,6 @@ func _ready() -> void:
 	resumeButton.pressed.connect(pause);
 	replayButton.pressed.connect(replay_level);
 	editorButton.pressed.connect(return_to_editor);
-
 
 func _process(delta: float) -> void:
 	if timerRunning:
@@ -222,13 +225,14 @@ func update_timer(label: RichTextLabel) -> void:
 
 ## Pauses gameplay, displays the win screen, and updates the completion statistics
 func level_complete() -> void:
-	# If the goal's already been reached, don't run this again
-	if goalReached:
-		return;
-	AudioManager.reset_audio();
-	goalReached = true;
+	## If the goal's already been reached, don't run this again
+	#if goalReached:
+		#return;
+	# AudioManager.reset_audio();
+	AudioManager.stop_music_preview();
 	print_level_completion_time();
 	pauseButton.hide();
+	pausable = false;
 	get_tree().paused = true;
 	update_coin_counter(winCoinLabel);
 	update_timer(winTimeLabel);
@@ -243,13 +247,19 @@ func level_complete() -> void:
 ## Returns to the level editor and restores the editor state
 func return_to_editor() -> void:
 	get_tree().paused = false;
+	freeze(true);
 	winScreen.hide();
 	timerRunning = false;
 	masterManager.edit();
-	
+	pausable = false;
 
 ## Restarts the current level from the beginning
 func replay_level() -> void:
 	get_tree().paused = false;
 	winScreen.hide();
 	full_restart();
+
+func goal_reached() -> void:
+	bottomScreenGroup.hide();
+	timerRunning = false;
+	goalReached = true;

@@ -5,6 +5,7 @@ extends Node
 @export var toolManager : Node2D
 @export var entityManager : Node2D;
 @export var tileSwitch : BoxContainer;
+@export var toolSwitch : BoxContainer;
 
 ## Handles keyboard inputs.
 ## event: The input event to parse.
@@ -18,15 +19,15 @@ func _unhandled_key_input(event : InputEvent) -> void:
 	if event.is_action_pressed("brush-tool"):
 		if (toolManager.prevBrushObject != -1):
 			entityManager.drop_entity();
-		toolManager.change_tool(Global.Tool.BRUSH);
+		toolSwitch.swap_to_brush();
 		editorManager.change_current_hotbar(Global.HotbarState.TILES);
 	elif event.is_action_pressed("box-brush-tool"):
 		if (toolManager.prevBrushObject != -1):
 			entityManager.drop_entity();
-		toolManager.change_tool(Global.Tool.BOX_BRUSH);
+		toolSwitch.swap_to_box_brush();
 		editorManager.change_current_hotbar(Global.HotbarState.TILES);
 	elif event.is_action_pressed("cursor-tool"):
-		toolManager.change_tool(Global.Tool.CURSOR);
+		toolSwitch.swap_to_cursor();
 		# Selected id is 0 for entities and 1 for props;
 		var dropdownState = tileSwitch.entityPropDropdown.get_selected_id();
 		editorManager.change_current_hotbar(dropdownState + 1);

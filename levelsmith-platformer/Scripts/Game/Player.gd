@@ -125,7 +125,7 @@ var fallAnimStarted : bool = false;
 
 var victory : bool = false;
 
-#var debugLabel: Label
+#var debugLabel: Label;
 
 ## Runs once on instantiation
 func _ready() -> void:
@@ -144,7 +144,7 @@ func _ready() -> void:
 	
 	#debugLabel = Label.new();
 	#debugLabel.position = Vector2(10, 10);
-	
+	#
 	#get_tree().current_scene.add_child(debugLabel);
 	
 	animatedSprites.sprite_frames = AnimationManager.playerTemplateSprite.sprite_frames;
@@ -215,11 +215,8 @@ func _physics_process(delta: float) -> void:
 	#
 	#debugLabel.position = Vector2( position.x - 148, position.y - 170 );
 	#debugLabel.text = debugText;
-	
-	
-	
-	
-			
+
+
 func apply_state_logic( delta: float ) :
 	
 		# Input based sprite flipping
@@ -365,7 +362,7 @@ func apply_state_logic( delta: float ) :
 		PlayerState.VICTORY:
 			# Animation
 			animatedSprites.flip_h = false;
-	
+
 
 func retainWallJumpAnimDir() :
 	if ( wallJumpDirection == WallDirection.RIGHT ): animatedSprites.flip_h = true;

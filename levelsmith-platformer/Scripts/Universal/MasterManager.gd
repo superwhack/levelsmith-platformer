@@ -83,8 +83,6 @@ func _ready() -> void:
 ## When the user does a save level input, save the level.
 ## event: The user input
 func _input(event: InputEvent) -> void:
-	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated);
 	if event.is_action_pressed("toggle-fullscreen"):
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);

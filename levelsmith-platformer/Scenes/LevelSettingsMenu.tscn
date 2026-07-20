@@ -18,7 +18,7 @@
 [sub_resource type="ButtonGroup" id="ButtonGroup_1i6c8"]
 
 [node name="LevelSettingsMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "resetButton", "gameplayZoom", "followSpeed", "cameraDeadzone", "cameraClamp")]
-process_mode = 2
+process_mode = 4
 self_modulate = Color(0, 0, 0, 0.3764706)
 anchors_preset = 15
 anchor_right = 1.0

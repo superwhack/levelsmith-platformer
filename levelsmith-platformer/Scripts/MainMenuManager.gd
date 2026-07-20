@@ -244,6 +244,8 @@ func fill_level_list() -> void:
 	# Get the directory that contains all the level folders
 	var levelsPath : String = "user://Levels"
 	var levelListDir : DirAccess = DirAccess.open(levelsPath);
+	print("Levels path:", levelsPath)
+	print("LLD:", levelListDir);
 	
 	# Return early if there is no directory.
 	if (!levelListDir):

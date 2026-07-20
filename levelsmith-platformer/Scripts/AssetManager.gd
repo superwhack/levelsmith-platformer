@@ -67,6 +67,9 @@ func _ready() -> void:
 	ImportExportManager.levelImported.connect(setup);
 	Global.levelCreated.connect(setup);
 	
+func _input( event: InputEvent ) -> void:
+	if ( event.is_action_pressed("ui_close_dialog") ):
+		editorManager.close_asset_manager();
 
 # WARNING Only refreshes all files once, might be worth it later to do individually
 ## Generate buttons for each asset

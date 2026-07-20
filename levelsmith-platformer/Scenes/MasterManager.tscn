@@ -115,7 +115,14 @@ visible = true
 anchors_preset = -1
 
 [node name="AssetManager" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="0" unique_id=468653693 node_paths=PackedStringArray("masterManager")]
+focus_behavior_recursive = 0
 masterManager = NodePath("../../..")
+
+[node name="PlayPauseButton" parent="EditorManager/CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(2045534837, 468653693, 1727755463) index="0" unique_id=1125072521]
+focus_mode = 2
+
+[node name="StopButton" parent="EditorManager/CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(2045534837, 468653693, 1727755463) index="1" unique_id=780017080]
+focus_mode = 2
 
 [node name="LevelSettingsMenu" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=79213823 node_paths=PackedStringArray("cameraManager")]
 cameraManager = NodePath("../../../Camera2D")

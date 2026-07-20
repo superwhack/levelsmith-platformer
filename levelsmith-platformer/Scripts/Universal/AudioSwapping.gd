@@ -26,7 +26,7 @@ func _ready() -> void:
 	add_child(previewAudioPlayer);
 	playButton.pressed.connect(play_preview_audio);
 	stopButton.pressed.connect(preview_audio_finished);
-	previewAudioPlayer.finished.connect(preview_audio_finished);
+	previewAudioPlayer.finished.connect(stop_preview)
 	audioTimeline.drag_started.connect(drag_started);
 	audioTimeline.drag_ended.connect(drag_ended);
 
@@ -35,6 +35,16 @@ func _process(delta: float) -> void:
 	#timeStampLabel.text = str("%.2f" % audioTimeline.value, "/", "%.2f" % audioLength);
 	if (previewAudioPlayer.playing):
 		audioTimeline.value = previewAudioPlayer.get_playback_position();
+	
+	# Hotkeys	
+	if ( Input.is_action_just_pressed( "UI-AssetMgr-accept" ) ):
+		play_preview_audio();
+	if ( Input.is_action_just_pressed( "UI-AssetMgr-deny" ) ):
+		preview_audio_finished();
+	if ( Input.is_action_just_pressed( "right" ) ):
+		audioTimeline.value += 0.02;
+	if ( Input.is_action_just_pressed( "left" ) ):
+		audioTimeline.value -= 0.02;
 
 ## Replaces the currently previewed audio  with one chosen via file dialog.
 ## newAudioPath: The file path of the new audio replacing the old one.x 
@@ -93,15 +103,23 @@ func save_mp3_stream(stream : AudioStreamMP3, filePath : String) -> void:
 
 func save_ogg_stream(sourcePath : String, filePath : String) -> void:
 	DirAccess.copy_absolute(sourcePath, filePath);
-
+	
+func stop_preview():
+	previewAudioPlayer.stop();
+	isPlayingPreview = false;
+	audioTimeline.value = 0;
+	
 func preview_audio_finished() -> void:
 	if (loadedPreviewAudio):
-		previewAudioPlayer.play()
+		previewAudioPlayer.play();
 		previewAudioPlayer.stream_paused = true;
 		isPlayingPreview = false;
 		audioTimeline.value = 0;
 
+## Plays the preview audio. 
 func play_preview_audio() -> void:
+	if (!previewAudioPlayer.playing):
+		previewAudioPlayer.play(audioTimeline.value)
 	isPlayingPreview = !isPlayingPreview
 	previewAudioPlayer.stream_paused = !isPlayingPreview;
 

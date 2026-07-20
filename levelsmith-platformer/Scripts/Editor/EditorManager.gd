@@ -153,6 +153,8 @@ func reset_enemy_positions() -> void:
 				moving.directionArrow.show();
 			elif moving is EnemyFlyer:
 				moving.previewLine.show();
+			elif moving is EnemyStationary:
+				moving.update_flipped(moving.propertyFile.isFacingRight);
 		if moving is MovingPlatform && moving.propertyFile:
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
 			moving.previewPlatform.show();

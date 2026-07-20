@@ -34,7 +34,6 @@ func _ready() -> void:
 	#AnimationManager.replace_animation_by_name(animatedSprites, "EnemyShoot");
 	
 	animatedSprites.sprite_frames = AnimationManager.shootingEnemyTemplateSprite.sprite_frames;
-	
 	animatedSprites.animation = "ShootIdle";
 	animatedSprites.play();
 	animatedSprites.animation_finished.connect(_on_animation_finished);
@@ -91,7 +90,8 @@ func shooting_behavior() -> void:
 		projectileFired.global_rotation_degrees = randFireDirection
 		update_flipped(!(randFireDirection >= 90 && randFireDirection < 270));
 	else:
-		projectileFired.global_rotation_degrees = fireDirection;
+		projectileFired.global_rotation_degrees = fireDirection + rotation_degrees;
+		
 	projectileFired.bounceable = projBounce;
 	if (projBounce):
 		projectileFired.assign_texture(bounceTexture);
@@ -108,6 +108,11 @@ func _on_animation_finished():
 func update_flipped(facingRight: bool) -> void:
 	animatedSprites.flip_h = !facingRight;
 
+func update_standing(direction):
+	if !gravityOn && rotation_degrees != direction * 90:
+		rotation_degrees = direction * 90;
+		shift_down();
+
 func assign_script(id: String, assignPosition: Vector2i) -> void:
 	propertyFile = ResourceLoader.load("user://Resources/Enemies/Shooting" + id + ".tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	name = "Shooting" + id;
@@ -118,6 +123,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;
 	gravityOn = propertyFile.gravity;
+	update_standing(propertyFile.facing);
 	ResourceSaver.save(propertyFile);
 	adjust_arrow(fireDirection, randomDirection);
 	adjust_arrow(fireDirection, randomDirection);
@@ -130,6 +136,7 @@ func apply_script(file: Resource) -> void:
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;
 	gravityOn = propertyFile.gravity;
+	update_standing(propertyFile.facing);
 	if !gravityOn:
 		motion_mode = CharacterBody2D.MOTION_MODE_FLOATING;
 		set_collision_layer_value(2, false);

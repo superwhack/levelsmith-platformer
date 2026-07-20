@@ -143,7 +143,7 @@ func start() -> void:
 		for node in tileMap.get_children():
 			if tileMap.local_to_map(node.global_position) == propertyFile.position:
 				if !node is EnemyFlyer:
-					node.position += Vector2(0, 20)
+					node.shift_down();
 				node.apply_script(propertyFile);
 				node.active = false;
 				break;

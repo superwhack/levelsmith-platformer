@@ -21,13 +21,14 @@ var active = false;
 @export var animatedSprites : AnimatedSprite2D;
 
 var deathAnim : String = "death";
+var originalPosition : Vector2;
 
 ## Initializing, add to the group named enemy
 func _ready() -> void:
 	add_to_group("enemy");
 	
 	animatedSprites.animation_finished.connect(on_animation_finished);
-	
+	originalPosition = position;
 	#AnimationManager.replace_animation_by_name(animatedSprites, deathAnim);
 
 ## Processes for every frame based on time
@@ -109,6 +110,19 @@ func on_animation_finished() -> void:
 #		print("Player OOB: ", global_position)
 #		return true;
 #	return false;
+
+## Shift down, different depending on rotation for shooting enemy.
+func shift_down() -> void:
+	position = originalPosition;
+	match rotation_degrees:
+		0.0:
+			position += Vector2(0, 20);
+		90.0:
+			position += Vector2(-20, 0);
+		180.0:
+			position += Vector2(0, -20);
+		270.0:
+			position += Vector2(20, 0);
 
 ## OVERRIDE -
 ## Assigns the script of the given ID (located in the Resources/Enemies folder) to an enemy at the given position.

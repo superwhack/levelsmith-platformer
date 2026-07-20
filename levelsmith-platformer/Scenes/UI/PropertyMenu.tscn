@@ -12,7 +12,7 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "presetOptions", "closeButton", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerSlopeSlowdownCheckbox", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "movingPlatformDelaySlider", "movingPlatformEasingCheckbox", "movingPlatformMomentumCheckbox", "movingPlatformVisibilityCheckbox", "movingPlatformAlwaysActiveCheckbox")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "presetOptions", "closeButton", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerSlopeSlowdownCheckbox", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "shootingFacingDropdown", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "movingPlatformDelaySlider", "movingPlatformEasingCheckbox", "movingPlatformMomentumCheckbox", "movingPlatformVisibilityCheckbox", "movingPlatformAlwaysActiveCheckbox")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -56,6 +56,7 @@ shootingShotSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/Shooting
 shootingFireRateSlider = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingFireRate")
 shootingProjectileBounce = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingBounce")
 shootingGravity = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingGravity")
+shootingFacingDropdown = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingFacing")
 flyingSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/FlightSpeed")
 flyingOffsetXSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/Xoffset")
 flyingOffsetYSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingProperties/Yoffset")
@@ -276,7 +277,6 @@ popup/item_4/text = "Custom"
 popup/item_4/id = 4
 
 [node name="PatrollingMargin" type="MarginContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1301200759]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 
@@ -302,7 +302,6 @@ size_flags_horizontal = 0
 propertyName = "Restricted"
 
 [node name="ShootingMargin" type="MarginContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=1975563573]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 
@@ -350,8 +349,13 @@ layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Gravity"
 
+[node name="ShootingFacing" parent="ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=155008978 instance=ExtResource("5_ehgsd")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Floor Direction"
+options = Array[String](["Down", "Left", "Up", "Right"])
+
 [node name="MovingPlatformMargin" type="MarginContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=2055794531]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 
@@ -460,6 +464,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Direction"
+options = Array[String](["Right", "Left"])
 
 [node name="StationaryGravity" parent="ScrollContainer/MainMargin/RootVBox/StationaryMargin/StationaryProperties" unique_id=239804786 instance=ExtResource("3_1mv14")]
 layout_mode = 2

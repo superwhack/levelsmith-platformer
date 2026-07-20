@@ -74,6 +74,7 @@ var playerWallJumpDecay : bool;
 @export var shootingFireRateSlider : VBoxContainer;
 @export var shootingProjectileBounce : VBoxContainer;
 @export var shootingGravity : VBoxContainer;
+@export var shootingFacingDropdown : VBoxContainer;
 
 @export_group("Flying Properties")
 # Flying inputs
@@ -131,6 +132,7 @@ func _ready() -> void:
 	shootingFireRateSlider.drag_ended.connect(_on_drag_ended);
 	shootingProjectileBounce.check_changed.connect(update_values);
 	shootingGravity.check_changed.connect(update_values);
+	shootingFacingDropdown.dropdown_changed.connect(update_values);
 	
 	flyingSpeedSlider.drag_ended.connect(_on_drag_ended);
 	flyingOffsetXSlider.drag_ended.connect(_on_drag_ended);
@@ -180,6 +182,7 @@ func _process(_delta: float) -> void:
 	elif selectedEntity is EnemyShooting:
 		entityName.text = "Shooting Enemy";
 		selectedEntity.adjust_arrow(-shootingDirectionSlider.value, shootingRandomDirection.value);
+		selectedEntity.update_standing(shootingFacingDropdown.value);
 	elif selectedEntity is EnemyFlyer:
 		entityName.text = "Flying Enemy";
 		selectedEntity.previewLine.update(Vector2(flyingOffsetXSlider.value, -flyingOffsetYSlider.value));
@@ -296,12 +299,14 @@ func update_sliders() -> void:
 		shootingFireRateSlider.value = selectedPreset.fireRate;
 		shootingProjectileBounce.value = selectedPreset.projBounce;
 		shootingGravity.value = selectedPreset.gravity;
+		shootingFacingDropdown.value = selectedPreset.facing;
 		shootingDirectionSlider.update_slider();
 		shootingRandomDirection.update_checkbox();
 		shootingShotSpeedSlider.update_slider();
 		shootingFireRateSlider.update_slider();
 		shootingProjectileBounce.update_checkbox();
 		shootingGravity.update_checkbox();
+		shootingFacingDropdown.update_dropdown();
 	elif selectedEntity is EnemyFlyer:
 		flyingSpeedSlider.value = selectedPreset.speed;
 		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.TILE_SIZE;
@@ -373,7 +378,9 @@ func update_values() -> void:
 		selectedPreset.shotSpeed = shootingShotSpeedSlider.value;
 		selectedPreset.fireRate = shootingFireRateSlider.value;
 		selectedPreset.projBounce = shootingProjectileBounce.value;
-		selectedPreset.gravity = shootingGravity.value
+		selectedPreset.gravity = shootingGravity.value;
+		print(shootingFacingDropdown.value);
+		selectedPreset.facing = shootingFacingDropdown.value;
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyFlyer:
 		selectedPreset.speed = flyingSpeedSlider.value;

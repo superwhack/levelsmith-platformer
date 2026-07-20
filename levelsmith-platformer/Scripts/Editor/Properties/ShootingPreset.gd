@@ -10,3 +10,4 @@ extends Resource
 @export var fireRate : float;
 @export var projBounce : bool;
 @export var gravity : bool;
+@export var facing : int;

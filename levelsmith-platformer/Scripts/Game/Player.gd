@@ -17,6 +17,7 @@ enum PlayerState {
 	FALLING,
 	SLIDING,
 	BOUNCING,
+	TILE_EFFECT_BOUNCE,
 	HURT,
 	DEAD,
 	VICTORY
@@ -24,7 +25,7 @@ enum PlayerState {
 
 var currentState : PlayerState = PlayerState.GROUNDED;
 
-var stateTimer : float = 1.5;
+var stateTimer : float = 1.2;
 var stateTimeLeft : float = stateTimer;
 
 # The player settings that can be changed in editor
@@ -103,7 +104,7 @@ var trueSpeed : float;
 var bounceTileHeight : float = 1.0;
 var iceFriction : float = 0.5;
 
-var iceAccelerationFactor : float = .25;
+var iceAccelerationFactor : float = .2;
 
 var isPlayerGrounded : bool = true;
 
@@ -125,7 +126,7 @@ var fallAnimStarted : bool = false;
 
 var victory : bool = false;
 
-#var debugLabel: Label;
+var debugLabel: Label;
 
 ## Runs once on instantiation
 func _ready() -> void:
@@ -142,10 +143,10 @@ func _ready() -> void:
 	#for animationName in animatedSprites.sprite_frames.get_animation_names():
 		#AnimationManager.replace_animation_by_name(animatedSprites, animationName);
 	
-	#debugLabel = Label.new();
-	#debugLabel.position = Vector2(10, 10);
-	#
-	#get_tree().current_scene.add_child(debugLabel);
+	debugLabel = Label.new();
+	debugLabel.position = Vector2(10, 10);
+	
+	get_tree().current_scene.add_child(debugLabel);
 	
 	animatedSprites.sprite_frames = AnimationManager.playerTemplateSprite.sprite_frames;
 	
@@ -195,28 +196,30 @@ func _physics_process(delta: float) -> void:
 	
 	# Decide whether player can wall jump and/or wallslide
 	resolve_wall_jumping();
-	
 	# Detect tiles before jumping and running so slow and ice tiles apply affects before inputs
 	detect_tiles();
 	
 	apply_state_logic( delta );
 	
 	# Move character body & play audio if player state is not VICTORY or DEAD
-	if ( currentState != PlayerState.DEAD || currentState != PlayerState.VICTORY ):
+	if ( currentState != PlayerState.VICTORY && currentState != PlayerState.DEAD ):
+		walk();
 		move_and_slide();
 		AudioManager.play_effect_walking(currentWalkingEffect);
 	
 	#var debugText : String = "state: %s" % currentState \
-							#+ "\n coyote: %f" % coyoteTimeLeft \
+							#+ "\n coyote: %s" % isCoyoteActive \
 							#+ "\n invul: %f" % invulnerabilityCurrent \
 							#+ "\n wallJumpDir: %s" % wallJumpDirection \
 							#+ "\n wallJumpCount: %s" % wallJumpCount \
-							#+ "\n velocity.x: %f" % velocity.x;
+							#+ "\n velocity.x: %f" % velocity.x \
+							#+ "\n wallSlideConditions: %s" % wallSlideConditionsMet;
 	#
-	#debugLabel.position = Vector2( position.x - 148, position.y - 170 );
+	#debugLabel.position = Vector2( position.x - 180, position.y - 180 );
 	#debugLabel.text = debugText;
 
-
+## Handle all state switch & player logic 
+## delta: How much time has passed
 func apply_state_logic( delta: float ) :
 	
 		# Input based sprite flipping
@@ -230,9 +233,8 @@ func apply_state_logic( delta: float ) :
 		elif ( Input.is_action_pressed("left") ): animatedSprites.flip_h = true;
 	
 	match currentState:
-# GROUNDED STATE
+# Grounded state
 		PlayerState.GROUNDED:
-			walk();
 			wallJumpDirection = WallDirection.NONE;
 			if ( isPlayerGrounded ) :
 				if ( moveInput ) : 
@@ -242,9 +244,8 @@ func apply_state_logic( delta: float ) :
 			else :
 				set_state( PlayerState.FALLING );
 
-# RUNNING STATE
+# Running state
 		PlayerState.RUNNING:
-			walk();
 			if ( isPlayerGrounded ) :
 				if ( !moveInput ) : 
 					set_state( PlayerState.GROUNDED );
@@ -253,9 +254,8 @@ func apply_state_logic( delta: float ) :
 			else :
 				set_state( PlayerState.FALLING );
 	
-# JUMPING STATE
+# Jumping state
 		PlayerState.JUMPING:
-			walk();
 			if ( isPlayerGrounded ) :
 				if ( !moveInput ) : 
 					set_state( PlayerState.GROUNDED );
@@ -274,11 +274,14 @@ func apply_state_logic( delta: float ) :
 					set_state( PlayerState.JUMPING );
 			justWallJumped = false;
 			
-# WALL JUMPING STATE
+# Wall jumping state
 		PlayerState.WALL_JUMPING:
+			if ( wallJumpDirection == WallDirection.LEFT && velocity.x > 0 ) :
+				animatedSprites.flip_h = false;
+			if ( wallJumpDirection == WallDirection.RIGHT && velocity.x < 0 ) :
+				animatedSprites.flip_h = true;
 			stateTimeLeft -= delta;
-			
-			walk();
+
 			if ( isPlayerGrounded ) :
 				if ( !moveInput ) : 
 					set_state( PlayerState.GROUNDED );
@@ -305,9 +308,8 @@ func apply_state_logic( delta: float ) :
 			justWallJumped = false;
 			
 	
-# FALLING STATE
+# Falling state
 		PlayerState.FALLING:
-			walk();
 			if ( isCoyoteActive ) :
 				if ( jumpInput ) :
 					set_state( PlayerState.JUMPING );
@@ -325,9 +327,8 @@ func apply_state_logic( delta: float ) :
 					doubleJumpAvailable = false;
 					set_state( PlayerState.JUMPING );
 					
-# WALL SLIDING STATE
+# Wall sliding state
 		PlayerState.SLIDING:
-			walk();
 			if ( jumpInput ) :
 				set_state( PlayerState.WALL_JUMPING );
 			elif ( !wallSlideConditionsMet ) :
@@ -338,9 +339,8 @@ func apply_state_logic( delta: float ) :
 						set_state( PlayerState.JUMPING );
 				else :
 					set_state( PlayerState.FALLING );
-# HURT STATE
+# Hurt state
 		PlayerState.HURT:
-			walk();
 			invulnerabilityCurrent -= delta;
 	
 			if ( health <= 0 ) :
@@ -353,21 +353,19 @@ func apply_state_logic( delta: float ) :
 							set_state( PlayerState.GROUNDED );
 				else :
 					set_state( PlayerState.FALLING );
-# DEAD STATE
+# Dead state
 		PlayerState.DEAD:
 			velocity = Vector2.ZERO;
 			# Animation
 			animatedSprites.flip_h = false;
-# VICTORY STATE
+# Victory state
 		PlayerState.VICTORY:
 			# Animation
 			animatedSprites.flip_h = false;
 
-
-func retainWallJumpAnimDir() :
-	if ( wallJumpDirection == WallDirection.RIGHT ): animatedSprites.flip_h = true;
-	elif ( wallJumpDirection == WallDirection.LEFT ) : animatedSprites.flip_h = false;
-
+## Sandle the setup for entering a new player state
+## state: The player state to transition into
+## function: a callable function that to be used during state transitions
 func set_state( state : PlayerState, function : Callable = Callable()) -> void:
 	
 	stateTimeLeft = stateTimer;
@@ -396,7 +394,6 @@ func set_state( state : PlayerState, function : Callable = Callable()) -> void:
 			
 		PlayerState.WALL_JUMPING :
 			wall_jump();
-			#Animation
 			if ( wallJumpDirection == WallDirection.RIGHT ): animatedSprites.flip_h = false;
 			elif ( wallJumpDirection == WallDirection.LEFT ) : animatedSprites.flip_h = true;
 			animatedSprites.play("PlayerJump");
@@ -415,12 +412,16 @@ func set_state( state : PlayerState, function : Callable = Callable()) -> void:
 			print( "set_state BOUNCING ( JUMPING )" );
 			
 		PlayerState.SLIDING :
-			# Animation
 			if ( wallJumpDirection == WallDirection.RIGHT ): animatedSprites.flip_h = true;
 			else : animatedSprites.flip_h = false;
 			animatedSprites.play("PlayerWallSlide");
 			currentState = PlayerState.SLIDING;
 			print( "set_state SLIDING" );
+			
+		PlayerState.TILE_EFFECT_BOUNCE :
+			animatedSprites.play("PlayerJump");
+			currentState = PlayerState.JUMPING;
+			print( "set_state TILE_EFFECT_BOUNCE ( JUMPING )" );
 			
 		PlayerState.HURT :
 			currentState = PlayerState.HURT;
@@ -445,7 +446,7 @@ func set_state( state : PlayerState, function : Callable = Callable()) -> void:
 			animatedSprites.flip_h = false;
 			print( "set_state VICTORY" );
 
-## Event for 
+## Event for when an animation is done playing
 func on_animation_finished() -> void:
 	if (animatedSprites.animation == "PlayerDeath"):
 		Global.death.emit();
@@ -468,6 +469,7 @@ func walk() -> void:
 		direction = Input.get_axis("left", "right");
 	else:
 		direction = 0;
+		
 	# If a direct is pressed, move in the direction, otherwise decelerate towards a 0 velocity 
 	if (direction):
 		accelerationX = direction * trueSpeed;
@@ -682,7 +684,8 @@ func resolve_wall_jumping() -> void:
 			return;
 			
 		wallSlideConditionsMet = true;
-		
+
+## Make the player wall jump
 func wall_jump() :
 	if ( wallJumpDirection == WallDirection.NONE ) : 
 		return;
@@ -692,15 +695,15 @@ func wall_jump() :
 		wallJumpCount = 1;
 	
 	if ( wallJumpDirection == WallDirection.RIGHT ) :
-		velocity.x = 1100 * pow(groundSpeed, .55);
+		velocity.x = 800 * pow(groundSpeed, .8);
 	else :
-		velocity.x = -1100 * pow(groundSpeed, .55);
-	velocity.y = -300 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(min(groundSpeed, 1), .35);
+		velocity.x = -800 * pow(groundSpeed, .8);
+	velocity.y = -375 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(min(groundSpeed, 1), .35);
 	justWallJumped = true;	
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
-	if ( currentState == PlayerState.VICTORY ) :
+	if ( currentState == PlayerState.VICTORY || currentState == PlayerState.DEAD ) :
 		return;
 	
 	slidingSticky = false;
@@ -741,7 +744,6 @@ func detect_tiles() -> void:
 		var tileName : String = tileData.get_custom_data("name");
 		var rayDirection : Vector2 = raycast.target_position;
 		
-		
 			# Wall Slide when not on ice
 		if ( wallSlideConditionsMet ):
 			if tileName != "ice":
@@ -761,9 +763,8 @@ func detect_tiles() -> void:
 			isPlayerGrounded = false;
 			wallJumpCount = 0;
 			AudioManager.play_effect("BounceTile");
-			doubleJumpAvailable = doubleJump;
 			currentSlowdown = 1.0;
-			set_state( PlayerState.BOUNCING );
+			set_state( PlayerState.TILE_EFFECT_BOUNCE );
 			# Horizontal bounces
 			if ( abs( rayDirection.x ) > abs( rayDirection.y ) ):
 				if rayDirection.x < 0:
@@ -778,6 +779,7 @@ func detect_tiles() -> void:
 					velocity.y = 1000 * bounceTileHeight;
 				else:
 					#jumpAnimStarted = false;
+					doubleJumpAvailable = doubleJump;
 					coyoteTimeLeft = 0.0;
 					velocity.y = -1000 * sqrt(fallSpeed) * bounceTileHeight;
 					if ( velocity.x > 0 && leftInput ) :
@@ -787,8 +789,11 @@ func detect_tiles() -> void:
 			
 		# Sticky Tiles
 		elif (tileData && (tileData.get_custom_data("name") == "slow")):
-			currentWalkingEffect = Global.WalkingEffect.SLIME;
-			currentFriction = 1;
+			var slimeNoiseThreshold : float = 5.0;
+			if ( ( rayDirection.y > 0 && abs( get_real_velocity().x ) > slimeNoiseThreshold ) || wallSlideConditionsMet ) :
+				currentWalkingEffect = Global.WalkingEffect.SLIME;
+				currentFriction = 1;
+				
 			# Horizontal Stick
 			if (abs(raycast.target_position.x) > abs(raycast.target_position.y)):
 				velocity.y *= .9;
@@ -825,7 +830,7 @@ func detect_tiles() -> void:
 		elif downwardsRaycasts.has(raycast):
 			#if currentState != PlayerState.JUMPING && currentState != PlayerState.BOUNCING:
 				#currentState = PlayerState.GROUNDED;
-			if tileName != "ice" && tileName != "slow":
+			if ( tileName != "ice" && tileName != "slow" ) :
 				currentWalkingEffect = Global.WalkingEffect.GENERAL;
 			if (tileData.get_custom_data("name") != "bounce" && is_on_floor()):
 				if (tileData.get_custom_data("name") != "ice"):

@@ -43,7 +43,6 @@ stationaryEnemySprites,
 goalSprites,
 coinSprites,
 movingPlatformSprites,
-movingPlatformPreviewSprites,
 checkpointSprites];
 
 # Reference to the asset manager

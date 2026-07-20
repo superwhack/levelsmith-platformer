@@ -36,6 +36,7 @@ var doubleJumpAvailable : bool = doubleJump;
 var wallJumpCount : int = 0;
 var wallJumpDirection : WallDirection = WallDirection.NONE;
 var justWallJumped = false;
+var wallJumpStrength := 1.0;
 var wallJumpDecay = false;
 
 # Friction in midair
@@ -461,12 +462,12 @@ func detect_tiles() -> void:
 					if wallJumpDirection != WallDirection.LEFT:
 						wallJumpCount = 0;
 					wallJumpDirection = WallDirection.LEFT;
-					velocity.x = 1500 * pow(groundSpeed, .55);
+					velocity.x = 1500 * pow(groundSpeed, .55) * wallJumpStrength;
 				elif rayDirection.x > 0:
 					if wallJumpDirection != WallDirection.RIGHT:
 						wallJumpCount = 0;
 					wallJumpDirection = WallDirection.RIGHT;
-					velocity.x = -1500 * pow(groundSpeed, .55);
+					velocity.x = -1500 * pow(groundSpeed, .55) * wallJumpStrength;
 				# Remove friction if not on ice
 				if tileName != "ice":
 					currentFriction = 1.0;
@@ -594,4 +595,5 @@ func apply_preset(preset: PlayerMovementPreset) -> void:
 	oneways = preset.oneways;
 	doubleJump = preset.doubleJump;
 	wallJump = preset.wallJump;
+	wallJumpStrength = preset.wallJumpStrength;
 	wallJumpDecay = preset.wallJumpDecay;

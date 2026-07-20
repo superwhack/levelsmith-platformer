@@ -7,11 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://bguub3y2mkgwv" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://do2buhww044b1" path="res://Scenes/MainMenu.tscn" id="9_4q5nt"]
 [ext_resource type="Shader" uid="uid://cdtehxsgxkdly" path="res://Assets/Shaders/ditherfadesquare.gdshader" id="11_iwvbt"]
-[ext_resource type="Texture2D" uid="uid://daeif0gohnc4o" path="res://Assets/Sprites/UI/LoadingScreen.png" id="12_8fjml"]
+[ext_resource type="Texture2D" uid="uid://bobue262qxapp" path="res://Assets/Sprites/UI/LoadingScreen.png" id="12_8fjml"]
 [ext_resource type="PackedScene" uid="uid://bj3ux7rusonfj" path="res://Scenes/GlobalSettingsMenu.tscn" id="13_8fjml"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
@@ -115,10 +115,20 @@ visible = true
 anchors_preset = -1
 
 [node name="AssetManager" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="0" unique_id=468653693 node_paths=PackedStringArray("masterManager")]
+focus_behavior_recursive = 0
 masterManager = NodePath("../../..")
+
+[node name="PlayPauseButton" parent="EditorManager/CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(2045534837, 468653693, 1727755463) index="0" unique_id=1125072521]
+focus_mode = 2
+
+[node name="StopButton" parent="EditorManager/CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(2045534837, 468653693, 1727755463) index="1" unique_id=780017080]
+focus_mode = 2
 
 [node name="LevelSettingsMenu" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=79213823 node_paths=PackedStringArray("cameraManager")]
 cameraManager = NodePath("../../../Camera2D")
+
+[node name="HotkeyManager" parent="EditorManager" index="5" unique_id=1848065233 node_paths=PackedStringArray("toolSwitch")]
+toolSwitch = NodePath("../ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/ToolSwitch")
 
 [node name="CustomCursorManager" parent="EditorManager" index="6" unique_id=1871670420 node_paths=PackedStringArray("masterManager")]
 masterManager = NodePath("../..")
@@ -126,9 +136,9 @@ masterManager = NodePath("../..")
 [node name="IconManager" parent="EditorManager" index="8" unique_id=1308220472 node_paths=PackedStringArray("masterManager")]
 masterManager = NodePath("../..")
 
-[node name="LevelScreenshot" parent="EditorManager" index="9" unique_id=1423987778 node_paths=PackedStringArray("masterManager", "baseCamera")]
-masterManager = NodePath("../..")
-baseCamera = NodePath("../../Camera2D")
+[node name="LevelScreenshot" parent="EditorManager/ScreenshotViewport" parent_id_path=PackedInt32Array(2045534837, 1948037548) index="0" unique_id=1423987778 node_paths=PackedStringArray("masterManager", "baseCamera")]
+masterManager = NodePath("../../..")
+baseCamera = NodePath("../../../Camera2D")
 
 [node name="GameManager" parent="." unique_id=344859815 node_paths=PackedStringArray("cameraManager", "masterManager") instance=ExtResource("4_ggjfv")]
 cameraManager = NodePath("../Camera2D")

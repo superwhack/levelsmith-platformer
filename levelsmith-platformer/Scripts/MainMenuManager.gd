@@ -8,17 +8,21 @@ extends Control
 @export var buttonImportLevel : Button;
 @export var buttonLoadExample : Button;
 @export var buttonQuit : Button;
+@export var buttonCredits : Button;
+@export var buttonCloseCredits : Button;
 @export var buttonOpenLevelFolder : Button;
 @export var buttonPlayLevel : Button;
 @export var buttonEditLevel : Button;
 @export var buttonDuplicateLevel : Button;
 @export var buttonDeleteLevel : Button;
 @export var buttonFavoriteLevel : Button;
+@onready var favoriteButtonIcon : TextureRect = buttonFavoriteLevel.get_node("MarginContainer/TextureRect");
 
 # Overlays
 @export var overlayNewLevel : ColorRect;
 @export var overlayImportLevel : ColorRect;
 @export var overlayDuplicateLevel : ColorRect;
+@export var overlayCredits : ColorRect;
 
 # New level overlay children
 @export var buttonNewLevelCreate : Button;
@@ -82,8 +86,14 @@ var selectedItem : Control = null;
 # Dictionary of all level items. For level list filling.
 var levelItems: Dictionary = {} # path -> item
 
+# Level size warning variables
+const MAX_LEVEL_AREA := 10000;
+@export var areaWarning : PanelContainer;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	buttonNewLevel.grab_focus();
+	
 	softwareVersion.text = str(Global.VERSION);
 	# Hides other screens
 	overlayImportLevel.hide();
@@ -96,7 +106,7 @@ func _ready() -> void:
 	buttonOpenLevelFolder.pressed.connect(open_level_folder);
 	buttonPlayLevel.pressed.connect(play_current_level);
 	buttonEditLevel.pressed.connect(edit_current_level);
-	buttonDeleteLevel.pressed.connect(delete_current_level);
+	buttonDeleteLevel.pressed.connect(open_delete_popup);
 	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
 	buttonFavoriteLevel.pressed.connect(favorite_current_level);
 	get_window().focus_entered.connect(fill_level_list);
@@ -115,36 +125,46 @@ func _ready() -> void:
 	# Duplicate buttons
 	buttonDuplicateLevelConfirm.pressed.connect(duplicate_current_level);
 	buttonDuplicateLevelCancel.pressed.connect(overlay_duplicate_level_hide);
-
 	globalSettingsButton.pressed.connect(masterManager.open_global_settings_menu);
-	
 	buttonQuit.pressed.connect(exit_program);
+	buttonCredits.pressed.connect(show_credits_screen);
+	buttonCloseCredits.pressed.connect(show_credits_screen.bind(false));
 
+	spinBoxNewLevelX.value_changed.connect(update_level_size_warning);
+	spinBoxNewLevelY.value_changed.connect(update_level_size_warning);
 
 	var set_directory = func (directory: String) -> void:
 		fieldImportLevelPath.text = directory + "/";
 	
 	fileExplorer.dir_selected.connect(set_directory);
-	
+
 ## Functions that just make a menu appear/dissapear, used to attach the sound effects
 func overlay_new_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.show();
+	update_level_size_warning();
+	fieldNewLevelName.grab_focus();
 func overlay_new_level_hide() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.hide();
+	buttonNewLevel.grab_focus();
 func overlay_import_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayImportLevel.show();
+	fieldImportLevelPath.grab_focus();
 func popup_file_dialog() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	fileExplorer.popup_file_dialog();
+	buttonNewLevel.grab_focus();
 func overlay_duplicate_level_show() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	overlayDuplicateLevel.show();
+	duplicateName.grab_focus();
+	
 func overlay_duplicate_level_hide() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	overlayDuplicateLevel.hide();
+	buttonNewLevel.grab_focus();
 
 ## Called when import level button is pressed
 func import_level() -> void:
@@ -174,6 +194,13 @@ func import_level() -> void:
 func import_cancel() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayImportLevel.hide();
+
+func update_level_size_warning(value = null) -> void:
+	var area := int(spinBoxNewLevelX.value) * int(spinBoxNewLevelY.value)
+	if area > MAX_LEVEL_AREA:
+		areaWarning.show()
+	else:
+		areaWarning.hide()
 
 ## Opens the menu for setting a name and size for the level
 func create_new_level() -> void:
@@ -285,11 +312,11 @@ func _on_level_double_clicked(path: String) -> void:
 	
 ## Fills in metadata labels with appropriate data when hovered.
 ## item: the level list button item.
-func _on_level_hovered(item) -> void:
+func _on_level_hovered(item: Node) -> void:
 	if (!selectedItem):
 		update_metadata(item);
 	
-func _on_level_pressed(item) -> void:
+func _on_level_pressed(item: Node) -> void:
 	if (selectedItem == item):
 		return;
 		
@@ -300,14 +327,11 @@ func _on_level_pressed(item) -> void:
 
 	selectedItem = item;
 	update_metadata(item);
-	if (selectedItem.favorited):
-		buttonFavoriteLevel.icon = favoriteFilled;
-	else:
-		buttonFavoriteLevel.icon = favoriteEmpty;
-	
+
+
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
-func _on_level_deselected(item) -> void:
+func _on_level_deselected(item: Node) -> void:
 	if (selectedItem == item):
 		item.levelButton.button_pressed = false;
 		toggle_level_buttons();
@@ -320,6 +344,9 @@ func toggle_level_buttons() -> void:
 	buttonEditLevel.disabled = !buttonEditLevel.disabled;
 	buttonPlayLevel.disabled = !buttonPlayLevel.disabled;
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
+
+func set_favorite_button_icon(is_favorited: bool) -> void:
+	favoriteButtonIcon.texture = favoriteFilled if is_favorited else favoriteEmpty;
 
 func update_level_item(item: Node, folderName : String, levelPath : String) -> void:
 	item.levelPath = levelPath + "/";
@@ -362,6 +389,11 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 	item.dimensions = str(metadata.get("dimensions", str([20, 20])));
 	item.objectCount = str(int(metadata.get("objects", str(0))));
 	item.version = str(metadata.get("version", Global.VERSION));
+	if (item.version != str(Global.VERSION)):
+		item.levelErrorIcon.show();
+		item.levelErrorIcon.tooltip_text = "This level's version is " + item.version + ". You are currently on version " + str(Global.VERSION) + ".";
+	else:
+		item.levelErrorIcon.hide();
 	item.favorited = metadata.get("favorited", false);
 	item.validated = metadata.get("validated", false);
 	if (item.favorited):
@@ -380,7 +412,7 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 
 ## Reusable function for updating metadata based on given item.
 ## item: Level item to be used for updating metadata.
-func update_metadata(item) -> void:
+func update_metadata(item: Node) -> void:
 	levelName.text = item.levelTitle.text;
 	author.text = item.author;
 	dateCreated.text = item.dateCreated;
@@ -393,10 +425,7 @@ func update_metadata(item) -> void:
 		preview.texture = item.thumbnail;
 	else:
 		preview.texture = previewDefault;
-	if (item.favorited):
-		buttonFavoriteLevel.icon = favoriteFilled;
-	else:
-		buttonFavoriteLevel.icon = favoriteEmpty;
+	set_favorite_button_icon(item.favorited);
 	if (item.validated):
 		validatedCheckmark.show();
 	else:
@@ -413,7 +442,7 @@ func clear_selection() -> void:
 		objectCount.text = "";
 		version.text = "";
 		preview.texture = previewDefault;
-		buttonFavoriteLevel.icon = favoriteEmpty;
+		set_favorite_button_icon(false);
 		validatedCheckmark.hide();
 
 ## Opens OS file explorer to the users Level folder.
@@ -426,10 +455,8 @@ func open_level_folder() -> void:
 func play_current_level() -> void:
 	if (!selectedItem):
 		return;
-
 	AudioManager.play_UI_effect("UI_Selection");
 	masterManager.load_level(selectedItem.levelPath, true);
-
 
 ## Edit the currently selected level.
 func edit_current_level() -> void:
@@ -438,6 +465,13 @@ func edit_current_level() -> void:
 
 	AudioManager.play_UI_effect("UI_Selection");
 	masterManager.load_level(selectedItem.levelPath);
+
+## Opens a delete popup when the delete button is pressed
+func open_delete_popup() -> void:
+	if (!selectedItem):
+		return;
+	
+	PopUpManager.create_delete_popup(delete_current_level, selectedItem.levelTitle.text);
 
 ## Deletes the currently selected level.
 func delete_current_level() -> void:
@@ -538,10 +572,7 @@ func favorite_current_level() -> void:
 		selectedItem.favorited
 	);
 	
-	if (selectedItem.favorited):
-		buttonFavoriteLevel.icon = favoriteFilled;
-	else:
-		buttonFavoriteLevel.icon = favoriteEmpty;
+	set_favorite_button_icon(selectedItem.favorited);
 		
 	if (selectedItem.favorited):
 		selectedItem.levelFavoriteIcon.show();
@@ -621,3 +652,11 @@ func remove_recursively(directory: String) -> void:
 		DirAccess.remove_absolute(directory.path_join(file));
 
 	DirAccess.remove_absolute(directory)
+
+func show_credits_screen(show : bool = true) -> void:
+	if (show):
+		AudioManager.play_UI_effect("UISelection")
+		overlayCredits.show();
+	else:
+		AudioManager.play_UI_effect("UISelection")
+		overlayCredits.hide();

@@ -151,9 +151,15 @@ func _unhandled_input(event: InputEvent) -> void:
 						entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:
-					entityManager.place_entity(editorManager.currentMousePosition);
+					if (propertyMenu.visible):
+						propertyMenu.close();
+					else:
+						entityManager.place_entity(editorManager.currentMousePosition);
 			elif (event.is_action_pressed("right-click")):
-				entityManager.delete_entity(editorManager.currentMousePosition);
+				if (propertyMenu.visible):
+					propertyMenu.close();
+				else:
+					entityManager.delete_entity(editorManager.currentMousePosition);
 			
 			# If left click is being held, pick up the current tile unless it's empty air.
 			if (isMoving && prevBrushObject == -1 && previousCell != -1) && previousCell >= editorManager.tileCount && previousCell < Global.BEDROCK_CORNER:
@@ -193,7 +199,7 @@ func change_tool(tool: Global.Tool) -> void:
 	if (currentTool == Global.Tool.CURSOR):
 		brushObject = Global.TileType.SOLID;
 	elif (tool == Global.Tool.CURSOR):
-		brushObject = Global.EntityType.PROP1 if tileSwitch.entityPropDropdown.get_selected_id() == 1 else Global.EntityType.GOAL;
+		brushObject = Global.TileType.SOLID;
 
 	if (currentTool == Global.Tool.BOX_BRUSH): 
 		disable_box_brush();
@@ -204,6 +210,11 @@ func change_tool(tool: Global.Tool) -> void:
 		tileSwitch.display_entities(false);
 	else:
 		tileSwitch.display_tiles(false);
+		# changing hotbar here allows display_entities to set last selected
+		if tileSwitch.entityPropDropdown.get_selected_id() == 0:
+			editorManager.change_current_hotbar(Global.HotbarState.ENTITIES);
+		else:
+			editorManager.change_current_hotbar(Global.HotbarState.PROPS);
 		tileSwitch.display_entities(true);
 
 	propertyMenu.close();

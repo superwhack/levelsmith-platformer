@@ -161,5 +161,3 @@ size_flags_vertical = 3
 
 [node name="PropertyMenu" parent="MainColumn/ContentRow/PropertiesPanel/PropertiesColumn" unique_id=1686733993 instance=ExtResource("3_hl0pc")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3

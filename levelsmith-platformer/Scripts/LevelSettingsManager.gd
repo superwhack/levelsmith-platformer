@@ -72,6 +72,10 @@ func _on_drag() -> void:
 	editorManager.tileMap.stickySlowdown = stickySlowdown.value / 100;
 	editorManager.tileMap.hazardDamage = hazardDamage.value;
 
+func _input( event: InputEvent ) -> void:
+	if ( event.is_action_pressed("ui_close_dialog") ):
+		editorManager.close_level_settings_menu();
+
 ## Update sliders visually
 func update_sliders() -> void:
 	

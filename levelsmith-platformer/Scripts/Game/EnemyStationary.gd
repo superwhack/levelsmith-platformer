@@ -19,6 +19,7 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if gravityEnabled || health <= 0:
 		super._physics_process(delta);
+		super.detect_tiles(false);
 		move_and_slide();
 	
 	update_flipped();

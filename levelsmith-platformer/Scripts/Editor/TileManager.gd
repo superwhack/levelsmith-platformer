@@ -43,9 +43,13 @@ func delete_tile (clickPosition: Vector2) -> void:
 	editorManager.unsavedChanges = true;
 	editorManager.isValidated = false;
 	
-	if (tileMap.get_cell_source_id(clickPosition) >= editorManager.tileCount 
+	var clickedObjectId : int = tileMap.get_cell_source_id(clickPosition);
+	
+	if (clickedObjectId >= editorManager.tileCount 
 	|| editorManager.check_out_of_bounds(clickPosition)):
 		return;
+	if (toolManager.currentTool != Global.Tool.BOX_BRUSH && clickedObjectId >= 0):
+		AudioManager.play_UI_effect("TileDelete");
 	
 	tileMap.erase_cell(clickPosition);
 
@@ -81,6 +85,8 @@ func box_delete(firstCorner: Vector2, secondCorner: Vector2) -> void:
 	var topLeft : Vector2 = Vector2(
 		min(firstCorner.x, secondCorner.x), 
 		min(firstCorner.y, secondCorner.y));
+	
+	AudioManager.play_UI_effect("TileDelete");
 	
 	# The deletion. 1 is added to max to be inclusive.
 	for i in abs(secondCorner.y - firstCorner.y) + 1:

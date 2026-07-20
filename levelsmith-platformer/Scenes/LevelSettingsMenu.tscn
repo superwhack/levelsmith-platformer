@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cwqko58a2l34m" path="res://Scripts/LevelSettingsManager.gd" id="2_b3nvf"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_xthqe"]
 [ext_resource type="Texture2D" uid="uid://dcqejjlkpcphp" path="res://Assets/UserInterface/Buttons/ButtonIcons/ResetIcon.png" id="4_bq73s"]
-[ext_resource type="Texture2D" uid="uid://uboggbk6slsr" path="res://Assets/UserInterface/Buttons/CloseX.png" id="5_8xvpl"]
+[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="5_8xvpl"]
 [ext_resource type="PackedScene" uid="uid://d4nqq7rlhq0q8" path="res://Scenes/UI/SettingsMenuSlider.tscn" id="6_msgve"]
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="8_mi7bj"]
 [ext_resource type="FontFile" uid="uid://dbkfb2swhokjo" path="res://Assets/Fonts/JetBrainsMono-Regular.ttf" id="9_64ysq"]
@@ -92,7 +92,9 @@ size_flags_horizontal = 3
 
 [node name="ResetButton" type="Button" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=2534971]
 custom_minimum_size = Vector2(40, 40)
+custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxEmpty_g4v7s")
 

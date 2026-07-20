@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://no4fqovbkfha" path="res://Scripts/GlobalSettingsManager.gd" id="2_5bsrg"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_w0xpy"]
 [ext_resource type="Texture2D" uid="uid://dcqejjlkpcphp" path="res://Assets/UserInterface/Buttons/ButtonIcons/ResetIcon.png" id="4_aixuf"]
-[ext_resource type="Texture2D" uid="uid://uboggbk6slsr" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_bpp5a"]
+[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_bpp5a"]
 [ext_resource type="PackedScene" uid="uid://d4nqq7rlhq0q8" path="res://Scenes/UI/SettingsMenuSlider.tscn" id="5_aixuf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
@@ -12,7 +12,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5bsrg"]
 
 [node name="GlobalSettingsMenu" type="Panel" unique_id=79213823 node_paths=PackedStringArray("closeButton", "resetButton", "masterVolume", "SFXVolume", "musicVolume")]
-process_mode = 2
+process_mode = 4
 self_modulate = Color(0, 0, 0, 0.3764706)
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,7 +81,9 @@ size_flags_horizontal = 3
 
 [node name="ResetButton" type="Button" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer" unique_id=2534971]
 custom_minimum_size = Vector2(40, 40)
+custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxEmpty_g4v7s")
 
@@ -92,7 +94,7 @@ offset_bottom = 40.0
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 6
+theme_override_constants/margin_bottom = 5
 
 [node name="TextureRect" type="TextureRect" parent="MainMargin/SettingsPanel/BorderMargin/ScrollContainer/SettingsBox/HeaderBlock/HBoxContainer/ResetButton/MarginContainer" unique_id=1814626391]
 layout_mode = 2

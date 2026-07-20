@@ -7,6 +7,7 @@ extends Node2D
 
 # Camera reference
 @export var mainCamera : Camera2D;
+@export var screenshotViewport : SubViewport;
 @export var levelScreenshotCamera : Camera2D;
 @export var screenUI : CanvasLayer;
 
@@ -44,6 +45,7 @@ var unsavedChanges : bool = false;
 var isPlaceable : bool = true;
 var playerExists : bool = false;
 var goalExists : bool = false;
+var isScreenshotting : bool = false;
 
 var returnClick : bool = false;
 
@@ -57,7 +59,7 @@ func _ready() -> void:
 		goalExists = false;
 	
 	var export_level = func() -> void:
-		unsavedChanges = true;
+		unsavedChanges = false;
 		AudioManager.play_UI_effect("UISelection");
 		masterManager.propertyMenu.close();
 		var levelScreenshot : Image = await screenshot_level();
@@ -92,6 +94,7 @@ func _process(_delta: float) -> void:
 	
 	# Save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
+
 	
 ## When the user does a save level input, save the level.
 ## event: The user input
@@ -107,20 +110,7 @@ func _input(event: InputEvent) -> void:
 ## Takes a screenshot of the level by hiding the UI and disabling the main camera
 ## returns; The image of the level
 func screenshot_level() -> Image:
-	mainCamera.enabled = false;
-	levelScreenshotCamera.enabled = true;
-	screenUI.hide();
-	previewTileMap.hide();
-	await RenderingServer.frame_post_draw;
-	
-	var screenshotImage = levelScreenshotCamera.get_level_screenshot();
-	
-	screenUI.show();
-	previewTileMap.show();
-	mainCamera.enabled = true;
-	levelScreenshotCamera.enabled = false;
-	await RenderingServer.frame_post_draw; 
-	
+	var screenshotImage = await levelScreenshotCamera.get_level_screenshot();	
 	return screenshotImage;
 
 ## NOTE: TEMPORARY FIX FUNCTION PT 1
@@ -134,6 +124,8 @@ func clear_enemies(alwaysClear: bool = false) -> void:
 ## Changes current hotbar state (used for hotkeys)
 ## newState: Global.HotbarState
 func change_current_hotbar(newState: Global.HotbarState):
+	# Clearing here
+	previewTileMap.clear();
 	currentHotbarState = newState;
 
 ## Converts the mouse's position into grid coordinates.
@@ -161,6 +153,8 @@ func reset_enemy_positions() -> void:
 				moving.directionArrow.show();
 			elif moving is EnemyFlyer:
 				moving.previewLine.show();
+			elif moving is EnemyStationary:
+				moving.update_flipped(moving.propertyFile.isFacingRight);
 		if moving is MovingPlatform && moving.propertyFile:
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
 			moving.previewPlatform.show();
@@ -174,6 +168,7 @@ func open_level_settings_menu() -> void:
 	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
 	iconManager.previewIcon.hide();
+	levelSettingsMenu.process_mode = Node.PROCESS_MODE_WHEN_PAUSED;
 	levelSettingsMenu.show();
 
 ## Opens the asset manager
@@ -183,7 +178,8 @@ func open_asset_manager() -> void:
 	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
 	iconManager.previewIcon.hide();
-	assetManager.audioSwapping.preview_audio_finished();
+	assetManager.audioSwapping.stop_preview()
+	assetManager.process_mode = Node.PROCESS_MODE_WHEN_PAUSED;
 	assetManager.show();
 
 ## Closes the asset manager
@@ -196,6 +192,8 @@ func close_asset_manager() -> void:
 	assetManager.animationSwapping.playingAnimation = false;
 	assetManager.audioSwapping.previewAudioPlayer.stop()
 	AnimationManager.refresh_animations();
+	assetManager.process_mode = Node.PROCESS_MODE_DISABLED;
+
 
 ## Closes the settings menu
 func close_level_settings_menu() -> void:
@@ -204,3 +202,4 @@ func close_level_settings_menu() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	previewTileMap.show();
 	levelSettingsMenu.hide();
+	levelSettingsMenu.process_mode = Node.PROCESS_MODE_DISABLED;

@@ -61,6 +61,25 @@ func _process(delta: float) -> void:
 		if (animTimer >= 1/FPS):
 			frame_change();
 			animTimer = 0;
+			
+func _input( event: InputEvent ) -> void:
+	# Hotkeys
+	if ( event.is_action_pressed( "up" ) ):
+		FPSSpinbox.value += 1;
+	if ( event.is_action_pressed( "down" ) ):
+		FPSSpinbox.value -= 1;
+	if ( event.is_action_pressed( "UI-AssetMgr-right" ) ):
+		anim_change(true);
+	if ( event.is_action_pressed( "UI-AssetMgr-left" ) ):
+		anim_change(false);
+	if ( event.is_action_pressed( "UI-AssetMgr-accept" ) ):
+		play_preview_animation();
+	if ( event.is_action_pressed( "UI-AssetMgr-deny" ) ):
+		stop_preview_animation();
+	if ( event.is_action_pressed( "UI-AssetMgr-frame-step-forward" ) ):
+		frame_change(false);
+	if ( event.is_action_pressed( "UI-AssetMgr-frame-step-backwards" ) ):
+		frame_change(false);
 
 ## Retrieve the frames for an animation from a given folder path
 ## folderName: Name of the folder to check
@@ -80,7 +99,10 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 			allImages.append(assetManager.find_image(imageName));
 		return allImages;
 	else:
-		PopUpManager.create_error_popup("Could not find folder","Could not find folder with name " + folderName + ".");
+		# If a folder is missing, create entire tree.
+		# NOTE: Could be made to more efficient.
+		assetManager.create_file_tree();
+		return [];
 	return [];
 
 ## Replaces the currently previewed animation with one chosen via file dialog.

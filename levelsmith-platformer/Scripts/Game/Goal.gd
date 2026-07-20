@@ -12,4 +12,6 @@ func _ready() -> void:
 ## body: the body entering to check if it's the player
 func complete_level(body: Node2D) -> void:
 	if body is Player:
-		Global.emit_signal("complete");
+		body.play_victory();
+		AudioManager.pause_music(true);
+		Global.goalReached.emit();

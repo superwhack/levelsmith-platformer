@@ -60,7 +60,6 @@ func _ready() -> void:
 	Global.levelCreated.connect(create_bedrock_border);
 	Global.levelCreated.connect(edit);
 	ImportExportManager.levelImported.connect(create_bedrock_border);
-	ImportExportManager.levelImported.connect(edit);
 	
 	# Connect all button signals
 	editorHomeButton.pressed.connect(main_menu);
@@ -68,7 +67,6 @@ func _ready() -> void:
 	editorPlayButton.mouse_entered.connect(mouse_entered_play_button);
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
-	winReturnToEditorButton.pressed.connect(edit);
 	get_window().close_requested.connect(check_unsaved_changes.bind(Callable(get_tree(), "quit"), ExitAction.QUIT));
 	
 	# Create the enemy resource folder and custom player preset.
@@ -92,7 +90,7 @@ func _input(event: InputEvent) -> void:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN);
-
+	
 ## When the level is completed, validate it and automatically return to editor
 ## NOTE: In the future we may want to instead pop up a menu notifying the player of completion.
 #func level_complete() -> void:
@@ -102,6 +100,7 @@ func _input(event: InputEvent) -> void:
 
 ## Plays the screen wipe animation that covers the screen before a state transition.
 func screen_wipe_in() -> void:
+	if (loadingScreen.visible): return;
 	loadingScreen.show();
 	# Create the loading animation tween
 	loadingTween = create_tween()
@@ -111,6 +110,7 @@ func screen_wipe_in() -> void:
 
 ## Plays the screen wipe animation that reveals the destination state after loading.
 func screen_wipe_out() -> void:
+	if (!loadingScreen.visible): return;
 	# Create the loading animation tween
 	loadingTween = create_tween()
 	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 0.0, loadingTweenTime)
@@ -163,7 +163,7 @@ func create_bedrock_border() -> void:
 		tileMap.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_WALL, Vector2i.ZERO, 3);
 
 ## Imports a level 
-func import_level_and_edit() -> void:
+func import_level_and_edit(play: bool = false) -> void:
 	ImportExportManager.clear_enemies_folder();
 	for childNode in editorManager.tileMap.get_children():
 		childNode.free();
@@ -176,6 +176,8 @@ func import_level_and_edit() -> void:
 	cameraManager.initialize_camera();
 	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.levelSettingsMenu);
 	ImportExportManager.levelImported.emit();
+	if (play): play();
+	else: edit();
 	#propertyMenu._on_preset_options_item_selected(4);
 	await get_tree().process_frame
 
@@ -186,10 +188,7 @@ func load_level(levelPath: String, play: bool = false) -> void:
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
 		# Await so that the camera gets properly placed
-		await import_level_and_edit();
-		if (play):
-			play();
-			
+		await import_level_and_edit(play);
 
 ## Checks if the level has unsaved changes, and creates a popup with appropriate functions.
 ## on_continue: A callable function, for going to main menu or force quitting app.
@@ -257,6 +256,7 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 ## Swap to edit state
 func edit() -> void:
 	get_tree().set_auto_accept_quit(false);
+	gameManager.pausable = false;
 	await get_tree().process_frame;
 	await screen_wipe_in();
 	AudioManager.reset_audio();
@@ -309,6 +309,7 @@ func play() -> void:
 	gameManagerCanvas.show();
 	editorManager.hide();
 	editorManagerCanvas.hide();
+	mainMenuControl.hide();
 	previewTileMap.clear();
 	toolManager.disable_box_brush();
 	# Pause the editor manager
@@ -387,6 +388,7 @@ func open_global_settings_menu() -> void:
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
+	globalSettingsMenu.process_mode = Node.PROCESS_MODE_WHEN_PAUSED;
 	globalSettingsMenu.show();
 
 ## Closes the settings menu
@@ -395,3 +397,4 @@ func close_global_settings_menu() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	previewTileMap.show();
 	globalSettingsMenu.hide();
+	globalSettingsMenu.process_mode = Node.PROCESS_MODE_DISABLED;

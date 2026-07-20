@@ -2,8 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_v6rci"]
 [ext_resource type="Script" uid="uid://bwa6vqp2x282t" path="res://Scripts/LevelListItem.gd" id="2_3yt47"]
-[ext_resource type="Texture2D" uid="uid://rolae2k5sktu" path="res://Assets/Sprites/UI/Invalid.png" id="4_3yt47"]
-[ext_resource type="Texture2D" uid="uid://2j2py7hm4a7o" path="res://Assets/Sprites/UI/FavoriteMedium.PNG" id="5_3yt47"]
+[ext_resource type="Texture2D" uid="uid://bkmrn51vfr3t7" path="res://Assets/UserInterface/UpdatedIcons/iconoir--warning-triangle-solid-yellow.png" id="3_yqi52"]
+[ext_resource type="Texture2D" uid="uid://cuqcf3f0aoyp0" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="4_yqi52"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_ilhfk"]
 
@@ -55,7 +55,7 @@ size_flags_vertical = 4
 
 [node name="TitleHBox" type="HBoxContainer" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer" unique_id=1097758974]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 3
 
 [node name="LevelError" type="TextureRect" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/TitleHBox" unique_id=1951360806]
 visible = false
@@ -64,7 +64,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 tooltip_text = "This level is corrupted, and cannot be loaded."
-texture = ExtResource("4_3yt47")
+texture = ExtResource("3_yqi52")
 
 [node name="LevelFavorite" type="TextureRect" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/TitleHBox" unique_id=574927128]
 visible = false
@@ -73,7 +73,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 tooltip_text = "This level has been favorited."
-texture = ExtResource("5_3yt47")
+texture = ExtResource("4_yqi52")
 
 [node name="LevelTitle" type="Label" parent="HBoxContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/TitleHBox" unique_id=1908587017]
 layout_mode = 2

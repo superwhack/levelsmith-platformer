@@ -125,7 +125,7 @@ func preview_audio_finished() -> void:
 
 ## Plays the preview audio. 
 func play_preview_audio() -> void:
-	#previewAudioPlayer.volume_db = linear_to_db(AudioManager.masterVolume * AudioManager.SFXVolume * volumeSlider.value / 100.0);
+	previewAudioPlayer.volume_db = linear_to_db(AudioManager.masterVolume * AudioManager.SFXVolume * volumeSlider.value / 100.0);
 	if (!previewAudioPlayer.playing):
 		previewAudioPlayer.play(audioTimeline.value)
 	isPlayingPreview = !isPlayingPreview

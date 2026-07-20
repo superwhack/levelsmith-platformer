@@ -18,6 +18,8 @@ var isPlayingPreview : bool = false;
 @export var audioTimeline : HSlider;
 @export var timeStampLabel : Label;
 
+@export var volumeSlider : VBoxContainer;
+
 var audioLength : float;
 
 # Called when the node enters the scene tree for the first time.
@@ -29,8 +31,9 @@ func _ready() -> void:
 	previewAudioPlayer.finished.connect(stop_preview)
 	audioTimeline.drag_started.connect(drag_started);
 	audioTimeline.drag_ended.connect(drag_ended);
+	volumeSlider.drag_ended.connect(change_volume);
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	timeStampLabel.text = str(get_converted_time(audioTimeline.value), "/", get_converted_time(audioLength));
 	#timeStampLabel.text = str("%.2f" % audioTimeline.value, "/", "%.2f" % audioLength);
 	if (previewAudioPlayer.playing):
@@ -103,7 +106,11 @@ func save_mp3_stream(stream : AudioStreamMP3, filePath : String) -> void:
 
 func save_ogg_stream(sourcePath : String, filePath : String) -> void:
 	DirAccess.copy_absolute(sourcePath, filePath);
-	
+
+func change_volume() -> void:
+	AudioManager.soundLevels[audioNameToReplace] = volumeSlider.value / 100.0;
+	print(AudioManager.soundLevels)
+
 func stop_preview():
 	previewAudioPlayer.stop();
 	isPlayingPreview = false;
@@ -118,6 +125,7 @@ func preview_audio_finished() -> void:
 
 ## Plays the preview audio. 
 func play_preview_audio() -> void:
+	#previewAudioPlayer.volume_db = linear_to_db(AudioManager.masterVolume * AudioManager.SFXVolume * volumeSlider.value / 100.0);
 	if (!previewAudioPlayer.playing):
 		previewAudioPlayer.play(audioTimeline.value)
 	isPlayingPreview = !isPlayingPreview

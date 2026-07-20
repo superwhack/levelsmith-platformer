@@ -39,7 +39,7 @@ var uiEffectCooldown : float = 0.035;
 func _ready() -> void:
 	
 	soundLevels = {
-		"Tile_Place_Error": 0.3,
+		"Tile_Place_Error": .1,
 	}
 	
 	musicPlayer = AudioStreamPlayer.new();

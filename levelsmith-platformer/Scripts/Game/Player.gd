@@ -168,7 +168,7 @@ func _physics_process(delta: float) -> void:
 	# Detect tiles before jumping and running so slow and ice tiles apply affects before inputs
 	detect_tiles();
 	# Jumping with W or Space
-	if (Input.is_action_just_pressed("jump") && !victory && !justWallJumped):
+	if (Input.is_action_just_pressed("jump") && !victory && !justWallJumped && jumpHeight != 0):
 		if (currentState == PlayerState.GROUNDED || coyoteTimeLeft > 0.0 || doubleJumpAvailable):
 			if !(currentState == PlayerState.GROUNDED || coyoteTimeLeft > 0.0):
 				currentSlowdown = 1.0;
@@ -445,10 +445,8 @@ func detect_tiles() -> void:
 		var rayDirection : Vector2 = raycast.target_position;
 
 		# Wall Jumping + Sliding
-		if wallJump && rayDirection.x != 0:
-			# Wall jumps not allowed on bedrock or one way tiles
-			if tileName == "bedrock" || tileName == "oneway" || tileName == "bounce":
-				return;
+		# Wall jumps not allowed on bedrock or one way tiles
+		if wallJump && rayDirection.x != 0 && !(tileName == "bedrock" || tileName == "oneway" || tileName == "bounce"):
 			# Wall Slide when not on ice
 			if ((rayDirection.x < 0 && (Input.is_action_pressed("left") && !victory) || rayDirection.x > 0 && Input.is_action_pressed("right"))) && !is_on_floor():
 				currentState = PlayerState.SLIDING;

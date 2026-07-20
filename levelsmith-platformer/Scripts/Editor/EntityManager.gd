@@ -135,7 +135,8 @@ func delete_entity (clickPosition: Vector2) -> void:
 		DirAccess.remove_absolute("user://Resources/Enemies/" + clickedEntity.name + ".tres");
 		clickedEntity.queue_free();
 	
-	AudioManager.play_UI_effect("TileDelete");
+	if movingResource == null:
+		AudioManager.play_UI_effect("TileDelete");
 	tileMap.erase_cell(clickPosition);
 	iconManager.delete_icon(clickPosition);
 
@@ -199,12 +200,12 @@ func drop_entity(reset: bool = false) -> void:
 	
 	# Drop the entity on its original spot if mouse is over any object.
 	if (clickedObjectId >= 0 || !editorManager.isPlaceable || reset):
+		AudioManager.play_UI_effect("TilePlaceError");
 		if toolManager.prevPosition == Vector2(-1 ,-1):
 			toolManager.prevBrushObject = -1;
 			toolManager.prevPosition = Vector2(0,0);
 			toolManager.currentObjectRotation = toolManager.prevRotation;
 			toolManager.isBackground = toolManager.prevIsBackground;
-			AudioManager.play_UI_effect("TilePlaceError");
 			return;
 		# Only allow it to be placed if you aren't copying
 		editorManager.isPlaceable = !toolManager.isCopying;

@@ -36,15 +36,17 @@ func _process(delta: float) -> void:
 	if (previewAudioPlayer.playing):
 		audioTimeline.value = previewAudioPlayer.get_playback_position();
 	
-	# Hotkeys	
-	if ( Input.is_action_just_pressed( "UI-AssetMgr-accept" ) ):
+## Hotkeys	
+func _input( event: InputEvent ) -> void:
+	if ( event.is_action_pressed( "UI-AssetMgr-accept" ) ):
 		play_preview_audio();
-	if ( Input.is_action_just_pressed( "UI-AssetMgr-deny" ) ):
+	if ( event.is_action_pressed( "UI-AssetMgr-deny" ) ):
 		preview_audio_finished();
-	if ( Input.is_action_just_pressed( "right" ) ):
-		audioTimeline.value += 0.02;
-	if ( Input.is_action_just_pressed( "left" ) ):
-		audioTimeline.value -= 0.02;
+	if ( event.is_action_pressed( "right" ) ):
+		audioTimeline.value += 0.05;
+	if ( event.is_action_pressed( "left" ) ):
+		audioTimeline.value -= 0.05;
+
 
 ## Replaces the currently previewed audio  with one chosen via file dialog.
 ## newAudioPath: The file path of the new audio replacing the old one.x 

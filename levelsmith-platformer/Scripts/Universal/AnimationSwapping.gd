@@ -61,9 +61,9 @@ func _process(delta: float) -> void:
 		if (animTimer >= 1/FPS):
 			frame_change();
 			animTimer = 0;
-			
+
+## Hotkeys	
 func _input( event: InputEvent ) -> void:
-	# Hotkeys
 	if ( event.is_action_pressed( "up" ) ):
 		FPSSpinbox.value += 1;
 	if ( event.is_action_pressed( "down" ) ):
@@ -77,7 +77,7 @@ func _input( event: InputEvent ) -> void:
 	if ( event.is_action_pressed( "UI-AssetMgr-deny" ) ):
 		stop_preview_animation();
 	if ( event.is_action_pressed( "UI-AssetMgr-frame-step-forward" ) ):
-		frame_change(false);
+		frame_change(true);
 	if ( event.is_action_pressed( "UI-AssetMgr-frame-step-backwards" ) ):
 		frame_change(false);
 

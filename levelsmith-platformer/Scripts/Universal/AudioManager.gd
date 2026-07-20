@@ -282,7 +282,7 @@ func _process(delta: float) -> void:
 		availablePlayers[0].play();
 		inusePlayers.append(availablePlayers[0]);
 		availablePlayers.pop_front();
-
+		
 func find_audio_in_folder(folderPath : String) -> AudioStream:
 # Opens the folder at the given folderName path
 	var dir : DirAccess = DirAccess.open(folderPath);

@@ -265,11 +265,13 @@ grow_vertical = 0
 
 [node name="PrevFrameButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer" unique_id=51178185]
 layout_mode = 2
+tooltip_text = "Previous Frame [A]"
 theme_type_variation = &"ToolButton"
 icon = ExtResource("7_clgtw")
 
 [node name="NextFrameButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer" unique_id=2054824461]
 layout_mode = 2
+tooltip_text = "Next Frame [D]"
 theme_type_variation = &"ToolButton"
 icon = ExtResource("8_ukhnw")
 
@@ -287,6 +289,7 @@ alignment = 1
 
 [node name="PrevAnimButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=1355417284]
 layout_mode = 2
+tooltip_text = "Previous Animation [Q]"
 theme_type_variation = &"ToolButton"
 icon = ExtResource("7_clgtw")
 
@@ -302,6 +305,7 @@ vertical_alignment = 1
 
 [node name="NextAnimButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=71301328]
 layout_mode = 2
+tooltip_text = "Next Animation [E]"
 theme_type_variation = &"ToolButton"
 icon = ExtResource("8_ukhnw")
 
@@ -324,6 +328,8 @@ text = "FPS:"
 
 [node name="FPSValue" type="SpinBox" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1524841534]
 layout_mode = 2
+tooltip_text = "Increase Frame Rate [W]
+Decrease Frame Rate [S]"
 min_value = 1.0
 max_value = 60.0
 value = 12.0
@@ -332,11 +338,13 @@ alignment = 1
 
 [node name="PlayPauseButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1544968013]
 layout_mode = 2
+tooltip_text = "Play Animation [Space]"
 text = "Play/Pause
 "
 
 [node name="StopButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=284005067]
 layout_mode = 2
+tooltip_text = "Stop Animation [Shift]"
 text = "Stop
 "
 
@@ -386,6 +394,8 @@ horizontal_alignment = 1
 
 [node name="AudioTimeline" type="HSlider" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox" unique_id=428290432]
 layout_mode = 2
+tooltip_text = "Scrub Audio Forward [D]
+Scrub Audio Backward [A]"
 step = 0.01
 
 [node name="BottomButtonContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=1727755463]
@@ -403,12 +413,14 @@ alignment = 1
 
 [node name="PlayPauseButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" unique_id=1125072521]
 layout_mode = 2
+tooltip_text = "Play Audio [Space]"
 focus_mode = 0
 text = "Play/Pause
 "
 
 [node name="StopButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" unique_id=780017080]
 layout_mode = 2
+tooltip_text = "Stop Audio [Shift]"
 focus_mode = 0
 text = "Stop
 "

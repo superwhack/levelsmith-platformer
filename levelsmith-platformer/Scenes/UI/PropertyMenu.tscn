@@ -240,8 +240,8 @@ propertyName = "Wall Jump"
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 propertyName = "Wall Jump Strength"
-propertyUnit = "Tiles"
-minMax = Vector2(0.1, 3)
+propertyUnit = "Magnitude"
+minMax = Vector2(0.3, 3)
 sliderStep = 0.1
 
 [node name="PlayerWallJumpDecay" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=837921176 instance=ExtResource("3_1mv14")]

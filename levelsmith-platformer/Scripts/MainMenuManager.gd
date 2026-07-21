@@ -332,6 +332,7 @@ func create_new_level() -> void:
 	
 	# Handle duplicate naming
 	fixedLevelName = duplicate_naming(fixedLevelName);
+	
 	overlayNewLevel.hide();
 	masterManager.level_setup( 
 		fixedLevelName, 
@@ -385,10 +386,10 @@ func fill_level_list() -> void:
 	for levelPath in levelItems.keys().duplicate():
 		if (!levelFolders.has(levelPath)):
 			var item = levelItems[levelPath];
-
+			
 			if (selectedItem == item):
 				clear_selection();
-
+			
 			item.queue_free();
 			levelItems.erase(levelPath);
 	
@@ -424,21 +425,23 @@ func _on_level_double_clicked(path: String) -> void:
 	AudioManager.play_UI_effect("UISelection");
 	masterManager.load_level(path);
 	
-## Fills in metadata labels with appropriate data when hovered.
+## Fills in metadata labels with appropriate data when hovered and nothing else selected.
 ## item: the level list button item.
 func _on_level_hovered(item: Node) -> void:
 	if (!selectedItem):
 		update_metadata(item);
-	
+
+## When a level is pressed, swap to it
+## item: the level list button item
 func _on_level_pressed(item: Node) -> void:
 	if (selectedItem == item):
 		return;
 		
 	if (selectedItem):
-		selectedItem.levelButton.button_pressed = false
+		selectedItem.levelButton.button_pressed = false;
 	else:
-		toggle_level_buttons()
-
+		toggle_level_buttons();
+	
 	selectedItem = item;
 	update_metadata(item);
 
@@ -460,9 +463,18 @@ func toggle_level_buttons() -> void:
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
 	exportLevelButton.disabled = !exportLevelButton.disabled;
 
-func set_favorite_button_icon(is_favorited: bool) -> void:
-	favoriteButtonIcon.texture = favoriteFilled if is_favorited else favoriteEmpty;
+## Set the favourite button icon
+## isFavourited: True if the favourite button made the level favourited, false if it made it unfavourited
+func set_favorite_button_icon(isFavorited: bool) -> void:
+	if (isFavorited):
+		favoriteButtonIcon.texture = favoriteFilled  
+	else:
+		favoriteButtonIcon.texture = favoriteEmpty;
 
+## Update the given level with it's current metadata and hook up signals
+## item: the level's node to update
+## folderName: The folder name for the level
+## levelPath: The path for the level
 func update_level_item(item: Node, folderName : String, levelPath : String) -> void:
 	item.levelPath = levelPath + "/";
 	levelItems[levelPath] = item;
@@ -474,7 +486,6 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 	# Connect the level button signal to the double clicked function
 	if (!item.level_double_clicked.is_connected(_on_level_double_clicked)):
 		item.level_double_clicked.connect(_on_level_double_clicked);	# Hovering an item populates the metadata field.
-	#item.level_hovered.connect(_on_level_hovered);
 	# Selecting an item toggles.
 	if (!item.level_pressed.is_connected(_on_level_pressed)):
 		item.level_pressed.connect(_on_level_pressed);
@@ -577,7 +588,7 @@ func play_current_level() -> void:
 func edit_current_level() -> void:
 	if (!selectedItem):
 		return;
-
+	
 	AudioManager.play_UI_effect("UI_Selection");
 	masterManager.load_level(selectedItem.levelPath);
 
@@ -592,11 +603,11 @@ func open_delete_popup() -> void:
 func delete_current_level() -> void:
 	if (!selectedItem):
 		return;
-
+	
 	AudioManager.play_UI_effect("UI_Selection");
 	
 	var levelPath : String = selectedItem.levelPath.rstrip("/");
-
+	
 	# Delete all files and folders inside the level directory
 	# Thank you: https://tinyurl.com/ak58bfvd
 	remove_recursively(selectedItem.levelPath);
@@ -629,8 +640,8 @@ func duplicate_current_level() -> void:
 	var itemLevelPath : String = selectedItem.levelPath;
 	var destination : String = "user://Levels/" + newLevelName + "/";
 
-	# Don't overwrite an existing level!!!
-	if DirAccess.dir_exists_absolute(destination):
+	# Don't overwrite an existing level!
+	if (DirAccess.dir_exists_absolute(destination)):
 		duplicateExistsBanner.show();
 		duplicateErrorBanner.hide();
 		duplicateEmptyBanner.hide();
@@ -654,7 +665,7 @@ func duplicate_current_level() -> void:
 	var date := "%02d.%02d.%04d" % [now.month, now.day, now.year];
 	var time := "%02d:%02d %s" % [now.hour, now.minute, meridiem];
 
-	# set all metadata when duplicating appropriately
+	# Set all metadata when duplicating appropriately
 	ImportExportManager.set_metadata(destination.rstrip("/"), "favorited", false);
 	ImportExportManager.set_metadata(destination.rstrip("/"), "dateCreated", date);
 	ImportExportManager.set_metadata(destination.rstrip("/"), "timeCreated", time);
@@ -700,7 +711,7 @@ func favorite_current_level() -> void:
 
 ## Checks if a level folder is valid with the correct files.
 ## filePath: The file path of the folder.
-## Returns a bool based on the folder being valid.
+## returns: a bool based on the folder being valid.
 func get_level_valid(filePath : String) -> bool:
 	if (!FileAccess.file_exists(filePath)):
 		# Check if settings file doesn't exist
@@ -715,6 +726,7 @@ func get_level_valid(filePath : String) -> bool:
 
 ## Sorts the levels by favorites first.
 ## levelPaths: An array of every level path.
+## returns: the sorted array
 func sort_levels_by_favorite(levelPaths: Array) -> Array:
 	# Custom callable built-in to arrays
 	levelPaths.sort_custom(func(a, b):
@@ -766,11 +778,13 @@ func remove_recursively(directory: String) -> void:
 		remove_recursively(directory.path_join(directoryName));
 	for file in DirAccess.get_files_at(directory):
 		DirAccess.remove_absolute(directory.path_join(file));
-
+	
 	DirAccess.remove_absolute(directory)
 
-func show_credits_screen(show : bool = true) -> void:
-	if (show):
+## Show the credits screen
+## showScreen: when true, show the credits screen
+func show_credits_screen(showScreen : bool = true) -> void:
+	if (showScreen):
 		AudioManager.play_UI_effect("UISelection")
 		overlayCredits.show();
 	else:

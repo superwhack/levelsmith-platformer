@@ -43,7 +43,6 @@ stationaryEnemySprites,
 goalSprites,
 coinSprites,
 movingPlatformSprites,
-movingPlatformPreviewSprites,
 checkpointSprites];
 
 # Reference to the asset manager
@@ -283,6 +282,7 @@ func create_template_sprites() -> void:
 func get_all_sprites() -> void:
 	for spriteGroup in allAnimatedSprites:
 		spriteGroup.clear();
+	movingPlatformPreviewSprites.clear();
 	for player in get_tree().get_nodes_in_group("Player"):
 		playerSprites.append(player.find_child("AnimatedSprite2D"));
 	for enemy in get_tree().get_nodes_in_group("Enemy"):

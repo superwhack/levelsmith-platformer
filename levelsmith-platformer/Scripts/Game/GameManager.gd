@@ -20,6 +20,7 @@ extends Node2D
 @export var replayButton : Button;
 @export var editorButton : Button;
 
+# Manager references
 @export var cameraManager : Node;
 @export var masterManager : Node;
 
@@ -45,7 +46,7 @@ var totalCoins : int = 0
 # Player and its position
 var player : CharacterBody2D;
 var playerStartingPosition : Vector2;
-var playerCheckpointPosition := Vector2(-1, -1);
+var playerCheckpointPosition : Vector2 = Vector2(-1, -1);
 
 # Reference to the tile set
 var tileMap : TileMapLayer;
@@ -88,12 +89,12 @@ func reset() -> void:
 	freeze(false);
 	await masterManager.screen_wipe_out();
 
+## Freeze/unfreeze this node and its children
+## locked: true if this node is being disabled.
 func freeze(locked: bool) -> void:
-	if locked:
-		process_mode = Node.PROCESS_MODE_DISABLED;
-	else:
-		process_mode = Node.PROCESS_MODE_INHERIT;
+	process_mode = Node.PROCESS_MODE_DISABLED if locked else Node.PROCESS_MODE_INHERIT;
 
+## Resets the level from the beginning by removing the player's checkpoint.
 func full_restart() -> void:
 	playerCheckpointPosition = Vector2(-1, -1);
 	pausable = false;
@@ -119,7 +120,8 @@ func start() -> void:
 		coinMargin.hide();
 		winCoinHBox.hide();
 	
-	# Await 5 process frames so the Player that has just been added to GameManager can be selected in the tree
+	# Waits until the player can be foundin the tree
+	# The Editor state player means there will already be 1 in the group.
 	while (get_tree().get_node_count_in_group("Player") == 1):
 		await get_tree().process_frame;
 
@@ -188,6 +190,7 @@ func _ready() -> void:
 	replayButton.pressed.connect(replay_level);
 	editorButton.pressed.connect(return_to_editor);
 
+## Runs every frame and updates the timer
 func _process(delta: float) -> void:
 	if timerRunning:
 		testingTime += delta;
@@ -205,21 +208,22 @@ func update_coin_counter(label: RichTextLabel) -> void:
 	if totalCoins > 0:
 		label.append_text("%02d" % [coinCount])
 
+## Updates the player's checkpoint when they cross a new one.
 func collect_checkpoint(newSpawn: Vector2) -> void:
 	playerCheckpointPosition = newSpawn;
 	
 ## Prints the final completion time and stops the level timer
 func print_level_completion_time() -> void:
 	timerRunning = false;
-	var minutes := int(testingTime) / 60;
-	var seconds := int(testingTime) % 60;
+	var minutes : float = int(testingTime) / 60.0;
+	var seconds : float = int(testingTime) % 60;
 	print("Completion Time: %02d:%02d" % [minutes, seconds]);
 
 ## Updates the specified timer label with the current elapsed time
 ## label: The timer label to update
-func update_timer(label: RichTextLabel) -> void:
-	var minutes := int(testingTime) / 60;
-	var seconds := int(testingTime) % 60;
+func update_timer(label : RichTextLabel) -> void:
+	var minutes : float = int(testingTime) / 60.0;
+	var seconds : float = int(testingTime) % 60;
 	label.clear();
 	label.append_text("%02d:%02d" % [minutes, seconds]);
 
@@ -259,6 +263,7 @@ func replay_level() -> void:
 	winScreen.hide();
 	full_restart();
 
+## When global goal signal is emitted, disable the timer and hide the UI
 func goal_reached() -> void:
 	bottomScreenGroup.hide();
 	timerRunning = false;

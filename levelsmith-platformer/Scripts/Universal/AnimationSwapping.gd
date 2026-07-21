@@ -24,6 +24,7 @@ var currentLoadedAnimation : Array[Texture2D];
 @export var frameLeftButton : Button;
 @export var frameCountLabel : Label;
 @export var playButton : Button;
+@export var pauseButton : Button;
 @export var stopButton : Button;
 @export var FPSSpinbox : SpinBox;
 # Information about played animation
@@ -47,9 +48,10 @@ const ANIMATION_LENGTH_LIMIT : int = 60;
 func _ready() -> void:
 	animationPreviewRightButton.pressed.connect(anim_change.bind(true));
 	animationPreviewLeftButton.pressed.connect(anim_change.bind(false));
-	frameRightButton.pressed.connect(frame_change.bind(true));
-	frameLeftButton.pressed.connect(frame_change.bind(false));
+	frameRightButton.pressed.connect(frame_change.bind(true, true));
+	frameLeftButton.pressed.connect(frame_change.bind(false, true));
 	playButton.pressed.connect(play_preview_animation);
+	pauseButton.pressed.connect(play_preview_animation.bind(false));
 	stopButton.pressed.connect(stop_preview_animation);
 	FPSSpinbox.value_changed.connect(fps_updated);
 
@@ -77,9 +79,9 @@ func _input( event: InputEvent ) -> void:
 	if ( event.is_action_pressed( "UI-AssetMgr-deny" ) ):
 		stop_preview_animation();
 	if ( event.is_action_pressed( "UI-AssetMgr-frame-step-forward" ) ):
-		frame_change(false);
+		frame_change(true, true);
 	if ( event.is_action_pressed( "UI-AssetMgr-frame-step-backwards" ) ):
-		frame_change(false);
+		frame_change(false, true);
 
 ## Retrieve the frames for an animation from a given folder path
 ## folderName: Name of the folder to check
@@ -153,7 +155,7 @@ func reset_animation() -> void:
 ## next: Whether the user is switching to the next or previous animation
 func anim_change(next : bool):
 	# Pause the animation
-	playingAnimation = false;
+	play_preview_animation(false);
 	# Increase or decrease the index accordingly
 	if (next):
 		currentAnimationIndex += 1;
@@ -185,7 +187,8 @@ func anim_change(next : bool):
 	
 ## Change the animation frame currently shown
 ## next: Whether the user is changing to the next or previous frame
-func frame_change(next : bool = true):
+## manual : Whether the user manually changes the frame
+func frame_change(next : bool = true, manual : bool = false):
 	# Change the animation frame index accordingly
 	if (next):
 		animationFrameIndex += 1;
@@ -197,6 +200,8 @@ func frame_change(next : bool = true):
 		animationFrameIndex = 0;
 	elif (animationFrameIndex < 0):
 		animationFrameIndex = frameCount - 1;
+	if (manual):
+		play_preview_animation(false);
 	update_animation_preview();
 
 ## Update all parts of the animation preview
@@ -212,12 +217,18 @@ func update_animation_preview() -> void:
 			animationPreviewTexture.texture = animationPreviewToReplace;
 
 ## Play the animation in the preview
-func play_preview_animation() -> void:
-	playingAnimation = !playingAnimation;
+func play_preview_animation(play : bool = true) -> void:
+	playingAnimation = play;
+	if (playingAnimation):
+		pauseButton.show();
+		playButton.hide();
+	else:
+		pauseButton.hide();
+		playButton.show();
 
 ## Stop the animation and set it to its first frame
 func stop_preview_animation() -> void:
-	playingAnimation = false;
+	play_preview_animation(false);
 	animationFrameIndex = 0;
 	update_animation_preview();
 

@@ -12,6 +12,7 @@ var loadedPreviewAudio : AudioStream;
 var previewAudioPlayer : AudioStreamPlayer;
 
 @export var playButton : Button;
+@export var pauseButton : Button;
 @export var stopButton : Button;
 var isPlayingPreview : bool = false;
 
@@ -25,8 +26,9 @@ func _ready() -> void:
 	previewAudioPlayer = AudioStreamPlayer.new();
 	add_child(previewAudioPlayer);
 	playButton.pressed.connect(play_preview_audio);
+	pauseButton.pressed.connect(play_preview_audio.bind(false));
 	stopButton.pressed.connect(preview_audio_finished);
-	previewAudioPlayer.finished.connect(stop_preview)
+	previewAudioPlayer.finished.connect(preview_audio_finished);
 	audioTimeline.drag_started.connect(drag_started);
 	audioTimeline.drag_ended.connect(drag_ended);
 
@@ -111,17 +113,24 @@ func stop_preview():
 	
 func preview_audio_finished() -> void:
 	if (loadedPreviewAudio):
+		play_preview_audio(false);
 		previewAudioPlayer.play();
 		previewAudioPlayer.stream_paused = true;
 		isPlayingPreview = false;
 		audioTimeline.value = 0;
 
 ## Plays the preview audio. 
-func play_preview_audio() -> void:
-	if (!previewAudioPlayer.playing):
-		previewAudioPlayer.play(audioTimeline.value)
-	isPlayingPreview = !isPlayingPreview
+func play_preview_audio(play : bool = true) -> void:
+	if (play):
+		previewAudioPlayer.play(audioTimeline.value);
+	isPlayingPreview = play
 	previewAudioPlayer.stream_paused = !isPlayingPreview;
+	if (isPlayingPreview):
+		pauseButton.show();
+		playButton.hide();
+	else:
+		pauseButton.hide();
+		playButton.show();
 
 func load_preview_audio() -> void:
 	loadedPreviewAudio = null;

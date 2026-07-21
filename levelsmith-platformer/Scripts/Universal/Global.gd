@@ -84,6 +84,7 @@ enum EntityType {
 	PROP6 = 605,
 }
 
+# Other major tile indices
 const EMPTY_TILE: int = -1;
 const BEDROCK_CORNER: int = 9997;
 const BEDROCK_WALL: int = 9998;

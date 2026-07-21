@@ -37,11 +37,6 @@ var uiEffectCooldown : float = 0.035;
 
 ## Create all players and connect them properly
 func _ready() -> void:
-	
-	soundLevels = {
-		"Tile_Place_Error": .1,
-	}
-	
 	musicPlayer = AudioStreamPlayer.new();
 	walkingPlayer = AudioStreamPlayer.new();
 	assetManagerPlayer = AudioStreamPlayer.new();

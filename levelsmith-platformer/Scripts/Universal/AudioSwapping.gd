@@ -82,6 +82,7 @@ func replace_audio(newAudioPath: String) -> void:
 		save_ogg_stream(newAudioPath, targetFilePath + "/" + audioNameToReplace + ".ogg");
 	else:
 		PopUpManager.create_error_popup("File type incorrect", "File must be .mp3 or .wav format.");
+	AudioManager.soundLevels[audioNameToReplace] = 1;
 	load_preview_audio();
 
 	
@@ -154,6 +155,9 @@ func load_preview_audio() -> void:
 	preview_audio_finished();
 	audioLength = loadedPreviewAudio.get_length()
 	audioTimeline.max_value = audioLength;
+	if !AudioManager.soundLevels.has(audioNameToReplace):
+		AudioManager.soundLevels[audioNameToReplace] = 1;
+	volumeSlider.value = AudioManager.soundLevels[audioNameToReplace] * 100;
 
 func drag_started():
 	previewAudioPlayer.stream_paused = true;

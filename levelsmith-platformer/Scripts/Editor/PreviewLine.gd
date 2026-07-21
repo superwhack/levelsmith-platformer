@@ -27,7 +27,7 @@ func _ready():
 func update(offset : Vector2 = Vector2((parent.pointB.x - parent.pointA.x) / Global.TILE_SIZE, (parent.pointB.y - parent.pointA.y) / Global.TILE_SIZE)) -> void:
 	# Displacement: Makes the end of the line slightly behind the circle
 	# Size is in pixels
-	var displacementSize : float = 12;
+	var displacementSize : float = 12.0;
 	var circleDisplacement : Vector2 = offset.normalized() * displacementSize;
 	var endPosition : Vector2 = offset * Global.TILE_SIZE;
 	
@@ -38,10 +38,10 @@ func update(offset : Vector2 = Vector2((parent.pointB.x - parent.pointA.x) / Glo
 	
 	endPoint.position = endPosition;
 	
-	if parent is EnemyFlyer:
+	if (parent is EnemyFlyer):
 		parent.animatedSprites.flip_h = -offset.x > 0
 
-	if endPosition == Vector2.ZERO:
+	if (endPosition == Vector2.ZERO):
 		endPoint.hide();
 	else:
 		endPoint.show();

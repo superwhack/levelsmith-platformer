@@ -143,7 +143,6 @@ func _ready() -> void:
 	#for animationName in animatedSprites.sprite_frames.get_animation_names():
 		#AnimationManager.replace_animation_by_name(animatedSprites, animationName);
 	
-	debugLabel = Label.new();
 	debugLabel.position = Vector2(10, 10);
 	
 	get_tree().current_scene.add_child(debugLabel);

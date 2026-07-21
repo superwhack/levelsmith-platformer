@@ -47,6 +47,24 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_km8ha"]
 radius = 307.56625
 
+[sub_resource type="Gradient" id="Gradient_vgv1q"]
+offsets = PackedFloat32Array(0, 0.61778843, 0.62259614, 1)
+colors = PackedColorArray(0, 0, 0.63529414, 0.09803922, 0, 0, 0.63529414, 0.09803922, 0, 0, 1, 0, 0, 0, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_km8ha"]
+gradient = SubResource("Gradient_vgv1q")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_fax0h"]
+offsets = PackedFloat32Array(0, 0.61778843, 0.63221157, 0.65625, 0.68028843, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.89743584, 0, 0, 0, 1, 0.32156864, 0.32156864, 0.32156864, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dourk"]
+gradient = SubResource("Gradient_fax0h")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="Shooting" type="CharacterBody2D" unique_id=1473950752 node_paths=PackedStringArray("directionArrow", "questionMark", "trackerRaycast", "trackerArea", "downRaycast", "upRaycast", "raycastHelper", "onScreen", "hitbox", "animatedSprites") groups=["Enemy", "Moving"]]
 position = Vector2(0, -1)
 collision_layer = 6
@@ -113,3 +131,15 @@ target_position = Vector2(0, 300)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TrackerArea" unique_id=1417711671]
 shape = SubResource("CircleShape2D_km8ha")
+
+[node name="Node" type="Node2D" parent="TrackerArea" unique_id=1606427338]
+scale = Vector2(10.5, 10.5)
+
+[node name="InnerCircle" type="Sprite2D" parent="TrackerArea/Node" unique_id=433678295]
+z_index = -10
+texture = SubResource("GradientTexture2D_km8ha")
+
+[node name="OuterCircle" type="Sprite2D" parent="TrackerArea/Node" unique_id=1378168829]
+z_index = -10
+scale = Vector2(0.99999994, 0.99999994)
+texture = SubResource("GradientTexture2D_dourk")

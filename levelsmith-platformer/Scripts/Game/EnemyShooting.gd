@@ -4,6 +4,7 @@ extends Enemy
 # Direction of fire, stored as float
 var fireDirection : float;
 var randomDirection : bool;
+var tracking : bool;
 
 # Firing properties
 var shotSpeed : float;
@@ -21,6 +22,10 @@ var gravityOn : bool;
 @export var dangerTexture : Texture2D;
 @export var bounceTexture : Texture2D;
 
+@export var trackerRaycast : RayCast2D;
+@export var trackerArea : Area2D;
+var trackingBody : Node2D;
+
 # Projectile scene for instantiating
 const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn");
 
@@ -32,6 +37,9 @@ func _ready() -> void:
 	
 	#AnimationManager.replace_animation_by_name(animatedSprites, "ShootIdle");
 	#AnimationManager.replace_animation_by_name(animatedSprites, "EnemyShoot");
+	
+	trackerArea.body_entered.connect(target_found);
+	trackerArea.body_exited.connect(target_lost);
 	
 	animatedSprites.sprite_frames = AnimationManager.shootingEnemyTemplateSprite.sprite_frames;
 	
@@ -55,12 +63,20 @@ func _physics_process(delta: float) -> void:
 	if onScreen.is_on_screen():
 		if (!randomDirection):
 			update_flipped(!(fireDirection <= -90 && fireDirection > -270));
-		# Decrease time left
-		timeLeft -= delta;
 		# If cooldown is finished, shoot
 		if (timeLeft <= 0.0):
-			shooting_behavior();
-			timeLeft = 1 / fireRate;
+			# If tracking and there is a body, test the raycast sightline and fire if the player is unobscured
+			if tracking && trackingBody:
+				if test_sightline():
+					shooting_behavior();
+					timeLeft = 1 / fireRate;
+			# If not tracking fire
+			elif !tracking:
+				shooting_behavior();
+				timeLeft = 1 / fireRate;
+		else:
+			# Decrease time left
+			timeLeft -= delta;
 	super.detect_tiles(false);
 	move_and_slide();
 
@@ -79,6 +95,27 @@ func adjust_arrow(angle: float = fireDirection, random: bool = randomDirection) 
 	directionArrow.position.y = sin(deg_to_rad(directionArrow.rotation_degrees)) * 60;
 	animatedSprites.flip_h = (angle <= -90 && angle > -270);
 
+## When a target enters the area2D, if it's a player make it a target
+func target_found(body: Node2D) -> void:
+	if body is Player && tracking:
+		trackingBody = body;
+
+## If tracking what was just lost, stop tracking it
+func target_lost(body: Node2D) -> void:
+	if trackingBody == body && tracking:
+		trackingBody = null;
+
+## Use a raycast to test if the enemy has a sightline to the player
+## returns: true if there is an unobscured sightline to the player
+func test_sightline() -> bool:
+	if !trackingBody:
+		return false;
+	
+	trackerRaycast.rotation = get_angle_to(trackingBody.global_position) - deg_to_rad(90);
+	if trackerRaycast.is_colliding():
+		if trackerRaycast.get_collider() is Player:
+			return true;
+	return false
 
 ## Shoots in the determined direction
 func shooting_behavior() -> void:
@@ -90,6 +127,8 @@ func shooting_behavior() -> void:
 		var randFireDirection = randi() % 360;
 		projectileFired.global_rotation_degrees = randFireDirection
 		update_flipped(!(randFireDirection >= 90 && randFireDirection < 270));
+	elif tracking:
+		projectileFired.global_rotation_degrees = rad_to_deg(get_angle_to(trackingBody.global_position));
 	else:
 		projectileFired.global_rotation_degrees = fireDirection;
 	projectileFired.bounceable = projBounce;
@@ -114,6 +153,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	propertyFile.position = assignPosition;
 	fireDirection = propertyFile.direction; 
 	randomDirection = propertyFile.randomDirection;
+	tracking = propertyFile.tracking;
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;
@@ -126,6 +166,7 @@ func apply_script(file: Resource) -> void:
 	propertyFile = file;
 	fireDirection = propertyFile.direction; 
 	randomDirection = propertyFile.randomDirection;
+	tracking = propertyFile.tracking;
 	shotSpeed = propertyFile.shotSpeed;
 	fireRate = propertyFile.fireRate;
 	projBounce = propertyFile.projBounce;

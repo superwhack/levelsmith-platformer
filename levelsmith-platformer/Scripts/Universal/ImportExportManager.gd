@@ -243,6 +243,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 			enemy["type"] = "shooting"
 			enemy["stats"] = {
 				"direction": propertyFile.direction,
+				"tracking": propertyFile.tracking,
 				"randomDirection": propertyFile.randomDirection,
 				"shotSpeed": propertyFile.shotSpeed,
 				"fireRate": propertyFile.fireRate,
@@ -556,6 +557,7 @@ func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
 			newResource.restricted = enemy.stats.restricted;
 		"shooting":
 			newResource.direction = enemy.stats.direction;
+			newResource.tracking = enemy.stats.tracking;
 			newResource.randomDirection = enemy.stats.randomDirection;
 			newResource.shotSpeed = enemy.stats.shotSpeed;
 			newResource.fireRate = enemy.stats.fireRate;

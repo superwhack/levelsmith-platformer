@@ -71,6 +71,7 @@ var playerWallJumpDecay : bool;
 @export_group("Shooting Properties")
 # Shooting inputs
 @export var shootingDirectionSlider : VBoxContainer;
+@export var shootingTrackingCheckbox : VBoxContainer;
 @export var shootingRandomDirection : VBoxContainer;
 @export var shootingShotSpeedSlider : VBoxContainer;
 @export var shootingFireRateSlider : VBoxContainer;
@@ -129,6 +130,7 @@ func _ready() -> void:
 	patrollingRestrictedCheckbox.check_changed.connect(update_values);
 	
 	shootingDirectionSlider.drag_ended.connect(_on_drag_ended);
+	shootingTrackingCheckbox.check_changed.connect(update_values);
 	shootingRandomDirection.check_changed.connect(update_values);
 	shootingShotSpeedSlider.drag_ended.connect(_on_drag_ended);
 	shootingFireRateSlider.drag_ended.connect(_on_drag_ended);
@@ -300,12 +302,14 @@ func update_sliders() -> void:
 		patrollingRestrictedCheckbox.update_checkbox();
 	elif selectedEntity is EnemyShooting:
 		shootingDirectionSlider.value = -selectedPreset.direction;
+		shootingTrackingCheckbox.value = selectedPreset.tracking;
 		shootingRandomDirection.value = selectedPreset.randomDirection;
 		shootingShotSpeedSlider.value = selectedPreset.shotSpeed;
 		shootingFireRateSlider.value = selectedPreset.fireRate;
 		shootingProjectileBounce.value = selectedPreset.projBounce;
 		shootingGravity.value = selectedPreset.gravity;
 		shootingDirectionSlider.update_slider();
+		shootingTrackingCheckbox.update_checkbox();
 		shootingRandomDirection.update_checkbox();
 		shootingShotSpeedSlider.update_slider();
 		shootingFireRateSlider.update_slider();
@@ -378,6 +382,7 @@ func update_values() -> void:
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyShooting:
 		selectedPreset.randomDirection = shootingRandomDirection.value;
+		selectedPreset.tracking = shootingTrackingCheckbox.value;
 		make_selectable(shootingDirectionSlider, !selectedPreset.randomDirection);
 		selectedPreset.direction = -shootingDirectionSlider.value;
 		selectedPreset.shotSpeed = shootingShotSpeedSlider.value;

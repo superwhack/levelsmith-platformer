@@ -11,7 +11,6 @@ offset_right = 80.0
 offset_bottom = 80.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-focus_mode = 0
 theme = ExtResource("1_tgw4b")
 theme_type_variation = &"TileButton"
 script = ExtResource("2_4u4rl")

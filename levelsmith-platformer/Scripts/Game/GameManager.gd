@@ -20,6 +20,7 @@ extends Node2D
 @export var replayButton : Button;
 @export var editorButton : Button;
 
+# Manager references
 @export var cameraManager : Node;
 @export var masterManager : Node;
 
@@ -45,7 +46,7 @@ var totalCoins : int = 0
 # Player and its position
 var player : CharacterBody2D;
 var playerStartingPosition : Vector2;
-var playerCheckpointPosition := Vector2(-1, -1);
+var playerCheckpointPosition : Vector2 = Vector2(-1, -1);
 
 # Reference to the tile set
 var tileMap : TileMapLayer;
@@ -211,15 +212,15 @@ func collect_checkpoint(newSpawn: Vector2) -> void:
 ## Prints the final completion time and stops the level timer
 func print_level_completion_time() -> void:
 	timerRunning = false;
-	var minutes := int(testingTime) / 60;
-	var seconds := int(testingTime) % 60;
+	var minutes : float = int(testingTime) / 60.0;
+	var seconds : float = int(testingTime) % 60;
 	print("Completion Time: %02d:%02d" % [minutes, seconds]);
 
 ## Updates the specified timer label with the current elapsed time
 ## label: The timer label to update
-func update_timer(label: RichTextLabel) -> void:
-	var minutes := int(testingTime) / 60;
-	var seconds := int(testingTime) % 60;
+func update_timer(label : RichTextLabel) -> void:
+	var minutes : float = int(testingTime) / 60.0;
+	var seconds : float = int(testingTime) % 60;
 	label.clear();
 	label.append_text("%02d:%02d" % [minutes, seconds]);
 

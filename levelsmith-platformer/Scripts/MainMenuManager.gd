@@ -177,6 +177,12 @@ func import_level() -> void:
 	# Extract the name of the folder from the file path
 	var importedLevelArray : Array = fieldImportLevelPath.text.rstrip("/").split("/");
 	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
+	var duplicateCounter : int = 0;
+	for folderName in DirAccess.get_directories_at("user://Levels"):
+		if (importedLevelName == folderName || str(importedLevelName, "(", duplicateCounter, ")") == folderName):
+			duplicateCounter += 1;
+	if (duplicateCounter > 0):
+		importedLevelName = str(importedLevelName, "(", duplicateCounter, ")");
 	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
 	masterManager.loadedLevelPath = fieldImportLevelPath.text;
 
@@ -218,10 +224,17 @@ func create_new_level() -> void:
 		emptyWarning.hide();
 		invalidWarning.show();
 		return;
-		
+	
+	var fixedLevelName = fieldNewLevelName.text;
+	var duplicateCounter : int = 0;
+	for folderName in DirAccess.get_directories_at("user://Levels"):
+		if (fixedLevelName == folderName || str(fixedLevelName, "(", duplicateCounter, ")") == folderName):
+			duplicateCounter += 1;
+	if (duplicateCounter > 0):
+		fixedLevelName = str(fixedLevelName, "(", duplicateCounter, ")");
 	overlayNewLevel.hide();
 	masterManager.level_setup( 
-		fieldNewLevelName.text, 
+		fixedLevelName, 
 		fieldNewLevelAuthor.text,
 		Vector2i( 
 			int(spinBoxNewLevelX.value), 

@@ -34,5 +34,8 @@ class_name PlayerMovementPreset
 
 # True if player can wall jump
 @export var wallJump : bool;
+# Determines the strength of the player's wall jump horizontally
+@export var wallJumpStrength : float;
+
 # True if player's wall jump decays when jumping off the same side repeatedly
 @export var wallJumpDecay : bool;

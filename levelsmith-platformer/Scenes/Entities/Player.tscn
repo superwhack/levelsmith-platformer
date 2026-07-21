@@ -284,7 +284,7 @@ target_position = Vector2(-45, 0)
 [node name="RayCastLeft3" type="RayCast2D" parent="." unique_id=1158609575]
 position = Vector2(0, 64)
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(-45, 0)
+target_position = Vector2(-28, 0)
 
 [node name="RayCastRight" type="RayCast2D" parent="." unique_id=464775608]
 position = Vector2(0, -42.222225)
@@ -299,7 +299,7 @@ target_position = Vector2(45, 0)
 [node name="RayCastRight3" type="RayCast2D" parent="." unique_id=1866021346]
 position = Vector2(0, 64)
 scale = Vector2(1.1, 1.1)
-target_position = Vector2(45, 0)
+target_position = Vector2(28, 0)
 
 [node name="RayCastRightWallJump" type="RayCast2D" parent="." unique_id=1310844289]
 position = Vector2(0, -25)

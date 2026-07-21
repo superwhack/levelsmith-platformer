@@ -244,8 +244,6 @@ func fill_level_list() -> void:
 	# Get the directory that contains all the level folders
 	var levelsPath : String = "user://Levels"
 	var levelListDir : DirAccess = DirAccess.open(levelsPath);
-	print("Levels path:", levelsPath)
-	print("LLD:", levelListDir);
 	
 	# Return early if there is no directory.
 	if (!levelListDir):
@@ -264,6 +262,11 @@ func fill_level_list() -> void:
 			# Add the level to the level list and set it up visually.
 			if (get_level_valid(levelPath)):
 				levelFolders[levelPath] = folderName;
+				
+			print(levelPath)
+			print(FileAccess.file_exists(levelPath + "/Settings.JSON"))
+			print(FileAccess.file_exists(levelPath + "/Tiles.CSV"))
+			print(get_level_valid(levelPath))
 
 		folderName = levelListDir.get_next();
 		
@@ -591,11 +594,12 @@ func favorite_current_level() -> void:
 func get_level_valid(filePath : String) -> bool:
 	if (!FileAccess.file_exists(filePath)):
 		# Check if settings file doesn't exist
-		if (!FileAccess.file_exists(filePath + "/Settings.json")):
+		if (!FileAccess.file_exists(filePath + "/Settings.JSON")):
 			return false;
 			
 		# Check if CSV file doesn't exist
 		if (!FileAccess.file_exists(filePath + "/Tiles.CSV")):
+			print("no tiles found")
 			return false;
 	return true;
 

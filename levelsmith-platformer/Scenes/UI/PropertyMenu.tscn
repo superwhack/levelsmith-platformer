@@ -12,7 +12,7 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "presetOptions", "closeButton", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerSlopeSlowdownCheckbox", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "movingPlatformDelaySlider", "movingPlatformEasingCheckbox", "movingPlatformMomentumCheckbox", "movingPlatformVisibilityCheckbox", "movingPlatformAlwaysActiveCheckbox")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "presetOptions", "closeButton", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerSlopeSlowdownCheckbox", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpStrengthSlider", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "movingPlatformDelaySlider", "movingPlatformEasingCheckbox", "movingPlatformMomentumCheckbox", "movingPlatformVisibilityCheckbox", "movingPlatformAlwaysActiveCheckbox")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -46,6 +46,7 @@ playerSlopeSlowdownCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/Play
 playerOnewaysCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerOneWays")
 playerDoubleJumpCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerDoubleJump")
 playerWallJumpCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerWallJump")
+playerWallJumpStrengthSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerWallJumpStrength")
 playerWallJumpDecayCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/PlayerProperties/PlayerWallJumpDecay")
 patrollingSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingSpeed")
 patrollingDirectionDropdown = NodePath("ScrollContainer/MainMargin/RootVBox/PatrollingMargin/PatrollingProperties/PatrollingDirection")
@@ -234,6 +235,14 @@ propertyName = "Double Jump"
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Wall Jump"
+
+[node name="PlayerWallJumpStrength" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=343078175 instance=ExtResource("2_w5eld")]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+propertyName = "Wall Jump Strength"
+propertyUnit = "Magnitude"
+minMax = Vector2(0.3, 3)
+sliderStep = 0.1
 
 [node name="PlayerWallJumpDecay" parent="ScrollContainer/MainMargin/RootVBox/PlayerProperties" unique_id=837921176 instance=ExtResource("3_1mv14")]
 layout_mode = 2

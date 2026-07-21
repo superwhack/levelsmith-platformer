@@ -161,8 +161,6 @@ func close() -> void:
 	previewManager.show();
 	cursorManager.show_selector_frame();
 	
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
@@ -404,7 +402,6 @@ func update_values() -> void:
 		selectedPreset.visible = movingPlatformVisibilityCheckbox.value;
 		selectedPreset.active = movingPlatformAlwaysActiveCheckbox.value
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
-	
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
@@ -423,8 +420,6 @@ func show_menu(resource: Resource = null) -> void:
 	previewManager.hide();
 	cursorManager.hide_selector_frame();
 	
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;

@@ -11,38 +11,16 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3obv"]
 
-[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tiles", "entities", "entityTab", "propTab", "entityPropDropdown", "firstTileButton", "secondTileButton", "thirdTileButton", "fourthTileButton", "fifthTileButton", "sixthTileButton", "seventhTileButton", "eighthTileButton", "firstEntityButton", "secondEntityButton", "thirdEntityButton", "fourthEntityButton", "fifthEntityButton", "sixthEntityButton", "seventhEntityButton", "eighthEntityButton", "firstPropButton", "secondPropButton", "thirdPropButton", "fourthPropButton", "fifthPropButton", "sixthPropButton")]
+[node name="Control" type="HBoxContainer" unique_id=959816093 node_paths=PackedStringArray("tilePanel", "entityPanel", "entityTab", "propTab", "entityPropDropdown")]
 offset_right = 669.0
 offset_bottom = 100.0
 theme_override_constants/separation = 4
 script = ExtResource("1_aauec")
-tiles = NodePath("TilePickerUI")
-entities = NodePath("EntityPickerUI")
+tilePanel = NodePath("TilePickerUI")
+entityPanel = NodePath("EntityPickerUI")
 entityTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities")
 propTab = NodePath("EntityPickerUI/MarginContainer/Tabs/Props")
 entityPropDropdown = NodePath("EntityPickerUI/MarginContainer/Tabs/EntityPropDropdown")
-firstTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SolidButton")
-secondTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/SlopeButton")
-thirdTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/OneWayButton")
-fourthTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/BounceButton")
-fifthTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/IceButton")
-sixthTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/StickyButton")
-seventhTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/HazardButton")
-eighthTileButton = NodePath("TilePickerUI/MarginContainer/Tiles/DeathButton")
-firstEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/PlayerEntityButton")
-secondEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/CoinEntityButton")
-thirdEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/PatrollingEntityButton")
-fourthEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/StationaryEntityButton")
-fifthEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/ShootingEntityButton")
-sixthEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/FlyingEntityButton")
-seventhEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/MovingPlatformButton")
-eighthEntityButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Entities/GoalEntityButton")
-firstPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropOneButton")
-secondPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropTwoButton")
-thirdPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropThreeButton")
-fourthPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFourButton")
-fifthPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropFiveButton")
-sixthPropButton = NodePath("EntityPickerUI/MarginContainer/Tabs/Props/PropSixButton")
 
 [node name="TilePickerUI" type="PanelContainer" parent="." unique_id=1112139919]
 layout_mode = 2

@@ -1,9 +1,10 @@
 extends Node
 
 # 0% - 100% volume measured in floats 
-var masterVolume : float = 0.7;
-var musicVolume : float = 0.7;
-var SFXVolume : float = 0.7;
+const VOLUME_DEFAULT : float = 0.7;
+var masterVolume : float = VOLUME_DEFAULT;
+var musicVolume : float = VOLUME_DEFAULT;
+var SFXVolume : float = VOLUME_DEFAULT;
 
 var soundLevels : Dictionary;
 
@@ -31,9 +32,10 @@ var assetManagerPlayer : AudioStreamPlayer
 
 # Preview music timer for the settings menu
 var previewMusicTimer : float = -1.0;
+const PREVIEW_MUSIC_CAP : float = 1.5;
 
 # The amount of time in seconds between each ui sound effect
-var uiEffectCooldown : float = 0.035;
+const UI_EFFECT_COOLDOWN : float = 0.035;
 
 ## Create all players and connect them properly
 func _ready() -> void:
@@ -42,6 +44,7 @@ func _ready() -> void:
 		"Tile_Place_Error": 0.3,
 	}
 	
+	# Create all players
 	musicPlayer = AudioStreamPlayer.new();
 	walkingPlayer = AudioStreamPlayer.new();
 	assetManagerPlayer = AudioStreamPlayer.new();
@@ -69,6 +72,8 @@ func _ready() -> void:
 func pause_music(pause : bool) -> void:
 	musicPlayer.stream_paused = pause;
 
+## Pause all effects
+## pause: true if the effects should be paused
 func pause_effects(pause : bool) -> void:
 	for player in inusePlayers:
 		player.stream_paused = pause;
@@ -85,7 +90,7 @@ func play_music_preview(musicName:  String) -> void:
 ## Stop playing the music
 func stop_music_preview() -> void:
 	await get_tree().process_frame;
-	if previewMusicTimer >= 1.5:
+	if previewMusicTimer >= PREVIEW_MUSIC_CAP:
 		musicPlayer.stop();
 		previewMusicTimer = -1;
 	else:
@@ -119,11 +124,10 @@ func play_UI_effect(effectName: String) -> void:
 		return;
 	# Check all players in use, if any are playing the same audio, check if the cooldown is up, return if not
 	for player in inusePlayers:
-		if (player.stream != null):
-			if (player.stream.has_meta("audioName")):
-				if (player.stream.get_meta("audioName") == effectName):
-					if (player.get_playback_position() + AudioServer.get_time_since_last_mix() <= uiEffectCooldown):
-						return;
+		if (player.stream):
+			if (player.stream.has_meta("audioName") && player.stream.get_meta("audioName") == effectName):
+				if (player.get_playback_position() + AudioServer.get_time_since_last_mix() <= UI_EFFECT_COOLDOWN):
+					return;
 	var fullPath : String = UI_AUDIO_LIBRARY_PATH + effectName;
 	if ResourceLoader.exists(fullPath + ".mp3"):
 		queue.append(fullPath + ".mp3");
@@ -179,10 +183,9 @@ func play_effect(effectName: String) -> void:
 		queue.append(BACKUP_AUDIO_LIBRARY_PATH + effectName + "/" + effectName + ".wav")
 	# Iterate through each in use audio player, if any are playing the current audio, stop the other one.
 	for player in inusePlayers:
-		if (player.stream != null):
-			if (player.stream.has_meta("audioName")):
-				if (player.stream.get_meta("audioName") == effectName):
-					player.stop();
+		if (player.stream):
+			if (player.stream.has_meta("audioName") && player.stream.get_meta("audioName") == effectName):
+				player.stop();
 
 ## Add and play a new walking effect, only one at a time
 ## effectName: name of the walking effect
@@ -253,7 +256,7 @@ func play_asset(assetName: String) -> void:
 ## If there are any current sounds in the queue and any avaliable players, start playing the sound.
 ## delta: used for tracking preview timer
 func _process(delta: float) -> void:
-	if previewMusicTimer >= 0:
+	if (previewMusicTimer >= 0):
 		previewMusicTimer += delta;
 	# If there aren't any available players, stop the longest running player early.
 	if (!queue.is_empty() && availablePlayers.is_empty()):
@@ -265,7 +268,7 @@ func _process(delta: float) -> void:
 		# If the sound level has an adjustment, apply it
 		var audioName = path.substr(path.rfind("/") + 1);
 		audioName = audioName.erase(audioName.rfind("."), 4);
-		if soundLevels.has(audioName):
+		if (soundLevels.has(audioName)):
 			availablePlayers[0].volume_db = linear_to_db(masterVolume * SFXVolume * soundLevels[audioName]);
 		if (path.begins_with("res://")):
 			availablePlayers[0].stream = load(path);
@@ -283,6 +286,9 @@ func _process(delta: float) -> void:
 		inusePlayers.append(availablePlayers[0]);
 		availablePlayers.pop_front();
 
+## Search for the audio within a given folder and return a new stream to play it
+## folderPath: the path for the audio source
+## returns: a new audiostream to play the sound
 func find_audio_in_folder(folderPath : String) -> AudioStream:
 # Opens the folder at the given folderName path
 	var dir : DirAccess = DirAccess.open(folderPath);
@@ -297,7 +303,6 @@ func find_audio_in_folder(folderPath : String) -> AudioStream:
 			return null;
 		else:
 			var audio : AudioStream;
-			
 			if (audioName.get_extension().to_lower() == "mp3"):
 				audio = AudioStreamMP3.new();
 				audio = AudioStreamMP3.load_from_file(folderPath + "/" + audioName);
@@ -315,4 +320,3 @@ func find_audio_in_folder(folderPath : String) -> AudioStream:
 	else:
 		PopUpManager.create_error_popup("Could not open file path", "Could not open file at " + folderPath + ".");
 		return null;
-#func find_effect_name(path: String) -> String:

@@ -701,13 +701,13 @@ func show_credits_screen(show : bool = true) -> void:
 ## Extracts files from a given zip file to the user level directory.
 ## zipPath: the path of the zip file being extracted
 func extract_all_from_zip(zipPath: String, destination: String):
-	var reader = ZIPReader.new();
+	var reader : ZIPReader = ZIPReader.new();
 	reader.open(zipPath);
 	
 	var rootDir = DirAccess.open("user://Levels");
 
 	for filePath in reader.get_files():
-		var fullPath := destination.path_join(filePath);
+		var fullPath : String = destination.path_join(filePath);
 
 		if filePath.ends_with("/"):
 			DirAccess.make_dir_recursive_absolute(fullPath);
@@ -715,7 +715,7 @@ func extract_all_from_zip(zipPath: String, destination: String):
 
 		DirAccess.make_dir_recursive_absolute(fullPath.get_base_dir());
 
-		var file := FileAccess.open(fullPath, FileAccess.WRITE);
+		var file : FileAccess = FileAccess.open(fullPath, FileAccess.WRITE);
 		file.store_buffer(reader.read_file(filePath));
 			
 	reader.close();

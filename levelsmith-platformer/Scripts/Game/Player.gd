@@ -29,17 +29,18 @@ var stateTimer : float = 1.2;
 var stateTimeLeft : float = stateTimer;
 
 # The player settings that can be changed in editor
-@export var groundSpeed : float = 1.0;
-@export var baseAcceleration : float = 1.0;
-@export var baseDeceleration : float = 1.0;
-@export var jumpHeight : float = 2.0;
-@export var doubleJump : bool = false;
+var groundSpeed : float = 1.0;
+var baseAcceleration : float = 1.0;
+var baseDeceleration : float = 1.0;
+var jumpHeight : float = 2.0;
+var doubleJump : bool = false;
 var doubleJumpAvailable : bool = doubleJump;
 
 # If the player can drop through oneways
-@export var oneways : bool = true;
+var oneways : bool = true;
 
-@export var wallJump : bool = false;
+# Wall jumping variables, only matter if wallJump is true
+var wallJump : bool = false;
 var wallJumpCount : int = 0;
 var wallJumpDirection : WallDirection = WallDirection.NONE;
 var justWallJumped = false;
@@ -50,20 +51,20 @@ var wallSlideConditionsMet : bool = false;
 
 # Friction in midair
 # BUG: Air Control doesn't work the frame you land on a bouncy tile, allowing you to change direction beofre bouncing back up
-@export var airControl : float = 1.0;
-@export var fallSpeed : float = 1.0;
+var airControl : float = 1.0;
+var fallSpeed : float = 1.0;
 
 # Determines how long after leaving a platform you can still jump
-@export var coyoteTime : float = 0.2;
+var coyoteTime : float = 0.2;
 
-@export var iceSpeedCap : int = 10;
+var iceSpeedCap : int = 10;
 
 var coyoteTimeLeft : float = 0;
 var isCoyoteActive : bool = false;
 
 # TODO: Make FPS dependant on a global FPS initailly instead of being set to 24
 # TODO: Impliment animations and use this
-@export var FPS : int = 24;
+var FPS : int = 24;
 
 var spawnpoint : Vector2 = Vector2(0, 0);
 var currentWalkingEffect : Global.WalkingEffect;
@@ -101,15 +102,14 @@ var direction : float;
 # Speed with constant multiplier and slowdown appended in
 var trueSpeed : float;
 
+# Tile effects (bounceTileHeight and iceFriction can be changed once tileProperties exist)
 var bounceTileHeight : float = 1.0;
 var iceFriction : float = 0.5;
-
 var iceAccelerationFactor : float = .2;
 
 var isPlayerGrounded : bool = true;
 
 # The selected movement preset
-# TODO: Make it so that it selects the DefaultMovement preset automatically 
 @export var playerMovementPreset : PlayerMovementPreset;
 
 # Enemy collision hitboxes for hooking signals
@@ -118,6 +118,7 @@ var isPlayerGrounded : bool = true;
 
 var enemiesInside : Array[Node2D];
 
+# Animation logic
 @export var animatedSprites : AnimatedSprite2D;
 @onready var jumpTimer : Timer = Timer.new();
 var isJumping : bool = false;
@@ -577,11 +578,11 @@ func detect_enemies(body: Node2D) -> void:
 	await get_tree().process_frame;
 	
 	if (body && body.is_in_group("enemy")):
-		var direction : Vector2 = position - body.position;
+		var enemyDirection : Vector2 = position - body.position;
 		if enemiesInside.find(body) == -1:
 			enemiesInside.append(body);
 		# Hurt Player
-		set_state( PlayerState.HURT, take_damage.bind( 1, direction.normalized()) );
+		set_state( PlayerState.HURT, take_damage.bind( 1, enemyDirection.normalized()) );
 
 ## Detect collisions between enemies and the bounce area
 ## body: the body being collided with
@@ -601,10 +602,10 @@ func detect_projectiles(area: Area2D) -> void:
 	# Wait one frame to see if the projectile has been bounced on
 	await get_tree().process_frame;
 	if (area && area.is_in_group("Projectile")):
-		var direction : Vector2 = position - area.position;
+		var projectileDirection : Vector2 = position - area.position;
 		
 		# Hurt Player
-		set_state( PlayerState.HURT, take_damage.bind(1, direction.normalized()) );
+		set_state( PlayerState.HURT, take_damage.bind(1, projectileDirection.normalized()) );
 		#else : set_state( PlayerState.DEAD );
 		area.queue_free();
 
@@ -615,9 +616,9 @@ func detect_projectile_bounce(area: Area2D) -> void:
 		if area.bounceable:
 			set_state( PlayerState.BOUNCING );
 		else:
-			var direction : Vector2 = position - area.position;
+			var projectileDirection : Vector2 = position - area.position;
 			# Hurt Player
-			set_state( PlayerState.HURT, take_damage.bind(1, direction.normalized()) );
+			set_state( PlayerState.HURT, take_damage.bind(1, projectileDirection.normalized()) );
 			#else : set_state( PlayerState.DEAD );
 		area.queue_free();
 
@@ -815,16 +816,16 @@ func detect_tiles() -> void:
 					#currentState = PlayerState.GROUNDED
 				currentSlowdown = .5;
 		elif tileName == "hazard":
-			var direction : Vector2 = -raycast.target_position;
+			var hazardDirection : Vector2 = -raycast.target_position;
 			# Hurt Player
 			if ( currentState != PlayerState.HURT && currentState != PlayerState.DEAD ) :
 				if (rayDirection.x < 0) :
 					velocity.x = 4500;
 				if (rayDirection.x > 0) :
 					velocity.x = -4500;
-				set_state( PlayerState.HURT, take_damage.bind(1, direction.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"), true) );
+				set_state( PlayerState.HURT, take_damage.bind(1, hazardDirection.normalized(), downwardsRaycasts.has(raycast) && Input.is_action_pressed("jump"), true) );
 
-		elif tileName == "death":	
+		elif tileName == "death":
 			# Kill Player
 			if ( currentState != PlayerState.DEAD ) :
 				set_state( PlayerState.DEAD );

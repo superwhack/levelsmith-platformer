@@ -43,6 +43,7 @@ var doubleJumpAvailable : bool = doubleJump;
 var wallJumpCount : int = 0;
 var wallJumpDirection : WallDirection = WallDirection.NONE;
 var justWallJumped = false;
+var wallJumpStrength := 1.0;
 var wallJumpDecay = false;
 
 var wallJumpConditionsMet : bool = false;
@@ -697,9 +698,9 @@ func wall_jump() :
 		wallJumpCount = 1;
 	
 	if ( wallJumpDirection == WallDirection.RIGHT ) :
-		velocity.x = 800 * pow(groundSpeed, .8);
+		velocity.x = 800 * pow(groundSpeed, .8) * wallJumpStrength;
 	else :
-		velocity.x = -800 * pow(groundSpeed, .8);
+		velocity.x = -800 * pow(groundSpeed, .8) * wallJumpStrength;
 	velocity.y = -375 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(min(groundSpeed, 1), .35);
 	justWallJumped = true;	
 
@@ -887,4 +888,5 @@ func apply_preset(preset: PlayerMovementPreset) -> void:
 	oneways = preset.oneways;
 	doubleJump = preset.doubleJump;
 	wallJump = preset.wallJump;
+	wallJumpStrength = preset.wallJumpStrength;
 	wallJumpDecay = preset.wallJumpDecay;

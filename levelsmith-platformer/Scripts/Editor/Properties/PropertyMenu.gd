@@ -42,6 +42,7 @@ var playerSlopeSlowdown : bool;
 var playerOneways : bool;
 var playerDoubleJump : bool;
 var playerWallJump : bool;
+var playerWallJumpStrength : float;
 var playerWallJumpDecay : bool;
 
 @export_group("Player Properties")
@@ -58,6 +59,7 @@ var playerWallJumpDecay : bool;
 @export var playerOnewaysCheckbox : VBoxContainer;
 @export var playerDoubleJumpCheckbox: VBoxContainer;
 @export var playerWallJumpCheckbox: VBoxContainer;
+@export var playerWallJumpStrengthSlider: VBoxContainer;
 @export var playerWallJumpDecayCheckbox : VBoxContainer;
 
 @export_group("Patrolling Properties")
@@ -118,6 +120,7 @@ func _ready() -> void:
 	playerSlopeSlowdownCheckbox.check_changed.connect(_on_drag_ended);
 	playerDoubleJumpCheckbox.check_changed.connect(_on_drag_ended);
 	playerWallJumpCheckbox.check_changed.connect(_on_drag_ended);
+	playerWallJumpStrengthSlider.drag_ended.connect(_on_drag_ended);
 	playerWallJumpDecayCheckbox.check_changed.connect(_on_drag_ended);
 	presetOptions.item_selected.connect(_on_preset_options_item_selected);
 	
@@ -215,6 +218,7 @@ func _on_preset_options_item_selected(index: int) -> void:
 	playerOneways = selectedPlayerPreset.oneways;
 	playerDoubleJump = selectedPlayerPreset.doubleJump;
 	playerWallJump = selectedPlayerPreset.wallJump;
+	playerWallJumpStrength = selectedPlayerPreset.wallJumpStrength;
 	playerWallJumpDecay = selectedPlayerPreset.wallJumpDecay;
 	update_sliders();
 
@@ -239,8 +243,9 @@ func update_custom() -> void:
 	customPreset.coyoteTime = playerCoyoteTime;
 	customPreset.slopeSlowdown = playerSlopeSlowdown;
 	customPreset.oneways = playerOneways;
-	customPreset.doubleJump = playerDoubleJump;	
+	customPreset.doubleJump = playerDoubleJump;
 	customPreset.wallJump = playerWallJump;
+	customPreset.wallJumpStrength = playerWallJumpStrength;
 	customPreset.wallJumpDecay = playerWallJumpDecay;
 	ResourceSaver.save(customPreset, "user://Resources/Custom.tres");
 	
@@ -278,7 +283,11 @@ func update_sliders() -> void:
 	# Make the WallJumpDecay Checkbox transparent if it can't be selected.
 	if !playerWallJump:
 		playerWallJumpDecay = false;
+		playerWallJumpStrength = 1.0;
 	make_selectable(playerWallJumpDecayCheckbox, playerWallJump);
+	make_selectable(playerWallJumpStrengthSlider, playerWallJump);
+	playerWallJumpStrengthSlider.value = playerWallJumpStrength;
+	playerWallJumpStrengthSlider.update_slider();
 	playerWallJumpDecayCheckbox.value = playerWallJumpDecay;
 	playerWallJumpDecayCheckbox.update_checkbox();
 	# Enemies
@@ -359,6 +368,7 @@ func update_values() -> void:
 	playerOneways = playerOnewaysCheckbox.value;
 	playerDoubleJump = playerDoubleJumpCheckbox.value;
 	playerWallJump = playerWallJumpCheckbox.value;
+	playerWallJumpStrength = playerWallJumpStrengthSlider.value;
 	playerWallJumpDecay = playerWallJumpDecayCheckbox.value;
 	
 	if selectedEntity is EnemyPatrol:

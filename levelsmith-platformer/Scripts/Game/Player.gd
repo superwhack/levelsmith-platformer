@@ -129,6 +129,39 @@ var victory : bool = false;
 
 var debugLabel: Label;
 
+# CONSTANTS
+
+const TRUE_SPEED_BASE : int = 400;
+# What point falling begins
+const FALLING_POINT : float = 0.5;
+const JUMP_BASE_HEIGHT : int = 496;
+
+# Movement with Acc/Dec
+const FRICTION_ACC_DEC_MAXIMUM : float = 1.25;
+const DECELERATION_EXPONENT : int = 5;
+const ACCELERATION_EXPONENT : int = 2;
+# Clamping acceleration
+const ACCELERATION_NO_FRICTION_CLAMPER : float = .5;
+const ACCELERATION_FRICTION_CLAMPER : float = .75;
+
+# Wall jump forces
+const WALL_JUMP_FORCE_X : int = 1200;
+const WALL_JUMP_FORCE_Y : int = 375;
+const WALL_JUMP_GROUND_MIN : float = 1.5;
+const WALL_JUMP_SPEED_EXPONENT_X : float = 0.8;
+const WALL_JUMP_SPEED_EXPONENT_Y : float = 0.35;
+const WALL_JUMP_Y_GROUND_MIN : float = 0.3;
+const WALL_JUMP_Y_GROUND_MAX : float = 1.0;
+
+# Tile Bases
+const SLOW_ICE_SLIDE_JUMP_X : float = 1.5;
+const BOUNCE_BASE_X : int = 3000;
+const BOUNCE_BASE_Y : int = 1000;
+const BOUNCE_BASE_Y_SIDE : int = 500;
+const WALL_SLIDE_SLOWDOWN : float = 0.94;
+const SLIME_NOISE_THRESHOLD : float = 2.5;
+const HORIZONTAL_STICK_FACTOR : float = 0.90;
+
 ## Runs once on instantiation
 func _ready() -> void:
 	enemyBounceCollision.body_entered.connect(detect_enemy_bounce);
@@ -175,7 +208,7 @@ func _physics_process(delta: float) -> void:
 	if (invulnerabilityCurrent > 0):
 		invulnerabilityCurrent -= delta;
 	
-	trueSpeed = max(0.01, groundSpeed) * 400 * currentSlowdown;
+	trueSpeed = groundSpeed * TRUE_SPEED_BASE * currentSlowdown;
 	isPlayerGrounded = is_on_floor();
 	
 	# Coyote time logic
@@ -213,6 +246,7 @@ func _physics_process(delta: float) -> void:
 	#
 	#debugLabel.position = Vector2( position.x - 180, position.y - 180 );
 	#debugLabel.text = debugText;
+
 
 ## Handle all state switch & player logic 
 ## delta: How much time has passed
@@ -259,7 +293,7 @@ func apply_state_logic(delta: float) :
 					set_state(PlayerState.RUNNING);
 			elif (wallSlideConditionsMet):
 				set_state(PlayerState.SLIDING);
-			elif (velocity.y > 0.5):
+			elif (velocity.y > FALLING_POINT):
 				set_state(PlayerState.FALLING);
 			elif (jumpInput):
 				if (wallJumpConditionsMet): 
@@ -284,7 +318,7 @@ func apply_state_logic(delta: float) :
 					set_state(PlayerState.RUNNING);
 			elif (wallSlideConditionsMet && !justWallJumped):
 				set_state(PlayerState.SLIDING);
-			elif (velocity.y > 0.5):
+			elif (velocity.y > FALLING_POINT):
 				set_state(PlayerState.FALLING);
 			elif (jumpInput && !justWallJumped):
 				if (wallJumpConditionsMet): 
@@ -445,7 +479,7 @@ func on_animation_finished() -> void:
 ## Make the player jump
 func jump() -> void:
 	isPlayerGrounded = false;
-	velocity.y = -sqrt(jumpHeight) * 496 * currentSlowdown * sqrt(fallSpeed);
+	velocity.y = -sqrt(jumpHeight) * JUMP_BASE_HEIGHT * currentSlowdown * sqrt(fallSpeed);
 
 ## Handle left and right movement logic, with the inclusion of if there is no input
 func walk() -> void:
@@ -461,21 +495,21 @@ func walk() -> void:
 		accelerationX = direction * trueSpeed;
 		# Acceleration if moving in direction of current movement
 		if (baseAcceleration != 1.0 && (sign(velocity.x) == sign(direction) || velocity.x == 0)):
-			accelerationX = direction * pow(abs(accelerationX), pow(baseAcceleration, 2));
-			if (baseAcceleration + currentFriction < 1.25):
-				currentFriction = 1.25 - baseAcceleration
+			accelerationX = direction * pow(abs(accelerationX), pow(baseAcceleration, ACCELERATION_EXPONENT));
+			if (baseAcceleration + currentFriction < FRICTION_ACC_DEC_MAXIMUM):
+				currentFriction = FRICTION_ACC_DEC_MAXIMUM - baseAcceleration
 		# Deceleration if moving in opposite direction
 		elif (baseDeceleration != 1.0 && sign(velocity.x) != sign(direction)):
-			if (baseDeceleration + currentFriction < 1.25):
-				currentFriction = 1.25 - baseDeceleration
-			accelerationX *= pow(baseDeceleration, 5);
+			if (baseDeceleration + currentFriction < FRICTION_ACC_DEC_MAXIMUM):
+				currentFriction = FRICTION_ACC_DEC_MAXIMUM - baseDeceleration
+			accelerationX *= pow(baseDeceleration, DECELERATION_EXPONENT);
 	# Acceleration
 	else:
 		currentWalkingEffect = Global.WalkingEffect.NONE;
 		if (currentFriction != 1.0):
-			accelerationX = clamp(-velocity.x, -trueSpeed * .5, trueSpeed * .5);
+			accelerationX = clamp(-velocity.x, -trueSpeed * ACCELERATION_NO_FRICTION_CLAMPER, trueSpeed * ACCELERATION_NO_FRICTION_CLAMPER);
 		else:
-			accelerationX = clamp(-velocity.x, -max(trueSpeed, 400) * .75, max(trueSpeed, 400) * .75);
+			accelerationX = clamp(-velocity.x, -max(trueSpeed, TRUE_SPEED_BASE) * ACCELERATION_FRICTION_CLAMPER, max(trueSpeed, TRUE_SPEED_BASE) * ACCELERATION_FRICTION_CLAMPER);
 		# Deceleration if not moving
 		if (baseDeceleration != 1.0):
 			accelerationX *= pow(baseDeceleration, 5);
@@ -670,12 +704,11 @@ func wall_jump():
 	wallJumpCount += 1;
 	if !(wallJumpDecay):
 		wallJumpCount = 1;
-	
 	if (wallJumpDirection == WallDirection.RIGHT):
-		velocity.x = 1200 * pow(max(groundSpeed, 1.5), .8) * wallJumpStrength;
+		velocity.x = WALL_JUMP_FORCE_X * pow(max(groundSpeed, WALL_JUMP_GROUND_MIN), WALL_JUMP_SPEED_EXPONENT_X) * wallJumpStrength;
 	else:
-		velocity.x = -1200 * pow(max(groundSpeed, 1.5), .8) * wallJumpStrength;
-	velocity.y = -375 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(clamp(groundSpeed, .3, 1), .35);
+		velocity.x = -WALL_JUMP_FORCE_X * pow(max(groundSpeed, WALL_JUMP_GROUND_MIN), WALL_JUMP_SPEED_EXPONENT_X) * wallJumpStrength;
+	velocity.y = -WALL_JUMP_FORCE_Y * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(clamp(groundSpeed, WALL_JUMP_Y_GROUND_MIN, WALL_JUMP_Y_GROUND_MAX), WALL_JUMP_SPEED_EXPONENT_Y);
 	justWallJumped = true;
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
@@ -718,11 +751,10 @@ func detect_tiles() -> void:
 		slideCollisionsHit.push_back(tileData);
 		var tileName : String = tileData.get_custom_data("name");
 		var rayDirection : Vector2 = raycast.target_position;
-		
 			# Wall Slide when not on ice
 		if (wallSlideConditionsMet):
 			if (tileName != "ice"):
-				velocity.y *= .94;
+				velocity.y *= WALL_SLIDE_SLOWDOWN;
 			if (tileName != "slow"):
 				currentSlowdown = 1.0;
 		
@@ -732,29 +764,28 @@ func detect_tiles() -> void:
 			# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)
 			if (tileName == "slow" || tileName == "ice"):
 				velocity.x /= 1.5;
-
 		# Bounce tile collisions
 		if (tileName == "bounce"):
 			isPlayerGrounded = false;
 			wallJumpCount = 0;
 			currentSlowdown = 1.0;
-			set_state( PlayerState.TILE_EFFECT_BOUNCE );
+			set_state(PlayerState.TILE_EFFECT_BOUNCE);
 			# Horizontal bounces
 			if (abs(rayDirection.x) > abs(rayDirection.y)):
 				if (rayDirection.x < 0):
-					velocity.x = 3000 * bounceTileHeight;
+					velocity.x = BOUNCE_BASE_X * bounceTileHeight;
 				else:
-					velocity.x = -3000 * bounceTileHeight;
+					velocity.x = -BOUNCE_BASE_X * bounceTileHeight;
 				if (jumpInput) :
-					velocity.y = -500 * bounceTileHeight;
+					velocity.y = -BOUNCE_BASE_Y_SIDE * bounceTileHeight;
 			# Vertical bounces
 			else:
 				if (rayDirection.y < 0):
-					velocity.y = 1000 * bounceTileHeight;
+					velocity.y = BOUNCE_BASE_Y * bounceTileHeight;
 				else:
 					doubleJumpAvailable = doubleJump;
 					coyoteTimeLeft = 0.0;
-					velocity.y = -1000 * sqrt(fallSpeed) * bounceTileHeight;
+					velocity.y = -BOUNCE_BASE_Y * sqrt(fallSpeed) * bounceTileHeight;
 					if (velocity.x > 0 && leftInput):
 						velocity.x /= 2;
 					elif (velocity.x < 0 && rightInput):
@@ -762,14 +793,13 @@ func detect_tiles() -> void:
 			
 		# Sticky Tiles
 		elif (tileData && (tileData.get_custom_data("name") == "slow")):
-			var slimeNoiseThreshold : float = 2.5;
-			if ((rayDirection.y > 0 && abs(get_real_velocity().x) > slimeNoiseThreshold) || wallSlideConditionsMet):
+			if ((rayDirection.y > 0 && abs(get_real_velocity().x) > SLIME_NOISE_THRESHOLD) || wallSlideConditionsMet):
 				currentWalkingEffect = Global.WalkingEffect.SLIME;
 				currentFriction = 1;
 		
 			# Horizontal Stick
 			if (abs(raycast.target_position.x) > abs(raycast.target_position.y)):
-				velocity.y *= .9;
+				velocity.y *= HORIZONTAL_STICK_FACTOR;
 			# Vertical Stick
 			## NOTE: Uncomment this to turn on the ability for the player to 'climb' on the bottom of sticky tiles
 			else:

@@ -85,11 +85,12 @@ func _text_change_ended() -> void:
 	adjust_label();
 	drag_ended.emit();
 
+const MAX_LENGTH : int = 4;
 ## Validate the length of the current string
 func _validate_length() -> void:
-	if (textField.has_focus() && textField.text.length() > 4):
-		textField.text = textField.text.substr(0, 4);
-		textField.set_caret_column(4);
+	if (textField.has_focus() && textField.text.length() > MAX_LENGTH):
+		textField.text = textField.text.substr(0, MAX_LENGTH);
+		textField.set_caret_column(MAX_LENGTH);
 
 ## Update the slider value
 func update_slider() -> void:

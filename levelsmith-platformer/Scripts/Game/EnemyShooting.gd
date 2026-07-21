@@ -71,7 +71,7 @@ func _physics_process(delta: float) -> void:
 
 ## Adjust the direction of the indicator arrow
 ## angle: the angle that the arrow should be pointing at.
-## random: if true, display the ? instead	
+## random: if true, display the ? instead
 func adjust_arrow(angle: float = fireDirection, random: bool = randomDirection) -> void:
 	if random:
 		questionMark.show();

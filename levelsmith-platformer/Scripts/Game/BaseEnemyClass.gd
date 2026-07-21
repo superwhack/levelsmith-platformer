@@ -41,6 +41,11 @@ func _physics_process(delta: float) -> void:
 	# Apply gravity every frame based on time passed since last frame
 	apply_gravity(delta)
 
+const BOUNCE_VEL_HORIZONTAL : int = 500;
+const BOUNCE_VEL_VERTICAL : int = 1000;
+const BOUNCE_DECAY_RATE : float = 0.97;
+const BOUNCE_BASE_BOOST : int = 600;
+
 ## Run tile detection with two or four raycasts on the enemy
 ## horizontal: True if horizontal (left and right) raycasts should be run
 func detect_tiles(horizontal : bool) -> void:
@@ -54,31 +59,31 @@ func detect_tiles(horizontal : bool) -> void:
 			var raycastTileData : TileData = raycastHelper.get_collision_data(rightRaycast);
 			if (raycastTileData && raycastTileData.get_custom_data("name") == "bounce"):
 				bounceMovementBoost = 2 * raycastTileData.get_custom_data("bounce");
-				velocity.y += -500 * raycastTileData.get_custom_data("bounce");
+				velocity.y += -BOUNCE_VEL_HORIZONTAL * raycastTileData.get_custom_data("bounce");
 		if (leftRaycast.is_colliding()):
 			direction = 1;
 			var raycastTileData : TileData = raycastHelper.get_collision_data(leftRaycast);
 			if (raycastTileData && raycastTileData.get_custom_data("name") == "bounce"):
 				bounceMovementBoost = 2 * raycastTileData.get_custom_data("bounce");
-				velocity.y += -500 * raycastTileData.get_custom_data("bounce");
+				velocity.y += -BOUNCE_VEL_HORIZONTAL * raycastTileData.get_custom_data("bounce");
 	
 	# -- Vertical raycasts -- #
 	if (downRaycast.is_colliding()):
 		var raycastTileData : TileData = raycastHelper.get_collision_data(downRaycast);
 		if (raycastTileData):
 			if (raycastTileData.get_custom_data("name") == "bounce"):
-				velocity.y = -1000 * raycastTileData.get_custom_data("bounce");
+				velocity.y = -BOUNCE_VEL_VERTICAL * raycastTileData.get_custom_data("bounce");
 			elif (raycastTileData.get_custom_data("name") == "slow"):
 				velocity.x /= 2;
 	if (upRaycast.is_colliding()):
 		var raycastTileData : TileData = raycastHelper.get_collision_data(upRaycast);
 		if (raycastTileData && raycastTileData.get_custom_data("name") == "bounce"):
-			velocity.y = 1000 * raycastTileData.get_custom_data("bounce");
+			velocity.y = BOUNCE_VEL_VERTICAL * raycastTileData.get_custom_data("bounce");
 	
 	# Decay the movement speed boost from bouncing on the side of a bounce tile
 	if (bounceMovementBoost > 1.0):
-		bounceMovementBoost = pow(bounceMovementBoost, .97);
-		bounceSpeedBoost = 600 * (bounceMovementBoost - 1.0);
+		bounceMovementBoost = pow(bounceMovementBoost, BOUNCE_DECAY_RATE);
+		bounceSpeedBoost = BOUNCE_BASE_BOOST * (bounceMovementBoost - 1.0);
 	velocity.x += bounceSpeedBoost * direction;
 
 ## Adds gravity

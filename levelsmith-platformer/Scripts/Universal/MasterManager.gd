@@ -163,6 +163,7 @@ func create_bedrock_border() -> void:
 ## Imports a level 
 ## startPlay: Starts the level in play mode
 func import_level_and_edit(startPlay: bool = false) -> void:
+	ImportExportManager.validate_import(loadedLevelPath);
 	ImportExportManager.clear_enemies_folder();
 	for childNode in editorManager.tileMap.get_children():
 		childNode.free();
@@ -185,6 +186,7 @@ func import_level_and_edit(startPlay: bool = false) -> void:
 ## startPlay: Starts the level in play mode
 func load_level(levelPath: String, startPlay: bool = false) -> void:
 	if (ImportExportManager.validate_import(levelPath)):
+		print("Settings level path...", levelPath)
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
 		# Await so that the camera gets properly placed

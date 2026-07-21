@@ -106,6 +106,8 @@ func _ready() -> void:
 		buttonQuit.hide();
 		exportLevelButton.pressed.connect(export_current_level);
 		add_child(webPopUp.instantiate());
+	else:
+		get_window().files_dropped.connect(_on_files_dropped)
 	
 	buttonNewLevel.grab_focus();
 	
@@ -152,7 +154,9 @@ func _ready() -> void:
 		fieldImportLevelPath.text = directory + "/";
 	
 	fileExplorer.file_selected.connect(set_directory);
-
+	fileExplorer.dir_selected.connect(set_directory);
+	
+	
 ## Functions that just make a menu appear/dissapear, used to attach the sound effects
 func overlay_new_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
@@ -185,8 +189,7 @@ func overlay_duplicate_level_hide() -> void:
 func import_level() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	
-	var importPath : String = fieldImportLevelPath.text.rstrip("/");
-
+	var importPath : String = fieldImportLevelPath.text;
 	var sourceDirectory : String = importPath;
 	
 	if importPath.to_lower().ends_with(".zip"):
@@ -201,20 +204,24 @@ func import_level() -> void:
 			remove_recursively(tempDirectory);
 
 		DirAccess.make_dir_absolute(tempDirectory);
-
 		extract_all_from_zip(importPath, tempDirectory);
 
-		sourceDirectory = tempDirectory.rstrip("/");
+		var extractedFolders : PackedStringArray = DirAccess.get_directories_at(tempDirectory);
+		
+		if (extractedFolders.size() != 1):
+			badImportWarning.show();
+			badImportBody.text = "Invalid level zip: missing root folder!";
+			return;
 
+		sourceDirectory = tempDirectory.path_join(extractedFolders[0]) + "/";
 	
-	
-	if (!ImportExportManager.validate_import(fieldImportLevelPath.text)): 
+	if (!ImportExportManager.validate_import(sourceDirectory)): 
 		badImportWarning.show();
-		badImportBody.text = "Level Import Failed from directory \"" + fieldImportLevelPath.text + "\"!";
+		badImportBody.text = "Level Import Failed from directory \"" + sourceDirectory + "\"!";
 		return;
 	
 	# Extract the name of the folder from the file path
-	var importedLevelArray : Array = fieldImportLevelPath.text.rstrip("/").split("/");
+	var importedLevelArray : Array = sourceDirectory.rstrip("/").split("/");
 	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
 	var duplicateCounter : int = 0;
 	for folderName in DirAccess.get_directories_at("user://Levels"):
@@ -223,21 +230,28 @@ func import_level() -> void:
 	if (duplicateCounter > 0):
 		importedLevelName = str(importedLevelName, "(", duplicateCounter, ")");
 	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
-	masterManager.loadedLevelPath = fieldImportLevelPath.text;
+	masterManager.loadedLevelPath = sourceDirectory;
 
 	if (!DirAccess.dir_exists_absolute(importDirectory)):
 		DirAccess.make_dir_absolute(importDirectory);
-		ImportExportManager.clone_data(fieldImportLevelPath.text + "/", importDirectory);
+		ImportExportManager.clone_data(sourceDirectory + "/", importDirectory);
+	
+	
+	masterManager.loadedLevelPath = importDirectory;
 	masterManager.import_level_and_edit();
 	
 	# Resets the ui overlay
 	fieldImportLevelPath.clear();
 	overlayImportLevel.hide();
-	pass;
+	
+	# Remove temp folder if it exists
+	if (DirAccess.dir_exists_absolute("user://TempLevelImport/")):
+		remove_recursively("user://TempLevelImport/");
 
 ## Called when import level is closed
 func import_cancel() -> void:
 	AudioManager.play_UI_effect("UISelection");
+	fieldImportLevelPath.clear();
 	overlayImportLevel.hide();
 	
 ## Exports the currently selected level.
@@ -269,7 +283,9 @@ func export_current_level() -> void:
 	JavaScriptBridge.download_buffer(zipData, levelName + ".zip");
 	
 	DirAccess.remove_absolute(zipPath);
-	remove_recursively(tempPath);
+
+	if (DirAccess.dir_exists_absolute("user://temp/")):
+		remove_recursively("user://temp/");
 	
 ## When an export directory is selected, clone all data to given directory.
 ## zip: The ZIPPacker we use to create the zip.
@@ -814,7 +830,7 @@ func validate_level_zip(zipPath: String) -> bool:
 		return false;
 
 	var files = reader.get_files();
-
+	
 	var hasSettings : bool = false;
 	var hasTiles : bool = false;
 	
@@ -826,3 +842,20 @@ func validate_level_zip(zipPath: String) -> bool:
 			hasTiles = true;
 	reader.close();
 	return hasSettings && hasTiles;
+	
+	
+## Opens the import menu with the file path filled out for importing zip level.
+## files: An array of dropped files.
+func _on_files_dropped(files: PackedStringArray) -> void:
+	if (!self.visible):
+		return;
+		
+	if (files.size() != 1):
+		return;
+	
+	# Get the first (and only) file
+	var droppedFile : String = files[0];
+
+	if (droppedFile.to_lower().ends_with(".zip")):
+		fieldImportLevelPath.text = droppedFile;
+		import_level();

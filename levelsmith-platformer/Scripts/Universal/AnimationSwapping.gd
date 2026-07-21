@@ -2,8 +2,10 @@ extends Node
 
 # Reference to the asset manager
 @export var assetManager : AssetManager;
+
 # The current entity type selected
 var selectedEntityType : String;
+
 # The Texture that will be replacing the texture with the preview name
 var animationPreviewToReplace : Texture2D;
 var animationPreviewNameToReplace : String;
@@ -13,6 +15,7 @@ var currentAnimationIndex : int = 0;
 var animationFrameIndex : int = 0;
 # The animation currently loaded into an array for quick switching
 var currentLoadedAnimation : Array[Texture2D];
+
 # References to nodes for displaying the animation preview
 @export var animationPreview : Panel;
 @export var animationPreviewTexture : TextureRect;
@@ -27,9 +30,10 @@ var currentLoadedAnimation : Array[Texture2D];
 @export var pauseButton : Button;
 @export var stopButton : Button;
 @export var FPSSpinbox : SpinBox;
+
 # Information about played animation
 var playingAnimation : bool;
-var FPS : float = 12;
+var fps : float = 12;
 var animTimer : float = 0;
 # All types of entities
 var animatedEntityTypes : Array[String] = ["Player", "StationaryEnemy", "ShootingEnemy", "PatrollingEnemy", "FlyingEnemy"];
@@ -55,15 +59,18 @@ func _ready() -> void:
 	stopButton.pressed.connect(stop_preview_animation);
 	FPSSpinbox.value_changed.connect(fps_updated);
 
-## Play the animation
+## Play the animation if enabled
+## delta: time passed since previous frame
 func _process(delta: float) -> void:
 	# Play the animation
 	if (playingAnimation):
 		animTimer += delta;
-		if (animTimer >= 1/FPS):
+		if (animTimer >= 1 / fps):
 			frame_change();
 			animTimer = 0;
-			
+
+## Handles hotkeys for controlling the animation viewer
+## event: The key being pressed
 func _input( event: InputEvent ) -> void:
 	# Hotkeys
 	if ( event.is_action_pressed( "up" ) ):
@@ -105,13 +112,12 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 		# NOTE: Could be made to more efficient.
 		assetManager.create_file_tree();
 		return [];
-	return [];
 
 ## Replaces the currently previewed animation with one chosen via file dialog.
 ## newAnimationPath: The path to the folder selected
 func replace_animation(newAnimationPath : String) -> void:
 	var targetFilePath : String = FileSearch.find_directory_by_name(animationPreviewNameToReplace);
-	var targetDirectory : DirAccess = assetManager.clear_files(animationPreviewNameToReplace);
+	assetManager.clear_files(animationPreviewNameToReplace);
 	# Count for which file is being iterated at for naming purposes
 	var fileCount : int = 0;
 	# Loop through every file at the path
@@ -142,6 +148,7 @@ func replace_animation(newAnimationPath : String) -> void:
 	else:
 		PopUpManager.create_error_popup("No Defaults", "No default images yet, update this when there are default animations");
 
+## Resets the currently visible animation to its default.
 func reset_animation() -> void:
 	assetManager.clear_files(animationPreviewNameToReplace);
 	animationFrameIndex = 0;
@@ -234,6 +241,6 @@ func stop_preview_animation() -> void:
 
 ## Update the FPS
 func fps_updated(value: float, changeTemplate : bool = false) -> void:
-	FPS = value;
+	fps = value;
 	if (changeTemplate):
 		AnimationManager.update_animation_fps(animationPreviewNameToReplace, value);

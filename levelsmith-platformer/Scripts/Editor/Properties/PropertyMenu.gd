@@ -258,43 +258,42 @@ func update_custom() -> void:
 ## Update all sliders according to the values
 func update_sliders() -> void:
 	# Player stats
-	if selectedEntity is Player:
-		playerHealthSlider.value = playerHealth;
-		playerHealthSlider.update_slider();
-		playerSpeedSlider.value = playerSpeed;
-		playerSpeedSlider.update_slider();
-		playerAccelerationSlider.value = playerAcceleration;
-		playerAccelerationSlider.update_slider();
-		playerDecelerationSlider.value = playerDeceleration;
-		playerDecelerationSlider.update_slider();
-		playerJumpSlider.value = playerJumpHeight;
-		playerJumpSlider.update_slider();
-		playerAirControlSlider.value = playerAirControl;
-		playerAirControlSlider.update_slider();
-		playerGravitySlider.value = playerGravity;
-		playerGravitySlider.update_slider();
-		playerCoyoteTimeSlider.value = playerCoyoteTime;
-		playerCoyoteTimeSlider.update_slider();
-		playerSlopeSlowdownCheckbox.value = playerSlopeSlowdown;
-		playerSlopeSlowdownCheckbox.update_checkbox();
-		playerOnewaysCheckbox.value = playerOneways;
-		playerOnewaysCheckbox.update_checkbox();
-		playerDoubleJumpCheckbox.value = playerDoubleJump;
-		playerDoubleJumpCheckbox.update_checkbox();
-		playerWallJumpCheckbox.value = playerWallJump;
-		playerWallJumpCheckbox.update_checkbox();
+	playerHealthSlider.value = playerHealth;
+	playerHealthSlider.update_slider();
+	playerSpeedSlider.value = playerSpeed;
+	playerSpeedSlider.update_slider();
+	playerAccelerationSlider.value = playerAcceleration;
+	playerAccelerationSlider.update_slider();
+	playerDecelerationSlider.value = playerDeceleration;
+	playerDecelerationSlider.update_slider();
+	playerJumpSlider.value = playerJumpHeight;
+	playerJumpSlider.update_slider();
+	playerAirControlSlider.value = playerAirControl;
+	playerAirControlSlider.update_slider();
+	playerGravitySlider.value = playerGravity;
+	playerGravitySlider.update_slider();
+	playerCoyoteTimeSlider.value = playerCoyoteTime;
+	playerCoyoteTimeSlider.update_slider();
+	playerSlopeSlowdownCheckbox.value = playerSlopeSlowdown;
+	playerSlopeSlowdownCheckbox.update_checkbox();
+	playerOnewaysCheckbox.value = playerOneways;
+	playerOnewaysCheckbox.update_checkbox();
+	playerDoubleJumpCheckbox.value = playerDoubleJump;
+	playerDoubleJumpCheckbox.update_checkbox();
+	playerWallJumpCheckbox.value = playerWallJump;
+	playerWallJumpCheckbox.update_checkbox();
 		# Make the WallJumpDecay Checkbox transparent if it can't be selected.
-		if !playerWallJump:
-			playerWallJumpDecay = false;
-			playerWallJumpStrength = 1.0;
-		make_selectable(playerWallJumpDecayCheckbox, playerWallJump);
-		make_selectable(playerWallJumpStrengthSlider, playerWallJump);
-		playerWallJumpStrengthSlider.value = playerWallJumpStrength;
-		playerWallJumpStrengthSlider.update_slider();
-		playerWallJumpDecayCheckbox.value = playerWallJumpDecay;
-		playerWallJumpDecayCheckbox.update_checkbox();
+	if !playerWallJump:
+		playerWallJumpDecay = false;
+		playerWallJumpStrength = 1.0;
+	make_selectable(playerWallJumpDecayCheckbox, playerWallJump);
+	make_selectable(playerWallJumpStrengthSlider, playerWallJump);
+	playerWallJumpStrengthSlider.value = playerWallJumpStrength;
+	playerWallJumpStrengthSlider.update_slider();
+	playerWallJumpDecayCheckbox.value = playerWallJumpDecay;
+	playerWallJumpDecayCheckbox.update_checkbox();
 	# Enemies
-	elif selectedEntity is EnemyPatrol:
+	if selectedEntity is EnemyPatrol:
 		patrollingSpeedSlider.value = selectedPreset.groundSpeed;
 		patrollingDirectionDropdown.value = selectedPreset.direction;
 		patrollingRestrictedCheckbox.value = selectedPreset.restricted;
@@ -359,21 +358,20 @@ func make_selectable(property: VBoxContainer, selectable: bool) -> void:
 
 ## Update all of the select entity's values based on the properties chosen in the menu
 func update_values() -> void:
-	if selectedEntity is Player:
-		playerHealth = playerHealthSlider.value;
-		playerSpeed = playerSpeedSlider.value;
-		playerAcceleration = playerAccelerationSlider.value;
-		playerDeceleration = playerDecelerationSlider.value;
-		playerJumpHeight = playerJumpSlider.value;
-		playerAirControl = playerAirControlSlider.value;
-		playerGravity = playerGravitySlider.value;
-		playerCoyoteTime = playerCoyoteTimeSlider.value;
-		playerSlopeSlowdown = playerSlopeSlowdownCheckbox.value;
-		playerOneways = playerOnewaysCheckbox.value;
-		playerDoubleJump = playerDoubleJumpCheckbox.value;
-		playerWallJump = playerWallJumpCheckbox.value;
-		playerWallJumpStrength = playerWallJumpStrengthSlider.value;
-		playerWallJumpDecay = playerWallJumpDecayCheckbox.value;
+	playerHealth = playerHealthSlider.value;
+	playerSpeed = playerSpeedSlider.value;
+	playerAcceleration = playerAccelerationSlider.value;
+	playerDeceleration = playerDecelerationSlider.value;
+	playerJumpHeight = playerJumpSlider.value;
+	playerAirControl = playerAirControlSlider.value;
+	playerGravity = playerGravitySlider.value;
+	playerCoyoteTime = playerCoyoteTimeSlider.value;
+	playerSlopeSlowdown = playerSlopeSlowdownCheckbox.value;
+	playerOneways = playerOnewaysCheckbox.value;
+	playerDoubleJump = playerDoubleJumpCheckbox.value;
+	playerWallJump = playerWallJumpCheckbox.value;
+	playerWallJumpStrength = playerWallJumpStrengthSlider.value;
+	playerWallJumpDecay = playerWallJumpDecayCheckbox.value;
 	if selectedEntity is EnemyPatrol:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
 		selectedPreset.direction = patrollingDirectionDropdown.value;

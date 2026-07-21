@@ -52,6 +52,9 @@ extends Control
 @export var duplicateEmptyBanner : PanelContainer;
 @export var duplicateExistsBanner : PanelContainer;
 
+# Export level button
+@export var exportLevelButton : Button;
+
 @export var fileExplorer : FileDialog;
 
 ## A reference to the Level List for loading levels.
@@ -90,8 +93,20 @@ var levelItems: Dictionary = {} # path -> item
 const MAX_LEVEL_AREA := 10000;
 @export var areaWarning : PanelContainer;
 
+# A reference to the web pop-up scene
+@export var webPopUp : PackedScene;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Check if we are in a web build to hide and show appropriate buttons.
+	if OS.has_feature("web"):
+		exportLevelButton.show();
+		buttonImportLevel.hide();
+		buttonOpenLevelFolder.hide();
+		buttonQuit.hide();
+		exportLevelButton.pressed.connect(export_current_level);
+		add_child(webPopUp.instantiate());
+	
 	buttonNewLevel.grab_focus();
 	
 	softwareVersion.text = str(Global.VERSION);
@@ -200,6 +215,73 @@ func import_level() -> void:
 func import_cancel() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayImportLevel.hide();
+	
+## Exports the currently selected level.
+func export_current_level() -> void:
+	if !selectedItem:
+		return;
+
+	# Set up file paths. Temp path is downloading the files, then zip it.
+	var levelPath : String = selectedItem.levelPath.rstrip("/");
+	var levelName : String = selectedItem.levelTitle.text;
+	var tempPath : String = "user://temp/" + levelName + "/"
+	var zipPath : String = "user://temp/" + levelName + ".zip";
+
+	# Make the temp path folder.
+	DirAccess.make_dir_recursive_absolute(tempPath);
+
+	# Copy level data.
+	ImportExportManager.clone_data(levelPath + "/", tempPath);
+
+	# Create ZIPPacker for creating the actual zip
+	var zip : ZIPPacker = ZIPPacker.new();
+	zip.open(zipPath);
+	add_directory_to_zip(zip, tempPath, levelName + "/");
+
+	zip.close();
+
+	# Download in browser
+	var zipData : PackedByteArray = FileAccess.get_file_as_bytes(zipPath);
+	JavaScriptBridge.download_buffer(zipData, levelName + ".zip");
+	
+	DirAccess.remove_absolute(zipPath);
+	remove_recursively(tempPath);
+	
+## When an export directory is selected, clone all data to given directory.
+## zip: The ZIPPacker we use to create the zip.
+## path: The path we are adding to the zip.
+## zipPath: the directory path inside the zip
+func add_directory_to_zip(zip: ZIPPacker, path: String, zipPath: String) -> void:
+	# G
+	var folders : PackedStringArray = DirAccess.get_directories_at(path);
+	var files : PackedStringArray = DirAccess.get_files_at(path);
+
+	# Add completely empty folder entry
+	if folders.is_empty() and files.is_empty():
+		zip.start_file(zipPath);
+		zip.close_file();
+		return;
+
+	# We want every folder, even if empty, so go through recursively
+	for folder in folders:
+		var folderPath : String = zipPath + folder + "/";
+		
+		zip.start_file(folderPath);
+		zip.close_file();
+
+		add_directory_to_zip(
+			zip,
+			path + "/" + folder,
+			folderPath
+		);
+
+	# Add files
+	for file in files:
+		var data : PackedByteArray = FileAccess.get_file_as_bytes(path + "/" + file)
+
+		zip.start_file(zipPath + file);
+		zip.write_file(data);
+
 
 func update_level_size_warning(value = null) -> void:
 	var area := int(spinBoxNewLevelX.value) * int(spinBoxNewLevelY.value)
@@ -257,8 +339,6 @@ func fill_level_list() -> void:
 	# Get the directory that contains all the level folders
 	var levelsPath : String = "user://Levels"
 	var levelListDir : DirAccess = DirAccess.open(levelsPath);
-	print("Levels path:", levelsPath)
-	print("LLD:", levelListDir);
 	
 	# Return early if there is no directory.
 	if (!levelListDir):
@@ -277,6 +357,7 @@ func fill_level_list() -> void:
 			# Add the level to the level list and set it up visually.
 			if (get_level_valid(levelPath)):
 				levelFolders[levelPath] = folderName;
+				
 
 		folderName = levelListDir.get_next();
 		
@@ -359,6 +440,7 @@ func toggle_level_buttons() -> void:
 	buttonEditLevel.disabled = !buttonEditLevel.disabled;
 	buttonPlayLevel.disabled = !buttonPlayLevel.disabled;
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
+	exportLevelButton.disabled = !exportLevelButton.disabled;
 
 func set_favorite_button_icon(is_favorited: bool) -> void:
 	favoriteButtonIcon.texture = favoriteFilled if is_favorited else favoriteEmpty;
@@ -604,11 +686,12 @@ func favorite_current_level() -> void:
 func get_level_valid(filePath : String) -> bool:
 	if (!FileAccess.file_exists(filePath)):
 		# Check if settings file doesn't exist
-		if (!FileAccess.file_exists(filePath + "/Settings.json")):
+		if (!FileAccess.file_exists(filePath + "/Settings.JSON")):
 			return false;
 			
 		# Check if CSV file doesn't exist
 		if (!FileAccess.file_exists(filePath + "/Tiles.CSV")):
+			print("no tiles found")
 			return false;
 	return true;
 

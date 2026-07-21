@@ -253,7 +253,7 @@ func reset_menu() -> void:
 func item_selected(selectedItem: AssetItem) -> void:
 	AudioManager.play_UI_effect("UISelection");
 	# Pause the animation
-	animationSwapping.playingAnimation = false;
+	animationSwapping.play_preview_animation(false);
 	audioSwapping.preview_audio_finished();
 	# If the selected item is an image, replace its preview
 	if (selectedItem.type == AssetItem.AssetType.IMAGE):

@@ -11,6 +11,8 @@ var randomDirection : bool;
 var shotSpeed : float;
 # How fast the enemy fires
 var fireRate : float;
+# Delay before firing first shot
+const INITIAL_DELAY : float = 1.0;
 # If the projectiles are bouncable
 var projBounce : bool;
 
@@ -148,4 +150,4 @@ func apply_script(file: Resource) -> void:
 		motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED;
 		set_collision_layer_value(2, true);
 		#set_collision_mask_value(2, true);
-	timeLeft = 1;
+	timeLeft = INITIAL_DELAY;

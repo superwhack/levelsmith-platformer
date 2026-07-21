@@ -20,6 +20,9 @@ const SPEED_MODIFIER : float = 100.0;
 
 @export var previewLine : Line2D;
 
+# Target distance before switching
+const TARGET_DISTANCE = 1.0;
+
 ## Adds enemy to group and sets up initial points
 func _ready() -> void:
 	deathAnim = "FlyDeath";
@@ -71,7 +74,6 @@ func fly_behavior() -> void:
 	velocity = flyDirection.normalized() * speed * SPEED_MODIFIER;
 
 
-const TARGET_DISTANCE = 1.0;
 ## Switches the active destination.
 func switch_target() -> void:
 	if (targetPoint.distance_to(pointA) < TARGET_DISTANCE):

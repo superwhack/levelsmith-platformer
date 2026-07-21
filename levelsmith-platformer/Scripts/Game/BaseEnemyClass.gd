@@ -30,6 +30,11 @@ var active = false;
 
 var deathAnim : String = "death";
 
+const BOUNCE_VEL_HORIZONTAL : int = 500;
+const BOUNCE_VEL_VERTICAL : int = 1000;
+const BOUNCE_DECAY_RATE : float = 0.97;
+const BOUNCE_BASE_BOOST : int = 600;
+
 ## Initializing, add to the group named enemy and connect animation
 func _ready() -> void:
 	add_to_group("enemy");
@@ -40,11 +45,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# Apply gravity every frame based on time passed since last frame
 	apply_gravity(delta)
-
-const BOUNCE_VEL_HORIZONTAL : int = 500;
-const BOUNCE_VEL_VERTICAL : int = 1000;
-const BOUNCE_DECAY_RATE : float = 0.97;
-const BOUNCE_BASE_BOOST : int = 600;
 
 ## Run tile detection with two or four raycasts on the enemy
 ## horizontal: True if horizontal (left and right) raycasts should be run

@@ -4,6 +4,7 @@ extends Control
 @export var masterManager : Node2D;
 
 # Main menu buttons
+@export_group("Buttons")
 @export var buttonNewLevel : Button;
 @export var buttonImportLevel : Button;
 @export var buttonLoadExample : Button;
@@ -19,12 +20,14 @@ extends Control
 @onready var favoriteButtonIcon : TextureRect = buttonFavoriteLevel.get_node("MarginContainer/TextureRect");
 
 # Overlays
+@export_group("Overlays")
 @export var overlayNewLevel : ColorRect;
 @export var overlayImportLevel : ColorRect;
 @export var overlayDuplicateLevel : ColorRect;
 @export var overlayCredits : ColorRect;
 
 # New level overlay children
+@export_group("New Level")
 @export var buttonNewLevelCreate : Button;
 @export var buttonNewLevelCancel : Button;
 @export var fieldNewLevelName : LineEdit;
@@ -35,6 +38,7 @@ extends Control
 @export var emptyWarning : MarginContainer;
 
 # Import level overlay children
+@export_group("Import Level")
 @export var buttonImportLevelOpen : Button;
 @export var buttonImportLevelCancel : Button;
 @export var buttonImportLevelBrowse : TextureButton;
@@ -42,7 +46,8 @@ extends Control
 @export var badImportWarning : PanelContainer;
 @export var badImportBody : RichTextLabel;
 
-# Duplicate Level Overlay Children <3
+# Duplicate Level Overlay Children
+@export_group("Duplicate Level")
 @export var buttonDuplicateLevelCancel : Button;
 @export var buttonDuplicateLevelConfirm : Button;
 @export var duplicateName : LineEdit;
@@ -52,6 +57,21 @@ extends Control
 @export var duplicateEmptyBanner : PanelContainer;
 @export var duplicateExistsBanner : PanelContainer;
 
+## References to meta data values.
+@export_group("MetaData")
+@export var levelName : Label;
+@export var author : Label;
+@export var dateCreated : Label;
+@export var dateModified : Label;
+@export var dimensions : Label;
+@export var objectCount : Label;
+@export var version : Label;
+@export var preview : TextureRect;
+@export var previewDefault : Texture2D;
+@export var favoriteEmpty : Texture2D;
+@export var favoriteFilled : Texture2D;
+
+@export_group("Other")
 # Export level button
 @export var exportLevelButton : Button;
 
@@ -67,19 +87,6 @@ extends Control
 
 ## reference to level check mark
 @export var validatedCheckmark : TextureRect;
-
-## References to meta data values.
-@export var levelName : Label;
-@export var author : Label;
-@export var dateCreated : Label;
-@export var dateModified : Label;
-@export var dimensions : Label;
-@export var objectCount : Label;
-@export var version : Label;
-@export var preview : TextureRect;
-@export var previewDefault : Texture2D;
-@export var favoriteEmpty : Texture2D;
-@export var favoriteFilled : Texture2D;
 
 # Global Settings Button
 @export var globalSettingsButton : Button;
@@ -129,10 +136,12 @@ func _ready() -> void:
 	get_window().focus_entered.connect(fill_level_list);
 	
 	# Hiding appropriate UI when cancelling level creation
+	# New Level Buttons
 	buttonNewLevelCancel.pressed.connect(overlay_new_level_hide);
 	buttonNewLevelCancel.pressed.connect(emptyWarning.hide);
 	buttonNewLevelCancel.pressed.connect(invalidWarning.hide);
 	
+	# Import Buttons
 	buttonImportLevel.pressed.connect(overlay_import_level_show);
 	buttonImportLevelOpen.pressed.connect(import_level);
 	buttonImportLevelCancel.pressed.connect(import_cancel);
@@ -142,6 +151,8 @@ func _ready() -> void:
 	# Duplicate buttons
 	buttonDuplicateLevelConfirm.pressed.connect(duplicate_current_level);
 	buttonDuplicateLevelCancel.pressed.connect(overlay_duplicate_level_hide);
+	
+	# Other Buttons
 	globalSettingsButton.pressed.connect(masterManager.open_global_settings_menu);
 	buttonQuit.pressed.connect(exit_program);
 	buttonCredits.pressed.connect(show_credits_screen);
@@ -179,7 +190,6 @@ func overlay_duplicate_level_show() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	overlayDuplicateLevel.show();
 	duplicateName.grab_focus();
-	
 func overlay_duplicate_level_hide() -> void:
 	AudioManager.play_UI_effect("UI_Selection");
 	overlayDuplicateLevel.hide();
@@ -223,12 +233,10 @@ func import_level() -> void:
 	# Extract the name of the folder from the file path
 	var importedLevelArray : Array = sourceDirectory.rstrip("/").split("/");
 	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
-	var duplicateCounter : int = 0;
-	for folderName in DirAccess.get_directories_at("user://Levels"):
-		if (importedLevelName == folderName || str(importedLevelName, "(", duplicateCounter, ")") == folderName):
-			duplicateCounter += 1;
-	if (duplicateCounter > 0):
-		importedLevelName = str(importedLevelName, "(", duplicateCounter, ")");
+	
+	# Handle duplicate level names
+	importedLevelName = duplicate_naming(importedLevelName);
+	
 	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
 	masterManager.loadedLevelPath = sourceDirectory;
 
@@ -240,7 +248,7 @@ func import_level() -> void:
 	masterManager.loadedLevelPath = importDirectory;
 	masterManager.import_level_and_edit();
 	
-	# Resets the ui overlay
+	# Resets the UI overlay
 	fieldImportLevelPath.clear();
 	overlayImportLevel.hide();
 	
@@ -256,31 +264,31 @@ func import_cancel() -> void:
 	
 ## Exports the currently selected level.
 func export_current_level() -> void:
-	if !selectedItem:
+	if (!selectedItem):
 		return;
-
+	
 	# Set up file paths. Temp path is downloading the files, then zip it.
-	var levelPath : String = selectedItem.levelPath.rstrip("/");
-	var levelName : String = selectedItem.levelTitle.text;
-	var tempPath : String = "user://temp/" + levelName + "/"
-	var zipPath : String = "user://temp/" + levelName + ".zip";
-
+	var newLevelPath : String = selectedItem.levelPath.rstrip("/");
+	var newLevelName : String = selectedItem.levelTitle.text;
+	var tempPath : String = "user://temp/" + newLevelName + "/"
+	var zipPath : String = "user://temp/" + newLevelName + ".zip";
+	
 	# Make the temp path folder.
 	DirAccess.make_dir_recursive_absolute(tempPath);
-
+	
 	# Copy level data.
-	ImportExportManager.clone_data(levelPath + "/", tempPath);
+	ImportExportManager.clone_data(newLevelPath + "/", tempPath);
 
 	# Create ZIPPacker for creating the actual zip
 	var zip : ZIPPacker = ZIPPacker.new();
 	zip.open(zipPath);
-	add_directory_to_zip(zip, tempPath, levelName + "/");
+	add_directory_to_zip(zip, tempPath, newLevelName + "/");
 
 	zip.close();
 
 	# Download in browser
 	var zipData : PackedByteArray = FileAccess.get_file_as_bytes(zipPath);
-	JavaScriptBridge.download_buffer(zipData, levelName + ".zip");
+	JavaScriptBridge.download_buffer(zipData, newLevelName + ".zip");
 	
 	DirAccess.remove_absolute(zipPath);
 
@@ -292,12 +300,11 @@ func export_current_level() -> void:
 ## path: The path we are adding to the zip.
 ## zipPath: the directory path inside the zip
 func add_directory_to_zip(zip: ZIPPacker, path: String, zipPath: String) -> void:
-	# G
 	var folders : PackedStringArray = DirAccess.get_directories_at(path);
 	var files : PackedStringArray = DirAccess.get_files_at(path);
 
 	# Add completely empty folder entry
-	if folders.is_empty() and files.is_empty():
+	if (folders.is_empty() && files.is_empty()):
 		zip.start_file(zipPath);
 		zip.close_file();
 		return;
@@ -322,13 +329,26 @@ func add_directory_to_zip(zip: ZIPPacker, path: String, zipPath: String) -> void
 		zip.start_file(zipPath + file);
 		zip.write_file(data);
 
-
-func update_level_size_warning(value = null) -> void:
+## Check level size and update with warning if needed
+## _value: unused
+func update_level_size_warning(_value = null) -> void:
 	var area := int(spinBoxNewLevelX.value) * int(spinBoxNewLevelY.value)
-	if area > MAX_LEVEL_AREA:
+	if (area > MAX_LEVEL_AREA):
 		areaWarning.show()
 	else:
 		areaWarning.hide()
+
+## Handle duplicate names with levels, duplicate levels get a (#) suffix added to them
+## name: name of the level to check for
+## returns: new level name with number suffix if needed
+func duplicate_naming(nameToCheck : String) -> String:
+	var duplicateCounter : int = 0;
+	for folderName in DirAccess.get_directories_at("user://Levels"):
+		if (nameToCheck == folderName || str(nameToCheck, "(", duplicateCounter, ")") == folderName):
+			duplicateCounter += 1;
+	if (duplicateCounter > 0):
+		nameToCheck = str(nameToCheck, "(", duplicateCounter, ")");
+	return nameToCheck;
 
 ## Opens the menu for setting a name and size for the level
 func create_new_level() -> void:
@@ -348,12 +368,9 @@ func create_new_level() -> void:
 		return;
 	
 	var fixedLevelName = fieldNewLevelName.text;
-	var duplicateCounter : int = 0;
-	for folderName in DirAccess.get_directories_at("user://Levels"):
-		if (fixedLevelName == folderName || str(fixedLevelName, "(", duplicateCounter, ")") == folderName):
-			duplicateCounter += 1;
-	if (duplicateCounter > 0):
-		fixedLevelName = str(fixedLevelName, "(", duplicateCounter, ")");
+	
+	# Handle duplicate naming
+	fixedLevelName = duplicate_naming(fixedLevelName);
 	overlayNewLevel.hide();
 	masterManager.level_setup( 
 		fixedLevelName, 

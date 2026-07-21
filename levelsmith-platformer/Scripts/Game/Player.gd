@@ -316,17 +316,17 @@ func walk() -> void:
 
 ## Have the player take damage
 ## amount: damage to deal, -1 is instant death
-## direction: direction to deal damage in
+## damageDirection: direction to deal damage in
 ## higherBounce: if the player should bounce higher
 ## returns: true is damage applied
 ## onFloorBypass: If true, the player is NOT on the floor for knockback
-func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce : int = 0, onFloorBypass : bool = false) -> bool:
+func take_damage(amount: int, damageDirection: Vector2 = Vector2(0, 0), higherBounce : int = 0, onFloorBypass : bool = false) -> bool:
 	if invulnerabilityCurrent > 0 || victory:
 		return false;
 	AudioManager.play_effect("Hurt");
 	invulnerabilityCurrent = invulnerabilityTimer;
-	direction.y /= 2;
-	velocity = direction * (1000 + higherBounce * 500);
+	damageDirection.y /= 2;
+	velocity = damageDirection * (1000 + higherBounce * 500);
 	velocity.y *= sqrt(fallSpeed);
 	coyoteTimeLeft = 0.0;
 	if is_on_floor() && !onFloorBypass:

@@ -5,14 +5,11 @@
 [ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
 [ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="3_rshqi"]
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_7puos"]
-[ext_resource type="Texture2D" uid="uid://dfco244lcptog" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="4_o8nck"]
-[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
-[ext_resource type="Texture2D" uid="uid://b265lhxnenhhc" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
+[ext_resource type="Texture2D" uid="uid://ctxw73txb750y" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="4_o8nck"]
+[ext_resource type="Texture2D" uid="uid://do1aligfv3wmg" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
+[ext_resource type="Texture2D" uid="uid://dxag1j2w8yhjg" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
+[ext_resource type="Texture2D" uid="uid://iyxcim187e44" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
 [ext_resource type="Texture2D" uid="uid://ctkp25yl7wov4" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="9_wgng1"]
-[ext_resource type="FontFile" uid="uid://ibgv3ey3taus" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="6_rrs8o"]
-[ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
-[ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
-[ext_resource type="Texture2D" uid="uid://cq6ndlm5t7xwj" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
 [ext_resource type="Script" uid="uid://cy0omeeqj1evc" path="res://Scripts/Universal/ImageSwapping.gd" id="10_clgtw"]
 [ext_resource type="Texture2D" uid="uid://b5f7fj8dwgcbn" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-right.png" id="10_yswm7"]
 [ext_resource type="Texture2D" uid="uid://bokwi0m4fmi0e" path="res://Assets/Sprites/UI/ArrowLeftMedium.PNG" id="11_mrdhq"]
@@ -21,7 +18,7 @@
 [ext_resource type="Script" uid="uid://cd1ukd2otaojf" path="res://Scripts/Universal/AudioSwapping.gd" id="12_qbbei"]
 [ext_resource type="Texture2D" uid="uid://g86q3u73bvbb" path="res://Assets/UserInterface/Buttons/ButtonIcons/PlayIcon.png" id="13_x8uhr"]
 [ext_resource type="Texture2D" uid="uid://dteaut1qlgfl" path="res://Assets/UserInterface/UpdatedIcons/mi--pause.png" id="14_yswm7"]
-[ext_resource type="Texture2D" uid="uid://5kmimttedd7n" path="res://Assets/UserInterface/material-symbols-light--stop-outline.png" id="15_l1dbf"]
+[ext_resource type="Texture2D" uid="uid://b5y65xluri0de" path="res://Assets/UserInterface/material-symbols-light--stop-outline.png" id="15_l1dbf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
@@ -266,7 +263,7 @@ offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_constants/separation = -4
+theme_override_constants/separation = 0
 
 [node name="PrevFrameButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer" unique_id=51178185]
 custom_maximum_size = Vector2(30, 30)

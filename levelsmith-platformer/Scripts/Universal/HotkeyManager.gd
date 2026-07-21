@@ -10,6 +10,11 @@ extends Node
 ## Handles keyboard inputs.
 ## event: The input event to parse.
 func _unhandled_key_input(event : InputEvent) -> void:
+	if (editorManager.masterManager.state != Global.State.EDIT): return;
+	
+	if event.is_action_pressed("level_save"):
+		editorManager.export_level();
+	
 	if event.is_action_pressed("rotate"):
 		toolManager.rotate_object();
 	if event.is_action_pressed("toggle-background"):

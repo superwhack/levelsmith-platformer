@@ -20,12 +20,12 @@ var importedLevelSize : Vector2i;
 var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tres");
 
 ## Create a new level, cloning from the default folder
-## levelName: Name of the new level, indicates where it'll go in the folder
+## newLevelName: Name of the new level, indicates where it'll go in the folder
+## levelAuthor: The name of the level's author as input
 ## levelSize: The size of the level
-## settings: The settings menu for the level
-func make_new_level(levelName: String,  levelAuthor: String, levelSize: Vector2i, settings: Panel) -> void:
+func make_new_level(newLevelName: String,  levelAuthor: String, levelSize: Vector2i) -> void:
 	# When making an enemy we need to set the path name and clear all enemies
-	levelName = levelName;
+	levelName = newLevelName;
 	clear_enemies_folder();
 	
 	# Create a directory under User and set the level and asset path.
@@ -142,9 +142,9 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 
 	# If the Settings file exists, get entire file as text
 	if (FileAccess.file_exists(levelPath + "Settings.JSON")):
-		var jsonFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
-		json = JSON.parse_string(jsonFile.get_as_text());
-		jsonFile.close();
+		var settingsJSONFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
+		json = JSON.parse_string(settingsJSONFile.get_as_text());
+		settingsJSONFile.close();
 	
 	##                        ##
 	## Metadata JSON Creation ##
@@ -201,6 +201,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		"oneways": playerData.playerOneways,
 		"doubleJump": playerData.playerDoubleJump,
 		"wallJump": playerData.playerWallJump,
+		"wallJumpStrength": playerData.playerWallJumpStrength,
 		"wallJumpDecay": playerData.playerWallJumpDecay
 	};
 
@@ -437,6 +438,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: Panel) -> v
 	playerData.playerOneways = player.get("oneways", playerData.playerOneways);
 	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
 	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);
+	playerData.playerWallJumpStrength = player.get("wallJumpStrength", playerData.playerWallJumpStrength);
 	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);
 	playerData.update_custom();
 	playerData.update_sliders();
@@ -468,14 +470,14 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: Panel) -> v
 	JSONFile.close();
 	
 ## Reads the metadata section from the Settings JSON
-## levelPath: The given path to the level directory.
+## getLevelPath: The given path to the level directory.
 ## Returns either a full or empty dictionary.
-func get_metadata(levelPath : String) -> Dictionary:
+func get_metadata(getLevelPath : String) -> Dictionary:
 	# If no settings JSON, return empty
-	if (!FileAccess.file_exists(levelPath + "/Settings.JSON")):
+	if (!FileAccess.file_exists(getLevelPath + "/Settings.JSON")):
 		return { };
 	
-	var jsonFile : FileAccess = FileAccess.open(levelPath + "/Settings.JSON", FileAccess.READ);
+	var jsonFile : FileAccess = FileAccess.open(getLevelPath + "/Settings.JSON", FileAccess.READ);
 	var jsonDict : Dictionary = JSON.parse_string(jsonFile.get_as_text());
 	jsonFile.close();
 	# Return metadata
@@ -483,15 +485,15 @@ func get_metadata(levelPath : String) -> Dictionary:
 
 
 ## Sets a specific metadata value.
-## levelPath: The given path to the level directory.
+## setLevelPath: The given path to the level directory.
 ## key: The name of the metadata value to be changed.
 ## value: The new value of the metadata being changed.
-func set_metadata(levelPath: String, key: String, value: Variant) -> void:
-	if (!FileAccess.file_exists(levelPath + "/Settings.JSON")):
+func set_metadata(setLevelPath: String, key: String, value: Variant) -> void:
+	if (!FileAccess.file_exists(setLevelPath + "/Settings.JSON")):
 		return;
 		
 	# Read file
-	var file : FileAccess = FileAccess.open(levelPath + "/Settings.JSON", FileAccess.READ);
+	var file : FileAccess = FileAccess.open(setLevelPath + "/Settings.JSON", FileAccess.READ);
 	var json : Dictionary = JSON.parse_string(file.get_as_text());
 	file.close();
 
@@ -503,7 +505,7 @@ func set_metadata(levelPath: String, key: String, value: Variant) -> void:
 	json["metadata"][key] = value;
 
 	# Write it to the file and close again.
-	file = FileAccess.open(levelPath + "/Settings.JSON", FileAccess.WRITE);
+	file = FileAccess.open(setLevelPath + "/Settings.JSON", FileAccess.WRITE);
 	file.store_string(JSON.stringify(json, "\t"));
 	file.close();
 

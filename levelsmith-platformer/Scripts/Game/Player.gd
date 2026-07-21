@@ -175,7 +175,7 @@ func _physics_process(delta: float) -> void:
 	if (invulnerabilityCurrent > 0):
 		invulnerabilityCurrent -= delta;
 	
-	trueSpeed = groundSpeed * 400 * currentSlowdown;
+	trueSpeed = max(0.01, groundSpeed) * 400 * currentSlowdown;
 	isPlayerGrounded = is_on_floor();
 	
 	# Coyote time logic
@@ -672,10 +672,10 @@ func wall_jump():
 		wallJumpCount = 1;
 	
 	if (wallJumpDirection == WallDirection.RIGHT):
-		velocity.x = 800 * pow(groundSpeed, .8) * wallJumpStrength;
+		velocity.x = 1200 * pow(max(groundSpeed, 1.5), .8) * wallJumpStrength;
 	else:
-		velocity.x = -800 * pow(groundSpeed, .8) * wallJumpStrength;
-	velocity.y = -375 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(min(groundSpeed, 1), .35);
+		velocity.x = -1200 * pow(max(groundSpeed, 1.5), .8) * wallJumpStrength;
+	velocity.y = -375 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(clamp(groundSpeed, .3, 1), .35);
 	justWallJumped = true;
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it

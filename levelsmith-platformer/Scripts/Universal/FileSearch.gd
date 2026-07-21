@@ -1,5 +1,6 @@
 extends Node
 
+# The root file path of the assets folder
 var filePath : String = "";
 
 ## Gets the amount of files within a folder
@@ -19,12 +20,17 @@ func file_count_in_folder(folderName: String) -> int:
 	# If there is no path to the folder
 	else:
 		# Print error
-		PopUpManager.create_error_popup("Folder not found", "Could not find folder with name " + folderName + ".")
+		PopUpManager.create_error_popup("Folder not found", "Could not find folder with name " + folderName + ".");
 	return -1;
 
+## Gets the amount of files in a folder not including .import or .remap files
+## folderPath : Path to the folder being counted
+## returns : Number of files within the folder
 func get_clean_file_count(folderPath: String) -> int:
-	if not DirAccess.dir_exists_absolute(folderPath):
+	# If there is nothing at the folder path, return 0
+	if (!DirAccess.dir_exists_absolute(folderPath)):
 		return 0
+	# Set the uniqueFiles array based on all of the files with completely unique names
 	var files = DirAccess.get_files_at(folderPath)
 	var uniqueFiles: Array[String] = []
 	for file in files:
@@ -33,7 +39,7 @@ func get_clean_file_count(folderPath: String) -> int:
 		cleanName = cleanName.replace(".import", "").replace(".remap", "");
 		if not uniqueFiles.has(cleanName):
 			uniqueFiles.append(cleanName)          
-		
+	# Return the size of the array of unique files
 	return uniqueFiles.size()
 
 ## Recursively finds the path to a specific directory based on its name
@@ -101,11 +107,17 @@ func find_file_by_name(targetFileName: String, currentDirectory: String = filePa
 			currentFileName = dir.get_next();
 	return "";
 
+## Recursively deletes all content within a given folder
+## folderPath : The path that the folder exists at
 func delete_folder(folderPath: String) -> void:
+	# If there is no folder at the path, return;
 	if (not DirAccess.dir_exists_absolute(folderPath)):
 		return;
+	# If there are any folders within this folder, call this function on that folder
 	for dirName in DirAccess.get_directories_at(folderPath):
 		delete_folder(str(folderPath + "/" + dirName));
+	# If there are any files within this folder, remove those files
 	for fileName in DirAccess.get_files_at(folderPath):
 		DirAccess.remove_absolute(str(folderPath + "/" + fileName));
+	# Remove this folder
 	DirAccess.remove_absolute(folderPath);

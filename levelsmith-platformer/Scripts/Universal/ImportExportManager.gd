@@ -356,15 +356,16 @@ func validate_import(sourceName: String) -> bool:
 	levelPath = sourceName;
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
-	
+	print(levelPath)
 	if (!DirAccess.dir_exists_absolute(levelPath)):
 		errors.append("Directory " + levelPath + " does not exist!");
-		
+		print("failed 1")
 	if (!FileAccess.file_exists(levelPath + "Settings.JSON")):
 		errors.append(levelPath + "Settings.JSON does not exist!");
-		
+		print("failed 2")
 	if (!FileAccess.file_exists(levelPath + "Tiles.CSV")):
 		errors.append(levelPath + "Tiles.CSV does not exist!");
+		print("failed 3")
 	if (errors.size() == 0):
 		sourceName = sourceName.left(-1);
 		levelName = sourceName.substr(sourceName.rfind("/") + 1);

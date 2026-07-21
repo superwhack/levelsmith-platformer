@@ -136,7 +136,7 @@ func _ready() -> void:
 	var set_directory = func (directory: String) -> void:
 		fieldImportLevelPath.text = directory + "/";
 	
-	fileExplorer.dir_selected.connect(set_directory);
+	fileExplorer.file_selected.connect(set_directory);
 
 ## Functions that just make a menu appear/dissapear, used to attach the sound effects
 func overlay_new_level_show() -> void:
@@ -169,6 +169,30 @@ func overlay_duplicate_level_hide() -> void:
 ## Called when import level button is pressed
 func import_level() -> void:
 	AudioManager.play_UI_effect("UISelection");
+	
+	var importPath : String = fieldImportLevelPath.text.rstrip("/");
+
+	var sourceDirectory : String = importPath;
+	
+	if importPath.to_lower().ends_with(".zip"):
+		if (!validate_level_zip(importPath)):
+			badImportWarning.show();
+			badImportBody.text = "Invalid level zip file \"" + importPath + "\"!";
+			return;
+		var tempDirectory : String = "user://TempLevelImport/";
+		
+		# Clean old temp import
+		if DirAccess.dir_exists_absolute(tempDirectory):
+			remove_recursively(tempDirectory);
+
+		DirAccess.make_dir_absolute(tempDirectory);
+
+		extract_all_from_zip(importPath, tempDirectory);
+
+		sourceDirectory = tempDirectory.rstrip("/");
+
+	
+	
 	if (!ImportExportManager.validate_import(fieldImportLevelPath.text)): 
 		badImportWarning.show();
 		badImportBody.text = "Level Import Failed from directory \"" + fieldImportLevelPath.text + "\"!";
@@ -244,9 +268,7 @@ func fill_level_list() -> void:
 	# Get the directory that contains all the level folders
 	var levelsPath : String = "user://Levels"
 	var levelListDir : DirAccess = DirAccess.open(levelsPath);
-	print("Levels path:", levelsPath)
-	print("LLD:", levelListDir);
-	
+
 	# Return early if there is no directory.
 	if (!levelListDir):
 		return;
@@ -662,3 +684,47 @@ func show_credits_screen(show : bool = true) -> void:
 	else:
 		AudioManager.play_UI_effect("UISelection")
 		overlayCredits.hide();
+		
+## Extracts files from a given zip file to the user level directory.
+## zipPath: the path of the zip file being extracted
+func extract_all_from_zip(zipPath: String, destination: String):
+	var reader = ZIPReader.new();
+	reader.open(zipPath);
+	
+	var rootDir = DirAccess.open("user://Levels");
+
+	for filePath in reader.get_files():
+		var fullPath := destination.path_join(filePath);
+
+		if filePath.ends_with("/"):
+			DirAccess.make_dir_recursive_absolute(fullPath);
+			continue;
+
+		DirAccess.make_dir_recursive_absolute(fullPath.get_base_dir());
+
+		var file := FileAccess.open(fullPath, FileAccess.WRITE);
+		file.store_buffer(reader.read_file(filePath));
+			
+	reader.close();
+
+## Validates a level zip file
+## zipPath: the directory of the zip being validated
+func validate_level_zip(zipPath: String) -> bool:
+	var reader : ZIPReader = ZIPReader.new();
+	
+	if (reader.open(zipPath) != OK):
+		return false;
+
+	var files = reader.get_files();
+
+	var hasSettings : bool = false;
+	var hasTiles : bool = false;
+	
+	# Set validation to false if missing necessary files
+	for path in files:
+		if (path.ends_with("Settings.JSON")):
+			hasSettings = true;
+		elif (path.ends_with("Tiles.CSV")):
+			hasTiles = true;
+	reader.close();
+	return hasSettings && hasTiles;

@@ -13,6 +13,9 @@ var settingsPath := "user://settings.cfg";
 @export var SFXVolume : VBoxContainer;
 @export var musicVolume : VBoxContainer;
 
+# Reference to the editor manager
+@export var editorManager : Node2D;
+
 var musicPreviewing := false;
 
 func _ready() -> void:
@@ -40,6 +43,10 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	pass;
+	
+func _input( event: InputEvent ) -> void:
+	if ( event.is_action_pressed("ui_close_dialog") ):
+		masterManager.close_global_settings_menu();
 
 ## When dragging, adjust the values in real time
 func _on_drag() -> void:

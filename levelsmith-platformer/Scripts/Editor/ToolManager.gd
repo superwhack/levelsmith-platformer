@@ -151,12 +151,15 @@ func _unhandled_input(event: InputEvent) -> void:
 						entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:
-					if propertyMenu.visible:
+					if (propertyMenu.visible):
 						propertyMenu.close();
 					else:
 						entityManager.place_entity(editorManager.currentMousePosition);
 			elif (event.is_action_pressed("right-click")):
-				entityManager.delete_entity(editorManager.currentMousePosition);
+				if (propertyMenu.visible):
+					propertyMenu.close();
+				else:
+					entityManager.delete_entity(editorManager.currentMousePosition);
 			
 			# If left click is being held, pick up the current tile unless it's empty air.
 			if (isMoving && prevBrushObject == -1 && previousCell != -1) && previousCell >= editorManager.tileCount && previousCell < Global.BEDROCK_CORNER:

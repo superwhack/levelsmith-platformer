@@ -8,6 +8,8 @@ extends Control
 @export var buttonImportLevel : Button;
 @export var buttonLoadExample : Button;
 @export var buttonQuit : Button;
+@export var buttonCredits : Button;
+@export var buttonCloseCredits : Button;
 @export var buttonOpenLevelFolder : Button;
 @export var buttonPlayLevel : Button;
 @export var buttonEditLevel : Button;
@@ -20,6 +22,7 @@ extends Control
 @export var overlayNewLevel : ColorRect;
 @export var overlayImportLevel : ColorRect;
 @export var overlayDuplicateLevel : ColorRect;
+@export var overlayCredits : ColorRect;
 
 # New level overlay children
 @export var buttonNewLevelCreate : Button;
@@ -83,6 +86,10 @@ var selectedItem : Control = null;
 # Dictionary of all level items. For level list filling.
 var levelItems: Dictionary = {} # path -> item
 
+# Level size warning variables
+const MAX_LEVEL_AREA := 10000;
+@export var areaWarning : PanelContainer;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	buttonNewLevel.grab_focus();
@@ -99,7 +106,7 @@ func _ready() -> void:
 	buttonOpenLevelFolder.pressed.connect(open_level_folder);
 	buttonPlayLevel.pressed.connect(play_current_level);
 	buttonEditLevel.pressed.connect(edit_current_level);
-	buttonDeleteLevel.pressed.connect(delete_current_level);
+	buttonDeleteLevel.pressed.connect(open_delete_popup);
 	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
 	buttonFavoriteLevel.pressed.connect(favorite_current_level);
 	get_window().focus_entered.connect(fill_level_list);
@@ -118,21 +125,24 @@ func _ready() -> void:
 	# Duplicate buttons
 	buttonDuplicateLevelConfirm.pressed.connect(duplicate_current_level);
 	buttonDuplicateLevelCancel.pressed.connect(overlay_duplicate_level_hide);
-
 	globalSettingsButton.pressed.connect(masterManager.open_global_settings_menu);
-	
 	buttonQuit.pressed.connect(exit_program);
+	buttonCredits.pressed.connect(show_credits_screen);
+	buttonCloseCredits.pressed.connect(show_credits_screen.bind(false));
 
+	spinBoxNewLevelX.value_changed.connect(update_level_size_warning);
+	spinBoxNewLevelY.value_changed.connect(update_level_size_warning);
 
 	var set_directory = func (directory: String) -> void:
 		fieldImportLevelPath.text = directory + "/";
 	
 	fileExplorer.dir_selected.connect(set_directory);
-	
+
 ## Functions that just make a menu appear/dissapear, used to attach the sound effects
 func overlay_new_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayNewLevel.show();
+	update_level_size_warning();
 	fieldNewLevelName.grab_focus();
 func overlay_new_level_hide() -> void:
 	AudioManager.play_UI_effect("UISelection");
@@ -185,6 +195,13 @@ func import_cancel() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	overlayImportLevel.hide();
 
+func update_level_size_warning(value = null) -> void:
+	var area := int(spinBoxNewLevelX.value) * int(spinBoxNewLevelY.value)
+	if area > MAX_LEVEL_AREA:
+		areaWarning.show()
+	else:
+		areaWarning.hide()
+
 ## Opens the menu for setting a name and size for the level
 func create_new_level() -> void:
 	AudioManager.play_UI_effect("UISelection");
@@ -227,6 +244,8 @@ func fill_level_list() -> void:
 	# Get the directory that contains all the level folders
 	var levelsPath : String = "user://Levels"
 	var levelListDir : DirAccess = DirAccess.open(levelsPath);
+	print("Levels path:", levelsPath)
+	print("LLD:", levelListDir);
 	
 	# Return early if there is no directory.
 	if (!levelListDir):
@@ -372,6 +391,11 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 	item.dimensions = str(metadata.get("dimensions", str([20, 20])));
 	item.objectCount = str(int(metadata.get("objects", str(0))));
 	item.version = str(metadata.get("version", Global.VERSION));
+	if (item.version != str(Global.VERSION)):
+		item.levelErrorIcon.show();
+		item.levelErrorIcon.tooltip_text = "This level's version is " + item.version + ". You are currently on version " + str(Global.VERSION) + ".";
+	else:
+		item.levelErrorIcon.hide();
 	item.favorited = metadata.get("favorited", false);
 	item.validated = metadata.get("validated", false);
 	if (item.favorited):
@@ -433,10 +457,8 @@ func open_level_folder() -> void:
 func play_current_level() -> void:
 	if (!selectedItem):
 		return;
-
 	AudioManager.play_UI_effect("UI_Selection");
 	masterManager.load_level(selectedItem.levelPath, true);
-
 
 ## Edit the currently selected level.
 func edit_current_level() -> void:
@@ -445,6 +467,13 @@ func edit_current_level() -> void:
 
 	AudioManager.play_UI_effect("UI_Selection");
 	masterManager.load_level(selectedItem.levelPath);
+
+## Opens a delete popup when the delete button is pressed
+func open_delete_popup() -> void:
+	if (!selectedItem):
+		return;
+	
+	PopUpManager.create_delete_popup(delete_current_level, selectedItem.levelTitle.text);
 
 ## Deletes the currently selected level.
 func delete_current_level() -> void:
@@ -625,3 +654,11 @@ func remove_recursively(directory: String) -> void:
 		DirAccess.remove_absolute(directory.path_join(file));
 
 	DirAccess.remove_absolute(directory)
+
+func show_credits_screen(show : bool = true) -> void:
+	if (show):
+		AudioManager.play_UI_effect("UISelection")
+		overlayCredits.show();
+	else:
+		AudioManager.play_UI_effect("UISelection")
+		overlayCredits.hide();

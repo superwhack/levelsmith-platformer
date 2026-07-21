@@ -1,7 +1,9 @@
 [gd_resource type="TileSet" format=3 uid="uid://d1n0acfj67o7r"]
 
-[ext_resource type="Texture2D" uid="uid://mqhonpbo41vu" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
+[ext_resource type="Texture2D" uid="uid://dxvpo5itxion1" path="res://Assets/Sprites/Tiles/solid.png" id="1_00q1o"]
+
 [ext_resource type="Texture2D" uid="uid://d0p32jicqqs1w" path="res://Assets/Sprites/Tiles/Hazard.png" id="2_6pq3v"]
+
 [ext_resource type="Texture2D" uid="uid://c50jm0prdc6ii" path="res://Assets/Sprites/Tiles/oneway.png" id="3_alyph"]
 [ext_resource type="PackedScene" uid="uid://bf3q4v3br7j4o" path="res://Scenes/Entities/Shooting.tscn" id="3_k4kw2"]
 [ext_resource type="Texture2D" uid="uid://blps015kdtqdd" path="res://Assets/Sprites/Entities/Props/Prop1.png" id="3_r4n42"]
@@ -27,11 +29,11 @@
 [ext_resource type="PackedScene" uid="uid://b6axoaekmjyr4" path="res://Scenes/Entities/MovingPlatform.tscn" id="19_yoa8o"]
 [ext_resource type="PackedScene" uid="uid://bpnflie3xuof8" path="res://Scenes/Preview/MovingPlatformPreview.tscn" id="20_4pytx"]
 [ext_resource type="PackedScene" uid="uid://b1he4q1q33j0e" path="res://Scenes/Entities/Coin.tscn" id="22_38lp2"]
-[ext_resource type="Texture2D" uid="uid://7w1us52d03lk" path="res://Assets/Sprites/Entities/Props/Prop6.png" id="22_hkman"]
+[ext_resource type="Texture2D" uid="uid://bkquthck5o5sq" path="res://Assets/Sprites/Entities/Props/Prop6.png" id="22_hkman"]
 [ext_resource type="PackedScene" uid="uid://nquey6f2ob44" path="res://Scenes/Preview/CoinPreview.tscn" id="23_hkman"]
 [ext_resource type="PackedScene" uid="uid://bgy7bisua1v0q" path="res://Scenes/Entities/Checkpoint.tscn" id="23_kwx3m"]
 [ext_resource type="PackedScene" uid="uid://bfjbmr71i67hr" path="res://Scenes/Preview/CheckpointPreview.tscn" id="24_gauhj"]
-[ext_resource type="Texture2D" uid="uid://bd65wp1rtty2a" path="res://Assets/Sprites/Tiles/death.png" id="24_hkman"]
+[ext_resource type="Texture2D" uid="uid://c8qdejopayvw7" path="res://Assets/Sprites/Tiles/death.png" id="24_hkman"]
 [ext_resource type="Texture2D" uid="uid://b2vvvjppl2cs4" path="res://Assets/Sprites/Tiles/BedrockCorner.PNG" id="31_gx8tr"]
 [ext_resource type="Texture2D" uid="uid://ctyx5efbqexfy" path="res://Assets/Sprites/Tiles/BedrockWall.PNG" id="32_kwx3m"]
 [ext_resource type="Texture2D" uid="uid://66t5crfub0ll" path="res://Assets/Sprites/UI/Delete.png" id="32_ldrp4"]
@@ -51,7 +53,7 @@ texture = ExtResource("2_6pq3v")
 texture_region_size = Vector2i(128, 128)
 0:0/next_alternative_id = 2
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-54, -54, 54, -54, 54, 54, -54, 54)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-59.42857, -59.42857, 59.428574, -59.42857, 59.428574, 59.428574, -59.42857, 59.428574)
 0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
 0:0/0/custom_data_2 = 5
 0:0/0/custom_data_3 = "hazard"
@@ -151,7 +153,7 @@ texture = ExtResource("24_hkman")
 texture_region_size = Vector2i(128, 128)
 0:0/next_alternative_id = 2
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-54, -54, 54, -54, 54, 54, -54, 54)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-59.42857, -59.42857, 59.428574, -59.42857, 59.428574, 59.428574, -59.42857, 59.428574)
 0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-64, -64, -64, 64, 64, 64, 64, -64)
 0:0/0/custom_data_3 = "death"
 0:0/1 = 1

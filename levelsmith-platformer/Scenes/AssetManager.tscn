@@ -8,8 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://dfco244lcptog" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="4_o8nck"]
 [ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
 [ext_resource type="Texture2D" uid="uid://b265lhxnenhhc" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
-[ext_resource type="Texture2D" uid="uid://cq6ndlm5t7xwj" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
 [ext_resource type="Texture2D" uid="uid://ctkp25yl7wov4" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="9_wgng1"]
+[ext_resource type="FontFile" uid="uid://ibgv3ey3taus" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="6_rrs8o"]
+[ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
+[ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
+[ext_resource type="Texture2D" uid="uid://cq6ndlm5t7xwj" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
 [ext_resource type="Script" uid="uid://cy0omeeqj1evc" path="res://Scripts/Universal/ImageSwapping.gd" id="10_clgtw"]
 [ext_resource type="Texture2D" uid="uid://b5f7fj8dwgcbn" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-right.png" id="10_yswm7"]
 [ext_resource type="Texture2D" uid="uid://bokwi0m4fmi0e" path="res://Assets/Sprites/UI/ArrowLeftMedium.PNG" id="11_mrdhq"]
@@ -34,13 +37,14 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [node name="AssetManager" type="Panel" unique_id=468653693 node_paths=PackedStringArray("imageSwapping", "animationSwapping", "audioSwapping", "audioPreview", "assetTabs", "fileSelect", "imagesTab", "animationsTab", "audioTab", "currentAssetLabel", "loadFileButton", "resetButton", "resetAllButton", "refreshAllButton")]
-process_mode = 2
+process_mode = 4
 self_modulate = Color(0, 0, 0, 0.3764706)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_behavior_recursive = 1
 theme = ExtResource("1_rshqi")
 script = ExtResource("1_2va5h")
 imageSwapping = NodePath("ImageSwapping")
@@ -189,12 +193,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -96.0
+offset_top = -96.0
+offset_right = 32.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+offset_transform_position = Vector2(136, 136)
 texture = ExtResource("3_rshqi")
 
 [node name="AnimationPreview" type="Panel" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=126647044]
@@ -217,12 +223,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -96.0
+offset_top = -96.0
+offset_right = 32.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("3_rshqi")
 
 [node name="FrameCountLabel" type="Label" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview" unique_id=1192766192]
@@ -388,32 +395,36 @@ layout_mode = 2
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=2080426857]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=1751057131]
+[node name="Audio Section Vbox" type="VBoxContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=574980595]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox" unique_id=1751057131]
+layout_mode = 2
+size_flags_vertical = 3
 alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer" unique_id=116285012]
+[node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox/VBoxContainer" unique_id=116285012]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AudioIconBackground" type="ColorRect" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer/MarginContainer" unique_id=1855316572]
+[node name="AudioIconBackground" type="ColorRect" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox/VBoxContainer/MarginContainer" unique_id=1855316572]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.23921569, 0.23921569, 0.23921569, 1)
 
-[node name="AudioIcon" type="TextureRect" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer/MarginContainer" unique_id=241379034]
+[node name="AudioIcon" type="TextureRect" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox/VBoxContainer/MarginContainer" unique_id=241379034]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("9_ssly3")
 stretch_mode = 4
 
-[node name="Timestamp" type="Label" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer/MarginContainer" unique_id=1390566539]
+[node name="Timestamp" type="Label" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox/VBoxContainer/MarginContainer" unique_id=1390566539]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -422,7 +433,7 @@ theme_type_variation = &"HeaderSmall"
 text = "0.0/0.0"
 horizontal_alignment = 1
 
-[node name="AudioTimeline" type="HSlider" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer" unique_id=428290432]
+[node name="AudioTimeline" type="HSlider" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox" unique_id=428290432]
 layout_mode = 2
 step = 0.01
 
@@ -579,8 +590,8 @@ assetManager = NodePath("..")
 playButton = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/PlayButton")
 pauseButton = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/PauseButton")
 stopButton = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/StopButton")
-audioTimeline = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer/AudioTimeline")
-timeStampLabel = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/VBoxContainer/MarginContainer/Timestamp")
+audioTimeline = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox/AudioTimeline")
+timeStampLabel = NodePath("../AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox/VBoxContainer/MarginContainer/Timestamp")
 
 [node name="AnimationSwapping" type="Control" parent="." unique_id=1958050613 node_paths=PackedStringArray("assetManager", "animationPreview", "animationPreviewTexture", "animationPreviewRightButton", "animationPreviewLeftButton", "animationName", "frameRightButton", "frameLeftButton", "frameCountLabel", "playButton", "pauseButton", "stopButton", "FPSSpinbox")]
 anchors_preset = 0

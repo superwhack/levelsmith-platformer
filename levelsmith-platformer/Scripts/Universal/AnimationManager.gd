@@ -23,6 +23,7 @@ var coinSprites : Array[AnimatedSprite2D];
 var coinTemplateSprite : AnimatedSprite2D;
 
 var movingPlatformSprites : Array[AnimatedSprite2D];
+var movingPlatformPreviewSprites : Array[Sprite2D];
 var movingPlatformTemplateSprite : AnimatedSprite2D;
 
 var checkpointSprites : Array[AnimatedSprite2D];
@@ -130,6 +131,8 @@ func refresh_animations() -> void:
 		sprite.sprite_frames = coinTemplateSprite.sprite_frames;
 	for sprite in movingPlatformSprites:
 		sprite.sprite_frames = movingPlatformTemplateSprite.sprite_frames;
+	for sprite in movingPlatformPreviewSprites:
+		sprite.texture = movingPlatformTemplateSprite.sprite_frames.get_frame_texture("PlatformAnimation" , 0);
 	for sprite in checkpointSprites:
 		sprite.sprite_frames = checkpointTemplateSprite.sprite_frames;
 
@@ -279,6 +282,7 @@ func create_template_sprites() -> void:
 func get_all_sprites() -> void:
 	for spriteGroup in allAnimatedSprites:
 		spriteGroup.clear();
+	movingPlatformPreviewSprites.clear();
 	for player in get_tree().get_nodes_in_group("Player"):
 		playerSprites.append(player.find_child("AnimatedSprite2D"));
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
@@ -297,6 +301,7 @@ func get_all_sprites() -> void:
 		goalSprites.append(goal.find_child("AnimatedSprite2D"));
 	for platform in get_tree().get_nodes_in_group("Platform"):
 		movingPlatformSprites.append(platform.find_child("AnimatedSprite2D"));
+		movingPlatformPreviewSprites.append(platform.find_child("PreviewPlatform"));
 	for checkpoint in get_tree().get_nodes_in_group("Checkpoint"):
 		checkpointSprites.append(checkpoint.find_child("AnimatedSprite2D"));
 

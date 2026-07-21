@@ -2,25 +2,25 @@
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/Editor/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
-[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
+[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
-[ext_resource type="Texture2D" uid="uid://cui13q7plxmpx" path="res://Assets/UserInterface/UpdatedIcons/material-symbols-light--home-outline.png" id="8_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://cmh6m8bok14oi" path="res://Assets/UserInterface/UpdatedIcons/material-symbols-light--home-outline.png" id="8_vrcqo"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
-[ext_resource type="Texture2D" uid="uid://dh46m4u50qh7d" path="res://Assets/UserInterface/UpdatedIcons/carbon--save.png" id="10_racgb"]
+[ext_resource type="Texture2D" uid="uid://chqycgpbvi2s5" path="res://Assets/UserInterface/UpdatedIcons/carbon--save.png" id="10_racgb"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
-[ext_resource type="Texture2D" uid="uid://nwtxmk18ptg6" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="11_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://bjepls0slldfm" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="11_vrcqo"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Texture2D" uid="uid://bmc67g43xfyjv" path="res://Assets/UserInterface/UpdatedIcons/wordpress--image.png" id="13_hh704"]
+[ext_resource type="Texture2D" uid="uid://cir38m5oo2h1t" path="res://Assets/UserInterface/UpdatedIcons/wordpress--image.png" id="13_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="Texture2D" uid="uid://d3twybevvpjqn" path="res://Assets/UserInterface/UpdatedIcons/LevelSettings.png" id="14_vrcqo"]
-[ext_resource type="Texture2D" uid="uid://db10ps4ripfsu" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_racgb"]
+[ext_resource type="Texture2D" uid="uid://ywvulmo75a48" path="res://Assets/UserInterface/UpdatedIcons/LevelSettings.png" id="14_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://dnlgeapuusb7p" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_racgb"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://cusuiuccep2n3" path="res://Scenes/LevelSettingsMenu.tscn" id="17_fnjh2"]
@@ -65,11 +65,12 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0vixy"]
 
-[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "iconManager", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "levelSettingsMenu", "levelSettingsButton", "globalSettingsButton", "customCursorManager")]
+[node name="EditorManager" type="Node2D" unique_id=2045534837 node_paths=PackedStringArray("toolManager", "iconManager", "screenshotViewport", "levelScreenshotCamera", "screenUI", "tileMap", "previewTileMap", "playButton", "exportButton", "assetManager", "assetManagerButton", "levelSettingsMenu", "levelSettingsButton", "globalSettingsButton", "customCursorManager")]
 script = ExtResource("1_3goer")
 toolManager = NodePath("ToolManager")
 iconManager = NodePath("IconManager")
-levelScreenshotCamera = NodePath("LevelScreenshot")
+screenshotViewport = NodePath("ScreenshotViewport")
+levelScreenshotCamera = NodePath("ScreenshotViewport/LevelScreenshot")
 screenUI = NodePath("ScreenUI")
 tileMap = NodePath("Tiles")
 previewTileMap = NodePath("PreviewTile")
@@ -157,8 +158,8 @@ expand_mode = 3
 
 [node name="TopbarSepMargin" type="MarginContainer" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup" unique_id=1831943124]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_right = 10
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
 
 [node name="HomeTileSeparator" type="VSeparator" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopbarSepMargin" unique_id=1938918365]
 layout_mode = 2
@@ -203,7 +204,12 @@ layout_mode = 2
 texture = ExtResource("10_racgb")
 expand_mode = 3
 
-[node name="SavePlaySeparator" type="VSeparator" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=245140535]
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=760380530]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="SavePlaySeparator" type="VSeparator" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup/MarginContainer" unique_id=245140535]
 layout_mode = 2
 
 [node name="PlayLevelButton" type="Button" parent="ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TopRightGroup" unique_id=960511629]
@@ -264,7 +270,6 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 0
 
 [node name="HomeToolSeparator" type="HSeparator" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/HomeToolSepMargin" unique_id=1868219100]
 layout_mode = 2
@@ -286,6 +291,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="SettingsGroupBottom" type="VBoxContainer" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer" unique_id=1710278780]
 layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="AssetManagerButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=293380868]
 custom_minimum_size = Vector2(60, 60)
@@ -313,6 +319,14 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 texture = ExtResource("13_hh704")
 expand_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=1266410473]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HSeparator" type="HSeparator" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom/MarginContainer" unique_id=720670943]
+layout_mode = 2
 
 [node name="LevelSettingsButton" type="Button" parent="ScreenUI/MainColumn/ContentRow/LeftToolRail/LeftToolColumn/MarginContainer/SettingsGroupBottom" unique_id=330056258]
 custom_minimum_size = Vector2(60, 60)
@@ -488,8 +502,15 @@ tileMap = NodePath("../Tiles")
 toolManager = NodePath("../ToolManager")
 editorManager = NodePath("..")
 
-[node name="LevelScreenshot" type="Camera2D" parent="." unique_id=1423987778]
+[node name="ScreenshotViewport" type="SubViewport" parent="." unique_id=1948037548]
+disable_3d = true
+msaa_2d = 1
+size = Vector2i(1920, 1080)
+render_target_update_mode = 0
+
+[node name="LevelScreenshot" type="Camera2D" parent="ScreenshotViewport" unique_id=1423987778 node_paths=PackedStringArray("screenshotViewport")]
 enabled = false
 script = ExtResource("25_fnjh2")
+screenshotViewport = NodePath("..")
 
 [editable path="CanvasLayer/AssetManager"]

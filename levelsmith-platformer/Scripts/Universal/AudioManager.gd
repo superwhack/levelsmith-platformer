@@ -125,11 +125,11 @@ func play_UI_effect(effectName: String) -> void:
 					if (player.get_playback_position() + AudioServer.get_time_since_last_mix() <= uiEffectCooldown):
 						return;
 	var fullPath : String = UI_AUDIO_LIBRARY_PATH + effectName;
-	if (FileAccess.file_exists(fullPath + ".mp3")):
+	if ResourceLoader.exists(fullPath + ".mp3"):
 		queue.append(fullPath + ".mp3");
-	elif (FileAccess.file_exists(fullPath + ".wav")):
+	elif ResourceLoader.exists(fullPath + ".wav"):
 		queue.append(fullPath + ".wav");
-	elif (FileAccess.file_exists(fullPath + ".ogg")):
+	elif ResourceLoader.exists(fullPath + ".ogg"):
 		queue.append(fullPath + ".ogg");
 
 ## Play the music track

@@ -61,6 +61,7 @@ var propButtons: Array[Button] = [];
 
 func _ready() -> void:
 	entityPropDropdown.item_selected.connect(entity_dropdown_select);
+	entityPropDropdown.get_popup().add_theme_constant_override("v_separation", 20);
 
 ## Toggles visibility of tile selection bar
 ## visibility: desired visibility

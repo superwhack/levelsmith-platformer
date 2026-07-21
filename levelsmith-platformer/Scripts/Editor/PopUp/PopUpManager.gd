@@ -79,6 +79,18 @@ func create_reset_image_popup(callback : Callable, asset : String = "asset") -> 
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
 	
+func create_delete_popup(callback: Callable, levelName : String = "LEVEL") -> void:
+	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
+	
+	newPopUp.set_title("Delete \"" + levelName + "\"?")
+	newPopUp.set_body_text("You are about to delete your \"" + levelName + "\" level. Are you sure you wish to proceed?");
+	newPopUp.set_reset_callback(callback);
+	newPopUp.resetButton.show();
+	newPopUp.resetButton.text = "Delete";
+	newPopUp.closeButton.text = "Cancel";
+	add_child(newPopUp);
+	currentPopUp = newPopUp;
+	
 	
 ## When saving a level, create the initial popup
 func create_save_popup() -> void:

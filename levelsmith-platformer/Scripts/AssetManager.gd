@@ -344,11 +344,13 @@ func open_file_selector() -> void:
 		fileSelect.add_filter("*.ogg");
 	fileSelect.popup_file_dialog();
 
-func file_selected(filePath : String) -> void:
+## Selects a new file, replacing it depending on it's type
+## path: the path of the file
+func file_selected(path : String) -> void:
 	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
-		imageSwapping.replace_image(filePath);
+		imageSwapping.replace_image(path);
 	elif (currentSelectedItem.type == AssetItem.AssetType.AUDIO):
-		audioSwapping.replace_audio(filePath);
+		audioSwapping.replace_audio(path);
 
 ## Creates a new missing texture for use when a texture is... missing.
 func get_missing_image() -> Image:

@@ -64,15 +64,6 @@ func _ready() -> void:
 		playerExists = false;
 		goalExists = false;
 	
-	var export_level = func() -> void:
-		unsavedChanges = false;
-		AudioManager.play_UI_effect("UISelection");
-		masterManager.propertyMenu.close();
-		var levelScreenshot : Image = await screenshot_level();
-		
-		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated);
-	
 	assetManagerButton.pressed.connect(open_asset_manager);
 	levelSettingsButton.pressed.connect(open_level_settings_menu);
 	globalSettingsButton.pressed.connect(masterManager.open_global_settings_menu);
@@ -100,18 +91,6 @@ func _process(_delta: float) -> void:
 	
 	# Save the mouse position to the previous frame
 	prevMousePosition = currentMousePosition;
-
-	
-## When the user does a save level input, save the level.
-## event: The user input
-func _input(event: InputEvent) -> void:
-	if (event.is_action_pressed("level_save")):
-		unsavedChanges = false;
-		masterManager.propertyMenu.close();
-		var levelScreenshot : Image = await screenshot_level();
-		ImportExportManager.save_level_screenshot(levelScreenshot);
-		ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated);
-
 
 ## Takes a screenshot of the level by hiding the UI and disabling the main camera
 ## returns; The image of the level
@@ -209,3 +188,13 @@ func close_level_settings_menu() -> void:
 	previewTileMap.show();
 	levelSettingsMenu.hide();
 	levelSettingsMenu.process_mode = Node.PROCESS_MODE_DISABLED;
+
+## Obtains the level screenshot and exports the current level to a folder
+func export_level() -> void:
+	unsavedChanges = false;
+	AudioManager.play_UI_effect("UISelection");
+	masterManager.propertyMenu.close();
+	var levelScreenshot : Image = await screenshot_level();
+	
+	ImportExportManager.save_level_screenshot(levelScreenshot);
+	ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated);

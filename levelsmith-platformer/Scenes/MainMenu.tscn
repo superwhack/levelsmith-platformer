@@ -1104,14 +1104,13 @@ layout_mode = 2
 [node name="WidthSpinBox" type="SpinBox" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow/InputsColumn" unique_id=699625108]
 layout_mode = 2
 min_value = 2.0
-max_value = 1000.0
+max_value = 150.0
 value = 20.0
-rounded = true
 
 [node name="HeightSpinBox" type="SpinBox" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow/InputsColumn" unique_id=1250217443]
 layout_mode = 2
 min_value = 2.0
-max_value = 1000.0
+max_value = 150.0
 value = 20.0
 
 [node name="GridButtonsSeparator2" type="HSeparator" parent="NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox" unique_id=190389457]

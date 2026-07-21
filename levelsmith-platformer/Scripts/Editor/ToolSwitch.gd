@@ -49,7 +49,7 @@ func swap_to_cursor() -> void:
 	# Change the selected tool and hotbar
 	toolManager.change_tool(Global.Tool.CURSOR);
 	# Set the dropdown state to that of the currently selected item
-	var dropdownState = tileSwitch.entityPropDropdown.get_selected_id();
+	var dropdownState : int = tileSwitch.entityPropDropdown.get_selected_id();
 	editorManager.change_current_hotbar(dropdownState + 1);
 	if (!cursorButton.button_pressed):
 		cursorButton.button_pressed = true;

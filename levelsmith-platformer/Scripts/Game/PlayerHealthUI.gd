@@ -18,14 +18,14 @@ var heartIcons: Array[TextureRect] = [];
 ## newPlayer : Player that should now be referenced
 func bind_player(newPlayer: Player) -> void:
 	# If there is currently a player and it has the health changed signal connected, remove the signal
-	if (player and player.healthChanged.is_connected(_on_player_health_changed)):
+	if (player && player.healthChanged.is_connected(_on_player_health_changed)):
 		player.healthChanged.disconnect(_on_player_health_changed);
 	# Set the player reference to the given player
 	player = newPlayer;
-	if (not player):
+	if (!player):
 		return;
 	# If the player does not have the health changed signal connected, connect it
-	if (not player.healthChanged.is_connected(_on_player_health_changed)):
+	if (!player.healthChanged.is_connected(_on_player_health_changed)):
 		player.healthChanged.connect(_on_player_health_changed);
 	# Sync to the player's values
 	sync_to_player();
@@ -33,7 +33,7 @@ func bind_player(newPlayer: Player) -> void:
 ## Sync all important values to those of the player
 func sync_to_player() -> void:
 	# If there is no player, return
-	if (not player):
+	if (!player):
 		return;
 	
 	# Call all functions to display hearts based on the player's values
@@ -68,7 +68,7 @@ func _on_player_health_changed(newHealth: int) -> void:
 ## currentHealth : The health the the visuals are being applied based on
 func apply_health_visuals(currentHealth: int) -> void:
 	# If the player is not being referenced, return
-	if (not player):
+	if (!player):
 		return;
 	# Loop through all heart icons, set them visible and set their texture based on whether they are currently full or not
 	for i in range(heartIcons.size()):

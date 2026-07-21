@@ -2,16 +2,16 @@
 
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_rshqi"]
-[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
+[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
 [ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="3_rshqi"]
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_7puos"]
 [ext_resource type="Texture2D" uid="uid://dfco244lcptog" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="4_o8nck"]
-[ext_resource type="Texture2D" uid="uid://do1aligfv3wmg" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
-[ext_resource type="Texture2D" uid="uid://dxag1j2w8yhjg" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
-[ext_resource type="FontFile" uid="uid://dp7iib08p6748" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="6_rrs8o"]
-[ext_resource type="Texture2D" uid="uid://cyvay03qvsu6l" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
-[ext_resource type="Texture2D" uid="uid://de45lgysplr4h" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
-[ext_resource type="Texture2D" uid="uid://iyxcim187e44" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
+[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
+[ext_resource type="Texture2D" uid="uid://b265lhxnenhhc" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
+[ext_resource type="FontFile" uid="uid://ibgv3ey3taus" path="res://Assets/Fonts/JetBrainsMono-SemiBold.ttf" id="6_rrs8o"]
+[ext_resource type="Texture2D" uid="uid://0onmix4wl65q" path="res://Assets/Sprites/UI/Decrement.png" id="7_clgtw"]
+[ext_resource type="Texture2D" uid="uid://d3asu86y8w1gu" path="res://Assets/Sprites/UI/Increment.png" id="8_ukhnw"]
+[ext_resource type="Texture2D" uid="uid://cq6ndlm5t7xwj" path="res://Assets/Sprites/UI/TempAudioMedium.png" id="9_ssly3"]
 [ext_resource type="Script" uid="uid://cy0omeeqj1evc" path="res://Scripts/Universal/ImageSwapping.gd" id="10_clgtw"]
 [ext_resource type="Script" uid="uid://pgp1usxbcoyf" path="res://Scripts/Universal/AnimationSwapping.gd" id="11_ukhnw"]
 [ext_resource type="Script" uid="uid://cd1ukd2otaojf" path="res://Scripts/Universal/AudioSwapping.gd" id="12_qbbei"]
@@ -190,16 +190,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -96.0
+offset_top = -96.0
+offset_right = 32.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+offset_transform_position = Vector2(136, 136)
 texture = ExtResource("3_rshqi")
 
 [node name="AnimationPreview" type="Panel" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=126647044]
-visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 
@@ -219,12 +220,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -96.0
+offset_top = -96.0
+offset_right = 32.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("3_rshqi")
 
 [node name="FrameCountLabel" type="Label" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview" unique_id=1192766192]
@@ -341,6 +343,7 @@ text = "Stop
 "
 
 [node name="AudioPreview" type="Panel" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer" unique_id=1493625619]
+visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 

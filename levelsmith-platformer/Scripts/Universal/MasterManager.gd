@@ -83,8 +83,6 @@ func _ready() -> void:
 ## When the user does a save level input, save the level.
 ## event: The user input
 func _input(event: InputEvent) -> void:
-	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated);
 	if event.is_action_pressed("toggle-fullscreen"):
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
@@ -134,7 +132,7 @@ func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) ->
 	
 	worldSize = newSize;
 	cameraManager.initialize_camera();
-	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.levelSettingsMenu);
+	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize);
 	propertyMenu.reset_custom();
 	loadedLevelPath = "user://Levels/" + levelName + "/";
 	#AudioManager.masterVolume = 0;
@@ -163,7 +161,8 @@ func create_bedrock_border() -> void:
 		tileMap.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_WALL, Vector2i.ZERO, 3);
 
 ## Imports a level 
-func import_level_and_edit(play: bool = false) -> void:
+## startPlay: Starts the level in play mode
+func import_level_and_edit(startPlay: bool = false) -> void:
 	ImportExportManager.clear_enemies_folder();
 	for childNode in editorManager.tileMap.get_children():
 		childNode.free();
@@ -176,19 +175,20 @@ func import_level_and_edit(play: bool = false) -> void:
 	cameraManager.initialize_camera();
 	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.levelSettingsMenu);
 	ImportExportManager.levelImported.emit();
-	if (play): play();
+	if (startPlay): play();
 	else: edit();
 	#propertyMenu._on_preset_options_item_selected(4);
 	await get_tree().process_frame
 
 ## Loads the given level to the player.
 ## levelPath: The folder path of the level.
-func load_level(levelPath: String, play: bool = false) -> void:
+## startPlay: Starts the level in play mode
+func load_level(levelPath: String, startPlay: bool = false) -> void:
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
 		# Await so that the camera gets properly placed
-		await import_level_and_edit(play);
+		await import_level_and_edit(startPlay);
 
 ## Checks if the level has unsaved changes, and creates a popup with appropriate functions.
 ## on_continue: A callable function, for going to main menu or force quitting app.

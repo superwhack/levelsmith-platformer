@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://dpituch0v2gjd"]
+
+[ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_pxnnb"]
+[ext_resource type="Shader" uid="uid://cdtehxsgxkdly" path="res://Assets/Shaders/ditherfadesquare.gdshader" id="1_qjfah"]
+[ext_resource type="Texture2D" uid="uid://dw1ckaqkfernr" path="res://Assets/UserInterface/Logo.png" id="2_8iyg2"]
+[ext_resource type="Script" uid="uid://bo15iarrshpfe" path="res://Scripts/WebPopUp.gd" id="2_8td68"]
+[ext_resource type="FontFile" uid="uid://3kn4gprbeda" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="2_bbcve"]
+[ext_resource type="FontFile" uid="uid://ych4d6j6jc2x" path="res://Assets/Fonts/JetBrainsMono-Light.ttf" id="4_e146t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ahjbw"]
+shader = ExtResource("1_qjfah")
+shader_parameter/progress = 1.0
+shader_parameter/dither_scale = 6.34800025403
+shader_parameter/edge_softness = 0.70000003255148
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/item_size = Vector2(1, 1)
+
+[node name="WebPopUp" type="Control" unique_id=1491555235 node_paths=PackedStringArray("continueButton", "body", "subViewportContainer")]
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_pxnnb")
+script = ExtResource("2_8td68")
+continueButton = NodePath("SubViewportContainer/SubViewport/Overlay/VBoxContainer/ContinueMargin/Continue")
+body = NodePath("SubViewportContainer/SubViewport/Overlay/VBoxContainer/Body")
+subViewportContainer = NodePath("SubViewportContainer")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=323937651]
+material = SubResource("ShaderMaterial_ahjbw")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=992666075]
+size = Vector2i(1920, 1080)
+
+[node name="Overlay" type="Panel" parent="SubViewportContainer/SubViewport" unique_id=158279013]
+material = SubResource("ShaderMaterial_ahjbw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/Overlay" unique_id=208683989]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -538.5
+offset_right = 538.5
+offset_bottom = 205.0
+grow_horizontal = 2
+
+[node name="LogoMargin" type="MarginContainer" parent="SubViewportContainer/SubViewport/Overlay/VBoxContainer" unique_id=1124017880]
+layout_mode = 2
+theme_override_constants/margin_top = 40
+
+[node name="F2D" type="TextureRect" parent="SubViewportContainer/SubViewport/Overlay/VBoxContainer/LogoMargin" unique_id=278815499]
+custom_minimum_size = Vector2(390, 150)
+custom_maximum_size = Vector2(390, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_8iyg2")
+
+[node name="WelcomeMargin" type="MarginContainer" parent="SubViewportContainer/SubViewport/Overlay/VBoxContainer" unique_id=90051767]
+layout_mode = 2
+theme_override_constants/margin_top = 51
+
+[node name="WelcomeText" type="Label" parent="SubViewportContainer/SubViewport/Overlay/VBoxContainer/WelcomeMargin" unique_id=805397942]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bbcve")
+theme_override_font_sizes/font_size = 46
+text = "Welcome to Foundry 2D's official web build!"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/SubViewport/Overlay/VBoxContainer" unique_id=675885821]
+layout_mode = 2
+
+[node name="Body" type="RichTextLabel" parent="SubViewportContainer/SubViewport/Overlay/VBoxContainer" unique_id=1047770884]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("4_e146t")
+theme_override_font_sizes/normal_font_size = 39
+bbcode_enabled = true
+text = "We greatly appreciate you checking out the web version of our application! 
+
+Unfortunately, due to some constraints with the virtual file system included with Itch.io, certain features such as importing levels and modifying assets are unavailable. Thus, we recommend that you either download the full application from further down this page, or from our [url=https://store.steampowered.com/app/1184370/Pathfinder_Wrath_of_the_Righteous__Enhanced_Edition/]Steam page[/url]."
+fit_content = true
+horizontal_alignment = 1
+
+[node name="ContinueMargin" type="MarginContainer" parent="SubViewportContainer/SubViewport/Overlay/VBoxContainer" unique_id=176941549]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_top = 50
+
+[node name="Continue" type="Button" parent="SubViewportContainer/SubViewport/Overlay/VBoxContainer/ContinueMargin" unique_id=2062916342]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("2_bbcve")
+theme_override_font_sizes/font_size = 51
+text = "Continue"

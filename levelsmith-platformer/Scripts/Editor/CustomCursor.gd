@@ -17,6 +17,9 @@ enum SelectorState {
 }
 var selectorState : SelectorState = SelectorState.DEFAULT;
 
+# Cursor texture is saved, to prevent updates every frame.
+var currentCursorTexture : Texture2D = null;
+
 # instantiated sprites
 var selectorFrame : Sprite2D;
 var entityHighlight : Sprite2D;
@@ -71,7 +74,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# If global state is not in edit, set to cursor icon and bail out
 	if (masterManager.state != Global.State.EDIT || editorManager.masterManager.propertyMenu.visible):
-		Input.set_custom_mouse_cursor(uiCursor);
+		change_cursor(uiCursor);
 		return;
 	# Set the current mouse position and place the selector frame and invalid sprite to the correct locations
 	currentMousePosition = editorManager.currentMousePosition;
@@ -100,21 +103,22 @@ func _process(_delta: float) -> void:
 	var popup = editorManager.toolManager.tileSwitch.entityPropDropdown.get_popup().visible;
 	
 	if (hoveredControl != null || popup):
-		Input.set_custom_mouse_cursor(uiCursor);
+		change_cursor(uiCursor);
 	else:
 		match (toolManager.currentTool):
 			Global.Tool.BRUSH:
-				Input.set_custom_mouse_cursor(brushIcon if editorManager.isPlaceable else brushInvalid);
+				change_cursor(brushIcon if editorManager.isPlaceable else brushInvalid);
 			Global.Tool.BOX_BRUSH:
-				Input.set_custom_mouse_cursor(boxBrushIcon if editorManager.isPlaceable else boxBrushInvalid);
+				change_cursor(boxBrushIcon if editorManager.isPlaceable else boxBrushInvalid);
 			Global.Tool.CURSOR:
 				if (toolManager.isMoving):
-					Input.set_custom_mouse_cursor(cursorMove if editorManager.isPlaceable else cursorMoveInvalid);
+					change_cursor(cursorMove if editorManager.isPlaceable else cursorMoveInvalid);
 				elif (isEditing):
-					Input.set_custom_mouse_cursor(cursorEdit if editorManager.isPlaceable else cursorEditInvalid);
+					change_cursor(cursorEdit if editorManager.isPlaceable else cursorEditInvalid);
 				else:
-					Input.set_custom_mouse_cursor(cursorIcon if editorManager.isPlaceable else cursorInvalid);
-	
+					change_cursor(cursorIcon if editorManager.isPlaceable else cursorInvalid);
+
+
 ## Shows the selector frame.
 func show_selector_frame() -> void:
 	selectorFrame.show();
@@ -155,3 +159,9 @@ func update_selector_state() -> void:
 func highlight_selected_entity(entityPosition: Vector2) -> void:
 	entityHighlight.position = entityPosition * Global.TILE_SIZE + Vector2(Global.TILE_SIZE / 2.0, Global.TILE_SIZE / 2.0);
 	entityHighlight.show();
+	
+## Setting the cursor every frame can break on web builds. This helps prevent glitchy custom cursors.
+func change_cursor(new_cursor: Texture2D) -> void:
+	if (currentCursorTexture != new_cursor):
+		currentCursorTexture = new_cursor;
+		Input.set_custom_mouse_cursor(new_cursor);

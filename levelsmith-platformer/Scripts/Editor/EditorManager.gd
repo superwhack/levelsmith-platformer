@@ -21,6 +21,7 @@ extends Node2D
 
 # Asset Manager and Button
 @export var assetManager : AssetManager;
+@export var assetManagerSeparator : HSeparator
 @export var assetManagerButton : Button;
 @export var closeAssetManagerButton : Button;
 
@@ -54,6 +55,11 @@ var tileCount : int = Global.TileType.size();
 
 ## Runs when the node first enters the tree
 func _ready() -> void:
+	
+	if (OS.has_feature("web")):
+		assetManagerButton.hide();
+		assetManagerSeparator.hide();
+		
 	var reset_player_and_goal = func() -> void:
 		playerExists = false;
 		goalExists = false;

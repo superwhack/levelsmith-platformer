@@ -240,7 +240,7 @@ func level_complete() -> void:
 	winScreen.show();
 	bottomScreenGroup.hide();
 	winScreenHealthUI.bind_player(player);
-	winScreenHealthUI._sync_to_player();
+	winScreenHealthUI.sync_to_player();
 	masterManager.editorManager.isValidated = true;
 	ImportExportManager.set_metadata(masterManager.loadedLevelPath, "validated", true);
 

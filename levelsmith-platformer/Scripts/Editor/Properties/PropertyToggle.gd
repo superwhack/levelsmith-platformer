@@ -1,9 +1,11 @@
 extends VBoxContainer
 
-# Variables for different parts of the CheckBox
-@export var propertyName : String;
+@export_group("Set in Toggle Scene")
 @export var nameLabel : Label; 
 @export var checkBox : CheckBox;
+
+@export_group("Set in Property Menu")
+@export var propertyName : String;
 
 signal check_changed;
 
@@ -22,7 +24,7 @@ func update_checkbox() -> void:
 
 ## Runs when the checkbox gets pressed
 func _box_clicked() -> void:
-	if !enabled:
+	if (!enabled):
 		checkBox.button_pressed = value;
 		return;
 	value = checkBox.button_pressed;

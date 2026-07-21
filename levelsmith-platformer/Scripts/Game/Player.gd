@@ -269,7 +269,6 @@ func apply_state_logic( delta: float ) :
 				if ( wallJumpConditionsMet ) : 
 					set_state( PlayerState.WALL_JUMPING );
 				elif ( doubleJumpAvailable ) :
-					currentSlowdown = 1.0;
 					doubleJumpAvailable = false;
 					set_state( PlayerState.JUMPING );
 			justWallJumped = false;
@@ -388,6 +387,7 @@ func set_state( state : PlayerState, function : Callable = Callable()) -> void:
 			jumpInput = false;
 			coyoteTimeLeft = 0.0;
 			jump();
+			AudioManager.play_effect("Jump");
 			animatedSprites.play("PlayerJump");
 			currentState = PlayerState.JUMPING;
 			print( "set_state JUMPING" );
@@ -419,21 +419,27 @@ func set_state( state : PlayerState, function : Callable = Callable()) -> void:
 			print( "set_state SLIDING" );
 			
 		PlayerState.TILE_EFFECT_BOUNCE :
+			AudioManager.play_effect("BounceTile");
 			animatedSprites.play("PlayerJump");
 			currentState = PlayerState.JUMPING;
 			print( "set_state TILE_EFFECT_BOUNCE ( JUMPING )" );
 			
 		PlayerState.HURT :
-			currentState = PlayerState.HURT;
+			if ( currentState == PlayerState.HURT || currentState == PlayerState.DEAD ) :
+				return;
 			function.call();
+			if ( health > 0 ) :
+				AudioManager.play_effect("Hurt");
 			invulnerabilityCurrent = invulnerabilityTimer;
 			animatedSprites.play("PlayerHurt");
 			animatedSprites.flip_h = velocity.x > 0;
+			currentState = PlayerState.HURT;
 			print( "set_state HURT" );
 			
 		PlayerState.DEAD :
 			velocity = Vector2.ZERO;
 			currentWalkingEffect = Global.WalkingEffect.NONE;
+			AudioManager.play_effect("PlayerDie");
 			animatedSprites.play("PlayerDeath");
 			animatedSprites.flip_h = false;
 			currentState = PlayerState.DEAD;
@@ -441,9 +447,13 @@ func set_state( state : PlayerState, function : Callable = Callable()) -> void:
 			die();
 			
 		PlayerState.VICTORY :
-			currentState = PlayerState.VICTORY;
-			animatedSprites.animation == "PlayerVictory";
+			
+			victory = true;
+			AudioManager.play_effect("Victory");
+			animatedSprites.play("PlayerVictory");
 			animatedSprites.flip_h = false;
+			currentState = PlayerState.VICTORY;
+			
 			print( "set_state VICTORY" );
 
 ## Event for when an animation is done playing
@@ -458,7 +468,6 @@ func on_animation_finished() -> void:
 ## Make the player jump
 func jump() -> void:
 	isPlayerGrounded = false;
-	AudioManager.play_effect("Jump");
 	velocity.y = -sqrt(jumpHeight) * 496 * currentSlowdown * sqrt(fallSpeed);
 
 ## Handle left and right movement logic, with the inclusion of if there is no input
@@ -548,13 +557,11 @@ func take_damage(amount: int, direction: Vector2 = Vector2(0, 0), higherBounce :
 	if ( isPlayerGrounded && !onFloorBypass ):
 		velocity *= pow(max(3, groundSpeed), .9);
 	health -= amount;
-	AudioManager.play_effect("Hurt");
 	return true;
 	
 ## Kill the player and send the global death signal
 func die() -> void:
 	health = -1;
-	AudioManager.play_effect("PlayerDie");
 
 ## Remove enemies or projectiles when no longer inside of them
 ## body: the body or area to remove from the array
@@ -574,9 +581,7 @@ func detect_enemies(body: Node2D) -> void:
 		if enemiesInside.find(body) == -1:
 			enemiesInside.append(body);
 		# Hurt Player
-		if ( currentState != PlayerState.HURT && currentState != PlayerState.DEAD ) :
-			set_state( PlayerState.HURT, take_damage.bind(1, direction.normalized()) );
-		#else : set_state( PlayerState.DEAD );
+		set_state( PlayerState.HURT, take_damage.bind( 1, direction.normalized()) );
 
 ## Detect collisions between enemies and the bounce area
 ## body: the body being collided with
@@ -599,8 +604,7 @@ func detect_projectiles(area: Area2D) -> void:
 		var direction : Vector2 = position - area.position;
 		
 		# Hurt Player
-		if ( currentState != PlayerState.HURT ) :
-			set_state( PlayerState.HURT, take_damage.bind(1, direction.normalized()) );
+		set_state( PlayerState.HURT, take_damage.bind(1, direction.normalized()) );
 		#else : set_state( PlayerState.DEAD );
 		area.queue_free();
 
@@ -613,8 +617,7 @@ func detect_projectile_bounce(area: Area2D) -> void:
 		else:
 			var direction : Vector2 = position - area.position;
 			# Hurt Player
-			if ( currentState != PlayerState.HURT ) :
-				set_state( PlayerState.HURT, take_damage.bind(1, direction.normalized()) );
+			set_state( PlayerState.HURT, take_damage.bind(1, direction.normalized()) );
 			#else : set_state( PlayerState.DEAD );
 		area.queue_free();
 
@@ -762,7 +765,6 @@ func detect_tiles() -> void:
 		if (tileName == "bounce"):
 			isPlayerGrounded = false;
 			wallJumpCount = 0;
-			AudioManager.play_effect("BounceTile");
 			currentSlowdown = 1.0;
 			set_state( PlayerState.TILE_EFFECT_BOUNCE );
 			# Horizontal bounces
@@ -789,7 +791,7 @@ func detect_tiles() -> void:
 			
 		# Sticky Tiles
 		elif (tileData && (tileData.get_custom_data("name") == "slow")):
-			var slimeNoiseThreshold : float = 5.0;
+			var slimeNoiseThreshold : float = 2.5;
 			if ( ( rayDirection.y > 0 && abs( get_real_velocity().x ) > slimeNoiseThreshold ) || wallSlideConditionsMet ) :
 				currentWalkingEffect = Global.WalkingEffect.SLIME;
 				currentFriction = 1;
@@ -866,9 +868,7 @@ func check_out_of_bounds() -> bool:
 func play_victory() -> void:
 	if (victory): 
 		return;
-	victory = true;
-	AudioManager.play_effect("Victory");
-	animatedSprites.play("PlayerVictory");
+	set_state( PlayerState.VICTORY );
 
 ## Applies the player selected player movement preset to the player
 func apply_preset(preset: PlayerMovementPreset) -> void:

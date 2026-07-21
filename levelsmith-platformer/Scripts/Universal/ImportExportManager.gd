@@ -201,6 +201,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		"oneways": playerData.playerOneways,
 		"doubleJump": playerData.playerDoubleJump,
 		"wallJump": playerData.playerWallJump,
+		"wallJumpStrength": playerData.playerWallJumpStrength,
 		"wallJumpDecay": playerData.playerWallJumpDecay
 	};
 
@@ -436,6 +437,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: Panel) -> v
 	playerData.playerOneways = player.get("oneways", playerData.playerOneways);
 	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
 	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);
+	playerData.playerWallJumpStrength = player.get("wallJumpStrength", playerData.playerWallJumpStrength);
 	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);
 	playerData.update_custom();
 	playerData.update_sliders();

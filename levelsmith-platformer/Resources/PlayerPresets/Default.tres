@@ -13,5 +13,4 @@ airControl = 100.0
 fallSpeed = 1.2
 coyoteTime = 0.1
 oneways = true
-wallJumpStength = 1.0
 metadata/_custom_type_script = "uid://bp8erofrb01fc"

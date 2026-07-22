@@ -218,7 +218,7 @@ func check_unsaved_changes(on_continue: Callable, exit: ExitAction) -> void:
 	var save = func() -> void:
 		editorManager.unsavedChanges = false;
 		AudioManager.play_UI_effect("UISelection");
-		var levelScreenshot : Image = await editorManager.screenshot_level();
+		var levelScreenshot : Image = await editorManager.levelScreenshotCamera.get_level_screenshot();
 		ImportExportManager.save_level_screenshot(levelScreenshot);
 		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated);
 		on_continue.call();

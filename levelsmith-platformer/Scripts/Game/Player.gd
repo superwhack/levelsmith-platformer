@@ -109,6 +109,8 @@ var iceAccelerationFactor : float = .2;
 
 var isPlayerGrounded : bool = true;
 
+var tileName : String;
+
 # The selected movement preset
 # TODO: Make it so that it selects the DefaultMovement preset automatically 
 @export var playerMovementPreset : PlayerMovementPreset;
@@ -127,7 +129,7 @@ var fallAnimStarted : bool = false;
 
 var victory : bool = false;
 
-var debugLabel: Label;
+#var debugLabel: Label;
 
 ## Runs once on instantiation
 func _ready() -> void:
@@ -144,8 +146,8 @@ func _ready() -> void:
 	#for animationName in animatedSprites.sprite_frames.get_animation_names():
 		#AnimationManager.replace_animation_by_name(animatedSprites, animationName);
 	
-	
-	get_tree().current_scene.add_child(debugLabel);
+	#debugLabel = Label.new();
+	#get_tree().current_scene.add_child(debugLabel);
 	
 	animatedSprites.sprite_frames = AnimationManager.playerTemplateSprite.sprite_frames;
 	
@@ -212,9 +214,11 @@ func _physics_process(delta: float) -> void:
 							#+ "\n wallJumpDir: %s" % wallJumpDirection \
 							#+ "\n wallJumpCount: %s" % wallJumpCount \
 							#+ "\n velocity.x: %f" % velocity.x \
-							#+ "\n wallSlideConditions: %s" % wallSlideConditionsMet;
+							#+ "\n wallSlideConditions: %s" % wallSlideConditionsMet \
+							#+ "\n isGrounded: %s" % isPlayerGrounded \
+							#+ "\n justWallJumped: %s" % justWallJumped;
 	#
-	#debugLabel.position = Vector2( position.x - 180, position.y - 180 );
+	#debugLabel.position = Vector2( position.x - 240, position.y - 180 );
 	#debugLabel.text = debugText;
 
 ## Handle all state switch & player logic 
@@ -236,7 +240,7 @@ func apply_state_logic( delta: float ) :
 		PlayerState.GROUNDED:
 			wallJumpDirection = WallDirection.NONE;
 			if ( isPlayerGrounded ) :
-				if ( moveInput ) : 
+				if ( moveInput && groundSpeed != 0 ) :
 					set_state( PlayerState.RUNNING );
 				elif ( jumpInput ) :
 					set_state( PlayerState.JUMPING );
@@ -245,6 +249,7 @@ func apply_state_logic( delta: float ) :
 
 # Running state
 		PlayerState.RUNNING:
+			wallJumpDirection = WallDirection.NONE;
 			if ( isPlayerGrounded ) :
 				if ( !moveInput ) : 
 					set_state( PlayerState.GROUNDED );
@@ -256,10 +261,10 @@ func apply_state_logic( delta: float ) :
 # Jumping state
 		PlayerState.JUMPING:
 			if ( isPlayerGrounded ) :
-				if ( !moveInput ) : 
-					set_state( PlayerState.GROUNDED );
-				else :
+				if ( moveInput && groundSpeed != 0 ) :
 					set_state( PlayerState.RUNNING );
+				else :
+					set_state( PlayerState.GROUNDED );
 			elif ( wallSlideConditionsMet ) :
 				set_state( PlayerState.SLIDING );
 			elif ( velocity.y > 0.5 ) :
@@ -281,10 +286,10 @@ func apply_state_logic( delta: float ) :
 			stateTimeLeft -= delta;
 
 			if ( isPlayerGrounded ) :
-				if ( !moveInput ) : 
-					set_state( PlayerState.GROUNDED );
-				else :
+				if ( moveInput && groundSpeed != 0 ) :
 					set_state( PlayerState.RUNNING );
+				else :
+					set_state( PlayerState.GROUNDED );
 				#retainWallJumpAnimDir();
 			elif ( wallSlideConditionsMet && !justWallJumped ) :
 				set_state( PlayerState.SLIDING );
@@ -312,7 +317,7 @@ func apply_state_logic( delta: float ) :
 				if ( jumpInput ) :
 					set_state( PlayerState.JUMPING );
 			if ( isPlayerGrounded ) :
-				if ( moveInput ) : 
+				if ( moveInput && groundSpeed != 0 ) :
 					set_state( PlayerState.RUNNING );
 				else : 
 					set_state ( PlayerState.GROUNDED );
@@ -331,10 +336,10 @@ func apply_state_logic( delta: float ) :
 				set_state( PlayerState.WALL_JUMPING );
 			elif ( !wallSlideConditionsMet ) :
 				if ( isPlayerGrounded ) :
-					if ( moveInput ) : 
+					if ( moveInput && groundSpeed != 0 ) : 
 						set_state( PlayerState.RUNNING );
-					elif ( jumpInput ) :
-						set_state( PlayerState.JUMPING );
+					else :
+						set_state( PlayerState.GROUNDED );
 				else :
 					set_state( PlayerState.FALLING );
 # Hurt state
@@ -377,6 +382,8 @@ func set_state( state : PlayerState, function : Callable = Callable()) -> void:
 			print( "set_state GROUNDED" );
 			
 		PlayerState.RUNNING :
+			if ( groundSpeed == 0 ) :
+				return;
 			doubleJumpAvailable = doubleJump;
 			animatedSprites.play("PlayerRun");
 			currentState = PlayerState.RUNNING;
@@ -473,7 +480,7 @@ func jump() -> void:
 func walk() -> void:
 	# Acceration in the X direction for the player
 	var accelerationX : float;
-	if !victory:
+	if !victory && groundSpeed!=0 :
 		direction = Input.get_axis("left", "right");
 	else:
 		direction = 0;
@@ -528,7 +535,7 @@ func walk() -> void:
 				accelerationX *= .05;
 		
 	# Velocity gets capped so you can't accelerate faster
-	elif (abs(velocity.x + accelerationX) > trueSpeed && groundSpeed != 0):
+	elif ( abs( velocity.x + accelerationX ) > trueSpeed && groundSpeed != 0 ):
 		if (abs(velocity.x) > trueSpeed):
 			var ratio = pow(trueSpeed / abs(velocity.x), .07);
 			velocity.x *= ratio;
@@ -610,6 +617,8 @@ func detect_projectiles(area: Area2D) -> void:
 ## Detect collisions between projectiles and the bounce area
 ## area: the area being collided with
 func detect_projectile_bounce(area: Area2D) -> void:
+	if ( currentState == PlayerState.DEAD || currentState == PlayerState.VICTORY ) :
+			return;
 	if (area.is_in_group("Projectile")):
 		if area.bounceable:
 			set_state( PlayerState.BOUNCING );
@@ -682,7 +691,8 @@ func resolve_wall_jumping() -> void:
 			wallJumpDirection = WallDirection.RIGHT;
 
 		# If no input pressed wall slide is false
-		if !( ( Input.is_action_pressed("left") && rayDirection.x < 0 ) || ( Input.is_action_pressed("right") && rayDirection.x > 0 ) ) : 
+		if !( ( Input.is_action_pressed("left") && rayDirection.x < 0 ) \
+			|| ( Input.is_action_pressed("right") && rayDirection.x > 0 ) ) : 
 			return;
 			
 		wallSlideConditionsMet = true;
@@ -697,10 +707,22 @@ func wall_jump() :
 		wallJumpCount = 1;
 	
 	if ( wallJumpDirection == WallDirection.RIGHT ) :
-		velocity.x = 800 * pow(groundSpeed, .8) * wallJumpStrength;
+		velocity.x = 1000 * wallJumpStrength;
 	else :
-		velocity.x = -800 * pow(groundSpeed, .8) * wallJumpStrength;
-	velocity.y = -375 * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(min(groundSpeed, 1), .35);
+		velocity.x = -1000 * wallJumpStrength;
+	velocity.y = -375 * jumpHeight * sqrt(1.0 / wallJumpCount) ;
+	
+	if tileName != "ice":
+		currentFriction = 1.0;
+		
+	# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)
+	if ( tileName == "slow" || tileName == "ice" ):
+		velocity.x /= 1.2;
+	
+	if ( tileName == "slow" ) :
+		velocity.y /= 1.5;
+	
+	
 	justWallJumped = true;	
 
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
@@ -743,22 +765,26 @@ func detect_tiles() -> void:
 		if !tileData || slideCollisionsHit.find(tileData) > -1:
 			continue;
 		slideCollisionsHit.push_back(tileData);
-		var tileName : String = tileData.get_custom_data("name");
+		tileName = tileData.get_custom_data("name");
 		var rayDirection : Vector2 = raycast.target_position;
 		
-			# Wall Slide when not on ice
-		if ( wallSlideConditionsMet ):
+			# Only create wallslide friction if tile is not ice
+		if ( currentState == PlayerState.SLIDING && groundSpeed != 0 ):
 			if tileName != "ice":
-				velocity.y *= .94;
+				velocity.y *= .93;
 			if tileName != "slow":
 				currentSlowdown = 1.0;
+			
+		if ( wallJumpConditionsMet ) :
+			if ( tileName == "ice" ) :
+				currentFriction = iceFriction;
 		
-		if ( wallJumpConditionsMet ):		
-			if tileName != "ice":
-				currentFriction = 1.0;
-			# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)
-			if tileName == "slow" || tileName == "ice":
-				velocity.x /= 1.5;
+		#if ( wallJumpConditionsMet ):		
+			#if tileName != "ice":
+				#currentFriction = 1.0;
+			## Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)
+			#if tileName == "slow" || tileName == "ice":
+				#velocity.x /= 1.5;
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):
@@ -783,21 +809,22 @@ func detect_tiles() -> void:
 					doubleJumpAvailable = doubleJump;
 					coyoteTimeLeft = 0.0;
 					velocity.y = -1000 * sqrt(fallSpeed) * bounceTileHeight;
-					if ( velocity.x > 0 && leftInput ) :
+					if ( velocity.x > 0 && leftInput && groundSpeed!=0 ) :
 						velocity.x /= 2;
-					elif ( velocity.x < 0 && rightInput ) :
+					elif ( velocity.x < 0 && rightInput && groundSpeed!=0 ) :
 						velocity.x /= 2;
 			
 		# Sticky Tiles
 		elif (tileData && (tileData.get_custom_data("name") == "slow")):
 			var slimeNoiseThreshold : float = 2.5;
-			if ( ( rayDirection.y > 0 && abs( get_real_velocity().x ) > slimeNoiseThreshold ) || wallSlideConditionsMet ) :
+			if ( ( rayDirection.y > 0 && abs( get_real_velocity().x ) > slimeNoiseThreshold ) || wallJumpConditionsMet ) :
 				currentWalkingEffect = Global.WalkingEffect.SLIME;
 				currentFriction = 1;
 				
 			# Horizontal Stick
 			if (abs(raycast.target_position.x) > abs(raycast.target_position.y)):
 				velocity.y *= .9;
+				currentSlowdown = .5;
 				slidingSticky = true;
 				# Vertical Stick
 			## NOTE: Uncomment this to turn on the ability for the player to 'climb' on the bottom of sticky tiles

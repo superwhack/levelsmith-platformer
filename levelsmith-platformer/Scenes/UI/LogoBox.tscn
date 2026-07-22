@@ -47,7 +47,7 @@ expand_mode = 3
 
 [node name="Label" type="Label" parent="SteamButton/MarginContainer/HBoxContainer" unique_id=522378092]
 layout_mode = 2
-text = "Steam Page"
+text = "Steam Page  -- Replace the link"
 
 [node name="ItchButton" type="Button" parent="." unique_id=1608734630]
 custom_minimum_size = Vector2(0, 50)

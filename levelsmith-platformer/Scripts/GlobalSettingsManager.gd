@@ -13,9 +13,6 @@ var settingsPath := "user://settings.cfg";
 @export var SFXVolume : VBoxContainer;
 @export var musicVolume : VBoxContainer;
 
-# Reference to the editor manager
-@export var editorManager : Node2D;
-
 var musicPreviewing := false;
 
 const BASE_VOLUME_VALUE : float = 70.0;

@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://dldr7iy6j6qgc" path="res://Assets/UserInterface/UpdatedIcons/export.png" id="19_3u44c"]
 [ext_resource type="Texture2D" uid="uid://b7ifia0h6vfsk" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
 [ext_resource type="Texture2D" uid="uid://yu2ukie5a6cg" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
+[ext_resource type="PackedScene" uid="uid://xr5wkr0v56pj" path="res://Scenes/UI/LogoBox.tscn" id="25_iqn0u"]
 
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="21_leunp"]
 [ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="22_h1v62"]
@@ -1520,7 +1521,7 @@ theme_override_constants/margin_left = 45
 theme_override_constants/margin_top = -5
 theme_override_constants/margin_right = 45
 
-[node name="LogoContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/MarginContainer" unique_id=276867774 instance=ExtResource("25_iqn0u")]
+[node name="LogoBox" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/MarginContainer" unique_id=276867774 instance=ExtResource("25_iqn0u")]
 layout_mode = 2
 
 [node name="FooterMargin" type="MarginContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox" unique_id=1609738927]

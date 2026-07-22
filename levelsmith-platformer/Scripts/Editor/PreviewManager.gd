@@ -11,6 +11,7 @@ var brushObject : int;
 var currentMousePosition : Vector2;
 var prevMousePosition : Vector2;
 
+# Entity preview (for asset swapping compatibility
 var entityPreviewSprite : Sprite2D = Sprite2D.new();
 
 func _ready() -> void:
@@ -18,7 +19,7 @@ func _ready() -> void:
 
 ## Runs every frame during the editing state.
 ## _delta: how much time has passed since the previous frame
-func _process(_delta: float) -> void:
+func _process(_delta : float) -> void:
 	brushObject = toolManager.brushObject;
 	currentMousePosition = editorManager.currentMousePosition;
 	
@@ -36,11 +37,12 @@ func _process(_delta: float) -> void:
 ## Hooks the preview tile to the mouse position and moves it when necessary
 ## mousePosition: Where the mouse currently is in grid coordinates
 ## prevPosition: Where the mouse previously was in grid coordinates
-func update_preview_object(mousePosition: Vector2, prevPosition: Vector2, previewObject: int = brushObject, isRed: bool = false) -> void:
+func update_preview_object(mousePosition : Vector2, prevPosition : Vector2, previewObject : int = brushObject, isRed : bool = false) -> void:
 	if (mousePosition != prevPosition): clear();
 	
 	entityPreviewSprite.hide();
-	if !toolManager.isMoving && (tileMap.get_cell_source_id(mousePosition) >= editorManager.tileCount && previewObject >= editorManager.tileCount):
+	# Hide preview if hovering over an entity with another one (and not moving)
+	if (!toolManager.isMoving && (tileMap.get_cell_source_id(mousePosition) >= editorManager.tileCount && previewObject >= editorManager.tileCount)):
 		clear();
 		return;
 	
@@ -73,7 +75,7 @@ func update_preview_object(mousePosition: Vector2, prevPosition: Vector2, previe
 ## Draws preview tiles across a grid area
 ## firstCorner: The starting corner to use for the box.
 ## secondCorner: The opposite corner to use for the box.
-func update_box_preview(firstCorner: Vector2, secondCorner: Vector2) -> void:
+func update_box_preview(firstCorner : Vector2, secondCorner : Vector2) -> void:
 	# Find the coordinate of the top left corner of the box.
 	var topLeft : Vector2 = Vector2(
 		min(firstCorner.x, secondCorner.x), 

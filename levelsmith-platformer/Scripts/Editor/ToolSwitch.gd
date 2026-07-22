@@ -18,31 +18,41 @@ func _ready() -> void:
 
 ## Swaps currently selected tool to the brush
 func swap_to_brush() -> void:
+	# Play ui sound effect
 	AudioManager.play_UI_effect("UISelection");
+	# Change the selected tool and hotbar
 	toolManager.change_tool(Global.Tool.BRUSH);
 	editorManager.change_current_hotbar(Global.HotbarState.TILES);
 	if (!brushButton.button_pressed):
 		brushButton.button_pressed = true;
+	# Give focus to the brush button
 	if (!brushButton.has_focus()):
 		brushButton.grab_focus();
 
 ## Swaps currently selected tool to the box brush
 func swap_to_box_brush() -> void:
+	# Play ui sound effect
 	AudioManager.play_UI_effect("UISelection");
+	# Change the selected tool and hotbar
 	toolManager.change_tool(Global.Tool.BOX_BRUSH);
 	editorManager.change_current_hotbar(Global.HotbarState.TILES);
 	if (!boxBrushButton.button_pressed):
 		boxBrushButton.button_pressed = true;
+	# Give focus to the box brush button
 	if (!boxBrushButton.has_focus()):
 		boxBrushButton.grab_focus();
 	
 ## Swaps currently selected tool to the cursor
 func swap_to_cursor() -> void:
+	# Play ui sound effect
 	AudioManager.play_UI_effect("UISelection");
+	# Change the selected tool and hotbar
 	toolManager.change_tool(Global.Tool.CURSOR);
-	var dropdownState = tileSwitch.entityPropDropdown.get_selected_id();
+	# Set the dropdown state to that of the currently selected item
+	var dropdownState : int = tileSwitch.entityPropDropdown.get_selected_id();
 	editorManager.change_current_hotbar(dropdownState + 1);
 	if (!cursorButton.button_pressed):
 		cursorButton.button_pressed = true;
+		# Give focus to the cursor button
 	if (!cursorButton.has_focus()):
 		cursorButton.grab_focus();

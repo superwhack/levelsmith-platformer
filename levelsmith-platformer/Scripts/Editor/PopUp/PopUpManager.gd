@@ -7,6 +7,7 @@ const ERROR_TEMPLATE : PackedScene = preload("res://Scenes/UI/ErrorPopUpTemplate
 const HOVER_TEMPLATE : PackedScene = preload("res://Scenes/UI/HoverPopUpTemplate.tscn");
 const SAVE_TEMPLATE : PackedScene = preload("res://Scenes/UI/SavingPopUpTemplate.tscn")
 
+# Current shown popup
 var currentPopUp : Panel;
 
 # Stack of messages (possible future addition if needed, would need to change some behavior)
@@ -20,11 +21,13 @@ func _ready() -> void:
 ## title: Title of error
 ## body: Body content of error
 func create_error_popup(title : String = "Error", body : String = "An error has occurred") -> void:
+	# If there is a current popup, set its body text
 	if (currentPopUp != null):
 		currentPopUp.set_body_text(" - " + body) ;
 		return;
+	# Create a new popup based on the error template
 	var newPopUp: Panel = ERROR_TEMPLATE.instantiate();
-	
+	# Set the title and text of the new pop up
 	newPopUp.set_title(title);
 	newPopUp.set_body_text(" - " + body);
 	
@@ -39,9 +42,9 @@ func create_multi_error_popup(title : String = "Error", body : Array[String] = [
 	# If there's only one body string, create a single popup
 	if (body.size()) == 1:
 		return create_error_popup(title, body[0]);
-		
+	# Create a new popup based on the error template
 	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
-	
+	# Set the title of the new popup
 	newPopUp.set_title(title);
 	
 	# Assemble the body text before adding it to the popup
@@ -55,10 +58,13 @@ func create_multi_error_popup(title : String = "Error", body : Array[String] = [
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
 
-## Creates a popup for resetting the specific given asset. 
+## Creates a popup for resetting the specific given asset.
+## callback : Function called when reset is pressed
 func create_reset_asset_popup(callback : Callable) -> void:
+	# Create a new popup based on the error template
 	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
 	
+	# Set the title and body text
 	newPopUp.set_title("Reset All Assets");
 	newPopUp.set_body_text("This will reset all assets to default. All custom assets will be lost.");
 	newPopUp.set_reset_callback(callback);
@@ -66,11 +72,15 @@ func create_reset_asset_popup(callback : Callable) -> void:
 	newPopUp.closeButton.text = "Cancel";
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
-	
+
 ## Creates a popup for resetting the specific given asset. 
+## callback : Function called when reset is pressed
+## asset : The name of the asset that is being reset
 func create_reset_image_popup(callback : Callable, asset : String = "asset") -> void:
+	# Create a new popup based on the error template
 	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
 	
+	# Set properties of the popup
 	newPopUp.set_title("Reset Selected Asset");
 	newPopUp.set_body_text("This will reset your custom " + asset + " asset to its default. The current asset will be lost.");
 	newPopUp.set_reset_callback(callback);
@@ -78,10 +88,15 @@ func create_reset_image_popup(callback : Callable, asset : String = "asset") -> 
 	newPopUp.closeButton.text = "Cancel";
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
-	
+
+## Creates a popup for deleting a level
+## callback : The function that will be called when deleted
+## levelName : The name of the level being deleted
 func create_delete_popup(callback: Callable, levelName : String = "LEVEL") -> void:
+	# Create a new popup based on the error template
 	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
 	
+	# Set properties of the popup
 	newPopUp.set_title("Delete \"" + levelName + "\"?")
 	newPopUp.set_body_text("You are about to delete your \"" + levelName + "\" level. Are you sure you wish to proceed?");
 	newPopUp.set_reset_callback(callback);
@@ -90,12 +105,13 @@ func create_delete_popup(callback: Callable, levelName : String = "LEVEL") -> vo
 	newPopUp.closeButton.text = "Cancel";
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
-	
-	
+
 ## When saving a level, create the initial popup
 func create_save_popup() -> void:
+	# Create a new poopup based on the save template
 	var newPopUp : Panel = SAVE_TEMPLATE.instantiate();
 	
+	# Set the properties of the popup
 	newPopUp.set_title("Saving...");
 	newPopUp.set_panel_color(Color(1.00, 0.97, 0.67), Color.YELLOW)
 	##newPopUp.separator2.hide();
@@ -106,12 +122,13 @@ func create_save_popup() -> void:
 	
 	add_child(newPopUp);
 	currentPopUp = newPopUp;
-	
 
 ## When a save has been completed, create a save complete popup
 func create_save_complete_popup() -> void:
+	# Create a popup based on the save template
 	var newPopUp : Panel = SAVE_TEMPLATE.instantiate();
 	
+	# Set the properties of the popup
 	newPopUp.set_title("Save Complete!");
 	newPopUp.set_panel_color(Color(0.68, 0.93, 0.68), Color.GREEN);
 	##newPopUp.separator2.hide();
@@ -124,10 +141,13 @@ func create_save_complete_popup() -> void:
 	currentPopUp = newPopUp;
 
 ## If there are unsaved changes, create a popup for user convenience.
-##
+## saveQuitCallback : Function that will be called if the player saves and quits
+## noSaveQuitCallback : Function that will be called if the player does not save and quit
 func create_unsaved_changes_popup(saveQuitCallback: Callable, noSaveQuitCallback: Callable) -> void:
+	# Create a new popup based on the error template
 	var newPopUp : Panel = ERROR_TEMPLATE.instantiate();
 	
+	# Set properties of the popup
 	newPopUp.set_title("Unsaved Changes!");
 	newPopUp.set_body_text("You have unsaved changes. Are you sure you want to return to the main menu without saving?");
 	newPopUp.set_save_to_menu_callback(saveQuitCallback);
@@ -143,7 +163,7 @@ func create_unsaved_changes_popup(saveQuitCallback: Callable, noSaveQuitCallback
 func clear_all_popups() -> void:
 	for child in get_children():
 		child.queue_free();
-	
+
 ## Removes specific popup from popup stack
 ## item: Panel being removed from stack
 #func removePopUpFromStack(item: Panel) -> void:

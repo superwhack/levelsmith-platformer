@@ -15,6 +15,7 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var loadingImage : TextureRect;
 @export var mainMenuControl : Control;
 
+# Reference to the global settings menu
 @export var globalSettingsMenu : GlobalSettingsMenu;
 
 # References to relevant buttons
@@ -35,8 +36,10 @@ var loadedMap : TileMapLayer;
 ## Vars for the world size.
 @export var worldSize : Vector2i;
 
+# Reference to the property menu
 @export var propertyMenu : Panel;
 
+# The file path to the loaded level
 var loadedLevelPath : String = "";
 
 # Tween information
@@ -52,7 +55,9 @@ enum ExitAction {
 	QUIT
 }
 
+## Runs when the scene enters the node tree
 func _ready() -> void:
+	# Connect global signals
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
 	Global.reload.connect(load_tilemap);
 	#Global.complete.connect(level_complete);
@@ -74,18 +79,19 @@ func _ready() -> void:
 		DirAccess.make_dir_absolute("user://Resources/");
 		DirAccess.make_dir_absolute("user://Resources/Enemies/");
 		DirAccess.copy_absolute("res://Resources/PlayerPresets/Default.tres", "user://Resources/Custom.tres");
-		
+	
+	# Open the main menu
 	main_menu(false);
 	
+	# Show loading screen, open the main menu in start mode
 	await screen_static();
 	await main_menu(false, true);
 
-## When the user does a save level input, save the level.
+## Handles the user pressing the fullscreen button
 ## event: The user input
 func _input(event: InputEvent) -> void:
-	if (event.is_action_pressed("level_save")):
-		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated);
 	if event.is_action_pressed("toggle-fullscreen"):
+		# Toggle the window mode between Fullscreen and Windowed
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
 		else:
@@ -100,6 +106,7 @@ func _input(event: InputEvent) -> void:
 
 ## Plays the screen wipe animation that covers the screen before a state transition.
 func screen_wipe_in() -> void:
+	# If the screen is already shown, return
 	if (loadingScreen.visible): return;
 	loadingScreen.show();
 	# Create the loading animation tween
@@ -110,6 +117,7 @@ func screen_wipe_in() -> void:
 
 ## Plays the screen wipe animation that reveals the destination state after loading.
 func screen_wipe_out() -> void:
+	# If the loading screen is already showing, return
 	if (!loadingScreen.visible): return;
 	# Create the loading animation tween
 	loadingTween = create_tween()
@@ -131,15 +139,19 @@ func screen_static() -> void:
 ## newSize: The width and height of the level
 func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) -> void:
 	# Overrides alt+f4 for saving
-	
+	# Set the world size
 	worldSize = newSize;
+	# Initialize the camera
 	cameraManager.initialize_camera();
-	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize, editorManager.levelSettingsMenu);
+	# Create the new level
+	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize);
+	# Reset the custom player property
 	propertyMenu.reset_custom();
 	loadedLevelPath = "user://Levels/" + levelName + "/";
 	#AudioManager.masterVolume = 0;
 	#AudioManager.update_volume();
 	#print("NEW LEVEL SET UP");
+	# Set all fps based on the json file
 	AnimationManager.set_all_fps_to_json(loadedLevelPath + "Settings.JSON");
 	Global.levelCreated.emit();
 	editorManager.returnClick = false;
@@ -163,32 +175,43 @@ func create_bedrock_border() -> void:
 		tileMap.set_cell(Vector2i(worldSize.x, y), Global.BEDROCK_WALL, Vector2i.ZERO, 3);
 
 ## Imports a level 
-func import_level_and_edit(play: bool = false) -> void:
+## startPlay: Starts the level in play mode
+func import_level_and_edit(startPlay: bool = false) -> void:
+	# Clear the enemies from the folder
 	ImportExportManager.clear_enemies_folder();
+	# Delete all child nodes
 	for childNode in editorManager.tileMap.get_children():
 		childNode.free();
+	# Wait for the ImportExportManager to import the level CSV before setting the playerExists to true
 	editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileMap);
+	# Set the world size
 	worldSize = ImportExportManager.importedLevelSize;
+	# Call setup functions
 	editorManager.returnClick = false;
 	entityManager.scan_goals(worldSize.x, worldSize.y);
 	editorManager.reset_enemy_positions();
+	# Wait a frame
 	await get_tree().process_frame;
+	# Initialize the camera, import data
 	cameraManager.initialize_camera();
 	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.levelSettingsMenu);
 	ImportExportManager.levelImported.emit();
-	if (play): play();
+	# Start in play or edit
+	if (startPlay): play();
 	else: edit();
 	#propertyMenu._on_preset_options_item_selected(4);
 	await get_tree().process_frame
 
 ## Loads the given level to the player.
 ## levelPath: The folder path of the level.
-func load_level(levelPath: String, play: bool = false) -> void:
+## startPlay: Starts the level in play mode
+func load_level(levelPath: String, startPlay: bool = false) -> void:
+	# If it is a valid import, set the paths accordingly
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
 		# Await so that the camera gets properly placed
-		await import_level_and_edit(play);
+		await import_level_and_edit(startPlay);
 
 ## Checks if the level has unsaved changes, and creates a popup with appropriate functions.
 ## on_continue: A callable function, for going to main menu or force quitting app.
@@ -212,24 +235,30 @@ func check_unsaved_changes(on_continue: Callable, exit: ExitAction) -> void:
 		editorManager.unsavedChanges = false;
 		on_continue.call();
 	
+	# If there are unsaved changes, popup to allow the user to save
 	if (editorManager.unsavedChanges):
 		PopUpManager.create_unsaved_changes_popup(save, no_save);
-		
+	# If exiting project show popup for save and quit
 	if (exit == ExitAction.QUIT):
 		PopUpManager.currentPopUp.set_save_quit_text("Save & Quit to Desktop");
 		PopUpManager.currentPopUp.set_no_save_quit_text("Quit to Desktop");
 
 
 ## Swap to main menu state
+## menuClickSound : Whether the sound should play for the menu being clicked
+## onStart : Whether this is being called when starting the project
 func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
+	# If there are unsaved changes, run the function to take care of those
 	if (editorManager.unsavedChanges):
 		check_unsaved_changes(main_menu, ExitAction.MAIN_MENU);
 		return;
-	
+	# Fill the list of levels
 	mainMenuControl.fill_level_list();
-	if !onStart:
+	# If it is when the project starts, screen wipe
+	if (!onStart):
 		await screen_wipe_in();
-	if menuClickSound:
+	# If the click sound should play, play it
+	if (menuClickSound):
 		AudioManager.play_UI_effect("UISelection");
 	# Hide all non-menu states, show Main Menu scene
 	gameManager.hide();

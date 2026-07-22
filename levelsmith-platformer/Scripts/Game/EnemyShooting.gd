@@ -3,11 +3,17 @@ extends Enemy
 
 # Direction of fire, stored as float
 var fireDirection : float;
+# If true, enemy fires in random directions
 var randomDirection : bool;
 
 # Firing properties
+# How fast the projectiles go
 var shotSpeed : float;
+# How fast the enemy fires
 var fireRate : float;
+# Delay before firing first shot
+const INITIAL_DELAY : float = 1.0;
+# If the projectiles are bouncable
 var projBounce : bool;
 
 # Gravity toggle
@@ -26,12 +32,10 @@ const PROJECTILE : PackedScene = preload("res://Scenes/Entities/Projectile.tscn"
 
 var timeLeft : float = 1;
 
+## Ready animations
 func _ready() -> void:
 	deathAnim = "ShootDeath";
 	super._ready();
-	
-	#AnimationManager.replace_animation_by_name(animatedSprites, "ShootIdle");
-	#AnimationManager.replace_animation_by_name(animatedSprites, "EnemyShoot");
 	
 	animatedSprites.sprite_frames = AnimationManager.shootingEnemyTemplateSprite.sprite_frames;
 	animatedSprites.animation = "ShootIdle";
@@ -39,6 +43,7 @@ func _ready() -> void:
 	animatedSprites.animation_finished.connect(_on_animation_finished);
 
 func _physics_process(delta: float) -> void:
+	# If dead, fall
 	if health <= 0:
 		super._physics_process(delta);
 		move_and_slide();
@@ -51,6 +56,8 @@ func _physics_process(delta: float) -> void:
 	if gravityOn:
 		super._physics_process(delta);
 	directionArrow.hide();
+	
+	# If capable of firing, start the timer, when it expires, fire a shot
 	if onScreen.is_on_screen():
 		if (!randomDirection):
 			update_flipped(!(fireDirection <= -90 && fireDirection > -270));
@@ -65,6 +72,7 @@ func _physics_process(delta: float) -> void:
 
 ## Adjust the direction of the indicator arrow
 ## angle: the angle that the arrow should be pointing at.
+## random: if true, display the ? instead
 func adjust_arrow(angle: float = fireDirection, random: bool = randomDirection) -> void:
 	if random:
 		questionMark.show();
@@ -85,10 +93,12 @@ func shooting_behavior() -> void:
 	var projectileFired = PROJECTILE.instantiate();
 	projectileFired.speed = shotSpeed;
 	projectileFired.global_position = position;
+	# If firing in a random direction, randomly rotate the projectile
 	if randomDirection:
 		var randFireDirection = randi() % 360;
 		projectileFired.global_rotation_degrees = randFireDirection
 		update_flipped(!(randFireDirection >= 90 && randFireDirection < 270));
+	# Otherwise, the direction is determined by the fireDirection
 	else:
 		projectileFired.global_rotation_degrees = fireDirection + rotation_degrees;
 		
@@ -100,6 +110,7 @@ func shooting_behavior() -> void:
 	add_sibling(projectileFired);
 	animatedSprites.play("EnemyShoot");
 
+## When animation is finished, die.
 func _on_animation_finished():
 	if (animatedSprites.animation == "EnemyShoot"):
 		animatedSprites.play("ShootIdle");
@@ -126,7 +137,6 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	update_standing(propertyFile.facing);
 	ResourceSaver.save(propertyFile);
 	adjust_arrow(fireDirection, randomDirection);
-	adjust_arrow(fireDirection, randomDirection);
 
 func apply_script(file: Resource) -> void:
 	propertyFile = file;
@@ -137,6 +147,7 @@ func apply_script(file: Resource) -> void:
 	projBounce = propertyFile.projBounce;
 	gravityOn = propertyFile.gravity;
 	update_standing(propertyFile.facing);
+	# Gravity being on impacts the shooting enemy's collisions with moving platforms
 	if !gravityOn:
 		motion_mode = CharacterBody2D.MOTION_MODE_FLOATING;
 		set_collision_layer_value(2, false);
@@ -146,4 +157,4 @@ func apply_script(file: Resource) -> void:
 		motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED;
 		set_collision_layer_value(2, true);
 		#set_collision_mask_value(2, true);
-	timeLeft = 1;
+	timeLeft = INITIAL_DELAY;

@@ -9,6 +9,7 @@ var defaultsFilePath : String = "res://Assets/Defaults/Assets/Sprites/";
 var newAudio : AudioStream;
 var audioToReplace : AudioStream;
 
+# References to swapping child nodes
 @export var imageSwapping : Control;
 @export var animationSwapping : Control;
 @export var audioSwapping : Control;
@@ -30,8 +31,10 @@ var audioToReplace : AudioStream;
 @export var resetAllButton: Button;
 @export var refreshAllButton : Button;
 
-# Reference to the editor manager
+# Reference to other nodes
 @export var editorManager : Node2D;
+@export var mainTileMap : TileMapLayer;
+@export var masterManager : Node2D;
 
 # Keep track of the first selected item
 var firstAnimationSelected : AssetItem = null;
@@ -46,11 +49,7 @@ const MISSING_TEXTURE : String = "res://Assets/Defaults/Assets/Sprites/Missing.p
 
 var currentSelectedItem : AssetItem;
 
-@export var mainTileMap : TileMapLayer;
-
-@export var masterManager : Node2D;
-
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_file_selector);
@@ -66,8 +65,9 @@ func _ready() -> void:
 	
 	ImportExportManager.levelImported.connect(setup);
 	Global.levelCreated.connect(setup);
-	
-func _input( event: InputEvent ) -> void:
+
+## Listens for the hotkey to close the asset manager.
+func _input( event : InputEvent ) -> void:
 	if ( event.is_action_pressed("ui_close_dialog") ):
 		editorManager.close_asset_manager();
 
@@ -76,15 +76,15 @@ func _input( event: InputEvent ) -> void:
 ## folder: Which folder the assets for a certain group are stored in
 ## container: Which container the list of assets is stored in
 ## type: What type the asset is - Image, Animation, or Audio 
-func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.AssetType = AssetItem.AssetType.IMAGE):
+func generate_buttons(folder : String, container : VBoxContainer, type : AssetItem.AssetType = AssetItem.AssetType.IMAGE):
 	# Set the file path to the folder
 	var categoryFilePath : String = FileSearch.find_directory_by_name(folder);
 	# Open the folder at the path
-	var dir : DirAccess = DirAccess.open(categoryFilePath);
+	var fileDirectory : DirAccess = DirAccess.open(categoryFilePath);
 	# If the folder is successfully opened
-	if (dir):
+	if (fileDirectory):
 		# Get all directories within the folder
-		var allDirectories : PackedStringArray = dir.get_directories();
+		var allDirectories : PackedStringArray = fileDirectory.get_directories();
 		# For each directory within, instantiate a button and set its properties based on the folder name
 		for directory: String in allDirectories:
 			var newButton : Button = ASSET_BUTTON.instantiate();
@@ -101,7 +101,9 @@ func generate_buttons(folder: String, container: VBoxContainer, type: AssetItem.
 			if (type == AssetItem.AssetType.AUDIO && !firstAudioSelected):
 				firstAudioSelected = newButton;
 
-func clear_buttons(container : VBoxContainer):
+## Removes all buttons from the asset list.
+## container: The control node containing the buttons.
+func clear_buttons(container : VBoxContainer) -> void:
 	for button : AssetItem in container.get_children() :
 		if (button.type == AssetItem.AssetType.IMAGE && firstImageSelected):
 			firstImageSelected = null;
@@ -114,7 +116,7 @@ func clear_buttons(container : VBoxContainer):
 ## Finds an image by its name
 ## imageName: Name of the image
 ## returns: Loaded image
-func find_image(imageName: String, currentDirectory: String = filePath) -> Image:
+func find_image(imageName : String, currentDirectory : String = filePath) -> Image:
 	var image : Image = Image.new();
 	# Get the path to the image
 	var imagePath : String = FileSearch.find_file_by_name(imageName, currentDirectory);
@@ -141,16 +143,16 @@ func find_image(imageName: String, currentDirectory: String = filePath) -> Image
 
 ## Finds and loads the first image found in given folder
 ## folderPath: Path to the folder
-## returns: Image loaded if it is foundf
+## returns: Image loaded if it is found
 func find_image_in_folder(folderPath: String) -> Image:
 	# Opens the folder at the given folderName path
-	var dir : DirAccess = DirAccess.open(folderPath);
+	var imageDirectory : DirAccess = DirAccess.open(folderPath);
 	# If a folder was sucessfully opened
-	if (dir):
+	if (imageDirectory):
 		# Initialize file stream
-		dir.list_dir_begin();
+		imageDirectory.list_dir_begin();
 		# Get the image name in the folder
-		var imageName : String = dir.get_next();
+		var imageName : String = imageDirectory.get_next();
 		# If there is no image in the folder, return null
 		if (imageName == ""):
 			return null;
@@ -160,7 +162,7 @@ func find_image_in_folder(folderPath: String) -> Image:
 			# Load the image based on it's file path
 			image.load(folderPath + "/" + imageName);
 			# CloseClose file stream
-			dir.list_dir_end();
+			imageDirectory.list_dir_end();
 			if (imageName.get_extension().to_lower() == "png"):
 				if (validate_image(image)):
 					# Return loaded image
@@ -171,7 +173,10 @@ func find_image_in_folder(folderPath: String) -> Image:
 		PopUpManager.create_error_popup("Could not open file path", "Could not open file at " + folderPath + ".");
 		return null;
 
-# WARNING Get Sten/Bee's input on if it should only be 128x128 or resize
+## Checks if the image exists
+## image: The image to be checked.
+## returns: True if the image exists and is properly sized
+## WARNING: Get Sten/Bee's input on if it should only be 128x128 or resize
 func validate_image(image: Image) -> bool:
 	# If there is no valid image, return false
 	if (!image): return false;
@@ -182,12 +187,17 @@ func validate_image(image: Image) -> bool:
 		image.resize(128, 128, Image.INTERPOLATE_LANCZOS);
 	return true;
 
-## Hadnles the switching of buttons between tab changes
+## Handles the switching of buttons between tab changes
+## tabIndex: The tab being swapped to
 func on_asset_tab_changed(tabIndex: int) -> void:
 	imageSwapping.imagePreview.hide();
 	animationSwapping.animationPreview.hide();
 	audioPreview.hide();
 	
+	# Tab indices:
+	# 0 - images
+	# 1 - animations
+	# 2 - audio
 	if tabIndex == 0:
 		imageSwapping.imagePreview.show();
 		item_selected(firstImageSelected);
@@ -198,9 +208,7 @@ func on_asset_tab_changed(tabIndex: int) -> void:
 		audioPreview.show();
 		item_selected(firstAudioSelected);
 
-#func replace_audio(audioToReplace: AudioStream, newAudio: AudioStream) -> void:
-#	pass;
-
+## Resets the currently selected asset.
 func reset() -> void:
 	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
 		imageSwapping.reset_image();
@@ -208,10 +216,10 @@ func reset() -> void:
 		animationSwapping.reset_animation();
 	elif (currentSelectedItem.type == AssetItem.AssetType.AUDIO):
 		audioSwapping.reset_audio();
+
 ## Creates the refresh asset popup.
 func reset_image_popup() -> void:
 	PopUpManager.create_reset_image_popup(Callable(self, "reset"), currentSelectedItem.displayName);
-
 
 ## Creates the reset all assets popup.
 func reset_all_popup() -> void:
@@ -242,18 +250,12 @@ func reset_menu() -> void:
 	generate_buttons("Audio", audioTab, AssetItem.AssetType.AUDIO);
 	on_asset_tab_changed(assetTabs.current_tab);
 
-#func reset_audio(audioName: String) -> void:
-#	pass;
-
-#func return_all_to_default(categoryName: String) -> void:
-#	pass;
-
-## Signal that is emitted when an asset in the menu is selected
+## Occurs when an asset is chosen in the list. Displays the preview for the selected item.
 ## selectedItem: The item that is selected, defaults to the firstImageSelected
 func item_selected(selectedItem: AssetItem) -> void:
 	AudioManager.play_UI_effect("UISelection");
 	# Pause the animation
-	animationSwapping.playingAnimation = false;
+	animationSwapping.play_preview_animation(false);
 	audioSwapping.preview_audio_finished();
 	# If the selected item is an image, replace its preview
 	if (selectedItem.type == AssetItem.AssetType.IMAGE):
@@ -325,6 +327,7 @@ func create_file_tree() -> void:
 	for audio: String in audioSwapping.audioTypes:
 		dir.make_dir_recursive(filePath + "/Audio/" + audio);
 
+## Opens the file dialog for selecting a replacement asset
 func open_file_selector() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
@@ -344,20 +347,24 @@ func open_file_selector() -> void:
 		fileSelect.add_filter("*.ogg");
 	fileSelect.popup_file_dialog();
 
-func file_selected(filePath : String) -> void:
+## Selects a new file, replacing it depending on it's type
+## path: the path of the file
+func file_selected(path : String) -> void:
 	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
-		imageSwapping.replace_image(filePath);
+		imageSwapping.replace_image(path);
 	elif (currentSelectedItem.type == AssetItem.AssetType.AUDIO):
-		audioSwapping.replace_audio(filePath);
+		audioSwapping.replace_audio(path);
 
 ## Creates a new missing texture for use when a texture is... missing.
+## returns: An image using the missing texture.
 func get_missing_image() -> Image:
 	var image : Image = Image.new();
 	image.load(MISSING_TEXTURE);
 	validate_image(image);
 	return image;
-	
+
 ## Clears any images in the replacement directory
+## nameToClear: The name of the image being deleted.
 ## returns: The replacement directory
 func clear_files(nameToClear : String) -> DirAccess:
 	var targetFilePath : String = FileSearch.find_directory_by_name(nameToClear);
@@ -370,12 +377,14 @@ func clear_files(nameToClear : String) -> DirAccess:
 		targetDirectory.remove(file); 
 	return targetDirectory;
 
+## Refreshes all images, animations and audio assets.
 func refresh_all() -> void:
 	AnimationManager.update_template_sprites();
 	AnimationManager.refresh_animations();
 	imageSwapping.refresh_images();
 	animationSwapping.update_animation_preview();
 
+## Initializes the buttons and custom assets when a level is imported or created.   
 func setup() -> void:
 	print("Setup");
 	filePath = masterManager.loadedLevelPath + "Assets";

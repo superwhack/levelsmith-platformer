@@ -5,7 +5,6 @@ extends Camera2D
 @export var baseCamera : Camera2D;
 @export var screenshotViewport : SubViewport;
 
-
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.levelCreated.connect(zoom_out);
@@ -13,30 +12,13 @@ func _ready() -> void:
 	screenshotViewport.world_2d = get_tree().root.get_viewport().world_2d;
 	enabled = true;
 	make_current();
-	
-## Zooms out this camera to cover the entire level.
+
+## Zooms out this camera to cover the entire level and centers it.
 func zoom_out() -> void:
-	# NOTE: Pretty much all of this came from CameraManager.
-	# Ideally, we would be able to use the functions from CM,
-	# but I would have to restructure the function params for a given camera.
-	var level_bounds := Rect2(Vector2.ZERO, masterManager.worldSize * Global.TILE_SIZE);
-
-	level_bounds.position -= Vector2.ONE * Global.TILE_SIZE;
-	level_bounds.size += Vector2.ONE * Global.TILE_SIZE * 2;
-
-	var roam_margin = 4.0 * Global.TILE_SIZE;
-	var roam_bounds := Rect2(
-		level_bounds.position - Vector2.ONE * roam_margin,
-		level_bounds.size + Vector2.ONE * roam_margin * 2
-	);
-
-	var viewport_size = screenshotViewport.size;
-
-	var zoom_x = viewport_size.x / roam_bounds.size.x;
-	var zoom_y = viewport_size.y / roam_bounds.size.y;
-
-	zoom = Vector2.ONE * min(zoom_x, zoom_y)
-	global_position = roam_bounds.get_center()
+	var minZoom : float = baseCamera.get_min_zoom_to_fit_roam(self);
+	zoom = Vector2.ONE * minZoom;
+	
+	global_position = baseCamera.roamBounds.get_center();
 
 ## Takes a screenshot of the entire level. 
 ## returns: An image file containing the level screenshot.
@@ -47,16 +29,16 @@ func get_level_screenshot() -> Image:
 	enabled = true;
 	make_current();
 	# Hide the preview and selector frame, then show post-screenshot.
-	masterManager.previewTileMap.hide();
+	masterManager.editorManager.previewTileMap.hide();
 	masterManager.editorManager.customCursorManager.hide_selector_frame();
 	masterManager.editorManager.customCursorManager.hide_entity_highlight();
 	masterManager.editorManager.iconManager.hide_preview_icon();
 	masterManager.editorManager.isScreenshotting = true;
-	print("hiding")
+	
 	await RenderingServer.frame_post_draw;
-	print("showing")
+	
 	enabled = false;
-	masterManager.previewTileMap.show();
+	masterManager.editorManager.previewTileMap.show();
 	masterManager.editorManager.customCursorManager.show_selector_frame();
 	masterManager.editorManager.iconManager.show_preview_icon();
 	masterManager.editorManager.isScreenshotting = false;

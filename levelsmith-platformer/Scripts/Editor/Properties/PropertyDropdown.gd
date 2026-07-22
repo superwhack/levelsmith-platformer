@@ -1,10 +1,11 @@
 extends VBoxContainer
 
-# Variables for different parts of the CheckBox
-@export var propertyName : String;
+@export_group("Set in Dropdown Scene")
 @export var nameLabel : Label; 
 @export var optionButton : OptionButton;
 
+@export_group("Set in Property Menu")
+@export var propertyName : String;
 @export var options : Array[String];
 
 signal dropdown_changed;

@@ -13,9 +13,7 @@ const AUDIO_PLAYER_COUNT : int = 12;
 const AUDIO_QUEUE_LIMIT : int = AUDIO_PLAYER_COUNT;
 
 # All folders for audio
-## BUG: UNTIL AUDIO LIBRARY PATH IS READY, IT IS TO BE ASSIGNED TO THE DEFAULT
 var audioLibraryPath : String = "res://Assets/Defaults/Assets/Audio/";
-#var audioLibraryPath : String = "user://Audio/";
 const UI_AUDIO_LIBRARY_PATH : String = "res://Assets/Audio/";
 const BACKUP_AUDIO_LIBRARY_PATH : String = "res://Assets/Defaults/Assets/Audio/";
 

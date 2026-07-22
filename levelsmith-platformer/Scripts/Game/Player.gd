@@ -151,7 +151,8 @@ const WALL_JUMP_Y_GROUND_MIN : float = 0.3;
 const WALL_JUMP_Y_GROUND_MAX : float = 1.0;
 
 # Tile Bases
-const SLOW_ICE_SLIDE_JUMP_X : float = 1.5;
+const SLOW_ICE_SLIDE_JUMP_X : float = 1.2;
+const SLOW_WALL_JUMP_Y : float = 1.5;
 const SLOW_TILE_SLOWDOWN_Y : float = 0.5;
 const BOUNCE_BASE_X : int = 3000;
 const BOUNCE_BASE_Y : int = 1000;
@@ -727,15 +728,12 @@ func wall_jump():
 		velocity.x = -WALL_JUMP_FORCE_X * pow(max(groundSpeed, WALL_JUMP_GROUND_MIN), WALL_JUMP_SPEED_EXPONENT_X) * wallJumpStrength;
 	velocity.y = -WALL_JUMP_FORCE_Y * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(clamp(groundSpeed, WALL_JUMP_Y_GROUND_MIN, WALL_JUMP_Y_GROUND_MAX), WALL_JUMP_SPEED_EXPONENT_Y);
 	
-	#if tileName != "ice":
-	#	currentFriction = 1.0;
-	
 	# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)
 	if (tileName == "slow" || tileName == "ice"):
-		velocity.x /= 1.2;
+		velocity.x /= SLOW_ICE_SLIDE_JUMP_X;
 	
 	if (tileName == "slow") :
-		velocity.y /= 1.5;
+		velocity.y /= SLOW_WALL_JUMP_Y;
 		
 	justWallJumped = true;
 

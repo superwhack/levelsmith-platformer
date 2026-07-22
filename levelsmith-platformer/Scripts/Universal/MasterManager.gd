@@ -169,7 +169,7 @@ func create_bedrock_border() -> void:
 
 ## Imports a level 
 ## startPlay: Starts the level in play mode
-func import_level_and_edit(startPlay: bool = false) -> void:
+func import_level_and_edit(startPlay: bool = false, skipWipeIn: bool = false) -> void:
 	# Clear the enemies from the folder
 	ImportExportManager.clear_enemies_folder();
 	# Delete all child nodes
@@ -190,8 +190,10 @@ func import_level_and_edit(startPlay: bool = false) -> void:
 	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.levelSettingsMenu);
 	ImportExportManager.levelImported.emit();
 	# Start in play or edit
-	if (startPlay): play();
-	else: edit();
+	if (startPlay):
+		await play(skipWipeIn);
+	else:
+		await edit(skipWipeIn);
 	#propertyMenu._on_preset_options_item_selected(4);
 	await get_tree().process_frame;
 
@@ -203,8 +205,11 @@ func load_level(levelPath: String, startPlay: bool = false) -> void:
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
+		await screen_wipe_in();
+		await get_tree().process_frame;
+		
 		# Await so that the camera gets properly placed
-		await import_level_and_edit(startPlay);
+		await import_level_and_edit(startPlay, true);
 
 ## Checks if the level has unsaved changes, and creates a popup with appropriate functions.
 ## on_continue: A callable function, for going to main menu or force quitting app.
@@ -276,12 +281,13 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	get_tree().set_auto_accept_quit(true);
 
 ## Swap to edit state
-func edit() -> void:
+func edit(skipWipeIn: bool = false) -> void:
 	# Setup edit state
 	get_tree().set_auto_accept_quit(false);
 	gameManager.pausable = false;
 	await get_tree().process_frame;
-	await screen_wipe_in();
+	if (!skipWipeIn):
+		await screen_wipe_in();
 	# Reset audio and play ui effect
 	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UISelection");
@@ -290,6 +296,7 @@ func edit() -> void:
 	# Delete tileMap from the game manager
 	if gameManager.tileMap:
 		gameManager.tileMap.queue_free();
+	
 	# Update state variable
 	state = Global.State.EDIT;
 	# Change scene to edit scene
@@ -317,11 +324,12 @@ func edit() -> void:
 	await screen_wipe_out();
 
 ## Swap to play state
-func play() -> void:
+func play(skipWipeIn: bool = false) -> void:
 	# Check that the game can be run
 	if (!get_play_errors().is_empty()):
 		return;
-	await screen_wipe_in();
+	if !skipWipeIn:
+		await screen_wipe_in();
 	propertyMenu.close();
 	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");

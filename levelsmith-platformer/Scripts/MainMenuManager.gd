@@ -17,6 +17,7 @@ extends Control
 @export var buttonDuplicateLevel : Button;
 @export var buttonDeleteLevel : Button;
 @export var buttonFavoriteLevel : Button;
+@export var buttonExportLevel : Button;
 @onready var favoriteButtonIcon : TextureRect = buttonFavoriteLevel.get_node("MarginContainer/TextureRect");
 
 # Overlays

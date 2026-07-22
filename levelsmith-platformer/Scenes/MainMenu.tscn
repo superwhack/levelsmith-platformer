@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://diiabterxff3k" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
 [ext_resource type="FontFile" uid="uid://3kn4gprbeda" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
 [ext_resource type="Texture2D" uid="uid://btblpw5rkc2oq" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
+[ext_resource type="Texture2D" uid="uid://dldr7iy6j6qgc" path="res://Assets/UserInterface/UpdatedIcons/export.png" id="19_3u44c"]
 [ext_resource type="Texture2D" uid="uid://b7ifia0h6vfsk" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
 [ext_resource type="Texture2D" uid="uid://yu2ukie5a6cg" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="21_leunp"]
@@ -133,7 +134,7 @@ corner_radius_bottom_left = 15
 corner_detail = 17
 expand_margin_left = 5.0
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonCredits", "buttonCloseCredits", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "overlayCredits", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "exportLevelButton", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "globalSettingsButton", "areaWarning")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonCredits", "buttonCloseCredits", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "overlayCredits", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "exportLevelButton", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "globalSettingsButton", "areaWarning")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -180,12 +181,6 @@ spinBoxDuplicateLevelY = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/Ov
 duplicateErrorBanner = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner")
 duplicateEmptyBanner = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/EmptyBanner")
 duplicateExistsBanner = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ExistsBanner")
-exportLevelButton = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/Export Level")
-fileExplorer = NodePath("FileDialog")
-levelList = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll/LevelList")
-levelListItem = ExtResource("3_07k0b")
-softwareVersion = NodePath("SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox/VersionLabel")
-validatedCheckmark = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture/ValidatedTexture")
 levelName = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/SelectedLevelName")
 author = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Author")
 dateCreated = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/DateCreated")
@@ -197,6 +192,12 @@ preview = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/Cent
 previewDefault = ExtResource("15_65hh5")
 favoriteEmpty = ExtResource("15_h1v62")
 favoriteFilled = ExtResource("6_65hh5")
+exportLevelButton = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/Export Level")
+fileExplorer = NodePath("FileDialog")
+levelList = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll/LevelList")
+levelListItem = ExtResource("3_07k0b")
+softwareVersion = NodePath("SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox/VersionLabel")
+validatedCheckmark = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture/ValidatedTexture")
 globalSettingsButton = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton")
 areaWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/PanelContainer")
 webPopUp = ExtResource("7_5hdia")
@@ -697,6 +698,30 @@ theme_override_constants/margin_bottom = 5
 [node name="TextureRect" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/FavoriteButton/MarginContainer" unique_id=1733455010]
 layout_mode = 2
 texture = ExtResource("15_h1v62")
+expand_mode = 3
+
+[node name="ExportButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow" unique_id=1798401647]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+tooltip_text = "Add to Favorties"
+disabled = true
+icon_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/ExportButton" unique_id=390466086]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/ExportButton/MarginContainer" unique_id=1001249113]
+layout_mode = 2
+texture = ExtResource("19_3u44c")
 expand_mode = 3
 
 [node name="TitleDetailsSeparator" type="HSeparator" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox" unique_id=1733107046]

@@ -16,8 +16,3 @@ signal item_selected(selectedItem: AssetItem);
 func _ready() -> void:
 	text = displayName;
 	pressed.connect(item_selected.emit);
-	focus_exited.connect(on_focus_exited);
-
-## When the asset item is unfocused, reset the modulate.
-func on_focus_exited() -> void:
-	modulate = Color(1, 1 , 1, 1);

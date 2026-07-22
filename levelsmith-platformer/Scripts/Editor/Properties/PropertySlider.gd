@@ -1,15 +1,17 @@
 extends VBoxContainer
 
 # Variables for different parts of the slider
-@export var propertyName : String;
+@export_group("Set in Slider Scene")
 @export var nameLabel : Label;
-@export var propertyUnit : String;
 @export var unit : Label; 
 @export var slider : HSlider;
 @export var textField : TextEdit;
 @export var minLabel : Label;
 @export var maxLabel : Label;
 
+@export_group("Set in Property Menu")
+@export var propertyName : String;
+@export var propertyUnit : String;
 @export var minMax : Vector2;
 @export var sliderStep : float;
 @export var valueAppend : String;
@@ -18,7 +20,7 @@ extends VBoxContainer
 signal drag_ended;
 
 # Signal to emit while the slider is being dragged
-signal dragging
+signal dragging;
 
 # Value of the slider
 var value : float;
@@ -29,26 +31,33 @@ func _ready() -> void:
 	slider.rounded = false;
 	nameLabel.text = propertyName;
 	unit.text = "(" + propertyUnit + ")";
+	
+	# Use min and max values to determine the extremes
 	slider.min_value = snapped(minMax.x, 0.01);
 	slider.max_value = snapped(minMax.y, 0.01);
 	slider.step = sliderStep;
+	minLabel.text = str(snapped(minMax.x, .01));
+	maxLabel.text = str(snapped(minMax.y, .01));
+	
+	# Connect signals
 	slider.drag_ended.connect(_drag_ended);
 	textField.text_changed.connect(_validate_length);
 	textField.focus_entered.connect(_text_change_begins);
 	textField.focus_exited.connect(_text_change_ended);
-	minLabel.text = str(snapped(minMax.x, .01));
-	maxLabel.text = str(snapped(minMax.y, .01));
+	
 	adjust_label();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	# Enter to confirm when focused
 	if Input.is_action_just_pressed("enter"):
 		textField.release_focus();
-	if !enabled:
+	if (!enabled):
 		slider.value = value;
 		return;
 	if value == slider.value:
 		return;
+	# If enabled and the value changed, adjust accordingly
 	dragging.emit();
 	adjust_label();
 	value = slider.value;
@@ -71,17 +80,18 @@ func _text_change_ended() -> void:
 	# Replace is needed since enter also puts a newline into the text field
 	textField.text = textField.text.replace("\n", "");
 	# If it's invalid, return to previous value
-	if !textField.text.is_valid_float():
+	if (!textField.text.is_valid_float()):
 		textField.text = textField.placeholder_text;
 	slider.value = float(textField.text);
 	adjust_label();
 	drag_ended.emit();
 
+const MAX_LENGTH : int = 4;
 ## Validate the length of the current string
 func _validate_length() -> void:
-	if textField.has_focus() && textField.text.length() > 4:
-		textField.text = textField.text.substr(0, 4);
-		textField.set_caret_column(4);
+	if (textField.has_focus() && textField.text.length() > MAX_LENGTH):
+		textField.text = textField.text.substr(0, MAX_LENGTH);
+		textField.set_caret_column(MAX_LENGTH);
 
 ## Update the slider value
 func update_slider() -> void:
@@ -91,10 +101,10 @@ func update_slider() -> void:
 ## Change the label, adding in appended values or changing the type to int or float
 func adjust_label() -> void:
 	var newLabel = "";
-	if int(sliderStep) == sliderStep:
+	if (int(sliderStep) == sliderStep):
 		newLabel += str(int(slider.value));
 	else:
 		newLabel += str(slider.value);
-	if valueAppend:
+	if (valueAppend):
 		newLabel += valueAppend;
 	textField.text = newLabel;

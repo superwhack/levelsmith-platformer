@@ -23,11 +23,11 @@ var coinSprites : Array[AnimatedSprite2D];
 var coinTemplateSprite : AnimatedSprite2D;
 
 var movingPlatformSprites : Array[AnimatedSprite2D];
+var movingPlatformPreviewSprites : Array[Sprite2D];
 var movingPlatformTemplateSprite : AnimatedSprite2D;
 
 var checkpointSprites : Array[AnimatedSprite2D];
 var checkpointTemplateSprite : AnimatedSprite2D;
-
 
 # Path for default animations
 var defaultAnimationsRootPath : String = "res://Assets/Sprites/Entities/";
@@ -130,6 +130,8 @@ func refresh_animations() -> void:
 		sprite.sprite_frames = coinTemplateSprite.sprite_frames;
 	for sprite in movingPlatformSprites:
 		sprite.sprite_frames = movingPlatformTemplateSprite.sprite_frames;
+	for sprite in movingPlatformPreviewSprites:
+		sprite.texture = movingPlatformTemplateSprite.sprite_frames.get_frame_texture("PlatformAnimation" , 0);
 	for sprite in checkpointSprites:
 		sprite.sprite_frames = checkpointTemplateSprite.sprite_frames;
 
@@ -203,8 +205,6 @@ func create_template_sprites() -> void:
 	playerTemplateSprite.animation = "PlayerIdle";
 	playerTemplateSprite.sprite_frames.remove_animation("default");
 	
-	# TODO: Add player wallsliding frames
-	
 	patrollingEnemyTemplateSprite = AnimatedSprite2D.new();
 	patrollingEnemyTemplateSprite.sprite_frames = SpriteFrames.new();
 	
@@ -273,12 +273,12 @@ func create_template_sprites() -> void:
 	checkpointTemplateSprite.sprite_frames.set_animation_loop_mode("CheckpointCollected", SpriteFrames.LoopMode.LOOP_NONE);
 	checkpointTemplateSprite.animation = "CheckpointInactive";
 	checkpointTemplateSprite.sprite_frames.remove_animation("default");
-	
 
 ## Finds all sprites within the project, adds them to their corresponding array
 func get_all_sprites() -> void:
 	for spriteGroup in allAnimatedSprites:
 		spriteGroup.clear();
+	movingPlatformPreviewSprites.clear();
 	for player in get_tree().get_nodes_in_group("Player"):
 		playerSprites.append(player.find_child("AnimatedSprite2D"));
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
@@ -297,6 +297,7 @@ func get_all_sprites() -> void:
 		goalSprites.append(goal.find_child("AnimatedSprite2D"));
 	for platform in get_tree().get_nodes_in_group("Platform"):
 		movingPlatformSprites.append(platform.find_child("AnimatedSprite2D"));
+		movingPlatformPreviewSprites.append(platform.find_child("PreviewPlatform"));
 	for checkpoint in get_tree().get_nodes_in_group("Checkpoint"):
 		checkpointSprites.append(checkpoint.find_child("AnimatedSprite2D"));
 
@@ -356,11 +357,12 @@ func get_animation_fps(animationName : String) -> float:
 		fps = movingPlatformTemplateSprite.sprite_frames.get_animation_speed(animationName);
 	elif "Checkpoint" in animationName:
 		fps = checkpointTemplateSprite.sprite_frames.get_animation_speed(animationName);
-	return fps
+	return fps;
 
 ## Sets all the fps values to their corresponding values within the JSON
+## jsonPath: The file path where the JSON is.
 func set_all_fps_to_json(jsonPath : String) -> void:
-	var JSONFile : FileAccess= FileAccess.open(jsonPath, FileAccess.READ);
-	var json_as_dict : Variant = JSON.parse_string(JSONFile.get_as_text());
-	for anim in json_as_dict.get("animations", {}):
-		AnimationManager.update_animation_fps(anim, json_as_dict["animations"][anim]);
+	var jsonFile : FileAccess = FileAccess.open(jsonPath, FileAccess.READ);
+	var jsonData : Dictionary = JSON.parse_string(jsonFile.get_as_text());
+	for animation in jsonData["animations"]:
+		AnimationManager.update_animation_fps(animation, jsonData["animations"][animation]);

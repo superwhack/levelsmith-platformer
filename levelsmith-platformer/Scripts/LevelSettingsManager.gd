@@ -18,6 +18,10 @@ class_name LevelSettingsMenu;
 @export var bounceHeight : VBoxContainer;
 @export var stickySlowdown : VBoxContainer;
 @export var hazardDamage : VBoxContainer;
+const DEFAULT_ZOOM : float = 100.0;
+const DEFAULT_FOLLOW_SPEEC : float = 100.0;
+const DEFAULT_DEADZONE : float = 0.0;
+const DEFAULT_CAMERA_CLAMP : bool = false;
 
 func _ready() -> void:
 	closeButton.pressed.connect(editorManager.close_level_settings_menu);
@@ -73,7 +77,7 @@ func _on_drag() -> void:
 	editorManager.tileMap.hazardDamage = hazardDamage.value;
 
 func _input( event: InputEvent ) -> void:
-	if ( event.is_action_pressed("ui_close_dialog") ):
+	if (event.is_action_pressed("ui_close_dialog")):
 		editorManager.close_level_settings_menu();
 
 ## Update sliders visually
@@ -91,16 +95,17 @@ func update_sliders() -> void:
 	
 	_on_drag();
 
+
 ## Reset the settings
-func reset_settings() -> void:
-	gameplayZoom.value = 100.0;
-	followSpeed.value = 100.0;
-	cameraDeadzone.value = 0.0;
-	cameraClamp.value = false;
-	
+func reset_settings() -> void:	
+	gameplayZoom.value = DEFAULT_ZOOM;
+	followSpeed.value = DEFAULT_FOLLOW_SPEEC;
+	cameraDeadzone.value = DEFAULT_DEADZONE;
+	cameraClamp.value = DEFAULT_CAMERA_CLAMP;
+
 	iceFriction.value = 50;
 	bounceHeight.value = 1.0;
 	stickySlowdown.value = 40;
 	hazardDamage.value = 1;
-
+	
 	update_sliders();

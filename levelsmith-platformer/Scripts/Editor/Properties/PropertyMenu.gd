@@ -29,7 +29,7 @@ var selectedPlayerPreset : Resource;
 @export var stationaryMenu : MarginContainer;
 @export var movingPlatformMenu : MarginContainer;
 
-# Player values
+# Player values, read from ImportExport as well so don't remove these
 var playerHealth: int;
 var playerSpeed: float;
 var playerAcceleration: float;
@@ -42,6 +42,7 @@ var playerSlopeSlowdown : bool;
 var playerOneways : bool;
 var playerDoubleJump : bool;
 var playerWallJump : bool;
+var playerWallJumpStrength : float;
 var playerWallJumpDecay : bool;
 
 @export_group("Player Properties")
@@ -58,6 +59,7 @@ var playerWallJumpDecay : bool;
 @export var playerOnewaysCheckbox : VBoxContainer;
 @export var playerDoubleJumpCheckbox: VBoxContainer;
 @export var playerWallJumpCheckbox: VBoxContainer;
+@export var playerWallJumpStrengthSlider: VBoxContainer;
 @export var playerWallJumpDecayCheckbox : VBoxContainer;
 
 @export_group("Patrolling Properties")
@@ -106,6 +108,7 @@ var directionArrow : Sprite2D;
 func _ready() -> void:
 	_on_preset_options_item_selected(0);
 	
+	# Connect everything
 	playerHealthSlider.drag_ended.connect(_on_drag_ended);
 	playerSpeedSlider.drag_ended.connect(_on_drag_ended);
 	playerAccelerationSlider.drag_ended.connect(_on_drag_ended);
@@ -118,6 +121,7 @@ func _ready() -> void:
 	playerSlopeSlowdownCheckbox.check_changed.connect(_on_drag_ended);
 	playerDoubleJumpCheckbox.check_changed.connect(_on_drag_ended);
 	playerWallJumpCheckbox.check_changed.connect(_on_drag_ended);
+	playerWallJumpStrengthSlider.drag_ended.connect(_on_drag_ended);
 	playerWallJumpDecayCheckbox.check_changed.connect(_on_drag_ended);
 	presetOptions.item_selected.connect(_on_preset_options_item_selected);
 	
@@ -157,8 +161,6 @@ func close() -> void:
 	previewManager.show();
 	cursorManager.show_selector_frame();
 	
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
@@ -170,6 +172,7 @@ func close() -> void:
 ## _delta: Time passed since the last frame
 func _process(_delta: float) -> void:
 	# If there is a selected entity, set the name in the property menu, otherwise close
+	# Also adjust any arrows, flips, or lines needed
 	if (!selectedEntity):
 		hide();
 		return;
@@ -215,6 +218,7 @@ func _on_preset_options_item_selected(index: int) -> void:
 	playerOneways = selectedPlayerPreset.oneways;
 	playerDoubleJump = selectedPlayerPreset.doubleJump;
 	playerWallJump = selectedPlayerPreset.wallJump;
+	playerWallJumpStrength = selectedPlayerPreset.wallJumpStrength;
 	playerWallJumpDecay = selectedPlayerPreset.wallJumpDecay;
 	update_sliders();
 
@@ -239,8 +243,9 @@ func update_custom() -> void:
 	customPreset.coyoteTime = playerCoyoteTime;
 	customPreset.slopeSlowdown = playerSlopeSlowdown;
 	customPreset.oneways = playerOneways;
-	customPreset.doubleJump = playerDoubleJump;	
+	customPreset.doubleJump = playerDoubleJump;
 	customPreset.wallJump = playerWallJump;
+	customPreset.wallJumpStrength = playerWallJumpStrength;
 	customPreset.wallJumpDecay = playerWallJumpDecay;
 	ResourceSaver.save(customPreset, "user://Resources/Custom.tres");
 	
@@ -275,10 +280,14 @@ func update_sliders() -> void:
 	playerDoubleJumpCheckbox.update_checkbox();
 	playerWallJumpCheckbox.value = playerWallJump;
 	playerWallJumpCheckbox.update_checkbox();
-	# Make the WallJumpDecay Checkbox transparent if it can't be selected.
+		# Make the WallJumpDecay Checkbox transparent if it can't be selected.
 	if !playerWallJump:
 		playerWallJumpDecay = false;
+		playerWallJumpStrength = 1.0;
 	make_selectable(playerWallJumpDecayCheckbox, playerWallJump);
+	make_selectable(playerWallJumpStrengthSlider, playerWallJump);
+	playerWallJumpStrengthSlider.value = playerWallJumpStrength;
+	playerWallJumpStrengthSlider.update_slider();
 	playerWallJumpDecayCheckbox.value = playerWallJumpDecay;
 	playerWallJumpDecayCheckbox.update_checkbox();
 	# Enemies
@@ -345,7 +354,7 @@ func make_selectable(property: VBoxContainer, selectable: bool) -> void:
 	else:
 		property.modulate = Color(1, 1, 1, 1);
 
-## Update all of the player values based on the sliders
+## Update all of the select entity's values based on the properties chosen in the menu
 func update_values() -> void:
 	playerHealth = playerHealthSlider.value;
 	playerSpeed = playerSpeedSlider.value;
@@ -359,8 +368,8 @@ func update_values() -> void:
 	playerOneways = playerOnewaysCheckbox.value;
 	playerDoubleJump = playerDoubleJumpCheckbox.value;
 	playerWallJump = playerWallJumpCheckbox.value;
+	playerWallJumpStrength = playerWallJumpStrengthSlider.value;
 	playerWallJumpDecay = playerWallJumpDecayCheckbox.value;
-	
 	if selectedEntity is EnemyPatrol:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
 		selectedPreset.direction = patrollingDirectionDropdown.value;
@@ -393,7 +402,6 @@ func update_values() -> void:
 		selectedPreset.visible = movingPlatformVisibilityCheckbox.value;
 		selectedPreset.active = movingPlatformAlwaysActiveCheckbox.value
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
-	
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
@@ -412,18 +420,19 @@ func show_menu(resource: Resource = null) -> void:
 	previewManager.hide();
 	cursorManager.hide_selector_frame();
 	
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
-		
+	
+	# Hide all menus
 	playerMenu.hide();
 	patrollingMenu.hide();
 	shootingMenu.hide();
 	flyingMenu.hide();
 	stationaryMenu.hide();
 	movingPlatformMenu.hide();
+	
+	# Show the menu of the selected entity and adjust anything that demonstrates their properties (arrow, line, etc)
 	if selectedEntity is Enemy || selectedEntity is MovingPlatform:
 		selectedPreset = resource;
 		update_sliders();
@@ -448,7 +457,5 @@ func show_menu(resource: Resource = null) -> void:
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
 				selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
-		
-		
 	else:
 		playerMenu.show();

@@ -38,7 +38,7 @@ float get_bayer_value(vec2 screen_pos) {
 }
 
 void fragment() {
-    vec4 tex_color = texture(TEXTURE, UV);
+    vec4 tex_color = COLOR;
 
     // Work in real pixel distance instead of raw UV distance, so the
     // reveal shape isn't stretched by the item's aspect ratio.

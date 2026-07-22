@@ -51,9 +51,9 @@ func _ready() -> void:
 	add_child(walkingPlayer);
 	add_child(assetManagerPlayer);
 	musicPlayer.finished.connect(music_loop.bind(musicPlayer));
-	musicPlayer.bus = "master";
-	walkingPlayer.bus = "master";
-	assetManagerPlayer.bus = "master";
+	musicPlayer.bus = "Master";
+	walkingPlayer.bus = "Master";
+	assetManagerPlayer.bus = "Master";
 	
 	# Loop through and create every potential audioPlayer for use with UI and in game
 	for i in AUDIO_PLAYER_COUNT:
@@ -61,7 +61,7 @@ func _ready() -> void:
 		add_child(audioPlayer);
 		availablePlayers.append(audioPlayer);
 		audioPlayer.finished.connect(audio_finished.bind(audioPlayer));
-		audioPlayer.bus = "master";
+		audioPlayer.bus = "Master";
 	
 	update_volume();
 

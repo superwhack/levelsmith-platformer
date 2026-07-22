@@ -76,7 +76,11 @@ func _process(_delta: float) -> void:
 	if (editorManager.masterManager.state != Global.State.EDIT || editorManager.masterManager.propertyMenu.visible):
 		change_cursor(uiCursor);
 		return;
-		
+	
+	# Hide the entity highlighter when not in the edit state or not using the cursor.
+	if (editorManager.masterManager.state != Global.State.EDIT || toolManager.currentTool != Global.Tool.CURSOR):
+		hide_entity_highlight();
+	
 	# Set the current mouse position and place the selector frame to the correct location
 	currentMousePosition = editorManager.currentMousePosition;
 	selectorFrame.global_position = currentMousePosition * Global.TILE_SIZE + Vector2(Global.TILE_SIZE / 2.0, Global.TILE_SIZE / 2.0);

@@ -179,8 +179,9 @@ func _ready() -> void:
 	#for animationName in animatedSprites.sprite_frames.get_animation_names():
 		#AnimationManager.replace_animation_by_name(animatedSprites, animationName);
 	
-	debugLabel = Label.new();
-	get_tree().current_scene.add_child(debugLabel);
+	if (OS.is_debug_build()):
+		debugLabel = Label.new();
+		get_tree().current_scene.add_child(debugLabel);
 	
 	animatedSprites.sprite_frames = AnimationManager.playerTemplateSprite.sprite_frames;
 	
@@ -239,21 +240,21 @@ func _physics_process(delta: float) -> void:
 		walk();
 		move_and_slide();
 		AudioManager.play_effect_walking(currentWalkingEffect);
-	
-	var debugText : String = "state: %s" % currentState \
-							+ "\n coyote: %s" % isCoyoteActive \
-							+ "\n invul: %f" % invulnerabilityCurrent \
-							+ "\n wallJumpDir: %s" % wallJumpDirection \
-							+ "\n wallJumpCount: %s" % wallJumpCount \
-							+ "\n velocity.x: %f" % velocity.x \
-							+ "\n wallSlideConditions: %s" % wallSlideConditionsMet \
-							+ "\n isGrounded: %s" % isPlayerGrounded \
-							+ "\n justWallJumped: %s" % justWallJumped \
-							+ "\n tileName: %s" % tileName \
-							+ "\n friction: %f" % currentFriction;
-	
-	debugLabel.position = Vector2( position.x - 240, position.y - 180 );
-	debugLabel.text = debugText;
+	if (OS.is_debug_build()):
+		var debugText : String = "state: %s" % currentState \
+								+ "\n coyote: %s" % isCoyoteActive \
+								+ "\n invul: %f" % invulnerabilityCurrent \
+								+ "\n wallJumpDir: %s" % wallJumpDirection \
+								+ "\n wallJumpCount: %s" % wallJumpCount \
+								+ "\n velocity.x: %f" % velocity.x \
+								+ "\n wallSlideConditions: %s" % wallSlideConditionsMet \
+								+ "\n isGrounded: %s" % isPlayerGrounded \
+								+ "\n justWallJumped: %s" % justWallJumped \
+								+ "\n tileName: %s" % tileName \
+								+ "\n friction: %f" % currentFriction;
+		
+		debugLabel.position = Vector2( position.x - 240, position.y - 180 );
+		debugLabel.text = debugText;
 
 
 ## Handle all state switch & player logic 

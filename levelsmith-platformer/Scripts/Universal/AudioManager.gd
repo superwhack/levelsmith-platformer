@@ -26,7 +26,7 @@ var queue : Array[String];
 var currentWalkingEffect : Global.WalkingEffect;
 
 # Audio player for the asset manager
-var assetManagerPlayer : AudioStreamPlayer
+var assetManagerPlayer : AudioStreamPlayer;
 
 # Preview music timer for the settings menu
 var previewMusicTimer : float = -1.0;
@@ -236,20 +236,6 @@ func reset_audio() -> void:
 	inusePlayers.clear();
 	musicPlayer.stop();
 	walkingPlayer.stop();
-
-## Play the sound for an asset when in the AssetManager
-## assetName: the name of the file to play from, no extentions
-func play_asset(assetName: String) -> void:
-	var fullPath : String = audioLibraryPath + assetName;
-	if (FileAccess.file_exists(fullPath + ".mp3")):
-		assetManagerPlayer.stream = AudioStreamMP3.load_from_file(fullPath + ".mp3");
-	elif (FileAccess.file_exists(fullPath + ".wav")):
-		assetManagerPlayer.stream = AudioStreamWAV.load_from_file(fullPath + ".wav");
-	elif (FileAccess.file_exists(fullPath + ".ogg")):
-		assetManagerPlayer.stream = AudioStreamOggVorbis.load_from_file(fullPath + ".ogg");
-	else:
-		print(assetName, " file not found or doesn't use .wav/.mp3/.ogg! Reading backup instead.");
-	assetManagerPlayer.play();
 
 ## If there are any current sounds in the queue and any avaliable players, start playing the sound.
 ## delta: used for tracking preview timer

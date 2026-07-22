@@ -17,6 +17,8 @@ extends Control
 @export var buttonDuplicateLevel : Button;
 @export var buttonDeleteLevel : Button;
 @export var buttonFavoriteLevel : Button;
+@export var buttonExportLevel : Button;
+@export var buttonSmallExportLevel : Button;
 @onready var favoriteButtonIcon : TextureRect = buttonFavoriteLevel.get_node("MarginContainer/TextureRect");
 
 # Overlays
@@ -91,8 +93,12 @@ extends Control
 # Global Settings Button
 @export var globalSettingsButton : Button;
 
+# Reference to the popup for the play button
+@export var playPopUp : HBoxContainer;
+
 # The currently selected level item.
 var selectedItem : Control = null;
+var isPlayable : bool = false;
 # Dictionary of all level items. For level list filling.
 var levelItems: Dictionary = {} # path -> item
 
@@ -106,10 +112,12 @@ const MAX_LEVEL_AREA := 10000;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Check if we are in a web build to hide and show appropriate buttons.
-	if OS.has_feature("web"):
+	if (OS.has_feature("web")):
 		exportLevelButton.show();
 		buttonImportLevel.hide();
 		buttonOpenLevelFolder.hide();
+		# This export button is only on regular builds
+		buttonSmallExportLevel.hide();
 		buttonQuit.hide();
 		exportLevelButton.pressed.connect(export_current_level);
 		add_child(webPopUp.instantiate());
@@ -129,10 +137,13 @@ func _ready() -> void:
 	buttonNewLevelCreate.pressed.connect(create_new_level);
 	buttonOpenLevelFolder.pressed.connect(open_level_folder);
 	buttonPlayLevel.pressed.connect(play_current_level);
+	buttonPlayLevel.mouse_entered.connect(play_button_mouse_entered);
+	buttonPlayLevel.mouse_exited.connect(play_button_mouse_exited);
 	buttonEditLevel.pressed.connect(edit_current_level);
 	buttonDeleteLevel.pressed.connect(open_delete_popup);
 	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
 	buttonFavoriteLevel.pressed.connect(favorite_current_level);
+	buttonSmallExportLevel.pressed.connect(export_current_level);
 	get_window().focus_entered.connect(fill_level_list);
 	
 	# Hiding appropriate UI when cancelling level creation
@@ -288,8 +299,21 @@ func export_current_level() -> void:
 
 	# Download in browser
 	var zipData : PackedByteArray = FileAccess.get_file_as_bytes(zipPath);
-	JavaScriptBridge.download_buffer(zipData, newLevelName + ".zip");
+	if (OS.has_feature("web")):
+		JavaScriptBridge.download_buffer(zipData, newLevelName + ".zip");
+	else:
+		var exportPath : String = OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS).path_join(newLevelName + ".zip");
+
+		var file : FileAccess = FileAccess.open(exportPath, FileAccess.WRITE);
+		
+		if (file):
+			file.store_buffer(zipData);
+			file.close();
+			
+		# Opens straight to downloads since that is where the file is saved
+		OS.shell_open(OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS));
 	
+	# Deletes temp folders
 	DirAccess.remove_absolute(zipPath);
 
 	if (DirAccess.dir_exists_absolute("user://temp/")):
@@ -483,12 +507,14 @@ func _on_level_pressed(item: Node) -> void:
 	
 	selectedItem = item;
 	update_metadata(item);
+	buttonPlayLevel.disabled = !isPlayable;
 
 
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
 func _on_level_deselected(item: Node) -> void:
 	if (selectedItem == item):
+		buttonPlayLevel.disabled = true;
 		item.levelButton.button_pressed = false;
 		toggle_level_buttons();
 		clear_selection();
@@ -498,9 +524,18 @@ func toggle_level_buttons() -> void:
 	buttonDeleteLevel.disabled = !buttonDeleteLevel.disabled;
 	buttonDuplicateLevel.disabled = !buttonDuplicateLevel.disabled;
 	buttonEditLevel.disabled = !buttonEditLevel.disabled;
-	buttonPlayLevel.disabled = !buttonPlayLevel.disabled;
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
 	exportLevelButton.disabled = !exportLevelButton.disabled;
+	buttonSmallExportLevel.disabled = !buttonSmallExportLevel.disabled;
+
+func play_button_mouse_entered() -> void:
+	if (selectedItem && !isPlayable):
+		playPopUp.set_title("Level cannot be played");
+		playPopUp.set_body_text("This level is missing a player and/or a goal");
+		playPopUp.show();
+
+func play_button_mouse_exited() -> void:
+	playPopUp.hide();
 
 ## Set the favourite button icon
 ## isFavourited: True if the favourite button made the level favourited, false if it made it unfavourited
@@ -561,6 +596,7 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 		item.levelErrorIcon.hide();
 	item.favorited = metadata.get("favorited", false);
 	item.validated = metadata.get("validated", false);
+	item.playable = metadata.get("playable", false);
 	if (item.favorited):
 		item.levelFavoriteIcon.show();
 	else:
@@ -595,6 +631,8 @@ func update_metadata(item: Node) -> void:
 		validatedCheckmark.show();
 	else:
 		validatedCheckmark.hide();
+	
+	isPlayable = item.playable;
 
 ## Clears the metadata selection.
 func clear_selection() -> void:

@@ -120,8 +120,10 @@ func reset_enemy_positions() -> void:
 			if (!moving is EnemyFlyer):
 				moving.global_position += Vector2(0, 20);
 			
-			if (moving is EnemyPatrol || moving is EnemyShooting):
+			if (moving is EnemyPatrol):
 				moving.directionArrow.show();
+			elif (moving is EnemyShooting):
+				moving.directionArrow.visible = !moving.randomDirection;
 			elif (moving is EnemyFlyer):
 				moving.previewLine.show();
 			elif (moving is EnemyStationary):
@@ -181,4 +183,4 @@ func export_level() -> void:
 	var levelScreenshot : Image = await levelScreenshotCamera.get_level_screenshot();
 	
 	ImportExportManager.save_level_screenshot(levelScreenshot);
-	ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated);
+	ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated, masterManager.get_play_errors().is_empty());

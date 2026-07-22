@@ -2,16 +2,16 @@ extends HBoxContainer
 
 @export_group("Buttons")
 ## A reference to the Steam button.
-@export var steamButton : TextureButton;
+@export var steamButton : Button;
 
 ## A reference to the itch.io button.
-@export var itchButton : TextureButton;
+@export var itchButton : Button;
 
 ## A reference to the website button.
-@export var websiteButton : TextureButton;
+@export var websiteButton : Button;
 
 ## A reference to our GitHub button.
-@export var githubButton : TextureButton;
+@export var githubButton : Button;
 
 @export_group("Links")
 ## A string reference to the steam link.

@@ -1,23 +1,25 @@
 [gd_scene format=3 uid="uid://xr5wkr0v56pj"]
 
 [ext_resource type="Script" uid="uid://dpprqh8s67gpa" path="res://Scripts/LogoBox.gd" id="1_0qnem"]
-[ext_resource type="Texture2D" uid="uid://bymd8y0b5q11p" path="res://Assets/UserInterface/Buttons/ButtonIcons/Steam.png" id="1_t7gyu"]
-[ext_resource type="Texture2D" uid="uid://b67obd1c7g4d1" path="res://Assets/UserInterface/Buttons/ButtonIcons/Itch.png" id="2_0qnem"]
-[ext_resource type="Texture2D" uid="uid://dkfc57p533ejv" path="res://Assets/UserInterface/Buttons/ButtonIcons/Website.png" id="3_hiiqq"]
-[ext_resource type="Texture2D" uid="uid://b0j4pytmd8ji" path="res://Assets/UserInterface/Buttons/ButtonIcons/Github.png" id="4_21v60"]
+[ext_resource type="Texture2D" uid="uid://b08mitjqoc8wr" path="res://Assets/UserInterface/Buttons/ButtonIcons/Steam.png" id="1_t7gyu"]
+[ext_resource type="Texture2D" uid="uid://bqeq44b2ax7jj" path="res://Assets/UserInterface/Buttons/ButtonIcons/Itch.png" id="2_0qnem"]
+[ext_resource type="Texture2D" uid="uid://dke3p0x5hd6yp" path="res://Assets/UserInterface/Buttons/ButtonIcons/Website.png" id="3_hiiqq"]
+[ext_resource type="Texture2D" uid="uid://bpngadvwnus7m" path="res://Assets/UserInterface/Buttons/ButtonIcons/Github.png" id="4_21v60"]
 
-[node name="LogoContainer" type="HBoxContainer" unique_id=1285122015 node_paths=PackedStringArray("steamButton", "itchButton", "websiteButton", "githubButton")]
+[node name="LogoContainer" type="VBoxContainer" unique_id=276867774]
+offset_right = 232.0
+offset_bottom = 232.0
 theme_override_constants/separation = 12
 script = ExtResource("1_0qnem")
-steamButton = NodePath("Steam")
-itchButton = NodePath("Itch")
-websiteButton = NodePath("Website")
-githubButton = NodePath("Github")
 steamLink = "https://store.steampowered.com/agecheck/app/1151340/"
 itchLink = "https://levelsmith-labs.itch.io/foundry2d"
 githubLink = "https://github.com/superwhack/levelsmith-platformer"
 
-[node name="Steam" type="TextureButton" parent="." unique_id=943390985]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=325709130]
+layout_mode = 2
+
+[node name="Steam" type="TextureButton" parent="HBoxContainer" unique_id=943390985]
+visible = false
 custom_maximum_size = Vector2(49, 49)
 layout_mode = 2
 texture_normal = ExtResource("1_t7gyu")
@@ -25,6 +27,23 @@ texture_pressed = ExtResource("1_t7gyu")
 texture_hover = ExtResource("1_t7gyu")
 texture_focused = ExtResource("1_t7gyu")
 stretch_mode = 0
+
+[node name="SteamButton" type="Button" parent="HBoxContainer" unique_id=925265389]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/SteamButton" unique_id=2084403704]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/SteamButton/MarginContainer" unique_id=567017628]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/SteamButton/MarginContainer/HBoxContainer" unique_id=42173951]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/SteamButton/MarginContainer/HBoxContainer" unique_id=522378092]
+layout_mode = 2
 
 [node name="Itch" type="TextureButton" parent="." unique_id=636418872]
 custom_maximum_size = Vector2(49, 49)

@@ -91,6 +91,9 @@ extends Control
 # Global Settings Button
 @export var globalSettingsButton : Button;
 
+# Reference to the popup for the play button
+@export var playPopUp : HBoxContainer;
+
 # The currently selected level item.
 var selectedItem : Control = null;
 var isPlayable : bool = false;
@@ -128,6 +131,8 @@ func _ready() -> void:
 	buttonNewLevelCreate.pressed.connect(create_new_level);
 	buttonOpenLevelFolder.pressed.connect(open_level_folder);
 	buttonPlayLevel.pressed.connect(play_current_level);
+	buttonPlayLevel.mouse_entered.connect(play_button_mouse_entered);
+	buttonPlayLevel.mouse_exited.connect(play_button_mouse_exited);
 	buttonEditLevel.pressed.connect(edit_current_level);
 	buttonDeleteLevel.pressed.connect(open_delete_popup);
 	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
@@ -464,6 +469,15 @@ func toggle_level_buttons() -> void:
 	buttonEditLevel.disabled = !buttonEditLevel.disabled;
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
 	exportLevelButton.disabled = !exportLevelButton.disabled;
+
+func play_button_mouse_entered() -> void:
+	if (selectedItem && !isPlayable):
+		playPopUp.set_title("Level cannot be played");
+		playPopUp.set_body_text("This level is missing a player and/or a goal");
+		playPopUp.show();
+
+func play_button_mouse_exited() -> void:
+	playPopUp.hide();
 
 ## Set the favourite button icon
 ## isFavourited: True if the favourite button made the level favourited, false if it made it unfavourited

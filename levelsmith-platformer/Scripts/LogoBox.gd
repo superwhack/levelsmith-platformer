@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends VBoxContainer
 
 @export_group("Buttons")
 ## A reference to the Steam button.

@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bnr0v62nioghx" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
 [ext_resource type="Texture2D" uid="uid://cbe74yepc8ohr" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
 [ext_resource type="Texture2D" uid="uid://x7ybbnq4r4fb" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
+[ext_resource type="PackedScene" uid="uid://xr5wkr0v56pj" path="res://Scenes/UI/LogoBox.tscn" id="12_iqn0u"]
 [ext_resource type="Texture2D" uid="uid://bkq66w0ki4iny" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
 [ext_resource type="Texture2D" uid="uid://bowlmfo2tiq32" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
 [ext_resource type="Texture2D" uid="uid://cggcysl218grk" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--group.png" id="15_5hdia"]
@@ -133,7 +134,7 @@ corner_radius_bottom_left = 15
 corner_detail = 17
 expand_margin_left = 5.0
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonCredits", "buttonCloseCredits", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "overlayCredits", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "exportLevelButton", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "globalSettingsButton", "areaWarning")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonCredits", "buttonCloseCredits", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "overlayCredits", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "exportLevelButton", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "globalSettingsButton", "areaWarning")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -180,12 +181,6 @@ spinBoxDuplicateLevelY = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/Ov
 duplicateErrorBanner = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ErrorBanner")
 duplicateEmptyBanner = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/EmptyBanner")
 duplicateExistsBanner = NodePath("DuplicateLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/ExistsBanner")
-exportLevelButton = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/Export Level")
-fileExplorer = NodePath("FileDialog")
-levelList = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll/LevelList")
-levelListItem = ExtResource("3_07k0b")
-softwareVersion = NodePath("SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox/VersionLabel")
-validatedCheckmark = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture/ValidatedTexture")
 levelName = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/SelectedLevelName")
 author = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/Author")
 dateCreated = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/MetadataMargin/MetadataRow/MetadataColumn/DateCreated")
@@ -197,6 +192,12 @@ preview = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/Cent
 previewDefault = ExtResource("15_65hh5")
 favoriteEmpty = ExtResource("15_h1v62")
 favoriteFilled = ExtResource("6_65hh5")
+exportLevelButton = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/Export Level")
+fileExplorer = NodePath("FileDialog")
+levelList = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/LevelListPanel/LevelListScroll/LevelList")
+levelListItem = ExtResource("3_07k0b")
+softwareVersion = NodePath("VersionLabel")
+validatedCheckmark = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture/ValidatedTexture")
 globalSettingsButton = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton")
 areaWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/PanelContainer")
 webPopUp = ExtResource("7_5hdia")
@@ -268,9 +269,8 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VersionLabel" type="Label" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=1529773254]
+[node name="LogoContainer" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=1285122015 instance=ExtResource("12_iqn0u")]
 layout_mode = 2
-text = "v0.1.0"
 
 [node name="DividerMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer" unique_id=533107761]
 layout_mode = 2
@@ -921,6 +921,18 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 theme_override_font_sizes/font_size = 12
 text = "Enter editor mode"
+
+[node name="VersionLabel" type="Label" parent="." unique_id=1529773254]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9770833
+anchor_top = 0.9814815
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "v0.1.0"
+metadata/_edit_use_anchors_ = true
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=2033598074]
 visible = false

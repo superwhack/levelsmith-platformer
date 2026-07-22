@@ -25,8 +25,8 @@ enum PlayerState {
 
 var currentState : PlayerState = PlayerState.GROUNDED;
 
-var stateTimer : float = 1.2;
-var stateTimeLeft : float = stateTimer;
+const STATE_TIMER : float = 1.2;
+var stateTimeLeft : float = STATE_TIMER;
 
 # The player settings that can be changed in editor
 var groundSpeed : float = 1.0;
@@ -63,11 +63,6 @@ var iceSpeedCap : int = 10;
 var coyoteTimeLeft : float = 0;
 var isCoyoteActive : bool = false;
 
-# TODO: Make FPS dependant on a global FPS initailly instead of being set to 24
-# TODO: Impliment animations and use this
-var FPS : int = 24;
-
-var spawnpoint : Vector2 = Vector2(0, 0);
 var currentWalkingEffect : Global.WalkingEffect;
 
 # Raycasts
@@ -81,7 +76,7 @@ var health := maxHealth:
 	set(newHealth):
 		health = newHealth;
 		healthChanged.emit(health);
-const invulnerabilityTimer := 1.5;
+const INVULNERABILITY_TIMER := 1.5;
 var invulnerabilityCurrent := 0.0;
 
 # Stored friction and slowdown, saved so they are maintained while in midair
@@ -406,7 +401,7 @@ func apply_state_logic(delta: float) :
 ## function: a callable function that to be used during state transitions, right now only used with HURT
 func set_state(state : PlayerState, function : Callable = Callable()) -> void:
 	
-	stateTimeLeft = stateTimer;
+	stateTimeLeft = STATE_TIMER;
 	animatedSprites.frame = 0;
 
 	match state:
@@ -464,7 +459,7 @@ func set_state(state : PlayerState, function : Callable = Callable()) -> void:
 			function.call();
 			if (health > 0) :
 				AudioManager.play_effect("Hurt");
-			invulnerabilityCurrent = invulnerabilityTimer;
+			invulnerabilityCurrent = INVULNERABILITY_TIMER;
 			animatedSprites.play("PlayerHurt");
 			animatedSprites.flip_h = velocity.x > 0;
 			currentState = PlayerState.HURT;
@@ -578,7 +573,7 @@ func walk() -> void:
 ## higherBounce: if the player should bounce higher
 ## onFloorBypass: If true, the player is NOT on the floor for knockback
 func take_damage(amount: int, damageDirection: Vector2 = Vector2(0, 0), higherBounce : int = 0, onFloorBypass : bool = false) -> void:
-	invulnerabilityCurrent = invulnerabilityTimer;
+	invulnerabilityCurrent = INVULNERABILITY_TIMER;
 	damageDirection.y /= 2;
 	velocity = damageDirection * (1000 + higherBounce * 500);
 	velocity.y *= sqrt(fallSpeed);

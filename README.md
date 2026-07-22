@@ -1,4 +1,4 @@
-# Welcome to the levelsmith-platformer(Foundry2D) wiki!
+# Welcome to Foundry2D!
 
 This wiki serves as the primary documentation for Foundry2D, covering its features, systems, workflows, and development practices. Whether you're using the editor to prototype levels or contributing to the project, you'll find information here to help you get started.
 

@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://bc0t4fwnf3jge" path="res://Scripts/Editor/ToolSwitch.gd" id="1_8le6k"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="3_0ykeq"]
 [ext_resource type="ButtonGroup" uid="uid://chw88wwcyvrn7" path="res://Resources/ButtonGroups/ToolButtonGroup.tres" id="3_i4e4n"]
-[ext_resource type="Texture2D" uid="uid://cvxf52quyl8la" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBrushWhite.png" id="4_8yt78"]
-[ext_resource type="Texture2D" uid="uid://doc723xlcpxyu" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBoxWhite.png" id="8_bma6q"]
-[ext_resource type="Texture2D" uid="uid://dgijysa7rqmhp" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolCursorWhite.png" id="12_126op"]
+[ext_resource type="Texture2D" uid="uid://cc85uk0ba7r73" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBrushWhite.png" id="4_8yt78"]
+[ext_resource type="Texture2D" uid="uid://kqxcpbn4i32k" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolBoxWhite.png" id="8_bma6q"]
+[ext_resource type="Texture2D" uid="uid://ccof3ja31cgcx" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconToolCursorWhite.png" id="12_126op"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 

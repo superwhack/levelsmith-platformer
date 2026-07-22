@@ -190,7 +190,7 @@ func import_level_and_edit(startPlay: bool = false, skipWipeIn: bool = false) ->
 	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.levelSettingsMenu);
 	ImportExportManager.levelImported.emit();
 	# Start in play or edit
-	if (startPlay):
+	if (startPlay && get_play_errors().is_empty()):
 		await play(skipWipeIn);
 	else:
 		await edit(skipWipeIn);
@@ -271,6 +271,7 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	AudioManager.reset_audio();
 	if (mainMenuControl.selectedItem):
 		mainMenuControl.update_metadata(mainMenuControl.selectedItem);
+		mainMenuControl.buttonPlayLevel.disabled = !mainMenuControl.selectedItem.playable;
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 	await get_tree().process_frame;

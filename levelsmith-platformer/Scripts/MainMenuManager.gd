@@ -93,6 +93,7 @@ extends Control
 
 # The currently selected level item.
 var selectedItem : Control = null;
+var isPlayable : bool = false;
 # Dictionary of all level items. For level list filling.
 var levelItems: Dictionary = {} # path -> item
 
@@ -444,12 +445,14 @@ func _on_level_pressed(item: Node) -> void:
 	
 	selectedItem = item;
 	update_metadata(item);
+	buttonPlayLevel.disabled = !isPlayable;
 
 
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
 func _on_level_deselected(item: Node) -> void:
 	if (selectedItem == item):
+		buttonPlayLevel.disabled = true;
 		item.levelButton.button_pressed = false;
 		toggle_level_buttons();
 		clear_selection();
@@ -459,7 +462,6 @@ func toggle_level_buttons() -> void:
 	buttonDeleteLevel.disabled = !buttonDeleteLevel.disabled;
 	buttonDuplicateLevel.disabled = !buttonDuplicateLevel.disabled;
 	buttonEditLevel.disabled = !buttonEditLevel.disabled;
-	buttonPlayLevel.disabled = !buttonPlayLevel.disabled;
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
 	exportLevelButton.disabled = !exportLevelButton.disabled;
 
@@ -522,6 +524,7 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 		item.levelErrorIcon.hide();
 	item.favorited = metadata.get("favorited", false);
 	item.validated = metadata.get("validated", false);
+	item.playable = metadata.get("playable", false);
 	if (item.favorited):
 		item.levelFavoriteIcon.show();
 	else:
@@ -556,6 +559,8 @@ func update_metadata(item: Node) -> void:
 		validatedCheckmark.show();
 	else:
 		validatedCheckmark.hide();
+	
+	isPlayable = item.playable;
 
 ## Clears the metadata selection.
 func clear_selection() -> void:

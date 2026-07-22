@@ -18,6 +18,7 @@ extends Control
 @export var buttonDeleteLevel : Button;
 @export var buttonFavoriteLevel : Button;
 @export var buttonExportLevel : Button;
+@export var buttonSmallExportLevel : Button;
 @onready var favoriteButtonIcon : TextureRect = buttonFavoriteLevel.get_node("MarginContainer/TextureRect");
 
 # Overlays
@@ -107,10 +108,12 @@ const MAX_LEVEL_AREA := 10000;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Check if we are in a web build to hide and show appropriate buttons.
-	if OS.has_feature("web"):
+	if (OS.has_feature("web")):
 		exportLevelButton.show();
 		buttonImportLevel.hide();
 		buttonOpenLevelFolder.hide();
+		# This export button is only on regular builds
+		buttonSmallExportLevel.hide();
 		buttonQuit.hide();
 		exportLevelButton.pressed.connect(export_current_level);
 		add_child(webPopUp.instantiate());
@@ -132,6 +135,7 @@ func _ready() -> void:
 	buttonDeleteLevel.pressed.connect(open_delete_popup);
 	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
 	buttonFavoriteLevel.pressed.connect(favorite_current_level);
+	buttonSmallExportLevel.pressed.connect(export_current_level);
 	get_window().focus_entered.connect(fill_level_list);
 	
 	# Hiding appropriate UI when cancelling level creation
@@ -252,8 +256,21 @@ func export_current_level() -> void:
 
 	# Download in browser
 	var zipData : PackedByteArray = FileAccess.get_file_as_bytes(zipPath);
-	JavaScriptBridge.download_buffer(zipData, newLevelName + ".zip");
+	if (OS.has_feature("web")):
+		JavaScriptBridge.download_buffer(zipData, newLevelName + ".zip");
+	else:
+		var exportPath : String = OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS).path_join(newLevelName + ".zip");
+
+		var file : FileAccess = FileAccess.open(exportPath, FileAccess.WRITE);
+		
+		if (file):
+			file.store_buffer(zipData);
+			file.close();
+			
+		# Opens straight to downloads since that is where the file is saved
+		OS.shell_open(OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS));
 	
+	# Deletes temp folders
 	DirAccess.remove_absolute(zipPath);
 	remove_recursively(tempPath);
 	
@@ -463,6 +480,7 @@ func toggle_level_buttons() -> void:
 	buttonPlayLevel.disabled = !buttonPlayLevel.disabled;
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
 	exportLevelButton.disabled = !exportLevelButton.disabled;
+	buttonSmallExportLevel.disabled = !buttonSmallExportLevel.disabled;
 
 ## Set the favourite button icon
 ## isFavourited: True if the favourite button made the level favourited, false if it made it unfavourited

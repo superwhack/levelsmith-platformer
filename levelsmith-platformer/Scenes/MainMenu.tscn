@@ -134,7 +134,7 @@ corner_radius_bottom_left = 15
 corner_detail = 17
 expand_margin_left = 5.0
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonCredits", "buttonCloseCredits", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "overlayCredits", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "exportLevelButton", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "globalSettingsButton", "areaWarning")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonCredits", "buttonCloseCredits", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "buttonExportLevel", "buttonSmallExportLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "overlayCredits", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "exportLevelButton", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "globalSettingsButton", "areaWarning")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -155,6 +155,8 @@ buttonEditLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterP
 buttonDuplicateLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn/DuplicateLevelButton")
 buttonDeleteLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn/DeleteLevelButton")
 buttonFavoriteLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/FavoriteButton")
+buttonExportLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow/Export Level")
+buttonSmallExportLevel = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn/ExportButton")
 overlayNewLevel = NodePath("NewLevelOverlay")
 overlayImportLevel = NodePath("ImportLevelOverlay")
 overlayDuplicateLevel = NodePath("DuplicateLevelOverlay")
@@ -223,6 +225,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -19.0
+offset_right = -59.0
+offset_bottom = 53.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 60
@@ -231,6 +236,7 @@ theme_override_constants/margin_right = 60
 theme_override_constants/margin_bottom = 64
 
 [node name="PanelContainer" type="PanelContainer" parent="SafeArea" unique_id=2124591170]
+custom_maximum_size = Vector2(1800, 990)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("7_w016u")
 
@@ -343,7 +349,7 @@ text = "New Level"
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 theme_override_font_sizes/font_size = 12
-text = "Create a new level"
+text = "Create a New Level"
 
 [node name="Export Level" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=1326238975]
 visible = false
@@ -422,7 +428,7 @@ text = "Import Level"
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 theme_override_font_sizes/font_size = 12
-text = "Import a level folder"
+text = "Import a Level Folder"
 
 [node name="OpenFolderButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/TopActionsRow" unique_id=1916229944]
 custom_minimum_size = Vector2(230, 75)
@@ -462,7 +468,7 @@ text = "Open Level Folder"
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 theme_override_font_sizes/font_size = 12
-text = "Location of stored levels"
+text = "View Your Level Save Data"
 
 [node name="LevelListSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox" unique_id=1375032286]
 custom_minimum_size = Vector2(0, 25)
@@ -493,6 +499,7 @@ theme_override_constants/margin_top = 35
 [node name="ExitButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin" unique_id=1356679422]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
+tooltip_text = "Quit to Desktop"
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/ExitButtonMargin/ExitButton" unique_id=570388100]
 layout_mode = 1
@@ -526,7 +533,7 @@ text = "Exit Editor"
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 theme_override_font_sizes/font_size = 12
-text = "Quit to desktop"
+text = "Quit to Desktop"
 
 [node name="CreditsButtonMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow" unique_id=1421721657]
 layout_mode = 2
@@ -535,6 +542,7 @@ theme_override_constants/margin_top = 35
 [node name="CreditsButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin" unique_id=1685499929]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
+tooltip_text = "View Credits and Links"
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/CreditsButtonMargin/CreditsButton" unique_id=1845059763]
 layout_mode = 1
@@ -577,6 +585,7 @@ theme_override_constants/margin_top = 35
 [node name="GlobalSettingsButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin" unique_id=1678820747]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
+tooltip_text = "Edit Global Settings"
 
 [node name="ContentMargin" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton" unique_id=26762294]
 layout_mode = 1
@@ -610,7 +619,7 @@ text = "Global Settings"
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 theme_override_font_sizes/font_size = 12
-text = "Affects editor settings"
+text = "Affects Editor Settings"
 
 [node name="CenterPane" type="PanelContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent" unique_id=2099896116]
 layout_mode = 2
@@ -700,30 +709,6 @@ layout_mode = 2
 texture = ExtResource("15_h1v62")
 expand_mode = 3
 
-[node name="ExportButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow" unique_id=1798401647]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-tooltip_text = "Add to Favorties"
-disabled = true
-icon_alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/ExportButton" unique_id=390466086]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="TextureRect" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow/ExportButton/MarginContainer" unique_id=1001249113]
-layout_mode = 2
-texture = ExtResource("19_3u44c")
-expand_mode = 3
-
 [node name="TitleDetailsSeparator" type="HSeparator" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox" unique_id=1733107046]
 layout_mode = 2
 
@@ -733,11 +718,12 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_bottom = 30
 
 [node name="DetailsRow" type="HBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin" unique_id=897913567]
+propagate_maximum_size = false
 layout_mode = 2
 
 [node name="ButtonColumn" type="VBoxContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow" unique_id=64140966]
 layout_mode = 2
-size_flags_vertical = 4
+theme_override_constants/separation = 18
 
 [node name="DuplicateLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=980103507]
 custom_minimum_size = Vector2(50, 50)
@@ -762,10 +748,29 @@ grow_vertical = 2
 texture = ExtResource("16_h1v62")
 expand_mode = 3
 
-[node name="CopyDeleteSeperator" type="Control" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=1034853394]
-custom_minimum_size = Vector2(0, 20)
+[node name="ExportButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=1885121134]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-size_flags_vertical = 3
+tooltip_text = "Export Level"
+disabled = true
+icon_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn/ExportButton" unique_id=1642559331]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn/ExportButton/MarginContainer" unique_id=215195985]
+layout_mode = 2
+texture = ExtResource("19_3u44c")
+expand_mode = 3
 
 [node name="DeleteLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=873845671]
 custom_minimum_size = Vector2(50, 50)

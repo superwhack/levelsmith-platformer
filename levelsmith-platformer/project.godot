@@ -15,7 +15,10 @@ run/main_scene="uid://bm5w14jlbl37k"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="Levelsmith Labs"
 config/features=PackedStringArray("4.7", "Forward Plus")
+boot_splash/show_image=false
+boot_splash/image="uid://b06lor04x3kh3"
 config/icon="uid://b06lor04x3kh3"
+<<<<<<<Updatedupstreamrun/main_scene="uid://bm5w14jlbl37k"
 
 [autoload]
 

@@ -31,6 +31,9 @@ var audioToReplace : AudioStream;
 @export var resetAllButton: Button;
 @export var refreshAllButton : Button;
 
+@export var collisionCheckbox : CheckBox;
+@export var collisionBox : ColorRect;
+
 # Reference to other nodes
 @export var editorManager : Node2D;
 @export var mainTileMap : TileMapLayer;
@@ -56,6 +59,7 @@ func _ready() -> void:
 	refreshAllButton.pressed.connect(refresh_all);
 	resetButton.pressed.connect(reset_image_popup);
 	resetAllButton.pressed.connect(reset_all_popup);
+	collisionCheckbox.toggled.connect(switch_collision_visibility);
 	fileSelect.file_selected.connect(file_selected);
 	fileSelect.dir_selected.connect(animationSwapping.replace_animation);
 	
@@ -383,6 +387,11 @@ func refresh_all() -> void:
 	AnimationManager.refresh_animations();
 	imageSwapping.refresh_images();
 	animationSwapping.update_animation_preview();
+	
+## Switches the collision box preview visibility.
+func switch_collision_visibility() -> void:
+	print("hello")
+	collisionBox.visiible = !collisionBox.visible;
 
 ## Initializes the buttons and custom assets when a level is imported or created.   
 func setup() -> void:

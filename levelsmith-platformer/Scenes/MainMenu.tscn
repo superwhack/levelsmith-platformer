@@ -4,10 +4,11 @@
 [ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_ygkdq"]
 [ext_resource type="PackedScene" uid="uid://cv3y1gdfsbknd" path="res://Scenes/UI/LevelListItem.tscn" id="3_07k0b"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="5_h35r6"]
-[ext_resource type="Texture2D" uid="uid://bguub3y2mkgwv" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
-[ext_resource type="Texture2D" uid="uid://bwtk8i6k373fq" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
+[ext_resource type="Texture2D" uid="uid://coe3rcn2twg1q" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
 [ext_resource type="PackedScene" uid="uid://dpituch0v2gjd" path="res://Scenes/UI/WebPopUp.tscn" id="7_5hdia"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
+
 [ext_resource type="Texture2D" uid="uid://bnr0v62nioghx" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
 [ext_resource type="Texture2D" uid="uid://cbe74yepc8ohr" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
 [ext_resource type="Texture2D" uid="uid://x7ybbnq4r4fb" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
@@ -25,8 +26,10 @@
 [ext_resource type="Texture2D" uid="uid://dldr7iy6j6qgc" path="res://Assets/UserInterface/UpdatedIcons/export.png" id="19_3u44c"]
 [ext_resource type="Texture2D" uid="uid://b7ifia0h6vfsk" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
 [ext_resource type="Texture2D" uid="uid://yu2ukie5a6cg" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
+
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="21_leunp"]
-[ext_resource type="Texture2D" uid="uid://b68udivkcp3yg" path="res://Assets/UserInterface/Buttons/CloseX.png" id="22_h1v62"]
+[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="22_h1v62"]
+[ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="23_iqn0u"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -134,7 +137,8 @@ corner_radius_bottom_left = 15
 corner_detail = 17
 expand_margin_left = 5.0
 
-[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonCredits", "buttonCloseCredits", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "buttonExportLevel", "buttonSmallExportLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "overlayCredits", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "exportLevelButton", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "globalSettingsButton", "areaWarning")]
+[node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonCredits", "buttonCloseCredits", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "buttonExportLevel", "buttonSmallExportLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "overlayCredits", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "exportLevelButton", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "globalSettingsButton", "playPopUp", "areaWarning")]
+
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -201,6 +205,7 @@ levelListItem = ExtResource("3_07k0b")
 softwareVersion = NodePath("SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox/VersionLabel")
 validatedCheckmark = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/PreviewPanel/PreviewTexture/ValidatedTexture")
 globalSettingsButton = NodePath("SafeArea/PanelContainer/RootVBox/MainContent/LeftPane/LeftPaneMargin/LeftPaneVBox/ExitRow/GlobalSettingsMargin/GlobalSettingsButton")
+playPopUp = NodePath("HoverPopUpContainer")
 areaWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/RootVbox/GridSettingsRow2/PanelContainer")
 webPopUp = ExtResource("7_5hdia")
 
@@ -951,6 +956,21 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 theme_override_font_sizes/font_size = 12
 text = "Enter editor mode"
+
+[node name="HoverPopUpContainer" parent="." unique_id=1808818748 instance=ExtResource("23_iqn0u")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1326.0
+offset_top = 725.0
+offset_right = 1772.0
+offset_bottom = 824.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="NewLevelOverlay" type="ColorRect" parent="." unique_id=2033598074]
 visible = false

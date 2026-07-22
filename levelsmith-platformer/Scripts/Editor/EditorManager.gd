@@ -183,4 +183,4 @@ func export_level() -> void:
 	var levelScreenshot : Image = await levelScreenshotCamera.get_level_screenshot();
 	
 	ImportExportManager.save_level_screenshot(levelScreenshot);
-	ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated);
+	ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated, masterManager.get_play_errors().is_empty());

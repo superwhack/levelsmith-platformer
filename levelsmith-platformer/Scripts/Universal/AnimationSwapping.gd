@@ -2,8 +2,10 @@ extends Node
 
 # Reference to the asset manager
 @export var assetManager : AssetManager;
+
 # The current entity type selected
 var selectedEntityType : String;
+
 # The Texture that will be replacing the texture with the preview name
 var animationPreviewToReplace : Texture2D;
 var animationPreviewNameToReplace : String;
@@ -13,6 +15,7 @@ var currentAnimationIndex : int = 0;
 var animationFrameIndex : int = 0;
 # The animation currently loaded into an array for quick switching
 var currentLoadedAnimation : Array[Texture2D];
+
 # References to nodes for displaying the animation preview
 @export var animationPreview : Panel;
 @export var animationPreviewTexture : TextureRect;
@@ -24,11 +27,13 @@ var currentLoadedAnimation : Array[Texture2D];
 @export var frameLeftButton : Button;
 @export var frameCountLabel : Label;
 @export var playButton : Button;
+@export var pauseButton : Button;
 @export var stopButton : Button;
 @export var FPSSpinbox : SpinBox;
+
 # Information about played animation
 var playingAnimation : bool;
-var FPS : float = 12;
+var fps : float = 12;
 var animTimer : float = 0;
 # All types of entities
 var animatedEntityTypes : Array[String] = ["Player", "StationaryEnemy", "ShootingEnemy", "PatrollingEnemy", "FlyingEnemy"];
@@ -47,21 +52,25 @@ const ANIMATION_LENGTH_LIMIT : int = 60;
 func _ready() -> void:
 	animationPreviewRightButton.pressed.connect(anim_change.bind(true));
 	animationPreviewLeftButton.pressed.connect(anim_change.bind(false));
-	frameRightButton.pressed.connect(frame_change.bind(true));
-	frameLeftButton.pressed.connect(frame_change.bind(false));
+	frameRightButton.pressed.connect(frame_change.bind(true, true));
+	frameLeftButton.pressed.connect(frame_change.bind(false, true));
 	playButton.pressed.connect(play_preview_animation);
+	pauseButton.pressed.connect(play_preview_animation.bind(false));
 	stopButton.pressed.connect(stop_preview_animation);
 	FPSSpinbox.value_changed.connect(fps_updated);
 
-## Play the animation
+## Play the animation if enabled
+## delta: time passed since previous frame
 func _process(delta: float) -> void:
 	# Play the animation
 	if (playingAnimation):
 		animTimer += delta;
-		if (animTimer >= 1/FPS):
+		if (animTimer >= 1 / fps):
 			frame_change();
 			animTimer = 0;
-			
+
+## Handles hotkeys for controlling the animation viewer
+## event: The key being pressed
 func _input( event: InputEvent ) -> void:
 	# Hotkeys
 	if ( event.is_action_pressed( "up" ) ):
@@ -77,9 +86,9 @@ func _input( event: InputEvent ) -> void:
 	if ( event.is_action_pressed( "UI-AssetMgr-deny" ) ):
 		stop_preview_animation();
 	if ( event.is_action_pressed( "UI-AssetMgr-frame-step-forward" ) ):
-		frame_change(false);
+		frame_change(true, true);
 	if ( event.is_action_pressed( "UI-AssetMgr-frame-step-backwards" ) ):
-		frame_change(false);
+		frame_change(false, true);
 
 ## Retrieve the frames for an animation from a given folder path
 ## folderName: Name of the folder to check
@@ -103,13 +112,12 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 		# NOTE: Could be made to more efficient.
 		assetManager.create_file_tree();
 		return [];
-	return [];
 
 ## Replaces the currently previewed animation with one chosen via file dialog.
 ## newAnimationPath: The path to the folder selected
 func replace_animation(newAnimationPath : String) -> void:
 	var targetFilePath : String = FileSearch.find_directory_by_name(animationPreviewNameToReplace);
-	var targetDirectory : DirAccess = assetManager.clear_files(animationPreviewNameToReplace);
+	assetManager.clear_files(animationPreviewNameToReplace);
 	# Count for which file is being iterated at for naming purposes
 	var fileCount : int = 0;
 	# Loop through every file at the path
@@ -140,6 +148,7 @@ func replace_animation(newAnimationPath : String) -> void:
 	else:
 		PopUpManager.create_error_popup("No Defaults", "No default images yet, update this when there are default animations");
 
+## Resets the currently visible animation to its default.
 func reset_animation() -> void:
 	assetManager.clear_files(animationPreviewNameToReplace);
 	animationFrameIndex = 0;
@@ -153,7 +162,7 @@ func reset_animation() -> void:
 ## next: Whether the user is switching to the next or previous animation
 func anim_change(next : bool):
 	# Pause the animation
-	playingAnimation = false;
+	play_preview_animation(false);
 	# Increase or decrease the index accordingly
 	if (next):
 		currentAnimationIndex += 1;
@@ -185,7 +194,8 @@ func anim_change(next : bool):
 	
 ## Change the animation frame currently shown
 ## next: Whether the user is changing to the next or previous frame
-func frame_change(next : bool = true):
+## manual : Whether the user manually changes the frame
+func frame_change(next : bool = true, manual : bool = false):
 	# Change the animation frame index accordingly
 	if (next):
 		animationFrameIndex += 1;
@@ -197,6 +207,8 @@ func frame_change(next : bool = true):
 		animationFrameIndex = 0;
 	elif (animationFrameIndex < 0):
 		animationFrameIndex = frameCount - 1;
+	if (manual):
+		play_preview_animation(false);
 	update_animation_preview();
 
 ## Update all parts of the animation preview
@@ -212,17 +224,23 @@ func update_animation_preview() -> void:
 			animationPreviewTexture.texture = animationPreviewToReplace;
 
 ## Play the animation in the preview
-func play_preview_animation() -> void:
-	playingAnimation = !playingAnimation;
+func play_preview_animation(play : bool = true) -> void:
+	playingAnimation = play;
+	if (playingAnimation):
+		pauseButton.show();
+		playButton.hide();
+	else:
+		pauseButton.hide();
+		playButton.show();
 
 ## Stop the animation and set it to its first frame
 func stop_preview_animation() -> void:
-	playingAnimation = false;
+	play_preview_animation(false);
 	animationFrameIndex = 0;
 	update_animation_preview();
 
 ## Update the FPS
 func fps_updated(value: float, changeTemplate : bool = false) -> void:
-	FPS = value;
+	fps = value;
 	if (changeTemplate):
 		AnimationManager.update_animation_fps(animationPreviewNameToReplace, value);

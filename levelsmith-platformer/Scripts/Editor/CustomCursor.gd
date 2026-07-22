@@ -12,10 +12,13 @@ enum SelectorState {
 	ERASING,
 	EDITING,
 	MOVING,
-	COPYING,
+	DUPLICATING,
 	INVALID
 }
 var selectorState : SelectorState = SelectorState.DEFAULT;
+
+# Cursor texture is saved, to prevent updates every frame.
+var currentCursorTexture : Texture2D = null;
 
 # instantiated sprites
 var selectorFrame : Sprite2D;
@@ -64,16 +67,17 @@ func _ready() -> void:
 	entityHighlight.hide();
 	
 	# Set the custom mouse cursor
-	Input.set_custom_mouse_cursor(uiCursor);
+	change_cursor(uiCursor);
 	entityManager.propertyMenu.hidden.connect(entityHighlight.hide);
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	# If global state is not in edit, set to cursor icon and bail out
-	if (masterManager.state != Global.State.EDIT || editorManager.masterManager.propertyMenu.visible):
-		Input.set_custom_mouse_cursor(uiCursor);
+	# Custom cursor always appears like the UI cursor in the property menu or in non-edit states.
+	if (editorManager.masterManager.state != Global.State.EDIT || editorManager.masterManager.propertyMenu.visible):
+		change_cursor(uiCursor);
 		return;
-	# Set the current mouse position and place the selector frame and invalid sprite to the correct locations
+		
+	# Set the current mouse position and place the selector frame to the correct location
 	currentMousePosition = editorManager.currentMousePosition;
 	selectorFrame.global_position = currentMousePosition * Global.TILE_SIZE + Vector2(Global.TILE_SIZE / 2.0, Global.TILE_SIZE / 2.0);
 	
@@ -90,7 +94,7 @@ func _process(_delta: float) -> void:
 			selectorFrame.modulate = Color(1, 1, 0);
 		SelectorState.MOVING:
 			selectorFrame.modulate = Color(0, 1, 1);
-		SelectorState.COPYING:
+		SelectorState.DUPLICATING:
 			selectorFrame.modulate = Color(1, 0, 1);
 		SelectorState.INVALID:
 			selectorFrame.modulate = Color(1, 1, 1, 0);
@@ -100,32 +104,33 @@ func _process(_delta: float) -> void:
 	var popup = editorManager.toolManager.tileSwitch.entityPropDropdown.get_popup().visible;
 	
 	if (hoveredControl != null || popup):
-		Input.set_custom_mouse_cursor(uiCursor);
+		change_cursor(uiCursor);
 	else:
 		match (toolManager.currentTool):
 			Global.Tool.BRUSH:
-				Input.set_custom_mouse_cursor(brushIcon if editorManager.isPlaceable else brushInvalid);
+				change_cursor(brushIcon if editorManager.isPlaceable else brushInvalid);
 			Global.Tool.BOX_BRUSH:
-				Input.set_custom_mouse_cursor(boxBrushIcon if editorManager.isPlaceable else boxBrushInvalid);
+				change_cursor(boxBrushIcon if editorManager.isPlaceable else boxBrushInvalid);
 			Global.Tool.CURSOR:
 				if (toolManager.isMoving):
-					Input.set_custom_mouse_cursor(cursorMove if editorManager.isPlaceable else cursorMoveInvalid);
+					change_cursor(cursorMove if editorManager.isPlaceable else cursorMoveInvalid);
 				elif (isEditing):
-					Input.set_custom_mouse_cursor(cursorEdit if editorManager.isPlaceable else cursorEditInvalid);
+					change_cursor(cursorEdit if editorManager.isPlaceable else cursorEditInvalid);
 				else:
-					Input.set_custom_mouse_cursor(cursorIcon if editorManager.isPlaceable else cursorInvalid);
-	
+					change_cursor(cursorIcon if editorManager.isPlaceable else cursorInvalid);
+
+
 ## Shows the selector frame.
 func show_selector_frame() -> void:
 	selectorFrame.show();
 
-## Hides the selector frame.
+## Hides the selector frame. Shows the entity highlight if duplicating.
 func hide_selector_frame() -> void:
 	selectorFrame.hide();
 	
-	if (selectorState == SelectorState.COPYING):
+	if (selectorState == SelectorState.DUPLICATING):
 		entityHighlight.show();
-		
+
 ## Shows the entity highlight.
 func show_entity_highlight() -> void:
 	entityHighlight.show();
@@ -142,7 +147,7 @@ func update_selector_state() -> void:
 	if (!editorManager.isPlaceable): selectorState = SelectorState.INVALID;
 	elif (toolManager.isErasing): selectorState = SelectorState.ERASING;
 	elif (entityManager.duplicatingResource): 
-		selectorState = SelectorState.COPYING;
+		selectorState = SelectorState.DUPLICATING;
 		entityHighlight.show();
 	elif (isEditing): selectorState = SelectorState.EDITING; 
 	elif (toolManager.isMoving && toolManager.prevBrushObject >= 0): 
@@ -152,6 +157,12 @@ func update_selector_state() -> void:
 
 ## Moves the entity highlighter to the selected entity and displays it
 ## entityPosition: Where the selected entity is
-func highlight_selected_entity(entityPosition: Vector2) -> void:
+func highlight_selected_entity(entityPosition : Vector2) -> void:
 	entityHighlight.position = entityPosition * Global.TILE_SIZE + Vector2(Global.TILE_SIZE / 2.0, Global.TILE_SIZE / 2.0);
 	entityHighlight.show();
+	
+## Setting the cursor every frame can break on web builds. This helps prevent glitchy custom cursors.
+func change_cursor(new_cursor: Texture2D) -> void:
+	if (currentCursorTexture != new_cursor):
+		currentCursorTexture = new_cursor;
+		Input.set_custom_mouse_cursor(new_cursor);

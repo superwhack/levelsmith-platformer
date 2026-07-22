@@ -15,6 +15,7 @@ var state : Global.State = Global.State.MAIN_MENU;
 @export var loadingImage : TextureRect;
 @export var mainMenuControl : Control;
 
+# Reference to the global settings menu
 @export var globalSettingsMenu : GlobalSettingsMenu;
 
 # References to relevant buttons
@@ -35,8 +36,10 @@ var loadedMap : TileMapLayer;
 ## Vars for the world size.
 @export var worldSize : Vector2i;
 
+# Reference to the property menu
 @export var propertyMenu : Panel;
 
+# The file path to the loaded level
 var loadedLevelPath : String = "";
 
 # Tween information
@@ -52,10 +55,11 @@ enum ExitAction {
 	QUIT
 }
 
+## Runs when the scene enters the node tree
 func _ready() -> void:
+	# Connect global signals
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
 	Global.reload.connect(load_tilemap);
-	#Global.complete.connect(level_complete);
 	Global.levelCreated.connect(tileMap.clear);
 	Global.levelCreated.connect(create_bedrock_border);
 	Global.levelCreated.connect(edit);
@@ -74,16 +78,19 @@ func _ready() -> void:
 		DirAccess.make_dir_absolute("user://Resources/");
 		DirAccess.make_dir_absolute("user://Resources/Enemies/");
 		DirAccess.copy_absolute("res://Resources/PlayerPresets/Default.tres", "user://Resources/Custom.tres");
-		
+	
+	# Open the main menu
 	main_menu(false);
 	
+	# Show loading screen, open the main menu in start mode
 	await screen_static();
 	await main_menu(false, true);
 
-## When the user does a save level input, save the level.
+## Handles the user pressing the fullscreen button
 ## event: The user input
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle-fullscreen"):
+		# Toggle the window mode between Fullscreen and Windowed
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED);
 		else:
@@ -98,30 +105,29 @@ func _input(event: InputEvent) -> void:
 
 ## Plays the screen wipe animation that covers the screen before a state transition.
 func screen_wipe_in() -> void:
+	# If the screen is already shown, return
 	if (loadingScreen.visible): return;
 	loadingScreen.show();
 	# Create the loading animation tween
-	loadingTween = create_tween()
-	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 1.0, loadingTweenTime)
+	loadingTween = create_tween();
+	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 1.0, loadingTweenTime);
 	await loadingTween.finished;
-	await get_tree().create_timer(loadingHold).timeout
+	await get_tree().create_timer(loadingHold).timeout;
 
 ## Plays the screen wipe animation that reveals the destination state after loading.
 func screen_wipe_out() -> void:
+	# If the loading screen is already showing, return
 	if (!loadingScreen.visible): return;
 	# Create the loading animation tween
-	loadingTween = create_tween()
-	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 0.0, loadingTweenTime)
+	loadingTween = create_tween();
+	loadingTween.tween_property(loadingImage.material, "shader_parameter/progress", 0.0, loadingTweenTime);
 	await loadingTween.finished;
 	loadingScreen.hide();
 
 ## special loading screen specific for main menu
 func screen_static() -> void:
-	await get_tree().create_timer(loadingHold).timeout
-	screen_wipe_out()
-	#loadingAnimation.play("WipeOut2");
-	#await loadingAnimation.animation_finished;
-	#loadingScreen.hide();
+	await get_tree().create_timer(loadingHold).timeout;
+	screen_wipe_out();
 
 ## Set up a new level
 ## levelName: Name of the level
@@ -129,15 +135,16 @@ func screen_static() -> void:
 ## newSize: The width and height of the level
 func level_setup( levelName: String, levelAuthor: String, newSize: Vector2i ) -> void:
 	# Overrides alt+f4 for saving
-	
+	# Set the world size
 	worldSize = newSize;
+	# Initialize the camera
 	cameraManager.initialize_camera();
+	# Create the new level
 	ImportExportManager.make_new_level(levelName, levelAuthor, worldSize);
+	# Reset the custom player property
 	propertyMenu.reset_custom();
 	loadedLevelPath = "user://Levels/" + levelName + "/";
-	#AudioManager.masterVolume = 0;
-	#AudioManager.update_volume();
-	#print("NEW LEVEL SET UP");
+	# Set all fps based on the json file
 	AnimationManager.set_all_fps_to_json(loadedLevelPath + "Settings.JSON");
 	Global.levelCreated.emit();
 	editorManager.returnClick = false;
@@ -162,33 +169,47 @@ func create_bedrock_border() -> void:
 
 ## Imports a level 
 ## startPlay: Starts the level in play mode
-func import_level_and_edit(startPlay: bool = false) -> void:
+func import_level_and_edit(startPlay: bool = false, skipWipeIn: bool = false) -> void:
+	# Clear the enemies from the folder
 	ImportExportManager.clear_enemies_folder();
+	# Delete all child nodes
 	for childNode in editorManager.tileMap.get_children():
 		childNode.free();
+	# Wait for the ImportExportManager to import the level CSV before setting the playerExists to true
 	editorManager.playerExists = await ImportExportManager.import_level_CSV(editorManager.tileMap);
+	# Set the world size
 	worldSize = ImportExportManager.importedLevelSize;
+	# Call setup functions
 	editorManager.returnClick = false;
 	entityManager.scan_goals(worldSize.x, worldSize.y);
 	editorManager.reset_enemy_positions();
+	# Wait a frame
 	await get_tree().process_frame;
+	# Initialize the camera, import data
 	cameraManager.initialize_camera();
 	ImportExportManager.import_JSON(editorManager.tileMap, propertyMenu, editorManager.levelSettingsMenu);
 	ImportExportManager.levelImported.emit();
-	if (startPlay): play();
-	else: edit();
+	# Start in play or edit
+	if (startPlay):
+		await play(skipWipeIn);
+	else:
+		await edit(skipWipeIn);
 	#propertyMenu._on_preset_options_item_selected(4);
-	await get_tree().process_frame
+	await get_tree().process_frame;
 
 ## Loads the given level to the player.
 ## levelPath: The folder path of the level.
 ## startPlay: Starts the level in play mode
 func load_level(levelPath: String, startPlay: bool = false) -> void:
+	# If it is a valid import, set the paths accordingly
 	if (ImportExportManager.validate_import(levelPath)):
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
+		await screen_wipe_in();
+		await get_tree().process_frame;
+		
 		# Await so that the camera gets properly placed
-		await import_level_and_edit(startPlay);
+		await import_level_and_edit(startPlay, true);
 
 ## Checks if the level has unsaved changes, and creates a popup with appropriate functions.
 ## on_continue: A callable function, for going to main menu or force quitting app.
@@ -202,7 +223,7 @@ func check_unsaved_changes(on_continue: Callable, exit: ExitAction) -> void:
 	var save = func() -> void:
 		editorManager.unsavedChanges = false;
 		AudioManager.play_UI_effect("UISelection");
-		var levelScreenshot : Image = await editorManager.screenshot_level();
+		var levelScreenshot : Image = await editorManager.levelScreenshotCamera.get_level_screenshot();
 		ImportExportManager.save_level_screenshot(levelScreenshot);
 		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated);
 		on_continue.call();
@@ -212,24 +233,30 @@ func check_unsaved_changes(on_continue: Callable, exit: ExitAction) -> void:
 		editorManager.unsavedChanges = false;
 		on_continue.call();
 	
+	# If there are unsaved changes, popup to allow the user to save
 	if (editorManager.unsavedChanges):
 		PopUpManager.create_unsaved_changes_popup(save, no_save);
-		
+	# If exiting project show popup for save and quit
 	if (exit == ExitAction.QUIT):
 		PopUpManager.currentPopUp.set_save_quit_text("Save & Quit to Desktop");
 		PopUpManager.currentPopUp.set_no_save_quit_text("Quit to Desktop");
 
 
 ## Swap to main menu state
+## menuClickSound : Whether the sound should play for the menu being clicked
+## onStart : Whether this is being called when starting the project
 func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
+	# If there are unsaved changes, run the function to take care of those
 	if (editorManager.unsavedChanges):
 		check_unsaved_changes(main_menu, ExitAction.MAIN_MENU);
 		return;
-	
+	# Fill the list of levels
 	mainMenuControl.fill_level_list();
-	if !onStart:
+	# If it is when the project starts, screen wipe
+	if (!onStart):
 		await screen_wipe_in();
-	if menuClickSound:
+	# If the click sound should play, play it
+	if (menuClickSound):
 		AudioManager.play_UI_effect("UISelection");
 	# Hide all non-menu states, show Main Menu scene
 	gameManager.hide();
@@ -254,16 +281,22 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	get_tree().set_auto_accept_quit(true);
 
 ## Swap to edit state
-func edit() -> void:
+func edit(skipWipeIn: bool = false) -> void:
+	# Setup edit state
 	get_tree().set_auto_accept_quit(false);
 	gameManager.pausable = false;
 	await get_tree().process_frame;
-	await screen_wipe_in();
+	if (!skipWipeIn):
+		await screen_wipe_in();
+	# Reset audio and play ui effect
 	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UISelection");
+	# Pause players
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
+	# Delete tileMap from the game manager
 	if gameManager.tileMap:
 		gameManager.tileMap.queue_free();
+	
 	# Update state variable
 	state = Global.State.EDIT;
 	# Change scene to edit scene
@@ -291,11 +324,12 @@ func edit() -> void:
 	await screen_wipe_out();
 
 ## Swap to play state
-func play() -> void:
+func play(skipWipeIn: bool = false) -> void:
 	# Check that the game can be run
 	if (!get_play_errors().is_empty()):
 		return;
-	await screen_wipe_in();
+	if !skipWipeIn:
+		await screen_wipe_in();
 	propertyMenu.close();
 	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");
@@ -317,18 +351,18 @@ func play() -> void:
 	# Reset the play scene and load the map
 	gameManager.freeze(true);
 	await gameManager.full_restart();
-	await get_tree().process_frame
+	await get_tree().process_frame;
 	await screen_wipe_out();
 	gameManager.freeze(false);
 
 ## Saves the tilemap to the resource folder
 func save_tilemap() -> void:
-	# Reference the tile map as the node to be saved\
+	# Reference the tile map as the node to be saved
 	var nodeToSave : Node = tileMap;
 	# Create a PackedScene
 	var scene : PackedScene = PackedScene.new();
 	# Pack the node to save as a scene
-	scene.pack(nodeToSave)
+	scene.pack(nodeToSave);
 	# Save that scene to the resource folder
 	ResourceSaver.save(scene, "user://SavedTileMap.tscn");
 
@@ -349,12 +383,10 @@ func load_tilemap() -> void:
 	# WARNING: Unsure if this could be a reference
 	loadedMap = gameManager.get_child(0);
 	gameManager.tileMap = loadedMap;
-	
-	
+
 ## Shows the play pop up to the user.
 func mouse_entered_play_button() -> void:
 	var errors : Array[String] = get_play_errors();
-	
 	# So long as there are errors, modify the pop-up to be accurate.
 	if (errors.size() > 0):
 		playPopUp.set_title("REQUIRED TO RUN");
@@ -366,25 +398,25 @@ func mouse_entered_play_button() -> void:
 		playPopUp.set_body_text(bodyText);
 		playPopUp.show();
 
-
 ## Hides the play pop up from the user.
 func mouse_exited_play_button() -> void:
 	playPopUp.hide();
 
-	
 ## Validates if a level is playable, and returns a string of any found errors
 ## Returns an array of error points, but not a full error description.
 func get_play_errors() -> Array[String]:
 	var errors : Array[String] = [];
-	
+	# Add player nonexistant error
 	if (!editorManager.playerExists):
 		errors.append("Player");
+	# Add goal nonexistant error
 	if (!editorManager.goalExists):
 		errors.append("End Goal");
-		
 	return errors;
 
+## Display the global settings menu
 func open_global_settings_menu() -> void:
+	# Pause the tree, show the settings menu
 	get_tree().paused = true;
 	AudioManager.play_UI_effect("UISelection")
 	previewTileMap.hide();
@@ -393,6 +425,7 @@ func open_global_settings_menu() -> void:
 
 ## Closes the settings menu
 func close_global_settings_menu() -> void:
+	# Unpause the tree, hide the settings menu
 	get_tree().paused = false;
 	AudioManager.play_UI_effect("UISelection");
 	previewTileMap.show();

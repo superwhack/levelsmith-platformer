@@ -2,12 +2,17 @@
 
 [ext_resource type="Script" uid="uid://bpmwwvhsaherl" path="res://Scripts/Game/PlayerHealthUI.gd" id="1_qhy4u"]
 [ext_resource type="PackedScene" uid="uid://bfmexmkn6uy3f" path="res://Scenes/UI/Heart.tscn" id="2_qhy4u"]
+[ext_resource type="Texture2D" uid="uid://qf7uq7d7mpai" path="res://Assets/UserInterface/line-md--heart-filled.png" id="3_qhy4u"]
+[ext_resource type="Texture2D" uid="uid://cerg25kv03gd3" path="res://Assets/UserInterface/tabler--heart.png" id="4_pwsf1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j23bb"]
 
-[node name="PlayerHealthUi" type="HBoxContainer" unique_id=621394887]
+[node name="PlayerHealthUi" type="HBoxContainer" unique_id=621394887 node_paths=PackedStringArray("healthContainer")]
 script = ExtResource("1_qhy4u")
-heart_scene = ExtResource("2_qhy4u")
+heartScene = ExtResource("2_qhy4u")
+fullHeartTexture = ExtResource("3_qhy4u")
+emptyHeartTexture = ExtResource("4_pwsf1")
+healthContainer = NodePath("PanelContainer/MarginContainer/HealthContainer")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=70166934]
 layout_mode = 2

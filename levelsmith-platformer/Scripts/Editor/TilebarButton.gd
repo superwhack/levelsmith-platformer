@@ -7,10 +7,8 @@ extends Button
 # Option to enable/disable updating the texture
 @export var isTextureUpdating : bool = false;
 # Reference to the tile set
-@onready var tileSet : TileSet = tilebar.tileMap.tile_set;
-
-@export var isEntity : bool = false;
-
+@onready var tileSet : TileSet = tilebar.editorManager.tileMap.tile_set;
+# Name of the entity this button selects (If it selects an entity)
 @export var entityName : String = "";
 
 enum ButtonType {
@@ -22,7 +20,7 @@ enum ButtonType {
 ## The type of object this button selects.
 @export var buttonType: ButtonType
 
-@export var image : TextureRect;
+@export var buttonImage : TextureRect;
 
 func _ready() -> void:
 	focus_entered.connect(select);
@@ -37,16 +35,16 @@ func _ready() -> void:
 		ButtonType.PROP:
 			tilebar.propButtons.append(self);
 
-func _process(_delta: float) -> void:
-	# Change the texture to the texture currently set in the tile set
-	if (isTextureUpdating): 
-		if(isEntity && entityName != ""):
-			var templateAnimation : AnimatedSprite2D = AnimationManager.get(entityName + "TemplateSprite");
-			#if entityName == "checkpoint":
-			#	print(templateAnimation.animation);
-			image.texture = templateAnimation.sprite_frames.get_frame_texture(templateAnimation.animation, 0);
-		else:
-			image.texture = tileSet.get_source(thisItemID).texture;
+## Runs during the editor state and updates the texture.
+func _process(_delta : float) -> void:
+	if (!isTextureUpdating): return;
+	
+	# Change the texture to the first frame of the entity's default animation.
+	if(buttonType == ButtonType.ENTITY && entityName != ""):
+		var templateAnimation : AnimatedSprite2D = AnimationManager.get(entityName + "TemplateSprite");
+		buttonImage.texture = templateAnimation.sprite_frames.get_frame_texture(templateAnimation.animation, 0);
+	else:
+		buttonImage.texture = tileSet.get_source(thisItemID).texture;
 
 ## Select this button.
 func select() -> void:
@@ -60,8 +58,3 @@ func select() -> void:
 	
 	AudioManager.play_UI_effect("UISelection");
 	tilebar.toolManager.update_brush_object(thisItemID);
-	
-	
-#func change_brush_object() -> void:
-	#AudioManager.play_UI_effect("UISelection");
-	#tilebar.toolManager.update_brush_object(thisItemID);

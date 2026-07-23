@@ -135,7 +135,6 @@ func export_level(tileMap : TileMapLayer, playerData : Panel, worldSize : Vector
 		
 	# First, get the meta data so we don't delete permanent data.
 	var json : Dictionary = { };
-
 	# If the Settings file exists, get entire file as text
 	if (FileAccess.file_exists(levelPath + "Settings.JSON")):
 		var settingsJSONFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
@@ -345,15 +344,15 @@ func validate_import(sourceName: String) -> bool:
 	levelPath = sourceName;
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
-	
+	print(levelPath)
 	if (!DirAccess.dir_exists_absolute(levelPath)):
 		errors.append("Directory " + levelPath + " does not exist!");
-		
+		print("failed 1")
 	if (!FileAccess.file_exists(levelPath + "Settings.JSON")):
 		errors.append(levelPath + "Settings.JSON does not exist!");
-		
 	if (!FileAccess.file_exists(levelPath + "Tiles.CSV")):
 		errors.append(levelPath + "Tiles.CSV does not exist!");
+		print("failed 3")
 	if (errors.size() == 0):
 		sourceName = sourceName.left(-1);
 		return true;

@@ -553,15 +553,21 @@ func match_enemy_type(enemy : Dictionary, locatedEnemy : Node2D) -> void:
 			newResource.active = enemyStats.get("active", false);
 		"flying":
 			newResource.speed = enemyStats.get("speed", 2.0);
-			newResource.pointBOffset.x = enemy.stats.endpoint.x;
-			newResource.pointBOffset.y = enemy.stats.endpoint.y;
+			if !(enemyStats.has("endpoint")):
+				newResource.pointBOffset = Vector2(0, 0);
+			else:
+				newResource.pointBOffset.x = enemy.stats.endpoint.x;
+				newResource.pointBOffset.y = enemy.stats.endpoint.y;
 		"stationary":
 			newResource.isFacingRight = enemyStats.get("isFacingRight", false);
 			newResource.gravity = enemyStats.get("gravity", false);
 		"movingPlatform":
 			newResource.speed = enemyStats.get("speed", 2);
-			newResource.pointBOffset.x = enemy.stats.endpoint.x;
-			newResource.pointBOffset.y = enemy.stats.endpoint.y;
+			if !(enemyStats.has("endpoint")):
+				newResource.pointBOffset = Vector2(0, 0);
+			else:
+				newResource.pointBOffset.x = enemy.stats.endpoint.x;
+				newResource.pointBOffset.y = enemy.stats.endpoint.y;
 			newResource.progress = enemyStats.get("progress", 0);
 			newResource.delay = enemyStats.get("delay", 0);
 			newResource.easing = enemyStats.get("easing", false);

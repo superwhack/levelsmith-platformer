@@ -15,7 +15,7 @@ steamButton = NodePath("SteamButton")
 itchButton = NodePath("ItchButton")
 websiteButton = NodePath("WebsiteButton")
 githubButton = NodePath("GithubButton")
-steamLink = "https://store.steampowered.com/agecheck/app/1151340/"
+steamLink = "https://levelsmith-labs.itch.io/foundry2d"
 itchLink = "https://levelsmith-labs.itch.io/foundry2d"
 websiteLink = "https://ziad-j05.github.io/levelsmith-website/foundry2d/"
 githubLink = "https://github.com/superwhack/levelsmith-platformer"
@@ -47,7 +47,7 @@ expand_mode = 3
 
 [node name="Label" type="Label" parent="SteamButton/MarginContainer/HBoxContainer" unique_id=522378092]
 layout_mode = 2
-text = "Steam Page  -- Replace the link"
+text = "Steam Page"
 
 [node name="ItchButton" type="Button" parent="." unique_id=1608734630]
 custom_minimum_size = Vector2(0, 50)

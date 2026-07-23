@@ -89,15 +89,16 @@ func _unhandled_input(event : InputEvent) -> void:
 			
 	match (currentTool):
 		Global.Tool.BRUSH:
-			if (event.is_action_pressed("left-click")):
+			if (event.is_action_pressed("left-click") and !event.ctrl_pressed):
 				isPainting = true;
-			elif (event.is_action_released("left-click")):
+			elif (event.is_action_released("left-click") and !event.ctrl_pressed):
 				isPainting = false;
-				
+
 			if (event.is_action_pressed("right-click")):
 				isErasing = true;
 			elif (event.is_action_released("right-click")):
 				isErasing = false;
+			
 				
 			if (isPainting): 
 				tileManager.place_tile(editorManager.currentMousePosition);

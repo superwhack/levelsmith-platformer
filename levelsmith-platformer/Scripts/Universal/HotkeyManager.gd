@@ -10,6 +10,12 @@ extends Node
 ## Handles keyboard inputs.
 ## event: The input event to parse.
 func _unhandled_key_input(event : InputEvent) -> void:
+	# Runs the level so long as we aren't in a line edit box.
+	if (event.is_action_pressed("enter")):
+		if (!get_viewport().gui_get_focus_owner() is LineEdit && editorManager.masterManager.state == Global.State.EDIT):
+			editorManager.masterManager.play();
+
+			
 	# If not in edit mode, return
 	if (editorManager.masterManager.state != Global.State.EDIT): return;
 	# If level save button is pressed, call the editorManager's export function
@@ -21,6 +27,7 @@ func _unhandled_key_input(event : InputEvent) -> void:
 	# If the toggle background button is pressed, toggle the toolManager's isBackground 
 	if (event.is_action_pressed("toggle-background")):
 		toolManager.isBackground = !toolManager.isBackground;
+		
 	
 	# Switching Tools
 	# When switching to the brush tool, drops the entity being held, switches the tool and sets the hotbar

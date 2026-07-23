@@ -195,6 +195,13 @@ func _process(delta: float) -> void:
 	if timerRunning:
 		testingTime += delta;
 		update_timer(timerLabel);
+		
+func _unhandled_input(event: InputEvent) -> void:
+	# Sets us into edit mode
+	if (event.is_action_pressed("enter")):
+		if(masterManager.state == Global.State.PLAY):
+			masterManager.edit();
+			return;
 
 ## Increase coin count and update its UI on coin collection
 func _on_coin_collected() -> void:

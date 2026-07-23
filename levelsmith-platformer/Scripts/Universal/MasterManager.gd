@@ -309,7 +309,7 @@ func edit(skipWipeIn: bool = false) -> void:
 	gameManager.hide();
 	gameManagerCanvas.hide();
 	editorManager.show();
-	if !gameManager.goalReached:
+	if (!gameManager.goalReached):
 		editorManager.returnClick = true;
 	# Just so there aren't any issues when holding down a button before swapping to play
 	toolManager.isErasing = false;
@@ -333,7 +333,7 @@ func play(skipWipeIn: bool = false) -> void:
 	# Check that the game can be run
 	if (!get_play_errors().is_empty()):
 		return;
-	if !skipWipeIn:
+	if (!skipWipeIn):
 		await screen_wipe_in();
 	propertyMenu.close();
 	AudioManager.play_UI_effect("UISelection");

@@ -823,7 +823,7 @@ func detect_tiles() -> void:
 					velocity.x = BOUNCE_BASE_X * bounceTileHeight;
 				else:
 					velocity.x = -BOUNCE_BASE_X * bounceTileHeight;
-				if (jumpInput) :
+				if (jumpInputHeld) :
 					velocity.y = -BOUNCE_BASE_Y_SIDE * bounceTileHeight;
 			# Vertical bounces
 			else:

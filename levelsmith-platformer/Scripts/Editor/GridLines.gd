@@ -1,6 +1,6 @@
 extends TileMapLayer
 
-# Master and Editor Manager exports for easy access
+# Master Manager export for easy access
 @export var masterManager : Node2D;
 
 ## Called when the grid lines tile map layer is created.

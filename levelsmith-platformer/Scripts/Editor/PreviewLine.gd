@@ -15,7 +15,6 @@ func _ready():
 	startPoint = Sprite2D.new(); 
 	startPoint.texture = hollowCircle;
 	add_child(startPoint);
-	
 	endPoint = Sprite2D.new(); 
 	endPoint.texture = hollowCircle;
 	endPoint.hide();

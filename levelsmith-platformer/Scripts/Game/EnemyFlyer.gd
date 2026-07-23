@@ -37,6 +37,7 @@ func _ready() -> void:
 	
 	animatedSprites.animation = "FlyMove";
 	animatedSprites.play();
+	z_index = 2;
 
 ## Processes flying movement and collision handling.
 ## delta: Time since previous frame.
@@ -111,8 +112,7 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	pointB = pointA + propertyFile.pointBOffset;
 	targetPoint = pointB;
 	previewLine.update();
-	z_index += 2;
-	previewLine.z_index = z_index - 5;
+	#previewLine.z_index = z_index - 5;
 	ResourceSaver.save(propertyFile);
 
 	apply_script(propertyFile);

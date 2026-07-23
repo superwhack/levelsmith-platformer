@@ -25,9 +25,6 @@ var inusePlayers : Array[AudioStreamPlayer]
 var queue : Array[String];
 var currentWalkingEffect : Global.WalkingEffect;
 
-# Audio player for the asset manager
-var assetManagerPlayer : AudioStreamPlayer;
-
 # Preview music timer for the settings menu
 var previewMusicTimer : float = -1.0;
 const PREVIEW_MUSIC_CAP : float = 1.5;
@@ -45,15 +42,12 @@ func _ready() -> void:
 	# Create all players
 	musicPlayer = AudioStreamPlayer.new();
 	walkingPlayer = AudioStreamPlayer.new();
-	assetManagerPlayer = AudioStreamPlayer.new();
 	process_mode = Node.PROCESS_MODE_ALWAYS;
 	add_child(musicPlayer);
 	add_child(walkingPlayer);
-	add_child(assetManagerPlayer);
 	musicPlayer.finished.connect(music_loop.bind(musicPlayer));
 	musicPlayer.bus = "Master";
 	walkingPlayer.bus = "Master";
-	assetManagerPlayer.bus = "Master";
 	
 	# Loop through and create every potential audioPlayer for use with UI and in game
 	for i in AUDIO_PLAYER_COUNT:

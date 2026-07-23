@@ -170,6 +170,8 @@ func create_bedrock_border() -> void:
 ## Imports a level 
 ## startPlay: Starts the level in play mode
 func import_level_and_edit(startPlay: bool = false, skipWipeIn: bool = false) -> void:
+	ImportExportManager.validate_import(loadedLevelPath);
+	
 	# Clear the enemies from the folder
 	ImportExportManager.clear_enemies_folder();
 	# Delete all child nodes
@@ -203,6 +205,7 @@ func import_level_and_edit(startPlay: bool = false, skipWipeIn: bool = false) ->
 func load_level(levelPath: String, startPlay: bool = false) -> void:
 	# If it is a valid import, set the paths accordingly
 	if (ImportExportManager.validate_import(levelPath)):
+		print("Settings level path...", levelPath)
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
 		await screen_wipe_in();

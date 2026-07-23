@@ -39,7 +39,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=992666075]
+handle_input_locally = false
 size = Vector2i(1920, 1080)
+render_target_update_mode = 4
 
 [node name="Overlay" type="Panel" parent="SubViewportContainer/SubViewport" unique_id=158279013]
 material = SubResource("ShaderMaterial_ahjbw")

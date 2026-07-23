@@ -213,7 +213,7 @@ func import_level() -> void:
 	var importPath : String = fieldImportLevelPath.text;
 	var sourceDirectory : String = importPath;
 	
-	if importPath.to_lower().ends_with(".zip"):
+	if (importPath.to_lower().ends_with(".zip")):
 		if (!validate_level_zip(importPath)):
 			badImportWarning.show();
 			badImportBody.text = "Invalid level zip file \"" + importPath + "\"!";
@@ -243,12 +243,13 @@ func import_level() -> void:
 	
 	# Extract the name of the folder from the file path
 	var importedLevelArray : Array = sourceDirectory.rstrip("/").split("/");
-	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
+	var importedLevelName : String = sourceDirectory.replace("\\", "/").rstrip("/").get_file()
 	
 	# Handle duplicate level names
 	importedLevelName = duplicate_naming(importedLevelName);
 	
 	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
+	print("Import directory: ", importDirectory)
 	masterManager.loadedLevelPath = sourceDirectory;
 
 	if (!DirAccess.dir_exists_absolute(importDirectory)):
@@ -924,7 +925,9 @@ func _on_files_dropped(files: PackedStringArray) -> void:
 	
 	# Get the first (and only) file
 	var droppedFile : String = files[0];
-
 	if (droppedFile.to_lower().ends_with(".zip")):
 		fieldImportLevelPath.text = droppedFile;
+		import_level();
+	elif (DirAccess.dir_exists_absolute(droppedFile)):
+		fieldImportLevelPath.text = droppedFile + "/";
 		import_level();

@@ -94,7 +94,7 @@ masterManager = NodePath("..")
 closeAssetManagerButton = NodePath("CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/HBoxContainer/CloseButton")
 
 [node name="GridLines" parent="EditorManager" index="0" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
-z_index = 0
+z_index = -5
 tile_set = SubResource("TileSet_0vixy")
 masterManager = NodePath("../..")
 

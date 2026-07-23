@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bpmwwvhsaherl" path="res://Scripts/Game/PlayerHealthUI.gd" id="1_qhy4u"]
 [ext_resource type="PackedScene" uid="uid://bfmexmkn6uy3f" path="res://Scenes/UI/Heart.tscn" id="2_qhy4u"]
-[ext_resource type="Texture2D" uid="uid://qf7uq7d7mpai" path="res://Assets/UserInterface/line-md--heart-filled.png" id="3_qhy4u"]
-[ext_resource type="Texture2D" uid="uid://cerg25kv03gd3" path="res://Assets/UserInterface/tabler--heart.png" id="4_pwsf1"]
+[ext_resource type="Texture2D" uid="uid://dqsmuj817sklp" path="res://Assets/UserInterface/IconHeartFilled.png" id="3_qhy4u"]
+[ext_resource type="Texture2D" uid="uid://tsgf2raogyco" path="res://Assets/UserInterface/IconHeartEmpty.png" id="4_pwsf1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j23bb"]
 

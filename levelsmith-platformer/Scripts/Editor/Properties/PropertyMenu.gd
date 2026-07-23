@@ -76,13 +76,15 @@ var playerWallJumpDecay : bool;
 @export var shootingFireRateSlider : VBoxContainer;
 @export var shootingProjectileBounce : VBoxContainer;
 @export var shootingGravity : VBoxContainer;
+@export var shootingProjectilePersistenceCheckbox : VBoxContainer;
+@export var shootingAlwaysActiveCheckbox : VBoxContainer;
 
 @export_group("Flying Properties")
 # Flying inputs
 @export var flyingSpeedSlider : VBoxContainer;
 @export var flyingOffsetXSlider : VBoxContainer;
 @export var flyingOffsetYSlider : VBoxContainer;
-var previewLine: Line2D;
+var previewLine : Line2D;
 
 @export_group("Stationary Properties")
 # Stationary inputs
@@ -135,6 +137,8 @@ func _ready() -> void:
 	shootingFireRateSlider.drag_ended.connect(_on_drag_ended);
 	shootingProjectileBounce.check_changed.connect(update_values);
 	shootingGravity.check_changed.connect(update_values);
+	shootingProjectilePersistenceCheckbox.check_changed.connect(update_values);
+	shootingAlwaysActiveCheckbox.check_changed.connect(update_values);
 	
 	flyingSpeedSlider.drag_ended.connect(_on_drag_ended);
 	flyingOffsetXSlider.drag_ended.connect(_on_drag_ended);
@@ -305,12 +309,16 @@ func update_sliders() -> void:
 		shootingFireRateSlider.value = selectedPreset.fireRate;
 		shootingProjectileBounce.value = selectedPreset.projBounce;
 		shootingGravity.value = selectedPreset.gravity;
+		shootingProjectilePersistenceCheckbox.value = selectedPreset.persistence;
+		shootingAlwaysActiveCheckbox.value = selectedPreset.active;
 		shootingDirectionSlider.update_slider();
 		shootingRandomDirection.update_checkbox();
 		shootingShotSpeedSlider.update_slider();
 		shootingFireRateSlider.update_slider();
 		shootingProjectileBounce.update_checkbox();
 		shootingGravity.update_checkbox();
+		shootingProjectilePersistenceCheckbox.update_checkbox();
+		shootingAlwaysActiveCheckbox.update_checkbox();
 	elif selectedEntity is EnemyFlyer:
 		flyingSpeedSlider.value = selectedPreset.speed;
 		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.TILE_SIZE;
@@ -383,6 +391,8 @@ func update_values() -> void:
 		selectedPreset.fireRate = shootingFireRateSlider.value;
 		selectedPreset.projBounce = shootingProjectileBounce.value;
 		selectedPreset.gravity = shootingGravity.value
+		selectedPreset.persistence = shootingProjectilePersistenceCheckbox.value;
+		selectedPreset.active = shootingAlwaysActiveCheckbox.value
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyFlyer:
 		selectedPreset.speed = flyingSpeedSlider.value;
@@ -414,7 +424,7 @@ func _on_drag_ended() -> void:
 
 ## Show the property menu, different sections pop up depending on the currently selected entity type
 ## resource: The resource file to load with properties
-func show_menu(resource: Resource = null) -> void:
+func show_menu(resource : Resource = null) -> void:
 	show();
 	# Hide preview and selector frame.
 	previewManager.hide();

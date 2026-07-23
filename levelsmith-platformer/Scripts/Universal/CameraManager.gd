@@ -4,17 +4,17 @@ extends Camera2D;
 @export var masterManager : Node2D;
 
 # Camera movement settings
-@export var roamCellCount : float = 4.0;
-@export var moveSpeed : float = 500.0;
-@export var edgeScrollSpeed : float = 800.0;
-@export var edgeScrollMargin : float = 100.0;
+var roamCellCount : float = 4.0;
+var moveSpeed : float = 500.0;
+var edgeScrollSpeed : float = 800.0;
+var edgeScrollMargin : float = 100.0;
 var isPanning : bool = false;
 var panSpeed : float = 1.0;
 
 # Camera zoom settings
-@export var zoomSpeed : float = 0.1;
-@export var maxZoomOut : float = 0.5;
-@export var maxZoomIn : float = 2.0;
+var zoomSpeed : float = 0.1;
+var maxZoomOut : float = 0.5;
+var maxZoomIn : float = 2.0;
 
 # Tilemap bound
 @export var gridLines : TileMapLayer;

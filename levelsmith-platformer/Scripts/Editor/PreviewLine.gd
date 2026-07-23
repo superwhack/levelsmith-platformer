@@ -4,7 +4,7 @@ extends Line2D
 @export var parent : Node2D;
 
 # Texture for start and end points
-var hollowCircle : Texture2D = preload("res://Assets/Sprites/UI/PreviewLineEndpoint.png");
+const HOLLOW_CIRCLE : Texture2D = preload("res://Assets/Sprites/UI/PreviewLineEndpoint.png");
 
 # Sprites for the start and end points
 var startPoint : Sprite2D;
@@ -13,10 +13,10 @@ var endPoint : Sprite2D;
 ## Updates when this node first generates.
 func _ready():
 	startPoint = Sprite2D.new(); 
-	startPoint.texture = hollowCircle;
+	startPoint.texture = HOLLOW_CIRCLE;
 	add_child(startPoint);
 	endPoint = Sprite2D.new(); 
-	endPoint.texture = hollowCircle;
+	endPoint.texture = HOLLOW_CIRCLE;
 	endPoint.hide();
 	add_child(endPoint);
 	update();

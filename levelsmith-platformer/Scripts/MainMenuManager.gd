@@ -243,7 +243,7 @@ func import_level() -> void:
 	
 	# Extract the name of the folder from the file path
 	var importedLevelArray : Array = sourceDirectory.rstrip("/").split("/");
-	var importedLevelName : String = sourceDirectory.replace("\\", "/").rstrip("/").get_file()
+	var importedLevelName : String = sourceDirectory.replace("\\", "/").rstrip("/").get_file();
 	
 	# Handle duplicate level names
 	importedLevelName = duplicate_naming(importedLevelName);

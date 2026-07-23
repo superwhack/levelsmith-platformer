@@ -6,14 +6,14 @@ class_name GlobalSettingsMenu;
 @export var closeButton : Button;
 @export var resetButton : Button;
 
-const SETTINGS_PATH := "user://settings.cfg";
+const SETTINGS_PATH : String = "user://settings.cfg";
 
 # Volume
 @export var masterVolume : VBoxContainer;
 @export var SFXVolume : VBoxContainer;
 @export var musicVolume : VBoxContainer;
 
-var musicPreviewing := false;
+var musicPreviewing : bool = false;
 
 const BASE_VOLUME_VALUE : float = 70.0;
 

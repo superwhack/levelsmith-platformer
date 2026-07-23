@@ -201,6 +201,9 @@ func process_player_camera(snap : bool = false) -> void:
 ## Adjusts the camera zoom dependent on the direction. Zoom amount is multiplicative.
 ## direction: Whether the zoom is going in or out.
 func process_zoom(direction: float) -> void:
+	if (get_viewport().gui_get_hovered_control() != null):
+		return;
+		
 	# Mouse world position BEFORE zoom
 	var mouseWorldBefore : Vector2 = get_global_mouse_position();
 		

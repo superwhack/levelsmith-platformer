@@ -2,18 +2,18 @@
 
 [ext_resource type="Script" uid="uid://cgpg23yvvg60m" path="res://Scripts/Editor/Properties/PropertyToggle.gd" id="1_adaxu"]
 
-[node name="PropertySlider" type="VBoxContainer" unique_id=305056832 node_paths=PackedStringArray("nameLabel", "checkBox")]
+[node name="PropertyToggle" type="VBoxContainer" unique_id=305056832 node_paths=PackedStringArray("nameLabel", "checkBox")]
 size_flags_horizontal = 4
 script = ExtResource("1_adaxu")
-nameLabel = NodePath("HBoxContainer/Name")
-checkBox = NodePath("HBoxContainer/CheckBox")
+nameLabel = NodePath("ToggleContainer/Name")
+checkBox = NodePath("ToggleContainer/CheckBox")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1927265922]
+[node name="ToggleContainer" type="HBoxContainer" parent="." unique_id=1927265922]
 layout_mode = 2
 
-[node name="CheckBox" type="CheckBox" parent="HBoxContainer" unique_id=472627819]
+[node name="CheckBox" type="CheckBox" parent="ToggleContainer" unique_id=472627819]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="HBoxContainer" unique_id=671881686]
+[node name="Name" type="Label" parent="ToggleContainer" unique_id=671881686]
 layout_mode = 2
 text = "Name"

@@ -266,7 +266,7 @@ func apply_state_logic(delta: float) :
 			if (isPlayerGrounded):
 				if (moveInput): 
 					set_state(PlayerState.RUNNING);
-				elif (jumpInput):
+				if (jumpInput):
 					set_state(PlayerState.JUMPING);
 			else:
 				set_state(PlayerState.FALLING);

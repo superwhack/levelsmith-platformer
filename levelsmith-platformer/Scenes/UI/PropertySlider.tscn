@@ -5,13 +5,13 @@
 [node name="PropertySlider" type="VBoxContainer" unique_id=305056832 node_paths=PackedStringArray("nameLabel", "unit", "slider", "textField", "minLabel", "maxLabel")]
 custom_minimum_size = Vector2(350, 0)
 script = ExtResource("1_w5nda")
-propertyName = "Name"
 nameLabel = NodePath("NameContainer2/Name")
 unit = NodePath("NameContainer2/Unit")
 slider = NodePath("SliderValuesVbox/SliderHBox/Slider")
 textField = NodePath("SliderValuesVbox/SliderHBox/Value")
 minLabel = NodePath("SliderValuesVbox/MinMaxHbox/Minimum")
 maxLabel = NodePath("SliderValuesVbox/MinMaxHbox/Maximum")
+propertyName = "Name"
 
 [node name="NameContainer2" type="HBoxContainer" parent="." unique_id=599260094]
 layout_mode = 2

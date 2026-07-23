@@ -13,6 +13,7 @@ extends VBoxContainer
 @export var propertyName : String;
 @export var propertyUnit : String;
 @export var minMax : Vector2;
+@export var absMinMax : Vector2 = minMax;
 @export var sliderStep : float;
 @export var valueAppend : String;
 
@@ -35,6 +36,15 @@ func _ready() -> void:
 	# Use min and max values to determine the extremes
 	slider.min_value = snapped(minMax.x, 0.01);
 	slider.max_value = snapped(minMax.y, 0.01);
+	
+	# Allows for the slider to go past the minimum and maximum if a text field is used
+	absMinMax.x = snapped(absMinMax.x, 0.01);
+	absMinMax.y = snapped(absMinMax.y, 0.01);
+	if absMinMax == Vector2(0, 0):
+		absMinMax = Vector2(slider.min_value, slider.max_value);
+	slider.allow_greater = true;
+	slider.allow_lesser = true;
+	
 	slider.step = sliderStep;
 	minLabel.text = str(snapped(minMax.x, .01));
 	maxLabel.text = str(snapped(minMax.y, .01));
@@ -60,7 +70,7 @@ func _process(_delta: float) -> void:
 	# If enabled and the value changed, adjust accordingly
 	dragging.emit();
 	adjust_label();
-	value = slider.value;
+	value = clamp(slider.value, absMinMax.x, absMinMax.y);
 
 ## When drag is finished, emit drag ended signal
 func _drag_ended(_value_changed: bool) -> void:

@@ -155,7 +155,7 @@ func apply_script(file: Resource) -> void:
 	speed = file.speed;
 	pointA = global_position;
 	pointB = pointA + file.pointBOffset;
-	movementDistance = pointA.distance_to(pointB)
+	movementDistance = pointA.distance_to(pointB);
 	progress = file.progress;
 	delay = file.delay;
 	easing = file.easing;

@@ -237,7 +237,9 @@ func export_level(tileMap : TileMapLayer, playerData : Panel, worldSize : Vector
 				"shotSpeed": propertyFile.shotSpeed,
 				"fireRate": propertyFile.fireRate,
 				"projBounce": propertyFile.projBounce,
-				"gravity": propertyFile.gravity
+				"gravity": propertyFile.gravity,
+				"persistence": propertyFile.persistence,
+				"active": propertyFile.active
 			};
 		elif (enemyProperty.contains("Flying")):
 			enemy["type"] = "flying"
@@ -546,6 +548,8 @@ func match_enemy_type(enemy : Dictionary, locatedEnemy : Node2D) -> void:
 			newResource.fireRate = enemy.stats.fireRate;
 			newResource.projBounce = enemy.stats.projBounce;
 			newResource.gravity = enemy.stats.gravity;
+			newResource.persistence = enemy.stats.persistence;
+			newResource.active = enemy.stats.active;
 		"flying":
 			newResource.speed = enemy.stats.speed;
 			newResource.pointBOffset.x = enemy.stats.endpoint.x;

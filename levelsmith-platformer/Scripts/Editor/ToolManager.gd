@@ -140,6 +140,7 @@ func _unhandled_input(event : InputEvent) -> void:
 			if (event.is_action_released("left-click") && prevBrushObject == -1 && !justMoved):
 				if (entityManager.duplicatingResource != null && Input.is_action_pressed("duplicate")):
 					entityManager.duplicatingResource = null;
+					editorManager.customCursorManager.hide_entity_highlight();
 				# If the clicked cell is an entity and the click was short, edit its properties
 				elif (currentCell > Global.EntityType.GOAL && currentCell < Global.EntityType.PROP1 && !isMoving && currentCell != Global.EntityType.COIN && currentCell != Global.EntityType.CHECKPOINT):
 					if Input.is_action_pressed("duplicate") && previousCell != -1 && currentCell != Global.EntityType.PLAYER:

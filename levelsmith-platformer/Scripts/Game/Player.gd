@@ -84,6 +84,9 @@ var currentFriction : float = 1.0;
 var currentSlowdown : float = 1.0;
 
 # Player inputs
+var jumpBufferTimer : float = .2;
+var jumpBufferLeft : float = 0;
+
 var moveInput : bool = false;
 var jumpInput : bool = false;
 var leftInput : bool = false;
@@ -103,6 +106,10 @@ var iceFriction : float = 0.5;
 var iceAccelerationFactor : float = .2;
 
 var isPlayerGrounded : bool = true;
+
+var justBounced : bool = false;
+var bounceTimer : float = 0.13;
+var bounceTimerLeft : float = 0.0;
 
 # The selected movement preset
 @export var playerMovementPreset : PlayerMovementPreset;
@@ -184,11 +191,20 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
+	
 	if (check_out_of_bounds() || victory):
 		return;
 		
-	# Register player inputs
-	jumpInput = Input.is_action_just_pressed("jump");
+	
+	# Timer to reset bounce tile noise from playing
+	bounceTimerLeft -= delta;
+	
+	# Jump buffer timer
+	jumpBufferLeft -= delta;
+	if ( Input.is_action_just_pressed("jump") ) :
+		jumpBufferLeft = jumpBufferTimer;
+	# Register player inputs	
+	jumpInput = jumpBufferLeft > 0;
 	jumpInputReleased = Input.is_action_just_released("jump");
 	jumpInputHeld = Input.is_action_pressed("jump");
 	leftInput = Input.is_action_pressed("left");
@@ -297,6 +313,7 @@ func apply_state_logic(delta: float) :
 					doubleJumpAvailable = false;
 					set_state(PlayerState.JUMPING);
 			justWallJumped = false;
+			justBounced = false;
 			
 		# Wall jumping state
 		PlayerState.WALL_JUMPING:
@@ -403,7 +420,7 @@ func set_state(state : PlayerState, function : Callable = Callable()) -> void:
 			jumpInput = false;
 			coyoteTimeLeft = 0.0;
 			jump();
-			AudioManager.play_effect("Jump");
+			AudioManager.play_effect("jump");
 			animatedSprites.play("PlayerJump");
 			currentState = PlayerState.JUMPING;
 			
@@ -431,9 +448,15 @@ func set_state(state : PlayerState, function : Callable = Callable()) -> void:
 			currentState = PlayerState.SLIDING;
 			
 		PlayerState.TILE_EFFECT_BOUNCE:
-			AudioManager.play_effect("BounceTile");
+			if (justBounced) :
+				return;
+			if ( bounceTimerLeft <= 0 ) :
+				AudioManager.play_effect("BounceTile");
+				bounceTimerLeft = bounceTimer;
 			animatedSprites.play("PlayerJump");
 			currentState = PlayerState.JUMPING;
+			print( "BOUNCE " );
+			justBounced = true;
 			
 		PlayerState.HURT:
 			if (currentState == PlayerState.HURT || currentState == PlayerState.DEAD):
@@ -473,6 +496,7 @@ func on_animation_finished() -> void:
 
 ## Make the player jump
 func jump() -> void:
+	jumpBufferLeft = 0.0;
 	isPlayerGrounded = false;
 	velocity.y = -sqrt(jumpHeight) * JUMP_BASE_HEIGHT * currentSlowdown * sqrt(fallSpeed);
 

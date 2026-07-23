@@ -84,7 +84,7 @@ var playerWallJumpDecay : bool;
 @export var flyingSpeedSlider : VBoxContainer;
 @export var flyingOffsetXSlider : VBoxContainer;
 @export var flyingOffsetYSlider : VBoxContainer;
-var previewLine: Line2D;
+var previewLine : Line2D;
 
 @export_group("Stationary Properties")
 # Stationary inputs
@@ -424,7 +424,7 @@ func _on_drag_ended() -> void:
 
 ## Show the property menu, different sections pop up depending on the currently selected entity type
 ## resource: The resource file to load with properties
-func show_menu(resource: Resource = null) -> void:
+func show_menu(resource : Resource = null) -> void:
 	show();
 	# Hide preview and selector frame.
 	previewManager.hide();

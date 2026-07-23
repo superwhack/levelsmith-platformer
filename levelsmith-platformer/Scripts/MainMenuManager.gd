@@ -507,14 +507,14 @@ func _on_level_pressed(item: Node) -> void:
 	
 	selectedItem = item;
 	update_metadata(item);
-	buttonPlayLevel.disabled = !isPlayable;
+	set_play_button();
 
 
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
 func _on_level_deselected(item: Node) -> void:
 	if (selectedItem == item):
-		buttonPlayLevel.disabled = true;
+		isPlayable = false;
 		item.levelButton.button_pressed = false;
 		toggle_level_buttons();
 		clear_selection();
@@ -527,6 +527,10 @@ func toggle_level_buttons() -> void:
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
 	exportLevelButton.disabled = !exportLevelButton.disabled;
 	buttonSmallExportLevel.disabled = !buttonSmallExportLevel.disabled;
+	set_play_button();
+
+func set_play_button() -> void:
+	buttonPlayLevel.disabled = !isPlayable;
 
 func play_button_mouse_entered() -> void:
 	if (selectedItem && !isPlayable):
@@ -739,8 +743,8 @@ func duplicate_current_level() -> void:
 	if (now.hour == 0):
 		now.hour = 12;
 
-	var date := "%02d.%02d.%04d" % [now.month, now.day, now.year];
-	var time := "%02d:%02d %s" % [now.hour, now.minute, meridiem];
+	var date : String = "%02d.%02d.%04d" % [now.month, now.day, now.year];
+	var time : String = "%02d:%02d %s" % [now.hour, now.minute, meridiem];
 
 	# Set all metadata when duplicating appropriately
 	ImportExportManager.set_metadata(destination.rstrip("/"), "favorited", false);

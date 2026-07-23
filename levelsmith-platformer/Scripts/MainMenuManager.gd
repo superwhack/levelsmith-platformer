@@ -739,8 +739,8 @@ func duplicate_current_level() -> void:
 	if (now.hour == 0):
 		now.hour = 12;
 
-	var date := "%02d.%02d.%04d" % [now.month, now.day, now.year];
-	var time := "%02d:%02d %s" % [now.hour, now.minute, meridiem];
+	var date : String = "%02d.%02d.%04d" % [now.month, now.day, now.year];
+	var time : String = "%02d:%02d %s" % [now.hour, now.minute, meridiem];
 
 	# Set all metadata when duplicating appropriately
 	ImportExportManager.set_metadata(destination.rstrip("/"), "favorited", false);

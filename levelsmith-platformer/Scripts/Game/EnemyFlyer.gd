@@ -35,8 +35,6 @@ func _ready() -> void:
 	
 	animatedSprites.sprite_frames = AnimationManager.flyingEnemyTemplateSprite.sprite_frames;
 	
-	animatedSprites.animation = "FlyMove";
-	animatedSprites.play();
 	z_index = 2;
 
 ## Processes flying movement and collision handling.

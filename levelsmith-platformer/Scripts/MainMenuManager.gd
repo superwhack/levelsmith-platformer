@@ -249,7 +249,6 @@ func import_level() -> void:
 	importedLevelName = duplicate_naming(importedLevelName);
 	
 	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
-	print("Import directory: ", importDirectory)
 	masterManager.loadedLevelPath = sourceDirectory;
 
 	if (!DirAccess.dir_exists_absolute(importDirectory)):

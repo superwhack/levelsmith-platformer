@@ -7,7 +7,7 @@ var active = false;
 @export var onScreen : VisibleOnScreenNotifier2D;
 
 # Movement speed of the platform.
-@export var speed : float = 1.0;
+var speed : float = 1.0;
 
 # Reference to the animated sprite
 @export var animatedSprite : AnimatedSprite2D;
@@ -34,7 +34,7 @@ const SPEED_MODIFIER : float = 100.0;
 # Mutes movement after spawning so it can teleport to it's initial position
 var muteMove = true;
 
-# Delay, in seconds, when reaching the current targetPoint before moving again
+# Delay, in seconds, when re	aching the current targetPoint before moving again
 var delay : float = 0.0;
 var delayLeft = 0.0;
 
@@ -106,6 +106,18 @@ func switch_target() -> void:
 	else:
 		targetPoint = pointA;
 
+## Adjust the current state of the preview platform
+## pointTo : The point that the preview is pointing at
+## selectedProgress : The progress along the path that the platform is at
+func adjust_preview(pointTo : Vector2 = pointB, selectedProgress : float = progress) -> void:
+	previewPlatform.show();
+	previewPlatform.global_position = lerp(global_position, global_position + pointTo, float(selectedProgress) / 100);
+
+## Apply the progress variable into starting global position
+func apply_progress() -> void:
+	position = lerp(pointA, pointB, float(progress) / 100.0);
+	muteMove = false;
+
 ## Assigns a resource file to the platform.
 ## id is the unique identifier of the preset.
 ## position: Tilemap position of the platform.
@@ -132,17 +144,6 @@ func assign_script(id: String, assignPosition: Vector2i) -> void:
 	# Apply the script
 	apply_script(propertyFile);
 
-## Adjust the current state of the preview platform
-## pointTo : The point that the preview is pointing at
-## selectedProgress : The progress along the path that the platform is at
-func adjust_preview(pointTo : Vector2 = pointB, selectedProgress : float = progress) -> void:
-	previewPlatform.show();
-	previewPlatform.global_position = lerp(global_position, global_position + pointTo, float(selectedProgress) / 100);
-
-## Apply the progress variable into starting global position
-func apply_progress() -> void:
-	position = lerp(pointA, pointB, float(progress) / 100.0);
-	muteMove = false;
 
 ## Applies the values stored in a MovingPlatformPreset.
 ## file: Resource containing enemy properties.

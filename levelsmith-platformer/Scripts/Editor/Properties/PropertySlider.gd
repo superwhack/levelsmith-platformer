@@ -26,6 +26,8 @@ signal dragging;
 var value : float;
 var enabled : bool = true;
 
+const MAX_LENGTH : int = 4;
+
 ## When started, set the text of the name label to the name of the property
 func _ready() -> void:
 	slider.rounded = false;
@@ -85,7 +87,7 @@ func _text_change_ended() -> void:
 	adjust_label();
 	drag_ended.emit();
 
-const MAX_LENGTH : int = 4;
+
 ## Validate the length of the current string
 func _validate_length() -> void:
 	if (textField.has_focus() && textField.text.length() > MAX_LENGTH):

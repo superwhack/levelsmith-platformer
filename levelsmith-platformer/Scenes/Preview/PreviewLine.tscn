@@ -3,5 +3,7 @@
 [ext_resource type="Script" uid="uid://bdiotj46ihakc" path="res://Scripts/Editor/PreviewLine.gd" id="1_da1wv"]
 
 [node name="PreviewLine" type="Line2D" unique_id=1504030647]
+z_index = 1
+z_as_relative = false
 width = 4.0
 script = ExtResource("1_da1wv")

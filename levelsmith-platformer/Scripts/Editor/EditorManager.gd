@@ -117,13 +117,15 @@ func reset_enemy_positions() -> void:
 	for moving in get_tree().get_nodes_in_group("Moving"):
 		if ((moving is Enemy || moving is MovingPlatform) && moving.propertyFile):
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
-			if !moving is EnemyFlyer:
-				moving.shift_down();
-			if moving is EnemyPatrol:
+			if (!moving is EnemyFlyer):
+				moving.global_position += Vector2(0, 20);
+			
+			if (moving is EnemyPatrol):
 				moving.directionArrow.show();
-			elif moving is EnemyShooting:
-				moving.directionArrow.show();
-				moving.update_standing(moving.propertyFile.facing);
+			elif (moving is EnemyShooting):
+				moving.directionArrow.visible = !moving.randomDirection;
+			elif (moving is EnemyFlyer):
+				moving.previewLine.show();
 			elif (moving is EnemyStationary):
 				moving.update_flipped(moving.propertyFile.isFacingRight);
 			elif (moving is MovingPlatform):
@@ -183,4 +185,4 @@ func export_level() -> void:
 	var levelScreenshot : Image = await levelScreenshotCamera.get_level_screenshot();
 	
 	ImportExportManager.save_level_screenshot(levelScreenshot);
-	ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated);
+	ImportExportManager.export_level(tileMap, masterManager.propertyMenu, masterManager.worldSize, levelSettingsMenu, isValidated, masterManager.get_play_errors().is_empty());

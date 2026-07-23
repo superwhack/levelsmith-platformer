@@ -17,6 +17,7 @@ var objectCount : String = "";
 var version : String = "";
 var favorited : bool = false;
 var validated : bool = false;
+var playable : bool = false;
 var thumbnail : Texture2D;
 
 # The level path. Used when emitting signal.

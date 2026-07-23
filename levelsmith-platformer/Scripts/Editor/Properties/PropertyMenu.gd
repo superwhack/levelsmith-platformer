@@ -22,10 +22,10 @@ var selectedPlayerPreset : Resource;
 @export var closeButton : Button;
 
 @export_group("Menu Containers")
-@export var playerMenu : VBoxContainer;
+@export var playerMenu : MarginContainer;
 @export var patrollingMenu : MarginContainer;
 @export var shootingMenu : MarginContainer;
-@export var flyingMenu : VBoxContainer;
+@export var flyingMenu : MarginContainer;
 @export var stationaryMenu : MarginContainer;
 @export var movingPlatformMenu : MarginContainer;
 

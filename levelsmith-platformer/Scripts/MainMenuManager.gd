@@ -126,7 +126,7 @@ func _ready() -> void:
 	
 	buttonNewLevel.grab_focus();
 	
-	softwareVersion.text = str(Global.VERSION);
+	softwareVersion.text = "v" + str(Global.VERSION);
 	# Hides other screens
 	overlayImportLevel.hide();
 	overlayNewLevel.hide();

@@ -745,12 +745,15 @@ func wall_jump():
 		velocity.x = -WALL_JUMP_FORCE_X * pow(max(groundSpeed, WALL_JUMP_GROUND_MIN), WALL_JUMP_SPEED_EXPONENT_X) * wallJumpStrength;
 	velocity.y = -WALL_JUMP_FORCE_Y * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(clamp(groundSpeed, WALL_JUMP_Y_GROUND_MIN, WALL_JUMP_Y_GROUND_MAX), WALL_JUMP_SPEED_EXPONENT_Y);
 	
+	var iceXSpeedScale : float = 1.75;
 	# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)
 	if (tileName == "slow" || tileName == "ice"):
-		velocity.x /= SLOW_ICE_SLIDE_JUMP_X;
-	
+		velocity.x /= ( SLOW_ICE_SLIDE_JUMP_X * iceXSpeedScale );
 	if (tileName == "slow") :
 		velocity.y /= SLOW_WALL_JUMP_Y;
+		currentFriction = 1.0;
+	if (tileName == "solid") :
+		currentFriction = 1.0;
 		
 	justWallJumped = true;
 
@@ -805,6 +808,8 @@ func detect_tiles() -> void:
 		if (wallJumpConditionsMet) :
 			if (tileName == "ice") :
 				currentFriction = iceFriction;
+			else :
+				currentFriction = 1.0;
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):

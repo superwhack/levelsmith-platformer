@@ -39,8 +39,6 @@ func _ready() -> void:
 	
 	animatedSprites.sprite_frames = AnimationManager.shootingEnemyTemplateSprite.sprite_frames;
 	
-	animatedSprites.animation = "ShootIdle";
-	animatedSprites.play();
 	animatedSprites.animation_finished.connect(_on_animation_finished);
 
 func _physics_process(delta: float) -> void:

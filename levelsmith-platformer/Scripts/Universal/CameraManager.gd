@@ -116,6 +116,15 @@ func _input(event : InputEvent) -> void:
 	if (event is InputEventMouseMotion && isPanning):
 		global_position -= event.relative / zoom * (1.8);
 		clamp_camera(roamBounds);
+	
+	# Pan with scrolling with gesture
+	if (event is InputEventPanGesture):
+		global_position += event.delta / zoom * 3.8;
+		clamp_camera(roamBounds);
+		
+	# Pinch to zoom.
+	if (event is InputEventMagnifyGesture):
+		process_magnify(event.factor);
 		
 	if (Input.is_action_just_pressed("shift")):
 		panSpeed = 3.0;
@@ -198,6 +207,7 @@ func process_player_camera(snap : bool = false) -> void:
 	if (cameraPlayClamp):
 		clamp_camera(levelBounds);
 
+
 ## Adjusts the camera zoom dependent on the direction. Zoom amount is multiplicative.
 ## direction: Whether the zoom is going in or out.
 func process_zoom(direction: float) -> void:
@@ -214,7 +224,7 @@ func process_zoom(direction: float) -> void:
 	var zoomFactor : float = 1.1;
 	var newZoom : float = zoom.x;
 	
-	if direction > 0:
+	if (direction > 0):
 		newZoom *= zoomFactor;
 	else:
 		newZoom /= zoomFactor;
@@ -229,6 +239,28 @@ func process_zoom(direction: float) -> void:
 	
 	# Offset camera so zoom focuses on mouse
 	global_position += mouseWorldBefore - mouseWorldAfter;
+
+
+## Processes magnify gesture from trackpads.
+## factor: The strength of the pinch.
+func process_magnify(factor: float) -> void:
+	# Cannot pinch if on GUI (like property menu)
+	if (get_viewport().gui_get_hovered_control() != null):
+		return;
+
+	var mouseWorldBefore = get_global_mouse_position();
+
+	var minZoom = get_min_zoom_to_fit_roam();
+
+	var newZoom = zoom.x * factor;
+	newZoom = clamp(newZoom, minZoom, maxZoomIn);
+
+	zoom = Vector2.ONE * newZoom;
+
+	var mouseWorldAfter = get_global_mouse_position();
+	global_position += mouseWorldBefore - mouseWorldAfter;
+
+
 
 ## Change the smoothing value, used by GameManager when followSpeed is less than 1
 func adjust_smoothing() -> void:

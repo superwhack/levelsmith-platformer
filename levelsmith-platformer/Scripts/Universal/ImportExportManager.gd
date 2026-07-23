@@ -237,7 +237,9 @@ func export_level(tileMap : TileMapLayer, playerData : Panel, worldSize : Vector
 				"shotSpeed": propertyFile.shotSpeed,
 				"fireRate": propertyFile.fireRate,
 				"projBounce": propertyFile.projBounce,
-				"gravity": propertyFile.gravity
+				"gravity": propertyFile.gravity,
+				"persistence": propertyFile.persistence,
+				"active": propertyFile.active
 			};
 		elif (enemyProperty.contains("Flying")):
 			enemy["type"] = "flying"
@@ -410,20 +412,20 @@ func import_JSON(tileMap : TileMapLayer, playerData : Panel, settings : Panel) -
 	
 	# Player information read
 	var player = json_as_dict.get("player", {});
-	playerData.playerHealth = player.get("health", playerData.playerHealth);
-	playerData.playerSpeed = player.get("speed", playerData.playerSpeed);
-	playerData.playerAcceleration = player.get("acceleration", playerData.playerAcceleration);
-	playerData.playerDeceleration = player.get("deceleration", playerData.playerDeceleration);
-	playerData.playerJumpHeight = player.get("jump", playerData.playerJumpHeight);
-	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
-	playerData.playerGravity = player.get("fallSpeed", playerData.playerGravity);
-	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
-	playerData.playerSlopeSlowdown = player.get("slopeSlowdown", playerData.playerSlopeSlowdown);
-	playerData.playerOneways = player.get("oneways", playerData.playerOneways);
-	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
-	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);
-	playerData.playerWallJumpStrength = player.get("wallJumpStrength", playerData.playerWallJumpStrength);
-	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);
+	playerData.playerHealth = player.get("health", 3);
+	playerData.playerSpeed = player.get("speed", 1.0);
+	playerData.playerAcceleration = player.get("acceleration", 95);
+	playerData.playerDeceleration = player.get("deceleration", 95);
+	playerData.playerJumpHeight = player.get("jump", 2.1);
+	playerData.playerAirControl = player.get("airControl", 100);
+	playerData.playerGravity = player.get("fallSpeed", 1.2);
+	playerData.playerCoyoteTime = player.get("coyoteTime", 0.1);
+	playerData.playerSlopeSlowdown = player.get("slopeSlowdown", false);
+	playerData.playerOneways = player.get("oneways", true);
+	playerData.playerDoubleJump = player.get("doubleJump", false);
+	playerData.playerWallJump = player.get("wallJump", false);
+	playerData.playerWallJumpStrength = player.get("wallJumpStrength", 0);
+	playerData.playerWallJumpDecay = player.get("wallJumpDecay", false);
 	playerData.update_custom();
 	playerData.update_sliders();
 
@@ -534,35 +536,44 @@ func match_enemy_type(enemy : Dictionary, locatedEnemy : Node2D) -> void:
 	var defaultResource : Resource = load("res://Resources/PlayerPresets/" + capitalType + "Default.tres");
 	var newResource : Resource = defaultResource.duplicate(true);
 	
+	var enemyStats = enemy.stats;
 	match enemy.type:
 		"patrolling":
-			newResource.groundSpeed = enemy.stats.speed;
-			newResource.direction = enemy.stats.direction;
-			newResource.restricted = enemy.stats.restricted;
+			newResource.groundSpeed = enemyStats.get("speed", 0.5);
+			newResource.direction = enemyStats.get("direction", false);
+			newResource.restricted = enemyStats.get("restricted", false);
 		"shooting":
-			newResource.direction = enemy.stats.direction;
-			newResource.randomDirection = enemy.stats.randomDirection;
-			newResource.shotSpeed = enemy.stats.shotSpeed;
-			newResource.fireRate = enemy.stats.fireRate;
-			newResource.projBounce = enemy.stats.projBounce;
-			newResource.gravity = enemy.stats.gravity;
+			newResource.direction = enemyStats.get("direction", 0);
+			newResource.randomDirection = enemyStats.get("randomDirection", false);
+			newResource.shotSpeed = enemyStats.get("shotSpeed", 3);
+			newResource.fireRate = enemyStats.get("fireRate", 1);
+			newResource.projBounce = enemyStats.get("projBounce", false);
+			newResource.gravity = enemyStats.get("gravity", false);
+			newResource.persistence = enemyStats.get("persistence", false);
+			newResource.active = enemyStats.get("active", false);
 		"flying":
-			newResource.speed = enemy.stats.speed;
-			newResource.pointBOffset.x = enemy.stats.endpoint.x;
-			newResource.pointBOffset.y = enemy.stats.endpoint.y;
+			newResource.speed = enemyStats.get("speed", 2.0);
+			if !(enemyStats.has("endpoint") && enemyStats.endpoint is Vector2 && enemyStats.endpoint.has("x") && enemyStats.endpoint.has("y")):
+				newResource.pointBOffset = Vector2(0, 0);
+			else:
+				newResource.pointBOffset.x = enemy.stats.endpoint.x;
+				newResource.pointBOffset.y = enemy.stats.endpoint.y;
 		"stationary":
-			newResource.isFacingRight = enemy.stats.isFacingRight;
-			newResource.gravity = enemy.stats.gravity;
+			newResource.isFacingRight = enemyStats.get("isFacingRight", false);
+			newResource.gravity = enemyStats.get("gravity", false);
 		"movingPlatform":
-			newResource.speed = enemy.stats.speed;
-			newResource.pointBOffset.x = enemy.stats.endpoint.x;
-			newResource.pointBOffset.y = enemy.stats.endpoint.y;
-			newResource.progress = enemy.stats.progress;
-			newResource.delay = enemy.stats.delay;
-			newResource.easing = enemy.stats.easing;
-			newResource.momentum = enemy.stats.momentum;
-			newResource.visible = enemy.stats.visible;
-			newResource.active = enemy.stats.active;
+			newResource.speed = enemyStats.get("speed", 2);
+			if !(enemyStats.has("endpoint") && enemyStats.endpoint is Vector2 && enemyStats.endpoint.has("x") && enemyStats.endpoint.has("y")):
+				newResource.pointBOffset = Vector2(0, 0);
+			else:
+				newResource.pointBOffset.x = enemy.stats.endpoint.x;
+				newResource.pointBOffset.y = enemy.stats.endpoint.y;
+			newResource.progress = enemyStats.get("progress", 0);
+			newResource.delay = enemyStats.get("delay", 0);
+			newResource.easing = enemyStats.get("easing", false);
+			newResource.momentum = enemyStats.get("momentum", false);
+			newResource.visible = enemyStats.get("visible", false);
+			newResource.active = enemyStats.get("active", false);
 	ResourceSaver.save(newResource, "user://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();

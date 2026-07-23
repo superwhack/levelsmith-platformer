@@ -51,6 +51,7 @@ func _ready() -> void:
 	targetPoint = pointA;
 	animatedSprite.sprite_frames = AnimationManager.movingPlatformTemplateSprite.sprite_frames;
 	previewPlatform.texture = animatedSprite.sprite_frames.get_frame_texture("PlatformAnimation", 0);
+	z_index = 2;
 
 ## Processes flying movement and collision handling.
 ## delta: Time since previous frame.
@@ -154,7 +155,7 @@ func apply_script(file: Resource) -> void:
 	speed = file.speed;
 	pointA = global_position;
 	pointB = pointA + file.pointBOffset;
-	movementDistance = pointA.distance_to(pointB)
+	movementDistance = pointA.distance_to(pointB);
 	progress = file.progress;
 	delay = file.delay;
 	easing = file.easing;
@@ -162,7 +163,7 @@ func apply_script(file: Resource) -> void:
 	adjust_preview(file.pointBOffset, progress);
 	targetPoint = pointB;
 	previewLine.update((pointB - pointA) / Global.TILE_SIZE);
-	z_index += 2;
-	previewLine.z_index = z_index - 5;
+	#z_index = 2;
+	#previewLine.z_index = z_index - 5;
 	visiblePath = propertyFile.visible;
 	momentumShare = propertyFile.momentum;

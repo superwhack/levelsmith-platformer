@@ -412,20 +412,20 @@ func import_JSON(tileMap : TileMapLayer, playerData : Panel, settings : Panel) -
 	
 	# Player information read
 	var player = json_as_dict.get("player", {});
-	playerData.playerHealth = player.get("health", playerData.playerHealth);
-	playerData.playerSpeed = player.get("speed", playerData.playerSpeed);
-	playerData.playerAcceleration = player.get("acceleration", playerData.playerAcceleration);
-	playerData.playerDeceleration = player.get("deceleration", playerData.playerDeceleration);
-	playerData.playerJumpHeight = player.get("jump", playerData.playerJumpHeight);
-	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
-	playerData.playerGravity = player.get("fallSpeed", playerData.playerGravity);
-	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
-	playerData.playerSlopeSlowdown = player.get("slopeSlowdown", playerData.playerSlopeSlowdown);
-	playerData.playerOneways = player.get("oneways", playerData.playerOneways);
-	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
-	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);
-	playerData.playerWallJumpStrength = player.get("wallJumpStrength", playerData.playerWallJumpStrength);
-	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);
+	playerData.playerHealth = player.get("health", 3);
+	playerData.playerSpeed = player.get("speed", 1.0);
+	playerData.playerAcceleration = player.get("acceleration", 95);
+	playerData.playerDeceleration = player.get("deceleration", 95);
+	playerData.playerJumpHeight = player.get("jump", 2.1);
+	playerData.playerAirControl = player.get("airControl", 100);
+	playerData.playerGravity = player.get("fallSpeed", 1.2);
+	playerData.playerCoyoteTime = player.get("coyoteTime", 0.1);
+	playerData.playerSlopeSlowdown = player.get("slopeSlowdown", false);
+	playerData.playerOneways = player.get("oneways", true);
+	playerData.playerDoubleJump = player.get("doubleJump", false);
+	playerData.playerWallJump = player.get("wallJump", false);
+	playerData.playerWallJumpStrength = player.get("wallJumpStrength", 0);
+	playerData.playerWallJumpDecay = player.get("wallJumpDecay", false);
 	playerData.update_custom();
 	playerData.update_sliders();
 

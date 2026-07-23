@@ -507,14 +507,14 @@ func _on_level_pressed(item: Node) -> void:
 	
 	selectedItem = item;
 	update_metadata(item);
-	buttonPlayLevel.disabled = !isPlayable;
+	set_play_button();
 
 
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
 func _on_level_deselected(item: Node) -> void:
 	if (selectedItem == item):
-		buttonPlayLevel.disabled = true;
+		isPlayable = false;
 		item.levelButton.button_pressed = false;
 		toggle_level_buttons();
 		clear_selection();
@@ -527,6 +527,10 @@ func toggle_level_buttons() -> void:
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
 	exportLevelButton.disabled = !exportLevelButton.disabled;
 	buttonSmallExportLevel.disabled = !buttonSmallExportLevel.disabled;
+	set_play_button();
+
+func set_play_button() -> void:
+	buttonPlayLevel.disabled = !isPlayable;
 
 func play_button_mouse_entered() -> void:
 	if (selectedItem && !isPlayable):

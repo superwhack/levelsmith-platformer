@@ -122,7 +122,10 @@ func _unhandled_input(event : InputEvent) -> void:
 					if (event.is_action_pressed("left-click")):
 						firstBoxCorner = editorManager.currentMousePosition;
 						secondBoxCorner = editorManager.currentMousePosition;
-						boxBrushState = Global.BoxBrushState.PLACE;
+						if (Input.is_key_pressed(KEY_ALT)):
+							boxBrushState = Global.BoxBrushState.DELETE
+						else:
+							boxBrushState = Global.BoxBrushState.PLACE
 					elif (event.is_action_pressed("right-click")):
 						firstBoxCorner = editorManager.currentMousePosition;
 						secondBoxCorner = editorManager.currentMousePosition;
@@ -133,7 +136,7 @@ func _unhandled_input(event : InputEvent) -> void:
 						boxBrushState = Global.BoxBrushState.PLACE_CONFIRM;
 				
 				Global.BoxBrushState.DELETE:
-					if (event.is_action_released("right-click")):
+					if (event.is_action_released("left-click") || event.is_action_released("right-click")):
 						boxBrushState = Global.BoxBrushState.DELETE_CONFIRM;
 				
 		Global.Tool.CURSOR:
@@ -144,7 +147,12 @@ func _unhandled_input(event : InputEvent) -> void:
 				# If the cursor moves a certain distance away from the last click, start moving
 				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > POSITION_DIFFERENCE && previousCell != -1;
 			if (event.is_action_released("left-click") && prevBrushObject == -1 && !justMoved):
-				if (entityManager.duplicatingResource != null && Input.is_action_pressed("duplicate")):
+				if (Input.is_key_pressed(KEY_ALT)):
+					if (propertyMenu.visible):
+						propertyMenu.close();
+					else:
+						entityManager.delete_entity(editorManager.currentMousePosition);
+				elif (entityManager.duplicatingResource != null && Input.is_action_pressed("duplicate")):
 					entityManager.duplicatingResource = null;
 					editorManager.customCursorManager.hide_entity_highlight();
 				# If the clicked cell is an entity and the click was short, edit its properties

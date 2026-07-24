@@ -69,6 +69,7 @@ var currentWalkingEffect : Global.WalkingEffect;
 @export var raycasts : Array[RayCast2D];
 @export var downwardsRaycasts : Array[RayCast2D];
 @export var sideRaycasts : Array[RayCast2D];
+@export var shapeCast : ShapeCast2D;
 
 signal healthChanged(newHealth);
 var maxHealth := 3;
@@ -123,6 +124,9 @@ var fallAnimStarted : bool = false;
 var victory : bool = false;
 
 var debugLabel: Label;
+
+# For weird slope collision handling
+var shapeCastCheck : bool;
 
 # CONSTANTS
 
@@ -710,6 +714,7 @@ func wall_jump():
 	velocity.y = -WALL_JUMP_FORCE_Y * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(clamp(groundSpeed, WALL_JUMP_Y_GROUND_MIN, WALL_JUMP_Y_GROUND_MAX), WALL_JUMP_SPEED_EXPONENT_Y);
 	justWallJumped = true;
 
+
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
 	if (currentState == PlayerState.VICTORY || currentState == PlayerState.DEAD):
@@ -722,7 +727,9 @@ func detect_tiles() -> void:
 	for raycast in raycasts:
 		if (raycast.is_colliding()):
 			slideCollisions.push_back(raycast);
-		
+	
+	shapeCastCheck = slideCollisions.size() == 1 && downwardsRaycasts.has(slideCollisions[0]);
+	
 	for raycast in slideCollisions:
 		var collider : Object = raycast.get_collider();
 		# Moving platform (It's not on the tilemap but still works like a solid tile)
@@ -750,7 +757,26 @@ func detect_tiles() -> void:
 		slideCollisionsHit.push_back(tileData);
 		var tileName : String = tileData.get_custom_data("name");
 		var rayDirection : Vector2 = raycast.target_position;
-			# Wall Slide when not on ice
+		
+		if (shapeCastCheck):
+			shapeCast.global_position = probeLocal;
+			shapeCast.force_shapecast_update();
+			
+			for i in range(shapeCast.get_collision_count()):
+				var collidedObject = shapeCast.get_collider(i);
+				if (collidedObject == tileLayer):
+					var tileLayer2 : TileMapLayer = collidedObject;
+					var hitGlobal2 : Vector2 = shapeCast.get_collision_point(i)
+					var hitNormal2 : Vector2 = shapeCast.get_collision_normal(i);
+					var probeGlobal2 : Vector2 = hitGlobal2 - hitNormal2 * 0.5;
+					var probeLocal2 : Vector2 = tileLayer2.to_local(probeGlobal2);
+					var tilePos2 : Vector2i = tileLayer2.local_to_map(probeLocal2);
+					var tileData2 : TileData = tileLayer2.get_cell_tile_data(tilePos2);
+					var newTileName : String = tileData2.get_custom_data("name");
+					if (newTileName != tileName):
+						print("a")
+						return;
+		# Wall Slide when not on ice
 		if (wallSlideConditionsMet):
 			if (tileName != "ice"):
 				velocity.y *= WALL_SLIDE_SLOWDOWN;

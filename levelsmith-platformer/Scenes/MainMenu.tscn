@@ -701,6 +701,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="FavoriteButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/TitleRow" unique_id=657863021]
+modulate = Color(1, 1, 1, 0.49803922)
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 tooltip_text = "Add to Favorties"
@@ -741,6 +742,7 @@ layout_mode = 2
 theme_override_constants/separation = 18
 
 [node name="DuplicateLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=980103507]
+modulate = Color(1, 1, 1, 0.49803922)
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 tooltip_text = "Duplicate Level"
@@ -764,6 +766,7 @@ texture = ExtResource("16_h1v62")
 expand_mode = 3
 
 [node name="ExportButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=1885121134]
+modulate = Color(1, 1, 1, 0.49803922)
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 tooltip_text = "Export Level"
@@ -788,6 +791,7 @@ texture = ExtResource("19_3u44c")
 expand_mode = 3
 
 [node name="DeleteLevelButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ButtonColumn" unique_id=873845671]
+modulate = Color(1, 1, 1, 0.49803922)
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 tooltip_text = "Delete Level"
@@ -887,6 +891,7 @@ theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
 layout_mode = 2
 
 [node name="PlayButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn" unique_id=1108696886]
+modulate = Color(1, 1, 1, 0.49803922)
 custom_minimum_size = Vector2(250, 65)
 layout_mode = 2
 disabled = true
@@ -929,6 +934,7 @@ text = "Play level outside of editor"
 layout_mode = 2
 
 [node name="EditButton" type="Button" parent="SafeArea/PanelContainer/RootVBox/MainContent/CenterPane/CenterPageMargin/CenterPaneVbox/DetailsCard/DetailsVBox/DetailsMargin/DetailsRow/ActionsColumn" unique_id=1777678716]
+modulate = Color(1, 1, 1, 0.49803922)
 custom_minimum_size = Vector2(250, 65)
 layout_mode = 2
 disabled = true

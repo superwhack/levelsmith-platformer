@@ -532,10 +532,17 @@ func toggle_level_buttons() -> void:
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
 	exportLevelButton.disabled = !exportLevelButton.disabled;
 	buttonSmallExportLevel.disabled = !buttonSmallExportLevel.disabled;
+	buttonDeleteLevel.modulate.a = 1 - int(buttonDeleteLevel.disabled) / 2.0;
+	buttonDuplicateLevel.modulate.a = 1 - int(buttonDuplicateLevel.disabled) / 2.0;
+	buttonEditLevel.modulate.a = 1 - int(buttonEditLevel.disabled) / 2.0;
+	buttonFavoriteLevel.modulate.a = 1 - int(buttonFavoriteLevel.disabled) / 2.0;
+	exportLevelButton.modulate.a = 1 - int(exportLevelButton.disabled) / 2.0;
+	buttonSmallExportLevel.modulate.a = 1 - int(buttonSmallExportLevel.disabled) / 2.0;
 	set_play_button();
 
 func set_play_button() -> void:
 	buttonPlayLevel.disabled = !isPlayable;
+	buttonPlayLevel.modulate.a = 1 - int(buttonPlayLevel.disabled) / 2.0;
 
 func play_button_mouse_entered() -> void:
 	if (selectedItem && !isPlayable):

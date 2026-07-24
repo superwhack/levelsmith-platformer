@@ -760,11 +760,14 @@ func wall_jump():
 	# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)
 	if (tileName == "slow" || tileName == "ice"):
 		velocity.x /= SLOW_ICE_SLIDE_JUMP_X;
-	
-	if (tileName == "slow") :
+		
+	if (tileName == "ice"):
+		currentFriction = iceFriction;
+		
+	if (tileName == "slow"):
 		velocity.y /= SLOW_WALL_JUMP_Y;
 	
-	if (tileName == "solid") :
+	if (tileName == "solid"):
 		currentFriction = 1.0;
 		currentSlowdown = 1.0;
 		

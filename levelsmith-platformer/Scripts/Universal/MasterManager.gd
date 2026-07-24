@@ -277,6 +277,7 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 	if (mainMenuControl.selectedItem):
 		mainMenuControl.update_metadata(mainMenuControl.selectedItem);
 		mainMenuControl.buttonPlayLevel.disabled = !mainMenuControl.selectedItem.playable;
+		mainMenuControl.buttonPlayLevel.modulate.a = 1 - int(mainMenuControl.buttonPlayLevel.disabled) / 2.0;
 	# Set the state to the Main Menu
 	state = Global.State.MAIN_MENU;
 	await get_tree().process_frame;

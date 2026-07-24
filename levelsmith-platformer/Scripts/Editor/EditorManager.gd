@@ -118,7 +118,7 @@ func reset_enemy_positions() -> void:
 		if ((moving is Enemy || moving is MovingPlatform) && moving.propertyFile):
 			moving.global_position = tileMap.map_to_local(moving.propertyFile.position);
 			if (!moving is EnemyFlyer):
-				moving.global_position += Vector2(0, 20);
+				moving.shift_down();
 			
 			if (moving is EnemyPatrol):
 				moving.directionArrow.show();

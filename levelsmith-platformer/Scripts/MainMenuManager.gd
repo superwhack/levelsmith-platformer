@@ -172,11 +172,14 @@ func _ready() -> void:
 	spinBoxNewLevelX.value_changed.connect(update_level_size_warning);
 	spinBoxNewLevelY.value_changed.connect(update_level_size_warning);
 
-	var set_directory = func (directory: String) -> void:
-		fieldImportLevelPath.text = directory + "/";
+	fileExplorer.file_selected.connect(func(path):
+		fieldImportLevelPath.text = path;
+	)
+
+	fileExplorer.dir_selected.connect(func(path):
+		fieldImportLevelPath.text = path + "/";
+	)
 	
-	fileExplorer.file_selected.connect(set_directory);
-	fileExplorer.dir_selected.connect(set_directory);
 	
 	
 ## Functions that just make a menu appear/dissapear, used to attach the sound effects

@@ -199,11 +199,7 @@ func _process(delta: float) -> void:
 	if timerRunning:
 		testingTime += delta;
 		update_timer(timerLabel);
-	print(
-	resetButton.button_pressed,
-	" ",
-	resetButton.is_pressed()
-)
+
 		
 func _unhandled_input(event: InputEvent) -> void:
 	# Sets us into edit mode

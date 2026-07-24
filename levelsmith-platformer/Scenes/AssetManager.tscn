@@ -2,20 +2,20 @@
 
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_rshqi"]
-[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
-[ext_resource type="Texture2D" uid="uid://da4v1xhytrdda" path="res://icon.svg" id="3_rshqi"]
+[ext_resource type="FontFile" uid="uid://3kn4gprbeda" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
+[ext_resource type="Texture2D" uid="uid://b8ynlavt7qjkx" path="res://icon.svg" id="3_rshqi"]
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_7puos"]
-[ext_resource type="Texture2D" uid="uid://dfco244lcptog" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="4_o8nck"]
-[ext_resource type="Texture2D" uid="uid://uboggbk6slsr" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
-[ext_resource type="Texture2D" uid="uid://dxag1j2w8yhjg" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
-[ext_resource type="Texture2D" uid="uid://ctkp25yl7wov4" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="9_wgng1"]
+[ext_resource type="Texture2D" uid="uid://b8ac8n3yb6286" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="4_o8nck"]
+[ext_resource type="Texture2D" uid="uid://b68udivkcp3yg" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
+[ext_resource type="Texture2D" uid="uid://c8c3dn0l64t2x" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
+[ext_resource type="Texture2D" uid="uid://byaio2lksrsli" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="9_wgng1"]
 [ext_resource type="Script" uid="uid://cy0omeeqj1evc" path="res://Scripts/Universal/ImageSwapping.gd" id="10_clgtw"]
-[ext_resource type="Texture2D" uid="uid://b5f7fj8dwgcbn" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-right.png" id="10_yswm7"]
-[ext_resource type="Texture2D" uid="uid://bokwi0m4fmi0e" path="res://Assets/Sprites/UI/ArrowLeftMedium.PNG" id="11_mrdhq"]
+[ext_resource type="Texture2D" uid="uid://dwcknses8u3jc" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-right.png" id="10_yswm7"]
+[ext_resource type="Texture2D" uid="uid://eya6rytjxq5y" path="res://Assets/Sprites/UI/ArrowLeftMedium.PNG" id="11_mrdhq"]
 [ext_resource type="Script" uid="uid://pgp1usxbcoyf" path="res://Scripts/Universal/AnimationSwapping.gd" id="11_ukhnw"]
-[ext_resource type="Texture2D" uid="uid://4k8sp2olvr6h" path="res://Assets/Sprites/UI/ArrowRightMedium.PNG" id="12_41b3d"]
+[ext_resource type="Texture2D" uid="uid://dw2iuwcie451d" path="res://Assets/Sprites/UI/ArrowRightMedium.PNG" id="12_41b3d"]
 [ext_resource type="Script" uid="uid://cd1ukd2otaojf" path="res://Scripts/Universal/AudioSwapping.gd" id="12_qbbei"]
-[ext_resource type="Texture2D" uid="uid://dteaut1qlgfl" path="res://Assets/UserInterface/UpdatedIcons/mi--pause.png" id="14_yswm7"]
+[ext_resource type="Texture2D" uid="uid://d3av07q8mayof" path="res://Assets/UserInterface/UpdatedIcons/mi--pause.png" id="14_yswm7"]
 [ext_resource type="Texture2D" uid="uid://bqvpgjst07vs7" path="res://Assets/UserInterface/ph--file-audio-fill.png" id="16_yswm7"]
 [ext_resource type="Texture2D" uid="uid://i182p1h0vkq0" path="res://Assets/UserInterface/iconoir--play.png" id="17_41b3d"]
 [ext_resource type="Texture2D" uid="uid://2c6wg320xdr" path="res://Assets/UserInterface/griddy-icons--stop.png" id="18_l1dbf"]
@@ -101,10 +101,12 @@ offset_right = -16.0
 offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_behavior_recursive = 1
 theme_override_constants/separation = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer" unique_id=586479525]
 layout_mode = 2
+focus_behavior_recursive = 1
 
 [node name="Title" type="Label" parent="AssetManagerPanel/ContentContainer/HBoxContainer" unique_id=1534252912]
 layout_mode = 2
@@ -174,6 +176,7 @@ layout_mode = 2
 [node name="MainContentContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer" unique_id=950802687]
 layout_mode = 2
 size_flags_vertical = 3
+focus_behavior_recursive = 1
 theme_override_constants/separation = 16
 alignment = 2
 
@@ -398,7 +401,7 @@ texture = ExtResource("17_41b3d")
 custom_minimum_size = Vector2(48, 48)
 custom_maximum_size = Vector2(48, 48)
 layout_mode = 2
-tooltip_text = "Stop Animation [LShift]"
+tooltip_text = "Stop Animation [Ctrl]"
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/StopButton" unique_id=1178652479]
 layout_mode = 0
@@ -415,6 +418,7 @@ texture = ExtResource("18_l1dbf")
 visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
+focus_behavior_recursive = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=2080426857]
 
@@ -459,7 +463,8 @@ horizontal_alignment = 1
 [node name="AudioTimeline" type="HSlider" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox" unique_id=428290432]
 layout_mode = 2
 tooltip_text = "Scrub Forward [D]
-Scrub Backward [A]"
+Scrub Backward [A]
+Speed Up [Shift]"
 step = 0.01
 
 [node name="BottomButtonContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=1727755463]
@@ -515,7 +520,7 @@ texture = ExtResource("17_41b3d")
 custom_minimum_size = Vector2(40, 40)
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
-tooltip_text = "Stop Audio [LShift]"
+tooltip_text = "Stop Audio [Ctrl]"
 icon_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/StopButton" unique_id=1901133783]

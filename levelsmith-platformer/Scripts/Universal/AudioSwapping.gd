@@ -13,6 +13,7 @@ var audioTypes : Array[String] = ["BounceTile", "CoinPickup", "EnemyDie", "Shoot
 var loadedPreviewAudio : AudioStream;
 var previewAudioPlayer : AudioStreamPlayer;
 var isPlayingPreview : bool = false;
+var audioScrubStep : float = 2;
 
 # Button references
 @export var playButton : Button;
@@ -44,14 +45,23 @@ func _process(_delta : float) -> void:
 		audioTimeline.value = previewAudioPlayer.get_playback_position();
 	
 	# Hotkeys	
+	if ( Input.is_action_pressed( "shift" ) ): 
+		audioScrubStep = 8;
+	else :
+		audioScrubStep = 2;
+	
 	if ( Input.is_action_just_pressed( "UI-AssetMgr-accept" ) ):
-		play_preview_audio();
+		play_preview_audio(!previewAudioPlayer.playing);
 	if ( Input.is_action_just_pressed( "UI-AssetMgr-deny" ) ):
 		preview_audio_finished();
-	if ( Input.is_action_just_pressed( "right" ) ):
-		audioTimeline.value += 0.02;
-	if ( Input.is_action_just_pressed( "left" ) ):
-		audioTimeline.value -= 0.02;
+	if ( Input.is_action_pressed( "right" ) ):
+		if ( previewAudioPlayer.playing ) :
+			play_preview_audio( false );
+		audioTimeline.value += audioScrubStep * _delta ;
+	if ( Input.is_action_pressed( "left" ) ):
+		if ( previewAudioPlayer.playing ) :
+			play_preview_audio( false );
+		audioTimeline.value -= audioScrubStep * _delta ;
 
 ## Replaces the currently previewed audio  with one chosen via file dialog.
 ## newAudioPath: The file path of the new audio replacing the old one.x 

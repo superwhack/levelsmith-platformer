@@ -82,7 +82,7 @@ func _input( event: InputEvent ) -> void:
 	if ( event.is_action_pressed( "UI-AssetMgr-left" ) ):
 		anim_change(false);
 	if ( event.is_action_pressed( "UI-AssetMgr-accept" ) ):
-		play_preview_animation();
+		play_preview_animation(!playingAnimation);
 	if ( event.is_action_pressed( "UI-AssetMgr-deny" ) ):
 		stop_preview_animation();
 	if ( event.is_action_pressed( "UI-AssetMgr-frame-step-forward" ) ):

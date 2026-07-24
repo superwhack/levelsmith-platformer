@@ -216,10 +216,10 @@ func load_level(levelPath: String, startPlay: bool = false) -> void:
 
 ## Checks if the level has unsaved changes, and creates a popup with appropriate functions.
 ## on_continue: A callable function, for going to main menu or force quitting app.
-func check_unsaved_changes(on_continue: Callable, exit: ExitAction) -> void:
+func check_unsaved_changes(onContinue: Callable, exit: ExitAction) -> void:
 	# No unsaved changes, do regular action.
 	if (!editorManager.unsavedChanges):
-		on_continue.call();
+		onContinue.call();
 		return;
 	
 	# Saves and brings the user to the main menu. First callable.
@@ -229,12 +229,12 @@ func check_unsaved_changes(on_continue: Callable, exit: ExitAction) -> void:
 		var levelScreenshot : Image = await editorManager.levelScreenshotCamera.get_level_screenshot();
 		ImportExportManager.save_level_screenshot(levelScreenshot);
 		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated, get_play_errors().is_empty());
-		on_continue.call();
+		onContinue.call();
 	
 	# No save, brings user to main menu
 	var no_save = func() -> void:
 		editorManager.unsavedChanges = false;
-		on_continue.call();
+		onContinue.call();
 	
 	# If there are unsaved changes, popup to allow the user to save
 	if (editorManager.unsavedChanges):

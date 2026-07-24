@@ -45,9 +45,9 @@ var loadedLevelPath : String = "";
 # Tween information
 var loadingTween : Tween
 # The time that the screen wipe takes
-var loadingTweenTime : float = 0.35
+var loadingTweenTime : float = 0.2
 #The time that the full screen holds
-var loadingHold : float = 0.30
+var loadingHold : float = 0.10
 
 # An enum for determining if we are going to the main menu or desktop.
 enum ExitAction {

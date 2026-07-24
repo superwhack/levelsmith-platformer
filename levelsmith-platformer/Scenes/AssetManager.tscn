@@ -88,6 +88,7 @@ offset_right = 450.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_behavior_recursive = 1
 
 [node name="ContentContainer" type="VBoxContainer" parent="AssetManagerPanel" unique_id=1686367830]
 layout_mode = 1
@@ -457,6 +458,8 @@ horizontal_alignment = 1
 
 [node name="AudioTimeline" type="HSlider" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox" unique_id=428290432]
 layout_mode = 2
+tooltip_text = "Scrub Forward [D]
+Scrub Backward [A]"
 step = 0.01
 
 [node name="BottomButtonContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=1727755463]
@@ -477,6 +480,7 @@ visible = false
 custom_minimum_size = Vector2(40, 40)
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
+tooltip_text = "Pause Audio [Space]"
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/PauseButton" unique_id=1411352883]
 custom_maximum_size = Vector2(40, 40)
@@ -492,6 +496,7 @@ texture = ExtResource("14_yswm7")
 custom_minimum_size = Vector2(40, 40)
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
+tooltip_text = "Play Audio [Space]"
 icon_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/PlayButton" unique_id=1395286219]
@@ -510,6 +515,7 @@ texture = ExtResource("17_41b3d")
 custom_minimum_size = Vector2(40, 40)
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
+tooltip_text = "Stop Audio [LShift]"
 icon_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/StopButton" unique_id=1901133783]

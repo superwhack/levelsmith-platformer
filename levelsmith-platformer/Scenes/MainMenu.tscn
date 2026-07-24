@@ -238,7 +238,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -19.0
 offset_right = -59.0
-offset_bottom = 53.0
+offset_bottom = 54.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 60
@@ -276,13 +276,15 @@ custom_maximum_size = Vector2(215, 81)
 layout_mode = 2
 texture = ExtResource("8_sn0qe")
 
-[node name="SmallSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=1848163393]
-visible = false
-custom_maximum_size = Vector2(50, -1)
+[node name="TopBarSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=801058569]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TopBarSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=801058569]
+[node name="InfoRow" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=423660098 instance=ExtResource("12_ux20s")]
+layout_mode = 2
+
+[node name="SmallSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=1848163393]
+custom_maximum_size = Vector2(20, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 

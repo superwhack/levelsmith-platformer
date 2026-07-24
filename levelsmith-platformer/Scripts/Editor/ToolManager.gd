@@ -89,10 +89,15 @@ func _unhandled_input(event : InputEvent) -> void:
 			
 	match (currentTool):
 		Global.Tool.BRUSH:
-			if (event.is_action_pressed("left-click") and !event.ctrl_pressed):
-				isPainting = true;
-			elif (event.is_action_released("left-click") and !event.ctrl_pressed):
+			if (event.is_action_pressed("left-click")):
+				if (event.alt_pressed):
+					isErasing = true;
+				else:
+					isPainting = true;
+
+			elif (event.is_action_released("left-click")):
 				isPainting = false;
+				isErasing = false;
 
 			if (event.is_action_pressed("right-click")):
 				isErasing = true;

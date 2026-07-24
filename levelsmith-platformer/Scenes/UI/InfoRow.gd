@@ -22,4 +22,5 @@ func _ready() -> void:
 
 
 func _on_button_pressed(link: String) -> void:
+	AudioManager.play_UI_effect("UISelection");
 	OS.shell_open(str(link));

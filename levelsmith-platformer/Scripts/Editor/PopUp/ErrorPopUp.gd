@@ -55,6 +55,7 @@ func set_no_save_quit_text(text: String) -> void:
 
 ## Closes popup/clears from stack
 func close_popup() -> void:
+	AudioManager.play_UI_effect("UISelection");
 	queue_free();
 	# Additional functionality can be added below
 	

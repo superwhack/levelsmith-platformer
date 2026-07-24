@@ -35,7 +35,7 @@ This workflow allows designers to rapidly prototype ideas, test them immediately
 
 If you're new to Foundry2D, the best place to begin is the tutorial, which walks through the editor, explains the core workflow, and demonstrates how to create your first level.
 
-> **Tutorial:** *In-Progress*
+> **Tutorial:** [Right Here!](https://github.com/superwhack/levelsmith-platformer/wiki/Getting-Started-&-Tutorial)
 
 Afterward, you may find these pages helpful:
 

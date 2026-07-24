@@ -245,7 +245,6 @@ func import_level() -> void:
 		return;
 	
 	# Extract the name of the folder from the file path
-	var importedLevelArray : Array = sourceDirectory.rstrip("/").split("/");
 	var importedLevelName : String = sourceDirectory.replace("\\", "/").rstrip("/").get_file();
 	
 	# Handle duplicate level names
@@ -881,8 +880,6 @@ func extract_all_from_zip(zipPath: String, destination: String):
 	var reader : ZIPReader = ZIPReader.new();
 	reader.open(zipPath);
 	
-	var rootDir = DirAccess.open("user://Levels");
-
 	for filePath in reader.get_files():
 		var fullPath : String = destination.path_join(filePath);
 

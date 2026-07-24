@@ -56,6 +56,7 @@ var playerPreset : Resource;
 
 ## When pause is pressed, flip the current state
 func pause() -> void:
+	AudioManager.play_UI_effect("UISelection");
 	if goalReached || !pausable:
 		return;
 	if playState == PlayState.PAUSE:
@@ -75,10 +76,10 @@ func pause() -> void:
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
+	AudioManager.play_UI_effect("UISelection");
 	freeze(true);
 	await masterManager.screen_wipe_in();
 	AudioManager.reset_audio();
-	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");
 	pauseButton.show();
 	get_tree().paused = false;

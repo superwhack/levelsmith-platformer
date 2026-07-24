@@ -54,6 +54,7 @@ func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_file_selector);
 	refreshAllButton.pressed.connect(refresh_all);
+	refreshAllButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	resetButton.pressed.connect(reset_image_popup);
 	resetAllButton.pressed.connect(reset_all_popup);
 	fileSelect.file_selected.connect(file_selected);
@@ -219,15 +220,16 @@ func reset() -> void:
 
 ## Creates the refresh asset popup.
 func reset_image_popup() -> void:
+	AudioManager.play_UI_effect("UISelection");
 	PopUpManager.create_reset_image_popup(Callable(self, "reset"), currentSelectedItem.displayName);
 
 ## Creates the reset all assets popup.
 func reset_all_popup() -> void:
+	AudioManager.play_UI_effect("UISelection");
 	PopUpManager.create_reset_asset_popup(Callable(self, "reset_all"));
 
 ## Resets everything within the assets manager
 func reset_all() -> void:
-	AudioManager.play_UI_effect("UISelection");
 	FileSearch.delete_folder(filePath);
 	create_file_tree();
 	reset_menu();

@@ -67,6 +67,7 @@ func _ready() -> void:
 	
 	# Connect all button signals
 	editorHomeButton.pressed.connect(main_menu);
+	editorHomeButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	editorPlayButton.pressed.connect(play);
 	editorPlayButton.mouse_entered.connect(mouse_entered_play_button);
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
@@ -286,6 +287,7 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 
 ## Swap to edit state
 func edit(skipWipeIn: bool = false) -> void:
+	AudioManager.play_UI_effect("UISelection");
 	# Setup edit state
 	get_tree().set_auto_accept_quit(false);
 	gameManager.pausable = false;
@@ -294,7 +296,6 @@ func edit(skipWipeIn: bool = false) -> void:
 		await screen_wipe_in();
 	# Reset audio and play ui effect
 	AudioManager.reset_audio();
-	AudioManager.play_UI_effect("UISelection");
 	AnimationManager.pause_all_animations();
 	# Pause players
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
@@ -330,13 +331,13 @@ func edit(skipWipeIn: bool = false) -> void:
 
 ## Swap to play state
 func play(skipWipeIn: bool = false) -> void:
+	AudioManager.play_UI_effect("UISelection");
 	# Check that the game can be run
 	if (!get_play_errors().is_empty()):
 		return;
 	if !skipWipeIn:
 		await screen_wipe_in();
 	propertyMenu.close();
-	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");
 	AnimationManager.play_all_animations();
 	# Update state variable

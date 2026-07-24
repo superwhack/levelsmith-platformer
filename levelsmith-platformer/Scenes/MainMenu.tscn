@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
 [ext_resource type="Texture2D" uid="uid://cu64rmk1o80h6" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
 [ext_resource type="Texture2D" uid="uid://bvkxxgdnheuii" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
+[ext_resource type="PackedScene" uid="uid://bhrbcojf8cvim" path="res://Scenes/UI/InfoRow.tscn" id="12_ux20s"]
 [ext_resource type="Texture2D" uid="uid://b4li6t0ittkbb" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
 [ext_resource type="Texture2D" uid="uid://dgom5vtp672is" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
 [ext_resource type="Texture2D" uid="uid://cggcysl218grk" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--group.png" id="15_5hdia"]

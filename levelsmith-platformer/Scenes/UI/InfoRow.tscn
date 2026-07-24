@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bhrbcojf8cvim"]
 
-[ext_resource type="Texture2D" uid="uid://c5rb3ykwlgr8e" path="res://Assets/UserInterface/Buttons/ButtonIcons/InfoIcon.png" id="1_7d13j"]
+[ext_resource type="Texture2D" uid="uid://eoeexalxc62g" path="res://Assets/UserInterface/Buttons/ButtonIcons/InfoIcon.png" id="1_7d13j"]
 [ext_resource type="Script" uid="uid://d4cfciodjcu05" path="res://Scenes/UI/InfoRow.gd" id="1_sqww1"]
 [ext_resource type="Texture2D" uid="uid://dd6v833kg7r4k" path="res://Assets/UserInterface/Buttons/ButtonIcons/BugIcon.png" id="2_sqww1"]
 
@@ -10,7 +10,7 @@ offset_bottom = 40.0
 script = ExtResource("1_sqww1")
 infoButton = NodePath("InfoButton")
 bugButton = NodePath("BugButton")
-infoLink = "https://github.com/superwhack/levelsmith-platformer/wiki/Getting-Started---Tutorial"
+infoLink = "https://github.com/superwhack/levelsmith-platformer/wiki/Getting-Started-&-Tutorial"
 bugLink = "https://docs.google.com/forms/d/e/1FAIpQLScCqUFd4hmgPDvh_iun-hH_NCP25s27G3fiqTtJzeClQlThVA/viewform"
 
 [node name="InfoButton" type="Button" parent="." unique_id=1613046938]

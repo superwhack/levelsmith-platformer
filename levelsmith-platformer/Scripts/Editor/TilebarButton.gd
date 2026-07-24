@@ -50,8 +50,6 @@ func _process(_delta : float) -> void:
 func select(sound : bool = true) -> void:
 	if (!button_pressed):
 		button_pressed = true;
-	if (!has_focus()):
-		grab_focus();
 	if (sound):
 		AudioManager.play_UI_effect("UISelection");
 	

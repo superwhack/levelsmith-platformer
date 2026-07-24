@@ -10,6 +10,12 @@ extends Node
 ## Handles keyboard inputs.
 ## event: The input event to parse.
 func _unhandled_key_input(event : InputEvent) -> void:
+	# Runs the level so long as we aren't in a line edit box.
+	if (event.is_action_pressed("enter")):
+		if (!get_viewport().gui_get_focus_owner() is LineEdit && editorManager.masterManager.state == Global.State.EDIT):
+			editorManager.masterManager.play();
+
+			
 	# If not in edit mode, return
 	if (editorManager.masterManager.state != Global.State.EDIT): return;
 	# If level save button is pressed, call the editorManager's export function
@@ -21,6 +27,7 @@ func _unhandled_key_input(event : InputEvent) -> void:
 	# If the toggle background button is pressed, toggle the toolManager's isBackground 
 	if (event.is_action_pressed("toggle-background")):
 		toolManager.isBackground = !toolManager.isBackground;
+		
 	
 	# Switching Tools
 	# When switching to the brush tool, drops the entity being held, switches the tool and sets the hotbar
@@ -70,22 +77,31 @@ func _unhandled_key_input(event : InputEvent) -> void:
 			# Switch selected entity
 			if (event.is_action_pressed("first-select")):
 				tileSwitch.entityButtons[0].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("second-select")):
 				tileSwitch.entityButtons[1].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("third-select")):
 				tileSwitch.entityButtons[2].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("fourth-select")):
 				tileSwitch.entityButtons[3].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("fifth-select")):
 				tileSwitch.entityButtons[4].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("sixth-select")):
 				tileSwitch.entityButtons[5].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("seventh-select")):
 				tileSwitch.entityButtons[6].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("eighth-select")):
 				tileSwitch.entityButtons[7].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("ninth-select")):
 				tileSwitch.entityButtons[8].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 		# If in the prop hotbar state, set the selected prop to the hotkey input
 		Global.HotbarState.PROPS:
 			# Switch dropdown

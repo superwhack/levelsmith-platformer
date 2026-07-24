@@ -5,32 +5,31 @@
 [ext_resource type="PackedScene" uid="uid://cv3y1gdfsbknd" path="res://Scenes/UI/LevelListItem.tscn" id="3_07k0b"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="5_h35r6"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
-[ext_resource type="Texture2D" uid="uid://coe3rcn2twg1q" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
+[ext_resource type="Texture2D" uid="uid://b2cq1omppx5oc" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
 [ext_resource type="PackedScene" uid="uid://dpituch0v2gjd" path="res://Scenes/UI/WebPopUp.tscn" id="7_5hdia"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
-
-[ext_resource type="Texture2D" uid="uid://bnr0v62nioghx" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
-[ext_resource type="Texture2D" uid="uid://cbe74yepc8ohr" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
-[ext_resource type="Texture2D" uid="uid://x7ybbnq4r4fb" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
-[ext_resource type="Texture2D" uid="uid://bkq66w0ki4iny" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
-[ext_resource type="Texture2D" uid="uid://bowlmfo2tiq32" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
-[ext_resource type="Texture2D" uid="uid://cggcysl218grk" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--group.png" id="15_5hdia"]
-[ext_resource type="Texture2D" uid="uid://b7w3bl2nsc6w8" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
-[ext_resource type="Texture2D" uid="uid://biqii24pbtl3q" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
-[ext_resource type="Texture2D" uid="uid://dv8ahbp0q7e7m" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
-[ext_resource type="Texture2D" uid="uid://t4kms6rgrknr" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check-circle.png" id="16_65hh5"]
-[ext_resource type="Texture2D" uid="uid://dt3xflnuxwxxe" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
-[ext_resource type="Texture2D" uid="uid://diiabterxff3k" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
-[ext_resource type="FontFile" uid="uid://3kn4gprbeda" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
-[ext_resource type="Texture2D" uid="uid://btblpw5rkc2oq" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
+[ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
+[ext_resource type="Texture2D" uid="uid://bwp7ms2ro7qbc" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
+[ext_resource type="Texture2D" uid="uid://dxd7oevrv4e7c" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
+[ext_resource type="PackedScene" uid="uid://bhrbcojf8cvim" path="res://Scenes/UI/InfoRow.tscn" id="12_ux20s"]
+[ext_resource type="Texture2D" uid="uid://dryfk84nu1yv1" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
+[ext_resource type="Texture2D" uid="uid://dodrkydpe4b04" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
+[ext_resource type="Texture2D" uid="uid://c1dmr6053ybf4" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--group.png" id="15_5hdia"]
+[ext_resource type="Texture2D" uid="uid://w64y47vwrufu" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
+[ext_resource type="Texture2D" uid="uid://c0lyraj4k064w" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
+[ext_resource type="Texture2D" uid="uid://db10ps4ripfsu" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://bru63ejw0q2j4" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check-circle.png" id="16_65hh5"]
+[ext_resource type="Texture2D" uid="uid://qlne6c3yxaff" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
+[ext_resource type="Texture2D" uid="uid://1glcsot8n2b" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
+[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
+[ext_resource type="Texture2D" uid="uid://bjepls0slldfm" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
 [ext_resource type="Texture2D" uid="uid://dldr7iy6j6qgc" path="res://Assets/UserInterface/UpdatedIcons/export.png" id="19_3u44c"]
-[ext_resource type="Texture2D" uid="uid://b7ifia0h6vfsk" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
-[ext_resource type="Texture2D" uid="uid://yu2ukie5a6cg" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
-[ext_resource type="PackedScene" uid="uid://xr5wkr0v56pj" path="res://Scenes/UI/LogoBox.tscn" id="25_iqn0u"]
-
+[ext_resource type="Texture2D" uid="uid://bbn361u6ti6j8" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
+[ext_resource type="Texture2D" uid="uid://b8oh8bg85bfsn" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="21_leunp"]
 [ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="22_h1v62"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="23_iqn0u"]
+[ext_resource type="PackedScene" uid="uid://xr5wkr0v56pj" path="res://Scenes/UI/LogoBox.tscn" id="25_iqn0u"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -139,7 +138,6 @@ corner_detail = 17
 expand_margin_left = 5.0
 
 [node name="MainMenu" type="Control" unique_id=1798083708 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "buttonCredits", "buttonCloseCredits", "buttonOpenLevelFolder", "buttonPlayLevel", "buttonEditLevel", "buttonDuplicateLevel", "buttonDeleteLevel", "buttonFavoriteLevel", "buttonExportLevel", "buttonSmallExportLevel", "overlayNewLevel", "overlayImportLevel", "overlayDuplicateLevel", "overlayCredits", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "fieldNewLevelAuthor", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "buttonDuplicateLevelCancel", "buttonDuplicateLevelConfirm", "duplicateName", "spinBoxDuplicateLevelX", "spinBoxDuplicateLevelY", "duplicateErrorBanner", "duplicateEmptyBanner", "duplicateExistsBanner", "levelName", "author", "dateCreated", "dateModified", "dimensions", "objectCount", "version", "preview", "exportLevelButton", "fileExplorer", "levelList", "softwareVersion", "validatedCheckmark", "globalSettingsButton", "playPopUp", "areaWarning")]
-
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -233,7 +231,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -19.0
 offset_right = -59.0
-offset_bottom = 53.0
+offset_bottom = 54.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 60
@@ -271,13 +269,15 @@ custom_maximum_size = Vector2(215, 81)
 layout_mode = 2
 texture = ExtResource("8_sn0qe")
 
-[node name="SmallSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=1848163393]
-visible = false
-custom_maximum_size = Vector2(50, -1)
+[node name="TopBarSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=801058569]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TopBarSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=801058569]
+[node name="InfoRow" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=423660098 instance=ExtResource("12_ux20s")]
+layout_mode = 2
+
+[node name="SmallSpacer" type="Control" parent="SafeArea/PanelContainer/RootVBox/TopBar/VBoxContainer/TopBarMargin/TopBarHBox" unique_id=1848163393]
+custom_maximum_size = Vector2(20, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 

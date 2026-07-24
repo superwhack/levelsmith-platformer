@@ -1229,7 +1229,6 @@ text = "Cancel
 "
 
 [node name="CreditsScreen" type="ColorRect" parent="." unique_id=1498871446]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1436,6 +1435,26 @@ text = "Chris Hamam"
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
+[node name="WLeadHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=2110291434]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WLeadHBox" unique_id=586486461]
+layout_mode = 2
+text = "Web Lead"
+label_settings = SubResource("LabelSettings_leunp")
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WLeadHBox" unique_id=1577945030]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Ziad" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WLeadHBox" unique_id=127316374]
+layout_mode = 2
+text = "Ziad Jaafar"
+
+[node name="WLeadTTeamSpacer2" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1089556803]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
 [node name="TTeamHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1981939656]
 layout_mode = 2
 
@@ -1516,6 +1535,26 @@ horizontal_alignment = 2
 layout_mode = 2
 text = "Deacon Mansfield"
 horizontal_alignment = 2
+
+[node name="DTeamWTeamSpacingSpacing" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=92821573]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="WTeamHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1980683507]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WTeamHBox" unique_id=600858550]
+layout_mode = 2
+text = "Web Team"
+label_settings = SubResource("LabelSettings_leunp")
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WTeamHBox" unique_id=1404372373]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Ziad" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WTeamHBox" unique_id=371993261]
+layout_mode = 2
+text = "Ziad Jaafar"
 
 [node name="Label" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer" unique_id=2118416437]
 layout_mode = 2

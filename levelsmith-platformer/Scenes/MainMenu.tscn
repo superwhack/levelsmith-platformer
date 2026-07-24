@@ -1801,7 +1801,8 @@ text = "Import Level"
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 10
-tooltip_text = "Choose a folder or zip file containing a level to import it."
+tooltip_text = "Choose a folder or zip file containing a level to import it.
+Supported files can also be dragged and drop into the main menu."
 theme_override_styles/normal = SubResource("StyleBoxEmpty_pnils")
 theme_override_styles/pressed = ExtResource("29_ke15f")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_ow4wq")

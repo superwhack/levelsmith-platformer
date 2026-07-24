@@ -17,6 +17,8 @@ extends Control
 @export var buttonDuplicateLevel : Button;
 @export var buttonDeleteLevel : Button;
 @export var buttonFavoriteLevel : Button;
+@export var buttonExportLevel : Button;
+@export var buttonSmallExportLevel : Button;
 @onready var favoriteButtonIcon : TextureRect = buttonFavoriteLevel.get_node("MarginContainer/TextureRect");
 
 # Overlays
@@ -91,8 +93,12 @@ extends Control
 # Global Settings Button
 @export var globalSettingsButton : Button;
 
+# Reference to the popup for the play button
+@export var playPopUp : HBoxContainer;
+
 # The currently selected level item.
 var selectedItem : Control = null;
+var isPlayable : bool = false;
 # Dictionary of all level items. For level list filling.
 var levelItems: Dictionary = {} # path -> item
 
@@ -106,17 +112,21 @@ const MAX_LEVEL_AREA := 10000;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Check if we are in a web build to hide and show appropriate buttons.
-	if OS.has_feature("web"):
+	if (OS.has_feature("web")):
 		exportLevelButton.show();
 		buttonImportLevel.hide();
 		buttonOpenLevelFolder.hide();
+		# This export button is only on regular builds
+		buttonSmallExportLevel.hide();
 		buttonQuit.hide();
 		exportLevelButton.pressed.connect(export_current_level);
 		add_child(webPopUp.instantiate());
+	else:
+		get_window().files_dropped.connect(_on_files_dropped)
 	
 	buttonNewLevel.grab_focus();
 	
-	softwareVersion.text = str(Global.VERSION);
+	softwareVersion.text = "v" + str(Global.VERSION);
 	# Hides other screens
 	overlayImportLevel.hide();
 	overlayNewLevel.hide();
@@ -127,10 +137,13 @@ func _ready() -> void:
 	buttonNewLevelCreate.pressed.connect(create_new_level);
 	buttonOpenLevelFolder.pressed.connect(open_level_folder);
 	buttonPlayLevel.pressed.connect(play_current_level);
+	buttonPlayLevel.mouse_entered.connect(play_button_mouse_entered);
+	buttonPlayLevel.mouse_exited.connect(play_button_mouse_exited);
 	buttonEditLevel.pressed.connect(edit_current_level);
 	buttonDeleteLevel.pressed.connect(open_delete_popup);
 	buttonDuplicateLevel.pressed.connect(overlay_duplicate_level_show);
 	buttonFavoriteLevel.pressed.connect(favorite_current_level);
+	buttonSmallExportLevel.pressed.connect(export_current_level);
 	get_window().focus_entered.connect(fill_level_list);
 	
 	# Hiding appropriate UI when cancelling level creation
@@ -159,11 +172,16 @@ func _ready() -> void:
 	spinBoxNewLevelX.value_changed.connect(update_level_size_warning);
 	spinBoxNewLevelY.value_changed.connect(update_level_size_warning);
 
-	var set_directory = func (directory: String) -> void:
-		fieldImportLevelPath.text = directory + "/";
-	
-	fileExplorer.dir_selected.connect(set_directory);
+	fileExplorer.file_selected.connect(func(path):
+		fieldImportLevelPath.text = path;
+	)
 
+	fileExplorer.dir_selected.connect(func(path):
+		fieldImportLevelPath.text = path + "/";
+	)
+	
+	
+	
 ## Functions that just make a menu appear/dissapear, used to attach the sound effects
 func overlay_new_level_show() -> void:
 	AudioManager.play_UI_effect("UISelection");
@@ -194,35 +212,67 @@ func overlay_duplicate_level_hide() -> void:
 ## Called when import level button is pressed
 func import_level() -> void:
 	AudioManager.play_UI_effect("UISelection");
-	# Warning for failed test
-	if (!ImportExportManager.validate_import(fieldImportLevelPath.text)): 
+	
+	var importPath : String = fieldImportLevelPath.text;
+	var sourceDirectory : String = importPath;
+	
+	if (importPath.to_lower().ends_with(".zip")):
+		if (!validate_level_zip(importPath)):
+			badImportWarning.show();
+			badImportBody.text = "Invalid level zip file \"" + importPath + "\"!";
+			return;
+		var tempDirectory : String = "user://TempLevelImport/";
+		
+		# Clean old temp import
+		if DirAccess.dir_exists_absolute(tempDirectory):
+			remove_recursively(tempDirectory);
+
+		DirAccess.make_dir_absolute(tempDirectory);
+		extract_all_from_zip(importPath, tempDirectory);
+
+		var extractedFolders : PackedStringArray = DirAccess.get_directories_at(tempDirectory);
+		
+		if (extractedFolders.size() != 1):
+			badImportWarning.show();
+			badImportBody.text = "Invalid level zip: missing root folder!";
+			return;
+
+		sourceDirectory = tempDirectory.path_join(extractedFolders[0]) + "/";
+	
+	if (!ImportExportManager.validate_import(sourceDirectory)): 
 		badImportWarning.show();
-		badImportBody.text = "Level Import Failed from directory \"" + fieldImportLevelPath.text + "\"!";
+		badImportBody.text = "Level Import Failed from directory \"" + sourceDirectory + "\"!";
 		return;
 	
 	# Extract the name of the folder from the file path
-	var importedLevelArray : Array = fieldImportLevelPath.text.rstrip("/").split("/");
-	var importedLevelName : String = importedLevelArray[importedLevelArray.size() - 1];
+	var importedLevelName : String = sourceDirectory.replace("\\", "/").rstrip("/").get_file();
 	
 	# Handle duplicate level names
 	importedLevelName = duplicate_naming(importedLevelName);
 	
 	var importDirectory : String = "user://Levels/" + importedLevelName + "/";
-	masterManager.loadedLevelPath = fieldImportLevelPath.text;
+	masterManager.loadedLevelPath = sourceDirectory;
 
 	if (!DirAccess.dir_exists_absolute(importDirectory)):
 		DirAccess.make_dir_absolute(importDirectory);
-		ImportExportManager.clone_data(fieldImportLevelPath.text + "/", importDirectory);
+		ImportExportManager.clone_data(sourceDirectory + "/", importDirectory);
+	
+	
+	masterManager.loadedLevelPath = importDirectory;
 	masterManager.import_level_and_edit();
 	
 	# Resets the UI overlay
 	fieldImportLevelPath.clear();
 	overlayImportLevel.hide();
-	pass;
+	
+	# Remove temp folder if it exists
+	if (DirAccess.dir_exists_absolute("user://TempLevelImport/")):
+		remove_recursively("user://TempLevelImport/");
 
 ## Called when import level is closed
 func import_cancel() -> void:
 	AudioManager.play_UI_effect("UISelection");
+	fieldImportLevelPath.clear();
 	overlayImportLevel.hide();
 	
 ## Exports the currently selected level.
@@ -251,10 +301,25 @@ func export_current_level() -> void:
 
 	# Download in browser
 	var zipData : PackedByteArray = FileAccess.get_file_as_bytes(zipPath);
-	JavaScriptBridge.download_buffer(zipData, newLevelName + ".zip");
+	if (OS.has_feature("web")):
+		JavaScriptBridge.download_buffer(zipData, newLevelName + ".zip");
+	else:
+		var exportPath : String = OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS).path_join(newLevelName + ".zip");
+
+		var file : FileAccess = FileAccess.open(exportPath, FileAccess.WRITE);
+		
+		if (file):
+			file.store_buffer(zipData);
+			file.close();
+			
+		# Opens straight to downloads since that is where the file is saved
+		OS.shell_open(OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS));
 	
+	# Deletes temp folders
 	DirAccess.remove_absolute(zipPath);
-	remove_recursively(tempPath);
+
+	if (DirAccess.dir_exists_absolute("user://temp/")):
+		remove_recursively("user://temp/");
 	
 ## When an export directory is selected, clone all data to given directory.
 ## zip: The ZIPPacker we use to create the zip.
@@ -444,12 +509,14 @@ func _on_level_pressed(item: Node) -> void:
 	
 	selectedItem = item;
 	update_metadata(item);
+	set_play_button();
 
 
 ## Deselecting a level with right-click removes metadata.
 ## item: The button item being deselected.
 func _on_level_deselected(item: Node) -> void:
 	if (selectedItem == item):
+		isPlayable = false;
 		item.levelButton.button_pressed = false;
 		toggle_level_buttons();
 		clear_selection();
@@ -459,9 +526,22 @@ func toggle_level_buttons() -> void:
 	buttonDeleteLevel.disabled = !buttonDeleteLevel.disabled;
 	buttonDuplicateLevel.disabled = !buttonDuplicateLevel.disabled;
 	buttonEditLevel.disabled = !buttonEditLevel.disabled;
-	buttonPlayLevel.disabled = !buttonPlayLevel.disabled;
 	buttonFavoriteLevel.disabled = !buttonFavoriteLevel.disabled;
 	exportLevelButton.disabled = !exportLevelButton.disabled;
+	buttonSmallExportLevel.disabled = !buttonSmallExportLevel.disabled;
+	set_play_button();
+
+func set_play_button() -> void:
+	buttonPlayLevel.disabled = !isPlayable;
+
+func play_button_mouse_entered() -> void:
+	if (selectedItem && !isPlayable):
+		playPopUp.set_title("Level cannot be played");
+		playPopUp.set_body_text("This level is missing a player and/or a goal");
+		playPopUp.show();
+
+func play_button_mouse_exited() -> void:
+	playPopUp.hide();
 
 ## Set the favourite button icon
 ## isFavourited: True if the favourite button made the level favourited, false if it made it unfavourited
@@ -522,6 +602,7 @@ func update_level_item(item: Node, folderName : String, levelPath : String) -> v
 		item.levelErrorIcon.hide();
 	item.favorited = metadata.get("favorited", false);
 	item.validated = metadata.get("validated", false);
+	item.playable = metadata.get("playable", false);
 	if (item.favorited):
 		item.levelFavoriteIcon.show();
 	else:
@@ -556,6 +637,8 @@ func update_metadata(item: Node) -> void:
 		validatedCheckmark.show();
 	else:
 		validatedCheckmark.hide();
+	
+	isPlayable = item.playable;
 
 ## Clears the metadata selection.
 func clear_selection() -> void:
@@ -662,8 +745,8 @@ func duplicate_current_level() -> void:
 	if (now.hour == 0):
 		now.hour = 12;
 
-	var date := "%02d.%02d.%04d" % [now.month, now.day, now.year];
-	var time := "%02d:%02d %s" % [now.hour, now.minute, meridiem];
+	var date : String = "%02d.%02d.%04d" % [now.month, now.day, now.year];
+	var time : String = "%02d:%02d %s" % [now.hour, now.minute, meridiem];
 
 	# Set all metadata when duplicating appropriately
 	ImportExportManager.set_metadata(destination.rstrip("/"), "favorited", false);
@@ -790,3 +873,64 @@ func show_credits_screen(showScreen : bool = true) -> void:
 	else:
 		AudioManager.play_UI_effect("UISelection")
 		overlayCredits.hide();
+		
+## Extracts files from a given zip file to the user level directory.
+## zipPath: the path of the zip file being extracted
+func extract_all_from_zip(zipPath: String, destination: String):
+	var reader : ZIPReader = ZIPReader.new();
+	reader.open(zipPath);
+	
+	for filePath in reader.get_files():
+		var fullPath : String = destination.path_join(filePath);
+
+		if filePath.ends_with("/"):
+			DirAccess.make_dir_recursive_absolute(fullPath);
+			continue;
+
+		DirAccess.make_dir_recursive_absolute(fullPath.get_base_dir());
+
+		var file : FileAccess = FileAccess.open(fullPath, FileAccess.WRITE);
+		file.store_buffer(reader.read_file(filePath));
+			
+	reader.close();
+
+## Validates a level zip file
+## zipPath: the directory of the zip being validated
+func validate_level_zip(zipPath: String) -> bool:
+	var reader : ZIPReader = ZIPReader.new();
+	
+	if (reader.open(zipPath) != OK):
+		return false;
+
+	var files = reader.get_files();
+	
+	var hasSettings : bool = false;
+	var hasTiles : bool = false;
+	
+	# Set validation to false if missing necessary files
+	for path in files:
+		if (path.ends_with("Settings.JSON")):
+			hasSettings = true;
+		elif (path.ends_with("Tiles.CSV")):
+			hasTiles = true;
+	reader.close();
+	return hasSettings && hasTiles;
+	
+	
+## Opens the import menu with the file path filled out for importing zip level.
+## files: An array of dropped files.
+func _on_files_dropped(files: PackedStringArray) -> void:
+	if (!self.visible):
+		return;
+		
+	if (files.size() != 1):
+		return;
+	
+	# Get the first (and only) file
+	var droppedFile : String = files[0];
+	if (droppedFile.to_lower().ends_with(".zip")):
+		fieldImportLevelPath.text = droppedFile;
+		import_level();
+	elif (DirAccess.dir_exists_absolute(droppedFile)):
+		fieldImportLevelPath.text = droppedFile + "/";
+		import_level();

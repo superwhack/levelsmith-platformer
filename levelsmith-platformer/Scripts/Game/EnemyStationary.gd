@@ -13,9 +13,6 @@ func _ready() -> void:
 	super._ready();
 	
 	animatedSprites.sprite_frames = AnimationManager.stationaryEnemyTemplateSprite.sprite_frames;
-	
-	animatedSprites.animation = "StationaryIdle";
-	animatedSprites.play();
 
 ## Stationary Enemy gravity if toggled / if enemy is killed
 ## delta: Time since previous frame

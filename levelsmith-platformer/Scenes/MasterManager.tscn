@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dtt02avvdvee" path="res://Scenes/PlayState.tscn" id="4_ggjfv"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_i0d1j"]
 [ext_resource type="Script" uid="uid://cp4jiffuw8vn4" path="res://Scripts/Universal/CameraManager.gd" id="4_mg0h4"]
-[ext_resource type="Texture2D" uid="uid://dkppj3b4tn3qj" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_i0d1j"]
 [ext_resource type="Script" uid="uid://balrchnavex6a" path="res://Scripts/Editor/PopUp/PopUpManager.gd" id="7_8vbpr"]
 [ext_resource type="PackedScene" uid="uid://do2buhww044b1" path="res://Scenes/MainMenu.tscn" id="9_4q5nt"]
 [ext_resource type="Shader" uid="uid://cdtehxsgxkdly" path="res://Assets/Shaders/ditherfadesquare.gdshader" id="11_iwvbt"]
@@ -94,7 +94,7 @@ masterManager = NodePath("..")
 closeAssetManagerButton = NodePath("CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/HBoxContainer/CloseButton")
 
 [node name="GridLines" parent="EditorManager" index="0" unique_id=669187714 node_paths=PackedStringArray("masterManager")]
-z_index = 0
+z_index = -5
 tile_set = SubResource("TileSet_0vixy")
 masterManager = NodePath("../..")
 
@@ -137,12 +137,6 @@ scale = Vector2(1, 1)
 
 [node name="AudioPreview" parent="EditorManager/CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer" parent_id_path=PackedInt32Array(2045534837, 468653693, 58018460) index="3" unique_id=1493625619]
 visible = true
-
-[node name="PlayPauseButton" parent="EditorManager/CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(2045534837, 468653693, 1727755463) index="0" unique_id=1125072521]
-focus_mode = 2
-
-[node name="StopButton" parent="EditorManager/CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(2045534837, 468653693, 1727755463) index="1" unique_id=780017080]
-focus_mode = 2
 
 [node name="LevelSettingsMenu" parent="EditorManager/CanvasLayer" parent_id_path=PackedInt32Array(2045534837, 738974318) index="1" unique_id=79213823 node_paths=PackedStringArray("cameraManager")]
 cameraManager = NodePath("../../../Camera2D")

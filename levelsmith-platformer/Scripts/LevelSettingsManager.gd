@@ -19,7 +19,7 @@ class_name LevelSettingsMenu;
 @export var stickySlowdown : VBoxContainer;
 @export var hazardDamage : VBoxContainer;
 const DEFAULT_ZOOM : float = 100.0;
-const DEFAULT_FOLLOW_SPEEC : float = 100.0;
+const DEFAULT_FOLLOW_SPEED : float = 100.0;
 const DEFAULT_DEADZONE : float = 0.0;
 const DEFAULT_CAMERA_CLAMP : bool = false;
 
@@ -99,7 +99,7 @@ func update_sliders() -> void:
 ## Reset the settings
 func reset_settings() -> void:	
 	gameplayZoom.value = DEFAULT_ZOOM;
-	followSpeed.value = DEFAULT_FOLLOW_SPEEC;
+	followSpeed.value = DEFAULT_FOLLOW_SPEED;
 	cameraDeadzone.value = DEFAULT_DEADZONE;
 	cameraClamp.value = DEFAULT_CAMERA_CLAMP;
 

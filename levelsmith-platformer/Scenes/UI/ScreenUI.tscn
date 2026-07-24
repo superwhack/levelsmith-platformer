@@ -2,14 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="1_ef2s3"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_oeklc"]
-[ext_resource type="Texture2D" uid="uid://bd4p61avbou82" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonHomeWhite.png" id="2_6fw3s"]
+[ext_resource type="Texture2D" uid="uid://cm0q3k7vwgsqs" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonHomeWhite.png" id="2_6fw3s"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="2_albdw"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="5_6fw3s"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="5_oeklc"]
-[ext_resource type="Texture2D" uid="uid://brn23iof6rncf" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonSaveWhite.png" id="6_63w0a"]
-[ext_resource type="Texture2D" uid="uid://cyv36kpfksb3b" path="res://Assets/UserInterface/IconButtonAssetManagerWhite.png" id="7_63w0a"]
-[ext_resource type="Texture2D" uid="uid://cpnh5eiw0m5fv" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="8_thd6u"]
-[ext_resource type="Texture2D" uid="uid://pc63ho3uson2" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="9_thd6u"]
+[ext_resource type="Texture2D" uid="uid://dps6wmhpjlbe6" path="res://Assets/UserInterface/Buttons/ButtonIcons/IconButtonSaveWhite.png" id="6_63w0a"]
+[ext_resource type="Texture2D" uid="uid://btraf0nhu8ai0" path="res://Assets/UserInterface/IconButtonAssetManagerWhite.png" id="7_63w0a"]
+[ext_resource type="Texture2D" uid="uid://db5k0cx4bb2l0" path="res://Assets/UserInterface/IconButtonCameraSettingsWhite.png" id="8_thd6u"]
+[ext_resource type="Texture2D" uid="uid://bh7hehwkyl4fe" path="res://Assets/UserInterface/IconBuildModePlayWhite.png" id="9_thd6u"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6fw3s"]
 
@@ -190,8 +190,6 @@ layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 1

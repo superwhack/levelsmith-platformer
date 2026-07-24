@@ -15,8 +15,7 @@
 [ext_resource type="Script" uid="uid://pgp1usxbcoyf" path="res://Scripts/Universal/AnimationSwapping.gd" id="11_ukhnw"]
 [ext_resource type="Texture2D" uid="uid://dw2iuwcie451d" path="res://Assets/Sprites/UI/ArrowRightMedium.PNG" id="12_41b3d"]
 [ext_resource type="Script" uid="uid://cd1ukd2otaojf" path="res://Scripts/Universal/AudioSwapping.gd" id="12_qbbei"]
-[ext_resource type="Texture2D" uid="uid://bupkqxgtnq1cb" path="res://Assets/UserInterface/UpdatedIcons/mi--pause.png" id="14_yswm7"]
-
+[ext_resource type="Texture2D" uid="uid://d3av07q8mayof" path="res://Assets/UserInterface/UpdatedIcons/mi--pause.png" id="14_yswm7"]
 [ext_resource type="Texture2D" uid="uid://bqvpgjst07vs7" path="res://Assets/UserInterface/ph--file-audio-fill.png" id="16_yswm7"]
 [ext_resource type="Texture2D" uid="uid://i182p1h0vkq0" path="res://Assets/UserInterface/iconoir--play.png" id="17_41b3d"]
 [ext_resource type="Texture2D" uid="uid://2c6wg320xdr" path="res://Assets/UserInterface/griddy-icons--stop.png" id="18_l1dbf"]

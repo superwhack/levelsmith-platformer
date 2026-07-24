@@ -2,11 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_pj8m8"]
 [ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="2_femvg"]
-[ext_resource type="Texture2D" uid="uid://c5xlpkbgkgyvi" path="res://Assets/UserInterface/UpdatedIcons/solar--restart-broken.png" id="2_nxle1"]
-[ext_resource type="Texture2D" uid="uid://b8oh8bg85bfsn" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="3_nxle1"]
-[ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="3_pj8m8"]
-[ext_resource type="Texture2D" uid="uid://qf7uq7d7mpai" path="res://Assets/UserInterface/line-md--heart-filled.png" id="5_nxle1"]
-[ext_resource type="Texture2D" uid="uid://cerg25kv03gd3" path="res://Assets/UserInterface/tabler--heart.png" id="6_i78rd"]
+[ext_resource type="Texture2D" uid="uid://g0robwvtn7od" path="res://Assets/UserInterface/UpdatedIcons/solar--restart-broken.png" id="2_nxle1"]
+[ext_resource type="Texture2D" uid="uid://yu2ukie5a6cg" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="3_nxle1"]
+[ext_resource type="Texture2D" uid="uid://crhvxgvxhk5bb" path="res://Assets/UserInterface/Union.png" id="3_pj8m8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ixtdl"]
 
@@ -176,8 +174,6 @@ size_flags_horizontal = 4
 
 [node name="WinPlayerHealthUi" parent="Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox" unique_id=621394887 instance=ExtResource("2_femvg")]
 layout_mode = 2
-full_heart_texture = ExtResource("5_nxle1")
-empty_heart_texture = ExtResource("6_i78rd")
 
 [node name="WinUISpacer" type="Control" parent="Panel/PanelContainer/WinVBoxContainer/BottomMarginContainer/WinDetailsHBox" unique_id=2137722702]
 custom_minimum_size = Vector2(10, 0)

@@ -3,13 +3,13 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_ede15"]
 [ext_resource type="Script" uid="uid://bwa6vqp2x282t" path="res://Scripts/LevelListItem.gd" id="2_c7ric"]
 [ext_resource type="Theme" uid="uid://dsbkv6718ooq1" path="res://Resources/LevelListItem.tres" id="3_j6dif"]
-[ext_resource type="Texture2D" uid="uid://dao7yhvkm4ri4" path="res://Assets/Sprites/Entities/dude.png" id="4_ut1as"]
-[ext_resource type="Texture2D" uid="uid://b3s4y2bfc4wd" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="5_4n3vt"]
-[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="6_c7ric"]
-[ext_resource type="Texture2D" uid="uid://u54ikbydic1p" path="res://Assets/Sprites/UI/Cursors/CursorBrush.PNG" id="6_cnwum"]
-[ext_resource type="Texture2D" uid="uid://dfw2rstoa2jyb" path="res://Assets/Sprites/UI/lucide--play.svg" id="7_4qevv"]
-[ext_resource type="Texture2D" uid="uid://vr7s35h7h741" path="res://Assets/Sprites/UI/ThumbnailModeMedium.PNG" id="8_4gylo"]
-[ext_resource type="Texture2D" uid="uid://qatvje4morq5" path="res://Assets/Sprites/UI/Invalid.png" id="9_27s7j"]
+[ext_resource type="Texture2D" uid="uid://ba277bao5tfhc" path="res://Assets/Sprites/Entities/dude.png" id="4_ut1as"]
+[ext_resource type="Texture2D" uid="uid://dam43f3lrnuoc" path="res://Assets/Sprites/Entities/Props/Prop4.png" id="5_4n3vt"]
+[ext_resource type="FontFile" uid="uid://3kn4gprbeda" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="6_c7ric"]
+[ext_resource type="Texture2D" uid="uid://dj11cm1uy3gix" path="res://Assets/Sprites/UI/Cursors/CursorBrush.PNG" id="6_cnwum"]
+[ext_resource type="Texture2D" uid="uid://cwn4gllfgy62s" path="res://Assets/Sprites/UI/lucide--play.svg" id="7_4qevv"]
+[ext_resource type="Texture2D" uid="uid://dx8onvyfjwktl" path="res://Assets/Sprites/UI/ThumbnailModeMedium.PNG" id="8_4gylo"]
+[ext_resource type="Texture2D" uid="uid://bxouul63o1mb7" path="res://Assets/Sprites/UI/Invalid.png" id="9_27s7j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nh84e"]
 bg_color = Color(1, 1, 1, 1)
@@ -18,7 +18,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="LevelListItem" type="Control" unique_id=2067988774 node_paths=PackedStringArray("levelThumbnail", "levelTitle", "levelAuthor", "levelEdited", "levelSize", "levelValid", "levelButton")]
+[node name="LevelListItem" type="Control" unique_id=2067988774 node_paths=PackedStringArray("levelTitle", "levelButton")]
 custom_minimum_size = Vector2(301, 304)
 layout_mode = 3
 anchor_top = 0.008
@@ -30,12 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ede15")
 script = ExtResource("2_c7ric")
-levelThumbnail = NodePath("ItemContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/ThumbnailMarginContainer/ThumbnailContainer/LevelThumbnail")
 levelTitle = NodePath("ItemContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/HBoxContainer/LevelTitle")
-levelAuthor = NodePath("ItemContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelAuthor")
-levelEdited = NodePath("ItemContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelEdited")
-levelSize = NodePath("ItemContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelSize")
-levelValid = NodePath("ItemContainer/LevelMarginContainer/LevelCard/LevelHBoxContainer/LevelVBoxContainer/LevelValid")
 levelButton = NodePath("ItemContainer/LevelMarginContainer/LevelCard")
 
 [node name="ItemContainer" type="VBoxContainer" parent="." unique_id=1938085737]

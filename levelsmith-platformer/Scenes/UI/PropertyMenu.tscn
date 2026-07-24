@@ -12,7 +12,7 @@ bg_color = Color(0.2, 0.20784314, 0.23137255, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
-[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "presetOptions", "closeButton", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerSlopeSlowdownCheckbox", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpStrengthSlider", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "movingPlatformDelaySlider", "movingPlatformEasingCheckbox", "movingPlatformMomentumCheckbox", "movingPlatformVisibilityCheckbox", "movingPlatformAlwaysActiveCheckbox")]
+[node name="PropertyMenu" type="Panel" unique_id=1686733993 node_paths=PackedStringArray("entityName", "presetOptions", "closeButton", "playerMenu", "patrollingMenu", "shootingMenu", "flyingMenu", "stationaryMenu", "movingPlatformMenu", "playerHealthSlider", "playerSpeedSlider", "playerAccelerationSlider", "playerDecelerationSlider", "playerJumpSlider", "playerAirControlSlider", "playerGravitySlider", "playerCoyoteTimeSlider", "playerSlopeSlowdownCheckbox", "playerOnewaysCheckbox", "playerDoubleJumpCheckbox", "playerWallJumpCheckbox", "playerWallJumpStrengthSlider", "playerWallJumpDecayCheckbox", "patrollingSpeedSlider", "patrollingDirectionDropdown", "patrollingRestrictedCheckbox", "shootingDirectionSlider", "shootingRandomDirection", "shootingShotSpeedSlider", "shootingFireRateSlider", "shootingProjectileBounce", "shootingGravity", "shootingProjectilePersistenceCheckbox", "shootingAlwaysActiveCheckbox", "flyingSpeedSlider", "flyingOffsetXSlider", "flyingOffsetYSlider", "stationaryDirectionDropdown", "stationaryGravity", "movingPlatformSpeedSlider", "movingPlatformOffsetXSlider", "movingPlatformOffsetYSlider", "movingPlatformProgressSlider", "movingPlatformDelaySlider", "movingPlatformEasingCheckbox", "movingPlatformMomentumCheckbox", "movingPlatformVisibilityCheckbox", "movingPlatformAlwaysActiveCheckbox")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -57,6 +57,8 @@ shootingShotSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/Shooting
 shootingFireRateSlider = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingFireRate")
 shootingProjectileBounce = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingBounce")
 shootingGravity = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingGravity")
+shootingProjectilePersistenceCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingPersistence")
+shootingAlwaysActiveCheckbox = NodePath("ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties/ShootingAlwaysActive")
 flyingSpeedSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingMargin/FlyingProperties/FlightSpeed")
 flyingOffsetXSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingMargin/FlyingProperties/Xoffset")
 flyingOffsetYSlider = NodePath("ScrollContainer/MainMargin/RootVBox/FlyingMargin/FlyingProperties/Yoffset")
@@ -361,6 +363,16 @@ propertyName = "Bounce on Projectiles"
 layout_mode = 2
 size_flags_horizontal = 0
 propertyName = "Gravity"
+
+[node name="ShootingPersistence" parent="ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=569517571 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Projectile Persistence"
+
+[node name="ShootingAlwaysActive" parent="ScrollContainer/MainMargin/RootVBox/ShootingMargin/ShootingProperties" unique_id=1405047447 instance=ExtResource("3_1mv14")]
+layout_mode = 2
+size_flags_horizontal = 0
+propertyName = "Always Active"
 
 [node name="MovingPlatformMargin" type="MarginContainer" parent="ScrollContainer/MainMargin/RootVBox" unique_id=2055794531]
 visible = false

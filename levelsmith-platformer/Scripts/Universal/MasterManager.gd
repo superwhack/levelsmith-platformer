@@ -295,6 +295,7 @@ func edit(skipWipeIn: bool = false) -> void:
 	# Reset audio and play ui effect
 	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UISelection");
+	AnimationManager.pause_all_animations();
 	# Pause players
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Delete tileMap from the game manager
@@ -337,6 +338,7 @@ func play(skipWipeIn: bool = false) -> void:
 	propertyMenu.close();
 	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");
+	AnimationManager.play_all_animations();
 	# Update state variable
 	state = Global.State.PLAY;
 	# Save map

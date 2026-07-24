@@ -39,6 +39,7 @@ const BOUNCE_BASE_BOOST : int = 600;
 func _ready() -> void:
 	add_to_group("enemy");
 	animatedSprites.animation_finished.connect(on_animation_finished);
+	z_index = 2;
 
 ## Processes for every frame based on time
 ## delta: Time since previous frame.

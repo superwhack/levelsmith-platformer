@@ -23,7 +23,7 @@ var prevPosition : Vector2;
 var brushObject : int = 0;
 
 # A timer to differentiate between click and holding click
-const POSITION_DIFFERENCE = .75;
+const POSITION_DIFFERENCE : float = .75;
 var previousClickPos : Vector2;
 
 # If the user starts a click on a UI element.

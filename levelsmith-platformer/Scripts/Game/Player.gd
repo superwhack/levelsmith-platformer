@@ -160,6 +160,7 @@ const BOUNCE_BASE_Y_SIDE : int = 500;
 const WALL_SLIDE_SLOWDOWN : float = 0.94;
 const SLIME_NOISE_THRESHOLD : float = 2.5;
 const HORIZONTAL_STICK_FACTOR : float = 0.90;
+const WALL_JUMP_AIR_CONTROL_POWER : float = 0.6;
 
 ## Runs once on instantiation
 func _ready() -> void:
@@ -717,7 +718,6 @@ func resolve_wall_jumping() -> void:
 func wall_jump():
 	if (wallJumpDirection == WallDirection.NONE): 
 		return;
-	
 	wallJumpCount += 1;
 	if !(wallJumpDecay):
 		wallJumpCount = 1;
@@ -726,6 +726,10 @@ func wall_jump():
 		velocity.x = WALL_JUMP_FORCE_X * pow(max(groundSpeed, WALL_JUMP_GROUND_MIN), WALL_JUMP_SPEED_EXPONENT_X) * wallJumpStrength;
 	else:
 		velocity.x = -WALL_JUMP_FORCE_X * pow(max(groundSpeed, WALL_JUMP_GROUND_MIN), WALL_JUMP_SPEED_EXPONENT_X) * wallJumpStrength;
+	if currentFriction != 1:
+		velocity.x *= currentFriction;
+	if airControl != 1:
+		velocity.x *= pow(airControl, WALL_JUMP_AIR_CONTROL_POWER);
 	velocity.y = -WALL_JUMP_FORCE_Y * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(clamp(groundSpeed, WALL_JUMP_Y_GROUND_MIN, WALL_JUMP_Y_GROUND_MAX), WALL_JUMP_SPEED_EXPONENT_Y);
 	
 	# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)

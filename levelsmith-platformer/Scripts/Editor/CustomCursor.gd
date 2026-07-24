@@ -166,7 +166,7 @@ func highlight_selected_entity(entityPosition : Vector2) -> void:
 	entityHighlight.show();
 	
 ## Setting the cursor every frame can break on web builds. This helps prevent glitchy custom cursors.
-func change_cursor(new_cursor: Texture2D) -> void:
-	if (currentCursorTexture != new_cursor):
-		currentCursorTexture = new_cursor;
-		Input.set_custom_mouse_cursor(new_cursor);
+func change_cursor(newCursor: Texture2D) -> void:
+	if (currentCursorTexture != newCursor):
+		currentCursorTexture = newCursor;
+		Input.set_custom_mouse_cursor(newCursor);

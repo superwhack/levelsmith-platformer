@@ -123,7 +123,7 @@ func reset_enemy_positions() -> void:
 			if (moving is EnemyPatrol):
 				moving.directionArrow.show();
 			elif (moving is EnemyShooting):
-				moving.directionArrow.visible = !moving.randomDirection;
+				moving.directionArrow.visible = !moving.propertyFile.randomDirection;
 			elif (moving is EnemyFlyer):
 				moving.previewLine.show();
 			elif (moving is EnemyStationary):

@@ -24,9 +24,6 @@ func _ready() -> void:
 	deathAnim = "PatrolDeath";
 	super._ready();
 	animatedSprites.sprite_frames = AnimationManager.patrollingEnemyTemplateSprite.sprite_frames;
-	
-	animatedSprites.animation = "PatrolWalk";
-	animatedSprites.play();
 
 ## Processes the physics every frame
 ## delta: Time since previous frame

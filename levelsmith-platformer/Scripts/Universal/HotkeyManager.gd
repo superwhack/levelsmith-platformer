@@ -77,22 +77,31 @@ func _unhandled_key_input(event : InputEvent) -> void:
 			# Switch selected entity
 			if (event.is_action_pressed("first-select")):
 				tileSwitch.entityButtons[0].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("second-select")):
 				tileSwitch.entityButtons[1].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("third-select")):
 				tileSwitch.entityButtons[2].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("fourth-select")):
 				tileSwitch.entityButtons[3].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("fifth-select")):
 				tileSwitch.entityButtons[4].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("sixth-select")):
 				tileSwitch.entityButtons[5].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("seventh-select")):
 				tileSwitch.entityButtons[6].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("eighth-select")):
 				tileSwitch.entityButtons[7].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 			elif (event.is_action_pressed("ninth-select")):
 				tileSwitch.entityButtons[8].select();
+				editorManager.customCursorManager.hide_entity_highlight();
 		# If in the prop hotbar state, set the selected prop to the hotkey input
 		Global.HotbarState.PROPS:
 			# Switch dropdown

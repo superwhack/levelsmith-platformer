@@ -4,34 +4,34 @@
 [ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_ygkdq"]
 [ext_resource type="PackedScene" uid="uid://cv3y1gdfsbknd" path="res://Scenes/UI/LevelListItem.tscn" id="3_07k0b"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="5_h35r6"]
-[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
-[ext_resource type="Texture2D" uid="uid://coe3rcn2twg1q" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
+[ext_resource type="Texture2D" uid="uid://bguub3y2mkgwv" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
+[ext_resource type="Texture2D" uid="uid://bwtk8i6k373fq" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
 [ext_resource type="PackedScene" uid="uid://dpituch0v2gjd" path="res://Scenes/UI/WebPopUp.tscn" id="7_5hdia"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
-[ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
-[ext_resource type="Texture2D" uid="uid://bwp7ms2ro7qbc" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
-[ext_resource type="Texture2D" uid="uid://dxd7oevrv4e7c" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
+[ext_resource type="Texture2D" uid="uid://bnr0v62nioghx" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
+[ext_resource type="Texture2D" uid="uid://cbe74yepc8ohr" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
+[ext_resource type="Texture2D" uid="uid://x7ybbnq4r4fb" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
 [ext_resource type="PackedScene" uid="uid://bhrbcojf8cvim" path="res://Scenes/UI/InfoRow.tscn" id="12_ux20s"]
-[ext_resource type="Texture2D" uid="uid://dryfk84nu1yv1" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
-[ext_resource type="Texture2D" uid="uid://dodrkydpe4b04" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
+[ext_resource type="Texture2D" uid="uid://bkq66w0ki4iny" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
+[ext_resource type="Texture2D" uid="uid://bowlmfo2tiq32" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
 [ext_resource type="Texture2D" uid="uid://c1dmr6053ybf4" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--group.png" id="15_5hdia"]
-[ext_resource type="Texture2D" uid="uid://w64y47vwrufu" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
-[ext_resource type="Texture2D" uid="uid://buv4gfuc3o66v" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
-[ext_resource type="Texture2D" uid="uid://dnlgeapuusb7p" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
-[ext_resource type="Texture2D" uid="uid://bru63ejw0q2j4" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check-circle.png" id="16_65hh5"]
-[ext_resource type="Texture2D" uid="uid://qlne6c3yxaff" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
-[ext_resource type="Texture2D" uid="uid://1glcsot8n2b" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
-[ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
-[ext_resource type="Texture2D" uid="uid://bjepls0slldfm" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
+[ext_resource type="Texture2D" uid="uid://b7w3bl2nsc6w8" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
+[ext_resource type="Texture2D" uid="uid://biqii24pbtl3q" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
+[ext_resource type="Texture2D" uid="uid://dv8ahbp0q7e7m" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://t4kms6rgrknr" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check-circle.png" id="16_65hh5"]
+[ext_resource type="Texture2D" uid="uid://dt3xflnuxwxxe" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
+[ext_resource type="Texture2D" uid="uid://diiabterxff3k" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
+[ext_resource type="FontFile" uid="uid://3kn4gprbeda" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
+[ext_resource type="Texture2D" uid="uid://btblpw5rkc2oq" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
 [ext_resource type="Texture2D" uid="uid://dldr7iy6j6qgc" path="res://Assets/UserInterface/UpdatedIcons/export.png" id="19_3u44c"]
-[ext_resource type="Texture2D" uid="uid://bo1m348j85vww" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
-[ext_resource type="Texture2D" uid="uid://b8oh8bg85bfsn" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
+[ext_resource type="Texture2D" uid="uid://b7ifia0h6vfsk" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
+[ext_resource type="Texture2D" uid="uid://yu2ukie5a6cg" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="21_leunp"]
-[ext_resource type="Texture2D" uid="uid://uboggbk6slsr" path="res://Assets/UserInterface/Buttons/CloseX.png" id="22_h1v62"]
+[ext_resource type="Texture2D" uid="uid://b68udivkcp3yg" path="res://Assets/UserInterface/Buttons/CloseX.png" id="22_h1v62"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="23_iqn0u"]
 [ext_resource type="PackedScene" uid="uid://xr5wkr0v56pj" path="res://Scenes/UI/LogoBox.tscn" id="25_iqn0u"]
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="29_ke15f"]
-[ext_resource type="Texture2D" uid="uid://dfco244lcptog" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="30_311ux"]
+[ext_resource type="Texture2D" uid="uid://b8ac8n3yb6286" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="30_311ux"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -237,8 +237,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 30.0
 offset_top = -19.0
-offset_right = -59.0
+offset_right = -29.0
 offset_bottom = 54.0
 grow_horizontal = 2
 grow_vertical = 2

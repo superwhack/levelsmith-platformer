@@ -2,28 +2,29 @@
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/Editor/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
-[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
+[ext_resource type="Texture2D" uid="uid://bguub3y2mkgwv" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
-[ext_resource type="Texture2D" uid="uid://cmh6m8bok14oi" path="res://Assets/UserInterface/UpdatedIcons/material-symbols-light--home-outline.png" id="8_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://cnh8taosrrpr5" path="res://Assets/UserInterface/UpdatedIcons/material-symbols-light--home-outline.png" id="8_vrcqo"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
-[ext_resource type="Texture2D" uid="uid://chqycgpbvi2s5" path="res://Assets/UserInterface/UpdatedIcons/carbon--save.png" id="10_racgb"]
+[ext_resource type="Texture2D" uid="uid://bjl3psc0mylxi" path="res://Assets/UserInterface/UpdatedIcons/carbon--save.png" id="10_racgb"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
-[ext_resource type="Texture2D" uid="uid://bjepls0slldfm" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="11_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://btblpw5rkc2oq" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="11_vrcqo"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Texture2D" uid="uid://cir38m5oo2h1t" path="res://Assets/UserInterface/UpdatedIcons/wordpress--image.png" id="13_hh704"]
+[ext_resource type="Texture2D" uid="uid://t315psvvxvbh" path="res://Assets/UserInterface/UpdatedIcons/wordpress--image.png" id="13_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="Texture2D" uid="uid://ywvulmo75a48" path="res://Assets/UserInterface/UpdatedIcons/LevelSettings.png" id="14_vrcqo"]
-[ext_resource type="Texture2D" uid="uid://dnlgeapuusb7p" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_racgb"]
+[ext_resource type="Texture2D" uid="uid://baqjlmdrk8ekf" path="res://Assets/UserInterface/UpdatedIcons/LevelSettings.png" id="14_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://dv8ahbp0q7e7m" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_racgb"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://cusuiuccep2n3" path="res://Scenes/LevelSettingsMenu.tscn" id="17_fnjh2"]
+[ext_resource type="FontFile" uid="uid://cwsqavv67tlux" path="res://Assets/Fonts/Inter/Inter_28pt-Bold.ttf" id="17_hh704"]
 [ext_resource type="Script" uid="uid://dennrhd1fmssd" path="res://Scripts/Universal/LevelScreenshot.gd" id="25_fnjh2"]
 [ext_resource type="Script" uid="uid://demhkcrctsljf" path="res://Scripts/Editor/IconManager.gd" id="26_vrcqo"]
 
@@ -391,19 +392,27 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
+theme_override_constants/separation = 15
 
 [node name="ZoomHintLabel" type="Label" parent="ScreenUI/MainColumn/ContentRow/MarginContainer/FooterHintsRow" unique_id=890252040]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("17_hh704")
 text = "Zoom In/Out [+ -/Scroll]"
-
-[node name="FooterSpacr" type="Control" parent="ScreenUI/MainColumn/ContentRow/MarginContainer/FooterHintsRow" unique_id=1801487145]
-custom_minimum_size = Vector2(20, 0)
-layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="PanHintLabel" type="Label" parent="ScreenUI/MainColumn/ContentRow/MarginContainer/FooterHintsRow" unique_id=1867169108]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("17_hh704")
 text = "Pan [WASD / MMB]"
+
+[node name="PanHintSpeedup" type="Label" parent="ScreenUI/MainColumn/ContentRow/MarginContainer/FooterHintsRow" unique_id=1798454232]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("17_hh704")
+text = "Fast Pan [Shift]"
+
+[node name="FullscreenHint" type="Label" parent="ScreenUI/MainColumn/ContentRow/MarginContainer/FooterHintsRow" unique_id=1373475812]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("17_hh704")
+text = "Fullscreen [F11]"
 
 [node name="PropertiesPanel" type="PanelContainer" parent="ScreenUI/MainColumn/ContentRow" unique_id=949999272]
 visible = false
@@ -451,6 +460,50 @@ grow_vertical = 1
 visible = false
 editorManager = NodePath("../..")
 mainTileMap = NodePath("../../Tiles")
+
+[node name="AssetManagerPanel" parent="CanvasLayer/AssetManager" index="0" unique_id=64344568]
+focus_behavior_recursive = 0
+
+[node name="QuestionButton" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/HBoxContainer" parent_id_path=PackedInt32Array(468653693, 586479525) index="2" unique_id=1503781909]
+tooltip_text = "The Asset Manager allows you to replace nearly every asset, animation, or sound from the Play scene. 
+
+Note that no matter the size of your assets, they will be resized to 128x128 pixels if they are not already."
+
+[node name="PrevFrameButton" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer" parent_id_path=PackedInt32Array(468653693, 1202222031) index="0" unique_id=51178185]
+tooltip_text = ""
+
+[node name="NextFrameButton" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer" parent_id_path=PackedInt32Array(468653693, 1202222031) index="1" unique_id=2054824461]
+tooltip_text = ""
+
+[node name="PrevAnimButton" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" parent_id_path=PackedInt32Array(468653693, 311396109) index="0" unique_id=1355417284]
+tooltip_text = ""
+
+[node name="NextAnimButton" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" parent_id_path=PackedInt32Array(468653693, 311396109) index="2" unique_id=71301328]
+tooltip_text = ""
+
+[node name="FPSValue" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(468653693, 91646301) index="1" unique_id=1524841534]
+tooltip_text = ""
+
+[node name="PauseButton" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(468653693, 91646301) index="2" unique_id=530867289]
+tooltip_text = ""
+
+[node name="PlayButton" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(468653693, 91646301) index="3" unique_id=1544968013]
+tooltip_text = ""
+
+[node name="StopButton" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(468653693, 91646301) index="4" unique_id=284005067]
+tooltip_text = ""
+
+[node name="AudioTimeline" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox" parent_id_path=PackedInt32Array(468653693, 574980595) index="1" unique_id=428290432]
+tooltip_text = ""
+
+[node name="PauseButton" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(468653693, 1727755463) index="0" unique_id=1090672809]
+tooltip_text = ""
+
+[node name="PlayButton" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(468653693, 1727755463) index="1" unique_id=1125072521]
+tooltip_text = ""
+
+[node name="StopButton" parent="CanvasLayer/AssetManager/AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer" parent_id_path=PackedInt32Array(468653693, 1727755463) index="2" unique_id=780017080]
+tooltip_text = ""
 
 [node name="LevelSettingsMenu" parent="CanvasLayer" unique_id=79213823 node_paths=PackedStringArray("editorManager") instance=ExtResource("17_fnjh2")]
 visible = false

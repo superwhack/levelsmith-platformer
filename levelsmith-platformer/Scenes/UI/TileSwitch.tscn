@@ -172,7 +172,6 @@ button_group = ExtResource("5_fdk17")
 thisItemID = 501
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
-isEntity = true
 entityName = "player"
 buttonType = 1
 
@@ -186,7 +185,6 @@ button_group = ExtResource("5_fdk17")
 thisItemID = 506
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
-isEntity = true
 entityName = "coin"
 buttonType = 1
 
@@ -200,7 +198,6 @@ button_group = ExtResource("5_fdk17")
 thisItemID = 502
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
-isEntity = true
 entityName = "patrollingEnemy"
 buttonType = 1
 
@@ -214,7 +211,6 @@ button_group = ExtResource("5_fdk17")
 thisItemID = 505
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
-isEntity = true
 entityName = "stationaryEnemy"
 buttonType = 1
 
@@ -228,7 +224,6 @@ button_group = ExtResource("5_fdk17")
 thisItemID = 503
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
-isEntity = true
 entityName = "shootingEnemy"
 buttonType = 1
 
@@ -242,7 +237,6 @@ button_group = ExtResource("5_fdk17")
 thisItemID = 504
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
-isEntity = true
 entityName = "flyingEnemy"
 buttonType = 1
 
@@ -256,7 +250,6 @@ button_group = ExtResource("5_fdk17")
 thisItemID = 507
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
-isEntity = true
 entityName = "movingPlatform"
 buttonType = 1
 
@@ -270,19 +263,17 @@ button_group = ExtResource("5_fdk17")
 thisItemID = 500
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
-isEntity = true
 entityName = "goal"
 buttonType = 1
 
 [node name="CheckpointButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=922654245 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Slope [8]"
+tooltip_text = "Checkpoint [9]"
 toggle_mode = true
 button_group = ExtResource("5_fdk17")
 thisItemID = 508
 tilebar = NodePath("../../../../..")
 isTextureUpdating = true
-isEntity = true
 entityName = "checkpoint"
 buttonType = 1
 

@@ -223,8 +223,8 @@ z_index = 5
 floor_block_on_wall = false
 floor_snap_length = 32.0
 script = ExtResource("1_kyqiw")
-raycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastDown2"), NodePath("RayCastUp"), NodePath("RayCastUp2"), NodePath("RayCastUp3"), NodePath("RayCastLeft2"), NodePath("RayCastLeft"), NodePath("RayCastLeft3"), NodePath("RayCastRight2"), NodePath("RayCastRight"), NodePath("RayCastRight3")]
-downwardsRaycasts = [NodePath("RayCastDown"), NodePath("RayCastDown3"), NodePath("RayCastDown2")]
+raycasts = [NodePath("RayCastDown"), NodePath("RayCastDown2"), NodePath("RayCastDown3"), NodePath("RayCastLeft"), NodePath("RayCastLeft2"), NodePath("RayCastLeft3"), NodePath("RayCastRight"), NodePath("RayCastRight2"), NodePath("RayCastRight3"), NodePath("RayCastUp"), NodePath("RayCastUp2"), NodePath("RayCastUp3")]
+downwardsRaycasts = [NodePath("RayCastDown"), NodePath("RayCastDown2"), NodePath("RayCastDown3")]
 sideRaycasts = [NodePath("RayCastRightWallJump"), NodePath("RayCastRightWallJump2"), NodePath("RayCastLeftWallJump"), NodePath("RayCastLeftWallJump2")]
 playerMovementPreset = ExtResource("2_agccv")
 enemyBounceCollision = NodePath("EnemyBounceCollision")
@@ -287,7 +287,9 @@ target_position = Vector2(-40, 0)
 [node name="RayCastLeft3" type="RayCast2D" parent="." unique_id=1158609575]
 position = Vector2(0, 64)
 scale = Vector2(1.1, 1.1)
+
 target_position = Vector2(-40, 0)
+
 
 [node name="RayCastRight" type="RayCast2D" parent="." unique_id=464775608]
 position = Vector2(0, -42.222225)
@@ -302,7 +304,9 @@ target_position = Vector2(40, 0)
 [node name="RayCastRight3" type="RayCast2D" parent="." unique_id=1866021346]
 position = Vector2(0, 64)
 scale = Vector2(1.1, 1.1)
+
 target_position = Vector2(40, 0)
+
 
 [node name="RayCastRightWallJump" type="RayCast2D" parent="." unique_id=1310844289]
 position = Vector2(0, -25)

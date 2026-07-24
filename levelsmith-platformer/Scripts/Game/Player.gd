@@ -263,6 +263,7 @@ func _physics_process(delta: float) -> void:
 								+ "\n tileName: %s" % tileName \
 								+ "\n friction: %f" % currentFriction \
 								+ "\n slowdown: %f" % currentSlowdown;
+
 		
 		debugLabel.position = Vector2( position.x - 240, position.y - 180 );
 		debugLabel.text = debugText;
@@ -764,6 +765,7 @@ func wall_jump():
 		
 	justWallJumped = true;
 
+
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
 	if (currentState == PlayerState.VICTORY || currentState == PlayerState.DEAD):
@@ -817,6 +819,10 @@ func detect_tiles() -> void:
 		if (wallJumpConditionsMet) :
 			if (tileName != "ice") :
 				currentFriction = 1.0;
+				
+		if (wallJumpConditionsMet) :
+			if (tileName == "ice") :
+				currentFriction = iceFriction;
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):

@@ -41,7 +41,7 @@ If you download it manually, all you have to do is extract the executable/applic
 
 If you're new to Foundry2D, the best place to begin is the tutorial, which explains the functionality of our tool in greater detail. This will also help explain how to install the software to your computer.
 
-**Tutorial:** [Right Here!](https://github.com/superwhack/levelsmith-platformer/wiki/Getting-Started-&-Tutorial)
+> **[Getting Started & Tutorial](https://github.com/superwhack/levelsmith-platformer/wiki/Getting-Started-&-Tutorial)**
 
 
 ## Contributing

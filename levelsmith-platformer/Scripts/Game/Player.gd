@@ -127,9 +127,6 @@ var victory : bool = false;
 
 var debugLabel: Label;
 
-# For weird slope collision handling
-var shapeCastCheck : bool;
-
 # CONSTANTS
 
 const TRUE_SPEED_BASE : int = 400;
@@ -758,9 +755,7 @@ func detect_tiles() -> void:
 	for raycast in raycasts:
 		if (raycast.is_colliding()):
 			slideCollisions.push_back(raycast);
-	
-	shapeCastCheck = slideCollisions.size() <= 2;
-	
+		
 	for raycast in slideCollisions:
 		var collider : Object = raycast.get_collider();
 		# Moving platform (It's not on the tilemap but still works like a solid tile)
@@ -788,20 +783,20 @@ func detect_tiles() -> void:
 		slideCollisionsHit.push_back(tileData);
 		tileName = tileData.get_custom_data("name");
 		var rayDirection : Vector2 = raycast.target_position;
+		shapeCast.global_position = probeLocal;
+		shapeCast.force_shapecast_update();
 		
-		if (shapeCastCheck):
-			shapeCast.global_position = probeLocal;
-			shapeCast.force_shapecast_update();
-			
-			for i in range(shapeCast.get_collision_count()):
-				var collidedObject = shapeCast.get_collider(i);
-				if (collidedObject == tileLayer):
-					var hitGlobalShape : Vector2 = shapeCast.get_collision_point(i)
-					var hitNormalShape : Vector2 = shapeCast.get_collision_normal(i);
-					var probeGlobalShape : Vector2 = hitGlobalShape - hitNormalShape * 0.5;
-					var probeLocalShape : Vector2 = tileLayer.to_local(probeGlobalShape);
-					var tilePosShape : Vector2i = tileLayer.local_to_map(probeLocalShape);
-					var tileDataShape : TileData = tileLayer.get_cell_tile_data(tilePosShape);
+		# Check collisions by the collision point, if theres multiple tiles in a small area, don't continue the logic
+		for i in range(shapeCast.get_collision_count()):
+			var collidedObject = shapeCast.get_collider(i);
+			if (collidedObject == tileLayer):
+				var hitGlobalShape : Vector2 = shapeCast.get_collision_point(i)
+				var hitNormalShape : Vector2 = shapeCast.get_collision_normal(i);
+				var probeGlobalShape : Vector2 = hitGlobalShape - hitNormalShape * 0.5;
+				var probeLocalShape : Vector2 = tileLayer.to_local(probeGlobalShape);
+				var tilePosShape : Vector2i = tileLayer.local_to_map(probeLocalShape);
+				var tileDataShape : TileData = tileLayer.get_cell_tile_data(tilePosShape);
+				if (tileDataShape):
 					var newTileName : String = tileDataShape.get_custom_data("name");
 					if (newTileName != tileName):
 						return;

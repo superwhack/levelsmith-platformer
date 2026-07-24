@@ -48,7 +48,8 @@ func _process(_delta : float) -> void:
 			
 		##if the property menu is open do not show the foreground background icon 
 		var propertyOpen : bool = propertyMenu.selectedEntity != null;
-		if propertyOpen:
+		
+		if (propertyOpen):
 			previewIcon.hide();
 		else:
 			previewIcon.show();

@@ -93,7 +93,7 @@ theme_override_font_sizes/normal_font_size = 39
 bbcode_enabled = true
 text = "We greatly appreciate you checking out the web version of our application! 
 
-Unfortunately, due to some constraints with the virtual file system included with Itch.io, certain features such as importing levels and modifying assets are unavailable. Thus, we recommend that you either download the full application from further down this page, or from our [url=https://store.steampowered.com/app/1184370/Pathfinder_Wrath_of_the_Righteous__Enhanced_Edition/]Steam page[/url]."
+Unfortunately, due to some constraints with the virtual file system included with Itch.io, certain features such as importing levels and modifying assets are unavailable. Thus, we recommend that you either download the full application from further down this page, or from our [url=https://levelsmith-labs.itch.io/foundry2d]Steam page[/url]."
 fit_content = true
 horizontal_alignment = 1
 

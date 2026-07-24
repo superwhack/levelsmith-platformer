@@ -103,6 +103,12 @@ var bounceTileHeight : float = 1.0;
 var iceFriction : float = 0.5;
 var iceAccelerationFactor : float = .2;
 
+var bounceSfxTimer : float = 0.08;
+var bounceSfxTimerLeft : float = 0.0;
+
+var jumpBufferTimer : float = 0.09;
+var jumpBufferTimerLeft : float = 0.0;
+
 var isPlayerGrounded : bool = true;
 
 var tileName : String = "null";
@@ -119,13 +125,14 @@ var enemiesInside : Array[Node2D];
 # Animation logic
 @export var animatedSprites : AnimatedSprite2D;
 @onready var jumpTimer : Timer = Timer.new();
+
 var isJumping : bool = false;
 var jumpAnimStarted : bool = false;
 var fallAnimStarted : bool = false;
 
 var victory : bool = false;
 
-var debugLabel: Label;
+#var debugLabel: Label;
 
 var forceQuit : bool;
 
@@ -146,7 +153,7 @@ const ACCELERATION_FRICTION_CLAMPER : float = .75;
 
 # Wall jump forces
 const WALL_JUMP_FORCE_X : int = 1200;
-const WALL_JUMP_FORCE_Y : int = 375;
+const WALL_JUMP_FORCE_Y : int = 190;
 const WALL_JUMP_GROUND_MIN : float = 1.5;
 const WALL_JUMP_SPEED_EXPONENT_X : float = 0.8;
 const WALL_JUMP_SPEED_EXPONENT_Y : float = 0.35;
@@ -179,9 +186,9 @@ func _ready() -> void:
 	#for animationName in animatedSprites.sprite_frames.get_animation_names():
 		#AnimationManager.replace_animation_by_name(animatedSprites, animationName);
 	
-	if (OS.is_debug_build()):
-		debugLabel = Label.new();
-		get_tree().current_scene.add_child(debugLabel);
+	#if (OS.is_debug_build()):
+		#debugLabel = Label.new();
+		#get_tree().current_scene.add_child(debugLabel);
 	
 	animatedSprites.sprite_frames = AnimationManager.playerTemplateSprite.sprite_frames;
 	
@@ -194,11 +201,18 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
+	
 	if (check_out_of_bounds() || victory):
 		return;
 		
+	bounceSfxTimerLeft -= delta;
+	jumpBufferTimerLeft -= delta;
+	
+	if (Input.is_action_just_pressed("jump")):
+		jumpBufferTimerLeft = jumpBufferTimer;
+	
 	# Register player inputs
-	jumpInput = Input.is_action_just_pressed("jump");
+	jumpInput = jumpBufferTimerLeft > 0;
 	jumpInputReleased = Input.is_action_just_released("jump");
 	jumpInputHeld = Input.is_action_pressed("jump");
 	leftInput = Input.is_action_pressed("left");
@@ -240,21 +254,21 @@ func _physics_process(delta: float) -> void:
 		walk();
 		move_and_slide();
 		AudioManager.play_effect_walking(currentWalkingEffect);
-	if (OS.is_debug_build()):
-		var debugText : String = "state: %s" % currentState \
-								+ "\n coyote: %s" % isCoyoteActive \
-								+ "\n invul: %f" % invulnerabilityCurrent \
-								+ "\n wallJumpDir: %s" % wallJumpDirection \
-								+ "\n wallJumpCount: %s" % wallJumpCount \
-								+ "\n velocity.x: %f" % velocity.x \
-								+ "\n wallSlideConditions: %s" % wallSlideConditionsMet \
-								+ "\n isGrounded: %s" % isPlayerGrounded \
-								+ "\n justWallJumped: %s" % justWallJumped \
-								+ "\n tileName: %s" % tileName \
-								+ "\n friction: %f" % currentFriction;
-		
-		debugLabel.position = Vector2( position.x - 240, position.y - 180 );
-		debugLabel.text = debugText;
+	#if (OS.is_debug_build()):
+		#var debugText : String = "state: %s" % currentState \
+								#+ "\n coyote: %s" % isCoyoteActive \
+								#+ "\n invul: %f" % invulnerabilityCurrent \
+								#+ "\n wallJumpDir: %s" % wallJumpDirection \
+								#+ "\n wallJumpCount: %s" % wallJumpCount \
+								#+ "\n velocity.x: %f" % velocity.x \
+								#+ "\n wallSlideConditions: %s" % wallSlideConditionsMet \
+								#+ "\n isGrounded: %s" % isPlayerGrounded \
+								#+ "\n justWallJumped: %s" % justWallJumped \
+								#+ "\n tileName: %s" % tileName \
+								#+ "\n friction: %f" % currentFriction;
+		#
+		#debugLabel.position = Vector2( position.x - 240, position.y - 180 );
+		#debugLabel.text = debugText;
 
 
 ## Handle all state switch & player logic 
@@ -279,10 +293,10 @@ func apply_state_logic(delta: float) :
 			wallJumpDirection = WallDirection.NONE;
 
 			if ( isPlayerGrounded ) :
-				if ( moveInput && groundSpeed != 0 ) :
-					set_state( PlayerState.RUNNING );
-				elif ( jumpInput ) :
+				if ( jumpInput ) :
 					set_state( PlayerState.JUMPING );
+				elif ( moveInput && groundSpeed != 0 ) :
+					set_state( PlayerState.RUNNING );
 			else :
 				set_state( PlayerState.FALLING );
 
@@ -290,10 +304,10 @@ func apply_state_logic(delta: float) :
 		PlayerState.RUNNING:
 			wallJumpDirection = WallDirection.NONE;
 			if ( isPlayerGrounded ) :
-				if ( !moveInput ) : 
-					set_state( PlayerState.GROUNDED );
-				elif ( jumpInput ) :
+				if ( jumpInput ) :
 					set_state( PlayerState.JUMPING );
+				elif ( !moveInput ) : 
+					set_state( PlayerState.GROUNDED );
 			else :
 				set_state( PlayerState.FALLING );
 	
@@ -426,12 +440,14 @@ func set_state(state : PlayerState, function : Callable = Callable()) -> void:
 			jumpInput = false;
 			coyoteTimeLeft = 0.0;
 			jump();
+			jumpBufferTimerLeft = 0.0;
 			AudioManager.play_effect("Jump");
 			animatedSprites.play("PlayerJump");
 			currentState = PlayerState.JUMPING;
 			
 		PlayerState.WALL_JUMPING:
 			wall_jump();
+			jumpBufferTimerLeft = 0.0;
 			if (wallJumpDirection == WallDirection.RIGHT): 
 				animatedSprites.flip_h = false;
 			elif (wallJumpDirection == WallDirection.LEFT): 
@@ -454,7 +470,9 @@ func set_state(state : PlayerState, function : Callable = Callable()) -> void:
 			currentState = PlayerState.SLIDING;
 			
 		PlayerState.TILE_EFFECT_BOUNCE:
-			AudioManager.play_effect("BounceTile");
+			if (bounceSfxTimerLeft <= 0.0) :
+				AudioManager.play_effect("BounceTile");
+				bounceSfxTimerLeft = bounceSfxTimer;
 			animatedSprites.play("PlayerJump");
 			currentState = PlayerState.JUMPING;
 			
@@ -733,14 +751,25 @@ func wall_jump():
 		velocity.x *= currentFriction;
 	if airControl != 1:
 		velocity.x *= pow(airControl, WALL_JUMP_AIR_CONTROL_POWER);
-	velocity.y = -WALL_JUMP_FORCE_Y * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(clamp(groundSpeed, WALL_JUMP_Y_GROUND_MIN, WALL_JUMP_Y_GROUND_MAX), WALL_JUMP_SPEED_EXPONENT_Y);
+	var combinedWallJumpHeightMax = 7.5;
+	var wallJumpHeight = jumpHeight + wallJumpStrength/1.15;
+	if ( wallJumpHeight > combinedWallJumpHeightMax ) :
+		wallJumpHeight = combinedWallJumpHeightMax ;
+	velocity.y = -WALL_JUMP_FORCE_Y * wallJumpHeight * sqrt(1.0 / wallJumpCount) * sqrt(fallSpeed) / pow(clamp(groundSpeed, WALL_JUMP_Y_GROUND_MIN, WALL_JUMP_Y_GROUND_MAX), WALL_JUMP_SPEED_EXPONENT_Y);
 	
 	# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)
 	if (tileName == "slow" || tileName == "ice"):
 		velocity.x /= SLOW_ICE_SLIDE_JUMP_X;
-	
-	if (tileName == "slow") :
+		
+	if (tileName == "ice"):
+		currentFriction = iceFriction;
+		
+	if (tileName == "slow"):
 		velocity.y /= SLOW_WALL_JUMP_Y;
+	
+	if (tileName == "solid"):
+		currentFriction = 1.0;
+		currentSlowdown = 1.0;
 		
 	justWallJumped = true;
 
@@ -808,12 +837,12 @@ func detect_tiles() -> void:
 		if (wallSlideConditionsMet && groundSpeed != 0 ):
 			if (tileName != "ice" && tileName != "oneway"):
 				velocity.y *= WALL_SLIDE_SLOWDOWN;
-			if tileName != "slow":
-				currentSlowdown = 1.0;
+			elif (tileName == "ice") :
+				currentFriction = iceFriction;
 				
 		if (wallJumpConditionsMet) :
-			if (tileName == "ice") :
-				currentFriction = iceFriction;
+			if (tileName != "ice") :
+				currentFriction = 1.0;
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):
@@ -827,7 +856,7 @@ func detect_tiles() -> void:
 					velocity.x = BOUNCE_BASE_X * bounceTileHeight;
 				else:
 					velocity.x = -BOUNCE_BASE_X * bounceTileHeight;
-				if (jumpInput) :
+				if (jumpInputHeld) :
 					velocity.y = -BOUNCE_BASE_Y_SIDE * bounceTileHeight;
 			# Vertical bounces
 			else:

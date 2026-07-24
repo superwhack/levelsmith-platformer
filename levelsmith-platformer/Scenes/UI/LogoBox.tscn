@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://xr5wkr0v56pj"]
 
 [ext_resource type="Script" uid="uid://dpprqh8s67gpa" path="res://Scripts/LogoBox.gd" id="1_0qnem"]
-[ext_resource type="Texture2D" uid="uid://qlan3tb5ohe6" path="res://Assets/UserInterface/Buttons/ButtonIcons/SteamWhiteIcon.png" id="2_0qnem"]
-[ext_resource type="Texture2D" uid="uid://coqup5uhwog15" path="res://Assets/UserInterface/Buttons/ButtonIcons/ItchWhiteIcon.png" id="3_hiiqq"]
-[ext_resource type="Texture2D" uid="uid://ddjuijrnpu0pi" path="res://Assets/UserInterface/Buttons/ButtonIcons/WebsiteWhiteIcon.png" id="4_21v60"]
-[ext_resource type="Texture2D" uid="uid://daw1tc0v7boga" path="res://Assets/UserInterface/Buttons/ButtonIcons/GithubWhiteIcon.png" id="5_jdvcl"]
+[ext_resource type="Texture2D" uid="uid://dl27nb1ict8uj" path="res://Assets/UserInterface/Buttons/ButtonIcons/SteamWhiteIcon.png" id="2_0qnem"]
+[ext_resource type="Texture2D" uid="uid://bpfqn470gsnnt" path="res://Assets/UserInterface/Buttons/ButtonIcons/ItchWhiteIcon.png" id="3_hiiqq"]
+[ext_resource type="Texture2D" uid="uid://deiv2yi6nvesk" path="res://Assets/UserInterface/Buttons/ButtonIcons/WebsiteWhiteIcon.png" id="4_21v60"]
+[ext_resource type="Texture2D" uid="uid://dj7coc1jtnrbh" path="res://Assets/UserInterface/Buttons/ButtonIcons/GithubWhiteIcon.png" id="5_jdvcl"]
 
 [node name="LogoContainer" type="VBoxContainer" unique_id=276867774 node_paths=PackedStringArray("steamButton", "itchButton", "websiteButton", "githubButton")]
 offset_right = 232.0

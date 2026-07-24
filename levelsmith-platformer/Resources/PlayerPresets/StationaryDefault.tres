@@ -1,8 +1,7 @@
 [gd_resource type="Resource" script_class="StationaryPreset" format=3 uid="uid://bta2c43k7h4iy"]
 
-[ext_resource type="Script" uid="uid://6tvktbvr17iv" path="res://Scripts/Editor/Properties/StationaryPreset.gd" id="1_m4lcv"]
+[ext_resource type="Script" uid="uid://cv2iquu0ghkbh" path="res://Scripts/Editor/Properties/StationaryPreset.gd" id="1_m4lcv"]
 
 [resource]
 script = ExtResource("1_m4lcv")
 isFacingRight = true
-gravityEnabled = true

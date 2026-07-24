@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://1wme1ton08gv"]
 
 [ext_resource type="Script" uid="uid://cplua8142i8c3" path="res://Scripts/Game/Goal.gd" id="1_vs13i"]
-[ext_resource type="Texture2D" uid="uid://rdd7x7a0sxqh" path="res://Assets/Sprites/Entities/Goal/GoalAnimation/1.png" id="2_vs13i"]
+[ext_resource type="Texture2D" uid="uid://8poeojoj6cga" path="res://Assets/Sprites/Entities/Goal/GoalAnimation/1.png" id="2_vs13i"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ogq8d"]
 animations = [{

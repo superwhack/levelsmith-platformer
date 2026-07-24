@@ -3,8 +3,8 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_02c1u"]
 [ext_resource type="Script" uid="uid://no4fqovbkfha" path="res://Scripts/GlobalSettingsManager.gd" id="2_5bsrg"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_w0xpy"]
-[ext_resource type="Texture2D" uid="uid://dcqejjlkpcphp" path="res://Assets/UserInterface/Buttons/ButtonIcons/ResetIcon.png" id="4_aixuf"]
-[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_bpp5a"]
+[ext_resource type="Texture2D" uid="uid://diyyolhbdvrkh" path="res://Assets/UserInterface/Buttons/ButtonIcons/ResetIcon.png" id="4_aixuf"]
+[ext_resource type="Texture2D" uid="uid://b68udivkcp3yg" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_bpp5a"]
 [ext_resource type="PackedScene" uid="uid://d4nqq7rlhq0q8" path="res://Scenes/UI/SettingsMenuSlider.tscn" id="5_aixuf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]

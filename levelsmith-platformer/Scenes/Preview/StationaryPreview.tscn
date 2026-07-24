@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://m70cp4yn5bd1"]
 
-[ext_resource type="Texture2D" uid="uid://c26vhixuu7u7m" path="res://Assets/Sprites/Entities/eviljumo.png" id="1_dg4ca"]
+[ext_resource type="Texture2D" uid="uid://oo860pbvklhg" path="res://Assets/Sprites/Entities/eviljumo.png" id="1_dg4ca"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dhqy0"]
 

@@ -3,11 +3,11 @@
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_5p6s6"]
 [ext_resource type="Script" uid="uid://cwqko58a2l34m" path="res://Scripts/LevelSettingsManager.gd" id="2_b3nvf"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="3_xthqe"]
-[ext_resource type="Texture2D" uid="uid://dcqejjlkpcphp" path="res://Assets/UserInterface/Buttons/ButtonIcons/ResetIcon.png" id="4_bq73s"]
-[ext_resource type="Texture2D" uid="uid://s02psm7peb0g" path="res://Assets/UserInterface/Buttons/CloseX.png" id="5_8xvpl"]
+[ext_resource type="Texture2D" uid="uid://diyyolhbdvrkh" path="res://Assets/UserInterface/Buttons/ButtonIcons/ResetIcon.png" id="4_bq73s"]
+[ext_resource type="Texture2D" uid="uid://b68udivkcp3yg" path="res://Assets/UserInterface/Buttons/CloseX.png" id="5_8xvpl"]
 [ext_resource type="PackedScene" uid="uid://d4nqq7rlhq0q8" path="res://Scenes/UI/SettingsMenuSlider.tscn" id="6_msgve"]
 [ext_resource type="PackedScene" uid="uid://d2vwie50ncny6" path="res://Scenes/UI/PropertyToggle.tscn" id="8_mi7bj"]
-[ext_resource type="FontFile" uid="uid://dbkfb2swhokjo" path="res://Assets/Fonts/JetBrainsMono-Regular.ttf" id="9_64ysq"]
+[ext_resource type="FontFile" uid="uid://w1656aobwuai" path="res://Assets/Fonts/JetBrainsMono-Regular.ttf" id="9_64ysq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 

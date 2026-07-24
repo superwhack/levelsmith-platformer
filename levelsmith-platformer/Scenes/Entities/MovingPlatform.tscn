@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://b6axoaekmjyr4"]
 
 [ext_resource type="Script" uid="uid://dvbnlxepvikk0" path="res://Scripts/Game/MovingPlatform.gd" id="1_it7tw"]
-[ext_resource type="Texture2D" uid="uid://0o8pa72fgxqb" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
+[ext_resource type="Texture2D" uid="uid://mkmv5xjwgx1o" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_it7tw"]
 [ext_resource type="PackedScene" uid="uid://bpq5curyo7xhv" path="res://Scenes/Preview/PreviewLine.tscn" id="2_v67sg"]
-[ext_resource type="Texture2D" uid="uid://dy7tdy3mjcigo" path="res://Assets/Sprites/Entities/MovingPlatform/PlatformAnimation/1.png" id="3_v67sg"]
+[ext_resource type="Texture2D" uid="uid://sxy2h587qijb" path="res://Assets/Sprites/Entities/MovingPlatform/PlatformAnimation/1.png" id="3_v67sg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hvxo"]
 

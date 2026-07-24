@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://bgy7bisua1v0q"]
 
 [ext_resource type="Script" uid="uid://d4f5foch5t1wj" path="res://Scripts/Game/Checkpoint.gd" id="1_r2h6u"]
-[ext_resource type="Texture2D" uid="uid://c0hd1afc8v8o7" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointInactive/1.png" id="1_uoa2o"]
-[ext_resource type="Texture2D" uid="uid://cbgaacvmg5f6g" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointActive/1.png" id="2_pxw8a"]
-[ext_resource type="Texture2D" uid="uid://ccn1f7wafks5i" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointCollected/1.png" id="3_eilgd"]
-[ext_resource type="Texture2D" uid="uid://bqpkghjd8okoy" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointCollected/2.png" id="4_2lwj2"]
+[ext_resource type="Texture2D" uid="uid://blmbfcitrxiqy" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointInactive/1.png" id="1_uoa2o"]
+[ext_resource type="Texture2D" uid="uid://d1xhttu3x8qcf" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointActive/1.png" id="2_pxw8a"]
+[ext_resource type="Texture2D" uid="uid://drweituff0ww3" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointCollected/1.png" id="3_eilgd"]
+[ext_resource type="Texture2D" uid="uid://cxoeemvqp4p2q" path="res://Assets/Sprites/Entities/Checkpoint/CheckpointCollected/2.png" id="4_2lwj2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_km8ha"]
 animations = [{

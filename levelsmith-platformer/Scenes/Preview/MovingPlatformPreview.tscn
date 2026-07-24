@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bpnflie3xuof8"]
 
-[ext_resource type="Texture2D" uid="uid://dxh785xsh6w2x" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_8r6c7"]
+[ext_resource type="Texture2D" uid="uid://mkmv5xjwgx1o" path="res://Assets/Sprites/Entities/MovingPlatform.png" id="2_8r6c7"]
 
 [node name="MovingPlatformPreview" type="Sprite2D" unique_id=1448345143]
 texture = ExtResource("2_8r6c7")

@@ -99,6 +99,7 @@ func full_restart() -> void:
 	playerCheckpointPosition = Vector2(-1, -1);
 	pausable = false;
 	await reset();
+	
 
 ## The first function that runs when the game starts, this makes sure the logic regarding the newly spawned in player is wired correctly
 func start() -> void:
@@ -184,7 +185,7 @@ func _ready() -> void:
 	Global.complete.connect(level_complete);
 	Global.checkpointCollected.connect(collect_checkpoint);
 	Global.onCoinCollected.connect(_on_coin_collected);
-	resetButton.pressed.connect(full_restart);
+	resetButton.button_up.connect(full_restart);
 	resetButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	pauseButton.pressed.connect(pause);
 	resumeButton.pressed.connect(pause);
@@ -198,6 +199,14 @@ func _process(delta: float) -> void:
 	if timerRunning:
 		testingTime += delta;
 		update_timer(timerLabel);
+
+		
+func _unhandled_input(event: InputEvent) -> void:
+	# Sets us into edit mode
+	if (event.is_action_pressed("enter")):
+		if(masterManager.state == Global.State.PLAY):
+			masterManager.edit();
+			return;
 
 ## Increase coin count and update its UI on coin collection
 func _on_coin_collected() -> void:
@@ -266,6 +275,7 @@ func replay_level() -> void:
 	get_tree().paused = false;
 	winScreen.hide();
 	full_restart();
+	
 
 ## When global goal signal is emitted, disable the timer and hide the UI
 func goal_reached() -> void:

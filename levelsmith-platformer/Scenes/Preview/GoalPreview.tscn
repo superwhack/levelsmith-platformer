@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c0lnvjeoj8xif"]
 
-[ext_resource type="Texture2D" uid="uid://celyeaicjebtq" path="res://Assets/Defaults/Assets/Sprites/Entities/Goal.png" id="1_7aylk"]
+[ext_resource type="Texture2D" uid="uid://c76vxkewb7lc4" path="res://Assets/Defaults/Assets/Sprites/Entities/Goal.png" id="1_7aylk"]
 
 [node name="GoalSprite" type="Sprite2D" unique_id=1093505444]
 texture = ExtResource("1_7aylk")

@@ -4,13 +4,13 @@
 [ext_resource type="Script" uid="uid://37gal4ph3my5" path="res://Scripts/MainMenuManager.gd" id="2_hlc3j"]
 [ext_resource type="PackedScene" uid="uid://ooleujet3lhf" path="res://Scenes/UI/LevelListBox.tscn" id="3_fe37b"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="4_ml86l"]
-[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_fiuc2"]
+[ext_resource type="Texture2D" uid="uid://bguub3y2mkgwv" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="5_fiuc2"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="6_eweeh"]
 [ext_resource type="StyleBox" uid="uid://dfo8xpb5cue1f" path="res://Resources/UIStyles/DividerStyle.tres" id="7_2lpb5"]
-[ext_resource type="FontFile" uid="uid://dxo1omlcs0lif" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="8_hlc3j"]
-[ext_resource type="Texture2D" uid="uid://caw5vfrla8ry1" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="8_mnjch"]
-[ext_resource type="Texture2D" uid="uid://cn52j7r73ygot" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="9_6ymy4"]
-[ext_resource type="Texture2D" uid="uid://5qon1fxclb4n" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="10_s456h"]
+[ext_resource type="FontFile" uid="uid://3kn4gprbeda" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="8_hlc3j"]
+[ext_resource type="Texture2D" uid="uid://d3gp7fpcv4n85" path="res://Assets/UserInterface/Buttons/FilePathButton-Normal (1).png" id="8_mnjch"]
+[ext_resource type="Texture2D" uid="uid://2a66nrkq1cy1" path="res://Assets/UserInterface/Buttons/FilePathButton-Pressed.png" id="9_6ymy4"]
+[ext_resource type="Texture2D" uid="uid://c31fpf8moxalt" path="res://Assets/UserInterface/Buttons/FilePathButton-Hover.png" id="10_s456h"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -50,7 +50,7 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 corner_detail = 10
 
-[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelCancel", "buttonImportLevelOpen", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "fileExplorer", "levelList")]
+[node name="MainMenu" type="Control" unique_id=422065839 node_paths=PackedStringArray("buttonNewLevel", "buttonImportLevel", "buttonLoadExample", "buttonQuit", "overlayNewLevel", "overlayImportLevel", "buttonNewLevelCreate", "buttonNewLevelCancel", "fieldNewLevelName", "spinBoxNewLevelX", "spinBoxNewLevelY", "invalidWarning", "emptyWarning", "buttonImportLevelOpen", "buttonImportLevelCancel", "buttonImportLevelBrowse", "fieldImportLevelPath", "badImportWarning", "badImportBody", "fileExplorer", "levelList")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,8 +72,8 @@ spinBoxNewLevelX = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/
 spinBoxNewLevelY = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/GridRowY/YSpinBox")
 invalidWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/InvalidWarning")
 emptyWarning = NodePath("NewLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/EmptyWarning")
-buttonImportLevelCancel = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/CancelButton")
 buttonImportLevelOpen = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/OpenButton")
+buttonImportLevelCancel = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/ActionsRow/CancelButton")
 buttonImportLevelBrowse = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/BrowseButton")
 fieldImportLevelPath = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/FormMargin/FilePathRow/FilePathInput")
 badImportWarning = NodePath("ImportLevelOverlay/SafeArea/OverlayCard/OverlayMargin/OverlayVBox/FormVBox/BadImportWarning")

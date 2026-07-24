@@ -2,16 +2,15 @@
 
 [ext_resource type="Script" uid="uid://8q4evvrox3yi" path="res://Scripts/Game/GameManager.gd" id="1_habuo"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="2_ym18m"]
-[ext_resource type="Texture2D" uid="uid://bjy6wvka1neg8" path="res://Assets/UserInterface/UpdatedIcons/solar--restart-broken.png" id="3_2riqt"]
-[ext_resource type="Texture2D" uid="uid://b8oh8bg85bfsn" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="4_2riqt"]
-[ext_resource type="Texture2D" uid="uid://dteaut1qlgfl" path="res://Assets/UserInterface/UpdatedIcons/mi--pause.png" id="5_j23bb"]
+[ext_resource type="Texture2D" uid="uid://g0robwvtn7od" path="res://Assets/UserInterface/UpdatedIcons/solar--restart-broken.png" id="3_2riqt"]
+[ext_resource type="Texture2D" uid="uid://yu2ukie5a6cg" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="4_2riqt"]
+[ext_resource type="Texture2D" uid="uid://d3av07q8mayof" path="res://Assets/UserInterface/UpdatedIcons/mi--pause.png" id="5_j23bb"]
 [ext_resource type="PackedScene" uid="uid://p2gafyxbmxfn" path="res://Scenes/UI/PlayerHealthUI.tscn" id="6_x53pn"]
 [ext_resource type="Script" uid="uid://chwsft6f3voqn" path="res://Scripts/Game/PauseScreen.gd" id="6_ym18m"]
-[ext_resource type="Texture2D" uid="uid://caho6aaptq3e1" path="res://Assets/UserInterface/mdi--heart.png" id="7_2riqt"]
-[ext_resource type="Texture2D" uid="uid://c8anit2m0chlt" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
+[ext_resource type="Texture2D" uid="uid://crhvxgvxhk5bb" path="res://Assets/UserInterface/Union.png" id="7_4pdbi"]
 [ext_resource type="PackedScene" uid="uid://cmpj0a4yqf4gu" path="res://Scenes/UI/WinScreen.tscn" id="8_4i4ea"]
-[ext_resource type="Texture2D" uid="uid://cerg25kv03gd3" path="res://Assets/UserInterface/tabler--heart.png" id="8_qxglv"]
-[ext_resource type="Texture2D" uid="uid://dbi7jwb54bdi5" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--resume-rounded.png" id="11_bwgen"]
+[ext_resource type="FontFile" uid="uid://cwsqavv67tlux" path="res://Assets/Fonts/Inter/Inter_28pt-Bold.ttf" id="8_4pdbi"]
+[ext_resource type="Texture2D" uid="uid://ipowissgj35x" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--resume-rounded.png" id="11_bwgen"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2riqt"]
 
@@ -68,10 +67,12 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 8
 tooltip_text = "Reset"
+focus_mode = 0
 focus_behavior_recursive = 1
 theme = ExtResource("2_ym18m")
 theme_override_constants/icon_max_width = 50
 action_mode = 0
+keep_pressed_outside = true
 icon_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ResetButton" unique_id=1351322610]
@@ -184,8 +185,6 @@ layout_mode = 2
 [node name="PlayerHealthUi" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=621394887 instance=ExtResource("6_x53pn")]
 custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
-full_heart_texture = ExtResource("7_2riqt")
-empty_heart_texture = ExtResource("8_qxglv")
 
 [node name="PlayUISpacer" type="Control" parent="CanvasLayer/BottomScreenGroup/TopLeftMargin/HBoxContainer" unique_id=79976120]
 custom_minimum_size = Vector2(10, 0)
@@ -281,6 +280,7 @@ theme_override_constants/margin_left = 20
 [node name="ControlsLabel" type="Label" parent="CanvasLayer/BottomScreenGroup/BottomLeftMargin" unique_id=1113873687]
 layout_mode = 2
 theme = ExtResource("2_ym18m")
+theme_override_fonts/font = ExtResource("8_4pdbi")
 theme_override_font_sizes/font_size = 16
 text = "Move [WASD / Arrow Keys]	     Jump [Space]"
 

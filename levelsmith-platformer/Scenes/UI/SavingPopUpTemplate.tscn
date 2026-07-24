@@ -21,7 +21,7 @@ corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 corner_detail = 10
 
-[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "separator", "separator2", "closeButton", "resetButton", "panelContainer2")]
+[node name="PopUpBackground" type="Panel" unique_id=1027997759 node_paths=PackedStringArray("title", "bodyText", "separator", "separator2", "panelContainer2")]
 process_mode = 3
 self_modulate = Color(0.3764706, 0.3764706, 0.3764706, 0.4862745)
 anchors_preset = 15
@@ -38,8 +38,6 @@ title = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Tit
 bodyText = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer2/MarginContainer/Body")
 separator = NodePath("PanelContainer/MarginContainer/VBoxContainer/HSeparator")
 separator2 = NodePath("PanelContainer/MarginContainer/VBoxContainer/HSeparator2")
-closeButton = NodePath("")
-resetButton = NodePath("")
 panelContainer2 = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer/PanelContainer2")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=240708855]

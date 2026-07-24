@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b1he4q1q33j0e"]
 
 [ext_resource type="Script" uid="uid://crkrncfit0mdk" path="res://Scripts/Game/Coin.gd" id="1_nsiks"]
-[ext_resource type="Texture2D" uid="uid://b2ylsot60hjxd" path="res://Assets/Sprites/Entities/Coin/CoinAnimation/1.png" id="2_nsiks"]
+[ext_resource type="Texture2D" uid="uid://deu2cqoi3aov2" path="res://Assets/Sprites/Entities/Coin/CoinAnimation/1.png" id="2_nsiks"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ogq8d"]
 animations = [{

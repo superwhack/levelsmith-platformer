@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bl34k1jvcme78"]
 
-[ext_resource type="Texture2D" uid="uid://dxv2aa1ba656r" path="res://Assets/Sprites/Entities/Flying.png" id="1_vc2xk"]
+[ext_resource type="Texture2D" uid="uid://cc3a2o6o3ufr" path="res://Assets/Sprites/Entities/Flying.png" id="1_vc2xk"]
 
 [node name="Sprite2D" type="Sprite2D" unique_id=1656018661]
 scale = Vector2(0.66, 0.66)

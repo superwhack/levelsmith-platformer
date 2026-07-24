@@ -103,6 +103,12 @@ var bounceTileHeight : float = 1.0;
 var iceFriction : float = 0.5;
 var iceAccelerationFactor : float = .2;
 
+var bounceSfxTimer : float = 0.08;
+var bounceSfxTimerLeft : float = 0.0;
+
+var jumpBufferTimer : float = 0.05;
+var jumpBufferTimerLeft : float = 0.0;
+
 var isPlayerGrounded : bool = true;
 
 var tileName : String = "null";
@@ -119,13 +125,14 @@ var enemiesInside : Array[Node2D];
 # Animation logic
 @export var animatedSprites : AnimatedSprite2D;
 @onready var jumpTimer : Timer = Timer.new();
+
 var isJumping : bool = false;
 var jumpAnimStarted : bool = false;
 var fallAnimStarted : bool = false;
 
 var victory : bool = false;
 
-var debugLabel: Label;
+#var debugLabel: Label;
 
 # CONSTANTS
 
@@ -177,9 +184,9 @@ func _ready() -> void:
 	#for animationName in animatedSprites.sprite_frames.get_animation_names():
 		#AnimationManager.replace_animation_by_name(animatedSprites, animationName);
 	
-	if (OS.is_debug_build()):
-		debugLabel = Label.new();
-		get_tree().current_scene.add_child(debugLabel);
+	#if (OS.is_debug_build()):
+		#debugLabel = Label.new();
+		#get_tree().current_scene.add_child(debugLabel);
 	
 	animatedSprites.sprite_frames = AnimationManager.playerTemplateSprite.sprite_frames;
 	
@@ -192,11 +199,18 @@ func _ready() -> void:
 ## Runs every frame during the play state
 ## delta: How much time has passed
 func _physics_process(delta: float) -> void:
+	
 	if (check_out_of_bounds() || victory):
 		return;
 		
+	bounceSfxTimerLeft -= delta;
+	jumpBufferTimerLeft -= delta;
+	
+	if (Input.is_action_just_pressed("jump")):
+		jumpBufferTimerLeft = jumpBufferTimer;
+	
 	# Register player inputs
-	jumpInput = Input.is_action_just_pressed("jump");
+	jumpInput = jumpBufferTimerLeft > 0;
 	jumpInputReleased = Input.is_action_just_released("jump");
 	jumpInputHeld = Input.is_action_pressed("jump");
 	leftInput = Input.is_action_pressed("left");
@@ -238,21 +252,21 @@ func _physics_process(delta: float) -> void:
 		walk();
 		move_and_slide();
 		AudioManager.play_effect_walking(currentWalkingEffect);
-	if (OS.is_debug_build()):
-		var debugText : String = "state: %s" % currentState \
-								+ "\n coyote: %s" % isCoyoteActive \
-								+ "\n invul: %f" % invulnerabilityCurrent \
-								+ "\n wallJumpDir: %s" % wallJumpDirection \
-								+ "\n wallJumpCount: %s" % wallJumpCount \
-								+ "\n velocity.x: %f" % velocity.x \
-								+ "\n wallSlideConditions: %s" % wallSlideConditionsMet \
-								+ "\n isGrounded: %s" % isPlayerGrounded \
-								+ "\n justWallJumped: %s" % justWallJumped \
-								+ "\n tileName: %s" % tileName \
-								+ "\n friction: %f" % currentFriction;
-		
-		debugLabel.position = Vector2( position.x - 240, position.y - 180 );
-		debugLabel.text = debugText;
+	#if (OS.is_debug_build()):
+		#var debugText : String = "state: %s" % currentState \
+								#+ "\n coyote: %s" % isCoyoteActive \
+								#+ "\n invul: %f" % invulnerabilityCurrent \
+								#+ "\n wallJumpDir: %s" % wallJumpDirection \
+								#+ "\n wallJumpCount: %s" % wallJumpCount \
+								#+ "\n velocity.x: %f" % velocity.x \
+								#+ "\n wallSlideConditions: %s" % wallSlideConditionsMet \
+								#+ "\n isGrounded: %s" % isPlayerGrounded \
+								#+ "\n justWallJumped: %s" % justWallJumped \
+								#+ "\n tileName: %s" % tileName \
+								#+ "\n friction: %f" % currentFriction;
+		#
+		#debugLabel.position = Vector2( position.x - 240, position.y - 180 );
+		#debugLabel.text = debugText;
 
 
 ## Handle all state switch & player logic 
@@ -277,10 +291,10 @@ func apply_state_logic(delta: float) :
 			wallJumpDirection = WallDirection.NONE;
 
 			if ( isPlayerGrounded ) :
-				if ( moveInput && groundSpeed != 0 ) :
-					set_state( PlayerState.RUNNING );
-				elif ( jumpInput ) :
+				if ( jumpInput ) :
 					set_state( PlayerState.JUMPING );
+				elif ( moveInput && groundSpeed != 0 ) :
+					set_state( PlayerState.RUNNING );
 			else :
 				set_state( PlayerState.FALLING );
 
@@ -288,10 +302,10 @@ func apply_state_logic(delta: float) :
 		PlayerState.RUNNING:
 			wallJumpDirection = WallDirection.NONE;
 			if ( isPlayerGrounded ) :
-				if ( !moveInput ) : 
-					set_state( PlayerState.GROUNDED );
-				elif ( jumpInput ) :
+				if ( jumpInput ) :
 					set_state( PlayerState.JUMPING );
+				elif ( !moveInput ) : 
+					set_state( PlayerState.GROUNDED );
 			else :
 				set_state( PlayerState.FALLING );
 	
@@ -424,12 +438,14 @@ func set_state(state : PlayerState, function : Callable = Callable()) -> void:
 			jumpInput = false;
 			coyoteTimeLeft = 0.0;
 			jump();
+			jumpBufferTimerLeft = 0.0;
 			AudioManager.play_effect("Jump");
 			animatedSprites.play("PlayerJump");
 			currentState = PlayerState.JUMPING;
 			
 		PlayerState.WALL_JUMPING:
 			wall_jump();
+			jumpBufferTimerLeft = 0.0;
 			if (wallJumpDirection == WallDirection.RIGHT): 
 				animatedSprites.flip_h = false;
 			elif (wallJumpDirection == WallDirection.LEFT): 
@@ -452,7 +468,9 @@ func set_state(state : PlayerState, function : Callable = Callable()) -> void:
 			currentState = PlayerState.SLIDING;
 			
 		PlayerState.TILE_EFFECT_BOUNCE:
-			AudioManager.play_effect("BounceTile");
+			if (bounceSfxTimerLeft <= 0.0) :
+				AudioManager.play_effect("BounceTile");
+				bounceSfxTimerLeft = bounceSfxTimer;
 			animatedSprites.play("PlayerJump");
 			currentState = PlayerState.JUMPING;
 			
@@ -818,8 +836,6 @@ func detect_tiles() -> void:
 		if (wallJumpConditionsMet) :
 			if (tileName != "ice") :
 				currentFriction = 1.0;
-			elif tileName != "slow":
-				currentSlowdown = 1.0;
 
 		# Bounce tile collisions
 		if (tileName == "bounce"):

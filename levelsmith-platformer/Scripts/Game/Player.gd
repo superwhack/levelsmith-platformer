@@ -106,7 +106,7 @@ var iceAccelerationFactor : float = .2;
 var bounceSfxTimer : float = 0.08;
 var bounceSfxTimerLeft : float = 0.0;
 
-var jumpBufferTimer : float = 0.05;
+var jumpBufferTimer : float = 0.09;
 var jumpBufferTimerLeft : float = 0.0;
 
 var isPlayerGrounded : bool = true;

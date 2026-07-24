@@ -66,10 +66,12 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_vertical = 8
 tooltip_text = "Reset"
+focus_mode = 0
 focus_behavior_recursive = 1
 theme = ExtResource("2_ym18m")
 theme_override_constants/icon_max_width = 50
 action_mode = 0
+keep_pressed_outside = true
 icon_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/BottomScreenGroup/TopRightMargin/Container/ResetButton" unique_id=1351322610]

@@ -66,12 +66,13 @@ func _ready() -> void:
 	ImportExportManager.levelImported.connect(create_bedrock_border);
 	
 	# Connect all button signals
-	editorHomeButton.pressed.connect(main_menu);
+	editorHomeButton.pressed.connect(main_menu.bind(false));
 	editorHomeButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	editorPlayButton.pressed.connect(play);
 	editorPlayButton.mouse_entered.connect(mouse_entered_play_button);
 	editorPlayButton.mouse_exited.connect(mouse_exited_play_button);
 	returnToEditorButton.pressed.connect(edit);
+	returnToEditorButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	get_window().close_requested.connect(check_unsaved_changes.bind(Callable(get_tree(), "quit"), ExitAction.QUIT));
 	
 	# Create the enemy resource folder and custom player preset.
@@ -226,7 +227,7 @@ func check_unsaved_changes(on_continue: Callable, exit: ExitAction) -> void:
 	# Saves and brings the user to the main menu. First callable.
 	var save = func() -> void:
 		editorManager.unsavedChanges = false;
-		AudioManager.play_UI_effect("UISelection");
+		#AudioManager.play_UI_effect("UISelection");
 		var levelScreenshot : Image = await editorManager.levelScreenshotCamera.get_level_screenshot();
 		ImportExportManager.save_level_screenshot(levelScreenshot);
 		ImportExportManager.export_level(editorManager.tileMap, propertyMenu, worldSize, editorManager.levelSettingsMenu, editorManager.isValidated, get_play_errors().is_empty());
@@ -287,7 +288,7 @@ func main_menu(menuClickSound : bool = true, onStart : bool = false) -> void:
 
 ## Swap to edit state
 func edit(skipWipeIn: bool = false) -> void:
-	AudioManager.play_UI_effect("UISelection");
+	#AudioManager.play_UI_effect("UISelection");
 	# Setup edit state
 	get_tree().set_auto_accept_quit(false);
 	gameManager.pausable = false;

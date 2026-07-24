@@ -53,15 +53,18 @@ var currentSelectedItem : AssetItem;
 func _ready() -> void:
 	# Connect signals
 	loadFileButton.pressed.connect(open_file_selector);
-	refreshAllButton.pressed.connect(refresh_all);
 	refreshAllButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
+	refreshAllButton.pressed.connect(refresh_all);
+	resetButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	resetButton.pressed.connect(reset_image_popup);
+	resetAllButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	resetAllButton.pressed.connect(reset_all_popup);
 	fileSelect.file_selected.connect(file_selected);
 	fileSelect.dir_selected.connect(animationSwapping.replace_animation);
+	fileSelect.canceled.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	
 	assetTabs.tab_changed.connect(on_asset_tab_changed);
-	
+	assetTabs.tab_clicked.connect(AudioManager.play_UI_effect.bind("UISelection").unbind(1));
 	AnimationManager.assetManager = self;
 	
 	ImportExportManager.levelImported.connect(setup);
@@ -93,6 +96,7 @@ func generate_buttons(folder : String, container : VBoxContainer, type : AssetIt
 			newButton.displayName = directory.capitalize();
 			container.add_child(newButton);
 			newButton.pressed.connect(item_selected.bind(newButton));
+			newButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 			newButton.type = type;
 			# Set the default image and animation to be selected
 			if (type == AssetItem.AssetType.IMAGE && !firstImageSelected):
@@ -191,6 +195,7 @@ func validate_image(image: Image) -> bool:
 ## Handles the switching of buttons between tab changes
 ## tabIndex: The tab being swapped to
 func on_asset_tab_changed(tabIndex: int) -> void:
+	#AudioManager.play_UI_effect("UISelection");
 	imageSwapping.imagePreview.hide();
 	animationSwapping.animationPreview.hide();
 	audioPreview.hide();
@@ -220,12 +225,10 @@ func reset() -> void:
 
 ## Creates the refresh asset popup.
 func reset_image_popup() -> void:
-	AudioManager.play_UI_effect("UISelection");
 	PopUpManager.create_reset_image_popup(Callable(self, "reset"), currentSelectedItem.displayName);
 
 ## Creates the reset all assets popup.
 func reset_all_popup() -> void:
-	AudioManager.play_UI_effect("UISelection");
 	PopUpManager.create_reset_asset_popup(Callable(self, "reset_all"));
 
 ## Resets everything within the assets manager
@@ -255,7 +258,6 @@ func reset_menu() -> void:
 ## Occurs when an asset is chosen in the list. Displays the preview for the selected item.
 ## selectedItem: The item that is selected, defaults to the firstImageSelected
 func item_selected(selectedItem: AssetItem) -> void:
-	AudioManager.play_UI_effect("UISelection");
 	# Pause the animation
 	animationSwapping.play_preview_animation(false);
 	audioSwapping.preview_audio_finished();
@@ -352,6 +354,7 @@ func open_file_selector() -> void:
 ## Selects a new file, replacing it depending on it's type
 ## path: the path of the file
 func file_selected(path : String) -> void:
+	AudioManager.play_UI_effect("UISelection");
 	if (currentSelectedItem.type == AssetItem.AssetType.IMAGE):
 		imageSwapping.replace_image(path);
 	elif (currentSelectedItem.type == AssetItem.AssetType.AUDIO):

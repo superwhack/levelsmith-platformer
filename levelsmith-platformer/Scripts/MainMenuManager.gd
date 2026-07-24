@@ -172,11 +172,12 @@ func _ready() -> void:
 	spinBoxNewLevelY.value_changed.connect(update_level_size_warning);
 
 	var set_directory = func (directory: String) -> void:
+		AudioManager.play_UI_effect("UISelection");
 		fieldImportLevelPath.text = directory + "/";
 	
 	fileExplorer.file_selected.connect(set_directory);
 	fileExplorer.dir_selected.connect(set_directory);
-	
+	fileExplorer.canceled.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	
 ## Functions that just make a menu appear/dissapear, used to attach the sound effects
 func overlay_new_level_show() -> void:

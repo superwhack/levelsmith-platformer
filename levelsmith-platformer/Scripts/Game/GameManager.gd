@@ -76,7 +76,6 @@ func pause() -> void:
 
 ## Reset the play state through the global signal. Causes the level scene to be reloaded.
 func reset() -> void:
-	AudioManager.play_UI_effect("UISelection");
 	freeze(true);
 	await masterManager.screen_wipe_in();
 	AudioManager.reset_audio();
@@ -186,10 +185,13 @@ func _ready() -> void:
 	Global.checkpointCollected.connect(collect_checkpoint);
 	Global.onCoinCollected.connect(_on_coin_collected);
 	resetButton.pressed.connect(full_restart);
+	resetButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	pauseButton.pressed.connect(pause);
 	resumeButton.pressed.connect(pause);
 	replayButton.pressed.connect(replay_level);
+	replayButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	editorButton.pressed.connect(return_to_editor);
+	editorButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 
 ## Runs every frame and updates the timer
 func _process(delta: float) -> void:

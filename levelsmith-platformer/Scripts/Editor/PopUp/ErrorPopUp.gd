@@ -61,7 +61,6 @@ func close_popup() -> void:
 	
 ## When the reset button is pressed, execute the callback.
 func _on_reset_pressed() -> void:
-	AudioManager.play_effect("UISelection");
 	if (resetCallback.is_valid()):
 		resetCallback.call();
 	close_popup();

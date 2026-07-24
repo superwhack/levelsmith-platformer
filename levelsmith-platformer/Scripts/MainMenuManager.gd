@@ -171,13 +171,17 @@ func _ready() -> void:
 	spinBoxNewLevelX.value_changed.connect(update_level_size_warning);
 	spinBoxNewLevelY.value_changed.connect(update_level_size_warning);
 
-	var set_directory = func (directory: String) -> void:
+	fileExplorer.file_selected.connect(func(path):
+		fieldImportLevelPath.text = path;
 		AudioManager.play_UI_effect("UISelection");
-		fieldImportLevelPath.text = directory + "/";
+	)
+
+	fileExplorer.dir_selected.connect(func(path):
+		fieldImportLevelPath.text = path + "/";
+		AudioManager.play_UI_effect("UISelection");
+	)
 	
-	fileExplorer.file_selected.connect(set_directory);
-	fileExplorer.dir_selected.connect(set_directory);
-	fileExplorer.canceled.connect(AudioManager.play_UI_effect.bind("UISelection"));
+	
 	
 ## Functions that just make a menu appear/dissapear, used to attach the sound effects
 func overlay_new_level_show() -> void:
@@ -242,7 +246,6 @@ func import_level() -> void:
 		return;
 	
 	# Extract the name of the folder from the file path
-	var importedLevelArray : Array = sourceDirectory.rstrip("/").split("/");
 	var importedLevelName : String = sourceDirectory.replace("\\", "/").rstrip("/").get_file();
 	
 	# Handle duplicate level names
@@ -884,8 +887,6 @@ func extract_all_from_zip(zipPath: String, destination: String):
 	var reader : ZIPReader = ZIPReader.new();
 	reader.open(zipPath);
 	
-	var rootDir = DirAccess.open("user://Levels");
-
 	for filePath in reader.get_files():
 		var fullPath : String = destination.path_join(filePath);
 

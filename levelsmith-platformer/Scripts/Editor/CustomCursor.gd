@@ -15,6 +15,7 @@ enum SelectorState {
 	DUPLICATING,
 	INVALID
 }
+
 var selectorState : SelectorState = SelectorState.DEFAULT;
 
 # Cursor texture is saved, to prevent updates every frame.

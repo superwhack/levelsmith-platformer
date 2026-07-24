@@ -37,7 +37,7 @@ func display_tiles(visibility : bool):
 	# If visible, select button if last applicable, otherwise the first.
 	if (visibility):
 		if (lastTileButton):
-			lastTileButton.select();
+			lastTileButton.select(false);
 
 ## Toggles visibility of entity selection bar
 ## visibility: desired visibility
@@ -46,9 +46,9 @@ func display_entities(visibility : bool):
 	if (visibility):
 		match (editorManager.currentHotbarState):
 			Global.HotbarState.ENTITIES:
-				lastEntityButton.select();
+				lastEntityButton.select(false);
 			Global.HotbarState.PROPS:
-				lastPropButton.select();
+				lastPropButton.select(false);
 
 ## Toggles visibility of tabs
 ## index: index of tab selected
@@ -61,13 +61,13 @@ func entity_dropdown_select(index : int):
 			toolManager.currentObjectRotation = 0;
 			entityTab.visible = true;
 			propTab.visible = false;
-			lastEntityButton.select();
+			lastEntityButton.select(false);
 		1:
 			entityPropDropdown.select(index);
 			editorManager.change_current_hotbar(Global.HotbarState.PROPS);
 			entityTab.visible = false;
 			propTab.visible = true;
-			lastPropButton.select();
+			lastPropButton.select(false);
 
 ## Sets the last selected button, so that it remains selected
 func remember_selected_button(button: Button):

@@ -5,33 +5,33 @@
 [ext_resource type="PackedScene" uid="uid://cv3y1gdfsbknd" path="res://Scenes/UI/LevelListItem.tscn" id="3_07k0b"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="5_h35r6"]
 [ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
-[ext_resource type="Texture2D" uid="uid://cuqcf3f0aoyp0" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
+[ext_resource type="Texture2D" uid="uid://coe3rcn2twg1q" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
 [ext_resource type="PackedScene" uid="uid://dpituch0v2gjd" path="res://Scenes/UI/WebPopUp.tscn" id="7_5hdia"]
 [ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
 [ext_resource type="Texture2D" uid="uid://cjqysujbtblvm" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
-[ext_resource type="Texture2D" uid="uid://cu64rmk1o80h6" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
-[ext_resource type="Texture2D" uid="uid://bvkxxgdnheuii" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
+[ext_resource type="Texture2D" uid="uid://bwp7ms2ro7qbc" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
+[ext_resource type="Texture2D" uid="uid://dxd7oevrv4e7c" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
 [ext_resource type="PackedScene" uid="uid://bhrbcojf8cvim" path="res://Scenes/UI/InfoRow.tscn" id="12_ux20s"]
-[ext_resource type="Texture2D" uid="uid://b4li6t0ittkbb" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
-[ext_resource type="Texture2D" uid="uid://dgom5vtp672is" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
-[ext_resource type="Texture2D" uid="uid://cggcysl218grk" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--group.png" id="15_5hdia"]
-[ext_resource type="Texture2D" uid="uid://cah5agwagulw6" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
-[ext_resource type="Texture2D" uid="uid://pg25xix0urw4" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
-[ext_resource type="Texture2D" uid="uid://b4dqbmv3a5230" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
-[ext_resource type="Texture2D" uid="uid://vc233h53hug6" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check-circle.png" id="16_65hh5"]
-[ext_resource type="Texture2D" uid="uid://bffoqoutr64dw" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
-[ext_resource type="Texture2D" uid="uid://dtlet7ssu5sio" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
+[ext_resource type="Texture2D" uid="uid://dryfk84nu1yv1" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
+[ext_resource type="Texture2D" uid="uid://dodrkydpe4b04" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
+[ext_resource type="Texture2D" uid="uid://c1dmr6053ybf4" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--group.png" id="15_5hdia"]
+[ext_resource type="Texture2D" uid="uid://w64y47vwrufu" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
+[ext_resource type="Texture2D" uid="uid://buv4gfuc3o66v" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
+[ext_resource type="Texture2D" uid="uid://dnlgeapuusb7p" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://bru63ejw0q2j4" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--check-circle.png" id="16_65hh5"]
+[ext_resource type="Texture2D" uid="uid://qlne6c3yxaff" path="res://Assets/UserInterface/UpdatedIcons/Duplicate (1).png" id="16_h1v62"]
+[ext_resource type="Texture2D" uid="uid://1glcsot8n2b" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
 [ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
-[ext_resource type="Texture2D" uid="uid://cay2v3yhicsj3" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
+[ext_resource type="Texture2D" uid="uid://bjepls0slldfm" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
 [ext_resource type="Texture2D" uid="uid://dldr7iy6j6qgc" path="res://Assets/UserInterface/UpdatedIcons/export.png" id="19_3u44c"]
-[ext_resource type="Texture2D" uid="uid://bbn361u6ti6j8" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
-[ext_resource type="Texture2D" uid="uid://cdwcriu6d4vi5" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
+[ext_resource type="Texture2D" uid="uid://bo1m348j85vww" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
+[ext_resource type="Texture2D" uid="uid://b8oh8bg85bfsn" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="21_leunp"]
-[ext_resource type="Texture2D" uid="uid://do1aligfv3wmg" path="res://Assets/UserInterface/Buttons/CloseX.png" id="22_h1v62"]
+[ext_resource type="Texture2D" uid="uid://uboggbk6slsr" path="res://Assets/UserInterface/Buttons/CloseX.png" id="22_h1v62"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="23_iqn0u"]
 [ext_resource type="PackedScene" uid="uid://xr5wkr0v56pj" path="res://Scenes/UI/LogoBox.tscn" id="25_iqn0u"]
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="29_ke15f"]
-[ext_resource type="Texture2D" uid="uid://bof6s5qalixcn" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="30_311ux"]
+[ext_resource type="Texture2D" uid="uid://dfco244lcptog" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="30_311ux"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hqns4"]
 
@@ -1229,7 +1229,6 @@ text = "Cancel
 "
 
 [node name="CreditsScreen" type="ColorRect" parent="." unique_id=1498871446]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1436,6 +1435,26 @@ text = "Chris Hamam"
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
+[node name="WLeadHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=2110291434]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WLeadHBox" unique_id=586486461]
+layout_mode = 2
+text = "Web Lead"
+label_settings = SubResource("LabelSettings_leunp")
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WLeadHBox" unique_id=1577945030]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Ziad" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WLeadHBox" unique_id=127316374]
+layout_mode = 2
+text = "Ziad Jaafar"
+
+[node name="WLeadTTeamSpacer2" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1089556803]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
 [node name="TTeamHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1981939656]
 layout_mode = 2
 
@@ -1516,6 +1535,26 @@ horizontal_alignment = 2
 layout_mode = 2
 text = "Deacon Mansfield"
 horizontal_alignment = 2
+
+[node name="DTeamWTeamSpacingSpacing" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=92821573]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="WTeamHBox" type="HBoxContainer" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits" unique_id=1980683507]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WTeamHBox" unique_id=600858550]
+layout_mode = 2
+text = "Web Team"
+label_settings = SubResource("LabelSettings_leunp")
+
+[node name="Control" type="Control" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WTeamHBox" unique_id=1404372373]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Ziad" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer/LevelsmithLabsContainer/MarginContainer/LevelsmithCredits/WTeamHBox" unique_id=371993261]
+layout_mode = 2
+text = "Ziad Jaafar"
 
 [node name="Label" type="Label" parent="CreditsScreen/MainMargin/SettingsPanel/BorderMargin/SettingsBox/ScrollContainer/VBoxContainer" unique_id=2118416437]
 layout_mode = 2

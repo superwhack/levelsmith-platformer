@@ -17,6 +17,7 @@ var objectCount : String = "";
 var version : String = "";
 var favorited : bool = false;
 var validated : bool = false;
+var playable : bool = false;
 var thumbnail : Texture2D;
 
 # The level path. Used when emitting signal.
@@ -69,6 +70,7 @@ func _on_level_button_input(event: InputEvent):
 ## On a specific GUI input on the button.
 ## event: The event the GUI is capturing.
 func _on_gui_input(event: InputEvent) -> void:
+	# If the click is a right click, deselect the level
 	if (event is InputEventMouseButton 
 	&& event.button_index == MOUSE_BUTTON_RIGHT 
 	&& event.pressed):
@@ -81,7 +83,6 @@ func _on_mouse_entered() -> void:
 	level_hovered.emit(self);
 
 ## When the button is toggled, emit a signal. Used for main menu level selection.
-## buttonPressed: 
 func _on_button_pressed() -> void:
 	level_pressed.emit(self);
 

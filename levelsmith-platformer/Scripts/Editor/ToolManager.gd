@@ -4,20 +4,16 @@ extends Node2D
 @export var editorManager : Node2D;
 @export var entityManager : Node2D;
 @export var tileManager : Node2D;
-@export var customCursorManager : Node2D;
 
 # references to UI elements
 @export var tileSwitch : HBoxContainer;
 @export var propertyMenu : Panel;
 
-# reference to preview tile map
-@export var previewTile : TileMapLayer;
-
 # Variables that tools will utilize
 var currentObjectRotation : int;
 var isBackground : bool = false;
 var currentTool :  Global.Tool = Global.Tool.BRUSH;
-var boxBrushState : Global.BoxBrushState = Global.BoxBrushState.INACTIVE
+var boxBrushState : Global.BoxBrushState = Global.BoxBrushState.INACTIVE;
 
 # The previously selected tile before dragging
 var prevBrushObject : int = -1;
@@ -27,24 +23,28 @@ var prevPosition : Vector2;
 var brushObject : int = 0;
 
 # A timer to differentiate between click and holding click
-const POSITION_DIFFERENCE = .75;
+const POSITION_DIFFERENCE : float = .75;
 var previousClickPos : Vector2;
 
 # If the user starts a click on a UI element.
 var clickOnUI : bool = false;
 
+# Opposite corners for the box brush
 var firstBoxCorner : Vector2;
 var secondBoxCorner : Vector2;
+
+# Cursor states
 var isPainting : bool;
 var isErasing : bool;
 var isMoving : bool;
-var isCopying : bool = false;
-# This is needed so there is no chance of drop_entity running twice (which can happen due to the awai process_frame inside of it)
+var isDuplicating : bool = false;
+
+# Prevents drop_entity from running twice while waiting an extra frame
 var justMoved : bool = false;
 
-## A frame-by-frame process
-## delta: time since previous frame
-func _process(_delta: float) -> void:
+## Runs every frame during the editor state
+## _delta: time since previous frame
+func _process(_delta : float) -> void:
 	# Return early if clicking on UI as there is nothing to process
 	if (clickOnUI):
 		return;
@@ -59,29 +59,28 @@ func _process(_delta: float) -> void:
 
 ## One of the first input handles to run, catches if the user clicked on a UI element.
 ## event: the captured input event
-func _input(event: InputEvent) -> void:
+func _input(event : InputEvent) -> void:
 	# Check viewport if the user is hovering over a UI element
 	if (event.is_action_pressed("left-click")):
 		clickOnUI = get_viewport().gui_get_hovered_control() != null;
 	# When released, the bool gets reset no matter what.
 	elif (event.is_action_released("left-click")):
 		clickOnUI = false;
-	if event.is_action_released("left-click") && prevBrushObject != -1 && get_viewport().gui_get_hovered_control():
+	if (event.is_action_released("left-click") && prevBrushObject != -1 && get_viewport().gui_get_hovered_control()):
 		isMoving = false;
 		entityManager.drop_entity(true);
 		previousClickPos = Vector2(0, 0);
-		isCopying = false;
+		isDuplicating = false;
 		justMoved = true;
-		
 
 ## Input manager for any clicks or key presses that aren't on UI elements
 ## event: The key input being read.
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(event : InputEvent) -> void:
 	# Return early if clicking on UI, to fix key release issues.
 	if (clickOnUI):
 		return;
 	
-	if editorManager.returnClick && !Input.is_action_just_pressed("right-click"):
+	if (editorManager.returnClick && !Input.is_action_just_pressed("right-click")):
 		if (Input.is_action_just_released("left-click") || Input.is_action_just_pressed("left-click")):
 			editorManager.returnClick = false;
 			
@@ -132,22 +131,23 @@ func _unhandled_input(event: InputEvent) -> void:
 						boxBrushState = Global.BoxBrushState.DELETE_CONFIRM;
 				
 		Global.Tool.CURSOR:
-			var currentCell = entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition);
-			var previousCell = entityManager.tileMap.get_cell_source_id(previousClickPos);
-			if (previousClickPos != Vector2(0,0) && !isMoving):
+			var currentCell : int = entityManager.tileMap.get_cell_source_id(editorManager.currentMousePosition);
+			var previousCell : int = entityManager.tileMap.get_cell_source_id(previousClickPos);
+			if (previousClickPos != Vector2.ZERO && !isMoving):
 				justMoved = false;
 				# If the cursor moves a certain distance away from the last click, start moving
 				isMoving = previousClickPos.distance_to(editorManager.currentMousePosition) > POSITION_DIFFERENCE && previousCell != -1;
 			if (event.is_action_released("left-click") && prevBrushObject == -1 && !justMoved):
-				if (entityManager.duplicatingResource != null && Input.is_action_pressed("copy")):
+				if (entityManager.duplicatingResource != null && Input.is_action_pressed("duplicate")):
 					entityManager.duplicatingResource = null;
+					editorManager.customCursorManager.hide_entity_highlight();
 				# If the clicked cell is an entity and the click was short, edit its properties
 				elif (currentCell > Global.EntityType.GOAL && currentCell < Global.EntityType.PROP1 && !isMoving && currentCell != Global.EntityType.COIN && currentCell != Global.EntityType.CHECKPOINT):
-					if Input.is_action_pressed("copy") && previousCell != -1 && currentCell != Global.EntityType.PLAYER:
+					if Input.is_action_pressed("duplicate") && previousCell != -1 && currentCell != Global.EntityType.PLAYER:
 						entityManager.duplicate_entity(editorManager.currentMousePosition);
 					else:
 						entityManager.duplicatingResource = null;
-						customCursorManager.highlight_selected_entity(editorManager.currentMousePosition);
+						editorManager.customCursorManager.highlight_selected_entity(editorManager.currentMousePosition);
 						entityManager.edit_properties(editorManager.currentMousePosition);
 				# Otherwise, place the entity
 				else:
@@ -171,12 +171,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			# Once the mouse click is released, drop the tile and reset to the previously selected tile brush
 			elif (!isMoving && prevBrushObject != -1 && !justMoved):
 				entityManager.drop_entity();
-				isCopying = false;
+				isDuplicating = false;
 				justMoved = true;
 
-## Change the currently selected tile/entity if possible
-## tile: the tile/entity to try and change to
-func update_brush_object(objectId: int) -> void:
+## Change the currently selected painting object
+## objectId: The ID of the object to swap to
+func update_brush_object(objectId : int) -> void:
 	entityManager.duplicatingResource = null;
 	if (isMoving): return;
 	
@@ -187,21 +187,19 @@ func update_brush_object(objectId: int) -> void:
 
 ## Change the selected tool to the clicked on tool, adjusting the selected tile if needed.
 ## tool: The tool to change to
-func change_tool(tool: Global.Tool) -> void:
+func change_tool(tool : Global.Tool) -> void:
 	if (currentTool == tool):
 		return;
 
 	editorManager.returnClick = false;
-	reset_tool_states();
+	isPainting = false;
+	isErasing = false;
 	currentObjectRotation = 0;
 	entityManager.duplicatingResource = null;
 
 	if (currentTool == Global.Tool.CURSOR):
 		brushObject = Global.TileType.SOLID;
-	elif (tool == Global.Tool.CURSOR):
-		brushObject = Global.TileType.SOLID;
-
-	if (currentTool == Global.Tool.BOX_BRUSH): 
+	elif (currentTool == Global.Tool.BOX_BRUSH): 
 		disable_box_brush();
 	currentTool = tool;
 	
@@ -216,24 +214,16 @@ func change_tool(tool: Global.Tool) -> void:
 		else:
 			editorManager.change_current_hotbar(Global.HotbarState.PROPS);
 		tileSwitch.display_entities(true);
-
+	
 	propertyMenu.close();
-	previewTile.clear();
-	
-	
+	editorManager.previewTileMap.clear();
+
 ## Deactivates the box brush.
 func disable_box_brush() -> void:
 	boxBrushState = Global.BoxBrushState.INACTIVE;
-	
-## Rotate currently selected object
-## Uses Alternative tiles 
+
+## Rotate currently selected object, using alternative tiles.
 func rotate_object() -> void:
 	currentObjectRotation += 1;
 	if (currentObjectRotation > 3): 
 		currentObjectRotation = 0;
-	
-## Reset tool states 
-func reset_tool_states() -> void:
-	isPainting = false;
-	isErasing = false;
-	# isMoving is not neccesary.

@@ -6,17 +6,16 @@ class_name GlobalSettingsMenu;
 @export var closeButton : Button;
 @export var resetButton : Button;
 
-var settingsPath := "user://settings.cfg";
+const SETTINGS_PATH : String = "user://settings.cfg";
 
 # Volume
 @export var masterVolume : VBoxContainer;
 @export var SFXVolume : VBoxContainer;
 @export var musicVolume : VBoxContainer;
 
-# Reference to the editor manager
-@export var editorManager : Node2D;
+var musicPreviewing : bool = false;
 
-var musicPreviewing := false;
+const BASE_VOLUME_VALUE : float = 70.0;
 
 func _ready() -> void:
 	closeButton.pressed.connect(masterManager.close_global_settings_menu);
@@ -41,11 +40,9 @@ func _ready() -> void:
 	
 	load_settings();
 
-func _process(_delta: float) -> void:
-	pass;
-	
+## When closed with esc, close with mastermanager
 func _input( event: InputEvent ) -> void:
-	if ( event.is_action_pressed("ui_close_dialog") ):
+	if (event.is_action_pressed("ui_close_dialog")):
 		masterManager.close_global_settings_menu();
 
 ## When dragging, adjust the values in real time
@@ -60,10 +57,12 @@ func _on_drag() -> void:
 	AudioManager.musicVolume = musicVolume.value / 100;
 	AudioManager.update_volume();
 
+## Every time the SFX slider gets adjusted, play a sound as a demo
 func _on_dragging_SFX() -> void:
 	_on_drag();
 	AudioManager.play_UI_effect("UISelection");
-	
+
+## When drag on music slider ends, it stops if 1.5seconds has based, checked in AudioMaager
 func _on_drag_end_music() -> void:
 	_on_drag();
 	await get_tree().process_frame;
@@ -71,9 +70,10 @@ func _on_drag_end_music() -> void:
 		musicPreviewing = false;
 		AudioManager.stop_music_preview();
 
+## When dragging music, start playing a demo while it's held down.
 func _on_drag_start_music() -> void:
 	_on_drag();
-	if !musicPreviewing:
+	if (!musicPreviewing):
 		musicPreviewing = true;
 		AudioManager.play_music_preview("LevelMusic");
 
@@ -87,16 +87,16 @@ func update_sliders() -> void:
 
 ## Reset the settings
 func reset_settings() -> void:
-	masterVolume.value = 70.0;
-	SFXVolume.value = 70.0;
-	musicVolume.value = 70.0;
+	masterVolume.value = BASE_VOLUME_VALUE;
+	SFXVolume.value = BASE_VOLUME_VALUE;
+	musicVolume.value = BASE_VOLUME_VALUE;
 	update_sliders();
 
 ## Load the settings from a config file, create the file if needed
 func load_settings() -> void:
-	if FileAccess.file_exists(settingsPath):
+	if FileAccess.file_exists(SETTINGS_PATH):
 		var configFile = ConfigFile.new();
-		configFile.load(settingsPath);
+		configFile.load(SETTINGS_PATH);
 		masterVolume.value = configFile.get_value("Audio", "master_volume");
 		SFXVolume.value = configFile.get_value("Audio", "sfx_volume");
 		musicVolume.value = configFile.get_value("Audio", "music_volume");
@@ -108,4 +108,4 @@ func save_settings() -> void:
 	configFile.set_value("Audio", "master_volume", masterVolume.value);
 	configFile.set_value("Audio", "sfx_volume", SFXVolume.value);
 	configFile.set_value("Audio", "music_volume", musicVolume.value);
-	configFile.save(settingsPath);
+	configFile.save(SETTINGS_PATH);

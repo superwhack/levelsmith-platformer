@@ -13,6 +13,11 @@ class_name LevelSettingsMenu;
 @export var cameraDeadzone : VBoxContainer;
 @export var cameraClamp : VBoxContainer;
 
+const DEFAULT_ZOOM : float = 100.0;
+const DEFAULT_FOLLOW_SPEED : float = 100.0;
+const DEFAULT_DEADZONE : float = 0.0;
+const DEFAULT_CAMERA_CLAMP : bool = false;
+
 func _ready() -> void:
 	closeButton.pressed.connect(editorManager.close_level_settings_menu);
 	resetButton.pressed.connect(reset_settings);
@@ -45,7 +50,7 @@ func _on_drag() -> void:
 	cameraManager.cameraPlayClamp = cameraClamp.value;
 
 func _input( event: InputEvent ) -> void:
-	if ( event.is_action_pressed("ui_close_dialog") ):
+	if (event.is_action_pressed("ui_close_dialog")):
 		editorManager.close_level_settings_menu();
 
 ## Update sliders visually
@@ -58,11 +63,12 @@ func update_sliders() -> void:
 	
 	_on_drag();
 
+
 ## Reset the settings
 func reset_settings() -> void:
-	gameplayZoom.value = 100.0;
-	followSpeed.value = 100.0;
-	cameraDeadzone.value = 0.0;
-	cameraClamp.value = false;
+	gameplayZoom.value = DEFAULT_ZOOM;
+	followSpeed.value = DEFAULT_FOLLOW_SPEED;
+	cameraDeadzone.value = DEFAULT_DEADZONE;
+	cameraClamp.value = DEFAULT_CAMERA_CLAMP;
 
 	update_sliders();

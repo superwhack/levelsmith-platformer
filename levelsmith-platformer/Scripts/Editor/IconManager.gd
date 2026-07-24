@@ -5,17 +5,18 @@ extends Node2D
 @export var toolManager : Node2D;
 @export var editorManager : Node2D;
 @export var masterManager : Node2D;
+@export var propertyMenu : Panel;
 
 # Icon textures
 var propBackgroundIcon : Texture2D = preload("res://Assets/Sprites/UI/Icons/PropBackground.png");
 var propForegroundIcon : Texture2D = preload("res://Assets/Sprites/UI/Icons/PropForeground.png");
-var copyIcon : Texture2D = preload("res://Assets/Sprites/UI/Icons/Copy.png");
+var duplicateIcon : Texture2D = preload("res://Assets/Sprites/UI/Icons/Duplicate.png");
 var defaultIcon : Texture2D = preload("res://Assets/Sprites/UI/triangle.png");
 
 #Offset for the icon appearing in the top left of each cell
 const ICON_OFFSET : Vector2 = Vector2(20, 20);
 
-# Heap dictionary (stores position and the sprite object)
+# Heap dictionary (stores position and the sprite object for each icon)
 var iconHeap : Dictionary[Vector2, Sprite2D] = {};
 
 # Preview icon. Displays when placing an applicable object.
@@ -33,24 +34,33 @@ func _ready() -> void:
 
 ## Ensures the preview icon snaps to the cell the mouse is at.
 ## _delta: Time passed since last frame. Unused.
-func _process(_delta: float) -> void:
+func _process(_delta : float) -> void:
 	previewIcon.global_position = editorManager.currentMousePosition * Global.TILE_SIZE + ICON_OFFSET;
 	if (!editorManager.isScreenshotting):
 		previewIcon.show();
 	
 	if (toolManager.entityManager.duplicatingResource):
-		previewIcon.texture = copyIcon;
+		previewIcon.texture = duplicateIcon;
 	elif (toolManager.brushObject >= Global.EntityType.PROP1 && toolManager.brushObject <= Global.EntityType.PROP6):
 		previewIcon.texture = propBackgroundIcon if toolManager.isBackground else propForegroundIcon;
 		if (tileMap.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL): 
 			previewIcon.hide();
+			
+		##if the property menu is open do not show the foreground background icon 
+		var propertyOpen : bool = propertyMenu.selectedEntity != null;
+		
+		if (propertyOpen):
+			previewIcon.hide();
+		else:
+			previewIcon.show();
+			
 	else:
 		previewIcon.hide();
 
 ## Creates a new icon based on the type and places it at the given position.
 ## objectPosition: Where the icon is placed in cell coordinates
 ## iconType: The type of icon to create
-func create_icon(objectPosition: Vector2, iconType: String) -> void:
+func create_icon(objectPosition : Vector2, iconType : String) -> void:
 	var baseSprite : Sprite2D = Sprite2D.new();
 	
 	match iconType:

@@ -7,14 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://bguub3y2mkgwv" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="6_5uev8"]
 [ext_resource type="Texture2D" uid="uid://bwtk8i6k373fq" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-rounded.png" id="6_65hh5"]
 [ext_resource type="PackedScene" uid="uid://dpituch0v2gjd" path="res://Scenes/UI/WebPopUp.tscn" id="7_5hdia"]
-[ext_resource type="StyleBox" uid="uid://b1jvpork37j5x" path="res://Assets/UserInterface/NewMenuPanel.tres" id="7_w016u"]
 [ext_resource type="Texture2D" uid="uid://bnr0v62nioghx" path="res://Assets/UserInterface/LogoNew.png" id="8_sn0qe"]
 [ext_resource type="Texture2D" uid="uid://cbe74yepc8ohr" path="res://Assets/UserInterface/UpdatedIcons/NewLevel.png" id="11_65hh5"]
 [ext_resource type="Texture2D" uid="uid://x7ybbnq4r4fb" path="res://Assets/UserInterface/UpdatedIcons/Import.png" id="12_65hh5"]
 [ext_resource type="PackedScene" uid="uid://bhrbcojf8cvim" path="res://Scenes/UI/InfoRow.tscn" id="12_ux20s"]
 [ext_resource type="Texture2D" uid="uid://bkq66w0ki4iny" path="res://Assets/UserInterface/UpdatedIcons/Folder.png" id="13_6byu3"]
 [ext_resource type="Texture2D" uid="uid://bowlmfo2tiq32" path="res://Assets/UserInterface/UpdatedIcons/iconamoon--exit-light.png" id="14_leunp"]
-[ext_resource type="Texture2D" uid="uid://c1dmr6053ybf4" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--group.png" id="15_5hdia"]
+[ext_resource type="Texture2D" uid="uid://cggcysl218grk" path="res://Assets/UserInterface/Buttons/ButtonIcons/iconoir--group.png" id="15_5hdia"]
 [ext_resource type="Texture2D" uid="uid://b7w3bl2nsc6w8" path="res://Assets/UserInterface/PreviewDefault.png" id="15_65hh5"]
 [ext_resource type="Texture2D" uid="uid://biqii24pbtl3q" path="res://Assets/UserInterface/UpdatedIcons/material-symbols--star-outline-rounded.png" id="15_h1v62"]
 [ext_resource type="Texture2D" uid="uid://dv8ahbp0q7e7m" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_m7n2d"]
@@ -23,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://diiabterxff3k" path="res://Assets/UserInterface/UpdatedIcons/weui--delete-outlined.png" id="17_5hdia"]
 [ext_resource type="FontFile" uid="uid://3kn4gprbeda" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="18_0g0bm"]
 [ext_resource type="Texture2D" uid="uid://btblpw5rkc2oq" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="18_65hh5"]
-[ext_resource type="Texture2D" uid="uid://dldr7iy6j6qgc" path="res://Assets/UserInterface/UpdatedIcons/export.png" id="19_3u44c"]
+[ext_resource type="Texture2D" uid="uid://cyj0kiicwalem" path="res://Assets/UserInterface/UpdatedIcons/export.png" id="19_3u44c"]
 [ext_resource type="Texture2D" uid="uid://b7ifia0h6vfsk" path="res://Assets/Sprites/UI/FolderLarge.PNG" id="19_47c6y"]
 [ext_resource type="Texture2D" uid="uid://yu2ukie5a6cg" path="res://Assets/UserInterface/UpdatedIcons/ep--edit.png" id="19_iqn0u"]
 [ext_resource type="StyleBox" uid="uid://lq67u7fg1vt7" path="res://Resources/UIStyles/MenuPanelStyle.tres" id="21_leunp"]
@@ -251,7 +250,7 @@ theme_override_constants/margin_bottom = 64
 [node name="PanelContainer" type="PanelContainer" parent="SafeArea" unique_id=2124591170]
 custom_maximum_size = Vector2(1800, 990)
 layout_mode = 2
-theme_override_styles/panel = ExtResource("7_w016u")
+theme_override_styles/panel = ExtResource("21_leunp")
 
 [node name="RootVBox" type="VBoxContainer" parent="SafeArea/PanelContainer" unique_id=216121502]
 layout_mode = 2
@@ -1016,7 +1015,7 @@ grow_vertical = 2
 [node name="OverlayCard" type="PanelContainer" parent="NewLevelOverlay/SafeArea" unique_id=1206689031]
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
-theme_override_styles/panel = ExtResource("7_w016u")
+theme_override_styles/panel = ExtResource("21_leunp")
 
 [node name="OverlayMargin" type="MarginContainer" parent="NewLevelOverlay/SafeArea/OverlayCard" unique_id=2037301916]
 layout_mode = 2
@@ -1580,7 +1579,7 @@ grow_vertical = 2
 [node name="OverlayCard" type="PanelContainer" parent="DuplicateLevelOverlay/SafeArea" unique_id=654238869]
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
-theme_override_styles/panel = ExtResource("7_w016u")
+theme_override_styles/panel = ExtResource("21_leunp")
 
 [node name="OverlayMargin" type="MarginContainer" parent="DuplicateLevelOverlay/SafeArea/OverlayCard" unique_id=339819368]
 layout_mode = 2
@@ -1785,7 +1784,7 @@ grow_vertical = 2
 [node name="OverlayCard" type="PanelContainer" parent="ImportLevelOverlay/SafeArea" unique_id=328358608]
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
-theme_override_styles/panel = ExtResource("7_w016u")
+theme_override_styles/panel = ExtResource("21_leunp")
 
 [node name="OverlayMargin" type="MarginContainer" parent="ImportLevelOverlay/SafeArea/OverlayCard" unique_id=665813585]
 layout_mode = 2

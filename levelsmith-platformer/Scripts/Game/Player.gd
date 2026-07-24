@@ -143,7 +143,7 @@ const ACCELERATION_FRICTION_CLAMPER : float = .75;
 
 # Wall jump forces
 const WALL_JUMP_FORCE_X : int = 1200;
-const WALL_JUMP_FORCE_Y : int = 375;
+const WALL_JUMP_FORCE_Y : int = 190;
 const WALL_JUMP_GROUND_MIN : float = 1.5;
 const WALL_JUMP_SPEED_EXPONENT_X : float = 0.8;
 const WALL_JUMP_SPEED_EXPONENT_Y : float = 0.35;
@@ -730,7 +730,7 @@ func wall_jump():
 		velocity.x *= currentFriction;
 	if airControl != 1:
 		velocity.x *= pow(airControl, WALL_JUMP_AIR_CONTROL_POWER);
-	velocity.y = -WALL_JUMP_FORCE_Y * jumpHeight * sqrt(1.0 / wallJumpCount) / sqrt(fallSpeed) / pow(clamp(groundSpeed, WALL_JUMP_Y_GROUND_MIN, WALL_JUMP_Y_GROUND_MAX), WALL_JUMP_SPEED_EXPONENT_Y);
+	velocity.y = -WALL_JUMP_FORCE_Y * jumpHeight * sqrt(1.0 / wallJumpCount) * sqrt(fallSpeed) / pow(clamp(groundSpeed, WALL_JUMP_Y_GROUND_MIN, WALL_JUMP_Y_GROUND_MAX), WALL_JUMP_SPEED_EXPONENT_Y);
 	
 	# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)
 	if (tileName == "slow" || tileName == "ice"):

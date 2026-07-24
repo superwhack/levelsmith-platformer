@@ -253,7 +253,8 @@ func level_complete() -> void:
 	winScreenHealthUI.bind_player(player);
 	winScreenHealthUI.sync_to_player();
 	masterManager.editorManager.isValidated = true;
-	ImportExportManager.set_metadata(masterManager.loadedLevelPath, "validated", true);
+	if (masterManager.editorManager.unsavedChanges == false):
+		ImportExportManager.set_metadata(masterManager.loadedLevelPath, "validated", true);
 
 ## Returns to the level editor and restores the editor state
 func return_to_editor() -> void:

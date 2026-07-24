@@ -31,20 +31,18 @@ Foundry2D separates level creation into several systems that work together:
 
 This workflow allows designers to rapidly prototype ideas, test them immediately, and iterate with minimal effort.
 
+## Installation & Setup
+
+Installing Foundry2D to your device is very simple. You can either download it from the [releases tab](), our [itch.io page](https://levelsmith-labs.itch.io/foundry2d), or from directly from [Steam](). 
+
+If you download it manually, all you have to do is extract the executable/application to any folder in your computer, and run it!
+
 ## Getting Started
 
-If you're new to Foundry2D, the best place to begin is the tutorial, which walks through the editor, explains the core workflow, and demonstrates how to create your first level.
+If you're new to Foundry2D, the best place to begin is the tutorial, which explains the functionality of our tool in greater detail. This will also help explain how to install the software to your computer.
 
-> **Tutorial:** *In-Progress*
+> **[Getting Started & Tutorial](https://github.com/superwhack/levelsmith-platformer/wiki/Getting-Started-&-Tutorial)**
 
-Afterward, you may find these pages helpful:
-
-- [Installation & Setup]?
-- [Master Manager](https://github.com/superwhack/levelsmith-platformer/wiki/Master-Manager)
-- [Asset Manager](https://github.com/superwhack/levelsmith-platformer/wiki/Asset-Manager)
-- [Importing & Exporting Levels](https://github.com/superwhack/levelsmith-platformer/wiki/Importing-and-Exporting)
-- [Known Issues](https://github.com/superwhack/levelsmith-platformer/wiki/Known-Issues)
-- [Future Work](https://github.com/superwhack/levelsmith-platformer/wiki/Future-Works)
 
 ## Contributing
 

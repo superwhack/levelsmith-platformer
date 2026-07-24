@@ -13,7 +13,7 @@ signal checkpointCollected;
 const TILE_SIZE : int = 128;
 
 # Current version of Foundry 2D
-const VERSION : String = "1.0.0";
+const VERSION : String = "1.0.1";
 
 # Application State
 enum State {

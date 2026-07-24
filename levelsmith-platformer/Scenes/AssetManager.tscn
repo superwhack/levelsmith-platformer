@@ -15,7 +15,8 @@
 [ext_resource type="Script" uid="uid://pgp1usxbcoyf" path="res://Scripts/Universal/AnimationSwapping.gd" id="11_ukhnw"]
 [ext_resource type="Texture2D" uid="uid://dw2iuwcie451d" path="res://Assets/Sprites/UI/ArrowRightMedium.PNG" id="12_41b3d"]
 [ext_resource type="Script" uid="uid://cd1ukd2otaojf" path="res://Scripts/Universal/AudioSwapping.gd" id="12_qbbei"]
-[ext_resource type="Texture2D" uid="uid://d3av07q8mayof" path="res://Assets/UserInterface/UpdatedIcons/mi--pause.png" id="14_yswm7"]
+[ext_resource type="Texture2D" uid="uid://bupkqxgtnq1cb" path="res://Assets/UserInterface/UpdatedIcons/mi--pause.png" id="14_yswm7"]
+
 [ext_resource type="Texture2D" uid="uid://bqvpgjst07vs7" path="res://Assets/UserInterface/ph--file-audio-fill.png" id="16_yswm7"]
 [ext_resource type="Texture2D" uid="uid://i182p1h0vkq0" path="res://Assets/UserInterface/iconoir--play.png" id="17_41b3d"]
 [ext_resource type="Texture2D" uid="uid://2c6wg320xdr" path="res://Assets/UserInterface/griddy-icons--stop.png" id="18_l1dbf"]
@@ -123,9 +124,15 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-tooltip_text = "The Asset Manager allows you to replace nearly every asset, animation, or sound from the Play scene. 
+tooltip_text = "The Asset Manager allows you to replace nearly every image, animation, and sound effect in your level. 
 
-Note that no matter the size of your assets, they will be resized to 128x128 pixels if they are not already."
+To replace an asset, select it, click \"load\" and choose a matching file from your computer. 
+- Images: png 
+- Audio Files: wav, mp3 and ogg
+- Animations: folders containing png images named numerically/alphabetically in frame order. (Limit: 60 frames per animation)
+You can also put these files directly into the subfolder for each replaceable asset in your level folder.
+
+Note that all image assets are at a scale of 128x128 pixels. Your image assets will be resized automatically if they don't match."
 theme_override_styles/normal = SubResource("StyleBoxEmpty_g4v7s")
 theme_override_styles/pressed = ExtResource("4_7puos")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_a3ruo")

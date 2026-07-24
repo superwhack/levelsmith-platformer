@@ -87,6 +87,7 @@ func update_sliders() -> void:
 
 ## Reset the settings
 func reset_settings() -> void:
+	AudioManager.play_UI_effect("UISelection");
 	masterVolume.value = BASE_VOLUME_VALUE;
 	SFXVolume.value = BASE_VOLUME_VALUE;
 	musicVolume.value = BASE_VOLUME_VALUE;

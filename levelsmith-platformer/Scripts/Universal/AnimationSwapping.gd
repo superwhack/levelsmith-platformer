@@ -116,6 +116,7 @@ func get_animation_from_folder(folderName: String) -> Array[Image]:
 ## Replaces the currently previewed animation with one chosen via file dialog.
 ## newAnimationPath: The path to the folder selected
 func replace_animation(newAnimationPath : String) -> void:
+	AudioManager.play_UI_effect("UISelection");
 	var targetFilePath : String = FileSearch.find_directory_by_name(animationPreviewNameToReplace);
 	assetManager.clear_files(animationPreviewNameToReplace);
 	# Count for which file is being iterated at for naming purposes

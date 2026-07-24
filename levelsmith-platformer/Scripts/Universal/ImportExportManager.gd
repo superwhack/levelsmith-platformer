@@ -553,7 +553,8 @@ func match_enemy_type(enemy : Dictionary, locatedEnemy : Node2D) -> void:
 			newResource.active = enemyStats.get("active", false);
 		"flying":
 			newResource.speed = enemyStats.get("speed", 2.0);
-			if !(enemyStats.has("endpoint") && enemyStats.endpoint is Vector2 && enemyStats.endpoint.has("x") && enemyStats.endpoint.has("y")):
+			#typeof() == 27 means it's a Vector3, which is valid for the endpoint
+			if !(enemyStats.has("endpoint") && typeof(enemyStats.endpoint) == 27 && enemyStats.endpoint.has("x") && enemyStats.endpoint.has("y")):
 				newResource.pointBOffset = Vector2(0, 0);
 			else:
 				newResource.pointBOffset.x = enemy.stats.endpoint.x;
@@ -563,7 +564,7 @@ func match_enemy_type(enemy : Dictionary, locatedEnemy : Node2D) -> void:
 			newResource.gravity = enemyStats.get("gravity", false);
 		"movingPlatform":
 			newResource.speed = enemyStats.get("speed", 2);
-			if !(enemyStats.has("endpoint") && enemyStats.endpoint is Vector2 && enemyStats.endpoint.has("x") && enemyStats.endpoint.has("y")):
+			if !(enemyStats.has("endpoint") && typeof(enemyStats.endpoint) == 27 && enemyStats.endpoint.has("x") && enemyStats.endpoint.has("y")):
 				newResource.pointBOffset = Vector2(0, 0);
 			else:
 				newResource.pointBOffset.x = enemy.stats.endpoint.x;

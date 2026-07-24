@@ -158,6 +158,7 @@ func _unhandled_input(event : InputEvent) -> void:
 				# If the clicked cell is an entity and the click was short, edit its properties
 				elif (currentCell > Global.EntityType.GOAL && currentCell < Global.EntityType.PROP1 && !isMoving && currentCell != Global.EntityType.COIN && currentCell != Global.EntityType.CHECKPOINT):
 					if Input.is_action_pressed("duplicate") && previousCell != -1 && currentCell != Global.EntityType.PLAYER:
+						tileSwitch.select_object(currentCell);
 						entityManager.duplicate_entity(editorManager.currentMousePosition);
 					else:
 						entityManager.duplicatingResource = null;

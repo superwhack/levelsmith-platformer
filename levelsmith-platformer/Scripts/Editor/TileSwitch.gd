@@ -78,3 +78,28 @@ func remember_selected_button(button: Button):
 			lastEntityButton = button;
 		button.ButtonType.PROP:
 			lastPropButton = button;
+			
+## Selects a hotbar item directly
+## objectID: the source if of the object
+func select_object(objectID: int) -> void:
+	# Check the tiles first
+	for button in tileButtons:
+		if (button.thisItemID == objectID):
+			button.select();
+			return;
+	
+	# Check the entities second
+	for button in entityButtons:
+		if (button.thisItemID == objectID):
+			if (editorManager.currentHotbarState != Global.HotbarState.ENTITIES):
+				entity_dropdown_select(0);
+			button.select();
+			return;
+
+	# Check the props last.
+	for button in propButtons:
+		if (button.thisItemID == objectID):
+			if (editorManager.currentHotbarState != Global.HotbarState.PROPS):
+				entity_dropdown_select(1);
+			button.select();
+			return;

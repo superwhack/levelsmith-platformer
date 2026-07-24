@@ -50,8 +50,6 @@ func _process(_delta : float) -> void:
 func select() -> void:
 	if (!button_pressed):
 		button_pressed = true;
-	if (!has_focus()):
-		grab_focus();
 	
 	# Remembers the last button selected, for focus purposes
 	tilebar.remember_selected_button(self);

@@ -17,7 +17,8 @@ extends Control
 @export var buttonDuplicateLevel : Button;
 @export var buttonDeleteLevel : Button;
 @export var buttonFavoriteLevel : Button;
-@export var buttonExportLevel : Button;
+# Export level button
+@export var exportLevelButton : Button;
 @export var buttonSmallExportLevel : Button;
 @onready var favoriteButtonIcon : TextureRect = buttonFavoriteLevel.get_node("MarginContainer/TextureRect");
 
@@ -74,8 +75,6 @@ extends Control
 @export var favoriteFilled : Texture2D;
 
 @export_group("Other")
-# Export level button
-@export var exportLevelButton : Button;
 
 @export var fileExplorer : FileDialog;
 
@@ -174,10 +173,12 @@ func _ready() -> void:
 
 	fileExplorer.file_selected.connect(func(path):
 		fieldImportLevelPath.text = path;
+		AudioManager.play_UI_effect("UISelection");
 	)
 
 	fileExplorer.dir_selected.connect(func(path):
 		fieldImportLevelPath.text = path + "/";
+		AudioManager.play_UI_effect("UISelection");
 	)
 	
 	
@@ -201,11 +202,11 @@ func popup_file_dialog() -> void:
 	fileExplorer.popup_file_dialog();
 	buttonNewLevel.grab_focus();
 func overlay_duplicate_level_show() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	overlayDuplicateLevel.show();
 	duplicateName.grab_focus();
 func overlay_duplicate_level_hide() -> void:
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	overlayDuplicateLevel.hide();
 	buttonNewLevel.grab_focus();
 
@@ -279,6 +280,8 @@ func import_cancel() -> void:
 func export_current_level() -> void:
 	if (!selectedItem):
 		return;
+	
+	AudioManager.play_UI_effect("UISelection");
 	
 	# Set up file paths. Temp path is downloading the files, then zip it.
 	var newLevelPath : String = selectedItem.levelPath.rstrip("/");
@@ -487,7 +490,6 @@ func setup_level_item(folderName : String, levelPath : String) -> void:
 ## Load a level when appropriate button is pressed
 ## path: The path of the level to be loaded.
 func _on_level_double_clicked(path: String) -> void:
-	AudioManager.play_UI_effect("UISelection");
 	masterManager.load_level(path);
 	
 ## Fills in metadata labels with appropriate data when hovered and nothing else selected.
@@ -499,6 +501,7 @@ func _on_level_hovered(item: Node) -> void:
 ## When a level is pressed, swap to it
 ## item: the level list button item
 func _on_level_pressed(item: Node) -> void:
+	AudioManager.play_UI_effect("UISelection");
 	if (selectedItem == item):
 		return;
 		
@@ -653,10 +656,12 @@ func clear_selection() -> void:
 		preview.texture = previewDefault;
 		set_favorite_button_icon(false);
 		validatedCheckmark.hide();
+		isPlayable = false;
 
 ## Opens OS file explorer to the users Level folder.
 func open_level_folder() -> void:
 	var path : String = ProjectSettings.globalize_path("user://Levels");
+	AudioManager.play_UI_effect("UISelection");
 	OS.shell_open(path);
 
 
@@ -664,7 +669,7 @@ func open_level_folder() -> void:
 func play_current_level() -> void:
 	if (!selectedItem):
 		return;
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	masterManager.load_level(selectedItem.levelPath, true);
 
 ## Edit the currently selected level.
@@ -672,14 +677,14 @@ func edit_current_level() -> void:
 	if (!selectedItem):
 		return;
 	
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	masterManager.load_level(selectedItem.levelPath);
 
 ## Opens a delete popup when the delete button is pressed
 func open_delete_popup() -> void:
 	if (!selectedItem):
 		return;
-	
+	AudioManager.play_UI_effect("UISelection");
 	PopUpManager.create_delete_popup(delete_current_level, selectedItem.levelTitle.text);
 
 ## Deletes the currently selected level.
@@ -687,7 +692,7 @@ func delete_current_level() -> void:
 	if (!selectedItem):
 		return;
 	
-	AudioManager.play_UI_effect("UI_Selection");
+	AudioManager.play_UI_effect("UISelection");
 	
 	var levelPath : String = selectedItem.levelPath.rstrip("/");
 	
@@ -771,7 +776,9 @@ func duplicate_current_level() -> void:
 func favorite_current_level() -> void:
 	if (!selectedItem):
 		return;
-
+	
+	AudioManager.play_UI_effect("UISelection");
+	
 	selectedItem.favorited = !selectedItem.favorited;
 
 	# Set the metadata value for favorited in the file

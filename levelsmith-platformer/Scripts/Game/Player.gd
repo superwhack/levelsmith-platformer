@@ -127,6 +127,8 @@ var victory : bool = false;
 
 var debugLabel: Label;
 
+var forceQuit : bool;
+
 # CONSTANTS
 
 const TRUE_SPEED_BASE : int = 400;
@@ -742,7 +744,6 @@ func wall_jump():
 		
 	justWallJumped = true;
 
-
 ## Detect tiles the player is colliding with, and have the player interact with tiles below it
 func detect_tiles() -> void:
 	if (currentState == PlayerState.VICTORY || currentState == PlayerState.DEAD):
@@ -757,6 +758,7 @@ func detect_tiles() -> void:
 			slideCollisions.push_back(raycast);
 		
 	for raycast in slideCollisions:
+		forceQuit = false;
 		var collider : Object = raycast.get_collider();
 		# Moving platform (It's not on the tilemap but still works like a solid tile)
 		if (collider is MovingPlatform && isPlayerGrounded):
@@ -799,7 +801,9 @@ func detect_tiles() -> void:
 				if (tileDataShape):
 					var newTileName : String = tileDataShape.get_custom_data("name");
 					if (newTileName != tileName):
-						return;
+						forceQuit = true;
+		if (forceQuit):
+			continue;
 		# Wall Slide when not on ice
 		if (wallSlideConditionsMet && groundSpeed != 0 ):
 			if (tileName != "ice" && tileName != "oneway"):

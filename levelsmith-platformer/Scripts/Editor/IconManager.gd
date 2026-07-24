@@ -63,15 +63,16 @@ func _process(_delta : float) -> void:
 func create_icon(objectPosition : Vector2, iconType : String) -> void:
 	var baseSprite : Sprite2D = Sprite2D.new();
 	
+	baseSprite.z_index = 2;
 	match iconType:
 		"foreground":
 			baseSprite.texture = propForegroundIcon;
+			baseSprite.z_index = 10;
 		"background": 
 			baseSprite.texture = propBackgroundIcon;
 		_:
 			baseSprite.texture = defaultIcon;
 	
-	baseSprite.z_index = 2;
 	iconHeap.set(objectPosition, baseSprite);
 	iconHeap[objectPosition].global_position = objectPosition * Global.TILE_SIZE + ICON_OFFSET;
 	add_child(iconHeap[objectPosition]);

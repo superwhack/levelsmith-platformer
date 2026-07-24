@@ -66,6 +66,7 @@ func update_sliders() -> void:
 
 ## Reset the settings
 func reset_settings() -> void:
+	AudioManager.play_UI_effect("UISelection");
 	gameplayZoom.value = DEFAULT_ZOOM;
 	followSpeed.value = DEFAULT_FOLLOW_SPEED;
 	cameraDeadzone.value = DEFAULT_DEADZONE;

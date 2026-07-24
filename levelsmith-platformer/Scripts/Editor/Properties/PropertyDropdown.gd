@@ -26,6 +26,6 @@ func update_dropdown() -> void:
 	optionButton.select(value);
 
 ## Runs when the dropdown gets selected
-func _option_selected(index: int) -> void:
+func _option_selected(index : int) -> void:
 	value = index;
 	dropdown_changed.emit();

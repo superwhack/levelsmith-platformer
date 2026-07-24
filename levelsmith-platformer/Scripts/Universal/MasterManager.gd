@@ -45,9 +45,9 @@ var loadedLevelPath : String = "";
 # Tween information
 var loadingTween : Tween
 # The time that the screen wipe takes
-var loadingTweenTime : float = 0.35
+var loadingTweenTime : float = 0.2
 #The time that the full screen holds
-var loadingHold : float = 0.30
+var loadingHold : float = 0.10
 
 # An enum for determining if we are going to the main menu or desktop.
 enum ExitAction {
@@ -170,6 +170,8 @@ func create_bedrock_border() -> void:
 ## Imports a level 
 ## startPlay: Starts the level in play mode
 func import_level_and_edit(startPlay: bool = false, skipWipeIn: bool = false) -> void:
+	ImportExportManager.validate_import(loadedLevelPath);
+	
 	# Clear the enemies from the folder
 	ImportExportManager.clear_enemies_folder();
 	# Delete all child nodes
@@ -203,6 +205,7 @@ func import_level_and_edit(startPlay: bool = false, skipWipeIn: bool = false) ->
 func load_level(levelPath: String, startPlay: bool = false) -> void:
 	# If it is a valid import, set the paths accordingly
 	if (ImportExportManager.validate_import(levelPath)):
+		print("Settings level path...", levelPath)
 		ImportExportManager.levelPath = levelPath;
 		loadedLevelPath = levelPath;
 		await screen_wipe_in();
@@ -292,6 +295,7 @@ func edit(skipWipeIn: bool = false) -> void:
 	# Reset audio and play ui effect
 	AudioManager.reset_audio();
 	AudioManager.play_UI_effect("UISelection");
+	AnimationManager.pause_all_animations();
 	# Pause players
 	get_tree().set_group("Player", "process_mode", Node.PROCESS_MODE_DISABLED);
 	# Delete tileMap from the game manager
@@ -334,6 +338,7 @@ func play(skipWipeIn: bool = false) -> void:
 	propertyMenu.close();
 	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");
+	AnimationManager.play_all_animations();
 	# Update state variable
 	state = Global.State.PLAY;
 	# Save map

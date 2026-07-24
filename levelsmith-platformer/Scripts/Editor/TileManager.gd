@@ -5,7 +5,7 @@ extends Node2D
 @export var toolManager : Node2D;
 @export var tileMap : TileMapLayer;
 
-@onready var brushObject = toolManager.brushObject;
+@onready var brushObject : int = toolManager.brushObject;
 
 ## Runs every frame. Ensures the brush object is always up to date.
 func _process(_delta : float) -> void:

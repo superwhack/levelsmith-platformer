@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://8hykb7g5hij7" path="res://Scripts/AssetManager.gd" id="1_2va5h"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="1_rshqi"]
 [ext_resource type="FontFile" uid="uid://b8sg6ccan6fc" path="res://Assets/Fonts/JetBrainsMono-Bold.ttf" id="3_mhodq"]
-[ext_resource type="Texture2D" uid="uid://bbas38g436c01" path="res://icon.svg" id="3_rshqi"]
+[ext_resource type="Texture2D" uid="uid://da4v1xhytrdda" path="res://icon.svg" id="3_rshqi"]
 [ext_resource type="StyleBox" uid="uid://b3w7vcdv82sh1" path="res://Assets/UserInterface/HoverStyleBox.tres" id="4_7puos"]
-[ext_resource type="Texture2D" uid="uid://ctxw73txb750y" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="4_o8nck"]
-[ext_resource type="Texture2D" uid="uid://do1aligfv3wmg" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
+[ext_resource type="Texture2D" uid="uid://dfco244lcptog" path="res://Assets/UserInterface/Buttons/iconoir--question-mark-circle.png" id="4_o8nck"]
+[ext_resource type="Texture2D" uid="uid://uboggbk6slsr" path="res://Assets/UserInterface/Buttons/CloseX.png" id="4_ssly3"]
 [ext_resource type="Texture2D" uid="uid://dxag1j2w8yhjg" path="res://Assets/Sprites/UI/Checkerboard.png" id="5_e4k77"]
 [ext_resource type="Texture2D" uid="uid://ctkp25yl7wov4" path="res://Assets/Sprites/UI/Iconoir/iconoir--nav-arrow-left.png" id="9_wgng1"]
 [ext_resource type="Script" uid="uid://cy0omeeqj1evc" path="res://Scripts/Universal/ImageSwapping.gd" id="10_clgtw"]
@@ -88,6 +88,7 @@ offset_right = 450.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_behavior_recursive = 1
 
 [node name="ContentContainer" type="VBoxContainer" parent="AssetManagerPanel" unique_id=1686367830]
 layout_mode = 1
@@ -283,6 +284,7 @@ theme_override_constants/separation = -2
 [node name="PrevFrameButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer" unique_id=51178185]
 custom_maximum_size = Vector2(30, 30)
 layout_mode = 2
+tooltip_text = "Previous Frame [A]"
 theme_type_variation = &"ToolButton"
 icon = ExtResource("9_wgng1")
 icon_alignment = 1
@@ -290,6 +292,7 @@ icon_alignment = 1
 [node name="NextFrameButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/FrameButtonContainer" unique_id=2054824461]
 custom_maximum_size = Vector2(30, 30)
 layout_mode = 2
+tooltip_text = "Next Frame [D]"
 theme_type_variation = &"ToolButton"
 icon = ExtResource("10_yswm7")
 icon_alignment = 1
@@ -308,6 +311,7 @@ alignment = 1
 
 [node name="PrevAnimButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=1355417284]
 layout_mode = 2
+tooltip_text = "Previous Animation [Q]"
 theme_type_variation = &"ToolButton"
 icon = ExtResource("11_mrdhq")
 icon_alignment = 1
@@ -322,6 +326,7 @@ vertical_alignment = 1
 
 [node name="NextAnimButton" type="Button" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/AnimButtonContainer" unique_id=71301328]
 layout_mode = 2
+tooltip_text = "Next Animation [D]"
 theme_type_variation = &"ToolButton"
 icon = ExtResource("12_41b3d")
 icon_alignment = 1
@@ -345,6 +350,8 @@ text = "FPS:"
 
 [node name="FPSValue" type="SpinBox" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer" unique_id=1524841534]
 layout_mode = 2
+tooltip_text = "Increase Frame Rate [W]
+Decrease Frame Rate [S]"
 min_value = 1.0
 max_value = 60.0
 value = 12.0
@@ -356,6 +363,7 @@ visible = false
 custom_minimum_size = Vector2(48, 48)
 custom_maximum_size = Vector2(48, 48)
 layout_mode = 2
+tooltip_text = "Pause Animation [Space]"
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/PauseButton" unique_id=1061477833]
 layout_mode = 0
@@ -372,6 +380,7 @@ texture = ExtResource("14_yswm7")
 custom_minimum_size = Vector2(48, 48)
 custom_maximum_size = Vector2(48, 48)
 layout_mode = 2
+tooltip_text = "Play Animation [Space]"
 text = "
 "
 
@@ -389,6 +398,7 @@ texture = ExtResource("17_41b3d")
 custom_minimum_size = Vector2(48, 48)
 custom_maximum_size = Vector2(48, 48)
 layout_mode = 2
+tooltip_text = "Stop Animation [LShift]"
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/StopButton" unique_id=1178652479]
 layout_mode = 0
@@ -448,6 +458,8 @@ horizontal_alignment = 1
 
 [node name="AudioTimeline" type="HSlider" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox" unique_id=428290432]
 layout_mode = 2
+tooltip_text = "Scrub Forward [D]
+Scrub Backward [A]"
 step = 0.01
 
 [node name="BottomButtonContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=1727755463]
@@ -468,6 +480,7 @@ visible = false
 custom_minimum_size = Vector2(40, 40)
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
+tooltip_text = "Pause Audio [Space]"
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/PauseButton" unique_id=1411352883]
 custom_maximum_size = Vector2(40, 40)
@@ -483,6 +496,7 @@ texture = ExtResource("14_yswm7")
 custom_minimum_size = Vector2(40, 40)
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
+tooltip_text = "Play Audio [Space]"
 icon_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/PlayButton" unique_id=1395286219]
@@ -501,6 +515,7 @@ texture = ExtResource("17_41b3d")
 custom_minimum_size = Vector2(40, 40)
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
+tooltip_text = "Stop Audio [LShift]"
 icon_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/StopButton" unique_id=1901133783]

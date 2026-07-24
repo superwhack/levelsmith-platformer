@@ -20,4 +20,12 @@ extends Resource
 
 # True if the shooting enemy has gravity and can have tile affects and gravity applied
 @export var gravity : bool;
+
+# Which way the enemy is standing
 @export var facing : int;
+
+# True if the projectiles stay active even when off screen
+@export var persistence : bool;
+
+# True if the enemy should always be active
+@export var active : bool;

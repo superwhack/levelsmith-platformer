@@ -5,6 +5,7 @@ extends Node2D
 @export var toolManager : Node2D;
 @export var editorManager : Node2D;
 @export var masterManager : Node2D;
+@export var propertyMenu : Panel;
 
 # Icon textures
 var propBackgroundIcon : Texture2D = preload("res://Assets/Sprites/UI/Icons/PropBackground.png");
@@ -44,6 +45,15 @@ func _process(_delta : float) -> void:
 		previewIcon.texture = propBackgroundIcon if toolManager.isBackground else propForegroundIcon;
 		if (tileMap.get_cell_source_id(editorManager.currentMousePosition) > Global.EntityType.GOAL): 
 			previewIcon.hide();
+			
+		##if the property menu is open do not show the foreground background icon 
+		var propertyOpen : bool = propertyMenu.selectedEntity != null;
+		
+		if (propertyOpen):
+			previewIcon.hide();
+		else:
+			previewIcon.show();
+			
 	else:
 		previewIcon.hide();
 

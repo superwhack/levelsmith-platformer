@@ -41,6 +41,7 @@ func _ready() -> void:
 	add_to_group("enemy");
 	animatedSprites.animation_finished.connect(on_animation_finished);
 	originalPosition = position;
+	z_index = 2;
 
 ## Processes for every frame based on time
 ## delta: Time since previous frame.

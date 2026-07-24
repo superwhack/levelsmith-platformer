@@ -9,7 +9,7 @@ This wiki serves as the primary documentation for Foundry2D, covering its featur
    width="700"
    height = "300">
 </p>
-Foundry2D is a **rapid 2D level prototyping tool** built in Godot. It allows users to quickly create platformer levels by placing tiles, entities, and gameplay objects through an intuitive visual editor. The project was designed to streamline the level creation process while remaining flexible enough to support a wide variety of mechanics and gameplay ideas.
+Foundry2D is an open source <i>rapid 2D level prototyping tool</i> built in Godot. It allows users to quickly create platformer levels by placing tiles, entities, and gameplay objects through an intuitive visual editor. The project was designed to streamline the level creation process while remaining flexible enough to support a wide variety of mechanics and gameplay ideas.
 
 Some of Foundry2D's key features include:
 

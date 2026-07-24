@@ -7,8 +7,6 @@ extends Area2D
 ## Hooks signals
 func _ready() -> void:
 	body_entered.connect(collect_checkpoint);
-	# Start playing the animated sprite
-	animatedSprite.play();
 	Global.checkpointCollected.connect(make_inactive);
 	animatedSprite.animation_finished.connect(_on_animation_finished);
 	# Set the sprite frames to the template sprite's frames

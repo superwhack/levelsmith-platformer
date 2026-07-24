@@ -12,16 +12,12 @@ var imageNameToReplace : String;
 @export var imagePreviewTexture : TextureRect;
 
 # Reference to the main tile map
-var mainTileMap : TileMapLayer;
+@onready var mainTileMap : TileMapLayer = assetManager.mainTileMap;
 
 # All types of tiles
 var tileTypes : Array[String] = ["Solid", "Hazard", "OneWay", "Ice", "Sticky", "Bounce", "Death", "Slope" ];
 # All types of props
 var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5", "Prop6"];
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	mainTileMap = assetManager.mainTileMap;
 
 ## Refresh all images in game
 func refresh_images() -> void:

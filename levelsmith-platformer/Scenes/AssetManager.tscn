@@ -101,10 +101,12 @@ offset_right = -16.0
 offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_behavior_recursive = 1
 theme_override_constants/separation = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer" unique_id=586479525]
 layout_mode = 2
+focus_behavior_recursive = 1
 
 [node name="Title" type="Label" parent="AssetManagerPanel/ContentContainer/HBoxContainer" unique_id=1534252912]
 layout_mode = 2
@@ -174,6 +176,7 @@ layout_mode = 2
 [node name="MainContentContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer" unique_id=950802687]
 layout_mode = 2
 size_flags_vertical = 3
+focus_behavior_recursive = 1
 theme_override_constants/separation = 16
 alignment = 2
 
@@ -398,7 +401,7 @@ texture = ExtResource("17_41b3d")
 custom_minimum_size = Vector2(48, 48)
 custom_maximum_size = Vector2(48, 48)
 layout_mode = 2
-tooltip_text = "Stop Animation [LShift]"
+tooltip_text = "Stop Animation [Ctrl]"
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AnimationPreview/BottomButtonContainer/StopButton" unique_id=1178652479]
 layout_mode = 0
@@ -415,6 +418,7 @@ texture = ExtResource("18_l1dbf")
 visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
+focus_behavior_recursive = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=2080426857]
 
@@ -459,7 +463,8 @@ horizontal_alignment = 1
 [node name="AudioTimeline" type="HSlider" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/Audio Section Vbox" unique_id=428290432]
 layout_mode = 2
 tooltip_text = "Scrub Forward [D]
-Scrub Backward [A]"
+Scrub Backward [A]
+Speed Up [Shift]"
 step = 0.01
 
 [node name="BottomButtonContainer" type="HBoxContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview" unique_id=1727755463]
@@ -515,7 +520,7 @@ texture = ExtResource("17_41b3d")
 custom_minimum_size = Vector2(40, 40)
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
-tooltip_text = "Stop Audio [LShift]"
+tooltip_text = "Stop Audio [Ctrl]"
 icon_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="AssetManagerPanel/ContentContainer/MainContentContainer/LeftColumnContainer/AudioPreview/BottomButtonContainer/StopButton" unique_id=1901133783]

@@ -749,7 +749,7 @@ func wall_jump():
 		velocity.x *= currentFriction;
 	if airControl != 1:
 		velocity.x *= pow(airControl, WALL_JUMP_AIR_CONTROL_POWER);
-	velocity.y = -WALL_JUMP_FORCE_Y * jumpHeight * sqrt(1.0 / wallJumpCount) / pow(clamp(groundSpeed, WALL_JUMP_Y_GROUND_MIN, WALL_JUMP_Y_GROUND_MAX), WALL_JUMP_SPEED_EXPONENT_Y);
+	velocity.y = -WALL_JUMP_FORCE_Y * jumpHeight * sqrt(1.0 / wallJumpCount) / sqrt(fallSpeed) / pow(clamp(groundSpeed, WALL_JUMP_Y_GROUND_MIN, WALL_JUMP_Y_GROUND_MAX), WALL_JUMP_SPEED_EXPONENT_Y);
 	
 	var iceXSpeedScale : float = 1.75;
 	# Slow down on slow tiles (and on ice, but you normally wall jump faster anyways)

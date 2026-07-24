@@ -128,7 +128,7 @@ To replace an asset, select it, click \"load\" and choose a matching file from y
 - Animations: folders containing png images named numerically/alphabetically in frame order. (Limit: 60 frames per animation)
 You can also put these files directly into the subfolder for each replaceable asset in your level folder.
 
-Note that all image assets are at a scale of 128x128. Your image assets will be resized automatically if they don't match."
+Note that all image assets are at a scale of 128x128 pixels. Your image assets will be resized automatically if they don't match."
 theme_override_styles/normal = SubResource("StyleBoxEmpty_g4v7s")
 theme_override_styles/pressed = ExtResource("4_7puos")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_a3ruo")

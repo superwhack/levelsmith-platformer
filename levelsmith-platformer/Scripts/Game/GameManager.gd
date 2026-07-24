@@ -56,6 +56,7 @@ var playerPreset : Resource;
 
 ## When pause is pressed, flip the current state
 func pause() -> void:
+	AudioManager.play_UI_effect("UISelection");
 	if goalReached || !pausable:
 		return;
 	if playState == PlayState.PAUSE:
@@ -78,7 +79,6 @@ func reset() -> void:
 	freeze(true);
 	await masterManager.screen_wipe_in();
 	AudioManager.reset_audio();
-	AudioManager.play_UI_effect("UISelection");
 	AudioManager.play_music("LevelMusic");
 	pauseButton.show();
 	get_tree().paused = false;
@@ -185,10 +185,13 @@ func _ready() -> void:
 	Global.checkpointCollected.connect(collect_checkpoint);
 	Global.onCoinCollected.connect(_on_coin_collected);
 	resetButton.pressed.connect(full_restart);
+	resetButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	pauseButton.pressed.connect(pause);
 	resumeButton.pressed.connect(pause);
 	replayButton.pressed.connect(replay_level);
+	replayButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 	editorButton.pressed.connect(return_to_editor);
+	editorButton.pressed.connect(AudioManager.play_UI_effect.bind("UISelection"));
 
 ## Runs every frame and updates the timer
 func _process(delta: float) -> void:

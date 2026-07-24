@@ -23,7 +23,7 @@ enum ButtonType {
 @export var buttonImage : TextureRect;
 
 func _ready() -> void:
-	focus_entered.connect(select);
+	focus_entered.connect(select.bind(false));
 	pressed.connect(select);
 	
 	# If an entity, prop, or tile, add to appropriate array.
@@ -47,12 +47,12 @@ func _process(_delta : float) -> void:
 		buttonImage.texture = tileSet.get_source(thisItemID).texture;
 
 ## Select this button.
-func select() -> void:
+func select(sound : bool = true) -> void:
 	if (!button_pressed):
 		button_pressed = true;
+	if (sound):
+		AudioManager.play_UI_effect("UISelection");
 	
 	# Remembers the last button selected, for focus purposes
 	tilebar.remember_selected_button(self);
-	
-	AudioManager.play_UI_effect("UISelection");
 	tilebar.toolManager.update_brush_object(thisItemID);

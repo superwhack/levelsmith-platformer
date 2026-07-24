@@ -284,8 +284,7 @@ buttonType = 1
 
 [node name="CheckpointButton" parent="EntityPickerUI/MarginContainer/Tabs/Entities" unique_id=922654245 node_paths=PackedStringArray("tilebar") instance=ExtResource("10_goodf")]
 layout_mode = 2
-tooltip_text = "Slope [8]"
-focus_mode = 0
+tooltip_text = "Checkpoint [9]"
 toggle_mode = true
 button_group = ExtResource("5_fdk17")
 thisItemID = 508

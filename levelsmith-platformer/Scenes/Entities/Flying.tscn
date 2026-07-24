@@ -76,7 +76,6 @@ scale = Vector2(6.3, 6.3)
 shape = SubResource("RectangleShape2D_iqs3o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1379822224]
-z_index = -1
 position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"FlyMove"

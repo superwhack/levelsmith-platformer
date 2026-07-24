@@ -2,22 +2,22 @@ extends Node
 
 # Reference to the asset manager
 @export var assetManager : AssetManager;
+
 # References to images
 var imageToReplace : Image;
 var imageNameToReplace : String;
+
 # References to nodes for previewing the image within the asset manager
 @export var imagePreview : Panel;
 @export var imagePreviewTexture : TextureRect;
+
 # Reference to the main tile map
-var mainTileMap : TileMapLayer;
+@onready var mainTileMap : TileMapLayer = assetManager.mainTileMap;
+
 # All types of tiles
 var tileTypes : Array[String] = ["Solid", "Hazard", "OneWay", "Ice", "Sticky", "Bounce", "Death", "Slope" ];
 # All types of props
 var propTypes : Array[String] = ["Prop1", "Prop2", "Prop3", "Prop4", "Prop5", "Prop6"];
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	mainTileMap = assetManager.mainTileMap;
 
 ## Refresh all images in game
 func refresh_images() -> void:
@@ -37,9 +37,9 @@ func refresh_images() -> void:
 ## newImage: Image being switched to
 ## tileMap: The tileMap being changed
 ## NOTE: Only works with images >= 128px x 128px
-func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer) -> void:
-	if (newImage == null):
-		return;
+func change_tile_texture(sourceID : int, newImage : Image, tileMap : TileMapLayer) -> void:
+	if (!newImage): return;
+	
 	# Create a Texture2D from the image
 	var newTexture : Texture2D = ImageTexture.create_from_image(newImage);
 	# Set a reference to the tile map's tile set
@@ -56,9 +56,10 @@ func change_tile_texture(sourceID: int, newImage: Image, tileMap: TileMapLayer) 
 
 ## Replaces the currently previewed image with one chosen via file dialog.
 ## newImagePath: The file path of the new image replacing the old one.x 
-func replace_image(newImagePath: String) -> void:
+func replace_image(newImagePath : String) -> void:
 	var targetFilePath : String = FileSearch.find_directory_by_name(imageNameToReplace);
-	var targetDirectory : DirAccess = assetManager.clear_files(imageNameToReplace);
+	assetManager.clear_files(imageNameToReplace);
+	
 	# If the image is a png, create a copy
 	if (newImagePath.get_extension().to_lower() == "png"):
 		assetManager.clear_files(imageNameToReplace);
@@ -84,6 +85,9 @@ func reset_image() -> void:
 	refresh_images();
 	imagePreviewTexture.texture = ImageTexture.create_from_image(get_default_image(imageNameToReplace));
 
+## Find the default image that matches the given name.
+## imageName: The name of the default image to find
+## returns: The default image corresponding with imageName.
 func get_default_image(imageName : String) -> Image:
 	var defaultImage : Image = Image.new();
 	if ("Prop" in imageName):

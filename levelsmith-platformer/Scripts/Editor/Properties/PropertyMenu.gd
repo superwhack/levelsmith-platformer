@@ -22,14 +22,14 @@ var selectedPlayerPreset : Resource;
 @export var closeButton : Button;
 
 @export_group("Menu Containers")
-@export var playerMenu : VBoxContainer;
+@export var playerMenu : MarginContainer;
 @export var patrollingMenu : MarginContainer;
 @export var shootingMenu : MarginContainer;
-@export var flyingMenu : VBoxContainer;
+@export var flyingMenu : MarginContainer;
 @export var stationaryMenu : MarginContainer;
 @export var movingPlatformMenu : MarginContainer;
 
-# Player values
+# Player values, read from ImportExport as well so don't remove these
 var playerHealth: int;
 var playerSpeed: float;
 var playerAcceleration: float;
@@ -76,13 +76,15 @@ var playerWallJumpDecay : bool;
 @export var shootingFireRateSlider : VBoxContainer;
 @export var shootingProjectileBounce : VBoxContainer;
 @export var shootingGravity : VBoxContainer;
+@export var shootingProjectilePersistenceCheckbox : VBoxContainer;
+@export var shootingAlwaysActiveCheckbox : VBoxContainer;
 
 @export_group("Flying Properties")
 # Flying inputs
 @export var flyingSpeedSlider : VBoxContainer;
 @export var flyingOffsetXSlider : VBoxContainer;
 @export var flyingOffsetYSlider : VBoxContainer;
-var previewLine: Line2D;
+var previewLine : Line2D;
 
 @export_group("Stationary Properties")
 # Stationary inputs
@@ -108,6 +110,7 @@ var directionArrow : Sprite2D;
 func _ready() -> void:
 	_on_preset_options_item_selected(0);
 	
+	# Connect everything
 	playerHealthSlider.drag_ended.connect(_on_drag_ended);
 	playerSpeedSlider.drag_ended.connect(_on_drag_ended);
 	playerAccelerationSlider.drag_ended.connect(_on_drag_ended);
@@ -134,6 +137,8 @@ func _ready() -> void:
 	shootingFireRateSlider.drag_ended.connect(_on_drag_ended);
 	shootingProjectileBounce.check_changed.connect(update_values);
 	shootingGravity.check_changed.connect(update_values);
+	shootingProjectilePersistenceCheckbox.check_changed.connect(update_values);
+	shootingAlwaysActiveCheckbox.check_changed.connect(update_values);
 	
 	flyingSpeedSlider.drag_ended.connect(_on_drag_ended);
 	flyingOffsetXSlider.drag_ended.connect(_on_drag_ended);
@@ -160,8 +165,6 @@ func close() -> void:
 	previewManager.show();
 	cursorManager.show_selector_frame();
 	
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
@@ -173,6 +176,7 @@ func close() -> void:
 ## _delta: Time passed since the last frame
 func _process(_delta: float) -> void:
 	# If there is a selected entity, set the name in the property menu, otherwise close
+	# Also adjust any arrows, flips, or lines needed
 	if (!selectedEntity):
 		hide();
 		return;
@@ -280,7 +284,7 @@ func update_sliders() -> void:
 	playerDoubleJumpCheckbox.update_checkbox();
 	playerWallJumpCheckbox.value = playerWallJump;
 	playerWallJumpCheckbox.update_checkbox();
-	# Make the WallJumpDecay Checkbox transparent if it can't be selected.
+		# Make the WallJumpDecay Checkbox transparent if it can't be selected.
 	if !playerWallJump:
 		playerWallJumpDecay = false;
 		playerWallJumpStrength = 1.0;
@@ -305,12 +309,16 @@ func update_sliders() -> void:
 		shootingFireRateSlider.value = selectedPreset.fireRate;
 		shootingProjectileBounce.value = selectedPreset.projBounce;
 		shootingGravity.value = selectedPreset.gravity;
+		shootingProjectilePersistenceCheckbox.value = selectedPreset.persistence;
+		shootingAlwaysActiveCheckbox.value = selectedPreset.active;
 		shootingDirectionSlider.update_slider();
 		shootingRandomDirection.update_checkbox();
 		shootingShotSpeedSlider.update_slider();
 		shootingFireRateSlider.update_slider();
 		shootingProjectileBounce.update_checkbox();
 		shootingGravity.update_checkbox();
+		shootingProjectilePersistenceCheckbox.update_checkbox();
+		shootingAlwaysActiveCheckbox.update_checkbox();
 	elif selectedEntity is EnemyFlyer:
 		flyingSpeedSlider.value = selectedPreset.speed;
 		flyingOffsetXSlider.value = selectedPreset.pointBOffset.x / Global.TILE_SIZE;
@@ -354,7 +362,7 @@ func make_selectable(property: VBoxContainer, selectable: bool) -> void:
 	else:
 		property.modulate = Color(1, 1, 1, 1);
 
-## Update all of the player values based on the sliders
+## Update all of the select entity's values based on the properties chosen in the menu
 func update_values() -> void:
 	playerHealth = playerHealthSlider.value;
 	playerSpeed = playerSpeedSlider.value;
@@ -370,7 +378,6 @@ func update_values() -> void:
 	playerWallJump = playerWallJumpCheckbox.value;
 	playerWallJumpStrength = playerWallJumpStrengthSlider.value;
 	playerWallJumpDecay = playerWallJumpDecayCheckbox.value;
-	
 	if selectedEntity is EnemyPatrol:
 		selectedPreset.groundSpeed = patrollingSpeedSlider.value;
 		selectedPreset.direction = patrollingDirectionDropdown.value;
@@ -384,6 +391,8 @@ func update_values() -> void:
 		selectedPreset.fireRate = shootingFireRateSlider.value;
 		selectedPreset.projBounce = shootingProjectileBounce.value;
 		selectedPreset.gravity = shootingGravity.value
+		selectedPreset.persistence = shootingProjectilePersistenceCheckbox.value;
+		selectedPreset.active = shootingAlwaysActiveCheckbox.value
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
 	elif selectedEntity is EnemyFlyer:
 		selectedPreset.speed = flyingSpeedSlider.value;
@@ -403,7 +412,6 @@ func update_values() -> void:
 		selectedPreset.visible = movingPlatformVisibilityCheckbox.value;
 		selectedPreset.active = movingPlatformAlwaysActiveCheckbox.value
 		ResourceSaver.save(selectedPreset, "user://Resources/Enemies/" + selectedEntity.name + ".tres");
-	
 
 ## When the slider is finished dragging, update the custom preset and switch to this preset
 func _on_drag_ended() -> void:
@@ -416,24 +424,25 @@ func _on_drag_ended() -> void:
 
 ## Show the property menu, different sections pop up depending on the currently selected entity type
 ## resource: The resource file to load with properties
-func show_menu(resource: Resource = null) -> void:
+func show_menu(resource : Resource = null) -> void:
 	show();
 	# Hide preview and selector frame.
 	previewManager.hide();
 	cursorManager.hide_selector_frame();
 	
-	if previewLine:
-		previewLine.modulate.a = .5;
 	if directionArrow:
 		directionArrow.scale = Vector2(1,1);
 		directionArrow = null;
-		
+	
+	# Hide all menus
 	playerMenu.hide();
 	patrollingMenu.hide();
 	shootingMenu.hide();
 	flyingMenu.hide();
 	stationaryMenu.hide();
 	movingPlatformMenu.hide();
+	
+	# Show the menu of the selected entity and adjust anything that demonstrates their properties (arrow, line, etc)
 	if selectedEntity is Enemy || selectedEntity is MovingPlatform:
 		selectedPreset = resource;
 		update_sliders();
@@ -458,7 +467,5 @@ func show_menu(resource: Resource = null) -> void:
 			previewLine = selectedEntity.previewLine;
 			if previewLine:
 				selectedEntity.previewLine.update(Vector2(movingPlatformOffsetXSlider.value, movingPlatformOffsetYSlider.value));
-		
-		
 	else:
 		playerMenu.show();

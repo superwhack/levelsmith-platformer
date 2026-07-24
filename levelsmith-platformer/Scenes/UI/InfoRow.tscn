@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://bhrbcojf8cvim"]
+
+[ext_resource type="Texture2D" uid="uid://c5rb3ykwlgr8e" path="res://Assets/UserInterface/Buttons/ButtonIcons/InfoIcon.png" id="1_7d13j"]
+[ext_resource type="Script" uid="uid://d4cfciodjcu05" path="res://Scenes/UI/InfoRow.gd" id="1_sqww1"]
+[ext_resource type="Texture2D" uid="uid://dd6v833kg7r4k" path="res://Assets/UserInterface/Buttons/ButtonIcons/BugIcon.png" id="2_sqww1"]
+
+[node name="InfoRow" type="HBoxContainer" unique_id=423660098 node_paths=PackedStringArray("infoButton", "bugButton")]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_sqww1")
+infoButton = NodePath("InfoButton")
+bugButton = NodePath("BugButton")
+infoLink = "https://github.com/superwhack/levelsmith-platformer/wiki/Getting-Started---Tutorial"
+bugLink = "https://docs.google.com/forms/d/e/1FAIpQLScCqUFd4hmgPDvh_iun-hH_NCP25s27G3fiqTtJzeClQlThVA/viewform"
+
+[node name="InfoButton" type="Button" parent="." unique_id=1613046938]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+tooltip_text = "Need help getting started?"
+
+[node name="MarginContainer" type="MarginContainer" parent="InfoButton" unique_id=1694420003]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="InfoButton/MarginContainer" unique_id=260399310]
+layout_mode = 2
+texture = ExtResource("1_7d13j")
+expand_mode = 3
+
+[node name="InfoBugSpacer" type="Control" parent="." unique_id=1934141662]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BugButton" type="Button" parent="." unique_id=522531608]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+tooltip_text = "Submit a bug report form"
+
+[node name="MarginContainer" type="MarginContainer" parent="BugButton" unique_id=782314971]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="BugButton/MarginContainer" unique_id=866393933]
+layout_mode = 2
+texture = ExtResource("2_sqww1")
+expand_mode = 3

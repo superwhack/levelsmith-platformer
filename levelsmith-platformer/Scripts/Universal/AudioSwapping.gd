@@ -3,24 +3,29 @@ extends Node
 # Reference to the asset manager
 @export var assetManager : AssetManager;
 
+# Name of the audio asset being replaced
 var audioNameToReplace : String;
 
 # All types of audio
 var audioTypes : Array[String] = ["BounceTile", "CoinPickup", "EnemyDie", "Shoot", "Hurt", "PlayerDie", "Jump", "Victory", "WalkingGeneral", "WalkingIce", "WalkingSlime", "LevelMusic", "CheckpointReached"];
 
+# Preview audio 
 var loadedPreviewAudio : AudioStream;
 var previewAudioPlayer : AudioStreamPlayer;
+var isPlayingPreview : bool = false;
 
+# Button references
 @export var playButton : Button;
 @export var pauseButton : Button;
 @export var stopButton : Button;
-var isPlayingPreview : bool = false;
 
+# Other references
 @export var audioTimeline : HSlider;
 @export var timeStampLabel : Label;
 
 @export var volumeSlider : VBoxContainer;
 
+# Audio length in seconds.
 var audioLength : float;
 
 # Called when the node enters the scene tree for the first time.
@@ -35,9 +40,9 @@ func _ready() -> void:
 	audioTimeline.drag_ended.connect(drag_ended);
 	volumeSlider.drag_ended.connect(change_volume);
 
-func _process(_delta: float) -> void:
+## Runs every frame. Handles visual feedback and hotkeys.
+func _process(_delta : float) -> void:
 	timeStampLabel.text = str(get_converted_time(audioTimeline.value), "/", get_converted_time(audioLength));
-	#timeStampLabel.text = str("%.2f" % audioTimeline.value, "/", "%.2f" % audioLength);
 	if (previewAudioPlayer.playing):
 		audioTimeline.value = previewAudioPlayer.get_playback_position();
 	
@@ -55,7 +60,8 @@ func _process(_delta: float) -> void:
 ## newAudioPath: The file path of the new audio replacing the old one.x 
 func replace_audio(newAudioPath: String) -> void:
 	var targetFilePath : String = FileSearch.find_directory_by_name(audioNameToReplace);
-	var targetDirectory : DirAccess = assetManager.clear_files(audioNameToReplace);
+	assetManager.clear_files(audioNameToReplace);
+	
 	print(newAudioPath);
 	print(targetFilePath);
 	# If the audio is mp3 or wav, create a copy
@@ -87,13 +93,15 @@ func replace_audio(newAudioPath: String) -> void:
 	AudioManager.soundLevels[audioNameToReplace] = 1;
 	load_preview_audio();
 
-	
 ## Clears the audio in a given folder and replaces it with a default
 func reset_audio() -> void:
 	AudioManager.play_UI_effect("UISelection");
 	assetManager.clear_files(audioNameToReplace);
 	load_preview_audio();
 
+## Saves the audio stream as an MP3 file.
+## stream: The audio MP3 to save
+## filePath: The name of the file being saved.
 func save_mp3_stream(stream : AudioStreamMP3, filePath : String) -> void:
 	var bytes : PackedByteArray = stream.data;
 	
@@ -107,18 +115,24 @@ func save_mp3_stream(stream : AudioStreamMP3, filePath : String) -> void:
 		file.store_buffer(bytes);
 		file.close();
 
+## Saves the audio stream as an OGG file.
+## sourcePath: The audio file's original location
+## filePath: The destination of the ogg file
 func save_ogg_stream(sourcePath : String, filePath : String) -> void:
 	DirAccess.copy_absolute(sourcePath, filePath);
 
+# Changes the volume of the current effect in the entire level
 func change_volume() -> void:
 	AudioManager.soundLevels[audioNameToReplace] = volumeSlider.value / 100.0;
 	print(AudioManager.soundLevels)
 
+## Resets the audio preview 
 func stop_preview():
 	previewAudioPlayer.stop();
 	isPlayingPreview = false;
 	audioTimeline.value = 0;
-	
+
+## When the audio privew is finished, replay it.
 func preview_audio_finished() -> void:
 	if (loadedPreviewAudio):
 		play_preview_audio(false);
@@ -141,6 +155,7 @@ func play_preview_audio(play : bool = true) -> void:
 		pauseButton.hide();
 		playButton.show();
 
+## Load all audio in the library to play in the preview. 
 func load_preview_audio() -> void:
 	loadedPreviewAudio = null;
 	var audioPath = AudioManager.audioLibraryPath + audioNameToReplace + "/" + audioNameToReplace;
@@ -167,15 +182,20 @@ func load_preview_audio() -> void:
 	if !AudioManager.soundLevels.has(audioNameToReplace):
 		AudioManager.soundLevels[audioNameToReplace] = 1;
 	volumeSlider.value = AudioManager.soundLevels[audioNameToReplace] * 100;
+	volumeSlider.update_slider();
 
+## Occurs when dragging the audio timeline slider.
 func drag_started():
 	previewAudioPlayer.stream_paused = true;
 
-func drag_ended(value_changed : bool):
-	if (value_changed):
+## Play the audio at the "time" value of the slider after being dragged.
+## valueChanged: Whether the time was changed since before the slider was dragged.
+func drag_ended(valueChanged : bool):
+	if (valueChanged):
 		previewAudioPlayer.play(audioTimeline.value);
 		previewAudioPlayer.stream_paused = !isPlayingPreview;
 
+## Convert a float value in seconds to minutes/seconds/milliseconds format.
 func get_converted_time(time : float) -> String:
 	var minutes : int = floori(time / 60.0);
 	time -= (minutes * 60.0);

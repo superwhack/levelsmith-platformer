@@ -10,9 +10,6 @@ var levelAssetPath : String;
 # A signal for when a level has been imported
 signal levelImported;
 
-## NOTE: TEMPORARY VARIABLE FOR STORING LEVEL'S NAME
-var levelName : String;
-
 # Stores size of an imported level
 var importedLevelSize : Vector2i;
 
@@ -23,14 +20,13 @@ var playerDefault : Resource = preload("res://Resources/PlayerPresets/Default.tr
 ## newLevelName: Name of the new level, indicates where it'll go in the folder
 ## levelAuthor: The name of the level's author as input
 ## levelSize: The size of the level
-func make_new_level(newLevelName: String,  levelAuthor: String, levelSize: Vector2i) -> void:
+func make_new_level(newLevelName : String,  levelAuthor : String, levelSize : Vector2i) -> void:
 	# When making an enemy we need to set the path name and clear all enemies
-	levelName = newLevelName;
 	clear_enemies_folder();
 	
 	# Create a directory under User and set the level and asset path.
 	DirAccess.make_dir_absolute("user://Levels/");
-	levelPath = "user://Levels/" + levelName + "/";
+	levelPath = "user://Levels/" + newLevelName + "/";
 	levelAssetPath = levelPath + "Assets/";
 	
 	# Create the directories for the level and asset path.
@@ -60,7 +56,8 @@ func make_new_level(newLevelName: String,  levelAuthor: String, levelSize: Vecto
 			"objects": 0,
 			"version": Global.VERSION,
 			"favorited": false,
-			"validated": false
+			"validated": false,
+			"playable": false
 		},
 		"enemies": [],
 		"player": {
@@ -111,27 +108,26 @@ func make_new_level(newLevelName: String,  levelAuthor: String, levelSize: Vecto
 	var jsonString : String = JSON.stringify(defaultJSON, "\t")
 	
 	# Write JSON to file and close it
-	var JSONFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE);
-	JSONFile.store_string(jsonString);
-	JSONFile.close();
+	var jsonFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.WRITE);
+	jsonFile.store_string(jsonString);
+	jsonFile.close();
 	
 	# Generate default CSV file with empty tiles
-	var CSVFile : FileAccess = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.WRITE);
+	var csvFile : FileAccess = FileAccess.open(levelPath + "Tiles.CSV", FileAccess.WRITE);
 	for row in levelSize.y:
 		var tileRow : Array;
 		for col in levelSize.x:
 			tileRow.append("-1");
-		CSVFile.store_csv_line(tileRow);
-	CSVFile.close();
-	
-	#clone_data("user://Assets/", levelAssetPath);
+		csvFile.store_csv_line(tileRow);
+	csvFile.close();
 
 ## Export the current level
-## tileMap: The tileMap
-## playerData: All of the player's special information
+## tileMap: The tile map to obtain object count and convert to a CSV file.
+## playerData: All of the player's stats and ability toggles.
 ## worldSize: Size of the world (x, y) for creating the csv file.
 ## settings: The settings menu to export the configurations from
-func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i, settings: Panel, isValidated : bool = false) -> void:
+## isValidated: Whether the level has been beaten in its current state.
+func export_level(tileMap : TileMapLayer, playerData : Panel, worldSize : Vector2i, settings : Panel, isValidated : bool = false, isPlayable : bool = false) -> void:
 	PopUpManager.create_save_popup();
 	# Create JSON for enemies and player
 	if (!DirAccess.dir_exists_absolute(levelPath)):
@@ -139,7 +135,6 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		
 	# First, get the meta data so we don't delete permanent data.
 	var json : Dictionary = { };
-
 	# If the Settings file exists, get entire file as text
 	if (FileAccess.file_exists(levelPath + "Settings.JSON")):
 		var settingsJSONFile : FileAccess = FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
@@ -182,12 +177,11 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 	metadata["version"] = Global.VERSION;
 	metadata["objects"] = objects;
 	metadata["validated"] = isValidated;
+	metadata["playable"] = isPlayable;
 
 	json["metadata"] = metadata;
 	
-	##                      ##
-	## Player JSON Creation ##
-	##                      ##
+	# Player JSON Creation 
 	json["player"] = {
 		"health": playerData.playerHealth,
 		"speed": playerData.playerSpeed,
@@ -205,9 +199,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		"wallJumpDecay": playerData.playerWallJumpDecay
 	};
 
-	##                        ##
-	## Settings JSON Creation ##
-	##                        ##
+	# Settings JSON Creation
 	json["settings"] = {
 		"playZoom": settings.gameplayZoom.value,
 		"followSpeed": settings.followSpeed.value,
@@ -215,9 +207,7 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		"cameraPlayClamp": settings.cameraClamp.value
 	};
 	
-	##                     ##
-	## Enemy JSON Creation ##
-	##                     ##
+	# Enemy JSON Creation
 	var enemies : Array = [];
 	var enemyProperties : PackedStringArray = DirAccess.get_files_at("user://Resources/Enemies/");
 
@@ -247,7 +237,9 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 				"shotSpeed": propertyFile.shotSpeed,
 				"fireRate": propertyFile.fireRate,
 				"projBounce": propertyFile.projBounce,
-				"gravity": propertyFile.gravity
+				"gravity": propertyFile.gravity,
+				"persistence": propertyFile.persistence,
+				"active": propertyFile.active
 			};
 		elif (enemyProperty.contains("Flying")):
 			enemy["type"] = "flying"
@@ -310,7 +302,6 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		"CheckpointCollected": AnimationManager.get_animation_fps("CheckpointCollected")
 	}
 	
-	
 	## NOTE: THIS IS TEMPORARY CODE TO TURN ON WHEN JSON FILE NEEDS TO BE VALIDATED
 	#var tmpFile : FileAccess = FileAccess.open(levelPath + "Temp.txt", FileAccess.WRITE);
 	#tmpFile.store_string(dataToSend);
@@ -337,8 +328,6 @@ func export_level(tileMap: TileMapLayer, playerData: Panel, worldSize: Vector2i,
 		CSVFile.store_csv_line(tileRow);
 	CSVFile.close();
 	
-	#clone_data("user://Assets/", levelAssetPath);
-	
 	await get_tree().create_timer(0.2).timeout;
 	PopUpManager.clear_all_popups();
 	PopUpManager.create_save_complete_popup();
@@ -357,18 +346,17 @@ func validate_import(sourceName: String) -> bool:
 	levelPath = sourceName;
 	levelAssetPath = levelPath + "Assets/"
 	var errors : Array[String];
-	
+	print(levelPath)
 	if (!DirAccess.dir_exists_absolute(levelPath)):
 		errors.append("Directory " + levelPath + " does not exist!");
-		
+		print("failed 1")
 	if (!FileAccess.file_exists(levelPath + "Settings.JSON")):
 		errors.append(levelPath + "Settings.JSON does not exist!");
-		
 	if (!FileAccess.file_exists(levelPath + "Tiles.CSV")):
 		errors.append(levelPath + "Tiles.CSV does not exist!");
+		print("failed 3")
 	if (errors.size() == 0):
 		sourceName = sourceName.left(-1);
-		levelName = sourceName.substr(sourceName.rfind("/") + 1);
 		return true;
 		
 	# If import fails, send a pop-up to the user.
@@ -410,7 +398,6 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 	
 	importedLevelSize = Vector2(col, row);
 	await get_tree().process_frame;
-	#clone_data(levelAssetPath, "user://Assets/");
 	
 	return playerExists;
 
@@ -418,27 +405,27 @@ func import_level_CSV(tileMap: TileMapLayer) -> bool:
 ## tileMap: Tile map for searching for enemies
 ## playerData: The panel that contains player data to adjust it
 ## settings: Settings to import saved configurations to
-func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: Panel) -> void:
+func import_JSON(tileMap : TileMapLayer, playerData : Panel, settings : Panel) -> void:
 	# Read JSON to file and close it
 	var JSONFile : FileAccess= FileAccess.open(levelPath + "Settings.JSON", FileAccess.READ);
 	var json_as_dict : Variant = JSON.parse_string(JSONFile.get_as_text());
 	
 	# Player information read
 	var player = json_as_dict.get("player", {});
-	playerData.playerHealth = player.get("health", playerData.playerHealth);
-	playerData.playerSpeed = player.get("speed", playerData.playerSpeed);
-	playerData.playerAcceleration = player.get("acceleration", playerData.playerAcceleration);
-	playerData.playerDeceleration = player.get("deceleration", playerData.playerDeceleration);
-	playerData.playerJumpHeight = player.get("jump", playerData.playerJumpHeight);
-	playerData.playerAirControl = player.get("airControl", playerData.playerAirControl);
-	playerData.playerGravity = player.get("fallSpeed", playerData.playerGravity);
-	playerData.playerCoyoteTime = player.get("coyoteTime", playerData.playerCoyoteTime);
-	playerData.playerSlopeSlowdown = player.get("slopeSlowdown", playerData.playerSlopeSlowdown);
-	playerData.playerOneways = player.get("oneways", playerData.playerOneways);
-	playerData.playerDoubleJump = player.get("doubleJump", playerData.playerDoubleJump);
-	playerData.playerWallJump = player.get("wallJump", playerData.playerWallJump);
-	playerData.playerWallJumpStrength = player.get("wallJumpStrength", playerData.playerWallJumpStrength);
-	playerData.playerWallJumpDecay = player.get("wallJumpDecay", playerData.playerWallJumpDecay);
+	playerData.playerHealth = player.get("health", 3);
+	playerData.playerSpeed = player.get("speed", 1.0);
+	playerData.playerAcceleration = player.get("acceleration", 95);
+	playerData.playerDeceleration = player.get("deceleration", 95);
+	playerData.playerJumpHeight = player.get("jump", 2.1);
+	playerData.playerAirControl = player.get("airControl", 100);
+	playerData.playerGravity = player.get("fallSpeed", 1.2);
+	playerData.playerCoyoteTime = player.get("coyoteTime", 0.1);
+	playerData.playerSlopeSlowdown = player.get("slopeSlowdown", false);
+	playerData.playerOneways = player.get("oneways", true);
+	playerData.playerDoubleJump = player.get("doubleJump", false);
+	playerData.playerWallJump = player.get("wallJump", false);
+	playerData.playerWallJumpStrength = player.get("wallJumpStrength", 0);
+	playerData.playerWallJumpDecay = player.get("wallJumpDecay", false);
 	playerData.update_custom();
 	playerData.update_sliders();
 
@@ -470,7 +457,7 @@ func import_JSON(tileMap: TileMapLayer, playerData: Panel, settings: Panel) -> v
 	
 ## Reads the metadata section from the Settings JSON
 ## getLevelPath: The given path to the level directory.
-## Returns either a full or empty dictionary.
+## returns: A dictionary with the metadata, or nothing if the file doesn't exist.
 func get_metadata(getLevelPath : String) -> Dictionary:
 	# If no settings JSON, return empty
 	if (!FileAccess.file_exists(getLevelPath + "/Settings.JSON")):
@@ -482,31 +469,30 @@ func get_metadata(getLevelPath : String) -> Dictionary:
 	# Return metadata
 	return jsonDict.get("metadata", {});
 
-
 ## Sets a specific metadata value.
 ## setLevelPath: The given path to the level directory.
 ## key: The name of the metadata value to be changed.
 ## value: The new value of the metadata being changed.
-func set_metadata(setLevelPath: String, key: String, value: Variant) -> void:
+func set_metadata(setLevelPath : String, key : String, value : Variant) -> void:
 	if (!FileAccess.file_exists(setLevelPath + "/Settings.JSON")):
 		return;
 		
 	# Read file
-	var file : FileAccess = FileAccess.open(setLevelPath + "/Settings.JSON", FileAccess.READ);
-	var json : Dictionary = JSON.parse_string(file.get_as_text());
-	file.close();
+	var jsonFile : FileAccess = FileAccess.open(setLevelPath + "/Settings.JSON", FileAccess.READ);
+	var jsonData : Dictionary = JSON.parse_string(jsonFile.get_as_text());
+	jsonFile.close();
 
 	# Not all files have metadata, so lets check first
-	if !json.has("metadata"):
-		json["metadata"] = {};
+	if !jsonData.has("metadata"):
+		jsonData["metadata"] = {};
 
 	# Change the given key to the value in the metadata.
-	json["metadata"][key] = value;
+	jsonData["metadata"][key] = value;
 
 	# Write it to the file and close again.
-	file = FileAccess.open(setLevelPath + "/Settings.JSON", FileAccess.WRITE);
-	file.store_string(JSON.stringify(json, "\t"));
-	file.close();
+	jsonFile = FileAccess.open(setLevelPath + "/Settings.JSON", FileAccess.WRITE);
+	jsonFile.store_string(JSON.stringify(jsonData, "\t"));
+	jsonFile.close();
 
 ## Clone all of the data from the user asset folder 
 ## from: the source directory
@@ -535,95 +521,99 @@ func clone_data(from: String, to: String, directory: String = ""):
 	#file.store_string("TESTING");
 	#file.close();
 
-## Gets files in the enemies folder and delete every single file.
+## Deletes all the resource files in the enemy folder
 func clear_enemies_folder() -> void:
-	var files : PackedStringArray = DirAccess.get_files_at("user://Resources/Enemies/");
+	var enemyResourceFiles : PackedStringArray = DirAccess.get_files_at("user://Resources/Enemies/");
 	
-	for file in files:
+	for file in enemyResourceFiles:
 		DirAccess.remove_absolute("user://Resources/Enemies/" + file);
 
 ## Matches the enemy type with the correct data, used when importing data
-## type: The type of enemy, stored as an Enum.
-func match_enemy_type(enemy: Dictionary, locatedEnemy: Node2D) -> void:
+## enemy: The dictionary entry containing the enemy's type.
+## locatedEnemy: The enemy node in the tile map.
+func match_enemy_type(enemy : Dictionary, locatedEnemy : Node2D) -> void:
 	var capitalType : String = enemy.type[0].to_upper() + enemy.type.substr(1);
 	var defaultResource : Resource = load("res://Resources/PlayerPresets/" + capitalType + "Default.tres");
 	var newResource : Resource = defaultResource.duplicate(true);
 	
+	var enemyStats = enemy.stats;
 	match enemy.type:
 		"patrolling":
-			newResource.groundSpeed = enemy.stats.speed;
-			newResource.direction = enemy.stats.direction;
-			newResource.restricted = enemy.stats.restricted;
+			newResource.groundSpeed = enemyStats.get("speed", 0.5);
+			newResource.direction = enemyStats.get("direction", false);
+			newResource.restricted = enemyStats.get("restricted", false);
 		"shooting":
-			newResource.direction = enemy.stats.direction;
-			newResource.randomDirection = enemy.stats.randomDirection;
-			newResource.shotSpeed = enemy.stats.shotSpeed;
-			newResource.fireRate = enemy.stats.fireRate;
-			newResource.projBounce = enemy.stats.projBounce;
-			newResource.gravity = enemy.stats.gravity;
+			newResource.direction = enemyStats.get("direction", 0);
+			newResource.randomDirection = enemyStats.get("randomDirection", false);
+			newResource.shotSpeed = enemyStats.get("shotSpeed", 3);
+			newResource.fireRate = enemyStats.get("fireRate", 1);
+			newResource.projBounce = enemyStats.get("projBounce", false);
+			newResource.gravity = enemyStats.get("gravity", false);
+			newResource.persistence = enemyStats.get("persistence", false);
+			newResource.active = enemyStats.get("active", false);
 		"flying":
-			newResource.speed = enemy.stats.speed;
-			newResource.pointBOffset.x = enemy.stats.endpoint.x;
-			newResource.pointBOffset.y = enemy.stats.endpoint.y;
+			newResource.speed = enemyStats.get("speed", 2.0);
+			#typeof() == 27 means it's a Vector3, which is valid for the endpoint
+			if !(enemyStats.has("endpoint") && typeof(enemyStats.endpoint) == 27 && enemyStats.endpoint.has("x") && enemyStats.endpoint.has("y")):
+				newResource.pointBOffset = Vector2(0, 0);
+			else:
+				newResource.pointBOffset.x = enemy.stats.endpoint.x;
+				newResource.pointBOffset.y = enemy.stats.endpoint.y;
 		"stationary":
-			newResource.isFacingRight = enemy.stats.isFacingRight;
-			newResource.gravity = enemy.stats.gravity;
+			newResource.isFacingRight = enemyStats.get("isFacingRight", false);
+			newResource.gravity = enemyStats.get("gravity", false);
 		"movingPlatform":
-			newResource.speed = enemy.stats.speed;
-			newResource.pointBOffset.x = enemy.stats.endpoint.x;
-			newResource.pointBOffset.y = enemy.stats.endpoint.y;
-			newResource.progress = enemy.stats.progress;
-			newResource.delay = enemy.stats.delay;
-			newResource.easing = enemy.stats.easing;
-			newResource.momentum = enemy.stats.momentum;
-			newResource.visible = enemy.stats.visible;
-			newResource.active = enemy.stats.active;
+			newResource.speed = enemyStats.get("speed", 2);
+			if !(enemyStats.has("endpoint") && typeof(enemyStats.endpoint) == 27 && enemyStats.endpoint.has("x") && enemyStats.endpoint.has("y")):
+				newResource.pointBOffset = Vector2(0, 0);
+			else:
+				newResource.pointBOffset.x = enemy.stats.endpoint.x;
+				newResource.pointBOffset.y = enemy.stats.endpoint.y;
+			newResource.progress = enemyStats.get("progress", 0);
+			newResource.delay = enemyStats.get("delay", 0);
+			newResource.easing = enemyStats.get("easing", false);
+			newResource.momentum = enemyStats.get("momentum", false);
+			newResource.visible = enemyStats.get("visible", false);
+			newResource.active = enemyStats.get("active", false);
 	ResourceSaver.save(newResource, "user://Resources/Enemies/" + capitalType + "-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)) + ".tres");
 	locatedEnemy.assign_script("-" + str(int(enemy.pos.x)) + str(int(enemy.pos.y)), Vector2i(enemy.pos.x, enemy.pos.y));
 	if locatedEnemy is EnemyStationary: locatedEnemy.update_flipped();
 
-
 ## If any enemy data is corrupted, we can repair it by giving it default values.
 ## tileMap: the main tile map layer.
 func repair_corrupted_enemies(tileMap: TileMapLayer) -> void:
+	var nodePosition : String;
+	var enemyName : String;
 	for node in tileMap.get_children():
-		if node is EnemyPatrol && node.propertyFile == null:
-			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
-			var defaultPatrolling : Resource = load("res://Resources/PlayerPresets/PatrollingDefault.tres");
-			var newPatrolling : Resource = defaultPatrolling.duplicate(true);
-			ResourceSaver.save(newPatrolling, "user://Resources/Enemies/Patrolling-" + nodePos + ".tres");
-			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
-		elif node is EnemyShooting && node.propertyFile == null:
-			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
-			var defaultShooting : Resource = load("res://Resources/PlayerPresets/ShootingDefault.tres");
-			var newShooting : Resource = defaultShooting.duplicate(true);
-			ResourceSaver.save(newShooting, "user://Resources/Enemies/Shooting-" + nodePos + ".tres");
-			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
-		elif node is EnemyFlyer && node.propertyFile == null:
-			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
-			var defaultFlying : Resource = load("res://Resources/PlayerPresets/FlyingDefault.tres");
-			var newFlying : Resource = defaultFlying.duplicate(true);
-			ResourceSaver.save(newFlying, "user://Resources/Enemies/Flying-" + nodePos + ".tres");
-			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
-		elif node is EnemyStationary && node.propertyFile == null:
-			var nodePos : String = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
-			var defaultStationary : Resource = load("res://Resources/PlayerPresets/StationaryDefault.tres");
-			var newStationary : Resource = defaultStationary.duplicate(true);
-			ResourceSaver.save(newStationary, "user://Resources/Enemies/Stationary-" + nodePos + ".tres");
-			node.assign_script("-" + nodePos, tileMap.local_to_map(node.global_position));
-			
+		if (node is not Enemy || node.propertyFile): continue;
+		
+		if (node is EnemyPatrol):
+			enemyName = "Patrolling";
+		elif (node is EnemyShooting):
+			enemyName = "Shooting";
+		elif (node is EnemyFlyer):
+			enemyName = "Flying";
+		elif (node is EnemyStationary):
+			enemyName = "Stationary";
+		
+		nodePosition = str(tileMap.local_to_map(node.global_position).x) + str(tileMap.local_to_map(node.global_position).y);
+		var defaultResource : Resource = load("res://Resources/PlayerPresets/" + enemyName + "Default.tres");
+		var newResource : Resource = defaultResource.duplicate(true);
+		ResourceSaver.save(newResource, "user://Resources/Enemies/" + enemyName + "-" + nodePosition + ".tres");
+		node.assign_script("-" + nodePosition, tileMap.local_to_map(node.global_position));
+
 ## Gets the object count of the given tile map and worldsize.
 ## tileMap: the main tile map layer.
 ## worldSize: the world size.
-## Returns the amount of tiles that are not empty and not ignored IDs.
+## returns: the amount of tiles that are not empty and not ignored IDs.
 func get_object_count(tileMap: TileMapLayer, worldSize : Vector2i) -> int:
-	var count : int = 0;
-
+	var objectCount : int = 0;
+	
 	for y in worldSize.y:
 		for x in worldSize.x:
 			var tileId : int = tileMap.get_cell_source_id(Vector2i(x, y));
-
+			
 			if (tileId != Global.EMPTY_TILE && tileId < Global.BEDROCK_CORNER):
-				count += 1;
-
-	return count;
+				objectCount += 1;
+	
+	return objectCount;

@@ -2,29 +2,29 @@
 
 [ext_resource type="Script" uid="uid://j3321yekjhij" path="res://Scripts/Editor/EditorManager.gd" id="1_3goer"]
 [ext_resource type="TileSet" uid="uid://d1n0acfj67o7r" path="res://Resources/TileSet.tres" id="2_8t3j3"]
-[ext_resource type="Texture2D" uid="uid://bguub3y2mkgwv" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
+[ext_resource type="Texture2D" uid="uid://rdahjsgipa1a" path="res://Assets/Sprites/Tiles/blankTileGrid.png" id="4_5cunq"]
 [ext_resource type="Script" uid="uid://3docyjmw7w4c" path="res://Scripts/Editor/GridLines.gd" id="5_2h6au"]
 [ext_resource type="PackedScene" uid="uid://84u38evaexwi" path="res://Scenes/UI/ToolSwitch.tscn" id="6_iws6f"]
 [ext_resource type="Theme" uid="uid://eva7bwyptfe4" path="res://Resources/GlobalTheme.tres" id="7_ditat"]
 [ext_resource type="PackedScene" uid="uid://bwguyxq8bjrjk" path="res://Scenes/UI/PropertyMenu.tscn" id="7_gc37a"]
 [ext_resource type="PackedScene" uid="uid://cgqrior0thya8" path="res://Scenes/UI/TileSwitch.tscn" id="7_qupls"]
-[ext_resource type="Texture2D" uid="uid://cnh8taosrrpr5" path="res://Assets/UserInterface/UpdatedIcons/material-symbols-light--home-outline.png" id="8_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://pk2aepci7aye" path="res://Assets/UserInterface/UpdatedIcons/material-symbols-light--home-outline.png" id="8_vrcqo"]
 [ext_resource type="Texture2D" uid="uid://h26lakbhbjgm" path="res://Assets/Sprites/Tiles/GridLine.png" id="9_2u2e6"]
 [ext_resource type="Script" uid="uid://di8rqbljptamp" path="res://Scripts/Universal/HotkeyManager.gd" id="10_bpoex"]
-[ext_resource type="Texture2D" uid="uid://bjl3psc0mylxi" path="res://Assets/UserInterface/UpdatedIcons/carbon--save.png" id="10_racgb"]
+[ext_resource type="Texture2D" uid="uid://cu3xhl1n3tsxf" path="res://Assets/UserInterface/UpdatedIcons/carbon--save.png" id="10_racgb"]
 [ext_resource type="PackedScene" uid="uid://d2ud25a3qonvp" path="res://Scenes/AssetManager.tscn" id="11_bpoex"]
 [ext_resource type="Script" uid="uid://cwd6vl74xk87p" path="res://Scripts/Editor/CustomCursor.gd" id="11_rllk2"]
-[ext_resource type="Texture2D" uid="uid://btblpw5rkc2oq" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="11_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://cay2v3yhicsj3" path="res://Assets/UserInterface/UpdatedIcons/streamline-plump--controller-1.png" id="11_vrcqo"]
 [ext_resource type="Script" uid="uid://bmuieq4vrbnnr" path="res://Scripts/Editor/ToolManager.gd" id="12_20xd7"]
 [ext_resource type="Script" uid="uid://ul6wpmf3lt8q" path="res://Scripts/Editor/TileManager.gd" id="13_7flhh"]
-[ext_resource type="Texture2D" uid="uid://t315psvvxvbh" path="res://Assets/UserInterface/UpdatedIcons/wordpress--image.png" id="13_hh704"]
+[ext_resource type="Texture2D" uid="uid://fs71ttkxq3re" path="res://Assets/UserInterface/UpdatedIcons/wordpress--image.png" id="13_hh704"]
 [ext_resource type="Script" uid="uid://bj0ohhixfxuta" path="res://Scripts/Editor/EntityManager.gd" id="14_pkt5f"]
-[ext_resource type="Texture2D" uid="uid://baqjlmdrk8ekf" path="res://Assets/UserInterface/UpdatedIcons/LevelSettings.png" id="14_vrcqo"]
-[ext_resource type="Texture2D" uid="uid://dv8ahbp0q7e7m" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_racgb"]
+[ext_resource type="Texture2D" uid="uid://bglh2hy4ys3l1" path="res://Assets/UserInterface/UpdatedIcons/LevelSettings.png" id="14_vrcqo"]
+[ext_resource type="Texture2D" uid="uid://b4dqbmv3a5230" path="res://Assets/UserInterface/UpdatedIcons/GlobalSettings.png" id="15_racgb"]
 [ext_resource type="Script" uid="uid://caqcmpw22li3h" path="res://Scripts/Editor/PreviewManager.gd" id="15_wiuwn"]
 [ext_resource type="PackedScene" uid="uid://c8xxq1ii6wmcc" path="res://Scenes/UI/HoverPopUpTemplate.tscn" id="16_rdu5w"]
 [ext_resource type="PackedScene" uid="uid://cusuiuccep2n3" path="res://Scenes/LevelSettingsMenu.tscn" id="17_fnjh2"]
-[ext_resource type="FontFile" uid="uid://cwsqavv67tlux" path="res://Assets/Fonts/Inter/Inter_28pt-Bold.ttf" id="17_hh704"]
+[ext_resource type="FontFile" uid="uid://bbxdmihdydm8o" path="res://Assets/Fonts/Inter/Inter_28pt-Bold.ttf" id="17_hh704"]
 [ext_resource type="Script" uid="uid://dennrhd1fmssd" path="res://Scripts/Universal/LevelScreenshot.gd" id="25_fnjh2"]
 [ext_resource type="Script" uid="uid://demhkcrctsljf" path="res://Scripts/Editor/IconManager.gd" id="26_vrcqo"]
 
@@ -414,6 +414,16 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("17_hh704")
 text = "Fullscreen [F11]"
 
+[node name="PlayHintLabel" type="Label" parent="ScreenUI/MainColumn/ContentRow/MarginContainer/FooterHintsRow" unique_id=1612007126]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("17_hh704")
+text = "Play Level [Enter]"
+
+[node name="DeleteHintLabel" type="Label" parent="ScreenUI/MainColumn/ContentRow/MarginContainer/FooterHintsRow" unique_id=31289842]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("17_hh704")
+text = "Delete Modifier [Alt]"
+
 [node name="PropertiesPanel" type="PanelContainer" parent="ScreenUI/MainColumn/ContentRow" unique_id=949999272]
 visible = false
 custom_minimum_size = Vector2(400, 0)
@@ -517,6 +527,7 @@ entityManager = NodePath("../ToolManager/EntityManager")
 tileSwitch = NodePath("../ScreenUI/MainColumn/TopBar/TopBarMargin/TopBarRow/LeftTopGroup/TileSwitch")
 
 [node name="CustomCursorManager" type="Node2D" parent="." unique_id=1871670420 node_paths=PackedStringArray("editorManager", "toolManager", "entityManager")]
+process_mode = 3
 script = ExtResource("11_rllk2")
 editorManager = NodePath("..")
 toolManager = NodePath("../ToolManager")
